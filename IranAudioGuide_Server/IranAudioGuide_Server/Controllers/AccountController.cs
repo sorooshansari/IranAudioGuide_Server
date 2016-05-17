@@ -81,7 +81,12 @@ namespace IranAudioGuide_Server.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    var user = UserManager.FindByName(model.Email);
+                    string UserRole = UserManager.GetRoles(user.Id).FirstOrDefault();
+                    if (UserRole == "Admin")
+                        return RedirectToAction("Index", "Admin");
+                    else
+                        return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

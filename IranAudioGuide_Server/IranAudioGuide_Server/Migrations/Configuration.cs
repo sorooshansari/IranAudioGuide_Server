@@ -15,7 +15,7 @@ namespace IranAudioGuide_Server.Migrations
         {
             get
             {
-                return _AdminUser ?? "Admin";
+                return _AdminUser ?? "admin@a.com";
             }
             set
             {
