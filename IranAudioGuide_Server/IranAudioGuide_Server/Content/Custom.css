@@ -1,0 +1,117 @@
+﻿body {
+}
+
+.icons a,
+.row a {
+    border-bottom: none;
+}
+
+.icon.style1 {
+    background-color: white;
+    color: #999999;
+}
+
+.icon.icon.style2 {
+    background-color: white;
+    color: #A4C639;
+}
+
+.icon.style3 {
+    background-color: white;
+    color: #00a1f1;
+}
+
+.row img {
+    width: 100%;
+}
+@media (max-width: 767px) {
+    .col-xs-offset-point5 {
+        margin-left: 4.16666666%;
+    }
+}
+@media (min-width: 768px) {
+    .col-sm-offset-point5 {
+        margin-left: 4.16666666%;
+    }
+    .col-md-offset-point5 {
+        margin-left: 4.16666666%;
+    }
+}
+
+.underlined-title {
+    text-align: center !important;
+    margin-bottom: 10%;
+}
+
+    .underlined-title h1 {
+        /*color: #2c3e50;*/
+        margin: 0;
+        font-size: 36px;
+    }
+
+    .underlined-title h2 {
+        font-size: 20px;
+        text-transform: uppercase;
+        font-weight: 700;
+        /*color: #95a5a6;*/
+    }
+
+    .underlined-title hr {
+        width: 15%;
+        border-width: 3px;
+        margin-left: auto;
+        margin-right: auto;
+        /*border-color: #003444;*/
+    }
+    
+@media (max-width: 399px) {
+    .underlined-title h1 {
+        font-size: 16px;
+    }
+    .underlined-title hr{
+        margin-top: 5%;
+    }
+}
+@media (min-width: 400px) and (max-width: 767px) {
+    .underlined-title h1 {
+        font-size: 22px;
+    }
+    .underlined-title hr{
+        margin-top: 5%;
+    }
+}
+
+/*Regiser*/
+.content-block
+{
+    width: 100%;
+    padding: 60px 0 60px 0;
+    z-index: 100;
+    position: relative;
+    min-height: 100vh;
+}
+
+@media (min-width: 992px){
+    .content-block{
+        padding-top: 28vh;
+    }
+}
+/*.min-height-600px
+{
+    min-height: 600px !important;
+}*/
+
+.ExternalLogin hr{
+    width: 50%;
+    margin-left: auto;
+    margin-top: 0;
+    margin-right: auto;
+}
+.ExternalLogin h4{
+    text-align: center;
+}
+.Validation{
+    text-decoration: underline;
+    -moz-text-decoration-color: red; /* Code for Firefox */
+    text-decoration-color: red;
+}
