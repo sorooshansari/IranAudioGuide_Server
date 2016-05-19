@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿
+@model IranAudioGuide_Server.Models.AdminIndexVM
+
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -8,6 +11,7 @@
     <link href="~/Content/AdiminMain.css" rel="stylesheet" />
     <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/ie9.css" /><![endif]-->
+    <link href="~/Content/AdminCustom.css" rel="stylesheet" />
 </head>
 <body>
     <!-- Header -->
@@ -17,9 +21,9 @@
 
             <!-- Logo -->
             <div id="logo">
-                <span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
-                <h1 id="title">Jane Doe</h1>
-                <p>Hyperspace Engineer</p>
+                <span class="image avatar48"><img src="@Model.AdminInfo.imgUrl" alt="@Model.AdminInfo.FullName" /></span>
+                <h1 id="title">@Model.AdminInfo.FullName</h1>
+                <p>@Model.AdminInfo.Email</p>
             </div>
 
             <!-- Nav -->
@@ -38,10 +42,9 @@
 
                 -->
                 <ul>
-                    <li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Intro</span></a></li>
-                    <li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Portfolio</span></a></li>
-                    <li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">About Me</span></a></li>
-                    <li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
+                    <li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Top</span></a></li>
+                    <li><a href="#PlaceList" id="PlaceList-link" class="skel-layers-ignoreHref"><span class="icon fa-list-ul">Places</span></a></li>
+                    <li><a href="#NewPlace" id="NewPlace-link" class="skel-layers-ignoreHref"><span class="icon fa-plus-square">New place</span></a></li>
                 </ul>
             </nav>
 

@@ -202,9 +202,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605161812599_InitialCreate.cs" />
-    <Compile Include="Migrations\201605161812599_InitialCreate.Designer.cs">
-      <DependentUpon>201605161812599_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201605181140169_1.cs" />
+    <Compile Include="Migrations\201605181140169_1.Designer.cs">
+      <DependentUpon>201605181140169_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -225,6 +225,7 @@
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
+    <Content Include="Content\AdminCustom.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -250,6 +251,7 @@
     <Content Include="images\banner.jpg" />
     <Content Include="images\banner_t.jpg" />
     <Content Include="images\googlePlay.png" />
+    <Content Include="images\Members\Soroosh.JPG" />
     <Content Include="images\pic01.jpg" />
     <Content Include="images\pic02.jpg" />
     <Content Include="images\pic03.jpg" />
@@ -257,8 +259,6 @@
     <Content Include="images\pic05.jpg" />
     <Content Include="images\playstore.png" />
     <Content Include="images\WindowsStore.png" />
-    <Content Include="Scripts\ai.0.22.9-build00167.js" />
-    <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -282,33 +282,34 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\AdminMain.js" />
+    <Content Include="Scripts\ai.0.22.9-build00167.js" />
+    <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\ie\backgroundsize.min.htc" />
     <Content Include="Scripts\ie\html5shiv.js" />
     <Content Include="Scripts\ie\PIE.htc" />
     <Content Include="Scripts\ie\respond.min.js" />
+    <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
-    <Content Include="Scripts\jquery-2.2.3.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.scrollex.min.js" />
     <Content Include="Scripts\jquery.scrolly.min.js" />
     <Content Include="Scripts\jquery.scrollzer.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\AdminMain.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\skel.min.js" />
     <Content Include="Scripts\util.js" />
-    <Content Include="Scripts\_references.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -345,6 +346,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Scripts\jquery-2.2.3.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -354,8 +356,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605161812599_InitialCreate.resx">
-      <DependentUpon>201605161812599_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605181140169_1.resx">
+      <DependentUpon>201605181140169_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

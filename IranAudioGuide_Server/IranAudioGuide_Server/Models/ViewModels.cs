@@ -14,4 +14,14 @@ namespace IranAudioGuide_Server.Models
         Register,
         Login
     }
+    public class AdminIndexVM
+    {
+        public UserInfo AdminInfo { get; set; }
+    }
+    public class UserInfo
+    {
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string imgUrl { get; set; }
+    }
 }

@@ -24,15 +24,18 @@
 .row img {
     width: 100%;
 }
+
 @media (max-width: 767px) {
     .col-xs-offset-point5 {
         margin-left: 4.16666666%;
     }
 }
+
 @media (min-width: 768px) {
     .col-sm-offset-point5 {
         margin-left: 4.16666666%;
     }
+
     .col-md-offset-point5 {
         margin-left: 4.16666666%;
     }
@@ -63,27 +66,29 @@
         margin-right: auto;
         /*border-color: #003444;*/
     }
-    
+
 @media (max-width: 399px) {
     .underlined-title h1 {
         font-size: 16px;
     }
-    .underlined-title hr{
+
+    .underlined-title hr {
         margin-top: 5%;
     }
 }
+
 @media (min-width: 400px) and (max-width: 767px) {
     .underlined-title h1 {
         font-size: 22px;
     }
-    .underlined-title hr{
+
+    .underlined-title hr {
         margin-top: 5%;
     }
 }
 
 /*Regiser*/
-.content-block
-{
+.content-block {
     width: 100%;
     padding: 60px 0 60px 0;
     z-index: 100;
@@ -91,8 +96,8 @@
     min-height: 100vh;
 }
 
-@media (min-width: 992px){
-    .content-block{
+@media (min-width: 992px) {
+    .content-block {
         padding-top: 28vh;
     }
 }
@@ -101,17 +106,31 @@
     min-height: 600px !important;
 }*/
 
-.ExternalLogin hr{
+.ExternalLogin hr {
     width: 50%;
     margin-left: auto;
     margin-top: 0;
     margin-right: auto;
 }
-.ExternalLogin h4{
+
+.ExternalLogin h4 {
     text-align: center;
 }
-.Validation{
+
+.Validation {
     text-decoration: underline;
     -moz-text-decoration-color: red; /* Code for Firefox */
     text-decoration-color: red;
+}
+
+.checkbox input[type="checkbox"] {
+    -moz-appearance: checkbox;
+    -webkit-appearance: checkbox;
+    -ms-appearance: checkbox;
+    appearance: checkbox;
+    opacity: 1;
+    margin-right: 0;
+    vertical-align: bottom;
+    margin-left: 0;
+    margin-top: 0.5em;
 }

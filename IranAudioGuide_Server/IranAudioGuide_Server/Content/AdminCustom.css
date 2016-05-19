@@ -1,0 +1,61 @@
+﻿body {
+}
+
+.text-Dark {
+    /*color: black;*/
+    text-shadow: 1px 1px 1px black;
+}
+
+    .text-Dark h2 {
+        font-size: 50px;
+        font-weight: 900;
+    }
+
+    .text-Dark p {
+        font-weight: 900;
+    }
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+    .inputfile + label {
+        /*font-size: 1.25em;
+        font-weight: 700;
+        color: white;
+        background-color: black;
+        display: inline-block;*/
+        position: relative;
+        display: inline-block;
+        border-radius: 0.35em;
+        color: #fff !important;
+        text-decoration: none;
+        padding: 0.75em 2.5em 0.75em 2.5em;
+        background-color: #8ebebc;
+        border: 0;
+        cursor: pointer;
+        background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
+        background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
+        background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
+        background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
+        -moz-transition: background-color 0.35s ease-in-out;
+        -webkit-transition: background-color 0.35s ease-in-out;
+        -ms-transition: background-color 0.35s ease-in-out;
+        transition: background-color 0.35s ease-in-out;
+    }
+
+        .inputfile + label :hover {
+            background-color: #9ececc;
+        }
+        .inputfile + label :active {
+            background-color: #7eaeac;
+        }
+
+    .inputfile + label {
+        cursor: pointer; /* "hand" cursor */
+    }

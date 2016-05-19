@@ -10,30 +10,6 @@ namespace IranAudioGuide_Server.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<IranAudioGuide_Server.Models.ApplicationDbContext>
     {
-        private string _AdminUser;
-        string AdminUser
-        {
-            get
-            {
-                return _AdminUser ?? "admin@a.com";
-            }
-            set
-            {
-                _AdminUser = value;
-            }
-        }
-        private string _AdminPass;
-        string AdminPass
-        {
-            get
-            {
-                return _AdminPass ?? "123456789";
-            }
-            set
-            {
-                _AdminPass = value;
-            }
-        }
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
@@ -46,7 +22,7 @@ namespace IranAudioGuide_Server.Migrations
             RoleCreator(context, "Admin");
 
             //Add User
-            AddUser(AdminUser, AdminPass, "Admin", context);
+            AddUser("admin@a.com", "1234567890", "/images/Members/Soroosh.JPG", "Soroosh Ansari", "Admin", context);
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -60,12 +36,18 @@ namespace IranAudioGuide_Server.Migrations
             //    );
             //
         }
-        private void AddUser(string Name, string Pass, string Role, IranAudioGuide_Server.Models.ApplicationDbContext context)
+        private void AddUser(string Email, string Pass, string ImgUrl, string FullName, string Role, IranAudioGuide_Server.Models.ApplicationDbContext context)
         {
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            if (UserManager.FindByName(Name) == null)
+            if (UserManager.FindByName(Email) == null)
             {
-                var user = new ApplicationUser() { UserName = Name };
+                var user = new ApplicationUser()
+                {
+                    UserName = Email,
+                    Email = Email,
+                    FullName = FullName,
+                    ImgUrl = ImgUrl
+                };
                 UserManager.Create(user, Pass);
                 UserManager.AddToRole(user.Id, Role);
             }

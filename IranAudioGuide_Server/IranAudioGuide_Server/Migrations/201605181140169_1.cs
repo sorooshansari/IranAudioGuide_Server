@@ -3,10 +3,39 @@ namespace IranAudioGuide_Server.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class _1 : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Audios",
+                c => new
+                    {
+                        Aud_Id = c.String(nullable: false, maxLength: 128),
+                        Aud_Name = c.String(),
+                        Aud_Url = c.String(),
+                        Aud_Discription = c.String(),
+                        Place_Pla_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Aud_Id)
+                .ForeignKey("dbo.Places", t => t.Place_Pla_Id)
+                .Index(t => t.Aud_Id, unique: true)
+                .Index(t => t.Place_Pla_Id);
+            
+            CreateTable(
+                "dbo.Places",
+                c => new
+                    {
+                        Pla_Id = c.String(nullable: false, maxLength: 128),
+                        Pla_Order = c.Int(nullable: false),
+                        Pla_Name = c.String(),
+                        Pla_ImgUrl = c.String(),
+                        Pla_Discription = c.String(),
+                    })
+                .PrimaryKey(t => t.Pla_Id)
+                .Index(t => t.Pla_Id, unique: true)
+                .Index(t => t.Pla_Order);
+            
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -35,6 +64,8 @@ namespace IranAudioGuide_Server.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        FullName = c.String(),
+                        ImgUrl = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -83,17 +114,24 @@ namespace IranAudioGuide_Server.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Audios", "Place_Pla_Id", "dbo.Places");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Places", new[] { "Pla_Order" });
+            DropIndex("dbo.Places", new[] { "Pla_Id" });
+            DropIndex("dbo.Audios", new[] { "Place_Pla_Id" });
+            DropIndex("dbo.Audios", new[] { "Aud_Id" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Places");
+            DropTable("dbo.Audios");
         }
     }
 }

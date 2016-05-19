@@ -28,9 +28,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-8">
-                            <input type="checkbox" id="RememberMe" name="RememberMe">
-                            <label for="RememberMe">Remember Me?</label>
+                        <div class="col-md-8 checkbox">
+                            @*<input type="checkbox" id="RememberMe" name="RememberMe" value="true">
+                            <label for="RememberMe">Remember me?</label>*@
+                            @*<input type="checkbox" id="a" name="a" value="true">*@
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
                         </div>
                     </div>
                     <div class="form-group">
