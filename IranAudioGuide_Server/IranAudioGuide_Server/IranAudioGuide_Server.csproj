@@ -202,9 +202,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605181140169_1.cs" />
-    <Compile Include="Migrations\201605181140169_1.Designer.cs">
-      <DependentUpon>201605181140169_1.cs</DependentUpon>
+    <Compile Include="Migrations\201605191015113_a.cs" />
+    <Compile Include="Migrations\201605191015113_a.Designer.cs">
+      <DependentUpon>201605191015113_a.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605191210507_b.cs" />
+    <Compile Include="Migrations\201605191210507_b.Designer.cs">
+      <DependentUpon>201605191210507_b.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605191538374_c.cs" />
+    <Compile Include="Migrations\201605191538374_c.Designer.cs">
+      <DependentUpon>201605191538374_c.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -225,6 +233,17 @@
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
+    <Content Include="audioplayerengine\amazingaudioplayer.js" />
+    <Content Include="audioplayerengine\amazingaudioplayer.swf" />
+    <Content Include="audioplayerengine\amazingaudioplayer_unminify.js" />
+    <Content Include="audioplayerengine\initaudioplayer-1.css" />
+    <Content Include="audioplayerengine\initaudioplayer-1.js" />
+    <Content Include="audioplayerengine\jquery.js" />
+    <Content Include="audioplayerengine\loop-24-24-0.png" />
+    <Content Include="audioplayerengine\playpause-48-48-1.png" />
+    <Content Include="audioplayerengine\prevnext-48-48-1.png" />
+    <Content Include="audioplayerengine\tracklistarrow-48-16-0.png" />
+    <Content Include="audioplayerengine\volume-24-24-0.png" />
     <Content Include="Content\AdminCustom.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -239,6 +258,8 @@
     <Content Include="Content\images\bars.svg" />
     <Content Include="Content\images\close.svg" />
     <Content Include="Content\AdiminMain.css" />
+    <Content Include="Content\images\ie\grad0-15.svg" />
+    <Content Include="Content\images\overlay.png" />
     <Content Include="Content\main.css" />
     <Content Include="Content\style-library-1.css" />
     <Content Include="favicon.ico" />
@@ -282,6 +303,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\AdminCustom.js" />
     <Content Include="Scripts\AdminMain.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -347,17 +369,26 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
+    <Content Include="Views\Admin\Audios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Audios\" />
+    <Folder Include="images\Places\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605181140169_1.resx">
-      <DependentUpon>201605181140169_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605191015113_a.resx">
+      <DependentUpon>201605191015113_a.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605191210507_b.resx">
+      <DependentUpon>201605191210507_b.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605191538374_c.resx">
+      <DependentUpon>201605191538374_c.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

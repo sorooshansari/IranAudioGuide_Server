@@ -36,7 +36,7 @@
         color: #fff !important;
         text-decoration: none;
         padding: 0.75em 2.5em 0.75em 2.5em;
-        background-color: #8ebebc;
+        /*background-color: #ffea00;*/
         border: 0;
         cursor: pointer;
         background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
@@ -47,15 +47,96 @@
         -webkit-transition: background-color 0.35s ease-in-out;
         -ms-transition: background-color 0.35s ease-in-out;
         transition: background-color 0.35s ease-in-out;
+        line-height: 1.25em;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        text-align: center;
     }
 
-        .inputfile + label :hover {
-            background-color: #9ececc;
+        /*.inputfile:focus + label,
+        .inputfile + label:hover {
+            background-color: #ffff00;
         }
+
         .inputfile + label :active {
-            background-color: #7eaeac;
-        }
+            background-color: #ffd500;
+        }*/
 
     .inputfile + label {
         cursor: pointer; /* "hand" cursor */
     }
+
+@media screen and (min-width: 736px) {
+    .lessPading {
+        padding-left: 5px;
+    }
+}
+
+.NewAudioForm input[type=submit] {
+    background-color: #778899;
+}
+
+    .NewAudioForm input[type=submit]:hover {
+        background-color: #8d9caa;
+    }
+
+.textDanger {
+    color: #8b0000;
+}
+
+.amazingaudioplayer {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0px auto 0px !important;
+    margin-bottom: 0  !important;
+}
+
+.amazingaudioplayer-image {
+    width: 20% !important;
+}
+
+.amazingaudioplayer-bar {
+    width: 78% !important;
+}
+
+.amazingaudioplayer-title {
+    text-align: left !important;
+}
+table.default td{
+}
+.tdName{
+    width: 20%;
+}
+.tdDesc p{
+   overflow-y: scroll;
+   max-height: 50px;
+}
+.LoadAudio{
+    cursor: pointer;
+}
+.modal-body{
+    padding: 0;
+}
+#myModal .modal-content{
+    box-sizing: border-box;
+	background-color: #333;
+	border: 1px solid #222;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+	-moz-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+	box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+	background-image: -ms-linear-gradient(top, #444444 0%, #111111 100%);
+	background-image: -moz-linear-gradient(top, #444444 0%, #111111 100%);
+	background-image: -o-linear-gradient(top, #444444 0%, #111111 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444444), color-stop(1, #111111));
+	background-image: -webkit-linear-gradient(top, #444444 0%, #111111 100%);
+	background-image: linear-gradient(to bottom, #444444 0%, #111111 100%);
+}
+.Player{
+    
+}

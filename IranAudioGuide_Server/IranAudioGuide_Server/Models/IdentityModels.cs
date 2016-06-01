@@ -26,19 +26,18 @@ namespace IranAudioGuide_Server.Models
     public class Audio
     {
         [Key]
-        [Index(IsUnique = true)]
-        public string Aud_Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Aud_Id { get; set; }
         public string Aud_Name { get; set; }
         public string Aud_Url { get; set; }
         public string Aud_Discription { get; set; }
+        public virtual Place Pla_Id { get; set; }
     }
     public class Place
     {
         [Key]
-        [Index(IsUnique =true)]
-        public string Pla_Id { get; set; }
-        [Index]
-        public int Pla_Order { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Pla_Id { get; set; }
         public string Pla_Name { get; set; }
         public string Pla_ImgUrl { get; set; }
         public string Pla_Discription { get; set; }

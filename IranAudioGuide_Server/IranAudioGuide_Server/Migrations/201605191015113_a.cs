@@ -3,7 +3,7 @@ namespace IranAudioGuide_Server.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class _1 : DbMigration
+    public partial class a : DbMigration
     {
         public override void Up()
         {
@@ -15,7 +15,7 @@ namespace IranAudioGuide_Server.Migrations
                         Aud_Name = c.String(),
                         Aud_Url = c.String(),
                         Aud_Discription = c.String(),
-                        Place_Pla_Id = c.String(maxLength: 128),
+                        Place_Pla_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Aud_Id)
                 .ForeignKey("dbo.Places", t => t.Place_Pla_Id)
@@ -26,15 +26,12 @@ namespace IranAudioGuide_Server.Migrations
                 "dbo.Places",
                 c => new
                     {
-                        Pla_Id = c.String(nullable: false, maxLength: 128),
-                        Pla_Order = c.Int(nullable: false),
+                        Pla_Id = c.Guid(nullable: false, identity: true),
                         Pla_Name = c.String(),
                         Pla_ImgUrl = c.String(),
                         Pla_Discription = c.String(),
                     })
-                .PrimaryKey(t => t.Pla_Id)
-                .Index(t => t.Pla_Id, unique: true)
-                .Index(t => t.Pla_Order);
+                .PrimaryKey(t => t.Pla_Id);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -121,8 +118,6 @@ namespace IranAudioGuide_Server.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.Places", new[] { "Pla_Order" });
-            DropIndex("dbo.Places", new[] { "Pla_Id" });
             DropIndex("dbo.Audios", new[] { "Place_Pla_Id" });
             DropIndex("dbo.Audios", new[] { "Aud_Id" });
             DropTable("dbo.AspNetUserLogins");

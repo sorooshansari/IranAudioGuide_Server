@@ -1,0 +1,32 @@
+﻿@model IranAudioGuide_Server.Models.AudioViewVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Audios</title>
+    <link href="~/audioplayerengine/initaudioplayer-1.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="amazingaudioplayer-1" class="amazingaudioplayer">
+        <ul class="amazingaudioplayer-audios" style="display:none;">
+            @foreach (var audio in Model.audios)
+            {
+                <li data-title="@audio.Aud_Name" data-artist="" data-album="" data-info="" data-image="..@Model.PlaceImage" data-duration="">
+                    <div class="amazingaudioplayer-source" data-src="..@audio.Aud_Url" data-type="audio/mp3" />
+                </li>
+            }
+        </ul>
+    </div>
+
+
+
+    <script src="~/audioplayerengine/amazingaudioplayer.js"></script>
+    <script src="~/audioplayerengine/initaudioplayer-1.js"></script>
+</body>
+</html>

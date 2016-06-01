@@ -1,12 +1,17 @@
-﻿
-@model IranAudioGuide_Server.Models.AdminIndexVM
+﻿@using IranAudioGuide_Server.Models
+@model AdminIndexVM
+
+@{
+    string hrefPrefix = (ViewBag.View == null || (Views)ViewBag.View != Views.AdminIndex) ? Url.Action("Index", "Admin") : "";
+}
 
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewBag.Title</title>    
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <!--[if lte IE 8]><script src="~/Scripts/ie/html5shiv.js"></script><![endif]-->
     <link href="~/Content/AdiminMain.css" rel="stylesheet" />
     <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/ie8.css" /><![endif]-->
@@ -28,23 +33,22 @@
 
             <!-- Nav -->
             <nav id="nav">
-                <!--
-
-                    Prologue's nav expects links in one of two formats:
-
-                    1. Hash link (scrolls to a different section within the page)
-
-                       <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
-
-                    2. Standard link (sends the user to another page/site)
-
-                       <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
-
-                -->
                 <ul>
-                    <li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Top</span></a></li>
-                    <li><a href="#PlaceList" id="PlaceList-link" class="skel-layers-ignoreHref"><span class="icon fa-list-ul">Places</span></a></li>
-                    <li><a href="#NewPlace" id="NewPlace-link" class="skel-layers-ignoreHref"><span class="icon fa-plus-square">New place</span></a></li>
+                    <li>
+                        <a href="@(hrefPrefix)#top" id="top-link" class="skel-layers-ignoreHref">
+                            <span class="icon fa-home">Top</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@(hrefPrefix)#PlaceList" id="PlaceList-link" class="skel-layers-ignoreHref">
+                            <span class="icon fa-list-ul">Places</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@(hrefPrefix)#NewPlace" id="NewPlace-link" class="skel-layers-ignoreHref">
+                            <span class="icon fa-plus-square">New place</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 
@@ -66,7 +70,7 @@
     </div>
     <div>
         @RenderBody()
-    </div>    
+    </div>
     <!-- Footer -->
     <div id="footer">
 
@@ -77,15 +81,17 @@
             <li>Developer: <a href="#">Soroosh Ansari Mehr</a></li>
         </ul>
 
-    </div>    
-    
+    </div>
+
     <!-- Scripts -->
     <script src="~/Scripts/jquery-2.2.3.min.js"></script>
     <script src="~/Scripts/jquery.scrolly.min.js"></script>
     <script src="~/Scripts/jquery.scrollzer.min.js"></script>
     <script src="~/Scripts/skel.min.js"></script>
     <script src="~/Scripts/util.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
     <!--[if lte IE 8]><script src="~/Scripts/ie/respond.min.js"></script><![endif]-->
     <script src="~/Scripts/AdminMain.js"></script>
+    <script src="~/Scripts/AdminCustom.js"></script>
 </body>
 </html>

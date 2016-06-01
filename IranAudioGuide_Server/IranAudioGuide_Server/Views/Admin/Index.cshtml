@@ -1,4 +1,4 @@
-﻿
+﻿@model IranAudioGuide_Server.Models.AdminIndexVM
 @{
     ViewBag.Title = "Admin";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -16,7 +16,7 @@
                     Iran Audio Guide Server
                 </h2>
                 <p>
-                    Esiest way to mange your application's audio.
+                    Easiest way to manage your application's audios.
                 </p>
             </header>
 
@@ -41,32 +41,43 @@
                 Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis
                 fusce hendrerit lacus ridiculus.
             </p>
-
+            <div class="Player hidden"></div>
             <table class="default">
                 <thead>
                     <tr>
-                        <td>a</td>
-                        <td>b</td>
+                        <td>@Html.LabelFor(m => m.Places.FirstOrDefault().Index)</td>
+                        <td class="tdName">@Html.LabelFor(m => m.Places.FirstOrDefault().PlaceName)</td>
+                        <td>@Html.LabelFor(m => m.Places.FirstOrDefault().PlaceDesc)</td>
+                        <td>Audios</td>
+                        <td>Remove</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>a</td>
-                        <td>b</td>
-                    </tr>
-                    <tr>
-                        <td>a</td>
-                        <td>b</td>
-                    </tr>
-                    <tr>
-                        <td>a</td>
-                        <td>b</td>
-                    </tr>
+                    @foreach (var item in Model.Places)
+                    {
+                        <tr class="LoadAudio" data-id="@item.PlaceId">
+                            <td>@item.Index.ToString()</td>
+                            <td class="tdName">@item.PlaceName</td>
+                            <td class="tdDesc"><p>@item.PlaceDesc</p></td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal"
+                                        data-audioid="@item.PlaceId">
+                                    <span class="fa fa-edit"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal"
+                                        data-audioid="@item.PlaceId">
+                                    <span class="fa fa-remove"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <td colspan="2">a</td>
-                    </tr>
+
                 </tfoot>
             </table>
 
@@ -87,24 +98,67 @@
                 donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
                 orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.
             </p>
-
-            <form method="post" action="#">
+            @using (Html.BeginForm("AddPlace", "Admin", FormMethod.Post,
+                new { enctype = "multipart/form-data", @class = "NewAudioForm", role = "form", id = "NewAudioForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(false, "", new { @class = "default textDanger" })
                 <div class="row">
-                    <div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Place name" /></div>
-                    <div class="4u$ 9u$(mobile)"><input type="text" disabled name="email" placeholder="Email" /></div>
-                    <input type="file" name="file" id="file" class="inputfile" />
-                    <label class="2u$ 3u$(mobile)" for="file">Choose</label>
-                    <div class="12u$">
-                        <textarea name="message" placeholder="Message"></textarea>
+                    <div class="6u 12u$(mobile)">
+                        @Html.TextBoxFor(m => m.NewPlace.PlaceName, new { @placeholder = "Place name" })
+                        @*<input type="text" id="PlaceName" name="PlaceName" placeholder="Place name" />*@
+                    </div>
+                    <div class="4u 9u(mobile)">
+                        @Html.TextBoxFor(m => m.NewPlace.PlaceName, new { @placeholder = "Place image", @disabled = "disabled" })
+                        @*<input type="text" disabled id="imgUrl" name="imgUrl" placeholder="Place image" />*@
+                    </div>
+                    <div class="2u$ 3u$(mobile) lessPading">
+                        @Html.TextBoxFor(m => m.NewPlace.Image, new { type = "file", @class = "inputfile" })
+                        @*<input type="file" name="img" id="img" class="inputfile" />*@
+                        @Html.LabelFor(m => m.NewPlace.Image, new { @class = "btn-primary" })
+                        @*<label for="img">Choose</label>*@
                     </div>
                     <div class="12u$">
-                        <input type="submit" value="Send Message" />
+                        @Html.TextAreaFor(m => m.NewPlace.PlaceDesc, new { @placeholder = "Place description" })
+                        @*<textarea name="message" placeholder="Place description"></textarea>*@
+                    </div>
+                    <div class="12u$">
+                        <input type="submit" value="Add place" />
                     </div>
                 </div>
-            </form>
-
+            }
         </div>
     </section>
 
+    <!-- Modal -->
+    @*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>*@    
+    <!-- Modal2 -->
+    @*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
 
 </div>

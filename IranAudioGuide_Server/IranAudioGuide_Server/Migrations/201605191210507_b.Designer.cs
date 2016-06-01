@@ -7,13 +7,13 @@ namespace IranAudioGuide_Server.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class _1 : IMigrationMetadata
+    public sealed partial class b : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(b));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605181140169_1"; }
+            get { return "201605191210507_b"; }
         }
         
         string IMigrationMetadata.Source
