@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using IranAudioGuide_Server.Models;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace IranAudioGuide_Server.Controllers
 {
@@ -22,13 +23,14 @@ namespace IranAudioGuide_Server.Controllers
             return View(new AdminIndexVM()
             {
                 AdminInfo = GetCurrentUserInfo(),
-                Places = GetPlaces()
+                Places = GetPlaces(),
+                Cities = GetCities()
             });
         }
         [Authorize(Roles = "Admin")]
         public ActionResult Audios(string PlaceId)
         {
-            if (PlaceId.Length>0)
+            if (PlaceId.Length > 0)
             {
                 string imgUrl = PlaceImg(PlaceId);
                 if (imgUrl != null)
@@ -46,25 +48,35 @@ namespace IranAudioGuide_Server.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult AddPlace(AdminIndexVM model)
+        public ActionResult AddPlace(NewPlace model)
         {
             if (!ModelState.IsValid)
             {
                 return View("Index", model);
             }
-            if (model.NewPlace.Image.ContentLength > 0 && IsImage(model.NewPlace.Image))
+            if (model.Image.ContentLength > 0 && IsImage(model.Image))
             {
-                var place = new Place() { Pla_Name = model.NewPlace.PlaceName, Pla_Discription = model.NewPlace.PlaceDesc };
+                List<double> cordinates = (from c in model.PlaceCordinates.Split(',')
+                                           select Convert.ToDouble(c)).ToList();
+                var place = new Place()
+                {
+                    Pla_Name = model.PlaceName,
+                    Pla_Discription = model.PlaceDesc,
+                    Pla_Address = model.PlaceAddress,
+                    Pla_cordinate_X = cordinates[0],
+                    Pla_cordinate_Y = cordinates[1]
+                };
                 try
                 {
                     using (var dbTran = db.Database.BeginTransaction())
                     {
+                        place.Pla_city = db.Cities.Where(c => c.Cit_Id == model.PlaceCityId).FirstOrDefault();
                         db.Places.Add(place);
                         db.SaveChanges(); //Save place and generate Pla_Id
                         string id = Convert.ToString(place.Pla_Id);
-                        string extention = Path.GetExtension(model.NewPlace.Image.FileName);
+                        string extention = Path.GetExtension(model.Image.FileName);
                         string path = string.Format("~/images/Places/{0}{1}", id, extention);
-                        model.NewPlace.Image.SaveAs(Server.MapPath(path));
+                        model.Image.SaveAs(Server.MapPath(path));
                         place.Pla_ImgUrl = path;
                         db.SaveChanges();
                         dbTran.Commit();
@@ -79,6 +91,38 @@ namespace IranAudioGuide_Server.Controllers
             }
             ModelState.AddModelError("", "Only jpg, png, gif, and jpeg are allowed.");
             return View("Index", model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddCity(NewCity model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new OK(false));
+            }
+            var city = new city() { Cit_Name = model.CityName, Cit_Description = model.CityDesc };
+            try
+            {
+                using (var dbTran = db.Database.BeginTransaction())
+                {
+                    db.Cities.Add(city);
+                    db.SaveChanges();
+                    dbTran.Commit();
+                }
+                return Json(new OK());
+            }
+            catch (Exception)
+            {
+                return Json(new OK(false));
+            }
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult DelCity(int Id)
+        {
+            int result = db.Database.SqlQuery<int>("DeleteCity @Id", new SqlParameter("@Id", Id)).Single();
+            return Json(new Respond("", result));
         }
         private string PlaceImg(string placeId)
         {
@@ -139,12 +183,15 @@ namespace IranAudioGuide_Server.Controllers
                                                           Aud_Id = audio.Aud_Id,
                                                           Aud_Name = audio.Aud_Name,
                                                           Aud_Url = audio.Aud_Url.Remove(0, 1)
-                                                      }).ToList()
+                                                      }).ToList(),
+                                            CityName = (from c in db.Cities
+                                                        where c == place.Pla_city
+                                                        select c.Cit_Name).FirstOrDefault()
                                         }).ToList();
-                int c = 0;
+                int counter = 0;
                 foreach (var item in Places)
                 {
-                    item.Index = ++c;
+                    item.Index = ++counter;
                 }
                 return Places;
             }
@@ -159,7 +206,7 @@ namespace IranAudioGuide_Server.Controllers
             try
             {
                 List<AudioVM> audios = (from a in db.Audios
-                                        where a.Pla_Id == db.Places.Where(x=>x.Pla_Id.ToString()==PlaceId).FirstOrDefault()
+                                        where a.Pla_Id == db.Places.Where(x => x.Pla_Id.ToString() == PlaceId).FirstOrDefault()
                                         select new AudioVM()
                                         {
                                             Aud_Discription = a.Aud_Discription,
@@ -168,6 +215,31 @@ namespace IranAudioGuide_Server.Controllers
                                             Aud_Id = a.Aud_Id
                                         }).ToList();
                 return audios;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        private List<CityVM> GetCities()
+        {
+            try
+            {
+                List<CityVM> cities = (from c in db.Cities
+                                       orderby c.Cit_Id descending
+                                       select new CityVM()
+                                       {
+                                           CityDesc = c.Cit_Description,
+                                           CityID = c.Cit_Id,
+                                           CityName = c.Cit_Name
+                                       }).ToList();
+                int counter = 0;
+                foreach (var item in cities)
+                {
+                    item.Index = ++counter;
+                }
+                return cities;
             }
             catch (Exception ex)
             {

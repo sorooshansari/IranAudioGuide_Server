@@ -10,7 +10,7 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewBag.Title</title>
+    <title>@ViewBag.Title @Model.AdminInfo.FullName</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <!--[if lte IE 8]><script src="~/Scripts/ie/html5shiv.js"></script><![endif]-->
     <link href="~/Content/AdiminMain.css" rel="stylesheet" />
@@ -30,27 +30,42 @@
                 <h1 id="title">@Model.AdminInfo.FullName</h1>
                 <p>@Model.AdminInfo.Email</p>
             </div>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                @Html.AntiForgeryToken()
 
+                <!-- Nav -->
+                <nav id="nav">
+                    <ul>
+                        <li>
+                            <a href="@(hrefPrefix)#top" id="top-link" class="skel-layers-ignoreHref">
+                                <span class="icon fa-home">Top</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@(hrefPrefix)#PlaceList" id="PlaceList-link" class="skel-layers-ignoreHref">
+                                <span class="icon fa-list-ul">Places</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@(hrefPrefix)#NewPlace" id="NewPlace-link" class="skel-layers-ignoreHref">
+                                <span class="icon fa-plus-square">New place</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@(hrefPrefix)#Cities" id="Cities-link" class="skel-layers-ignoreHref">
+                                <span class="icon fa-globe">Cities</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="skel-layers-ignoreHref">
+                                <span class="icon fa-sign-out">Log out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            }
             <!-- Nav -->
-            <nav id="nav">
-                <ul>
-                    <li>
-                        <a href="@(hrefPrefix)#top" id="top-link" class="skel-layers-ignoreHref">
-                            <span class="icon fa-home">Top</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@(hrefPrefix)#PlaceList" id="PlaceList-link" class="skel-layers-ignoreHref">
-                            <span class="icon fa-list-ul">Places</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@(hrefPrefix)#NewPlace" id="NewPlace-link" class="skel-layers-ignoreHref">
-                            <span class="icon fa-plus-square">New place</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
 
         </div>
 

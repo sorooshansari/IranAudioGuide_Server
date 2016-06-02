@@ -64,5 +64,6 @@ namespace IranAudioGuide_Server.Migrations
                 roleResult = RoleManager.Create(new IdentityRole(roleName));
             }
         }
+        
     }
 }

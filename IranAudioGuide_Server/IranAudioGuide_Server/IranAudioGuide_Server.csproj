@@ -202,17 +202,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605191015113_a.cs" />
-    <Compile Include="Migrations\201605191015113_a.Designer.cs">
-      <DependentUpon>201605191015113_a.cs</DependentUpon>
+    <Compile Include="Migrations\201606020858567_a.cs" />
+    <Compile Include="Migrations\201606020858567_a.Designer.cs">
+      <DependentUpon>201606020858567_a.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605191210507_b.cs" />
-    <Compile Include="Migrations\201605191210507_b.Designer.cs">
-      <DependentUpon>201605191210507_b.cs</DependentUpon>
+    <Compile Include="Migrations\201606021510318_delSPs.cs" />
+    <Compile Include="Migrations\201606021510318_delSPs.Designer.cs">
+      <DependentUpon>201606021510318_delSPs.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605191538374_c.cs" />
-    <Compile Include="Migrations\201605191538374_c.Designer.cs">
-      <DependentUpon>201605191538374_c.cs</DependentUpon>
+    <Compile Include="Migrations\201606021718413_sdAlter.cs" />
+    <Compile Include="Migrations\201606021718413_sdAlter.Designer.cs">
+      <DependentUpon>201606021718413_sdAlter.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -381,14 +381,14 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605191015113_a.resx">
-      <DependentUpon>201605191015113_a.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606020858567_a.resx">
+      <DependentUpon>201606020858567_a.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605191210507_b.resx">
-      <DependentUpon>201605191210507_b.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606021510318_delSPs.resx">
+      <DependentUpon>201606021510318_delSPs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605191538374_c.resx">
-      <DependentUpon>201605191538374_c.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606021718413_sdAlter.resx">
+      <DependentUpon>201606021718413_sdAlter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

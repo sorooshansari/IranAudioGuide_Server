@@ -42,12 +42,13 @@
                 fusce hendrerit lacus ridiculus.
             </p>
             <div class="Player hidden"></div>
-            <table class="default">
+            <table class="default" id="placeTbl" data-action="@Url.Action("DelPlace", "Admin")">
                 <thead>
                     <tr>
-                        <td>@Html.LabelFor(m => m.Places.FirstOrDefault().Index)</td>
-                        <td class="tdName">@Html.LabelFor(m => m.Places.FirstOrDefault().PlaceName)</td>
-                        <td>@Html.LabelFor(m => m.Places.FirstOrDefault().PlaceDesc)</td>
+                        <td>#</td>
+                        <td>Name</td>
+                        <td>City</td>
+                        <td>Desc</td>
                         <td>Audios</td>
                         <td>Remove</td>
                     </tr>
@@ -58,20 +59,22 @@
                         <tr class="LoadAudio" data-id="@item.PlaceId">
                             <td>@item.Index.ToString()</td>
                             <td class="tdName">@item.PlaceName</td>
+                            <td>@item.CityName</td>
                             <td class="tdDesc"><p>@item.PlaceDesc</p></td>
                             <td>
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal"
+                                <button type="button" class="btn btn-primary btn-block"
+                                        data-toggle="modal" data-target="#myModal"
                                         data-audioid="@item.PlaceId">
-                                    <span class="fa fa-edit"></span>
+                                    <span class="fa fa-edit"></span> edit
                                 </button>
                             </td>
                             <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal"
-                                        data-audioid="@item.PlaceId">
-                                    <span class="fa fa-remove"></span>
-                                </button>
+                                <div role="button" tabindex="0" class="btn btn-danger btn-block rmvPlc"
+                                     data-placename="@item.PlaceName"
+                                     data-placeid="@item.PlaceId">
+                                    <span class="fa fa-remove"></span> Remove
+                                </div>
                             </td>
                         </tr>
                     }
@@ -101,64 +104,143 @@
             @using (Html.BeginForm("AddPlace", "Admin", FormMethod.Post,
                 new { enctype = "multipart/form-data", @class = "NewAudioForm", role = "form", id = "NewAudioForm" }))
             {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(false, "", new { @class = "default textDanger" })
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "default textDanger" })
+            <div class="row">
+                <div class="6u 12u$(mobile)">
+                    @Html.TextBoxFor(m => m.NewPlace.PlaceName, new { @placeholder = "Place name*" })
+                </div>
+                <div class="4u 9u(mobile)">
+                    @Html.TextBoxFor(m => m.NewPlace.PlaceName, new { @placeholder = "Place image*", @disabled = "disabled" })
+                </div>
+                <div class="2u$ 3u$(mobile) lessPading">
+                    @Html.TextBoxFor(m => m.NewPlace.Image, new { type = "file", @class = "inputfile" })
+                    @Html.LabelFor(m => m.NewPlace.Image, new { @class = "btn-primary" })
+                </div>
+                <div class="6u 12u$(mobile)">
+                    @Html.DropDownListFor(m => m.NewPlace.PlaceCityId,
+                           new SelectList(Model.NewPlace.Cities, "CityID", "CityName"),
+                           "Select Place City*")
+                </div>
+                <div class="6u$ 12u$(mobile)">
+                    @Html.TextBoxFor(m => m.NewPlace.PlaceCordinates, new { @placeholder = "Place Cordinates" })
+                </div>
+                <div class="12u$">
+                    @Html.TextAreaFor(m => m.NewPlace.PlaceDesc, new { @rows = "3", @placeholder = "*Place description" })
+                </div>
+                <div class="12u$">
+                    @Html.TextAreaFor(m => m.NewPlace.PlaceAddress, new { @rows = "1", @placeholder = "Place PlaceAddress" })
+                </div>
+                <div class="12u$">
+                    <input type="submit" value="Add place" />
+                </div>
+            </div>
+            }
+        </div>
+    </section>
+
+    <!-- Cities List -->
+    <section id="Cities" class="four">
+        <div class="container">
+
+            <header>
+                <h2>Cities</h2>
+            </header>
+
+            <p>
+                Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
+                egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
+                Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis
+                fusce hendrerit lacus ridiculus.
+            </p>
+            <table class="default" id="ctyTbl" data-action="@Url.Action("DelCity", "Admin")">
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Name</td>
+                        <td>Description</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Cities)
+                    {
+                        <tr>
+                            <td>@item.Index.ToString()</td>
+                            <td>@item.CityName</td>
+                            <td><p>@item.CityDesc</p></td>
+                            <td>
+                                <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" data-CityName="@item.CityName" data-CityId="@item.CityID">
+                                    <span class="fa fa-remove"></span> Remove
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" id="rmvError"></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="col-md-12">
+
+                <div class="divider dashed">
+
+                    <span class="editContent">Add new City</span>
+
+                </div><!-- /.divider -->
+
+            </div><!-- /.col -->
+            @using (Html.BeginForm("AddCity", "Admin", FormMethod.Post,
+                new { @class = "NewCityForm", role = "form", id = "NewCityForm" }))
+            {
+                @*@Html.ValidationSummary(false, "", new { @class = "default textDanger" })*@
+                <div id="NewCityValidation" class="12u$ text-danger hidden">City name must be fill.</div>
                 <div class="row">
-                    <div class="6u 12u$(mobile)">
-                        @Html.TextBoxFor(m => m.NewPlace.PlaceName, new { @placeholder = "Place name" })
-                        @*<input type="text" id="PlaceName" name="PlaceName" placeholder="Place name" />*@
-                    </div>
-                    <div class="4u 9u(mobile)">
-                        @Html.TextBoxFor(m => m.NewPlace.PlaceName, new { @placeholder = "Place image", @disabled = "disabled" })
-                        @*<input type="text" disabled id="imgUrl" name="imgUrl" placeholder="Place image" />*@
-                    </div>
-                    <div class="2u$ 3u$(mobile) lessPading">
-                        @Html.TextBoxFor(m => m.NewPlace.Image, new { type = "file", @class = "inputfile" })
-                        @*<input type="file" name="img" id="img" class="inputfile" />*@
-                        @Html.LabelFor(m => m.NewPlace.Image, new { @class = "btn-primary" })
-                        @*<label for="img">Choose</label>*@
+                    <div class="6u$ 12u$(mobile)">
+                        @Html.TextBoxFor(m => m.NewCity.CityName, new { @placeholder = "City name*" })
                     </div>
                     <div class="12u$">
-                        @Html.TextAreaFor(m => m.NewPlace.PlaceDesc, new { @placeholder = "Place description" })
-                        @*<textarea name="message" placeholder="Place description"></textarea>*@
+                        @Html.TextAreaFor(m => m.NewCity.CityDesc, new { @rows = "2", @placeholder = "City description" })
                     </div>
                     <div class="12u$">
-                        <input type="submit" value="Add place" />
+                        <input type="submit" value="Add City" />
                     </div>
                 </div>
             }
         </div>
     </section>
-
     <!-- Modal -->
-    @*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="ForignKeyErrorModal" tabindex="-1" role="dialog" aria-labelledby="ForignKeyErrorModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-body"></div>
+                <div class="modal-header">Removing Error</div>
+                <div class="modal-body" id="ForignKeyErrorModal_body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" id="ForignKeyErrorModal_close" class="btn btn-info" data-dismiss="modal">Close</button>
+                    <button type="button" id="ForignKeyErrorModal_Delete" class="btn btn-danger" data-id="">Delete with all sub-places</button>
                 </div>
             </div>
         </div>
-    </div>*@    
+    </div>
     <!-- Modal2 -->
     @*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
 
 </div>

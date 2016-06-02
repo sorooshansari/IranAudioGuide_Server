@@ -11,16 +11,15 @@ namespace IranAudioGuide_Server.Migrations
                 "dbo.Audios",
                 c => new
                     {
-                        Aud_Id = c.String(nullable: false, maxLength: 128),
+                        Aud_Id = c.Guid(nullable: false, identity: true),
                         Aud_Name = c.String(),
                         Aud_Url = c.String(),
                         Aud_Discription = c.String(),
-                        Place_Pla_Id = c.Guid(),
+                        Pla_Id_Pla_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Aud_Id)
-                .ForeignKey("dbo.Places", t => t.Place_Pla_Id)
-                .Index(t => t.Aud_Id, unique: true)
-                .Index(t => t.Place_Pla_Id);
+                .ForeignKey("dbo.Places", t => t.Pla_Id_Pla_Id)
+                .Index(t => t.Pla_Id_Pla_Id);
             
             CreateTable(
                 "dbo.Places",
@@ -30,8 +29,24 @@ namespace IranAudioGuide_Server.Migrations
                         Pla_Name = c.String(),
                         Pla_ImgUrl = c.String(),
                         Pla_Discription = c.String(),
+                        Pla_cordinate_X = c.Double(nullable: false),
+                        Pla_cordinate_Y = c.Double(nullable: false),
+                        Pla_Address = c.String(),
+                        Pla_city_Cit_Id = c.Int(),
                     })
-                .PrimaryKey(t => t.Pla_Id);
+                .PrimaryKey(t => t.Pla_Id)
+                .ForeignKey("dbo.cities", t => t.Pla_city_Cit_Id)
+                .Index(t => t.Pla_city_Cit_Id);
+            
+            CreateTable(
+                "dbo.cities",
+                c => new
+                    {
+                        Cit_Id = c.Int(nullable: false, identity: true),
+                        Cit_Name = c.String(),
+                        Cit_Description = c.String(),
+                    })
+                .PrimaryKey(t => t.Cit_Id);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -102,7 +117,6 @@ namespace IranAudioGuide_Server.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
         }
         
         public override void Down()
@@ -111,20 +125,22 @@ namespace IranAudioGuide_Server.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Audios", "Place_Pla_Id", "dbo.Places");
+            DropForeignKey("dbo.Places", "Pla_city_Cit_Id", "dbo.cities");
+            DropForeignKey("dbo.Audios", "Pla_Id_Pla_Id", "dbo.Places");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.Audios", new[] { "Place_Pla_Id" });
-            DropIndex("dbo.Audios", new[] { "Aud_Id" });
+            DropIndex("dbo.Places", new[] { "Pla_city_Cit_Id" });
+            DropIndex("dbo.Audios", new[] { "Pla_Id_Pla_Id" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.cities");
             DropTable("dbo.Places");
             DropTable("dbo.Audios");
         }
