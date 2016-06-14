@@ -13,6 +13,7 @@ namespace IranAudioGuide_Server.Controllers
     public class AdminController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private const int pagingLen = 10;
 
         // GET: Admin
         [Authorize(Roles = "Admin")]
@@ -48,40 +49,57 @@ namespace IranAudioGuide_Server.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult AddPlace(NewPlace model)
+        public ActionResult AddPlace(AdminIndexVM model)
         {
             if (!ModelState.IsValid)
             {
                 return View("Index", model);
             }
-            if (model.Image.ContentLength > 0 && IsImage(model.Image))
+            if (model.NewPlace.Image.ContentLength > 0 && IsImage(model.NewPlace.Image))
             {
-                List<double> cordinates = (from c in model.PlaceCordinates.Split(',')
-                                           select Convert.ToDouble(c)).ToList();
                 var place = new Place()
                 {
-                    Pla_Name = model.PlaceName,
-                    Pla_Discription = model.PlaceDesc,
-                    Pla_Address = model.PlaceAddress,
-                    Pla_cordinate_X = cordinates[0],
-                    Pla_cordinate_Y = cordinates[1]
+                    Pla_Name = model.NewPlace.PlaceName,
+                    Pla_Discription = model.NewPlace.PlaceDesc,
+                    Pla_Address = model.NewPlace.PlaceAddress
                 };
+                if (model.NewPlace.PlaceCordinates != null)
+                {
+                    if (!model.NewPlace.PlaceCordinates.Contains(','))
+                    {
+                        ModelState.AddModelError("", "Enter X and Y cordinates and seprate them whith \",\".");
+                        return View("Index", model);
+                    }
+                    try
+                    {
+                        List<double> cordinates = (from c in model.NewPlace.PlaceCordinates.Split(',')
+                                                   select Convert.ToDouble(c)).ToList();
+                        place.Pla_cordinate_X = cordinates[0];
+                        place.Pla_cordinate_Y = cordinates[1];
+                    }
+                    catch (Exception)
+                    {
+                        ModelState.AddModelError("", "Enter percise cordinates.");
+                        return View("Index", model);
+                    }
+                }
+
                 try
                 {
                     using (var dbTran = db.Database.BeginTransaction())
                     {
-                        place.Pla_city = db.Cities.Where(c => c.Cit_Id == model.PlaceCityId).FirstOrDefault();
+                        place.Pla_city = db.Cities.Where(c => c.Cit_Id == model.NewPlace.PlaceCityId).FirstOrDefault();
                         db.Places.Add(place);
                         db.SaveChanges(); //Save place and generate Pla_Id
                         string id = Convert.ToString(place.Pla_Id);
-                        string extention = Path.GetExtension(model.Image.FileName);
+                        string extention = Path.GetExtension(model.NewPlace.Image.FileName);
                         string path = string.Format("~/images/Places/{0}{1}", id, extention);
-                        model.Image.SaveAs(Server.MapPath(path));
+                        model.NewPlace.Image.SaveAs(Server.MapPath(path));
                         place.Pla_ImgUrl = path;
                         db.SaveChanges();
                         dbTran.Commit();
                     }
-                    return View("place", place);
+                    return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
@@ -92,10 +110,9 @@ namespace IranAudioGuide_Server.Controllers
             ModelState.AddModelError("", "Only jpg, png, gif, and jpeg are allowed.");
             return View("Index", model);
         }
-
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult AddCity(NewCity model)
+        public JsonResult AddCity(NewCity model)
         {
             if (!ModelState.IsValid)
             {
@@ -124,43 +141,20 @@ namespace IranAudioGuide_Server.Controllers
             int result = db.Database.SqlQuery<int>("DeleteCity @Id", new SqlParameter("@Id", Id)).Single();
             return Json(new Respond("", result));
         }
-        private string PlaceImg(string placeId)
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult DelPlace(System.Guid Id)
         {
-            try
-            {
-                Place place = db.Places.Where(x => x.Pla_Id.ToString() == placeId).FirstOrDefault();
-                if (place != default(Place))
-                {
-                    return place.Pla_ImgUrl;
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+            int result = db.Database.SqlQuery<int>("DeletePlace @Id", new SqlParameter("@Id", Id)).Single();
+            return Json(new Respond("", result));
         }
-        private UserInfo GetCurrentUserInfo()
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult GetPlaces(int PageNum)
         {
-            try
-            {
-                string userName = User.Identity.Name;
-                UserInfo Info = (from user in db.Users
-                                 where user.UserName == userName
-                                 select new UserInfo()
-                                 {
-                                     Email = user.Email,
-                                     FullName = user.FullName,
-                                     imgUrl = user.ImgUrl
-                                 }).FirstOrDefault();
-                return Info;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+            var places = GetPlaces();
+            int pagesLen = (places.Count() % 10 == 0) ? places.Count() : places.Count() + 1;
+            return Json(new GetPlacesVM(places.GetRange(PageNum * pagingLen, pagingLen), pagesLen));
         }
         private List<PlaceVM> GetPlaces()
         {
@@ -194,6 +188,45 @@ namespace IranAudioGuide_Server.Controllers
                     item.Index = ++counter;
                 }
                 return Places;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        private string PlaceImg(string placeId)
+        {
+            try
+            {
+                Place place = db.Places.Where(x => x.Pla_Id.ToString() == placeId).FirstOrDefault();
+                if (place != default(Place))
+                {
+                    return place.Pla_ImgUrl;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        private UserInfo GetCurrentUserInfo()
+        {
+            try
+            {
+                string userName = User.Identity.Name;
+                UserInfo Info = (from user in db.Users
+                                 where user.UserName == userName
+                                 select new UserInfo()
+                                 {
+                                     Email = user.Email,
+                                     FullName = user.FullName,
+                                     imgUrl = user.ImgUrl
+                                 }).FirstOrDefault();
+                return Info;
             }
             catch (Exception ex)
             {

@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    $("#img").on("change", function () {
-        var img = $("#img").val().split("\\");
+    $("#NewPlace_Image").on("change", function () {
+        var img = $("#NewPlace_Image").val().split("\\");
         $("#imgUrl").val(img[img.length - 1]);
     });
     $('#myModal').on('show.bs.modal', function (event) {
@@ -40,6 +40,7 @@
             // Put the results in a div
             posting.done(function (data) {
                 if (data.success) {
+                    location.reload();
                     location.replace(location.href.split('#')[0] + "#Cities");
                 }
             });
@@ -53,23 +54,24 @@
         var url = $("#ctyTbl").data('action');
         var posting = $.post(url, { Id: CityId });
         posting.done(function (data) {
-            console.log(data);
-            console.log(data.status);
             switch (data.status) {
                 case 0:
                     $("#rmvError").empty();
                     location.reload();
+                    location.replace(location.href.split('#')[0] + "#Cities");
                     break;
                 case 1:
                     var CityName = button.data('cityname');
                     var btn = $("#ForignKeyErrorModal_Delete");
-                    btn.addClass("removeClassWithSubs");
-                    btn.data('id', CityId);
-                    $("#ForignKeyErrorModal_body").empty().append('<div class="container text-info">This city (<span class="text-danger">' + CityName + '</span>) has one or more sub-places.<br/>Do you want to delete it with all of it\'s sub-places?</div>');
+                    btn.addClass("hidden");
+                    $("#ForignKeyErrorModal_body").empty().append('<div class="container text-info">This city (<span class="text-danger">' + CityName + '</span>) has one or more sub-places.<br/>To remove this city, first you have to delete it\'s sub-places.</div>');
                     $('#ForignKeyErrorModal').modal('show');
                     break;
                 case 2:
-                    $("#rmvError").empty().append('<div class="12u$ align-left text-danger">Error in deletting city. Contact site developer to get more information.</div>');
+                    var btn = $("#ForignKeyErrorModal_Delete");
+                    btn.addClass("hidden");
+                    $("#ForignKeyErrorModal_body").empty().append('<div class="container text-info">Error in deletting city. Contact site developer to get more information.</div>');
+                    $('#ForignKeyErrorModal').modal('show');
                     break;
                 default:
 
@@ -82,9 +84,10 @@
     });
     $(".rmvPlc").on("click", function (event) {
         var button = $(this); // Button that Clicked
-        var CityId = button.data('placeid'); // Extract info from data-CityId attribute
+        var PlaceId = button.data('placeid'); // Extract info from data-CityId attribute
         var url = $("#placeTbl").data('action');
-        var posting = $.post(url, { Id: CityId });
+        console.log(PlaceId);
+        var posting = $.post(url, { Id: PlaceId });
         posting.done(function (data) {
             console.log(data);
             console.log(data.status);
@@ -92,13 +95,22 @@
                 case 0:
                     $("#rmvError").empty();
                     location.reload();
+                    location.replace(location.href.split('#')[0] + "#PlaceList");
                     break;
                 case 1:
-                    var CityName = button.data('placename');
-                    $("#rmvError").empty().append('<div class="12u$ align-left text-danger">Error in deletting city. This city (' + CityName + ') has one or more place(s).</div>');
+                    var PlaceName = button.data('placename');
+                    var btn = $("#ForignKeyErrorModal_Delete");
+                    btn.removeClass("hidden");
+                    btn.addClass("removeClassWithSubs");
+                    btn.data('id', PlaceId);
+                    $("#ForignKeyErrorModal_body").empty().append('<div class="container text-info">This place (<span class="text-danger">' + PlaceName + '</span>) has one or more audios.<br/>Do you want to delete it with all of it\'s audios?</div>');
+                    $('#ForignKeyErrorModal').modal('show');
                     break;
                 case 2:
-                    $("#rmvError").empty().append('<div class="12u$ align-left text-danger">Error in deletting city. Contact site developer to get more information.</div>');
+                    var btn = $("#ForignKeyErrorModal_Delete");
+                    btn.addClass("hidden");
+                    $("#ForignKeyErrorModal_body").empty().append('<div class="container text-info">Error in deletting city. Contact site developer to get more information.</div>');
+                    $('#ForignKeyErrorModal').modal('show');
                     break;
                 default:
 
@@ -108,7 +120,4 @@
             }
         });
     });
-    $(".removeClassWithSubs").on("click", function (event) {
-        alert('hi');
-    })
 });

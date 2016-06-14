@@ -52,6 +52,16 @@ namespace IranAudioGuide_Server.Models
         [Display(Name = "Description")]
         public string CityDesc { get; set; }
     }
+    public class GetPlacesVM
+    {
+        public GetPlacesVM(List<PlaceVM> Places, int PagesLen)
+        {
+            this.Places = Places;
+            this.PagesLen = PagesLen;
+        }
+        public List<PlaceVM> Places { get; set; }
+        public int PagesLen { get; set; }
+    }
     public class NewPlace
     {
         [Required]

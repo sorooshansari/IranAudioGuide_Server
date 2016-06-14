@@ -56,17 +56,17 @@
                 <tbody>
                     @foreach (var item in Model.Places)
                     {
-                        <tr class="LoadAudio" data-id="@item.PlaceId">
-                            <td>@item.Index.ToString()</td>
-                            <td class="tdName">@item.PlaceName</td>
-                            <td>@item.CityName</td>
-                            <td class="tdDesc"><p>@item.PlaceDesc</p></td>
+                        <tr class="hoverable">
+                            <td class="LoadAudio" data-id="@item.PlaceId">@item.Index.ToString()</td>
+                            <td class="tdName LoadAudio" data-id="@item.PlaceId">@item.PlaceName</td>
+                            <td class="LoadAudio" data-id="@item.PlaceId">@item.CityName</td>
+                            <td class="tdDesc LoadAudio" data-id="@item.PlaceId"><p>@item.PlaceDesc</p></td>
                             <td>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary btn-block"
                                         data-toggle="modal" data-target="#myModal"
                                         data-audioid="@item.PlaceId">
-                                    <span class="fa fa-edit"></span> edit
+                                    <span class="fa fa-edit"></span> Edit
                                 </button>
                             </td>
                             <td>
@@ -111,7 +111,7 @@
                     @Html.TextBoxFor(m => m.NewPlace.PlaceName, new { @placeholder = "Place name*" })
                 </div>
                 <div class="4u 9u(mobile)">
-                    @Html.TextBoxFor(m => m.NewPlace.PlaceName, new { @placeholder = "Place image*", @disabled = "disabled" })
+                    <input type="text" disabled placeholder="Place image*" id="imgUrl" />
                 </div>
                 <div class="2u$ 3u$(mobile) lessPading">
                     @Html.TextBoxFor(m => m.NewPlace.Image, new { type = "file", @class = "inputfile" })
@@ -178,9 +178,6 @@
                     }
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <td colspan="4" id="rmvError"></td>
-                    </tr>
                 </tfoot>
             </table>
             <div class="col-md-12">
@@ -215,11 +212,11 @@
     <div class="modal fade" id="ForignKeyErrorModal" tabindex="-1" role="dialog" aria-labelledby="ForignKeyErrorModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">Removing Error</div>
+                <div class="modal-header text-danger">Removing Failed</div>
                 <div class="modal-body" id="ForignKeyErrorModal_body"></div>
                 <div class="modal-footer">
                     <button type="button" id="ForignKeyErrorModal_close" class="btn btn-info" data-dismiss="modal">Close</button>
-                    <button type="button" id="ForignKeyErrorModal_Delete" class="btn btn-danger" data-id="">Delete with all sub-places</button>
+                    <button type="button" id="ForignKeyErrorModal_Delete" class="btn btn-danger" data-id="">Delete with all audios</button>
                 </div>
             </div>
         </div>

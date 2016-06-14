@@ -54,7 +54,7 @@
         text-align: center;
     }
 
-        /*.inputfile:focus + label,
+    /*.inputfile:focus + label,
         .inputfile + label:hover {
             background-color: #ffff00;
         }
@@ -91,7 +91,7 @@
     width: 100% !important;
     height: auto !important;
     margin: 0px auto 0px !important;
-    margin-bottom: 0  !important;
+    margin-bottom: 0 !important;
 }
 
 .amazingaudioplayer-image {
@@ -105,38 +105,64 @@
 .amazingaudioplayer-title {
     text-align: left !important;
 }
-table.default td{
+
+table.default td {
 }
-.tdName{
+
+.tdName {
     width: 20%;
 }
-.tdDesc p{
-   overflow-y: scroll;
-   max-height: 50px;
+
+.tdDesc p {
+    overflow-y: scroll;
+    max-height: 50px;
 }
-.LoadAudio{
+
+.LoadAudio {
     cursor: pointer;
 }
-.modal-body{
+
+.modal-body {
     padding: 0;
 }
-#myModal .modal-content{
+
+#myModal .modal-content {
     box-sizing: border-box;
-	background-color: #333;
-	border: 1px solid #222;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-	-webkit-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
-	-moz-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
-	box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
-	background-image: -ms-linear-gradient(top, #444444 0%, #111111 100%);
-	background-image: -moz-linear-gradient(top, #444444 0%, #111111 100%);
-	background-image: -o-linear-gradient(top, #444444 0%, #111111 100%);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444444), color-stop(1, #111111));
-	background-image: -webkit-linear-gradient(top, #444444 0%, #111111 100%);
-	background-image: linear-gradient(to bottom, #444444 0%, #111111 100%);
+    background-color: #333;
+    border: 1px solid #222;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    -moz-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    background-image: -ms-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -moz-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -o-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444444), color-stop(1, #111111));
+    background-image: -webkit-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: linear-gradient(to bottom, #444444 0%, #111111 100%);
 }
-.Player{
-    
+
+.Player {
 }
+
+form textarea {
+    min-height: initial;
+}
+
+.hoverable:hover {
+    background-color: lightblue;
+}
+
+/*table.default tr {
+    padding:0 0 0 0; 
+}
+
+table.default tbody tr:nth-child(2n+2) {
+    padding:0 0 0 0;    
+}
+
+table.default td {
+    padding:0 0 0 0; 
+}*/
