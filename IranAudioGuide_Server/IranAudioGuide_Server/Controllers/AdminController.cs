@@ -153,8 +153,30 @@ namespace IranAudioGuide_Server.Controllers
         public JsonResult GetPlaces(int PageNum)
         {
             var places = GetPlaces();
-            int pagesLen = (places.Count() % 10 == 0) ? places.Count() : places.Count() + 1;
-            return Json(new GetPlacesVM(places.GetRange(PageNum * pagingLen, pagingLen), pagesLen));
+            int pagesLen = (places.Count() % 10 == 0) ? places.Count() / 10 : (places.Count() / 10) + 1;
+            int remain = places.Count - (PageNum * pagingLen);
+            return Json(new GetPlacesVM(
+                (remain > pagingLen)
+                ?               
+                    places.GetRange(PageNum * pagingLen, pagingLen)
+                :
+                    places.GetRange(PageNum * pagingLen, remain)
+                , pagesLen));
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult GetCities(int PageNum)
+        {
+            var Cities = GetCities();
+            int pagesLen = (Cities.Count() % 10 == 0) ? Cities.Count() / 10 : (Cities.Count() / 10) + 1;
+            int remain = Cities.Count - (PageNum * pagingLen);
+            return Json(new GetCitiesVM(
+                (remain > pagingLen)
+                ?
+                    Cities.GetRange(PageNum * pagingLen, pagingLen)
+                :
+                    Cities.GetRange(PageNum * pagingLen, remain)
+                , pagesLen));
         }
         private List<PlaceVM> GetPlaces()
         {

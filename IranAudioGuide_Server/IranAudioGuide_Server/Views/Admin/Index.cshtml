@@ -54,33 +54,44 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Places)
-                    {
-                        <tr class="hoverable">
-                            <td class="LoadAudio" data-id="@item.PlaceId">@item.Index.ToString()</td>
-                            <td class="tdName LoadAudio" data-id="@item.PlaceId">@item.PlaceName</td>
-                            <td class="LoadAudio" data-id="@item.PlaceId">@item.CityName</td>
-                            <td class="tdDesc LoadAudio" data-id="@item.PlaceId"><p>@item.PlaceDesc</p></td>
-                            <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary btn-block"
-                                        data-toggle="modal" data-target="#myModal"
-                                        data-audioid="@item.PlaceId">
-                                    <span class="fa fa-edit"></span> Edit
-                                </button>
-                            </td>
-                            <td>
-                                <div role="button" tabindex="0" class="btn btn-danger btn-block rmvPlc"
-                                     data-placename="@item.PlaceName"
-                                     data-placeid="@item.PlaceId">
-                                    <span class="fa fa-remove"></span> Remove
-                                </div>
-                            </td>
-                        </tr>
-                    }
+                    <tr class="hoverable" ng-repeat="place in places">
+                        <td class="LoadAudio" data-id="{{place.placeId}}">{{place.Index}}</td>
+                        <td class="tdName LoadAudio" data-id="{{place.placeId}}">{{place.PlaceName}}</td>
+                        <td class="LoadAudio" data-id="{{place.PlaceId}}">{{place.CityName}}</td>
+                        <td class="tdDesc LoadAudio" data-id="{{place.PlaceId}}"><p>{{place.PlaceDesc}}</p></td>
+                        <td>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary btn-block"
+                                    data-toggle="modal" data-target="#myModal"
+                                    data-audioid="{{place.PlaceId}}">
+                                <span class="fa fa-edit"></span> Edit
+                            </button>
+                        </td>
+                        <td>
+                            <div role="button" tabindex="0" class="btn btn-danger btn-block rmvPlc"
+                                 data-placename="{{place.PlaceName}}"
+                                 data-placeid="{{place.PlaceId}}">
+                                <span class="fa fa-remove"></span> Remove
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
                 <tfoot>
-
+                    <tr>
+                        <td colspan="6">
+                            <ul class="nav nav-tabs nav-justified">
+                                <li>
+                                    <a href="" ng-click="PreviousPlace()"><span class="fa fa-chevron-left"></span> Previus</a>
+                                </li>
+                                <li>
+                                    <a class="text-primary">page {{PlaceCurrentPage + 1}} (out of {{PlacePagesLen}} pages)</a>
+                                </li>
+                                <li>
+                                    <a href="" ng-click="NextPlace()">Next <span class="fa fa-chevron-right"></span></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
                 </tfoot>
             </table>
 
@@ -163,21 +174,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Cities)
-                    {
-                        <tr>
-                            <td>@item.Index.ToString()</td>
-                            <td>@item.CityName</td>
-                            <td><p>@item.CityDesc</p></td>
-                            <td>
-                                <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" data-CityName="@item.CityName" data-CityId="@item.CityID">
-                                    <span class="fa fa-remove"></span> Remove
-                                </div>
-                            </td>
-                        </tr>
-                    }
+                    <tr ng-repeat="city in cities">
+                        <td>{{city.Index}}</td>
+                        <td>{{city.CityName}}</td>
+                        <td><p>{{city.CityDesc}}</p></td>
+                        <td>
+                            <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" data-CityName="{{city.CityName}}" data-CityId="{{city.CityID}}">
+                                <span class="fa fa-remove"></span> Remove
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
                 <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <ul class="nav nav-tabs nav-justified">
+                                <li>
+                                    <a href="" ng-click="PreviousCity()"><span class="fa fa-chevron-left"></span> Previus</a>
+                                </li>
+                                <li>
+                                    <a class="text-primary">page {{CityCurrentPage + 1}} (out of {{PlacePagesLen}} pages)</a>
+                                </li>
+                                <li>
+                                    <a href="" ng-click="NextCity()">Next <span class="fa fa-chevron-right"></span></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
                 </tfoot>
             </table>
             <div class="col-md-12">

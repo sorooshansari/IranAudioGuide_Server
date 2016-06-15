@@ -303,8 +303,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\AdminControllers.js" />
     <Content Include="Scripts\AdminCustom.js" />
+    <Content Include="Scripts\AdminDirectives.js" />
     <Content Include="Scripts\AdminMain.js" />
+    <Content Include="Scripts\AdminServices.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\angular-animate.js" />

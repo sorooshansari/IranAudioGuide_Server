@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {
+﻿angular.module('AdminPage', ['AdminPage.controllers', 'AdminPage.services', 'AdminPage.directives'])
+.run(function () {
+
+});
+
+$(document).ready(function () {
     $("#NewPlace_Image").on("change", function () {
         var img = $("#NewPlace_Image").val().split("\\");
         $("#imgUrl").val(img[img.length - 1]);
