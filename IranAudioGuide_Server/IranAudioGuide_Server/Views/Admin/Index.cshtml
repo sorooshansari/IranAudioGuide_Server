@@ -1,5 +1,4 @@
-﻿@model IranAudioGuide_Server.Models.AdminIndexVM
-@{
+﻿@{
     ViewBag.Title = "Admin";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -112,41 +111,51 @@
                 donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
                 orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.
             </p>
-            @using (Html.BeginForm("AddPlace", "Admin", FormMethod.Post,
-                new { enctype = "multipart/form-data", @class = "NewAudioForm", role = "form", id = "NewAudioForm" }))
-            {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(false, "", new { @class = "default textDanger" })
-            <div class="row">
-                <div class="6u 12u$(mobile)">
-                    @Html.TextBoxFor(m => m.NewPlace.PlaceName, new { @placeholder = "Place name*" })
+            <form role="form" name="NewPlaceForm" class="NewPlaceForm" ng-submit="AddPlace(NewPlace, NewPlaceForm)">
+                <ul class="formError text-danger" ng-show="NewPlaceForm.$submitted">
+                    <li ng-show="NewPlaceForm.PlaceName.$error.required"><strong>Place name must be fill.</strong></li>
+                    <li ng-show="NewPlaceForm.Image.$error.required"><strong>Place Image must be choose.</strong></li>
+                    <li ng-show="NewPlaceForm.PlaceCityId.$error.required"><strong>Place city must be choose.</strong></li>
+                </ul>
+                <div class="row">
+                    <div class="6u 12u$(mobile)">
+                        <input type="text" ng-model="NewPlace.PlaceName" name="PlaceName" required placeholder="Place name*" />
+                    </div>
+                    @*<div class="6u 12u$(mobile)">
+                        <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                             ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+                             ngf-resize="{width: 100, height: 100}">Select</div>
+                    </div>*@
+                    <div class="4u 9u(mobile)">
+                        <input type="text" name="imgUrl" placeholder="Place image*" disabled/>
+                    </div>
+                    <div class="2u$ 3u$(mobile) lessPading">
+                        <input class="inputfile" type="file"
+                               file-model="NewPlace.Image"
+                               onchange="angular.element(this).scope().SetImageName(this)" 
+                               id="Image" name="Image" required />
+                        <label for="Image" class="btn-primary">Choose</label>
+                    </div>
+                    <div class="6u 12u$(mobile)">
+                        <select ng-model="NewPlace.PlaceCityId" name="PlaceCityId" required>
+                            <option value="">Select City*</option>
+                            <option ng-repeat="city in cities" value="{{city.CityID}}">{{city.CityName}}</option>
+                        </select>
+                    </div>
+                    <div class="6u$ 12u$(mobile)">
+                        <input type="text" ng-model="NewPlace.PlaceCordinates" value="" name="PlaceCordinates" placeholder="Place Cordinates" />
+                    </div>
+                    <div class="12u$">
+                        <textarea ng-model="NewPlace.PlaceDesc" name="PlaceDesc" rows="3" placeholder="Place description"></textarea>
+                    </div>
+                    <div class="12u$">
+                        <textarea ng-model="NewPlace.PlaceAddress" name="PlaceAddress" rows="1" placeholder="Place Address"></textarea>
+                    </div>
+                    <div class="12u$">
+                        <input type="submit" value="Add place" />
+                    </div>
                 </div>
-                <div class="4u 9u(mobile)">
-                    <input type="text" disabled placeholder="Place image*" id="imgUrl" />
-                </div>
-                <div class="2u$ 3u$(mobile) lessPading">
-                    @Html.TextBoxFor(m => m.NewPlace.Image, new { type = "file", @class = "inputfile" })
-                    @Html.LabelFor(m => m.NewPlace.Image, new { @class = "btn-primary" })
-                </div>
-                <div class="6u 12u$(mobile)">
-                    @Html.DropDownListFor(m => m.NewPlace.PlaceCityId,
-                           new SelectList(Model.NewPlace.Cities, "CityID", "CityName"),
-                           "Select Place City*")
-                </div>
-                <div class="6u$ 12u$(mobile)">
-                    @Html.TextBoxFor(m => m.NewPlace.PlaceCordinates, new { @placeholder = "Place Cordinates" })
-                </div>
-                <div class="12u$">
-                    @Html.TextAreaFor(m => m.NewPlace.PlaceDesc, new { @rows = "3", @placeholder = "*Place description" })
-                </div>
-                <div class="12u$">
-                    @Html.TextAreaFor(m => m.NewPlace.PlaceAddress, new { @rows = "1", @placeholder = "Place PlaceAddress" })
-                </div>
-                <div class="12u$">
-                    <input type="submit" value="Add place" />
-                </div>
-            </div>
-            }
+            </form>
         </div>
     </section>
 
@@ -179,7 +188,7 @@
                         <td>{{city.CityName}}</td>
                         <td><p>{{city.CityDesc}}</p></td>
                         <td>
-                            <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" data-CityName="{{city.CityName}}" data-CityId="{{city.CityID}}">
+                            <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" ng-click="RemoveCity(city.CityID, city.CityName)">
                                 <span class="fa fa-remove"></span> Remove
                             </div>
                         </td>
@@ -193,7 +202,7 @@
                                     <a href="" ng-click="PreviousCity()"><span class="fa fa-chevron-left"></span> Previus</a>
                                 </li>
                                 <li>
-                                    <a class="text-primary">page {{CityCurrentPage + 1}} (out of {{PlacePagesLen}} pages)</a>
+                                    <a class="text-primary">page {{CityCurrentPage + 1}} (out of {{CityPagesLen}} pages)</a>
                                 </li>
                                 <li>
                                     <a href="" ng-click="NextCity()">Next <span class="fa fa-chevron-right"></span></a>
@@ -203,32 +212,35 @@
                     </tr>
                 </tfoot>
             </table>
-            <div class="col-md-12">
-
-                <div class="divider dashed">
-
-                    <span class="editContent">Add new City</span>
-
-                </div><!-- /.divider -->
-
+            <div class="row myDivider">
+                <div class="4u">
+                    <hr />
+                </div>
+                <div class="4u">
+                    <span>
+                        Add new City
+                    </span>
+                </div>
+                <div class="4u$">
+                    <hr />
+                </div>
             </div><!-- /.col -->
-            @using (Html.BeginForm("AddCity", "Admin", FormMethod.Post,
-                new { @class = "NewCityForm", role = "form", id = "NewCityForm" }))
-            {
-                @*@Html.ValidationSummary(false, "", new { @class = "default textDanger" })*@
-                <div id="NewCityValidation" class="12u$ text-danger hidden">City name must be fill.</div>
+            <form name="NewCityForm" role="form" ng-submit="AddCity(NewCity, NewCityForm)" novalidate>
                 <div class="row">
                     <div class="6u$ 12u$(mobile)">
-                        @Html.TextBoxFor(m => m.NewCity.CityName, new { @placeholder = "City name*" })
+                        <div class="formError" ng-show="NewCityForm.$submitted || NewCityForm.CityName.$touched">
+                            <p class="text-danger" ng-show="NewCityForm.CityName.$error.required">City name must be fill.</p>
+                        </div>
+                        <input type="text" ng-model="NewCity.CityName" name="CityName" required placeholder="City name*" />
                     </div>
                     <div class="12u$">
-                        @Html.TextAreaFor(m => m.NewCity.CityDesc, new { @rows = "2", @placeholder = "City description" })
+                        <textarea ng-model="NewCity.CityDesc" name="CityDesc" placeholder="City description" rows="2"></textarea>
                     </div>
                     <div class="12u$">
                         <input type="submit" value="Add City" />
                     </div>
                 </div>
-            }
+            </form>
         </div>
     </section>
     <!-- Modal -->
@@ -236,10 +248,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-danger">Removing Failed</div>
-                <div class="modal-body" id="ForignKeyErrorModal_body"></div>
+                <div class="modal-body" id="ForignKeyErrorModal_body">
+                    <div class="container text-info">
+                        {{ForignKeyErrorBody}}
+                    </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" id="ForignKeyErrorModal_close" class="btn btn-info" data-dismiss="modal">Close</button>
-                    <button type="button" id="ForignKeyErrorModal_Delete" class="btn btn-danger" data-id="">Delete with all audios</button>
+                    <button type="button" id="ForignKeyErrorModal_Delete" class="btn btn-danger {{DelSubsBtn}}" data-id="">{{DelSubsBtnText}}</button>
                 </div>
             </div>
         </div>

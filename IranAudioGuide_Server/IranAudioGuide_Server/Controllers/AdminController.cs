@@ -13,7 +13,7 @@ namespace IranAudioGuide_Server.Controllers
     public class AdminController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private const int pagingLen = 10;
+        private const int pagingLen = 5;
 
         // GET: Admin
         [Authorize(Roles = "Admin")]
@@ -21,12 +21,7 @@ namespace IranAudioGuide_Server.Controllers
         {
             ViewBag.View = Views.AdminIndex;
 
-            return View(new AdminIndexVM()
-            {
-                AdminInfo = GetCurrentUserInfo(),
-                Places = GetPlaces(),
-                Cities = GetCities()
-            });
+            return View(GetCurrentUserInfo());
         }
         [Authorize(Roles = "Admin")]
         public ActionResult Audios(string PlaceId)
@@ -47,32 +42,31 @@ namespace IranAudioGuide_Server.Controllers
             return Content("");
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult AddPlace(AdminIndexVM model)
+        public ActionResult AddPlace(NewPlace model)
         {
             if (!ModelState.IsValid)
             {
                 return View("Index", model);
             }
-            if (model.NewPlace.Image.ContentLength > 0 && IsImage(model.NewPlace.Image))
+            if (model.Image.ContentLength > 0 && IsImage(model.Image))
             {
                 var place = new Place()
                 {
-                    Pla_Name = model.NewPlace.PlaceName,
-                    Pla_Discription = model.NewPlace.PlaceDesc,
-                    Pla_Address = model.NewPlace.PlaceAddress
+                    Pla_Name = model.PlaceName,
+                    Pla_Discription = model.PlaceDesc,
+                    Pla_Address = model.PlaceAddress
                 };
-                if (model.NewPlace.PlaceCordinates != null)
+                if (model.PlaceCordinates != null)
                 {
-                    if (!model.NewPlace.PlaceCordinates.Contains(','))
+                    if (!model.PlaceCordinates.Contains(','))
                     {
                         ModelState.AddModelError("", "Enter X and Y cordinates and seprate them whith \",\".");
                         return View("Index", model);
                     }
                     try
                     {
-                        List<double> cordinates = (from c in model.NewPlace.PlaceCordinates.Split(',')
+                        List<double> cordinates = (from c in model.PlaceCordinates.Split(',')
                                                    select Convert.ToDouble(c)).ToList();
                         place.Pla_cordinate_X = cordinates[0];
                         place.Pla_cordinate_Y = cordinates[1];
@@ -88,13 +82,13 @@ namespace IranAudioGuide_Server.Controllers
                 {
                     using (var dbTran = db.Database.BeginTransaction())
                     {
-                        place.Pla_city = db.Cities.Where(c => c.Cit_Id == model.NewPlace.PlaceCityId).FirstOrDefault();
+                        place.Pla_city = db.Cities.Where(c => c.Cit_Id == model.PlaceCityId).FirstOrDefault();
                         db.Places.Add(place);
                         db.SaveChanges(); //Save place and generate Pla_Id
                         string id = Convert.ToString(place.Pla_Id);
-                        string extention = Path.GetExtension(model.NewPlace.Image.FileName);
+                        string extention = Path.GetExtension(model.Image.FileName);
                         string path = string.Format("~/images/Places/{0}{1}", id, extention);
-                        model.NewPlace.Image.SaveAs(Server.MapPath(path));
+                        model.Image.SaveAs(Server.MapPath(path));
                         place.Pla_ImgUrl = path;
                         db.SaveChanges();
                         dbTran.Commit();
@@ -168,7 +162,7 @@ namespace IranAudioGuide_Server.Controllers
         public JsonResult GetCities(int PageNum)
         {
             var Cities = GetCities();
-            int pagesLen = (Cities.Count() % 10 == 0) ? Cities.Count() / 10 : (Cities.Count() / 10) + 1;
+            int pagesLen = (Cities.Count() % pagingLen == 0) ? Cities.Count() / pagingLen : (Cities.Count() / pagingLen) + 1;
             int remain = Cities.Count - (PageNum * pagingLen);
             return Json(new GetCitiesVM(
                 (remain > pagingLen)

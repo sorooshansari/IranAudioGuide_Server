@@ -37,6 +37,7 @@ namespace IranAudioGuide_Server.Models
     }
     public class NewCity
     {
+        [Required]
         [Display(Name = "City name")]
         public string CityName { get; set; }
         [Display(Name = "City description")]
@@ -90,29 +91,6 @@ namespace IranAudioGuide_Server.Models
         [Required]
         [Display(Name = "Choose")]
         public HttpPostedFileBase Image { get; set; }
-        public List<CityVM> Cities { get; set; }
-        public NewPlace()
-        {
-            try
-            {
-                using (var db = new ApplicationDbContext())
-                {
-                    Cities = (from c in db.Cities
-                              select new CityVM()
-                              {
-                                  CityID = c.Cit_Id,
-                                  CityName = c.Cit_Name,
-                                  CityDesc = c.Cit_Description
-                              }
-                              ).ToList();
-                }
-            }
-            catch (Exception e)
-            {
-
-                throw e;
-            }
-        }
     }
     public class PlaceVM
     {

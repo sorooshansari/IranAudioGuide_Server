@@ -73,11 +73,11 @@
     }
 }
 
-.NewAudioForm input[type=submit] {
+.NewPlaceForm input[type=submit] {
     background-color: #778899;
 }
 
-    .NewAudioForm input[type=submit]:hover {
+    .NewPlaceForm input[type=submit]:hover {
         background-color: #8d9caa;
     }
 
@@ -155,14 +155,33 @@ form textarea {
     background-color: lightblue;
 }
 
-/*table.default tr {
-    padding:0 0 0 0; 
+.myDivider {
+    
+}
+.myDivider hr {
+    border: 1px solid;
 }
 
-table.default tbody tr:nth-child(2n+2) {
-    padding:0 0 0 0;    
+    .myDivider span {
+        font-size: 40px;
+        padding: 0 10px;
+    }
+
+@media screen and (max-width: 736px) {
+    .myDivider span {
+        font-size: 30px;
+        padding: 0 5px;
+    }
 }
 
-table.default td {
-    padding:0 0 0 0; 
-}*/
+@media screen and (max-width: 400px) {
+    .myDivider span {
+        font-size: 20px;
+        padding: 0 2px;
+    }
+}
+
+.formError{
+    margin-bottom: 0px;
+    text-align: left;
+}
