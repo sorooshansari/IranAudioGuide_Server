@@ -78,7 +78,6 @@ namespace IranAudioGuide_Server.Models
         [Required]
         [Display(Name = "Place name")]
         public string PlaceName { get; set; }
-        [Required]
         [Display(Name = "Place description")]
         public string PlaceDesc { get; set; }
         [Display(Name = "Place address")]
@@ -108,12 +107,18 @@ namespace IranAudioGuide_Server.Models
     }
     public class AudioViewVM
     {
+        public AudioViewVM()
+        {
+            respond = new Respond();
+        }
         public List<AudioVM> audios { get; set; }
         public string PlaceImage { get; set; }
+        public Respond respond { get; set; }
     }
     public class AudioVM
     {
-        public System.Guid Aud_Id { get; set; }
+        public int Index { get; set; }
+        public Guid Aud_Id { get; set; }
         public string Aud_Name { get; set; }
         public string Aud_Url { get; set; }
         public string Aud_Discription { get; set; }
@@ -142,7 +147,7 @@ namespace IranAudioGuide_Server.Models
     }
     public class Respond
     {
-        public Respond(string content, int status = 0)
+        public Respond(string content = "", int status = 0)
         {
             this.status = status;
             this.content = content;

@@ -244,6 +244,7 @@
     <Content Include="audioplayerengine\prevnext-48-48-1.png" />
     <Content Include="audioplayerengine\tracklistarrow-48-16-0.png" />
     <Content Include="audioplayerengine\volume-24-24-0.png" />
+    <Content Include="Audios\a.mp3" />
     <Content Include="Content\AdminCustom.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -1103,6 +1104,7 @@
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.scrollex.min.js" />
     <Content Include="Scripts\jquery.scrolly.min.js" />
@@ -1161,7 +1163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Audios\" />
     <Folder Include="images\Places\" />
   </ItemGroup>
   <ItemGroup>

@@ -156,11 +156,11 @@ form textarea {
 }
 
 .myDivider {
-    
 }
-.myDivider hr {
-    border: 1px solid;
-}
+
+    .myDivider hr {
+        border: 1px solid;
+    }
 
     .myDivider span {
         font-size: 40px;
@@ -181,7 +181,149 @@ form textarea {
     }
 }
 
-.formError{
+.formError {
     margin-bottom: 0px;
     text-align: left;
+}
+
+#progressOut {
+    width: 300px;
+    height: 20px;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+#progressIn {
+    position: relative; /*This is important*/
+    height: 100%;
+    bottom: 0px;
+    width: 0px;
+    background: #FC6428; /*This can be anything*/
+}
+
+#time {
+    position: absolute;
+    padding: 5px 8px;
+    font-size: 10px;
+    background: #12BFD3;
+    right: -0px;
+    bottom: 0px;
+}
+
+.Player {
+    text-align: left;
+    box-sizing: border-box;
+    background-color: #333;
+    border: 1px solid #222;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    padding: 8px 4px;
+    margin-bottom: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    -moz-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    background-image: -ms-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -moz-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -o-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444444), color-stop(1, #111111));
+    background-image: -webkit-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: linear-gradient(to bottom, #444444 0%, #111111 100%);
+}
+
+    .Player .player-image {
+        display: block;
+        position: relative;
+        /*width: 20%;*/
+        height: auto;
+        margin: 0px auto 0px;
+        margin-bottom: 0;
+        float: left;
+        overflow: hidden;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+
+        .Player .player-image img {
+            width: 100%;
+            max-width: 100%;
+            vertical-align: middle;
+            display: inline-block;
+            border: none;
+            margin: 0;
+            padding: 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+    .Player .play {
+        display: block;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        background-image: url("../audioplayerengine/playpause-48-48-1.png");
+        background-position: left top;
+        background-repeat: no-repeat;
+    }
+
+    .Player .pause {
+        display: block;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        background-image: url("../audioplayerengine/playpause-48-48-1.png");
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+
+    .Player .next {
+        display: block;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        background-image: url("../audioplayerengine/prevnext-48-48-1.png");
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+
+    .Player .prev {
+        display: block;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        background-image: url("../audioplayerengine/prevnext-48-48-1.png");
+        background-position: left top;
+        background-repeat: no-repeat;
+    }
+
+    .Player .AudioTitle {
+        color: white;
+    }
+
+    .Player .buttons {
+        margin-left: -10px;
+    }
+
+    .Player .pb {
+        margin-top: 8%;
+    }
+
+    .Player .audiosList {
+        margin: 0px 20px;
+    }
+
+        .Player .audiosList .listItem {
+            cursor: pointer;
+        }
+
+            .Player .audiosList .listItem div {
+                padding: 0px;
+                margin: 0px;
+            }
+
+.align-right {
+    text-align: right !important;
+    float: right !important;
 }

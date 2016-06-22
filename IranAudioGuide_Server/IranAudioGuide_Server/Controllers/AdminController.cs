@@ -23,31 +23,39 @@ namespace IranAudioGuide_Server.Controllers
 
             return View(GetCurrentUserInfo());
         }
+        [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult Audios(string PlaceId)
+        public JsonResult Audios(string PlaceId)
         {
             if (PlaceId.Length > 0)
             {
                 string imgUrl = PlaceImg(PlaceId);
                 if (imgUrl != null)
                 {
-                    return View(new AudioViewVM()
+                    return Json(new AudioViewVM()
                     {
                         audios = GetAudios(PlaceId),
-                        PlaceImage = imgUrl.Remove(0, 1)
+                        PlaceImage = imgUrl
                     });
                 }
-                return Content("");
+                return Json(new AudioViewVM()
+                {
+                    audios = GetAudios(PlaceId),
+                    respond = new Respond(content: "Error. Couldn't find any image.", status: 1)
+                });
             }
-            return Content("");
+            return Json(new AudioViewVM()
+            {
+                respond = new Respond(content: "Fatal error. Invalid Place Id.", status: 2)
+            });
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult AddPlace(NewPlace model)
+        public JsonResult AddPlace(NewPlace model)
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", model);
+                return Json(new Respond("Check input fields", 1));
             }
             if (model.Image.ContentLength > 0 && IsImage(model.Image))
             {
@@ -60,10 +68,7 @@ namespace IranAudioGuide_Server.Controllers
                 if (model.PlaceCordinates != null)
                 {
                     if (!model.PlaceCordinates.Contains(','))
-                    {
-                        ModelState.AddModelError("", "Enter X and Y cordinates and seprate them whith \",\".");
-                        return View("Index", model);
-                    }
+                        return Json(new Respond("Enter X and Y cordinates and seprate them with \",\".", 2));
                     try
                     {
                         List<double> cordinates = (from c in model.PlaceCordinates.Split(',')
@@ -73,8 +78,7 @@ namespace IranAudioGuide_Server.Controllers
                     }
                     catch (Exception)
                     {
-                        ModelState.AddModelError("", "Enter percise cordinates.");
-                        return View("Index", model);
+                        return Json(new Respond("Enter percise cordinates.", 2));
                     }
                 }
 
@@ -87,13 +91,13 @@ namespace IranAudioGuide_Server.Controllers
                         db.SaveChanges(); //Save place and generate Pla_Id
                         string id = Convert.ToString(place.Pla_Id);
                         string extention = Path.GetExtension(model.Image.FileName);
-                        string path = string.Format("~/images/Places/{0}{1}", id, extention);
+                        string path = string.Format("{0}{1}", id, extention);
                         model.Image.SaveAs(Server.MapPath(path));
                         place.Pla_ImgUrl = path;
                         db.SaveChanges();
                         dbTran.Commit();
                     }
-                    return RedirectToAction("Index");
+                    return Json(new Respond(""));
                 }
                 catch (Exception ex)
                 {
@@ -101,8 +105,7 @@ namespace IranAudioGuide_Server.Controllers
                     throw ex;
                 }
             }
-            ModelState.AddModelError("", "Only jpg, png, gif, and jpeg are allowed.");
-            return View("Index", model);
+            return Json(new Respond("Only jpg, png, gif, and jpeg are allowed.", 3));
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -137,7 +140,7 @@ namespace IranAudioGuide_Server.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult DelPlace(System.Guid Id)
+        public JsonResult DelPlace(Guid Id)
         {
             int result = db.Database.SqlQuery<int>("DeletePlace @Id", new SqlParameter("@Id", Id)).Single();
             return Json(new Respond("", result));
@@ -151,7 +154,7 @@ namespace IranAudioGuide_Server.Controllers
             int remain = places.Count - (PageNum * pagingLen);
             return Json(new GetPlacesVM(
                 (remain > pagingLen)
-                ?               
+                ?
                     places.GetRange(PageNum * pagingLen, pagingLen)
                 :
                     places.GetRange(PageNum * pagingLen, remain)
@@ -263,6 +266,11 @@ namespace IranAudioGuide_Server.Controllers
                                             Aud_Url = a.Aud_Url,
                                             Aud_Id = a.Aud_Id
                                         }).ToList();
+                int counter = 0;
+                foreach (var item in audios)
+                {
+                    item.Index = ++counter;
+                }
                 return audios;
             }
             catch (Exception ex)
