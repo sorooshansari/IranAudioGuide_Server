@@ -18,6 +18,7 @@
                   $rootScope.PlacePagesLen = response.data.PagesLen;
                   $rootScope.PlaceCurrentPage = PageNum;
                   angular.copy(response.data.Places, Places);
+                  $rootScope.$broadcast('LoadFirstPlaceAudios', {});
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);
@@ -74,10 +75,78 @@
                           break;
                       case 2:
                           $rootScope.$broadcast('PlaceUnknownError', {});
-                          console.log("Server failed to add Place.");
+                          console.log("Server failed to remove Place.");
+                          break;
+                      case 3:
+                          console.log(response.data.content);
                           break;
                       default:
 
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        Edit: function (EditPlaceVM) {
+            method = 'POST';
+            url = '/Admin/EditPlace';
+            $http({ method: method, url: url, data: EditPlaceVM }).
+              then(function (response) {
+                  $rootScope.EditOverlay = false;
+                  $rootScope.hide('#EditPlaceModal');
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdatePlaces', {});
+                          break;
+                      case 1:
+                          $rootScope.$broadcast('EditPlaceValidationSummery', {
+                              data: response.data.content
+                          });
+                          break;
+                      case 2:
+                          $rootScope.$broadcast('EditPlaceUnknownError', {});
+                          console.log("Server failed to remove Place.");
+                          break;
+                      case 3:
+                          console.log(response.data.content);
+                          break;
+                      default:
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        ChangeImage: function (ImageName, NewImage) {
+            method = 'POST';
+            url = '/Admin/ChangePlaceImage';
+            var fd = new FormData();
+            fd.append('ImageName', ImageName);
+            fd.append('NewImage', NewImage);
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).
+              then(function (response) {
+                  $rootScope.EditOverlay = false;
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdatePlaceImage', {});
+                          break;
+                      case 1:
+                          $rootScope.$broadcast('UpdateImageValidationSummery', {
+                              data: response.data.content
+                          });
+                          break;
+                      case 3:
+                          console.log(response.data.content);
+                          break;
+                      default:
                   }
               }, function (response) {
                   console.log("Request failed");
@@ -87,9 +156,23 @@
     }
 }])
 .service('CityServices', ['$rootScope', '$http', function ($rootScope, $http) {
+    var AllCities = [];
     var Cities = [];
     var Success = false;
     return {
+        All: function () {
+            method = 'POST';
+            url = '/Admin/GetCities';
+            data = { PageNum: -1 };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  angular.copy(response.data, AllCities);
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return AllCities;
+        },
         Get: function (PageNum) {
             method = 'POST';
             url = '/Admin/GetCities';
@@ -152,6 +235,13 @@
     };
 }])
 .service('AudioServices', ['$rootScope', '$http', function ($rootScope, $http) {
+    var getModelAsFormData = function (data) {
+        var dataAsFormData = new FormData();
+        angular.forEach(data, function (value, key) {
+            dataAsFormData.append(key, value);
+        });
+        return dataAsFormData;
+    };
     return {
         Get: function (PlaceId) {
             method = 'POST';
@@ -168,6 +258,64 @@
                   console.log("status:" + response.status);
               });
             return;
+        },
+        Add: function (model, placeId) {
+            method = 'POST';
+            url = '/Admin/AddAudio';
+            var fd = new FormData();
+            fd.append('PlaceId', placeId);
+            fd.append('AudioName', model.AudioName);
+            fd.append('AudioFile', model.AudioFile);
+            //fd = getModelAsFormData(model);
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).
+              then(function (response) {
+                  $rootScope.ShowOverlay = false;
+                  $rootScope.hide('#NewAudioModal');
+                  if (response.data.status == 0) {
+                      $rootScope.$broadcast('UpdateAudios', {});
+                  }
+                  else {
+                      $rootScope.$broadcast('UpdateAudioValidationSummery', {
+                          data: response.data.content
+                      });
+                      console.log("Server failed to add Place.");
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        Remove: function (AudioId) {
+            method = 'POST';
+            url = '/Admin/DelAudio';
+            data = { Id: AudioId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdateAudios', {});
+                          break;
+                      case 1:
+                          $rootScope.$broadcast('RemoveAudioError', {
+                              content: response.data.content
+                          });
+                          console.log("Server failed to remove audio.");
+                          console.log(response.data.content);
+                          break;
+                      default:
+
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
         }
     }
 }]);

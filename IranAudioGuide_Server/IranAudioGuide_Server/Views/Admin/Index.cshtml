@@ -5,7 +5,6 @@
 
 <!-- Main -->
 <div id="main">
-
     <!-- Intro -->
     <section id="top" class="one dark cover">
         <div class="container">
@@ -35,10 +34,10 @@
             </header>
 
             <p>
-                Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
-                egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
-                Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis
-                fusce hendrerit lacus ridiculus.
+                Easily manage places audios by select them to fill player,
+                 then you can add new audios or remove them.
+                 Also, by pressing edit button you can edit place information like name,
+                 adding extra images or change existence ones. 
             </p>
             <div id="Player" class="Player">
                 <div class="row head">
@@ -58,14 +57,14 @@
                                 </ul>
                             </li>
                             @*<li class="12u$ pb">
-                                <div class="progress-bar progress-bar-success" role="progressbar" ng-style="audioProgress">
-                                    {{}}
-                                </div>
-                            </li>*@
+                                    <div class="progress-bar progress-bar-success" role="progressbar" ng-style="audioProgress">
+                                        {{}}
+                                    </div>
+                                </li>*@
                         </ul>
                     </div>
                     <div class="2u$">
-                        <a ng-show="selectedPlaceId != null" href="" ng-click="AddAudio(selectedPlaceId)" class="btn btn-primary btn-block">
+                        <a ng-show="selectedPlaceId != null" href="" ng-click="NewAudio()" class="btn btn-primary btn-block">
                             <i class="fa fa-plus"></i>
                             Add Audio
                         </a>
@@ -93,8 +92,7 @@
                         <td>#</td>
                         <td>Name</td>
                         <td>City</td>
-                        <td>Desc</td>
-                        <td>Audios</td>
+                        <td>Edit</td>
                         <td>Remove</td>
                     </tr>
                 </thead>
@@ -103,10 +101,10 @@
                         <td>{{place.Index}}</td>
                         <td>{{place.PlaceName}}</td>
                         <td>{{place.CityName}}</td>
-                        <td class="tdDesc"><p>{{place.PlaceDesc}}</p></td>
                         <td>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-block">
+                            <button type="button" class="btn btn-primary btn-block"
+                                    ng-click="ShowEditPlaceModal(place)">
                                 <span class="fa fa-edit"></span> Edit
                             </button>
                         </td>
@@ -149,10 +147,8 @@
             </header>
 
             <p>
-                Elementum sem parturient nulla quam placerat viverra
-                mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
-                donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
-                orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.
+                Create new place by filling the form.
+                 Remember, to fill the star boxes.
             </p>
             <form role="form" name="NewPlaceForm" class="NewPlaceForm" ng-submit="AddPlace(NewPlace, NewPlaceForm)">
                 <ul class="formError text-danger" ng-show="NewPlaceForm.$submitted">
@@ -183,7 +179,7 @@
                     <div class="6u 12u$(mobile)">
                         <select ng-model="NewPlace.PlaceCityId" name="PlaceCityId" required>
                             <option value="">Select City*</option>
-                            <option ng-repeat="city in cities" value="{{city.CityID}}">{{city.CityName}}</option>
+                            <option ng-repeat="city in AllCities" value="{{city.CityID}}">{{city.CityName}}</option>
                         </select>
                     </div>
                     <div class="6u$ 12u$(mobile)">
@@ -206,16 +202,12 @@
     <!-- Cities List -->
     <section id="Cities" class="four">
         <div class="container">
-
             <header>
                 <h2>Cities</h2>
             </header>
-
             <p>
-                Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
-                egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
-                Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis
-                fusce hendrerit lacus ridiculus.
+                Create new city just by filling its name (filling description box is optional). 
+                This information will be used to categorize places.
             </p>
             <table class="default" id="ctyTbl">
                 <thead>
@@ -291,10 +283,15 @@
     <div class="modal fade" id="ForignKeyErrorModal" tabindex="-1" role="dialog" aria-labelledby="ForignKeyErrorModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header text-danger">Removing Failed</div>
+                <div class="modal-header">
+                    <h3 class="text-danger">Removing Failed</h3>
+                    <a href="" ng-click="hide('#ForignKeyErrorModal')">
+                        <i class="fa fa-2x fa-times ModalDismissIco"></i>
+                    </a>
+                </div>
                 <div class="modal-body" id="ForignKeyErrorModal_body">
-                    <div class="container text-info">
-                        {{ForignKeyErrorBody}}
+                    <div class="container text-info" ng-bind-html="ForignKeyErrorBody">
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -304,23 +301,124 @@
             </div>
         </div>
     </div>
-    <!-- Modal2 -->
-    @*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
+    <!-- NewAudio Modal -->
+    <div class="modal fade" id="NewAudioModal" tabindex="-1" role="dialog" aria-labelledby="NewAudioModalLabel">
+        <!--overlay-->
+        <div ng-show="ShowOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
+            <div id="floatingCirclesG">
+                <div class="f_circleG" id="frotateG_01"></div>
+                <div class="f_circleG" id="frotateG_02"></div>
+                <div class="f_circleG" id="frotateG_03"></div>
+                <div class="f_circleG" id="frotateG_04"></div>
+                <div class="f_circleG" id="frotateG_05"></div>
+                <div class="f_circleG" id="frotateG_06"></div>
+                <div class="f_circleG" id="frotateG_07"></div>
+                <div class="f_circleG" id="frotateG_08"></div>
+            </div>
+        </div>
+        <div class="modal-dialog" role="document">
+
+            <form role="form" name="NewAudioForm" ng-submit="AddAudio(NewAudioVM)">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        <h3 class="text-primary">Add New Audio</h3>
+                        <a href="" ng-click="hide('#NewAudioModal')">
+                            <i class="fa fa-2x fa-times ModalDismissIco"></i>
+                        </a>
                     </div>
-                    <div class="modal-body">
-                        ...
+                    <div class="modal-body" style="padding: 15px;">
+                        <div class="row">
+                            <div class="12u$">
+                                <input type="text" ng-model="NewAudioVM.AudioName" name="AudioName" required placeholder="Audio name*" />
+                            </div>
+                            <div class="9u">
+                                <input type="text" name="AudioUrl" placeholder="Audio*" disabled />
+                            </div>
+                            <div class="3u$ lessPading">
+                                <input class="inputfile" type="file"
+                                       file-model="NewAudioVM.AudioFile"
+                                       onchange="angular.element(this).scope().SetAudioName(this)"
+                                       id="Audio" name="Audio" required />
+                                <label for="Audio" class="btn-primary">Choose</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <input type="button" id="NewAudioModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
+                        <input type="submit" class="addBtn" value="Add Audio" />
                     </div>
                 </div>
-            </div>
-        </div>*@
+            </form>
+        </div>
+    </div>
 
+    <!-- Edit Place Modal -->
+    <div class="modal fade" id="EditPlaceModal" tabindex="-1" role="dialog" aria-labelledby="EditPlaceModalLabel">
+        <!--overlay-->
+        <div ng-show="EditOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
+            <div id="floatingCirclesG">
+                <div class="f_circleG" id="frotateG_01"></div>
+                <div class="f_circleG" id="frotateG_02"></div>
+                <div class="f_circleG" id="frotateG_03"></div>
+                <div class="f_circleG" id="frotateG_04"></div>
+                <div class="f_circleG" id="frotateG_05"></div>
+                <div class="f_circleG" id="frotateG_06"></div>
+                <div class="f_circleG" id="frotateG_07"></div>
+                <div class="f_circleG" id="frotateG_08"></div>
+            </div>
+        </div>
+        <div class="modal-dialog" style="width: 900px;" role="document">
+
+            <form role="form" name="EditPlaceForm" ng-submit="EditPlace(EditPlaceVM)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-primary">Edit Place Informations</h3>
+                        <a href="" ng-click="hide('#EditPlaceModal')">
+                            <i class="fa fa-2x fa-times ModalDismissIco"></i>
+                        </a>
+                    </div>
+                    <div class="modal-body" style="padding: 15px;">
+                        <div class="row">
+                            <div class="place-image 3u 6u(mobile)">
+                                <input id="PlaceImage" name="PlaceImage" type="file" file-model="PlaceImage" class="hidden"
+                                       onchange="angular.element(this).scope().ChangeImg(this)" />
+                                <img ng-click="ClickPlaceImg()" src="../images/Places/{{selectedPlace.Img}}" />
+                            </div>
+                            <div class="place-image 1u$" style="float: right;">
+                                <img ng-click="AddExtraImage()" src="../images/file_add.png" />
+                            </div>
+                            <div class="12u$">
+                                <div class="row">
+                                    <div class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImgs">
+                                        <img ng-click="RemoveExtraImg(img.ImgId)" src="../images/Places/{{img.name}}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="6u$ 12u$(mobile)">
+                                <input type="text" ng-model="EditPlaceVM.PlaceName" name="PlaceName" required placeholder="Place name*" />
+                            </div>
+                            <div class="6u 12u$(mobile)">
+                                <select ng-model="EditPlaceVM.PlaceCityId" name="PlaceCityId" required>
+                                    <option ng-repeat="city in AllCities" value="{{city.CityID}}">{{city.CityName}}</option>
+                                </select>
+                            </div>
+                            <div class="6u$ 12u$(mobile)">
+                                <input type="text" ng-model="EditPlaceVM.PlaceCordinates" value="" name="PlaceCordinates" placeholder="Place Cordinates" />
+                            </div>
+                            <div class="12u$">
+                                <textarea ng-model="EditPlaceVM.PlaceDesc" name="PlaceDesc" rows="3" placeholder="Place description"></textarea>
+                            </div>
+                            <div class="12u$">
+                                <textarea ng-model="EditPlaceVM.PlaceAddress" name="PlaceAddress" rows="1" placeholder="Place Address"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" id="EditPlaceModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
+                        <input type="submit" class="addBtn" value="Save Changes" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

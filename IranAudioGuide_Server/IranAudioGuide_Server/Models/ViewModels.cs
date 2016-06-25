@@ -53,6 +53,11 @@ namespace IranAudioGuide_Server.Models
         [Display(Name = "Description")]
         public string CityDesc { get; set; }
     }
+    public class JNOCitiesVM
+    {
+        public int CityID { get; set; }
+        public string CityName { get; set; }
+    }
     public class GetPlacesVM
     {
         public GetPlacesVM(List<PlaceVM> Places, int PagesLen)
@@ -76,34 +81,43 @@ namespace IranAudioGuide_Server.Models
     public class NewPlace
     {
         [Required]
-        [Display(Name = "Place name")]
         public string PlaceName { get; set; }
-        [Display(Name = "Place description")]
         public string PlaceDesc { get; set; }
-        [Display(Name = "Place address")]
         public string PlaceAddress { get; set; }
-        [Display(Name = "Place description")]
         public string PlaceCordinates { get; set; }
         [Required]
-        [Display(Name = "Place City")]
         public int PlaceCityId { get; set; }
         [Required]
-        [Display(Name = "Choose")]
         public HttpPostedFileBase Image { get; set; }
+    }
+    public class EditPlaceVM
+    {
+        [Required]
+        public System.Guid PlaceId { get; set; }
+        [Required]
+        public string PlaceName { get; set; }
+        public string PlaceDesc { get; set; }
+        public string PlaceAddress { get; set; }
+        public string PlaceCordinates { get; set; }
+        [Required]
+        public int PlaceCityId { get; set; }
     }
     public class PlaceVM
     {
         public System.Guid PlaceId { get; set; }
-        [Display(Name = "#")]
         public int Index { get; set; }
-        [Display(Name = "Name")]
         public string PlaceName { get; set; }
-        [Display(Name = "Description")]
         public string PlaceDesc { get; set; }
-        [Display(Name = "City")]
         public string CityName { get; set; }
+        public int PlaceCityId { get; set; }
         public string ImgUrl { get; set; }
-        public List<AudioVM> Audios { get; set; }
+        public string PlaceAddress { get; set; }
+        public string PlaceCordinates { get; set; }
+    }
+    public class ChangeImageVM
+    {
+        public string ImageName { get; set; }
+        public HttpPostedFileBase NewImage { get; set; }
     }
     public class AudioViewVM
     {
@@ -125,17 +139,12 @@ namespace IranAudioGuide_Server.Models
     }
     public class NewAudioVM
     {
-        [Required(ErrorMessage = "Something went wrong. Failed to upload file.")]
+        [Required]
         public System.Guid PlaceId { get; set; }
         [Required]
-        [Display(Name = "Audio name")]
         public string AudioName { get; set; }
         [Required]
-        [Display(Name = "Audio file")]
-        public string AudioFile { get; set; }
-        [Required]
-        [Display(Name = "Audio description")]
-        public string AudioDesc { get; set; }
+        public HttpPostedFileBase AudioFile { get; set; }
     }
     public class OK
     {
