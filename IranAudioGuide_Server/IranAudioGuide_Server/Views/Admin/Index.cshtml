@@ -37,7 +37,7 @@
                 Easily manage places audios by select them to fill player,
                  then you can add new audios or remove them.
                  Also, by pressing edit button you can edit place information like name,
-                 adding extra images or change existence ones. 
+                 adding extra images or change existing ones. 
             </p>
             <div id="Player" class="Player">
                 <div class="row head">
@@ -379,18 +379,22 @@
                     </div>
                     <div class="modal-body" style="padding: 15px;">
                         <div class="row">
-                            <div class="place-image 3u 6u(mobile)">
+                            <div ng-mouseleave="selectedPlace.rmvShow = false" ng-mousemove="selectedPlace.rmvShow = true" class="place-image 3u 6u(mobile) ImgHoverable">
                                 <input id="PlaceImage" name="PlaceImage" type="file" file-model="PlaceImage" class="hidden"
                                        onchange="angular.element(this).scope().ChangeImg(this)" />
-                                <img ng-click="ClickPlaceImg()" src="../images/Places/{{selectedPlace.Img}}" />
+                                <img class="PImg" ng-click="ClickPlaceImg('#PlaceImage')" src="../images/Places/{{selectedPlace.Img}}" />
+                                <i ng-click="ClickPlaceImg('#PlaceImage')" ng-show="selectedPlace.rmvShow" class="btn fa fa-2x fa-pencil-square-o text-blue addImgBtn"></i>
                             </div>
                             <div class="place-image 1u$" style="float: right;">
-                                <img ng-click="AddExtraImage()" src="../images/file_add.png" />
+                                <input id="PlaceExtraImage" name="PlaceExtraImage" type="file" file-model="PlaceExtraImage" class="hidden"
+                                       onchange="angular.element(this).scope().AddExtraImage(this)" />
+                                <img ng-click="ClickPlaceImg('#PlaceExtraImage')" src="../images/file_add.png" />
                             </div>
-                            <div class="12u$">
+                            <div ng-show="selectedPlace.ExtraImages.length" class="12u$ PlaceExtraImage">
                                 <div class="row">
-                                    <div class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImgs">
-                                        <img ng-click="RemoveExtraImg(img.ImgId)" src="../images/Places/{{img.name}}" />
+                                    <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true" name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImages">
+                                        <img ng-click="RemoveExtraImg(img.ImageId)" src="../images/Places/Extras/{{img.ImageName}}" />
+                                        <i ng-click="RemoveExtraImg(img.ImageId)" ng-show="img.rmvShow" class="btn fa fa-remove text-red rmvBtn"></i>
                                     </div>
                                 </div>
                             </div>

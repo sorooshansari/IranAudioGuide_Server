@@ -202,17 +202,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606020858567_a.cs" />
-    <Compile Include="Migrations\201606020858567_a.Designer.cs">
-      <DependentUpon>201606020858567_a.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606021510318_delSPs.cs" />
-    <Compile Include="Migrations\201606021510318_delSPs.Designer.cs">
-      <DependentUpon>201606021510318_delSPs.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606021718413_sdAlter.cs" />
-    <Compile Include="Migrations\201606021718413_sdAlter.Designer.cs">
-      <DependentUpon>201606021718413_sdAlter.cs</DependentUpon>
+    <Compile Include="Migrations\201606251920554_CreatingDb.cs" />
+    <Compile Include="Migrations\201606251920554_CreatingDb.Designer.cs">
+      <DependentUpon>201606251920554_CreatingDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -264,6 +256,8 @@
     <Content Include="images\file_add.png" />
     <Content Include="images\googlePlay.png" />
     <Content Include="images\loop-24-24-0.png" />
+    <Content Include="images\Members\Mona.jpg" />
+    <Content Include="images\Members\Hamed.jpg" />
     <Content Include="images\Members\Soroosh.JPG" />
     <Content Include="images\pic01.jpg" />
     <Content Include="images\pic02.jpg" />
@@ -1160,21 +1154,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\Places\" />
+    <Folder Include="images\Places\Extras\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606020858567_a.resx">
-      <DependentUpon>201606020858567_a.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606021510318_delSPs.resx">
-      <DependentUpon>201606021510318_delSPs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606021718413_sdAlter.resx">
-      <DependentUpon>201606021718413_sdAlter.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606251920554_CreatingDb.resx">
+      <DependentUpon>201606251920554_CreatingDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

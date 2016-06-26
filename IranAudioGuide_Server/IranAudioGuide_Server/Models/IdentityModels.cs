@@ -42,6 +42,7 @@ namespace IranAudioGuide_Server.Models
         public string Pla_ImgUrl { get; set; }
         public string Pla_Discription { get; set; }
         public List<Audio> Pla_Audios { get; set; }
+        public List<Image> Pla_ExtraImages { get; set; }
         public city Pla_city { get; set; }
         public double Pla_cordinate_X { get; set; }
         public double Pla_cordinate_Y { get; set; }
@@ -54,6 +55,15 @@ namespace IranAudioGuide_Server.Models
         public int Cit_Id { get; set; }
         public string Cit_Name { get; set; }
         public string Cit_Description { get; set; }
+    }
+
+    public class Image
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Img_Id { get; set; }
+        public string Img_Name { get; set; }
+        public virtual Place Pla_Id { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -70,6 +80,7 @@ namespace IranAudioGuide_Server.Models
         public DbSet<Audio> Audios { get; set; }
         public DbSet<Place> Places { get; set; }
         public DbSet<city> Cities { get; set; }
+        public DbSet<Image> Images { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_Server.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

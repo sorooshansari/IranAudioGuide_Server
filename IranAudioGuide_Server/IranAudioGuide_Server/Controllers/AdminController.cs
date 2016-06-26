@@ -15,6 +15,9 @@ namespace IranAudioGuide_Server.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private const int pagingLen = 5;
         private Object ChangeImgLock = new Object();
+        private Object DelExtraImg = new Object();
+        private Object DelAdo = new Object(); 
+        private Object DelPlc = new Object();
         // GET: Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
@@ -86,7 +89,7 @@ namespace IranAudioGuide_Server.Controllers
                     throw ex;
                 }
             }
-            return Json(new Respond("Only jpg, png, gif, and jpeg are allowed.", 3));
+            return Json(new Respond("Only WAV, MID, MIDI, WMA, MP3, OGG, and RMA are allowed.", 3));
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -98,7 +101,13 @@ namespace IranAudioGuide_Server.Controllers
                 try
                 {
                     string path = Server.MapPath(string.Format("~/Audios/{0}", audio.Aud_Url));
-                    System.IO.File.Delete(path);
+                    lock (DelAdo)
+                    {
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                    }
                     using (var dbTran = db.Database.BeginTransaction())
                     {
                         db.Audios.Remove(audio);
@@ -170,7 +179,7 @@ namespace IranAudioGuide_Server.Controllers
                     throw ex;
                 }
             }
-            return Json(new Respond("Only WAV, MID, MIDI, WMA, MP3, OGG, and RMA are allowed.", 3));
+            return Json(new Respond("Only jpg, png, gif, and jpeg are allowed.", 3));
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -182,7 +191,13 @@ namespace IranAudioGuide_Server.Controllers
                 try
                 {
                     string path = Server.MapPath(string.Format("~/images/Places/{0}", place.Pla_ImgUrl));
-                    System.IO.File.Delete(path);
+                    lock (DelPlc)
+                    {
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                    }
                     int result = db.Database.SqlQuery<int>("DeletePlace @Id", new SqlParameter("@Id", Id)).Single();
                     return Json(new Respond("", result));
                 }
@@ -247,13 +262,20 @@ namespace IranAudioGuide_Server.Controllers
             var places = GetPlaces();
             int pagesLen = (places.Count() % pagingLen == 0) ? places.Count() / pagingLen : (places.Count() / pagingLen) + 1;
             int remain = places.Count - (PageNum * pagingLen);
-            return Json(new GetPlacesVM(
+            //Gernerate Indexes
+            int counter = 0;
+            var Places = new GetPlacesVM(
                 (remain > pagingLen)
                 ?
                     places.GetRange(PageNum * pagingLen, pagingLen)
                 :
                     places.GetRange(PageNum * pagingLen, remain)
-                , pagesLen));
+                , pagesLen);
+            foreach (var place in Places.Places)
+            {
+                place.Index = ++counter;
+            }
+            return Json(Places);
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -268,7 +290,10 @@ namespace IranAudioGuide_Server.Controllers
                 string path = Server.MapPath(string.Format("~/images/Places/{0}", model.ImageName));
                 lock (ChangeImgLock)
                 {
-                    System.IO.File.Delete(path);
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
                     model.NewImage.SaveAs(path);
                 }
                 return Json(new Respond());
@@ -277,6 +302,75 @@ namespace IranAudioGuide_Server.Controllers
             {
                 return Json(new Respond(ex.Message, 3));
             }
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult AddPlaceExtraImage(NewImageVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new Respond("Check input fields", 1));
+            }
+            if (!(model.NewImage != null && model.NewImage.ContentLength > 0 && IsImage(model.NewImage)))
+            {
+                return Json(new Respond("Only jpg, png, gif, and jpeg are allowed.", 3));
+            };
+            try
+            {
+                var img = new Image() { Pla_Id = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault() };
+                using (var dbTran = db.Database.BeginTransaction())
+                {
+                    db.Images.Add(img);
+                    db.SaveChanges();
+                    string id = Convert.ToString(img.Img_Id);
+                    string extention = Path.GetExtension(model.NewImage.FileName);
+                    string path = string.Format("~/images/Places/Extras/{0}{1}", id, extention);
+                    model.NewImage.SaveAs(Server.MapPath(path));
+                    img.Img_Name = string.Format("{0}{1}", id, extention);
+                    db.SaveChanges();
+                    dbTran.Commit();
+
+                }
+                return Json(new Respond());
+            }
+            catch (Exception ex)
+            {
+                return Json(new Respond(ex.Message, 3));
+            }
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult DelPlaceExtraImage(Guid imgId)
+        {
+            try
+            {
+                lock (DelExtraImg)
+                {
+                    var img = db.Images.Where(x => x.Img_Id == imgId).FirstOrDefault();
+                    if (img == default(Image))
+                    {
+                        return Json(new Respond("Invalid Image Id", 2));
+                    }
+                    string path = Server.MapPath(string.Format("~/images/Places/Extras/{0}", img.Img_Name));
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                    db.Images.Remove(img);
+                    db.SaveChanges();
+                }
+                return Json(new Respond());
+            }
+            catch (Exception ex)
+            {
+                return Json(new Respond(ex.Message, 3));
+            }
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult GetExtraImages(Guid placeId)
+        {
+            return Json(GetImages(placeId));
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -344,11 +438,6 @@ namespace IranAudioGuide_Server.Controllers
                          PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
                          PlaceCityId = place.Pla_city.Cit_Id
                      }).ToList();
-                int counter = 0;
-                foreach (var item in Places)
-                {
-                    item.Index = ++counter;
-                }
                 return Places;
             }
             catch (Exception ex)
@@ -440,6 +529,20 @@ namespace IranAudioGuide_Server.Controllers
                 item.Index = ++counter;
             }
             return cities;
+        }
+        private List<ImageVM> GetImages(Guid PlaceId)
+        {
+            var img = (from i in db.Images
+                       where i.Pla_Id == db.Places.Where(x => x.Pla_Id == PlaceId).FirstOrDefault()
+                       select new ImageVM()
+                       {
+                           ImageId = i.Img_Id,
+                           ImageName = i.Img_Name
+                       }).ToList();
+            int counter = 0;
+            foreach (var i in img)
+                i.Index = counter++;
+            return img;
         }
         private bool IsImage(HttpPostedFileBase file)
         {

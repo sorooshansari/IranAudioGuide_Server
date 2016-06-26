@@ -232,6 +232,7 @@ angular.module('AdminPage.controllers', [])
         $scope.EditPlaceVM;
         $scope.selectedPlace = {};
         $scope.ShowEditPlaceModal = function (Place) {
+            $scope.selectedPlace.ExtraImages = PlaceServices.GetExtraImages(Place.PlaceId);
             $scope.selectedPlace.Img = Place.ImgUrl;
             $scope.EditPlaceVM = angular.copy(Place);
             $('#EditPlaceModal').modal('show');
@@ -240,13 +241,22 @@ angular.module('AdminPage.controllers', [])
             $rootScope.EditOverlay = true;
             PlaceServices.Edit(EditPlaceVM);
         };
-        $scope.ClickPlaceImg = function () {
-            $('#PlaceImage').click();
+        $scope.ClickPlaceImg = function (id) {
+            $(id).click();
         };
         $scope.ChangeImg = function (NewImage) {
             $rootScope.EditOverlay = true;
             PlaceServices.ChangeImage($scope.selectedPlace.Img, NewImage.files[0])
         };
+        $scope.AddExtraImage = function (image) {
+            PlaceServices.AddExtraImage(image.files[0], $scope.EditPlaceVM.PlaceId);
+        };
+        $scope.RemoveExtraImg = function (placeId) {
+            PlaceServices.DelExtraImage(placeId);
+        };
+        $scope.$on('UpdateExtraImg', function (event) {
+            $scope.selectedPlace.ExtraImages = PlaceServices.GetExtraImages($scope.EditPlaceVM.PlaceId);
+        });
         $scope.$on('EditPlaceValidationSummery', function (event, data) {
             console.log(data.data);
             //to be fill
@@ -291,6 +301,7 @@ angular.module('AdminPage.controllers', [])
         };
         $scope.$on('UpdateCities', function (event) {
             $scope.cities = CityServices.Get(0);
+            $scope.AllCities = CityServices.All();
             scroll("#Cities");
         });
         $scope.$on('CityForignKeyError', function (event, CityID, CityName) {

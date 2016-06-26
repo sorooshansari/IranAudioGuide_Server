@@ -520,10 +520,48 @@ form textarea {
     max-height: 450px;
 }
 
-#EditPlaceModal img {
+/*.ImgHoverable img {
     cursor: pointer;
 }
 
-    #EditPlaceModal img:hover {
+    .ImgHoverable img:hover {
         opacity: 0.8;
+    }*/
+.text-red {
+    color: #d9534f;
+}
+
+    .text-red:hover {
+        color: #d9534f;
     }
+
+.text-blue {
+    color: #067de4;
+}
+
+    .text-blue:hover {
+        color: #067de4;
+    }
+
+.text-green {
+    color: #449d44;
+}
+
+.text-green:hover {
+    color: #449d44;
+}
+
+.rmvBtn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.addImgBtn{
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    font-weight:400 !important;
+}
+.addImgBtn:hover > .PImg{
+    opacity: 0.8;
+}

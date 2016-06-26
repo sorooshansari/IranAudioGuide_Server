@@ -22,7 +22,9 @@ namespace IranAudioGuide_Server.Migrations
             RoleCreator(context, "Admin");
 
             //Add User
-            AddUser("admin@a.com", "1234567890", "/images/Members/Soroosh.JPG", "Soroosh Ansari", "Admin", context);
+            AddUser("sorosh.ansari@gmail.com", "1234567890", "/images/Members/Soroosh.JPG", "Soroosh Ansari", "Admin", context);
+            AddUser("hakhlaghi@gmail.com", "1234567890", "/images/Members/Hamed.JPG", "Hamed Akhlaghi", "Admin", context);
+            AddUser("monaakhlaghi@gmail.com", "1234567890", "/images/Members/Mona.JPG", "Mona Akhlaghi", "Admin", context);
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -64,6 +66,6 @@ namespace IranAudioGuide_Server.Migrations
                 roleResult = RoleManager.Create(new IdentityRole(roleName));
             }
         }
-        
+
     }
 }

@@ -113,6 +113,17 @@ namespace IranAudioGuide_Server.Models
         public string ImgUrl { get; set; }
         public string PlaceAddress { get; set; }
         public string PlaceCordinates { get; set; }
+}
+    public class ImageVM
+    {
+        public Guid ImageId { get; set; }
+        public string ImageName { get; set; }
+        public int Index { get; set; }
+    }
+    public class NewImageVM
+    {
+        public Guid PlaceId { get; set; }
+        public HttpPostedFileBase NewImage { get; set; }
     }
     public class ChangeImageVM
     {

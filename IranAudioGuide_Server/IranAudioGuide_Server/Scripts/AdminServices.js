@@ -1,13 +1,7 @@
 ﻿angular.module('AdminPage.services', [])
 .service('PlaceServices', ['$rootScope', '$http', function ($rootScope, $http) {
     var Places = [];
-    //var getModelAsFormData = function (data) {
-    //    var dataAsFormData = new FormData();
-    //    angular.forEach(data, function (value, key) {
-    //        dataAsFormData.append(key, value);
-    //    });
-    //    return dataAsFormData;
-    //};
+    var ExtraImages = [];
     return {
         Get: function (PageNum) {
             method = 'POST';
@@ -147,6 +141,69 @@
                           console.log(response.data.content);
                           break;
                       default:
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        GetExtraImages: function (PlaceId) {
+            method = 'POST';
+            url = '/Admin/GetExtraImages';
+            data = { placeId: PlaceId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  angular.copy(response.data, ExtraImages);
+              }, function (response) {
+                  console.log("Request failed");
+              });
+            return ExtraImages;
+        },
+        AddExtraImage: function (image, placeId) {
+            method = 'POST';
+            url = '/Admin/AddPlaceExtraImage';
+            var fd = new FormData();
+            fd.append('NewImage', image);
+            fd.append('PlaceId', placeId);
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).
+              then(function (response) {
+                  if (response.data.status == 0) {
+                      $rootScope.$broadcast('UpdateExtraImg', {});
+                  }
+                  else {
+                      $rootScope.$broadcast('ExtraImgUnknownError', {
+                          data: response.data.content
+                      });
+                      console.log("Server failed to add Place.");
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        DelExtraImage: function (placeId) {
+            method = 'POST';
+            url = '/Admin/DelPlaceExtraImage';
+            data = { imgId: placeId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdateExtraImg', {});
+                          break;
+                      case 3:
+                          $rootScope.$broadcast('PlaceUnknownError', {});
+                          console.log(response.data.content);
+                          break;
+                      default:
+
                   }
               }, function (response) {
                   console.log("Request failed");
