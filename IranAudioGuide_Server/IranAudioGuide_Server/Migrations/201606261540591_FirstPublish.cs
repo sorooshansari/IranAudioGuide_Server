@@ -3,7 +3,7 @@ namespace IranAudioGuide_Server.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreatingDb : DbMigration
+    public partial class FirstPublish : DbMigration
     {
         public override void Up()
         {
@@ -159,8 +159,9 @@ END
             Sql(string.Format(DeleteProcedure, "DeleteCity", "cities", "Cit", "int"));
             Sql(string.Format(DeleteProcedure, "DeletePlace", "Places", "Pla", "uniqueidentifier"));
 
+
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");

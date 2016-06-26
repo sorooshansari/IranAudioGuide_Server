@@ -13,8 +13,8 @@ namespace IranAudioGuide_Server.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "IranAudioGuide_Server.Models.ApplicationDbContext";
         }
+
 
         protected override void Seed(IranAudioGuide_Server.Models.ApplicationDbContext context)
         {
