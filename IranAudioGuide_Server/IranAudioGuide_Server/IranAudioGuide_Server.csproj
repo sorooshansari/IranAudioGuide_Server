@@ -225,7 +225,6 @@
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
-    <Content Include="Audios\a.mp3" />
     <Content Include="Content\AdminCustom.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -1154,6 +1153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Audios\" />
     <Folder Include="images\Places\Extras\" />
   </ItemGroup>
   <ItemGroup>
