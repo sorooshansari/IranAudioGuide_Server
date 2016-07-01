@@ -353,7 +353,7 @@
     </div>
 
     <!-- Edit Place Modal -->
-    <div class="modal fade" id="EditPlaceModal" tabindex="-1" role="dialog" aria-labelledby="EditPlaceModalLabel">
+    <div class="modal fade" id="EditPlaceModal" tabindex="-2" role="dialog" aria-labelledby="EditPlaceModalLabel">
         <!--overlay-->
         <div ng-show="EditOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
             <div id="floatingCirclesG">
@@ -394,6 +394,7 @@
                                 <div class="row">
                                     <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true" name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImages">
                                         <img ng-click="RemoveExtraImg(img.ImageId)" src="../images/Places/Extras/{{img.ImageName}}" />
+                                        <i ng-click="EditEIDescModal(img)" ng-show="img.rmvShow" class="btn fa fa-pencil text-blue EditDescBtn"></i>
                                         <i ng-click="RemoveExtraImg(img.ImageId)" ng-show="img.rmvShow" class="btn fa fa-remove text-red rmvBtn"></i>
                                     </div>
                                 </div>
@@ -420,6 +421,33 @@
                     <div class="modal-footer">
                         <input type="button" id="EditPlaceModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
                         <input type="submit" class="addBtn" value="Save Changes" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Extra Image Description Modal -->
+    <div class="modal fade" id="EditEIDescModal" tabindex="-1" role="dialog" aria-labelledby="EditEIDescModalLabel">
+        <div class="modal-dialog" role="document">
+            <form role="form" name="EditEIDescForm" ng-submit="EditEIDesc(EditEIDescVM)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-primary">Edit Image Description</h3>
+                        <a href="" ng-click="hide('#EditEIDescModal')">
+                            <i class="fa fa-2x fa-times ModalDismissIco"></i>
+                        </a>
+                    </div>
+                    <div class="modal-body" style="padding: 15px;">
+                        <div class="row">
+                            <div class="12u$">
+                                <textarea ng-model="EditEIDescVM.Desc" placeholder="Image Description" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" id="EditEIDescModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
+                        <input type="submit" class="addBtn" value="Save Description" />
                     </div>
                 </div>
             </form>

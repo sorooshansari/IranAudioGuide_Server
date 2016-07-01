@@ -554,7 +554,12 @@ form textarea {
 .rmvBtn {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 65%;
+}
+.EditDescBtn{
+    position: absolute;
+    top: 50%;
+    left: 35%;
 }
 .addImgBtn{
     position: absolute;

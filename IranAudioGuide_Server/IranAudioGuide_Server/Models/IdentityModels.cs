@@ -64,6 +64,7 @@ namespace IranAudioGuide_Server.Models
         public System.Guid Img_Id { get; set; }
         public string Img_Name { get; set; }
         public virtual Place Pla_Id { get; set; }
+        public string Img_Description { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

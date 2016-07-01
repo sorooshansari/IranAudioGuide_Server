@@ -198,6 +198,37 @@
                       case 0:
                           $rootScope.$broadcast('UpdateExtraImg', {});
                           break;
+                      case 2:
+                          $rootScope.$broadcast('Invalid Id', {});
+                          console.log(response.data.content);
+                          break;
+                      case 3:
+                          $rootScope.$broadcast('PlaceUnknownError', {});
+                          console.log(response.data.content);
+                          break;
+                      default:
+
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        EditEIDesc: function (EditEIDescVM) {
+            method = 'POST';
+            url = '/Admin/EditPlaceExtraImageDesc';
+            data = { ImageId: EditEIDescVM.ImageId, ImageDesc: EditEIDescVM.Desc };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  switch (response.data.status) {
+                      case 0:
+                          $('#EditEIDescModal').modal('hide');
+                          $rootScope.$broadcast('UpdateExtraImg', {});
+                          break;
+                      case 2:
+                          $rootScope.$broadcast('Invalid Id', {});
+                          console.log(response.data.content);
+                          break;
                       case 3:
                           $rootScope.$broadcast('PlaceUnknownError', {});
                           console.log(response.data.content);

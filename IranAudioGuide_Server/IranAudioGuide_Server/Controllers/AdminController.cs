@@ -16,7 +16,7 @@ namespace IranAudioGuide_Server.Controllers
         private const int pagingLen = 5;
         private Object ChangeImgLock = new Object();
         private Object DelExtraImg = new Object();
-        private Object DelAdo = new Object(); 
+        private Object DelAdo = new Object();
         private Object DelPlc = new Object();
         // GET: Admin
         [Authorize(Roles = "Admin")]
@@ -368,6 +368,26 @@ namespace IranAudioGuide_Server.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        public JsonResult EditPlaceExtraImageDesc(EditEIDescVM model)
+        {
+            try
+            {
+                var img = db.Images.Where(x => x.Img_Id == model.ImageId).FirstOrDefault();
+                if (img==default(Image))
+                {
+                    return Json(new Respond("Invalid Image Id", 2));
+                }
+                img.Img_Description = model.ImageDesc;
+                db.SaveChanges();
+                return Json(new Respond());
+            }
+            catch (Exception ex)
+            {
+                return Json(new Respond(ex.Message, 3));
+            }
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public JsonResult GetExtraImages(Guid placeId)
         {
             return Json(GetImages(placeId));
@@ -537,7 +557,8 @@ namespace IranAudioGuide_Server.Controllers
                        select new ImageVM()
                        {
                            ImageId = i.Img_Id,
-                           ImageName = i.Img_Name
+                           ImageName = i.Img_Name,
+                           ImageDesc = i.Img_Description
                        }).ToList();
             int counter = 0;
             foreach (var i in img)

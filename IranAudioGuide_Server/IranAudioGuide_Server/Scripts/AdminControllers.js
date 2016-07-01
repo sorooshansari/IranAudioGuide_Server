@@ -251,8 +251,18 @@ angular.module('AdminPage.controllers', [])
         $scope.AddExtraImage = function (image) {
             PlaceServices.AddExtraImage(image.files[0], $scope.EditPlaceVM.PlaceId);
         };
-        $scope.RemoveExtraImg = function (placeId) {
-            PlaceServices.DelExtraImage(placeId);
+        $scope.RemoveExtraImg = function (ImageId) {
+            PlaceServices.DelExtraImage(ImageId);
+        };
+        $scope.EditEIDescVM = {};
+        $scope.EditEIDescModal = function (image) {
+            console.log(image);
+            $scope.EditEIDescVM.ImageId = image.ImageId;
+            $scope.EditEIDescVM.Desc = image.ImageDesc;
+            $('#EditEIDescModal').modal('show');
+        };
+        $scope.EditEIDesc = function (EditEIDescVM) {
+            PlaceServices.EditEIDesc(EditEIDescVM);
         };
         $scope.$on('UpdateExtraImg', function (event) {
             $scope.selectedPlace.ExtraImages = PlaceServices.GetExtraImages($scope.EditPlaceVM.PlaceId);

@@ -119,6 +119,12 @@ namespace IranAudioGuide_Server.Models
         public Guid ImageId { get; set; }
         public string ImageName { get; set; }
         public int Index { get; set; }
+        public string ImageDesc { get; set; }
+    }
+    public class EditEIDescVM
+    {
+        public Guid ImageId { get; set; }
+        public string ImageDesc { get; set; }
     }
     public class NewImageVM
     {
