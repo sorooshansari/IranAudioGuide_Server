@@ -24,6 +24,117 @@ angular.module('AdminPage.controllers', [])
             NewPlaceForm.imgUrl.value = o.files[0].name;
         }
 
+        //Online Player stuff
+        $scope.OnlineselectedPlaceId;
+        $rootScope.OnlinePlaceimage = "160x100.png";
+        $scope.OnlineAudioTitle = "...";
+        $rootScope.OnlineAudios;
+        $scope.OnlinePlayStatus = "play";
+        var OnlinePlayingIndex;
+        var OnlineAudio;
+        var OnlineAudioStatus = "empty"; //empty, play, puase
+        $scope.OnlineLoadPlaceAudios = function (PlaceId) {
+            $scope.OnlineSelectedPlaceId = PlaceId;
+            $scope.OnlineAudioTitle = "...";
+            OnlineAudioStatus = "empty";
+            AudioServices.OnlineGet(PlaceId);
+        };
+        $scope.$on('OnlineFillFirstAudio', function (event) {
+            $scope.OnlineLoadAudio(1);
+        });
+        $scope.OnlineLoadAudio = function (audioIndex) {
+            OnlinePlayingIndex = audioIndex;
+            angular.forEach($rootScope.OnlineAudios, function (value, key) {
+                if (value.Index == audioIndex) {
+                    if (OnlineAudioStatus != "empty") {
+                        OnlineAudio.pause();
+                        $scope.OnlinePlayStatus = "play";
+                    }
+                    $scope.OnlineAudioTitle = value.Aud_Name;
+                    var src = "../Audios/" + value.Aud_Url;
+                    OnlineAudio = new Audio(src);
+                    OnlineAudioStatus = "pause";
+                    return;
+                }
+            });
+        }
+        $scope.OnlineAudio_Play = function () {
+            switch (OnlineAudioStatus) {
+                case "empty":
+                    break;
+                case "play":
+                    OnlineAudio.pause();
+                    $scope.OnlinePlayStatus = "play";
+                    OnlineAudioStatus = "pause";
+                    break;
+                case "pause":
+                    OnlineAudio.play();
+                    $scope.OnlinePlayStatus = "pause";
+                    OnlineAudioStatus = "play";
+                    break;
+                default:
+
+            }
+        };
+        $scope.OnlineAudio_prev = function () {
+            if (OnlinePlayingIndex > 1) {
+                if (OnlineAudioStatus == "play")
+                    $scope.OnlineAudio_Play(); //first pause the playing audio
+                $scope.OnlineLoadAudio(OnlinePlayingIndex - 1);
+                $scope.OnlineAudio_Play();
+            }
+        };
+        $scope.OnlineAudio_next = function () {
+            if ($rootScope.OnlineAudios.length > OnlinePlayingIndex) {
+                if (OnlineAudioStatus == "play")
+                    $scope.OnlineAudio_Play(); //first pause the playing audio
+                $scope.OnlineLoadAudio(OnlinePlayingIndex + 1);
+                $scope.OnlineAudio_Play();
+            }
+        };
+
+        $scope.$on('OnlineLoadFirstPlaceAudios', function (event) {
+            if ($scope.OnlinePlaces.length > 0) {
+                $scope.OnlineLoadPlaceAudios($scope.OnlinePlaces[0].PlaceId);
+            }
+        });
+
+        //Online Place stuff
+        $rootScope.OnlinePlacePagesLen;
+        $rootScope.OnlinePlaceCurrentPage;
+        $scope.OnlinePlaces = PlaceServices.OnlineGet(0);
+        $scope.PreviousPlace = function () {
+            if ($rootScope.OnlinePlaceCurrentPage > 0)
+                $scope.OnlinePlaces = PlaceServices.OnlineGet($rootScope.OnlinePlaceCurrentPage - 1);
+        };
+        $scope.OnlineNextPlace = function () {
+            if ($rootScope.OnlinePlacePagesLen - $rootScope.OnlinePlaceCurrentPage > 1)
+                $scope.OnlinePlaces = PlaceServices.OnlineGet($rootScope.OnlinePlaceCurrentPage + 1);
+        };
+        $scope.OnlineRemovePlaceVM = {};
+        $scope.OnlineRemovePlaceModal = function (PlaceID, PlaceName) {
+            $scope.OnlineRemovePlaceVM.PlaceID = PlaceID;
+            $scope.OnlineRemovePlaceVM.PlaceName = PlaceName;
+            $('#OnlineEditPlaceModal').modal('show');
+        };
+        $scope.OnlineRemovePlace = function (PlaceID) {
+            PlaceServices.OnlineRemovePlace(PlaceID);
+        };
+        $scope.$on('OnlineUpdatePlaces', function (event) {
+            $scope.OnlinePlaces = PlaceServices.OnlineGet(0);
+            scroll("#OnlinePlaces");
+        });
+
+        //Edit Place
+        $scope.OnlineEditPlaceVM;
+        $scope.OnlineSelectedPlace = {};
+        $scope.OnlineShowEditPlaceModal = function (Place) {
+            $scope.OnlineSelectedPlace.ExtraImages = PlaceServices.GetExtraImages(Place.PlaceId);
+            $scope.OnlineSelectedPlace.Img = Place.ImgUrl;
+            $scope.OnlineEditPlaceVM = angular.copy(Place);
+            $('#OnlineEditPlaceModal').modal('show');
+        };
+
         //Player stuff
         $scope.selectedPlaceId;
         $rootScope.placeimage = "160x100.png";
@@ -134,53 +245,6 @@ angular.module('AdminPage.controllers', [])
             NewAudioForm.AudioUrl.value = o.files[0].name;
         }
 
-        //validation stuff
-        //var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
-        //function Validate(oForm) {
-        //    var arrInputs = oForm.getElementsByTagName("input");
-        //    for (var i = 0; i < arrInputs.length; i++) {
-        //        var oInput = arrInputs[i];
-        //        if (oInput.type == "file") {
-        //            var sFileName = oInput.value;
-        //            if (sFileName.length > 0) {
-        //                var blnValid = false;
-        //                for (var j = 0; j < _validFileExtensions.length; j++) {
-        //                    var sCurExtension = _validFileExtensions[j];
-        //                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-        //                        blnValid = true;
-        //                        break;
-        //                    }
-        //                }
-
-        //                if (!blnValid) {
-        //                    alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
-        //                    return false;
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return true;
-        //}
-
-        //progress bar stuff
-        //var updateProgress = function () {
-        //    if (audio.duration == 'Infinity') { //If duration = infinity set value to 100
-        //        $scope.audioProgress = 100;
-        //    } else if (audio.currentTime > 0) { //else if it is > 0 calculate percentage to highlight
-        //        $scope.audioProgress = "{'width': " + Math.floor((100 / audio.duration) * audio.currentTime).toString() + "% !important}";
-        //        console.log($scope.audioProgress);
-        //    }
-        //    $scope.timeElapsed = formatTime(audio.currentTime);
-        //};
-        //var formatTime = function (seconds) {
-        //    minutes = Math.floor(seconds / 60);
-        //    minutes = (minutes >= 10) ? minutes : "" + minutes;
-        //    seconds = Math.floor(seconds % 60);
-        //    seconds = (seconds >= 10) ? seconds : "0" + seconds;
-        //    return minutes + ":" + seconds;
-        //}
-
         //Place stuff
         $rootScope.PlacePagesLen;
         $rootScope.PlaceCurrentPage;
@@ -226,6 +290,23 @@ angular.module('AdminPage.controllers', [])
             $scope.ForignKeyErrorBody = 'Unknown error prevent removing place. Contact site developer to get more information.'
             $scope.DelSubsBtn = "hidden";
             $('#ForignKeyErrorModal').modal('show');
+        });
+
+        //Get Online
+        $scope.GetOnlineVM = {};
+        $scope.ShowGetOnlineModal = function (PlaceId, PlaceName) {
+            $scope.GetOnlineVM.Id = PlaceId;
+            $scope.GetOnlineVM.Name = PlaceName;
+            $('#GoOnlineModal').modal('show');
+        };
+        $scope.GoOnline = function (PlaceId) {
+            PlaceServices.GoOnline(PlaceId);
+        };
+        $scope.$on('UpdateBothPlaces', function (event) {
+            $('#GoOnlineModal').modal('hide');
+            $scope.places = PlaceServices.Get(0);
+            $scope.OnlinePlaces = PlaceServices.OnlineGet(0);
+            scroll("#OnlinePlaces");
         });
 
         //Edit Place

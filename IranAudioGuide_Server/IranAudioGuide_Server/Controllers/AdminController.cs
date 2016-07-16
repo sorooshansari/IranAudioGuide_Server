@@ -210,6 +210,27 @@ namespace IranAudioGuide_Server.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        public JsonResult DeactiveOnlinePlace(Guid Id)
+        {
+            try
+            {
+                var place = db.OnlinePlaces.Where(x => x.OnP_Id == Id).FirstOrDefault();
+                if (place == default(OnlinePlace))
+                {
+                    return Json(new Respond("Invalid Place Id.", 2));
+                }
+                place.OnP_Deactive = true;
+                db.SaveChanges();
+                return Json(new Respond());
+            }
+            catch (Exception ex)
+            {
+                return Json(new Respond(ex.Message, 3));
+            }
+
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public JsonResult EditPlace(EditPlaceVM model)
         {
             if (!ModelState.IsValid)
@@ -257,9 +278,9 @@ namespace IranAudioGuide_Server.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult GetPlaces(int PageNum)
+        public JsonResult GetPlaces(int PageNum, bool isOnline = false)
         {
-            var places = GetPlaces();
+            var places = GetPlaces(isOnline);
             int pagesLen = (places.Count() % pagingLen == 0) ? places.Count() / pagingLen : (places.Count() / pagingLen) + 1;
             int remain = places.Count - (PageNum * pagingLen);
             //Gernerate Indexes
@@ -276,6 +297,43 @@ namespace IranAudioGuide_Server.Controllers
                 place.Index = ++counter;
             }
             return Json(Places);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult GoOnline(Guid PlaceId)
+        {
+            try
+            {
+                var place = db.Places.Where(x => x.Pla_Id == PlaceId).FirstOrDefault();
+                if (place == default(Place))
+                {
+                    return Json(new Respond("Invalid Place Id.", 2));
+                }
+                var onlinePlace = new OnlinePlace()
+                {
+                    OnP_Address = place.Pla_Address,
+                    OnP_Audios = place.Pla_Audios,
+                    OnP_city = place.Pla_city,
+                    OnP_cordinate_X = place.Pla_cordinate_X,
+                    OnP_cordinate_Y = place.Pla_cordinate_Y,
+                    OnP_Discription = place.Pla_Discription,
+                    OnP_ExtraImages = place.Pla_ExtraImages,
+                    OnP_ImgUrl = place.Pla_ImgUrl,
+                    OnP_Name = place.Pla_Name
+                };
+                using (var dbTrans = db.Database.BeginTransaction())
+                {
+                    place.Pla_Deactive = true;
+                    db.OnlinePlaces.Add(onlinePlace);
+                    db.SaveChanges();
+                    dbTrans.Commit();
+                }
+                return Json(new Respond());
+            }
+            catch (Exception ex)
+            {
+                return Json(new Respond(ex.Message, 3));
+            }
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -373,7 +431,7 @@ namespace IranAudioGuide_Server.Controllers
             try
             {
                 var img = db.Images.Where(x => x.Img_Id == model.ImageId).FirstOrDefault();
-                if (img==default(Image))
+                if (img == default(Image))
                 {
                     return Json(new Respond("Invalid Image Id", 2));
                 }
@@ -440,12 +498,35 @@ namespace IranAudioGuide_Server.Controllers
                     Cities.GetRange(PageNum * pagingLen, remain)
                 , pagesLen));
         }
-        private List<PlaceVM> GetPlaces()
+        private List<PlaceVM> GetPlaces(bool isOnline)
         {
+            List<PlaceVM> Places;
             try
             {
-                List<PlaceVM> Places =
+                if (isOnline)
+                {
+                    Places =
+                    (from place in db.OnlinePlaces
+                     where !place.OnP_Deactive
+                     orderby place.OnP_Id descending
+                     select new PlaceVM()
+                     {
+                         PlaceId = place.OnP_Id,
+                         ImgUrl = place.OnP_ImgUrl,
+                         PlaceDesc = place.OnP_Discription,
+                         PlaceName = place.OnP_Name,
+                         CityName = place.OnP_city.Cit_Name,
+                         PlaceAddress = place.OnP_Address,
+                         PlaceCordinates = place.OnP_cordinate_X.ToString() + "," + place.OnP_cordinate_Y.ToString(),
+                         PlaceCityId = place.OnP_city.Cit_Id
+                     }).ToList();
+                }
+                else
+                {
+
+                Places =
                     (from place in db.Places
+                     where !place.Pla_Deactive
                      orderby place.Pla_Id descending
                      select new PlaceVM()
                      {
@@ -458,6 +539,7 @@ namespace IranAudioGuide_Server.Controllers
                          PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
                          PlaceCityId = place.Pla_city.Cit_Id
                      }).ToList();
+                }
                 return Places;
             }
             catch (Exception ex)

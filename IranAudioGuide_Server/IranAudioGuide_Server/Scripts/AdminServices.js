@@ -1,6 +1,7 @@
 ﻿angular.module('AdminPage.services', [])
 .service('PlaceServices', ['$rootScope', '$http', function ($rootScope, $http) {
     var Places = [];
+    var OnlinePlaces = [];
     var ExtraImages = [];
     return {
         Get: function (PageNum) {
@@ -18,6 +19,22 @@
                   console.log("status:" + response.status);
               });
             return Places;
+        },
+        OnlineGet: function (PageNum) {
+            method = 'POST';
+            url = '/Admin/GetPlaces';
+            data = { PageNum: PageNum, isOnline: true };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  $rootScope.PlacePagesLen = response.data.PagesLen;
+                  $rootScope.PlaceCurrentPage = PageNum;
+                  angular.copy(response.data.Places, OnlinePlaces);
+                  $rootScope.$broadcast('OnlineLoadFirstPlaceAudios', {});
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return OnlinePlaces;
         },
         AddPlace: function (NewPlace) {
             method = 'POST';
@@ -72,6 +89,32 @@
                           console.log("Server failed to remove Place.");
                           break;
                       case 3:
+                          console.log(response.data.content);
+                          break;
+                      default:
+
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        OnlineRemovePlace: function (PlaceID) {
+            method = 'POST';
+            url = '/Admin/DeactiveOnlinePlace';
+            data = { Id: PlaceID };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('OnlineUpdatePlaces', {});
+                          break;
+                      case 2:
+                          console.log("Server failed to remove Place. Invalid Place Id.");
+                          console.log(response.data.content);
+                          break;
+                      case 3:
+                          $rootScope.$broadcast('PlaceUnknownError', {});
                           console.log(response.data.content);
                           break;
                       default:
@@ -188,10 +231,10 @@
               });
             return;
         },
-        DelExtraImage: function (placeId) {
+        DelExtraImage: function (imgId) {
             method = 'POST';
             url = '/Admin/DelPlaceExtraImage';
-            data = { imgId: placeId };
+            data = { imgId: imgId };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   switch (response.data.status) {
@@ -226,7 +269,33 @@
                           $rootScope.$broadcast('UpdateExtraImg', {});
                           break;
                       case 2:
-                          $rootScope.$broadcast('Invalid Id', {});
+                          $rootScope.$broadcast('InvalidId', {});
+                          console.log(response.data.content);
+                          break;
+                      case 3:
+                          $rootScope.$broadcast('PlaceUnknownError', {});
+                          console.log(response.data.content);
+                          break;
+                      default:
+
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        GoOnline: function (PlaceId) {
+            method = 'POST';
+            url = '/Admin/GoOnline';
+            data = { PlaceId: PlaceId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdateBothPlaces', {});
+                          break;
+                      case 2:
+                          $rootScope.$broadcast('InvalidId', {});
                           console.log(response.data.content);
                           break;
                       case 3:
@@ -341,6 +410,22 @@
                   $rootScope.placeimage = response.data.PlaceImage;
                   $rootScope.audios = angular.copy(response.data.audios);
                   $rootScope.$broadcast('FillFirstAudio', {});
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        OnlineGet: function (PlaceId) {
+            method = 'POST';
+            url = '/Admin/Audios';
+            data = { PlaceId: PlaceId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  var temp = [];
+                  $rootScope.OnlinePlaceimage = response.data.PlaceImage;
+                  $rootScope.OnlineAudios = angular.copy(response.data.audios);
+                  $rootScope.$broadcast('OnlineFillFirstAudio', {});
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);

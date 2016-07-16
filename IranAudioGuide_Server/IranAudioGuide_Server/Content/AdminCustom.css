@@ -515,7 +515,8 @@ form textarea {
     }
 }
 
-#EditPlaceModal .modal-body {
+#EditPlaceModal .modal-body,
+#OnlineEditPlaceModal .modal-body {
     overflow-y: scroll;
     max-height: 450px;
 }

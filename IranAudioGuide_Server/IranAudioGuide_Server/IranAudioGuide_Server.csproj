@@ -206,6 +206,42 @@
     <Compile Include="Migrations\201606261540591_FirstPublish.Designer.cs">
       <DependentUpon>201606261540591_FirstPublish.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607020655178_UpdatePlace.cs" />
+    <Compile Include="Migrations\201607020655178_UpdatePlace.Designer.cs">
+      <DependentUpon>201607020655178_UpdatePlace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607020659332_UpdatePlaceIndex.cs" />
+    <Compile Include="Migrations\201607020659332_UpdatePlaceIndex.Designer.cs">
+      <DependentUpon>201607020659332_UpdatePlaceIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607020709027_UpdatePlaceIndex2.cs" />
+    <Compile Include="Migrations\201607020709027_UpdatePlaceIndex2.Designer.cs">
+      <DependentUpon>201607020709027_UpdatePlaceIndex2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607020710454_UpdatePlaceIndex3.cs" />
+    <Compile Include="Migrations\201607020710454_UpdatePlaceIndex3.Designer.cs">
+      <DependentUpon>201607020710454_UpdatePlaceIndex3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607020713586_UpdatePlaceIndex4.cs" />
+    <Compile Include="Migrations\201607020713586_UpdatePlaceIndex4.Designer.cs">
+      <DependentUpon>201607020713586_UpdatePlaceIndex4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607020722531_UpdatePlaceIndex5.cs" />
+    <Compile Include="Migrations\201607020722531_UpdatePlaceIndex5.Designer.cs">
+      <DependentUpon>201607020722531_UpdatePlaceIndex5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607020725082_UpdatePlaceIndex6.cs" />
+    <Compile Include="Migrations\201607020725082_UpdatePlaceIndex6.Designer.cs">
+      <DependentUpon>201607020725082_UpdatePlaceIndex6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607020755271_UpdatePlaceIndex7.cs" />
+    <Compile Include="Migrations\201607020755271_UpdatePlaceIndex7.Designer.cs">
+      <DependentUpon>201607020755271_UpdatePlaceIndex7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607160903347_addUpdateCounter.cs" />
+    <Compile Include="Migrations\201607160903347_addUpdateCounter.Designer.cs">
+      <DependentUpon>201607160903347_addUpdateCounter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -1163,6 +1199,33 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201606261540591_FirstPublish.resx">
       <DependentUpon>201606261540591_FirstPublish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020655178_UpdatePlace.resx">
+      <DependentUpon>201607020655178_UpdatePlace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020659332_UpdatePlaceIndex.resx">
+      <DependentUpon>201607020659332_UpdatePlaceIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020709027_UpdatePlaceIndex2.resx">
+      <DependentUpon>201607020709027_UpdatePlaceIndex2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020710454_UpdatePlaceIndex3.resx">
+      <DependentUpon>201607020710454_UpdatePlaceIndex3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020713586_UpdatePlaceIndex4.resx">
+      <DependentUpon>201607020713586_UpdatePlaceIndex4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020722531_UpdatePlaceIndex5.resx">
+      <DependentUpon>201607020722531_UpdatePlaceIndex5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020725082_UpdatePlaceIndex6.resx">
+      <DependentUpon>201607020725082_UpdatePlaceIndex6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020755271_UpdatePlaceIndex7.resx">
+      <DependentUpon>201607020755271_UpdatePlaceIndex7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607160903347_addUpdateCounter.resx">
+      <DependentUpon>201607160903347_addUpdateCounter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
