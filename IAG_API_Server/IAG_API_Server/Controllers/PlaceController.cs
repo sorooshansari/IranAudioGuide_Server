@@ -24,32 +24,36 @@ namespace IAG_API_Server.Controllers
                 res.Add(new PlaceBasicInfo() { PlaceId = (Guid)dr["Id"], UpdateNum = (int)dr["UpdateNum"] });
             return res;
         }
-        // POST: api/Place
+        //POST: api/Place
         public IEnumerable<PlaceFullInfo> Post(params Guid[] IDs)
         {
-            if (IDs == null || IDs.Length > 0)
-                return null;
-            var table = new DataTable();
-            table.Columns.Add("Id", typeof(Guid));
-            foreach (var item in IDs)
-                table.Rows.Add(item);
-            var pList = new SqlParameter("@list", SqlDbType.Structured);
-            pList.TypeName = "dbo.IdList";
-            pList.Value = table;
-            var dt = dbManager.TableResultSP("GetPlaceWithDetails", pList);
+            DataTable dt;
+            if (IDs == null || IDs.Length == 0)
+                dt = dbManager.TableResultSP("GetPlaceWithDetails");
+            else
+            {
+                var table = new DataTable();
+                table.Columns.Add("Id", typeof(Guid));
+                foreach (var item in IDs)
+                    table.Rows.Add(item);
+                var pList = new SqlParameter("@list", SqlDbType.Structured);
+                pList.TypeName = "dbo.IdList";
+                pList.Value = table;
+                dt = dbManager.TableResultSP("GetPlaceWithDetails", pList);
+            }
             List<PlaceFullInfo> res = new List<PlaceFullInfo>();
             foreach (DataRow dr in dt.Rows)
                 res.Add(new PlaceFullInfo()
                 {
-                    Id = (Guid)dr["[OnP_Id]"],
-                    Name = (string)dr["[OnP_Name]"],
-                    imgUrl = (string)dr["[OnP_ImgUrl]"],
-                    desc = (string)dr["[OnP_Discription]"],
-                    c_x = (float)dr["[OnP_cordinate_X]"],
-                    C_y = (float)dr["[OnP_cordinate_Y]"],
-                    address = (string)dr["[OnP_Address]"],
-                    CityName = (string)dr["[Cit_Name]"],
-                    UpdateNumber = (int)dr["[OnP_UpdateNumber]"]
+                    Id = (Guid)dr["Id"],
+                    Name = (dr["Name"] == DBNull.Value) ? string.Empty : dr["Name"].ToString(),
+                    ImgUrl = (dr["Url"] == DBNull.Value) ? string.Empty : dr["Url"].ToString(),
+                    Desc = (dr["Descript"] == DBNull.Value) ? string.Empty : dr["Descript"].ToString(),
+                    CX = (double)dr["X"],
+                    CY = (double)dr["Y"],
+                    Address = (dr["Adr"] == DBNull.Value) ? string.Empty : dr["Adr"].ToString(),
+                    CityId = (int)dr["CityId"],
+                    UpdateNumber = (int)dr["UN"]
                 });
             return res;
         }

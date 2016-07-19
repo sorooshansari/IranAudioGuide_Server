@@ -208,27 +208,27 @@ namespace IranAudioGuide_Server.Controllers
             }
             return Json(new Respond("Invalid Place Id.", 3));
         }
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public JsonResult DeactiveOnlinePlace(Guid Id)
-        {
-            try
-            {
-                var place = db.OnlinePlaces.Where(x => x.OnP_Id == Id).FirstOrDefault();
-                if (place == default(OnlinePlace))
-                {
-                    return Json(new Respond("Invalid Place Id.", 2));
-                }
-                place.OnP_Deactive = true;
-                db.SaveChanges();
-                return Json(new Respond());
-            }
-            catch (Exception ex)
-            {
-                return Json(new Respond(ex.Message, 3));
-            }
+        //[HttpPost]
+        //[Authorize(Roles = "Admin")]
+        //public JsonResult DeactiveOnlinePlace(Guid Id)
+        //{
+        //    try
+        //    {
+        //        var place = db.OnlinePlaces.Where(x => x.OnP_Id == Id).FirstOrDefault();
+        //        if (place == default(OnlinePlace))
+        //        {
+        //            return Json(new Respond("Invalid Place Id.", 2));
+        //        }
+        //        place.OnP_Deactive = true;
+        //        db.SaveChanges();
+        //        return Json(new Respond());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new Respond(ex.Message, 3));
+        //    }
 
-        }
+        //}
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult EditPlace(EditPlaceVM model)
@@ -298,43 +298,43 @@ namespace IranAudioGuide_Server.Controllers
             }
             return Json(Places);
         }
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public JsonResult GoOnline(Guid PlaceId)
-        {
-            try
-            {
-                var place = db.Places.Where(x => x.Pla_Id == PlaceId).FirstOrDefault();
-                if (place == default(Place))
-                {
-                    return Json(new Respond("Invalid Place Id.", 2));
-                }
-                var onlinePlace = new OnlinePlace()
-                {
-                    OnP_Address = place.Pla_Address,
-                    OnP_Audios = place.Pla_Audios,
-                    OnP_city = place.Pla_city,
-                    OnP_cordinate_X = place.Pla_cordinate_X,
-                    OnP_cordinate_Y = place.Pla_cordinate_Y,
-                    OnP_Discription = place.Pla_Discription,
-                    OnP_ExtraImages = place.Pla_ExtraImages,
-                    OnP_ImgUrl = place.Pla_ImgUrl,
-                    OnP_Name = place.Pla_Name
-                };
-                using (var dbTrans = db.Database.BeginTransaction())
-                {
-                    place.Pla_Deactive = true;
-                    db.OnlinePlaces.Add(onlinePlace);
-                    db.SaveChanges();
-                    dbTrans.Commit();
-                }
-                return Json(new Respond());
-            }
-            catch (Exception ex)
-            {
-                return Json(new Respond(ex.Message, 3));
-            }
-        }
+        //[HttpPost]
+        //[Authorize(Roles = "Admin")]
+        //public JsonResult GoOnline(Guid PlaceId)
+        //{
+        //    try
+        //    {
+        //        var place = db.Places.Where(x => x.Pla_Id == PlaceId).FirstOrDefault();
+        //        if (place == default(Place))
+        //        {
+        //            return Json(new Respond("Invalid Place Id.", 2));
+        //        }
+        //        var onlinePlace = new OnlinePlace()
+        //        {
+        //            OnP_Address = place.Pla_Address,
+        //            OnP_Audios = place.Pla_Audios,
+        //            OnP_city = place.Pla_city,
+        //            OnP_cordinate_X = place.Pla_cordinate_X,
+        //            OnP_cordinate_Y = place.Pla_cordinate_Y,
+        //            OnP_Discription = place.Pla_Discription,
+        //            OnP_ExtraImages = place.Pla_ExtraImages,
+        //            OnP_ImgUrl = place.Pla_ImgUrl,
+        //            OnP_Name = place.Pla_Name
+        //        };
+        //        using (var dbTrans = db.Database.BeginTransaction())
+        //        {
+        //            place.Pla_Deactive = true;
+        //            db.OnlinePlaces.Add(onlinePlace);
+        //            db.SaveChanges();
+        //            dbTrans.Commit();
+        //        }
+        //        return Json(new Respond());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new Respond(ex.Message, 3));
+        //    }
+        //}
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult ChangePlaceImage(ChangeImageVM model)
@@ -506,19 +506,19 @@ namespace IranAudioGuide_Server.Controllers
                 if (isOnline)
                 {
                     Places =
-                    (from place in db.OnlinePlaces
-                     where !place.OnP_Deactive
-                     orderby place.OnP_Id descending
+                    (from place in db.Places
+                     where place.Pla_isOnline && !place.Pla_Deactive
+                     orderby place.Pla_Id descending
                      select new PlaceVM()
                      {
-                         PlaceId = place.OnP_Id,
-                         ImgUrl = place.OnP_ImgUrl,
-                         PlaceDesc = place.OnP_Discription,
-                         PlaceName = place.OnP_Name,
-                         CityName = place.OnP_city.Cit_Name,
-                         PlaceAddress = place.OnP_Address,
-                         PlaceCordinates = place.OnP_cordinate_X.ToString() + "," + place.OnP_cordinate_Y.ToString(),
-                         PlaceCityId = place.OnP_city.Cit_Id
+                         PlaceId = place.Pla_Id,
+                         ImgUrl = place.Pla_ImgUrl,
+                         PlaceDesc = place.Pla_Discription,
+                         PlaceName = place.Pla_Name,
+                         CityName = place.Pla_city.Cit_Name,
+                         PlaceAddress = place.Pla_Address,
+                         PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
+                         PlaceCityId = place.Pla_city.Cit_Id
                      }).ToList();
                 }
                 else

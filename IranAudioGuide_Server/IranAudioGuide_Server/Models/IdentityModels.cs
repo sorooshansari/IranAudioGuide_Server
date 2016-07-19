@@ -22,7 +22,14 @@ namespace IranAudioGuide_Server.Models
         public string FullName { get; set; }
         public string ImgUrl { get; set; }
     }
-
+    public class UpdateLog {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UpL_Id { get; set; }
+        public System.Guid? Aud_Id { get; set; }
+        public System.Guid? Pla_ID { get; set; }
+        public int? Cit_ID { get; set; }
+    }
     public class Audio
     {
         [Key]
@@ -48,24 +55,25 @@ namespace IranAudioGuide_Server.Models
         public double Pla_cordinate_Y { get; set; }
         public string Pla_Address { get; set; }
         public bool Pla_Deactive { get; set; }
+        public bool Pla_isOnline { get; set; }
     }
-    public class OnlinePlace
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public System.Guid OnP_Id { get; set; }
-        public string OnP_Name { get; set; }
-        public string OnP_ImgUrl { get; set; }
-        public string OnP_Discription { get; set; }
-        public List<Audio> OnP_Audios { get; set; }
-        public List<Image> OnP_ExtraImages { get; set; }
-        public city OnP_city { get; set; }
-        public double OnP_cordinate_X { get; set; }
-        public double OnP_cordinate_Y { get; set; }
-        public string OnP_Address { get; set; }
-        public bool OnP_Deactive { get; set; }
-        public int OnP_UpdateNumber { get; set; }
-    }
+    //public class OnlinePlace
+    //{
+    //    [Key]
+    //    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    //    public System.Guid OnP_Id { get; set; }
+    //    public string OnP_Name { get; set; }
+    //    public string OnP_ImgUrl { get; set; }
+    //    public string OnP_Discription { get; set; }
+    //    public List<Audio> OnP_Audios { get; set; }
+    //    public List<Image> OnP_ExtraImages { get; set; }
+    //    public city OnP_city { get; set; }
+    //    public double OnP_cordinate_X { get; set; }
+    //    public double OnP_cordinate_Y { get; set; }
+    //    public string OnP_Address { get; set; }
+    //    public bool OnP_Deactive { get; set; }
+    //    public int OnP_UpdateNumber { get; set; }
+    //}
     public class city
     {
         [Key]
@@ -100,7 +108,8 @@ namespace IranAudioGuide_Server.Models
         public DbSet<Place> Places { get; set; }
         public DbSet<city> Cities { get; set; }
         public DbSet<Image> Images { get; set; }
-        public DbSet<OnlinePlace> OnlinePlaces { get; set; }
+        public DbSet<UpdateLog> UpdateLogs { get; set; }
+        //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_Server.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

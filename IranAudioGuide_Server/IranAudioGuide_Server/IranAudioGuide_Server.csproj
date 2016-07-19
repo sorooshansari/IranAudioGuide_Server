@@ -242,6 +242,26 @@
     <Compile Include="Migrations\201607160903347_addUpdateCounter.Designer.cs">
       <DependentUpon>201607160903347_addUpdateCounter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607181834169_RemoveOnlinePlaces.cs" />
+    <Compile Include="Migrations\201607181834169_RemoveOnlinePlaces.Designer.cs">
+      <DependentUpon>201607181834169_RemoveOnlinePlaces.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607181848162_AddUpdateNumber.cs" />
+    <Compile Include="Migrations\201607181848162_AddUpdateNumber.Designer.cs">
+      <DependentUpon>201607181848162_AddUpdateNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607191054478_UploadLogAdded.cs" />
+    <Compile Include="Migrations\201607191054478_UploadLogAdded.Designer.cs">
+      <DependentUpon>201607191054478_UploadLogAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607191329337_UploadLogAdded2.cs" />
+    <Compile Include="Migrations\201607191329337_UploadLogAdded2.Designer.cs">
+      <DependentUpon>201607191329337_UploadLogAdded2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607191446032_UploadLogAdded3.cs" />
+    <Compile Include="Migrations\201607191446032_UploadLogAdded3.Designer.cs">
+      <DependentUpon>201607191446032_UploadLogAdded3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -1226,6 +1246,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607160903347_addUpdateCounter.resx">
       <DependentUpon>201607160903347_addUpdateCounter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607181834169_RemoveOnlinePlaces.resx">
+      <DependentUpon>201607181834169_RemoveOnlinePlaces.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607181848162_AddUpdateNumber.resx">
+      <DependentUpon>201607181848162_AddUpdateNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607191054478_UploadLogAdded.resx">
+      <DependentUpon>201607191054478_UploadLogAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607191329337_UploadLogAdded2.resx">
+      <DependentUpon>201607191329337_UploadLogAdded2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607191446032_UploadLogAdded3.resx">
+      <DependentUpon>201607191446032_UploadLogAdded3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
