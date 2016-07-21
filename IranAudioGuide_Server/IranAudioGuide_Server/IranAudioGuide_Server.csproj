@@ -262,6 +262,14 @@
     <Compile Include="Migrations\201607191446032_UploadLogAdded3.Designer.cs">
       <DependentUpon>201607191446032_UploadLogAdded3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607201921283_tumbnail_added.cs" />
+    <Compile Include="Migrations\201607201921283_tumbnail_added.Designer.cs">
+      <DependentUpon>201607201921283_tumbnail_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607201937560_LOG-UPDATED.cs" />
+    <Compile Include="Migrations\201607201937560_LOG-UPDATED.Designer.cs">
+      <DependentUpon>201607201937560_LOG-UPDATED.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -1261,6 +1269,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607191446032_UploadLogAdded3.resx">
       <DependentUpon>201607191446032_UploadLogAdded3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607201921283_tumbnail_added.resx">
+      <DependentUpon>201607201921283_tumbnail_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607201937560_LOG-UPDATED.resx">
+      <DependentUpon>201607201937560_LOG-UPDATED.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

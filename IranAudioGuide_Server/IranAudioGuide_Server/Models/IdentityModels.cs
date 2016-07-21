@@ -29,6 +29,7 @@ namespace IranAudioGuide_Server.Models
         public System.Guid? Aud_Id { get; set; }
         public System.Guid? Pla_ID { get; set; }
         public int? Cit_ID { get; set; }
+        public System.Guid? Img_Id { get; set; }
     }
     public class Audio
     {
@@ -47,6 +48,7 @@ namespace IranAudioGuide_Server.Models
         public System.Guid Pla_Id { get; set; }
         public string Pla_Name { get; set; }
         public string Pla_ImgUrl { get; set; }
+        public string Pla_TumbImgUrl { get; set; }
         public string Pla_Discription { get; set; }
         public List<Audio> Pla_Audios { get; set; }
         public List<Image> Pla_ExtraImages { get; set; }
@@ -57,23 +59,6 @@ namespace IranAudioGuide_Server.Models
         public bool Pla_Deactive { get; set; }
         public bool Pla_isOnline { get; set; }
     }
-    //public class OnlinePlace
-    //{
-    //    [Key]
-    //    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    //    public System.Guid OnP_Id { get; set; }
-    //    public string OnP_Name { get; set; }
-    //    public string OnP_ImgUrl { get; set; }
-    //    public string OnP_Discription { get; set; }
-    //    public List<Audio> OnP_Audios { get; set; }
-    //    public List<Image> OnP_ExtraImages { get; set; }
-    //    public city OnP_city { get; set; }
-    //    public double OnP_cordinate_X { get; set; }
-    //    public double OnP_cordinate_Y { get; set; }
-    //    public string OnP_Address { get; set; }
-    //    public bool OnP_Deactive { get; set; }
-    //    public int OnP_UpdateNumber { get; set; }
-    //}
     public class city
     {
         [Key]

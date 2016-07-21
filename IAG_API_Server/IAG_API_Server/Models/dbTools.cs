@@ -25,7 +25,8 @@ namespace IAG_API_Server.Models
                 Places = FillPlaceVM(dt[0]),
                 Audios = FillAudioVM(dt[1]),
                 Cities = FillCityVM(dt[2]),
-                UpdateNumber = GetNumFromdataTable(dt[3])
+                Images = FillImageVM(dt[3]),
+                UpdateNumber = GetNumFromdataTable(dt[4])
             };
             return res;
         }
@@ -37,6 +38,19 @@ namespace IAG_API_Server.Models
             return res;
         }
 
+        private List<ImagesFullInfno> FillImageVM(DataTable dataTable)
+        {
+            List<ImagesFullInfno> res = new List<ImagesFullInfno>();
+            foreach (DataRow dr in dataTable.Rows)
+                res.Add(new ImagesFullInfno()
+                {
+                    PlaceId = (Guid)dr["PlaceId"],
+                    ID = (Guid)dr["Id"],
+                    Desc = (dr["Descript"] == DBNull.Value) ? string.Empty : dr["Descript"].ToString(),
+                    Url = (dr["Url"] == DBNull.Value) ? string.Empty : dr["Url"].ToString()
+                });
+            return res;
+        }
         private List<CitiesFullInfno> FillCityVM(DataTable dataTable)
         {
             List<CitiesFullInfno> res = new List<CitiesFullInfno>();
@@ -73,6 +87,7 @@ namespace IAG_API_Server.Models
                     Id = (Guid)dr["Id"],
                     Name = (dr["Name"] == DBNull.Value) ? string.Empty : dr["Name"].ToString(),
                     ImgUrl = (dr["Url"] == DBNull.Value) ? string.Empty : dr["Url"].ToString(),
+                    TNImgUrl = (dr["Url"] == DBNull.Value) ? string.Empty : dr["TNUrl"].ToString(),
                     Desc = (dr["Descript"] == DBNull.Value) ? string.Empty : dr["Descript"].ToString(),
                     CX = (double)dr["X"],
                     CY = (double)dr["Y"],

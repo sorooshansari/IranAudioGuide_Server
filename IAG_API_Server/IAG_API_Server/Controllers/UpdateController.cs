@@ -13,9 +13,10 @@ namespace IAG_API_Server.Controllers
     public class UpdateController : ApiController
     {
         dbTools dbTools = new dbTools();
-        // GET: api/Update
-        public void Get([FromBody]string value)
+        // GET: api/Update/5
+        public GetAllVM Get(int LastUpdateNumber)
         {
+            return dbTools.GetUpdate(LastUpdateNumber);
         }
         
         // POST: api/Update/5
