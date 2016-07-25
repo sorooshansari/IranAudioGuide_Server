@@ -1,0 +1,16 @@
+﻿body {
+}
+.center{
+    margin-left: auto;
+    margin-right: auto;
+}
+.noBoarder{
+    border: none !important;
+}
+.player{
+    margin: 0;
+    padding: 0;
+}
+.ClearBtn{
+    margin-right: 5%;
+}

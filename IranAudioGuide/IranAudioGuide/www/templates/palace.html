@@ -1,0 +1,47 @@
+<ion-view title="{{PageTitle}}" id="page6">
+    <ion-content padding="true" class="has-header">
+        <div>
+            <img src="img/6.jpg" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+        </div>
+        <div class="list card">
+            <div class="item item-divider">Tomb of Hafez</div>
+            <div class="item item-body">
+                The Tomb of Hafez and its associated memorial hall, the Hafezieh, are two memorial structures erected in the northern edge of Shiraz, Iran, in memory of the celebrated Persian poet Hafez. 
+            </div>
+        </div>
+        <ion-list>
+            <ion-item class="item-icon-left" 
+                      ng-repeat="audio in Audios" 
+                      type="item-text-wrap"
+                      ng-click="playPause(audio)">
+                <i class="icon ion-{{audio.icoStatus}}" ng-init="audio.icoStatus = 'play'"></i>
+                {{audio.title}}
+            </ion-item>
+        </ion-list>
+
+
+        <!--<div class="list">
+
+            <a href="#" class="item item-icon-left" ng-click="playPause()">
+                <i class="icon ion-play"></i>
+                Enter home address
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-play"></i>
+                Enter phone number
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-play"></i>
+                Enter wireless password
+            </a>
+
+            <a href="#" class="item item-icon-left">
+                <i class="icon ion-play"></i>
+                Enter card information
+            </a>
+        </div>-->
+        <div class="margin"></div>
+    </ion-content>
+</ion-view>
