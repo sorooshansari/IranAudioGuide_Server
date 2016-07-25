@@ -189,6 +189,7 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlaceController.cs" />
+    <Compile Include="Controllers\test2Controller.cs" />
     <Compile Include="Controllers\testController.cs" />
     <Compile Include="Controllers\UpdateController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

@@ -1219,6 +1219,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Audios\" />
     <Folder Include="images\Places\Extras\" />
+    <Folder Include="images\Places\TumbnailImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
