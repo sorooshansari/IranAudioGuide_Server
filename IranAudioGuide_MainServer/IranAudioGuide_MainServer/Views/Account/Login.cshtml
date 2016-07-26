@@ -1,0 +1,61 @@
+﻿@using IranAudioGuide_MainServer.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<section id="promo" class="content-block min-height-600px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <h2>Everything is awesome!</h2>
+                <p>Suspendisse ac pretium sapien, placerat lacinia enim. Fusce eu elit quis lacus cursus mollis. In feugiat diam id sem consectetur, id accumsan risus venenatis.</p>
+
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8 checkbox">
+                            @*<input type="checkbox" id="RememberMe" name="RememberMe" value="true">
+                            <label for="RememberMe">Remember me?</label>*@
+                            @*<input type="checkbox" id="a" name="a" value="true">*@
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <input type="submit" class="btn btn-default btn-block" value="Sign in" />
+                        </div>
+                    </div>
+                    <p>
+                        @Html.ActionLink("Register as a new user", "Register")
+                    </p>
+                }
+
+            </div>
+            <!-- /.col -->
+            <div class="col-md-6 col-md-offset-1">
+                <div class="video-wrapper">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+</section>
+@Scripts.Render("~/bundles/jqueryval")
