@@ -1,18 +1,27 @@
 angular.module('app.controllers', [])
 
+.controller('firstPageCtrl', function ($scope, $cordovaOauth) {
+    $scope.googleLogin = function () {
+        console.log("hi");
+        $cordovaOauth.google("751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
+            ["https://www.googleapis.com/auth/urlshortener", "https://www.googleapis.com/auth/userinfo.email"])
+            .then(function (result) {
+                console.log(JSON.stringify(result));
+            }, function (error) {
+                console.log(error);
+            });
+    }
+})
+
+.controller('secondPageCtrl', function ($scope) {
+
+})
+
 .controller('loginCtrl', function ($scope) {
 
 })
 
 .controller('signupCtrl', function ($scope) {
-
-})
-
-.controller('firstPageCtrl', function ($scope) {
-
-})
-
-.controller('secondPageCtrl', function ($scope) {
 
 })
 
@@ -76,7 +85,7 @@ angular.module('app.controllers', [])
             $scope.selectedPlaces = [];
             if (word != '') {
                 var tempList = [];
-                for (var i = 0; i < AllPlaces.length; i++){
+                for (var i = 0; i < AllPlaces.length; i++) {
                     if (AllPlaces[i].name.indexOf(word) > -1 &&
                         (SelectedCityId == 0 || AllPlaces[i].CityId == SelectedCityId))
                         tempList.push(AllPlaces[i]);
