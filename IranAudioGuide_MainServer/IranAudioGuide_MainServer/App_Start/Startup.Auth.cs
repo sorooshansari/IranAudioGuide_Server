@@ -58,11 +58,11 @@ namespace IranAudioGuide_MainServer
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
+                ClientSecret = "1kvO5-vGb9kkaaQRV8M1-pM-"
+            });
         }
     }
 }
