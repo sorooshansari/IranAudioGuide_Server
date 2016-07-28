@@ -4,9 +4,9 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
 .run(function ($ionicPlatform, $rootScope, $cordovaDialogs, ApiServices, dbServices, FileServices) {
     var start = 0, SplashTime = 3000;
     $ionicPlatform.ready(function () {
+        navigator.splashscreen.show();
         start = new Date().getTime();
         $rootScope.waitingUpdates = -1;
-        navigator.splashscreen.show();
         //checkConnection();
 
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

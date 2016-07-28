@@ -1,5 +1,24 @@
 angular.module('app.controllers', [])
 
+.controller('loginCtrl', function ($scope) {
+
+})
+
+.controller('signupCtrl', function ($scope) {
+
+})
+
+.controller('firstPageCtrl', function ($scope) {
+
+})
+
+.controller('secondPageCtrl', function ($scope) {
+
+})
+
+.controller('recoverPasswordCtrl', function ($scope) {
+
+})
 .controller('homeCtrl', function ($scope, SlideShows, Places, $cordovaFile) {
     $scope.PageTitle = 'Iran Audio Guide'
     $scope.SlideShows = SlideShows.all();

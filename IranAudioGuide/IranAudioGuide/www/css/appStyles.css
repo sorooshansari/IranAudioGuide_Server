@@ -1,16 +1,50 @@
 ﻿body {
 }
-.center{
+
+.center {
     margin-left: auto;
     margin-right: auto;
 }
-.noBoarder{
+
+.noBoarder {
     border: none !important;
 }
-.player{
+
+.player {
     margin: 0;
     padding: 0;
 }
-.ClearBtn{
+
+.ClearBtn {
     margin-right: 5%;
+}
+
+.ListBtn {
+    border-radius: 0px 0px 0px 0px;
+    margin-top: 0px !important;
+}
+
+.intputLable {
+    width: 25px;
+}
+
+.gradiantBG {
+    background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+}
+
+.bar-transparent .bar.bar-header {
+    background: rgba(255,255,255,0);
+    border-bottom-width: 0;
+}
+
+    .bar-transparent .bar.bar-header h1 {
+        color: black !important;
+    }
+
+.bar-transparent .scroll-content {
+    overflow: visible !important;
+}
+
+.bar-transparent .platform-ios.platform-cordova:not(.fullscreen) .has-header {
+    top: 0px;
 }

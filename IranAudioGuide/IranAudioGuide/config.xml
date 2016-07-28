@@ -1,12 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.tourapp194994" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>tourApp</name>
-  <description>
-        An Ionic Framework and Cordova project.
-    </description>
-  <author email="you@example.com" href="http://example.com.com/">
-      Your Name Here
-    </author>
+<widget id="com.ionicframework.tourapp194994" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Iran Audio Guide</name>
+  <description>Soroosh Developer Team</description>
+  <author email="you@example.com" href="http://example.com.com/">Soroosh Ansari</author>
   <content src="index.html" />
   <!--<access origin="*" />-->
   <access origin="cdvfile://*" />
@@ -83,4 +79,5 @@
   <plugin name="cordova-plugin-dialogs" version="1.2.1" />
   <plugin name="cordova-plugin-file-transfer" version="1.5.2-dev" src="https://github.com/apache/cordova-plugin-file-transfer.git" />
   <access origin="http://api.iranaudioguide.com/*" />
+  <preference name="Orientation" value="portrait" />
 </widget>
