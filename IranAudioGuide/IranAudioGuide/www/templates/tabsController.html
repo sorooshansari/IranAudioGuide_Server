@@ -21,44 +21,49 @@
             </ion-tabs>
         </ion-side-menu-content>
         <ion-side-menu side="right" id="side-menu21">
-            <ion-header-bar class="bar-stable">
-                <div class="title">Player</div>
-            </ion-header-bar>
-            <ion-content padding="false" class="side-menu-right has-header">
-                <div class="list">
+            <ion-content padding="false" class="side-menu-right">
+                <ion-list id="menu-list1" class="">
+                    <ion-item class="item-avatar positive" id="menu-list-item4">
+                        <img src="{{User_Img}}">
+                        <h2positive>
+                            {{User_Name}}
+                            <p>{{User_Email}}</p>
+                        </h2positive>
+                    </ion-item>
+                    <div class="list">
 
-                    <div class="item item-divider center item-stable">
-                        Who was hafez
-                    </div>
-
-                    <div class="item player" href="#">
-                        <div class="row">
-                            <div class="col col-offset-10"><i class="icon ion-ios-skipbackward"></i></div>
-                            <div class="col"><i class="icon ion-play"></i></div>
-                            <div class="col"><i class="icon ion-ios-skipforward"></i></div>
-                            <div class="col">10s<i class="icon ion-arrow-return-left"></i></div>
+                        <div class="item item-divider center item-stable">
+                            Who was hafez
                         </div>
-                        <div class="list">
-                            <div class="item range noBoarder">
-                                <i>3:34</i>
-                                <input type="range" name="volume" min="0" max="100" value="33">
-                                <i>7:21</i>
+
+                        <div class="item player" href="#">
+                            <div class="row">
+                                <div class="col col-offset-10"><i class="icon ion-ios-skipbackward"></i></div>
+                                <div class="col"><i class="icon ion-play"></i></div>
+                                <div class="col"><i class="icon ion-ios-skipforward"></i></div>
+                                <div class="col">10s<i class="icon ion-arrow-return-left"></i></div>
+                            </div>
+                            <div class="list">
+                                <div class="item range noBoarder">
+                                    <i>3:34</i>
+                                    <input type="range" name="volume" min="0" max="100" value="33">
+                                    <i>7:21</i>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="item item-divider">
-                        Recently Played
-                    </div>
+                        <div class="item item-divider">
+                            Recently Played
+                        </div>
 
-                    <a href="#" class="item item-icon-left">
-                        <i class="icon ion-play"></i>
-                        Who was hafez
-                    </a>
-                </div>
-            </ion-content>
+                        <a href="#" class="item item-icon-left">
+                            <i class="icon ion-play"></i>
+                            Who was hafez
+                        </a>
+                    </div>
+</ion-content>
             <ion-footer-bar class="bar-stable">
-                <div style="margin-left: auto;margin-right:auto;">
-                    <h5 style="margin-left:auto; margin-right:auto">Made with <i class="icon ion-ios-heart assertive"></i> on planet earth</h5>
+                <div>
+                    <h5 style="text-align:center;">Made with <i class="icon ion-ios-heart assertive"></i> on planet earth</h5>
                 </div>
             </ion-footer-bar>
         </ion-side-menu>

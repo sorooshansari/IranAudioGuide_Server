@@ -4,6 +4,11 @@ angular.module('app.routes', [])
 
     // Each state's controller can be found in controllers.js
     $stateProvider
+    .state('primaryPage', {
+        url: '/primary',
+        templateUrl: 'templates/primaryPage.html',
+        controller: 'primaryPageCtrl'
+    })
     .state('firstPage', {
         url: '/first',
         templateUrl: 'templates/firstPage.html',
@@ -90,5 +95,5 @@ angular.module('app.routes', [])
         }
     })
 
-    $urlRouterProvider.otherwise('/first')
+    $urlRouterProvider.otherwise('/primary')
 });

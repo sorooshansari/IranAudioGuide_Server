@@ -81,4 +81,6 @@
   <access origin="http://api.iranaudioguide.com/*" />
   <preference name="Orientation" value="portrait" />
   <plugin name="cordova-plugin-inappbrowser" version="1.4.1-dev" src="https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git" />
+  <access origin="https://www.googleapis.com/*" />
+  <access origin="https://*.googleusercontent.com/*" />
 </widget>

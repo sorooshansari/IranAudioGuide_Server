@@ -1,16 +1,98 @@
 angular.module('app.controllers', [])
-
-.controller('firstPageCtrl', function ($scope, $cordovaOauth) {
-    $scope.googleLogin = function () {
-        console.log("hi");
-        $cordovaOauth.google("751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
-            ["https://www.googleapis.com/auth/urlshortener", "https://www.googleapis.com/auth/userinfo.email"])
-            .then(function (result) {
-                console.log(JSON.stringify(result));
-            }, function (error) {
-                console.log(error);
+.controller('primaryPageCtrl', function ($scope, $rootScope, $ionicPlatform, ApiServices, dbServices, FileServices, $ionicHistory, $state) {
+    var start = 0, SplashTime = 3000;
+    var updateNumber = 0;
+    $ionicPlatform.ready(function () {
+        var Authenticated = window.localStorage.getItem("Authenticated") || false;
+        if (!Authenticated) {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
             });
+            $state.go('firstPage');
+        }
+        else {
+            fillMenu();
+            navigator.splashscreen.show();
+            start = new Date().getTime();
+            $rootScope.waitingUpdates = -1;
+            dbServices.openDB();
+            var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
+            if (LstUpdtNum == 0) {
+                FileServices.createDirs();
+                dbServices.initiate();
+                var networkState = navigator.connection.type;
+                while (networkState == Connection.NONE)
+                    alert('check internet connection');
+                //$cordovaDialogs.alert('check your internet connection and try again.', 'Network error', 'Try again')
+                ApiServices.GetAll(0);
+            }
+            else
+                ApiServices.GetAll(LstUpdtNum);
+        }
+    });
+    var fillMenu = function () {
+        //var user = window.localStorage.getItem("userInfo");
+        $rootScope.User_Img = window.localStorage.getItem("User_Img");
+        $rootScope.User_Name = window.localStorage.getItem("User_Name");
+        $rootScope.User_Email = window.localStorage.getItem("User_Email");
+    };
+    $rootScope.$on('PopulateTables', function (event, Data) {
+        console.log(Data);
+        dbServices.populatePlaces(Data.Data.Places);
+        dbServices.populateAudios(Data.Data.Audios);
+        dbServices.populateCities(Data.Data.Cities);
+        dbServices.populateImages(Data.Data.Images);
+        updateNumber = Data.Data.UpdateNumber;
+    });
+    $rootScope.$on('CheckWaitingUpdates', function (event) {
+        if ($rootScope.waitingUpdates == 0) {
+            window.localStorage.setItem("LastUpdateNumber", updateNumber);
+            GoHome();
+        }
+    });
+    //var waitForUpdate = function (updateNumber) {
+    //    if ($rootScope.waitingUpdates == 0) {
+    //        window.localStorage.setItem("LastUpdateNumber", updateNumber);
+    //        GoHome();
+    //    }
+    //    else
+    //        setTimeout(waitForUpdate, 100, updateNumber);
+    //};
+    $rootScope.$on('ServerConnFailed', function (event, error) {
+        console.log(error);
+        alert("try again.");
+        var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
+        if (LstUpdtNum == 0)
+            ApiServices.GetAll(LstUpdtNum);
+        else
+            GoHome();
+        //$cordovaDialogs.alert("Couldn’t connect to server, check your internet connection and try again.", 'Network error', 'Try again');
+    });
+    var GoHome = function () {
+        var end = new Date().getTime();
+        var time = end - start;
+        if (time < SplashTime)
+            setTimeout(function () {
+                $state.go('tabsController.home');
+                navigator.splashscreen.hide();
+            }, SplashTime - time);
+        else {
+            $state.go('tabsController.home');
+            navigator.splashscreen.hide();
+        }
     }
+})
+.controller('firstPageCtrl', function ($scope, $rootScope, $state, OAuthServices, $ionicHistory) {
+    $scope.googleLogin = function () {
+        OAuthServices.Google();
+    }
+    $rootScope.$on('loadProfilePicCommpleted', function (event) {
+        console.log("loadProfilePicCommpleted");
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('primaryPage');
+    });
 })
 
 .controller('secondPageCtrl', function ($scope) {

@@ -109,6 +109,46 @@ angular.module('app.services', [])
         }
     };
 }])
+.service('OAuthServices', ['$http', '$rootScope', '$cordovaOauth', 'FileServices',
+    function ($http, $rootScope, $cordovaOauth, FileServices) {
+        return {
+            Google: function () {
+                $cordovaOauth.google("751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
+                    ["https://www.googleapis.com/auth/urlshortener",
+                    "https://www.googleapis.com/auth/userinfo.email",
+                    "https://www.googleapis.com/auth/userinfo.profile"])
+                    .then(function (result) {
+                        console.log(result.access_token);
+                        $http({
+                            url: 'https://www.googleapis.com/oauth2/v3/userinfo',
+                            method: 'GET',
+                            params: {
+                                access_token: result.access_token,
+                                format: 'json'
+                            }
+                        }).then(function (user_data) {
+                            console.log(user_data);
+                            var profilePath = user_data.data.sub + '.jpg';
+                            //var user = {
+                            //    name: user_data.name,
+                            //    gender: user_data.gender,
+                            //    email: user_data.email,
+                            //    google_id: user_data.sub,
+                            //    picture: profilePath,
+                            //    profile: user_data.profile
+                            //};
+                            window.localStorage.setItem("User_Name", user_data.data.name);
+                            window.localStorage.setItem("User_Email", user_data.data.email);
+                            FileServices.DownloadProfilePic(user_data.data.picture, profilePath)
+                            //console.log(user);
+                        }, function (err) {
+                            alert("There was a problem getting your profile.");
+                            console.log(err);
+                        });
+                    });
+            }
+        }
+    }])
 .service('ApiServices', ['$http', '$rootScope', function ($http, $rootScope) {
     return {
         GetAll: function (LUN) {
@@ -119,12 +159,12 @@ angular.module('app.services', [])
                   //var Tables = angular.copy(response.data);
                   $rootScope.$broadcast('PopulateTables', { Data: response.data });
               }, function (response) {
-                  $rootScope.$broadcast('ServerConnFailde', { error: response.data });
+                  $rootScope.$broadcast('ServerConnFailed', { error: response.data });
               });
         }
     }
 }])
-.service('dbServices', ['$rootScope', '$cordovaSQLite', 'FileServices', function ($rootScope, $cordovaSQLite, FileServices) {   
+.service('dbServices', ['$rootScope', '$cordovaSQLite', 'FileServices', function ($rootScope, $cordovaSQLite, FileServices) {
     return {
         openDB: function () {
             db = $cordovaSQLite.openDB({ name: 'app.db', iosDatabaseLocation: 'default' });
@@ -180,7 +220,7 @@ angular.module('app.services', [])
             )");
         },
         populatePlaces: function (Places) {
-            $rootScope.waitingUpdates = Places.length;
+            $rootScope.waitingUpdates = Places.length || 0;
             var query = "INSERT OR REPLACE INTO Places\
                     (Pla_Id,\
                     Pla_Name,\
@@ -214,6 +254,7 @@ angular.module('app.services', [])
                     });
                 FileServices.DownloadTumbNail(Places[i].TNImgUrl, Places[i].Id);
             }
+            $rootScope.$broadcast('CheckWaitingUpdates');
         },
         populateAudios: function (Audios) {
             var query = "INSERT OR REPLACE INTO Audios\
@@ -240,12 +281,12 @@ angular.module('app.services', [])
             }
         },
         populateImages: function (Images) {
-            var query = "INSERT OR REPLACE INTO Audios\
-                    (Aud_Id\
-                    ,Aud_PlaceId\
-                    ,Aud_Url\
-                    ,Aud_desc\
-                    ,Aud_Dirty)\
+            var query = "INSERT OR REPLACE INTO Images\
+                    (Img_Id,\
+                    Img_PlaceId,\
+                    Img_Url,\
+                    Img_desc,\
+                    Img_Dirty\
                     VALUES (?,?,?,?,?)";
             for (var i = 0; i < Images.length; i++) {
                 $cordovaSQLite.execute(db, query,
@@ -375,7 +416,7 @@ angular.module('app.services', [])
 .service('FileServices', ['$rootScope', '$cordovaFile', '$cordovaFileTransfer', function ($rootScope, $cordovaFile, $cordovaFileTransfer) {
     return {
         createDirs: function () {
-            Dirs = ["TumbNameil_dir", "PlacePic_dir", "PlaceAudio_dir", "Extras_dir"];
+            Dirs = ["TumbNameil_dir", "PlacePic_dir", "PlaceAudio_dir", "Extras_dir", "ProfilePic_dir"];
             for (var i = 0; i < Dirs.length; i++) {
                 $cordovaFile.createDir(cordova.file.dataDirectory, Dirs[i], false)
                   .then(function (success) {
@@ -394,10 +435,13 @@ angular.module('app.services', [])
 
             $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
               .then(function (result) {
-                  $rootScope.$broadcast('CleanPlaceTumbnail', { placeId: placeId });
+                  $rootScope.waitingUpdates--;
+                  $rootScope.$broadcast('CheckWaitingUpdates');
                   // Success!
               }, function (err) {
                   console.log(err);
+                  $rootScope.waitingUpdates--;
+                  $rootScope.$broadcast('CheckWaitingUpdates');
                   // Error
               }, function (progress) {
                   //$timeout(function () {
@@ -414,6 +458,27 @@ angular.module('app.services', [])
             $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
               .then(function (result) {
                   //dbServices.CleanPlaceImage(placeId);
+                  // Success!
+              }, function (err) {
+                  console.log(err);
+                  // Error
+              }, function (progress) {
+                  //$timeout(function () {
+                  //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                  //});
+              });
+        },
+        DownloadProfilePic: function (url, dest) {
+            console.log(url);
+            console.log(dest);
+            var targetPath = cordova.file.dataDirectory + "/ProfilePic_dir/" + dest;
+            var trustHosts = true;
+            var options = {};
+            $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+              .then(function (result) {
+                  window.localStorage.setItem("Authenticated", true);
+                  window.localStorage.setItem("User_Img", targetPath);
+                  $rootScope.$broadcast('loadProfilePicCommpleted');
                   // Success!
               }, function (err) {
                   console.log(err);
