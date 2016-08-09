@@ -4,6 +4,8 @@ angular.module('app.controllers', [])
     var updateNumber = 0;
     $ionicPlatform.ready(function () {
         var Authenticated = window.localStorage.getItem("Authenticated") || false;
+        //below line must be remove
+        Authenticated = true; //just for bypassing autentication
         if (!Authenticated) {
             $ionicHistory.nextViewOptions({
                 disableBack: true
@@ -214,49 +216,32 @@ angular.module('app.controllers', [])
     $scope.PageTitle = "Tomb of Hafez"
 
     $scope.Audios = AudioServices.all();
-    var playNewAudio = function (url) {
-        var audioPath = "file:///android_asset/www/audio/" + url;
+    var playNewAudio = function (audio) {
+        var audioPath = "file:///android_asset/www/audio/" + audio.URL;
         $rootScope.audio.media = new Media(audioPath, null, null, mediaStatusCallback);
+        $rootScope.audio.index = audio.index;
+        $rootScope.audio.title = audio.title;
         $rootScope.audio.media.play();
     }
     $scope.playPause = function (audio) {
         if ($rootScope.audio.media == null) { //No audio loaded yet
-            playNewAudio(audio.URL);
+            playNewAudio(audio);
             audio.icoStatus = 'pause';
         }
-        else if ($rootScope.audio.index != audio.index) { //another audio is playing so firs pause the playing one
-            $rootScope.media.pause();
-            $scope.Audios($rootScope.audio.index).icoStatus = 'play';
-            playNewAudio(audio.URL);
+        else if ($rootScope.audio.index != audio.index) { //another audio is playing, so first pause the playing one
+            $rootScope.audio.media.release();
+            $scope.Audios[$rootScope.audio.index].icoStatus = 'play';
+            playNewAudio(audio);
             audio.icoStatus = 'pause';
         }
         else if (audio.icoStatus == 'pause') {//same audio is playing
-            $rootScope.media.pause();
-            audio.icoStatus == 'play'
+            $rootScope.audio.media.pause();
+            audio.icoStatus = 'play';
         }
-        else { //playe paused audio
-            $rootScope.media.play();
-            audio.icoStatus == 'pause'
+        else { //play paused audio
+            $rootScope.audio.media.play();
+            audio.icoStatus = 'pause';
         }
-        //if ($rootScope.activeAudioId == audio_id) {
-        //    if ($rootScope.AudioPlayed) {
-        //        pause(audio_id);
-        //    }
-        //    else {
-        //        play(audio_id);
-        //    }
-        //}
-        //else {
-        //    if (media != null) {
-        //        pause($rootScope.activeAudioId);
-        //        media.release();
-        //    }
-        //    var src = PlayList.get(audio_id).URL;
-        //    media = new Media(src, null, null, mediaStatusCallback);
-        //    //media = $cordovaMedia.newMedia(src);
-        //    $rootScope.activeAudioId = audio_id;
-        //    play(audio_id);
-        //}
     }
 
     var iOSPlayOptions = {
