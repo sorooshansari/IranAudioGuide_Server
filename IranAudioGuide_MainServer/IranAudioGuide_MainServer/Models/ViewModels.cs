@@ -9,6 +9,20 @@ namespace IranAudioGuide_MainServer.Models
     public class ViewModels
     {
     }
+    public class GoogleUserInfo
+    {
+        public string name { get; set; }
+        public string gender { get; set; }
+        public string email { get; set; }
+        public string google_id { get; set; }
+        public string picture { get; set; }
+        public string profile { get; set; }
+    }
+    public enum gender
+    {
+        Male = 1,
+        Female = 0
+    }
     public enum Views
     {
         Index = 1,
@@ -113,7 +127,7 @@ namespace IranAudioGuide_MainServer.Models
         public string ImgUrl { get; set; }
         public string PlaceAddress { get; set; }
         public string PlaceCordinates { get; set; }
-}
+    }
     public class ImageVM
     {
         public Guid ImageId { get; set; }

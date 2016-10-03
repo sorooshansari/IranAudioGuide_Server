@@ -33,6 +33,29 @@ namespace IranAudioGuide_MainServer.Models
                 _userManager = value;
             }
         }
+        public bool CreateUser(ApplicationUser userInfo)
+        {
+            var appUser = UserManager.FindByNameAsync(userInfo.Email).Result;
+            if (appUser == null)
+            {
+                if (UserManager.CreateAsync(userInfo).Result.Succeeded)
+                {
+                    UserManager.AddToRoleAsync(userInfo.Id, "AppUser");
+                    return true;
+                }
+            }
+            else
+                return updateUserInfo(appUser, userInfo);
+            return false;
+        }
+        private bool updateUserInfo(ApplicationUser user, ApplicationUser NewUserInfo)
+        {
+            user.GoogleId = NewUserInfo.GoogleId;
+            user.Picture = NewUserInfo.Picture;
+            user.UserName = NewUserInfo.UserName;
+            user.gender = NewUserInfo.gender;
+            return UserManager.UpdateAsync(user).Result.Succeeded;
+        }
         public string logIn(string email, string pass)
         {
             var result = SignInManager.PasswordSignIn(email, pass, false, shouldLockout: false);

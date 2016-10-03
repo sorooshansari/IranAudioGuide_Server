@@ -111,6 +111,15 @@ angular.module('app.services', [])
 }])
 .service('OAuthServices', ['$http', '$rootScope', '$cordovaOauth', 'FileServices',
     function ($http, $rootScope, $cordovaOauth, FileServices) {
+        var AutenticateUser = function (user) {
+            $http({
+                url: 'http://iranaudioguide.com/api/AppManager/AutenticateGoogleUser',
+                method: 'POST',
+                data: user
+            }).then(function (data) {
+                console.log(data)
+            });
+        };
         return {
             Google: function () {
                 $cordovaOauth.google("751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
@@ -129,14 +138,15 @@ angular.module('app.services', [])
                         }).then(function (user_data) {
                             console.log(user_data);
                             var profilePath = user_data.data.sub + '.jpg';
-                            //var user = {
-                            //    name: user_data.name,
-                            //    gender: user_data.gender,
-                            //    email: user_data.email,
-                            //    google_id: user_data.sub,
-                            //    picture: profilePath,
-                            //    profile: user_data.profile
-                            //};
+                            var user = {
+                                name: user_data.data.name,
+                                gender: user_data.data.gender,
+                                email: user_data.data.email,
+                                google_id: user_data.data.sub,
+                                picture: user_data.data.picture,
+                                profile: user_data.data.profile
+                            };
+                            console.log(user);
                             window.localStorage.setItem("User_Name", user_data.data.name);
                             window.localStorage.setItem("User_Email", user_data.data.email);
                             FileServices.DownloadProfilePic(user_data.data.picture, profilePath)
@@ -153,7 +163,7 @@ angular.module('app.services', [])
     return {
         GetAll: function (LUN) {
             method = 'post';
-            url = 'http://api.iranaudioguide.com/api/update?LastUpdateNumber=' + LUN;
+            url = 'http://iranaudioguide.com/api/AppManager/GetUpdates?LastUpdateNumber=' + LUN;
             $http({ method: method, url: url }).
               then(function (response) {
                   //var Tables = angular.copy(response.data);

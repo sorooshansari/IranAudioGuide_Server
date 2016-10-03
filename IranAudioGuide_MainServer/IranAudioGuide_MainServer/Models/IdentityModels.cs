@@ -21,6 +21,9 @@ namespace IranAudioGuide_MainServer.Models
         }
         public string FullName { get; set; }
         public string ImgUrl { get; set; }
+        public string GoogleId { get; set; }
+        public gender gender { get; set; }
+        public string Picture { get; set; }
     }
     public class UpdateLog {
         [Key]

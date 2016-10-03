@@ -1,11 +1,21 @@
 angular.module('app.controllers', [])
 .controller('primaryPageCtrl', function ($scope, $rootScope, $ionicPlatform, ApiServices, dbServices, FileServices, $ionicHistory, $state) {
+    console.log("Primary Page");
     var start = 0, SplashTime = 3000;
     var updateNumber = 0;
+    
     $ionicPlatform.ready(function () {
+        AutenticateAndLoadData();
+    });
+    var fillMenu = function () {
+        //var user = window.localStorage.getItem("userInfo");
+        $rootScope.User_Img = window.localStorage.getItem("User_Img");
+        $rootScope.User_Name = window.localStorage.getItem("User_Name");
+        $rootScope.User_Email = window.localStorage.getItem("User_Email");
+    };
+    var AutenticateAndLoadData = function () {
         var Authenticated = window.localStorage.getItem("Authenticated") || false;
-        //below line must be remove
-        Authenticated = true; //just for bypassing autentication
+        console.log(Authenticated);
         if (!Authenticated) {
             $ionicHistory.nextViewOptions({
                 disableBack: true
@@ -31,13 +41,12 @@ angular.module('app.controllers', [])
             else
                 ApiServices.GetAll(LstUpdtNum);
         }
+    }
+    $scope.$on('$ionicView.enter', function () {
+        // code to run each time view is entered
+        console.log("tester");
+        AutenticateAndLoadData();
     });
-    var fillMenu = function () {
-        //var user = window.localStorage.getItem("userInfo");
-        $rootScope.User_Img = window.localStorage.getItem("User_Img");
-        $rootScope.User_Name = window.localStorage.getItem("User_Name");
-        $rootScope.User_Email = window.localStorage.getItem("User_Email");
-    };
     $rootScope.$on('PopulateTables', function (event, Data) {
         console.log(Data);
         dbServices.populatePlaces(Data.Data.Places);
@@ -93,7 +102,8 @@ angular.module('app.controllers', [])
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $state.go('primaryPage');
+        console.log("Go to Primary Page");
+        $state.go('primaryPage', null, { reload: true });
     });
 })
 
