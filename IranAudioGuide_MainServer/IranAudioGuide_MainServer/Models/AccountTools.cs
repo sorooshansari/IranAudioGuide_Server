@@ -2,7 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Owin.Security;
 using System.Web;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using IranAudioGuide_MainServer.Models;
+using System.Threading.Tasks;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -33,7 +38,36 @@ namespace IranAudioGuide_MainServer.Models
                 _userManager = value;
             }
         }
-        public bool CreateUser(ApplicationUser userInfo)
+        public SignInStatus AutorizeAppUser(string username, string password)
+        {
+            return SignInManager.PasswordSignIn(username, password, false, true);
+        }
+        public async Task<CreateingUserResult> CreateAppUser(string Email, string password, string baseUrl)
+        {
+            var appUser = await UserManager.FindByNameAsync(Email);
+            if (appUser != null)
+                return CreateingUserResult.userExists;
+            var user = new ApplicationUser() { UserName = Email, Email = Email };
+            var result = await UserManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                try
+                {
+                    string code = HttpUtility.UrlEncode(UserManager.GenerateEmailConfirmationToken(user.Id));
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    await UserManager.AddToRoleAsync(user.Id, "AppUser");
+                    var callbackUrl = string.Format("{0}/Account/ConfirmEmail?userId={1}&code={2}", baseUrl, user.Id, code);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    return CreateingUserResult.success;
+                }
+                catch (Exception ex)
+                {
+                    UserManager.Delete(user);
+                }
+            }
+            return CreateingUserResult.fail;
+        }
+        public bool CreateGoogleUser(ApplicationUser userInfo)
         {
             var appUser = UserManager.FindByNameAsync(userInfo.Email).Result;
             if (appUser == null)

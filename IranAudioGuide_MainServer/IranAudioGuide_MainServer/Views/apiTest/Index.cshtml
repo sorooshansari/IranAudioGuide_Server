@@ -12,7 +12,17 @@
 </head>
 <body>
     <div>
-        <button onclick="f1()" value="click me"></button>
+        <ul>
+            <li>
+                <a href="#" onclick="f1()">google</a>
+            </li>
+            <li>
+                <a href="#" onclick="f2()">create</a>
+            </li>
+            <li>
+                <a href="#" onclick="f3()">enter</a>
+            </li>
+        </ul>
     </div>
     <script src="~/Scripts/jquery.js"></script>
     <script>
@@ -24,11 +34,43 @@
             picture: "fghj",
             profile: "ghjkl"
         };
+        var appUser = {
+            email: "soroosh.ansari@gmail.com",
+            password: "123456789"
+        };
         var f1 = function () {
             console.log(user);
             $.post(
                 "../api/AppManager/AutenticateGoogleUser",
                 user)
+                .then(function (o) {
+                    console.log("1");
+                    console.log(o);
+                },
+                function (err) {
+                    console.log("2");
+                    console.log(err)
+                });
+        }
+        var f2 = function () {
+            console.log(appUser);
+            $.post(
+                "../api/AppManager/ResgisterAppUser",
+                appUser)
+                .then(function (o) {
+                    console.log("1");
+                    console.log(o);
+                },
+                function (err) {
+                    console.log("2");
+                    console.log(err)
+                });
+        }
+        var f3 = function () {
+            console.log(appUser);
+            $.post(
+                "../api/AppManager/AuthoruzeAppUser",
+                appUser)
                 .then(function (o) {
                     console.log("1");
                     console.log(o);

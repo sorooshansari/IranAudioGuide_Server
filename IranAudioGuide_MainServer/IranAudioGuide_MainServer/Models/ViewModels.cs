@@ -9,6 +9,11 @@ namespace IranAudioGuide_MainServer.Models
     public class ViewModels
     {
     }
+    public class AppUser
+    {
+        public string email { get; set; }
+        public string password { get; set; }
+    }
     public class GoogleUserInfo
     {
         public string name { get; set; }
@@ -17,6 +22,12 @@ namespace IranAudioGuide_MainServer.Models
         public string google_id { get; set; }
         public string picture { get; set; }
         public string profile { get; set; }
+    }
+    public enum CreateingUserResult
+    {
+        success = 0,
+        userExists = 1,
+        fail = 2
     }
     public enum gender
     {

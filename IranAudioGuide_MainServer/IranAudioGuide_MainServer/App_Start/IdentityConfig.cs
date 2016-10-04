@@ -19,6 +19,27 @@ namespace IranAudioGuide_MainServer
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+            var credentialUserName = "info@iranaudioguide.com";
+            var sentFrom = "noreply@iranaudioguide.com";
+            var pwd = "QQwwee11@@";
+
+            // Configure the client:
+            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("mail.iranaudioguide.com");
+
+            client.Port = 25;
+            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+
+            // Creatte the credentials:
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
+            client.EnableSsl = false;
+            client.Credentials = credentials;
+
+            // Create the message:
+            var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+            mail.Subject = message.Subject;
+            mail.Body = message.Body;
+
             return Task.FromResult(0);
         }
     }
@@ -54,10 +75,10 @@ namespace IranAudioGuide_MainServer
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false
             };
 
             // Configure user lockout defaults
