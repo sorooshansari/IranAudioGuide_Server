@@ -111,13 +111,16 @@ angular.module('app.services', [])
 }])
 .service('OAuthServices', ['$http', '$rootScope', '$cordovaOauth', 'FileServices',
     function ($http, $rootScope, $cordovaOauth, FileServices) {
-        var AutenticateUser = function (user) {
+        var AutenticateUser = function (user, profilePath) {
             $http({
                 url: 'http://iranaudioguide.com/api/AppManager/AutenticateGoogleUser',
                 method: 'POST',
                 data: user
             }).then(function (data) {
-                console.log(data)
+                console.log(data);
+                window.localStorage.setItem("User_Name", user.name);
+                window.localStorage.setItem("User_Email", user.email);
+                FileServices.DownloadProfilePic(user.picture, profilePath)
             });
         };
         return {
@@ -147,10 +150,7 @@ angular.module('app.services', [])
                                 profile: user_data.data.profile
                             };
                             console.log(user);
-                            window.localStorage.setItem("User_Name", user_data.data.name);
-                            window.localStorage.setItem("User_Email", user_data.data.email);
-                            FileServices.DownloadProfilePic(user_data.data.picture, profilePath)
-                            //console.log(user);
+                            AutenticateUser(user, profilePath);
                         }, function (err) {
                             alert("There was a problem getting your profile.");
                             console.log(err);

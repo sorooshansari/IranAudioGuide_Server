@@ -207,6 +207,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\apiTestController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -214,6 +215,10 @@
     <Compile Include="Migrations\201607261519234_AddCommands.cs" />
     <Compile Include="Migrations\201607261519234_AddCommands.Designer.cs">
       <DependentUpon>201607261519234_AddCommands.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610040750363_userAutenticateBaseGoogleAdded.cs" />
+    <Compile Include="Migrations\201610040750363_userAutenticateBaseGoogleAdded.Designer.cs">
+      <DependentUpon>201610040750363_userAutenticateBaseGoogleAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -1160,6 +1165,7 @@
     <Content Include="Views\Admin\Audios.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\apiTest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1181,6 +1187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607261519234_AddCommands.resx">
       <DependentUpon>201607261519234_AddCommands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610040750363_userAutenticateBaseGoogleAdded.resx">
+      <DependentUpon>201610040750363_userAutenticateBaseGoogleAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

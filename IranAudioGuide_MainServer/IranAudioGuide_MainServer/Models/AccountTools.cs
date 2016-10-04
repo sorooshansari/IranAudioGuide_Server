@@ -52,7 +52,7 @@ namespace IranAudioGuide_MainServer.Models
         {
             user.GoogleId = NewUserInfo.GoogleId;
             user.Picture = NewUserInfo.Picture;
-            user.UserName = NewUserInfo.UserName;
+            user.FullName = NewUserInfo.FullName;
             user.gender = NewUserInfo.gender;
             return UserManager.UpdateAsync(user).Result.Succeeded;
         }

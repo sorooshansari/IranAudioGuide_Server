@@ -28,7 +28,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 GoogleId = user.google_id,
                 UserName = user.email,
                 Picture = user.picture,
-                FullName = user.name
+                FullName = user.name,
+                gender = (user.gender.ToLower() == "female") ? gender.Female : (user.gender.ToLower() == "male") ? gender.Male : gender.Unknown
             });
             return Json(res);
         }

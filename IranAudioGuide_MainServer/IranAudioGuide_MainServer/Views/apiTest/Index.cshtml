@@ -1,0 +1,43 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <button onclick="f1()" value="click me"></button>
+    </div>
+    <script src="~/Scripts/jquery.js"></script>
+    <script>
+        var user = {
+            name: "soroosh",
+            gender: 'male',
+            email: "so@g.com",
+            google_id: "34567",
+            picture: "fghj",
+            profile: "ghjkl"
+        };
+        var f1 = function () {
+            console.log(user);
+            $.post(
+                "../api/AppManager/AutenticateGoogleUser",
+                user)
+                .then(function (o) {
+                    console.log("1");
+                    console.log(o);
+                },
+                function (err) {
+                    console.log("2");
+                    console.log(err)
+                });
+        }
+    </script>
+</body>
+</html>

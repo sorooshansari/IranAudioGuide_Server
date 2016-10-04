@@ -20,8 +20,9 @@ namespace IranAudioGuide_MainServer.Models
     }
     public enum gender
     {
+        Unknown = 0,
         Male = 1,
-        Female = 0
+        Female = 2
     }
     public enum Views
     {
