@@ -20,7 +20,7 @@ namespace IranAudioGuide_MainServer
         {
             // Plug in your email service here to send an email.
             var credentialUserName = "info@iranaudioguide.com";
-            var sentFrom = "noreply@iranaudioguide.com";
+            var sentFrom = "info@iranaudioguide.com";
             var pwd = "QQwwee11@@";
 
             // Configure the client:

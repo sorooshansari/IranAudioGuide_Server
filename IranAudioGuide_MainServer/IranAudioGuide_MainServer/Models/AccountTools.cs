@@ -38,9 +38,9 @@ namespace IranAudioGuide_MainServer.Models
                 _userManager = value;
             }
         }
-        public SignInStatus AutorizeAppUser(string username, string password)
+        public async Task<SignInStatus> AutorizeAppUser(string username, string password)
         {
-            return SignInManager.PasswordSignIn(username, password, false, true);
+            return await SignInManager.PasswordSignInAsync(username, password, false, true);
         }
         public async Task<CreateingUserResult> CreateAppUser(string Email, string password, string baseUrl)
         {
@@ -60,35 +60,38 @@ namespace IranAudioGuide_MainServer.Models
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     return CreateingUserResult.success;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     UserManager.Delete(user);
                 }
             }
             return CreateingUserResult.fail;
         }
-        public bool CreateGoogleUser(ApplicationUser userInfo)
+        public async Task<bool> CreateGoogleUser(ApplicationUser userInfo)
         {
-            var appUser = UserManager.FindByNameAsync(userInfo.Email).Result;
+            var appUser = await UserManager.FindByNameAsync(userInfo.Email);
             if (appUser == null)
             {
-                if (UserManager.CreateAsync(userInfo).Result.Succeeded)
+                var res = await UserManager.CreateAsync(userInfo);
+                if (res.Succeeded)
                 {
-                    UserManager.AddToRoleAsync(userInfo.Id, "AppUser");
+                    await UserManager.AddToRoleAsync(userInfo.Id, "AppUser");
                     return true;
                 }
             }
             else
-                return updateUserInfo(appUser, userInfo);
+                return await updateUserInfo(appUser, userInfo);
             return false;
         }
-        private bool updateUserInfo(ApplicationUser user, ApplicationUser NewUserInfo)
+        private async Task<bool> updateUserInfo(ApplicationUser user, ApplicationUser NewUserInfo)
         {
             user.GoogleId = NewUserInfo.GoogleId;
             user.Picture = NewUserInfo.Picture;
             user.FullName = NewUserInfo.FullName;
             user.gender = NewUserInfo.gender;
-            return UserManager.UpdateAsync(user).Result.Succeeded;
+            user.EmailConfirmed = NewUserInfo.EmailConfirmed;
+            var res = await UserManager.UpdateAsync(user);
+            return res.Succeeded;
         }
         public string logIn(string email, string pass)
         {

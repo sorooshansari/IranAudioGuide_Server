@@ -21,9 +21,9 @@ namespace IranAudioGuide_MainServer.Controllers
             return dbTools.GetUpdate(LastUpdateNumber);
         }
         [HttpPost]
-        public JsonResult<bool> AutenticateGoogleUser(GoogleUserInfo user)
+        public async Task<IHttpActionResult> AutenticateGoogleUser(GoogleUserInfo user)
         {
-            var res = acTools.CreateGoogleUser(new ApplicationUser()
+            var res = await acTools.CreateGoogleUser(new ApplicationUser()
             {
                 Email = user.email,
                 GoogleId = user.google_id,
@@ -35,15 +35,17 @@ namespace IranAudioGuide_MainServer.Controllers
             });
             return Json(res);
         }
+        [HttpPost]
         public async Task<IHttpActionResult> ResgisterAppUser(AppUser user)
         {
             string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
             CreateingUserResult res = await acTools.CreateAppUser(user.email, user.password, baseUrl);
             return Json(res);
         }
-        public JsonResult<Microsoft.AspNet.Identity.Owin.SignInStatus> AuthoruzeAppUser(AppUser user)
+        [HttpPost]
+        public async Task<IHttpActionResult> AuthoruzeAppUser(AppUser user)
         {
-            Microsoft.AspNet.Identity.Owin.SignInStatus res = acTools.AutorizeAppUser(user.email, user.password);
+            Microsoft.AspNet.Identity.Owin.SignInStatus res = await acTools.AutorizeAppUser(user.email, user.password);
             return Json(res);
         }
     }

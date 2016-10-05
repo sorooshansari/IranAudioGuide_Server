@@ -1,7 +1,7 @@
 
 angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngCordova', 'ngCordovaOauth'])
 
-.run(function ($ionicPlatform, $rootScope) {
+.run(function ($ionicPlatform, $rootScope, $ionicLoading, $ionicHistory, $state) {
     $ionicPlatform.ready(function () {
         //checkConnection();
 
@@ -18,6 +18,18 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         $rootScope.audio = {};
         $rootScope.audio.media = null;
 
+    });
+    $rootScope.$on('LoadDefaultUser', function () {
+        console.log("Load Default User");
+        window.localStorage.setItem("User_Name", "");
+        window.localStorage.setItem("User_Img", 'img/defaultProfile.png');
+        window.localStorage.setItem("Authenticated", true);
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $ionicLoading.hide();
+        console.log("Go to Primary Page");
+        $state.go('primaryPage', null, { reload: true });
     });
 });
 function checkConnection() {

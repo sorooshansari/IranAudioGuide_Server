@@ -93,15 +93,30 @@ angular.module('app.controllers', [])
         }
     }
 })
-.controller('firstPageCtrl', function ($scope, $rootScope, $state, OAuthServices, $ionicHistory) {
+.controller('firstPageCtrl', function ($scope, $rootScope, $state, AuthServices, $ionicHistory, $ionicLoading) {
     $scope.googleLogin = function () {
-        OAuthServices.Google();
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
+        AuthServices.Google();
     }
     $rootScope.$on('loadProfilePicCommpleted', function (event) {
+        $ionicLoading.hide();
         console.log("loadProfilePicCommpleted");
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
+        console.log("Go to Primary Page");
+        $state.go('primaryPage', null, { reload: true });
+    });
+    $rootScope.$on('loadProfilePicFailed', function (event) {
+        $ionicLoading.hide();
+        console.log("loadProfilePicFailed");
+        window.localStorage.setItem("User_Img", 'img/defaultProfile.png');
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        alert("loading profile pic failed.")
         console.log("Go to Primary Page");
         $state.go('primaryPage', null, { reload: true });
     });
@@ -115,7 +130,13 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('signupCtrl', function ($scope) {
+.controller('signupCtrl', function ($scope, AuthServices, $ionicLoading) {
+    $scope.Register = function (user) {
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
+        AuthServices.Register(user.email, user.password);
+    }
 
 })
 

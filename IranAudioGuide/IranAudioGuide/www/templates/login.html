@@ -13,13 +13,13 @@
             <ion-list id="login-list1" class="">
                 <label class="item item-input " id="login-input3">
                     <span class="intputLable ion-email"></span>
-                    <input type="email" placeholder="Email">
+                    <input ng-model="email" type="email" placeholder="Email">
                 </label>
                 <label class="item item-input" id="login-input4">
                     <span class="intputLable ion-key"></span>
-                    <input type="password" placeholder="Password">
+                    <input ng-model="password" type="password" placeholder="Password">
                 </label>
-                <button id="login-button1" class="button button-positive  button-block icon-left ion-log-in ListBtn">Log in</button>
+                <button id="login-button1" ng-click="logIn(email, password)" class="button button-positive button-block icon-left ion-log-in ListBtn">Log in</button>
             </ion-list>
             <button ui-sref="recoverPassword" id="login-button12" class="button button-dark button-small button-block button-clear">Forget your password</button>
             <button ui-sref="signup" id="login-button2" class="button button-light  button-block button-clear">Or create an account</button>

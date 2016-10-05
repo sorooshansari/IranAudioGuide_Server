@@ -109,7 +109,7 @@ angular.module('app.services', [])
         }
     };
 }])
-.service('OAuthServices', ['$http', '$rootScope', '$cordovaOauth', 'FileServices',
+.service('AuthServices', ['$http', '$rootScope', '$cordovaOauth', 'FileServices',
     function ($http, $rootScope, $cordovaOauth, FileServices) {
         var AutenticateUser = function (user, profilePath) {
             $http({
@@ -124,6 +124,32 @@ angular.module('app.services', [])
             });
         };
         return {
+            Register: function (email, password, $ionicLoading) {
+                var AppUser = { email: email, password: password };
+                console.log(AppUser);
+                $http({
+                    url: 'http://iranaudioguide.com/api/AppManager/ResgisterAppUser',
+                    method: 'POST',
+                    data: AppUser
+                }).then(function (data) {
+                    console.log(data);
+                    switch (data.data) {
+                        case 0: {
+                            window.localStorage.setItem("User_Email", email);
+                            $rootScope.$broadcast('LoadDefaultUser', {});
+                        }
+                        case 1: {
+                            $ionicLoading.hide();
+                            alert("This email is already regestered. Please go to log in.")
+                        }
+                        case 2: {
+                            $ionicLoading.hide();
+                            alert("Connecting to server failed.")
+                        }
+                        default:
+                    }
+                });
+            },
             Google: function () {
                 $cordovaOauth.google("751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
                     ["https://www.googleapis.com/auth/urlshortener",
@@ -484,14 +510,14 @@ angular.module('app.services', [])
             var targetPath = cordova.file.dataDirectory + "/ProfilePic_dir/" + dest;
             var trustHosts = true;
             var options = {};
+            window.localStorage.setItem("Authenticated", true);
             $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
               .then(function (result) {
-                  window.localStorage.setItem("Authenticated", true);
                   window.localStorage.setItem("User_Img", targetPath);
                   $rootScope.$broadcast('loadProfilePicCommpleted');
                   // Success!
               }, function (err) {
-                  console.log(err);
+                  $rootScope.$broadcast('loadProfilePicFailed');
                   // Error
               }, function (progress) {
                   //$timeout(function () {
