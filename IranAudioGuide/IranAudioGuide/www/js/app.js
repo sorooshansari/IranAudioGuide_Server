@@ -1,7 +1,7 @@
 
 angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngCordova', 'ngCordovaOauth'])
 
-.run(function ($ionicPlatform, $rootScope, $ionicLoading, $ionicHistory, $state) {
+.run(function ($ionicPlatform, $rootScope, $ionicLoading, $ionicHistory, $state, AuthServices) {
     $ionicPlatform.ready(function () {
         //checkConnection();
 
@@ -17,7 +17,7 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         }
         $rootScope.audio = {};
         $rootScope.audio.media = null;
-
+        alert(device.uuid);
     });
     $rootScope.$on('LoadDefaultUser', function () {
         console.log("Load Default User");
@@ -31,6 +31,19 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         console.log("Go to Primary Page");
         $state.go('primaryPage', null, { reload: true });
     });
+    $rootScope.Skip = function () {
+        console.log("Authentication skiped");
+        window.localStorage.setItem("Skipped", true);
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        console.log("Go to Primary Page");
+        $state.go('primaryPage', null, { reload: true });
+    };
+
+    $rootScope.googleLogin = function () {
+        AuthServices.Google();
+    };
 });
 function checkConnection() {
     var networkState = navigator.connection.type;

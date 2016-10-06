@@ -14,9 +14,12 @@ angular.module('app.controllers', [])
         $rootScope.User_Email = window.localStorage.getItem("User_Email");
     };
     var AutenticateAndLoadData = function () {
+        start = new Date().getTime();
+        var Skipped = window.localStorage.getItem("Skipped") || false;
         var Authenticated = window.localStorage.getItem("Authenticated") || false;
+        console.log(Skipped);
         console.log(Authenticated);
-        if (!Authenticated) {
+        if (!Authenticated && !Skipped) {
             $ionicHistory.nextViewOptions({
                 disableBack: true
             });
@@ -25,7 +28,6 @@ angular.module('app.controllers', [])
         else {
             fillMenu();
             navigator.splashscreen.show();
-            start = new Date().getTime();
             $rootScope.waitingUpdates = -1;
             dbServices.openDB();
             var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
@@ -38,8 +40,12 @@ angular.module('app.controllers', [])
                 //$cordovaDialogs.alert('check your internet connection and try again.', 'Network error', 'Try again')
                 ApiServices.GetAll(0);
             }
-            else
-                ApiServices.GetAll(LstUpdtNum);
+            else {
+                if (navigator.connection.type == Connection.NONE)
+                    GoHome();
+                else
+                    ApiServices.GetAll(LstUpdtNum);
+            }
         }
     }
     $scope.$on('$ionicView.enter', function () {
@@ -93,13 +99,7 @@ angular.module('app.controllers', [])
         }
     }
 })
-.controller('firstPageCtrl', function ($scope, $rootScope, $state, AuthServices, $ionicHistory, $ionicLoading) {
-    $scope.googleLogin = function () {
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
-        AuthServices.Google();
-    }
+.controller('firstPageCtrl', function ($scope, $rootScope, $state, $ionicHistory, $ionicLoading) {
     $rootScope.$on('loadProfilePicCommpleted', function (event) {
         $ionicLoading.hide();
         console.log("loadProfilePicCommpleted");
@@ -126,18 +126,22 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('loginCtrl', function ($scope) {
-
+.controller('loginCtrl', function ($scope, AuthServices, $ionicLoading) {
+    $scope.logIn = function (user) {
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
+        AuthServices.logIn(user.email, user.password);
+    }
 })
 
-.controller('signupCtrl', function ($scope, AuthServices, $ionicLoading) {
+.controller('signupCtrl', function ($scope, AuthServices, $ionicLoading, $ionicPlatform) {
     $scope.Register = function (user) {
         $ionicLoading.show({
             template: 'Loading...'
         });
-        AuthServices.Register(user.email, user.password);
+        AuthServices.Register(user.email, user.password, device.uuid);
     }
-
 })
 
 .controller('recoverPasswordCtrl', function ($scope) {

@@ -109,8 +109,8 @@ angular.module('app.services', [])
         }
     };
 }])
-.service('AuthServices', ['$http', '$rootScope', '$cordovaOauth', 'FileServices',
-    function ($http, $rootScope, $cordovaOauth, FileServices) {
+.service('AuthServices', ['$http', '$rootScope', '$cordovaOauth', 'FileServices', '$ionicLoading',
+    function ($http, $rootScope, $cordovaOauth, FileServices, $ionicLoading) {
         var AutenticateUser = function (user, profilePath) {
             $http({
                 url: 'http://iranaudioguide.com/api/AppManager/AutenticateGoogleUser',
@@ -124,8 +124,8 @@ angular.module('app.services', [])
             });
         };
         return {
-            Register: function (email, password, $ionicLoading) {
-                var AppUser = { email: email, password: password };
+            Register: function (email, password, uuid) {
+                var AppUser = { email: email, password: password, uuid: uuid };
                 console.log(AppUser);
                 $http({
                     url: 'http://iranaudioguide.com/api/AppManager/ResgisterAppUser',
@@ -137,14 +137,51 @@ angular.module('app.services', [])
                         case 0: {
                             window.localStorage.setItem("User_Email", email);
                             $rootScope.$broadcast('LoadDefaultUser', {});
+                            break;
                         }
                         case 1: {
                             $ionicLoading.hide();
                             alert("This email is already regestered. Please go to log in.")
+                            break;
                         }
                         case 2: {
                             $ionicLoading.hide();
                             alert("Connecting to server failed.")
+                            break;
+                        }
+                        default:
+                    }
+                });
+            },
+            logIn: function (email, password) {
+                var AppUser = { email: email, password: password };
+                console.log(AppUser);
+                $http({
+                    url: 'http://iranaudioguide.com/api/AppManager/AuthoruzeAppUser',
+                    method: 'POST',
+                    data: AppUser
+                }).then(function (data) {
+                    console.log(data);
+                    switch (data.data) {
+                        case 0: {
+                            window.localStorage.setItem("User_Email", email);
+                            $rootScope.$broadcast('LoadDefaultUser', {});
+                            break;
+                        }
+                        case 1: {
+                            $ionicLoading.hide();
+                            alert("LockedOut");
+                            break;
+                        }
+                        case 2: {
+                            $ionicLoading.hide();
+                            alert("RequiresVerification");
+                            break;
+                        }
+                        case 2: {
+                            $ionicLoading.hide();
+                            alert("Wrong username or password.");
+                            break;
                         }
                         default:
                     }
@@ -156,6 +193,9 @@ angular.module('app.services', [])
                     "https://www.googleapis.com/auth/userinfo.email",
                     "https://www.googleapis.com/auth/userinfo.profile"])
                     .then(function (result) {
+                        $ionicLoading.show({
+                            template: 'Loading...'
+                        });
                         console.log(result.access_token);
                         $http({
                             url: 'https://www.googleapis.com/oauth2/v3/userinfo',

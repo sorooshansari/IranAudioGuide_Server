@@ -1,14 +1,17 @@
 <ion-view title="" id="signupPage" class="gradiantBG">
     <ion-nav-bar class="bar-stable bar-transparent">
         <ion-nav-back-button></ion-nav-back-button>
+        <ion-nav-buttons side="right">
+            <button ng-click="Skip()" class="button button-clear">Skip</button>
+        </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content padding="true" class="has-header" scroll="true">
         <form name="signupForm" ng-submit="Register(user)" id="signupForm" class="list" novalidate>
-            <div class="spacer" style="width: 300px; height: 31px;"></div>
+            <div class="spacer" style="width: 300px; height: 25px;"></div>
             <h3 id="signup-heading2" style="color:#000000;text-align:center;" class="">Create your account</h3>
             <p id="signup-markdown4" style="color:#000000;text-align:center;" class="">Sign up with Google or Email</p>
             <div class="spacer" style="width: 300px; height: 18px;"></div>
-            <button id="signup-button11" class="button button-assertive  button-block icon-left ion-social-google-outline">Google</button>
+            <button ng-click="googleLogin()" id="signup-button11" class="button button-assertive  button-block icon-left ion-social-google-outline">Google</button>
             <p id="signup-markdown5" style="color:#000000;text-align:center;" class="">or</p>
             <ion-list id="signup-list2" class="">
                 <label class="item item-input " id="signup-input5">

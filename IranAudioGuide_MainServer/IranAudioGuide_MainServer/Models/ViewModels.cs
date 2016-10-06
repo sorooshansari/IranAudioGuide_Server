@@ -13,6 +13,7 @@ namespace IranAudioGuide_MainServer.Models
     {
         public string email { get; set; }
         public string password { get; set; }
+        public string uuid { get; set; }
     }
     public class GoogleUserInfo
     {
