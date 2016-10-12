@@ -17,7 +17,7 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         }
         $rootScope.audio = {};
         $rootScope.audio.media = null;
-        alert(device.uuid);
+        console.log(device.uuid);
     });
     $rootScope.$on('LoadDefaultUser', function () {
         console.log("Load Default User");
@@ -42,7 +42,7 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
     };
 
     $rootScope.googleLogin = function () {
-        AuthServices.Google();
+        AuthServices.Google(device.uuid);
     };
 });
 function checkConnection() {

@@ -11,10 +11,17 @@ using System.Threading.Tasks;
 
 namespace IranAudioGuide_MainServer.Models
 {
-    public class AccountTools
+    public class AccountTools : IDisposable
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.Current.GetOwinContext().Authentication;
+            }
+        }
         public ApplicationSignInManager SignInManager
         {
             get
@@ -38,16 +45,27 @@ namespace IranAudioGuide_MainServer.Models
                 _userManager = value;
             }
         }
-        public async Task<SignInStatus> AutorizeAppUser(string username, string password)
+        public async Task<SignInResults> AutorizeAppUser(string username, string password, string uuid)
         {
-            return await SignInManager.PasswordSignInAsync(username, password, false, true);
+            var res = (SignInResults)await SignInManager.PasswordSignInAsync(username, password, false, true);
+            if (res == SignInResults.Success)
+            {
+                string name = HttpContext.Current.User.Identity.Name;
+                string old_uuid = (await UserManager.FindByNameAsync(name)).uuid;
+                if (old_uuid != uuid)
+                {
+                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return SignInResults.uuidMissMatch;
+                }
+            }
+            return res;
         }
-        public async Task<CreateingUserResult> CreateAppUser(string Email, string password, string baseUrl)
+        public async Task<CreateingUserResult> CreateAppUser(string Email, string password, string uuid, string baseUrl)
         {
             var appUser = await UserManager.FindByNameAsync(Email);
             if (appUser != null)
                 return CreateingUserResult.userExists;
-            var user = new ApplicationUser() { UserName = Email, Email = Email };
+            var user = new ApplicationUser() { UserName = Email, Email = Email, uuid = uuid };
             var result = await UserManager.CreateAsync(user, password);
             if (result.Succeeded)
             {
@@ -67,7 +85,7 @@ namespace IranAudioGuide_MainServer.Models
             }
             return CreateingUserResult.fail;
         }
-        public async Task<bool> CreateGoogleUser(ApplicationUser userInfo)
+        public async Task<CreateingUserResult> CreateGoogleUser(ApplicationUser userInfo)
         {
             var appUser = await UserManager.FindByNameAsync(userInfo.Email);
             if (appUser == null)
@@ -76,12 +94,18 @@ namespace IranAudioGuide_MainServer.Models
                 if (res.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(userInfo.Id, "AppUser");
-                    return true;
+                    return CreateingUserResult.success;
                 }
             }
             else
-                return await updateUserInfo(appUser, userInfo);
-            return false;
+            {
+                if (appUser.uuid == null || appUser.uuid == userInfo.uuid)
+                {
+                    return (await updateUserInfo(appUser, userInfo)) ? CreateingUserResult.success : CreateingUserResult.fail;
+                }
+                return CreateingUserResult.uuidMissMatch;
+            }
+            return CreateingUserResult.fail;
         }
         private async Task<bool> updateUserInfo(ApplicationUser user, ApplicationUser NewUserInfo)
         {
@@ -90,25 +114,56 @@ namespace IranAudioGuide_MainServer.Models
             user.FullName = NewUserInfo.FullName;
             user.gender = NewUserInfo.gender;
             user.EmailConfirmed = NewUserInfo.EmailConfirmed;
+            if (user.uuid == null)
+                user.uuid = NewUserInfo.uuid;
             var res = await UserManager.UpdateAsync(user);
             return res.Succeeded;
         }
-        public string logIn(string email, string pass)
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
         {
-            var result = SignInManager.PasswordSignIn(email, pass, false, shouldLockout: false);
-            switch (result)
+            if (!disposedValue)
             {
-                case SignInStatus.Success:
-                    return "Success";
-                case SignInStatus.LockedOut:
-                    return "LockedOut";
-                case SignInStatus.RequiresVerification:
-                    return "RequiresVerification";
-                case SignInStatus.Failure:
-                    return "Failure";
-                default:
-                    return "Invalid login attempt.";
+                if (disposing)
+                {
+                    if (_userManager != null)
+                    {
+                        _userManager.Dispose();
+                        _userManager = null;
+                    }
+
+                    if (_signInManager != null)
+                    {
+                        _signInManager.Dispose();
+                        _signInManager = null;
+                    }
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
             }
         }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        ~AccountTools()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(false);
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

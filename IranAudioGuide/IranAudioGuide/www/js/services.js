@@ -153,8 +153,8 @@ angular.module('app.services', [])
                     }
                 });
             },
-            logIn: function (email, password) {
-                var AppUser = { email: email, password: password };
+            logIn: function (email, password, uuid) {
+                var AppUser = { email: email, password: password, uuid: uuid };
                 console.log(AppUser);
                 $http({
                     url: 'http://iranaudioguide.com/api/AppManager/AuthoruzeAppUser',
@@ -187,7 +187,7 @@ angular.module('app.services', [])
                     }
                 });
             },
-            Google: function () {
+            Google: function (uuid) {
                 $cordovaOauth.google("751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
                     ["https://www.googleapis.com/auth/urlshortener",
                     "https://www.googleapis.com/auth/userinfo.email",
@@ -213,7 +213,8 @@ angular.module('app.services', [])
                                 email: user_data.data.email,
                                 google_id: user_data.data.sub,
                                 picture: user_data.data.picture,
-                                profile: user_data.data.profile
+                                profile: user_data.data.profile,
+                                uuid: uuid
                             };
                             console.log(user);
                             AutenticateUser(user, profilePath);

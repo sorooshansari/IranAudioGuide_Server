@@ -13,7 +13,18 @@ namespace IranAudioGuide_MainServer.Controllers
     public class AppManagerController : ApiController
     {
         dbTools dbTools = new dbTools();
-        AccountTools acTools = new AccountTools();
+        private AccountTools _acTools;
+        public AccountTools acTools
+        {
+            get
+            {
+                return _acTools ?? new AccountTools();
+            }
+            private set
+            {
+                _acTools = value;
+            }
+        }
         [HttpPost]
         // POST: api/AppManager/GetUpdates/5
         public GetAllVM GetUpdates(int LastUpdateNumber)
@@ -31,7 +42,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 Picture = user.picture,
                 FullName = user.name,
                 gender = (user.gender.ToLower() == "female") ? gender.Female : (user.gender.ToLower() == "male") ? gender.Male : gender.Unknown,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                uuid = user.uuid
             });
             return Json(res);
         }
@@ -39,14 +51,27 @@ namespace IranAudioGuide_MainServer.Controllers
         public async Task<IHttpActionResult> ResgisterAppUser(AppUser user)
         {
             string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
-            CreateingUserResult res = await acTools.CreateAppUser(user.email, user.password, baseUrl);
+            CreateingUserResult res = await acTools.CreateAppUser(user.email, user.password, user.uuid, baseUrl);
             return Json(res);
         }
         [HttpPost]
         public async Task<IHttpActionResult> AuthoruzeAppUser(AppUser user)
         {
-            Microsoft.AspNet.Identity.Owin.SignInStatus res = await acTools.AutorizeAppUser(user.email, user.password);
+            SignInResults res = await acTools.AutorizeAppUser(user.email, user.password, user.uuid);
             return Json(res);
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_acTools != null)
+                {
+                    _acTools.Dispose();
+                    _acTools = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

@@ -7,7 +7,18 @@ namespace IranAudioGuide_MainServer.Models
 {
     public class dbTools
     {
-        dbManager dbManager = new dbManager();
+        private dbManager _dbManager;
+        public dbManager dbManager
+        {
+            get
+            {
+                return _dbManager ?? new dbManager();
+            }
+            private set
+            {
+                _dbManager = value;
+            }
+        }
         public GetAllVM GetUpdate(int LastUpdateNumber)
         {
             List<DataTable> dt;

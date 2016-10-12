@@ -131,7 +131,7 @@ angular.module('app.controllers', [])
         $ionicLoading.show({
             template: 'Loading...'
         });
-        AuthServices.logIn(user.email, user.password);
+        AuthServices.logIn(user.email, user.password, device.uuid);
     }
 })
 

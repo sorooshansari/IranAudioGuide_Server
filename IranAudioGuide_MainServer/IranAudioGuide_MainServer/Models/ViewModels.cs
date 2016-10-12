@@ -23,12 +23,49 @@ namespace IranAudioGuide_MainServer.Models
         public string google_id { get; set; }
         public string picture { get; set; }
         public string profile { get; set; }
+        public string uuid { get; set; }
     }
     public enum CreateingUserResult
     {
+        //
+        // Summary:
+        //     Creating user was successful
         success = 0,
+        //
+        // Summary:
+        //     This user was existed
         userExists = 1,
-        fail = 2
+        //
+        // Summary:
+        //     Creating user failed
+        fail = 2,
+        //
+        // Summary:
+        //     Creating user with different uuid
+        uuidMissMatch = 3
+    }
+    public enum SignInResults
+    {
+        //
+        // Summary:
+        //     Sign in was successful
+        Success = 0,
+        //
+        // Summary:
+        //     User is locked out
+        LockedOut = 1,
+        //
+        // Summary:
+        //     Sign in requires addition verification (i.e. two factor)
+        RequiresVerification = 2,
+        //
+        // Summary:
+        //     Sign in failed
+        Failure = 3,
+        //
+        // Summary:
+        //     Sign in with different uuid
+        uuidMissMatch = 4
     }
     public enum gender
     {
