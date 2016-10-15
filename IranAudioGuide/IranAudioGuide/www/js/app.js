@@ -23,7 +23,6 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         console.log("Load Default User");
         window.localStorage.setItem("User_Name", "");
         window.localStorage.setItem("User_Img", 'img/defaultProfile.png');
-        window.localStorage.setItem("Authenticated", true);
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
@@ -33,6 +32,8 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
     });
     $rootScope.Skip = function () {
         console.log("Authentication skiped");
+        $rootScope.$broadcast('LoadDefaultUser', {});
+        window.localStorage.setItem("Authenticated", false);
         window.localStorage.setItem("Skipped", true);
         $ionicHistory.nextViewOptions({
             disableBack: true

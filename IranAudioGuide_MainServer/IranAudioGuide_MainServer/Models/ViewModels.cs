@@ -9,6 +9,14 @@ namespace IranAudioGuide_MainServer.Models
     public class ViewModels
     {
     }
+    public class AuthorizedUser
+    {
+        public string GoogleId { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string Picture { get; set; }
+        public SignInResults Result { get; set; }
+    }
     public class AppUser
     {
         public string email { get; set; }

@@ -25,10 +25,21 @@
                 <ion-list id="menu-list1" class="">
                     <ion-item class="item-avatar positive" id="menu-list-item4">
                         <img src="{{User_Img}}">
-                        <h2positive>
+                        <h2positive ng-hide="User_GoogleId == ''">
                             {{User_Name}}
                             <p>{{User_Email}}</p>
                         </h2positive>
+                        <div ng-show="User_GoogleId == ''">
+                            <div ng-show="Skipped === false || Skipped == 'false'">
+                                {{User_Email}}
+                            </div>
+                            <button ng-click="googleLogin()" id="login-button4" class="button button-assertive button-block icon-left ion-social-google-outline">
+                                Sign In with Google
+                            </button>
+                            <a ng-show="Skipped === true || Skipped == 'true'" ui-sref="signup" class="button button-balanced button-block">
+                                Register
+                            </a>
+                        </div>
                     </ion-item>
                     <div class="list">
 
@@ -60,11 +71,9 @@
                             Who was hafez
                         </a>
                     </div>
-</ion-content>
+            </ion-content>
             <ion-footer-bar class="bar-stable">
-                <div>
-                    <h5 style="text-align:center;">Made with <i class="icon ion-ios-heart assertive"></i> on planet earth</h5>
-                </div>
+                <h5 style="text-align:center; width: 100%;">Made with <i class="icon ion-ios-heart assertive"></i> on planet earth</h5>
             </ion-footer-bar>
         </ion-side-menu>
     </ion-side-menus>

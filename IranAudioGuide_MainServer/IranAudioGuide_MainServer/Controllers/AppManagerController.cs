@@ -32,7 +32,7 @@ namespace IranAudioGuide_MainServer.Controllers
             return dbTools.GetUpdate(LastUpdateNumber);
         }
         [HttpPost]
-        public async Task<IHttpActionResult> AutenticateGoogleUser(GoogleUserInfo user)
+        public async Task<CreateingUserResult> AutenticateGoogleUser(GoogleUserInfo user)
         {
             var res = await acTools.CreateGoogleUser(new ApplicationUser()
             {
@@ -45,20 +45,20 @@ namespace IranAudioGuide_MainServer.Controllers
                 EmailConfirmed = true,
                 uuid = user.uuid
             });
-            return Json(res);
+            return res;
         }
         [HttpPost]
         public async Task<IHttpActionResult> ResgisterAppUser(AppUser user)
         {
             string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
-            CreateingUserResult res = await acTools.CreateAppUser(user.email, user.password, user.uuid, baseUrl);
+            var res = await acTools.CreateAppUser(user.email, user.password, user.uuid, baseUrl);
             return Json(res);
         }
         [HttpPost]
-        public async Task<IHttpActionResult> AuthoruzeAppUser(AppUser user)
+        public async Task<AuthorizedUser> AuthorizeAppUser(AppUser user)
         {
-            SignInResults res = await acTools.AutorizeAppUser(user.email, user.password, user.uuid);
-            return Json(res);
+            var res = await acTools.AutorizeAppUser(user.email, user.password, user.uuid);
+            return res;
         }
         protected override void Dispose(bool disposing)
         {

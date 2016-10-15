@@ -22,6 +22,9 @@
             <li>
                 <a href="#" onclick="f3()">enter</a>
             </li>
+            <li>
+                <a href="#" onclick="f4()">enter get</a>
+            </li>
         </ul>
     </div>
     <script src="~/Scripts/jquery.js"></script>
@@ -38,12 +41,12 @@
         var appUser = {
             email: "sorosh.ansari@gmail.com",
             password: "123456789",
-            uuid: "3fa3756559779e06"
+            uuid: "3fa3756559779e01"
         };
         var f1 = function () {
             console.log(user);
             $.post(
-                "../api/AppManager/AutenticateGoogleUser",
+                "http://iranaudioguide.com/api/AppManager/AutenticateGoogleUser",
                 user)
                 .then(function (o) {
                     console.log("1");
@@ -57,7 +60,7 @@
         var f2 = function () {
             console.log(appUser);
             $.post(
-                "../api/AppManager/ResgisterAppUser",
+                "http://iranaudioguide.com/api/AppManager/ResgisterAppUser",
                 appUser)
                 .then(function (o) {
                     console.log("1");
@@ -70,8 +73,37 @@
         }
         var f3 = function () {
             console.log(appUser);
-            $.post(
-                "../api/AppManager/AuthoruzeAppUser",
+            $.ajax({
+                url: 'http://iranaudioguide.com/api/AppManager/AuthorizeAppUser',
+                data: appUser,
+                type: 'POST',
+                crossDomain: true,
+                dataType: 'jsonp',
+                success: function (o) {
+                    console.log("1");
+                    console.log(o);
+                },
+                error: function (err) {
+                    console.log("2");
+                    console.log(err)
+                }
+            });
+            //$.post(
+            //    "http://iranaudioguide.com/api/AppManager/AuthorizeAppUser",
+            //    appUser)
+            //    .then(function (o) {
+            //        console.log("1");
+            //        console.log(o);
+            //    },
+            //    function (err) {
+            //        console.log("2");
+            //        console.log(err)
+            //    });
+        }
+        var f4 = function () {
+            console.log(appUser);
+            $.get(
+                "../api/AppManager/AuthorizeAppUserGet",
                 appUser)
                 .then(function (o) {
                     console.log("1");

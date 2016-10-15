@@ -212,27 +212,6 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return Json(new Respond("Invalid Place Id.", 3));
         }
-        //[HttpPost]
-        //[Authorize(Roles = "Admin")]
-        //public JsonResult DeactiveOnlinePlace(Guid Id)
-        //{
-        //    try
-        //    {
-        //        var place = db.OnlinePlaces.Where(x => x.OnP_Id == Id).FirstOrDefault();
-        //        if (place == default(OnlinePlace))
-        //        {
-        //            return Json(new Respond("Invalid Place Id.", 2));
-        //        }
-        //        place.OnP_Deactive = true;
-        //        db.SaveChanges();
-        //        return Json(new Respond());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new Respond(ex.Message, 3));
-        //    }
-
-        //}
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult EditPlace(EditPlaceVM model)

@@ -3,16 +3,23 @@ angular.module('app.controllers', [])
     console.log("Primary Page");
     var start = 0, SplashTime = 3000;
     var updateNumber = 0;
-    
+
     $ionicPlatform.ready(function () {
         AutenticateAndLoadData();
     });
+
     var fillMenu = function () {
         //var user = window.localStorage.getItem("userInfo");
-        $rootScope.User_Img = window.localStorage.getItem("User_Img");
-        $rootScope.User_Name = window.localStorage.getItem("User_Name");
-        $rootScope.User_Email = window.localStorage.getItem("User_Email");
+        $rootScope.$apply(function () {
+            $rootScope.Authenticated = window.localStorage.getItem("Authenticated") || false;
+            $rootScope.Skipped = window.localStorage.getItem("Skipped") || false;
+            $rootScope.User_Img = window.localStorage.getItem("User_Img");
+            $rootScope.User_Name = window.localStorage.getItem("User_Name");
+            $rootScope.User_GoogleId = window.localStorage.getItem("User_GoogleId") || '';
+            $rootScope.User_Email = window.localStorage.getItem("User_Email");
+        });
     };
+
     var AutenticateAndLoadData = function () {
         start = new Date().getTime();
         var Skipped = window.localStorage.getItem("Skipped") || false;
@@ -47,7 +54,8 @@ angular.module('app.controllers', [])
                     ApiServices.GetAll(LstUpdtNum);
             }
         }
-    }
+    };
+
     $scope.$on('$ionicView.enter', function () {
         // code to run each time view is entered
         console.log("tester");
@@ -67,14 +75,6 @@ angular.module('app.controllers', [])
             GoHome();
         }
     });
-    //var waitForUpdate = function (updateNumber) {
-    //    if ($rootScope.waitingUpdates == 0) {
-    //        window.localStorage.setItem("LastUpdateNumber", updateNumber);
-    //        GoHome();
-    //    }
-    //    else
-    //        setTimeout(waitForUpdate, 100, updateNumber);
-    //};
     $rootScope.$on('ServerConnFailed', function (event, error) {
         console.log(error);
         alert("try again.");

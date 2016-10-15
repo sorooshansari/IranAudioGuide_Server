@@ -118,9 +118,29 @@ angular.module('app.services', [])
                 data: user
             }).then(function (data) {
                 console.log(data);
-                window.localStorage.setItem("User_Name", user.name);
-                window.localStorage.setItem("User_Email", user.email);
-                FileServices.DownloadProfilePic(user.picture, profilePath)
+                switch (data.data) {
+                    case 0: {
+                        window.localStorage.setItem("Skipped", false);
+                        window.localStorage.setItem("Authenticated", true);
+                        window.localStorage.setItem("User_Name", user.name);
+                        window.localStorage.setItem("User_Email", user.email);
+                        window.localStorage.setItem("User_GoogleId", user.google_id);
+                        FileServices.DownloadProfilePic(user.picture, profilePath);
+                    }
+                    case 1: {
+                        alert("Authenticating user failed");
+                        break;
+                    }
+                    case 2: {
+                        alert("Authenticating user failed");
+                        break;
+                    }
+                    case 3: {
+                        alert("You have already signed in with a different device.");
+                        break;
+                    }
+                    default:
+                }
             });
         };
         return {
@@ -136,6 +156,8 @@ angular.module('app.services', [])
                     switch (data.data) {
                         case 0: {
                             window.localStorage.setItem("User_Email", email);
+                            window.localStorage.setItem("Skipped", false);
+                            window.localStorage.setItem("Authenticated", true);
                             $rootScope.$broadcast('LoadDefaultUser', {});
                             break;
                         }
@@ -157,34 +179,51 @@ angular.module('app.services', [])
                 var AppUser = { email: email, password: password, uuid: uuid };
                 console.log(AppUser);
                 $http({
-                    url: 'http://iranaudioguide.com/api/AppManager/AuthoruzeAppUser',
+                    url: 'http://iranaudioguide.com/api/AppManager/AuthorizeAppUser',
                     method: 'POST',
                     data: AppUser
                 }).then(function (data) {
+                    $ionicLoading.hide();
                     console.log(data);
-                    switch (data.data) {
+                    switch (data.data.Result) {
                         case 0: {
-                            window.localStorage.setItem("User_Email", email);
-                            $rootScope.$broadcast('LoadDefaultUser', {});
+                            window.localStorage.setItem("Skipped", false);
+                            window.localStorage.setItem("Authenticated", true);
+                            var user = data.data;
+                            if (user.GoogleId != null) {
+                                window.localStorage.setItem("User_Name", user.FullName);
+                                window.localStorage.setItem("User_Email", user.Email);
+                                window.localStorage.setItem("User_GoogleId", user.GoogleId);
+                                FileServices.DownloadProfilePic(user.Picture, user.GoogleId)
+                            }
+                            else {
+                                window.localStorage.setItem("User_Email", email);
+                                $rootScope.$broadcast('LoadDefaultUser', {});
+                            }
                             break;
                         }
                         case 1: {
-                            $ionicLoading.hide();
                             alert("LockedOut");
                             break;
                         }
                         case 2: {
-                            $ionicLoading.hide();
                             alert("RequiresVerification");
                             break;
                         }
-                        case 2: {
-                            $ionicLoading.hide();
+                        case 3: {
                             alert("Wrong username or password.");
+                            break;
+                        }
+                        case 4: {
+                            alert("You have already signed in with a different device.");
                             break;
                         }
                         default:
                     }
+                },
+                function (err) {
+                    console.log(err);
+                    alert("error");
                 });
             },
             Google: function (uuid) {

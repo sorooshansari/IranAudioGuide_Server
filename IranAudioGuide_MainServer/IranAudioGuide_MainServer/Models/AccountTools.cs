@@ -45,20 +45,24 @@ namespace IranAudioGuide_MainServer.Models
                 _userManager = value;
             }
         }
-        public async Task<SignInResults> AutorizeAppUser(string username, string password, string uuid)
+        public async Task<AuthorizedUser> AutorizeAppUser(string username, string password, string uuid)
         {
-            var res = (SignInResults)await SignInManager.PasswordSignInAsync(username, password, false, true);
-            if (res == SignInResults.Success)
+            var user = await UserManager.FindByNameAsync(username);
+            bool res = await UserManager.CheckPasswordAsync(user, password);
+            if (res)
             {
-                string name = HttpContext.Current.User.Identity.Name;
-                string old_uuid = (await UserManager.FindByNameAsync(name)).uuid;
-                if (old_uuid != uuid)
+                if (user.uuid != uuid)
+                    return new AuthorizedUser() { Result = SignInResults.uuidMissMatch };
+                return new AuthorizedUser()
                 {
-                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-                    return SignInResults.uuidMissMatch;
-                }
+                    GoogleId = user.GoogleId,
+                    Email = user.Email,
+                    FullName = user.FullName,
+                    Picture = user.Picture,
+                    Result = SignInResults.Success
+                };
             }
-            return res;
+            return new AuthorizedUser() { Result = SignInResults.Failure };
         }
         public async Task<CreateingUserResult> CreateAppUser(string Email, string password, string uuid, string baseUrl)
         {
