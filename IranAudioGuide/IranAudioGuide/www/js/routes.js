@@ -73,24 +73,24 @@ angular.module('app.routes', [])
         }
     })
 
-    .state('tabsController.palace', {
+    .state('tabsController.place', {
         url: '/page5',
         views: {
             'tab1': {
-                templateUrl: 'templates/palace.html',
-                controller: 'palaceCtrl'
+                templateUrl: 'templates/place.html',
+                controller: 'placeCtrl'
             }
         }
     })
-    .state('tabsController.palaceSearched', {
-        url: '/palaceSearched',
+    .state('tabsController.placeSearched', {
+        url: '/placeSearched',
         params: {
             id: 'salam'
         },
         views: {
             'tab3': {
-                templateUrl: 'templates/palace.html',
-                controller: 'palaceCtrl'
+                templateUrl: 'templates/place.html',
+                controller: 'placeCtrl'
             }
         }
     })

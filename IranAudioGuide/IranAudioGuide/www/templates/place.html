@@ -1,0 +1,92 @@
+<ion-view title="{{PageTitle}}" id="page6">
+    <ion-content padding="true" class="has-header">
+        <div class="list card" id="cameraTabDefaultPage-card21">
+            <ion-item class="item-icon-left  item-divider" id="cameraTabDefaultPage-list-item3">
+                <i class="icon ion-map"></i>Tomb of Hafez
+            </ion-item>
+            <div class="item item-image">
+                <img src="img/6.jpg" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+            </div>
+            <div id="cameraTabDefaultPage-container1" class="item-body">
+                <div id="cameraTabDefaultPage-markdown2" style="color:#000000;">
+                    <p style="margin-top:0px;">
+                        The Tomb of Hafez and its associated memorial hall, the Hafezieh,
+                        are two memorial structures erected in the northern edge of Shiraz, Iran,
+                        in memory of the celebrated Persian poet Hafez.
+                    </p>
+                </div>
+                <ion-list id="cameraTabDefaultPage-list3">
+                    <ion-item class="item-icon-left positive" id="cameraTabDefaultPage-list-item4">
+                        <i class="icon ion-pause"></i>Who was Hafez
+                    </ion-item>
+                    <ion-item class="item-icon-left positive" id="cameraTabDefaultPage-list-item8">
+                        <i class="icon ion-play"></i>Who was Soroosh
+                    </ion-item>
+                    <ion-item class="item-icon-left positive" id="cameraTabDefaultPage-list-item9">
+                        <i class="icon ion-play"></i>Who was Mona
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+        <div class="list card" id="cameraTabDefaultPage-card25">
+            <ion-item class="item-icon-left  item-divider" id="cameraTabDefaultPage-list-item16">
+                <i class="icon ion-ios-glasses-outline"></i>Related Stories
+            </ion-item>
+            <div id="cameraTabDefaultPage-container2" class="item-body">
+                <div id="cameraTabDefaultPage-markdown8" style="color:#000000;">
+                    <p style="margin-top:0px;">
+                        Some friendly
+                        <strong>markdown</strong>
+                    </p>
+                </div>
+                <ion-list id="cameraTabDefaultPage-list4">
+                    <ion-item class="item-icon-left balanced" id="cameraTabDefaultPage-list-item17">
+                        <i class="icon ion-pause"></i>Hafez Story
+                    </ion-item>
+                    <ion-item class="item-icon-left balanced" id="cameraTabDefaultPage-list-item10">
+                        <i class="icon ion-ios-play"></i>Soroosh Story
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+        <div class="list card" id="cameraTabDefaultPage-card24">
+            <ion-item class="item-icon-left  item-divider" id="cameraTabDefaultPage-list-item14">
+                <i class="icon ion-images"></i>Galery Item
+            </ion-item>
+            <ion-slide-box slide-interval="10000" auto-play="true" does-continue="true" on-slide-changed="slideHasChanged($index)">
+                <ion-slide ng-repeat="SlideShow in SlideShows" class="margin">
+                    <img src="{{SlideShow.URL}}" style="display: block; margin-left: auto; margin-right: auto; width:100%; height:auto;">
+                </ion-slide>
+            </ion-slide-box>
+            <div class="item item-body" id="cameraTabDefaultPage-list-item-container7">
+                <div id="cameraTabDefaultPage-markdown7" style="color:#000000;">
+                    <p style="margin-top:0px;">
+                        {{slidshowMarkdown}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="list card" id="cameraTabDefaultPage-card23">
+            <ion-item class="item-icon-left  item-divider" id="cameraTabDefaultPage-list-item30">
+                <i class="icon ion-alert"></i>Tips
+            </ion-item>
+            <div id="cameraTabDefaultPage-container3">
+                <div class="item item-body" id="cameraTabDefaultPage-list-item-container12">
+                    <div id="cameraTabDefaultPage-markdown12" style="color:#000000;">
+                        <p style="margin-top:0px;">
+                            Some friendly
+                            <strong>markdown</strong>
+                        </p>
+                    </div>
+                    <ion-list id="cameraTabDefaultPage-list6">
+                        <ion-list id="cameraTabDefaultPage-list7">
+                            <ion-item id="cameraTabDefaultPage-list-item35">Item 1</ion-item>
+                            <ion-item id="cameraTabDefaultPage-list-item36">Item 2</ion-item>
+                            <ion-item id="cameraTabDefaultPage-list-item37">Item 3</ion-item>
+                        </ion-list>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

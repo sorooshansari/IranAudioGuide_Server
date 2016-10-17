@@ -246,7 +246,15 @@ angular.module('app.controllers', [])
     });
 })
 
-.controller('palaceCtrl', function ($scope, AudioServices, $rootScope, $ionicLoading, $stateParams) {
+.controller('placeCtrl', function ($scope, AudioServices, $rootScope, $ionicLoading, $stateParams, SlideShows) {
+
+    $scope.SlideShows = SlideShows.all();
+    $scope.slidshowMarkdown = $scope.SlideShows[0].title;
+    $scope.slideHasChanged = function (index) {
+        console.log(index);
+        $scope.slidshowMarkdown = $scope.SlideShows[index].title;
+    }
+
     console.log($stateParams.id);
     $scope.PageTitle = "Tomb of Hafez"
 
