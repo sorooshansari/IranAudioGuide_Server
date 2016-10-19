@@ -247,6 +247,13 @@ angular.module('app.controllers', [])
 })
 
 .controller('placeCtrl', function ($scope, AudioServices, $rootScope, $ionicLoading, $stateParams, SlideShows) {
+    $scope.showRef = true;
+    $scope.showHideRef = function () {
+        if ($scope.showRef)
+            $scope.showRef = false;
+        else
+            $scope.showRef = true;
+    };
 
     $scope.SlideShows = SlideShows.all();
     $scope.slidshowMarkdown = $scope.SlideShows[0].title;

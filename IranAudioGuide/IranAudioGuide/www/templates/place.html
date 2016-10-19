@@ -2,7 +2,7 @@
     <ion-content padding="true" class="has-header">
         <div class="list card" id="cameraTabDefaultPage-card21">
             <ion-item class="item-icon-left  item-divider" id="cameraTabDefaultPage-list-item3">
-                <i class="icon ion-map"></i>Tomb of Hafez
+                <i class="icon ion-pin"></i>Tomb of Hafez
             </ion-item>
             <div class="item item-image">
                 <img src="img/6.jpg" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
@@ -18,12 +18,15 @@
                 <ion-list id="cameraTabDefaultPage-list3">
                     <ion-item class="item-icon-left positive" id="cameraTabDefaultPage-list-item4">
                         <i class="icon ion-pause"></i>Who was Hafez
+                        <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
                     </ion-item>
                     <ion-item class="item-icon-left positive" id="cameraTabDefaultPage-list-item8">
                         <i class="icon ion-play"></i>Who was Soroosh
+                        <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
                     </ion-item>
                     <ion-item class="item-icon-left positive" id="cameraTabDefaultPage-list-item9">
                         <i class="icon ion-play"></i>Who was Mona
+                        <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
                     </ion-item>
                 </ion-list>
             </div>
@@ -33,18 +36,20 @@
                 <i class="icon ion-ios-glasses-outline"></i>Related Stories
             </ion-item>
             <div id="cameraTabDefaultPage-container2" class="item-body">
-                <div id="cameraTabDefaultPage-markdown8" style="color:#000000;">
+                <!--<div id="cameraTabDefaultPage-markdown8" style="color:#000000;">
                     <p style="margin-top:0px;">
                         Some friendly
                         <strong>markdown</strong>
                     </p>
-                </div>
+                </div>-->
                 <ion-list id="cameraTabDefaultPage-list4">
                     <ion-item class="item-icon-left balanced" id="cameraTabDefaultPage-list-item17">
                         <i class="icon ion-pause"></i>Hafez Story
+                        <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
                     </ion-item>
                     <ion-item class="item-icon-left balanced" id="cameraTabDefaultPage-list-item10">
                         <i class="icon ion-ios-play"></i>Soroosh Story
+                        <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
                     </ion-item>
                 </ion-list>
             </div>
@@ -68,21 +73,48 @@
         </div>
         <div class="list card" id="cameraTabDefaultPage-card23">
             <ion-item class="item-icon-left  item-divider" id="cameraTabDefaultPage-list-item30">
-                <i class="icon ion-alert"></i>Tips
+                <i class="icon ion-android-bulb"></i>Tips
             </ion-item>
             <div id="cameraTabDefaultPage-container3">
                 <div class="item item-body" id="cameraTabDefaultPage-list-item-container12">
-                    <div id="cameraTabDefaultPage-markdown12" style="color:#000000;">
-                        <p style="margin-top:0px;">
-                            Some friendly
-                            <strong>markdown</strong>
-                        </p>
-                    </div>
                     <ion-list id="cameraTabDefaultPage-list6">
                         <ion-list id="cameraTabDefaultPage-list7">
-                            <ion-item id="cameraTabDefaultPage-list-item35">Item 1</ion-item>
-                            <ion-item id="cameraTabDefaultPage-list-item36">Item 2</ion-item>
-                            <ion-item id="cameraTabDefaultPage-list-item37">Item 3</ion-item>
+                            <ion-item class="item-icon-left" id="cameraTabDefaultPage-list-item35">
+                                <i class="icon ion-android-walk"></i>
+                                transportation
+                            </ion-item>
+                            <ion-item class="item-icon-left" id="cameraTabDefaultPage-list-item36">
+                                <i class="icon ion-ios-pulse-strong"></i>
+                                rough trak
+                            </ion-item>
+                            <ion-item class="item-icon-left" id="cameraTabDefaultPage-list-item37">
+                                <i class="icon ion-android-time"></i>
+                                time
+                            </ion-item>
+                            <ion-item class="item-icon-left" id="cameraTabDefaultPage-list-item37">
+                                <i class="icon ion-android-checkbox-outline"></i>
+                                stuff
+                            </ion-item>
+                            <ion-item class="item-icon-left" id="cameraTabDefaultPage-list-item37">
+                                <i class="icon ion-ios-nutrition-outline"></i>
+                                others
+                            </ion-item>
+                        </ion-list>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+        <div class="list card" id="card-refrences">
+            <ion-item class="item-icon-left item-divider" id="refrences-header" ng-click="showHideRef()">
+                <i class="icon ion-link"></i>Refrences
+            </ion-item>
+            <div id="container-refrences" class="my-show-hide-animation" ng-hide="showRef">
+                <div class="item item-body" id="refrences-list-item-container">
+                    <ion-list id="refrences-list">
+                        <ion-list id="refrences-list">
+                            <ion-item id="refrences-list-item1">refrence 1</ion-item>
+                            <ion-item id="refrences-list-item2">refrence 2</ion-item>
+                            <ion-item id="refrences-list-item3">refrence 3</ion-item>
                         </ion-list>
                     </ion-list>
                 </div>
@@ -90,3 +122,17 @@
         </div>
     </ion-content>
 </ion-view>
+<style>
+    .my-show-hide-animation.ng-hide-add,
+    .my-show-hide-animation.ng-hide-remove {
+        -webkit-transition: 0.5s linear all;
+        transition: 0.5s linear all;
+        /* remember to add this */
+        display: block !important;
+        opacity: 1;
+    }
+
+    .my-show-hide-animation.ng-hide {
+        opacity: 0;
+    }
+</style>
