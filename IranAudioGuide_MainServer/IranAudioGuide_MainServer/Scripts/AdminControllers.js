@@ -3,6 +3,9 @@ angular.module('AdminPage.controllers', [])
 .controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices',
     function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices) {
         //global
+        var paging = 5;
+        var validImgFormats = ['jpg', 'gif'];
+        var validAudioFormats = ['mp3'];
         $rootScope.hide = function (modal) {
             $(modal).modal('hide');
         }
@@ -99,31 +102,31 @@ angular.module('AdminPage.controllers', [])
             }
         });
 
-        //Online Place stuff
-        $rootScope.OnlinePlacePagesLen;
-        $rootScope.OnlinePlaceCurrentPage;
-        $scope.OnlinePlaces = PlaceServices.OnlineGet(0);
-        $scope.PreviousPlace = function () {
-            if ($rootScope.OnlinePlaceCurrentPage > 0)
-                $scope.OnlinePlaces = PlaceServices.OnlineGet($rootScope.OnlinePlaceCurrentPage - 1);
-        };
-        $scope.OnlineNextPlace = function () {
-            if ($rootScope.OnlinePlacePagesLen - $rootScope.OnlinePlaceCurrentPage > 1)
-                $scope.OnlinePlaces = PlaceServices.OnlineGet($rootScope.OnlinePlaceCurrentPage + 1);
-        };
-        $scope.OnlineRemovePlaceVM = {};
-        $scope.OnlineRemovePlaceModal = function (PlaceID, PlaceName) {
-            $scope.OnlineRemovePlaceVM.PlaceID = PlaceID;
-            $scope.OnlineRemovePlaceVM.PlaceName = PlaceName;
-            $('#OnlineEditPlaceModal').modal('show');
-        };
-        $scope.OnlineRemovePlace = function (PlaceID) {
-            PlaceServices.OnlineRemovePlace(PlaceID);
-        };
-        $scope.$on('OnlineUpdatePlaces', function (event) {
-            $scope.OnlinePlaces = PlaceServices.OnlineGet(0);
-            scroll("#OnlinePlaces");
-        });
+        ////Online Place stuff
+        //$rootScope.OnlinePlacePagesLen;
+        //$rootScope.OnlinePlaceCurrentPage;
+        //$scope.OnlinePlaces = PlaceServices.OnlineGet(0);
+        //$scope.PreviousPlace = function () {
+        //    if ($rootScope.OnlinePlaceCurrentPage > 0)
+        //        $scope.OnlinePlaces = PlaceServices.OnlineGet($rootScope.OnlinePlaceCurrentPage - 1);
+        //};
+        //$scope.OnlineNextPlace = function () {
+        //    if ($rootScope.OnlinePlacePagesLen - $rootScope.OnlinePlaceCurrentPage > 1)
+        //        $scope.OnlinePlaces = PlaceServices.OnlineGet($rootScope.OnlinePlaceCurrentPage + 1);
+        //};
+        //$scope.OnlineRemovePlaceVM = {};
+        //$scope.OnlineRemovePlaceModal = function (PlaceID, PlaceName) {
+        //    $scope.OnlineRemovePlaceVM.PlaceID = PlaceID;
+        //    $scope.OnlineRemovePlaceVM.PlaceName = PlaceName;
+        //    $('#OnlineEditPlaceModal').modal('show');
+        //};
+        //$scope.OnlineRemovePlace = function (PlaceID) {
+        //    PlaceServices.OnlineRemovePlace(PlaceID);
+        //};
+        //$scope.$on('OnlineUpdatePlaces', function (event) {
+        //    $scope.OnlinePlaces = PlaceServices.OnlineGet(0);
+        //    scroll("#OnlinePlaces");
+        //});
 
         //Edit Place
         $scope.OnlineEditPlaceVM;
@@ -215,11 +218,25 @@ angular.module('AdminPage.controllers', [])
         $scope.NewAudio = function () {
             $('#NewAudioModal').modal('show');
         };
-        $scope.AddAudio = function (model) {
-            //$('#NewAudioModal').modal('hide');
-            $rootScope.ShowOverlay = true;
-            //model.PlaceId = $scope.selectedPlaceId;
-            AudioServices.Add(model, $scope.selectedPlaceId);
+        $scope.SetAudioName = function (o) {
+            $scope.NewAudioVM.FileChanged = true;
+            var AudioUrl = o.files[0].name;
+            var ext = AudioUrl.substring(AudioUrl.lastIndexOf('.') + 1).toLowerCase();
+            if (validAudioFormats.indexOf(ext) !== -1) {
+                NewAudioForm.AudioUrl.value = AudioUrl;
+                $scope.NewAudioVM.invalidFile = false;
+            }
+            else {
+                NewAudioForm.AudioUrl.value = '';
+                $scope.NewAudioVM.invalidFile = true;
+            }
+        }
+        $scope.AddAudio = function (model, form) {
+            console.log(model);
+            if (form.$valid && !model.invalidFile) {
+                $rootScope.ShowOverlay = true;
+                AudioServices.Add(model, $scope.selectedPlaceId);
+            }
         };
         $scope.removeAudio = function (audioId) {
             AudioServices.Remove(audioId);
@@ -227,12 +244,12 @@ angular.module('AdminPage.controllers', [])
         $scope.$on('UpdateAudios', function (event) {
             $scope.LoadPlaceAudios($scope.selectedPlaceId);
         });
-        $scope.$on('UpdateAudioValidationSummery', function (event, data) {
-            //$scope.additionalError = data.data;
+        $scope.$on('UpdateAudioValidationSummery', function (event, args) {
+            //$scope.additionalError = args.data;
             //scroll("#NewPlace");
         });
-        $scope.$on('RemoveAudioError', function (event, content) {
-            $scope.ForignKeyErrorBody = 'Error on removing audio.<br/>' + content + '<br/>Contact site developer to get more information.'
+        $scope.$on('RemoveAudioError', function (event, args) {
+            $scope.ForignKeyErrorBody = 'Error on removing audio.<br/>' + args.content + '<br/>Contact site developer to get more information.'
             $scope.DelSubsBtn = "hidden";
             $('#ForignKeyErrorModal').modal('show');
         });
@@ -241,35 +258,54 @@ angular.module('AdminPage.controllers', [])
                 $scope.LoadPlaceAudios($scope.places[0].PlaceId);
             }
         });
-        $scope.SetAudioName = function (o) {
-            NewAudioForm.AudioUrl.value = o.files[0].name;
-        }
 
         //Place stuff
-        $rootScope.PlacePagesLen;
-        $rootScope.PlaceCurrentPage;
-        $scope.places = PlaceServices.Get(0);
-        $scope.PreviousPlace = function () {
-            if ($rootScope.PlaceCurrentPage > 0)
-                $scope.places = PlaceServices.Get($rootScope.PlaceCurrentPage - 1);
-        };
+        $scope.PlacePagesLen = 0;
+        $scope.PlaceCurrentPage = 0;
+        $rootScope.allPlaces = [];
+        PlaceServices.GetAll();
+        $scope.$on('LoadPlaces', function (event) {
+            $scope.places = angular.copy($rootScope.allPlaces.slice(0, paging));
+            $scope.PlacePagesLen = Math.floor($rootScope.allPlaces.length / paging);
+            if (($rootScope.allPlaces.length / paging > $scope.PlacePagesLen))
+                $scope.PlacePagesLen++;
+        });
         $scope.NextPlace = function () {
-            if ($rootScope.PlacePagesLen - $rootScope.PlaceCurrentPage > 1)
-                $scope.places = PlaceServices.Get($rootScope.PlaceCurrentPage + 1);
+            //if ($rootScope.PlacePagesLen - $rootScope.PlaceCurrentPage > 1)
+            //    $scope.places = PlaceServices.Get($rootScope.PlaceCurrentPage + 1);
+            if ($scope.PlacePagesLen - $scope.PlaceCurrentPage > 1){
+                $scope.places = angular.copy($rootScope.allPlaces.slice(($scope.PlaceCurrentPage + 1) * paging, ($scope.PlaceCurrentPage + 2) * paging));
+                $scope.PlaceCurrentPage++;
+            }
+        };
+        $scope.PreviousPlace = function () {
+            //if ($rootScope.PlaceCurrentPage > 0)
+            //    $scope.places = PlaceServices.Get($rootScope.PlaceCurrentPage - 1);
+            if ($scope.PlaceCurrentPage > 0) {
+                $scope.places = angular.copy($rootScope.allPlaces.slice(($scope.PlaceCurrentPage - 1) * paging, $scope.PlaceCurrentPage * paging));
+                $scope.PlaceCurrentPage--;
+            }
         };
         $scope.AddPlace = function (NewPlace, form) {
             if (form.$valid) {
                 PlaceServices.AddPlace(NewPlace);
-
-                $scope.NewPlace.PlaceName = "";
-                NewPlaceForm.imgUrl.value = "";
-                $scope.NewPlace.Image = "";
-                $scope.NewPlace.PlaceCityId = "";
-                $scope.NewPlace.PlaceCordinates = "";
-                $scope.NewPlace.PlaceDesc = "";
-                $scope.NewPlace.PlaceAddress = "";
             }
         };
+        $scope.$on('placeAdded', function (event) {
+            $scope.NewPlace = {
+                PlaceName: '',
+                Image: '',
+                PlaceCityId: '',
+                PlaceCordinates: '',
+                PlaceDesc: '',
+                PlaceAddress: ''
+            };
+            NewPlaceForm.imgUrl.value = "";
+            $scope.NewPlaceForm.$setPristine();
+            $scope.NewPlaceForm.$setUntouched();
+            $scope.NewPlaceForm.$submitted = false;
+            $scope.$broadcast('UpdatePlaces', {});
+        });
         $scope.RemovePlace = function (PlaceID, PlaceName) {
             PlaceServices.RemovePlace(PlaceID, PlaceName);
         };
@@ -277,12 +313,12 @@ angular.module('AdminPage.controllers', [])
             $scope.places = PlaceServices.Get(0);
             scroll("#PlaceList");
         });
-        $scope.$on('UpdatePlaceValidationSummery', function (event, data) {
-            $scope.additionalError = data.data;
+        $scope.$on('UpdatePlaceValidationSummery', function (event, args) {
+            $scope.additionalError = args.data;
             scroll("#NewPlace");
         });
-        $scope.$on('PlaceForignKeyError', function (event, data) {
-            $scope.ForignKeyErrorBody = 'This place (<span class="text-danger">' + data.PlaceName + '</span>) has one or more audios.<br />To remove this place, first you have to delete it\'s audios.'
+        $scope.$on('PlaceForignKeyError', function (event, args) {
+            $scope.ForignKeyErrorBody = 'This place (<span class="text-danger">' + args.PlaceName + '</span>) has one or more audios.<br />To remove this place, first you have to delete it\'s audios.'
             $scope.DelSubsBtn = "hidden";
             $('#ForignKeyErrorModal').modal('show');
         });
@@ -301,13 +337,19 @@ angular.module('AdminPage.controllers', [])
         };
         $scope.GoOnline = function (PlaceId) {
             PlaceServices.GoOnline(PlaceId);
-        };
-        $scope.$on('UpdateBothPlaces', function (event) {
             $('#GoOnlineModal').modal('hide');
-            $scope.places = PlaceServices.Get(0);
-            $scope.OnlinePlaces = PlaceServices.OnlineGet(0);
-            scroll("#OnlinePlaces");
-        });
+        };
+
+        //Get Offline
+        $scope.GetOfflineVM = {};
+        $scope.ShowGetOfflineModal = function (PlaceId, PlaceName) {
+            $scope.GetOfflineVM.Id = PlaceId;
+            $scope.GetOfflineVM.Name = PlaceName;
+            $('#GoOfflineModal').modal('show');
+        };
+        $scope.GoOffline = function (PlaceId) {
+            PlaceServices.GoOffline(PlaceId);
+        };
 
         //Edit Place
         $scope.EditPlaceVM;
@@ -315,6 +357,7 @@ angular.module('AdminPage.controllers', [])
         $scope.ShowEditPlaceModal = function (Place) {
             $scope.selectedPlace.ExtraImages = PlaceServices.GetExtraImages(Place.PlaceId);
             $scope.selectedPlace.Img = Place.ImgUrl;
+            $scope.selectedPlace.Id = Place.PlaceId;
             $scope.EditPlaceVM = angular.copy(Place);
             $('#EditPlaceModal').modal('show');
         };
@@ -326,8 +369,9 @@ angular.module('AdminPage.controllers', [])
             $(id).click();
         };
         $scope.ChangeImg = function (NewImage) {
+            console.log($scope.selectedPlace);
             $rootScope.EditOverlay = true;
-            PlaceServices.ChangeImage($scope.selectedPlace.Img, NewImage.files[0])
+            PlaceServices.ChangeImage($scope.selectedPlace.Img, NewImage.files[0], $scope.selectedPlace.Id)
         };
         $scope.AddExtraImage = function (image) {
             PlaceServices.AddExtraImage(image.files[0], $scope.EditPlaceVM.PlaceId);
@@ -342,8 +386,10 @@ angular.module('AdminPage.controllers', [])
             $scope.EditEIDescVM.Desc = image.ImageDesc;
             $('#EditEIDescModal').modal('show');
         };
-        $scope.EditEIDesc = function (EditEIDescVM) {
-            PlaceServices.EditEIDesc(EditEIDescVM);
+        $scope.EditEIDesc = function (EditEIDescVM, form) {
+            if (form.$valid) {
+                PlaceServices.EditEIDesc(EditEIDescVM);
+            }
         };
         $scope.$on('UpdateExtraImg', function (event) {
             $scope.selectedPlace.ExtraImages = PlaceServices.GetExtraImages($scope.EditPlaceVM.PlaceId);
@@ -383,10 +429,18 @@ angular.module('AdminPage.controllers', [])
         $scope.AddCity = function (NewCity, form) {
             if (form.$valid) {
                 CityServices.AddCity(NewCity);
-                $scope.NewCity.CityName = "";
-                $scope.NewCity.CityDesc = "";
             }
         };
+        $scope.$on('cityAdded', function (event) {
+            $scope.NewCity = {
+                CityName: '',
+                CityDesc: ''
+            };
+            $scope.NewCityForm.$setPristine();
+            $scope.NewCityForm.$setUntouched();
+            $scope.NewCityForm.$submitted = false;
+            $scope.$broadcast('UpdateCities', {});
+        });
         $scope.RemoveCity = function (CityID, CityName) {
             CityServices.RemoveCity(CityID, CityName);
         };
@@ -395,8 +449,8 @@ angular.module('AdminPage.controllers', [])
             $scope.AllCities = CityServices.All();
             scroll("#Cities");
         });
-        $scope.$on('CityForignKeyError', function (event, CityID, CityName) {
-            $scope.ForignKeyErrorBody = 'This city (<span class="text-danger">' + CityName + '</span>) has one or more places.<br />To remove this city, first you have to delete it\'s places.'
+        $scope.$on('CityForignKeyError', function (event, args) {
+            $scope.ForignKeyErrorBody = 'This city (<span class="text-danger">' + args.CityName + '</span>) has one or more places.<br />To remove this city, first you have to delete it\'s places.'
             $scope.DelSubsBtn = "hidden";
             $('#ForignKeyErrorModal').modal('show');
         });

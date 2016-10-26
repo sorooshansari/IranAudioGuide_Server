@@ -44,12 +44,12 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(new AudioViewVM()
                 {
                     audios = GetAudios(PlaceId),
-                    respond = new Respond(content: "Error. Couldn't find any image.", status: 1)
+                    respond = new Respond(content: "Error. Couldn't find any image.", status: status.invalidInput)
                 });
             }
             return Json(new AudioViewVM()
             {
-                respond = new Respond(content: "Fatal error. Invalid Place Id.", status: 2)
+                respond = new Respond(content: "Fatal error. Invalid Place Id.", status: status.invalidInput)
             });
         }
         [HttpPost]
@@ -58,20 +58,20 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new Respond("Check input fields", 1));
+                return Json(new Respond("Check input fields", status.invalidInput));
             }
             if (model.AudioFile.ContentLength > 0 && IsAudioFile(model.AudioFile.FileName))
             {
-                try
+                using (var dbTran = db.Database.BeginTransaction())
                 {
-                    var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
-                    var audio = new Audio()
+                    try
                     {
-                        Aud_Name = model.AudioName,
-                        Pla_Id = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault()
-                    };
-                    using (var dbTran = db.Database.BeginTransaction())
-                    {
+                        var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
+                        var audio = new Audio()
+                        {
+                            Aud_Name = model.AudioName,
+                            Pla_Id = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault()
+                        };
                         db.Audios.Add(audio);
                         db.SaveChanges(); //Save audio and generate Aud_Id
                         string id = Convert.ToString(audio.Aud_Id);
@@ -83,16 +83,16 @@ namespace IranAudioGuide_MainServer.Controllers
                             db.UpdateLogs.Add(new UpdateLog() { Aud_Id = audio.Aud_Id });
                         db.SaveChanges();
                         dbTran.Commit();
+                        return Json(new Respond());
                     }
-                    return Json(new Respond(""));
-                }
-                catch (Exception ex)
-                {
-
-                    throw ex;
+                    catch (Exception ex)
+                    {
+                        dbTran.Rollback();
+                        return Json(new Respond(ex.Message, status.unknownError));
+                    }
                 }
             }
-            return Json(new Respond("Only WAV, MID, MIDI, WMA, MP3, OGG, and RMA are allowed.", 3));
+            return Json(new Respond("Only WAV, MID, MIDI, WMA, MP3, OGG, and RMA are allowed.", status.invalidFileFormat));
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -104,6 +104,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 try
                 {
                     string path = Server.MapPath(string.Format("~/Audios/{0}", audio.Aud_Url));
+                    db.Audios.Remove(audio);
+                    db.SaveChanges();
                     lock (DelAdo)
                     {
                         if (System.IO.File.Exists(path))
@@ -111,20 +113,14 @@ namespace IranAudioGuide_MainServer.Controllers
                             System.IO.File.Delete(path);
                         }
                     }
-                    using (var dbTran = db.Database.BeginTransaction())
-                    {
-                        db.Audios.Remove(audio);
-                        db.SaveChanges();
-                        dbTran.Commit();
-                    }
                     return Json(new Respond());
                 }
                 catch (Exception ex)
                 {
-                    return Json(new Respond(ex.Message, 1));
+                    return Json(new Respond(ex.Message, status.unknownError));
                 }
             }
-            return Json(new Respond("Invalid Audio Id", 1));
+            return Json(new Respond("Invalid Audio Id", status.invalidInput));
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -132,7 +128,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new Respond("Check input fields", 1));
+                return Json(new Respond("Check input fields", status.invalidInput));
             }
             if (model.Image.ContentLength > 0 && IsImage(model.Image))
             {
@@ -145,7 +141,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (model.PlaceCordinates != null)
                 {
                     if (!model.PlaceCordinates.Contains(','))
-                        return Json(new Respond("Enter X and Y cordinates and seprate them with \",\".", 2));
+                        return Json(new Respond("Enter X and Y cordinates and seprate them with \",\".", status.ivalidCordinates));
                     try
                     {
                         List<double> cordinates = (from c in model.PlaceCordinates.Split(',')
@@ -155,13 +151,13 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     catch (Exception)
                     {
-                        return Json(new Respond("Enter percise cordinates.", 2));
+                        return Json(new Respond("Enter percise cordinates.", status.ivalidCordinates));
                     }
                 }
 
-                try
+                using (var dbTran = db.Database.BeginTransaction())
                 {
-                    using (var dbTran = db.Database.BeginTransaction())
+                    try
                     {
                         place.Pla_city = db.Cities.Where(c => c.Cit_Id == model.PlaceCityId).FirstOrDefault();
                         db.Places.Add(place);
@@ -174,16 +170,16 @@ namespace IranAudioGuide_MainServer.Controllers
                         db.UpdateLogs.Add(new UpdateLog() { Pla_ID = place.Pla_Id });
                         db.SaveChanges();
                         dbTran.Commit();
+                        return Json(new Respond());
                     }
-                    return Json(new Respond(""));
-                }
-                catch (Exception ex)
-                {
-
-                    throw ex;
+                    catch (Exception ex)
+                    {
+                        dbTran.Rollback();
+                        return Json(new Respond(ex.Message, status.unknownError));
+                    }
                 }
             }
-            return Json(new Respond("Only jpg, png, gif, and jpeg are allowed.", 3));
+            return Json(new Respond("Only jpg, png, gif, and jpeg are allowed.", status.invalidFileFormat));
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -192,25 +188,40 @@ namespace IranAudioGuide_MainServer.Controllers
             var place = db.Places.Where(x => x.Pla_Id == Id).FirstOrDefault();
             if (place != default(Place))
             {
-                try
+                using (var dbTran = db.Database.BeginTransaction())
                 {
-                    string path = Server.MapPath(string.Format("~/images/Places/{0}", place.Pla_ImgUrl));
-                    lock (DelPlc)
+                    try
                     {
-                        if (System.IO.File.Exists(path))
+                        int result = db.Database.SqlQuery<int>("DeletePlace @Id", new SqlParameter("@Id", Id)).Single();
+                        switch (result)
                         {
-                            System.IO.File.Delete(path);
+                            case 0:
+                                string path = Server.MapPath(string.Format("~/images/Places/{0}", place.Pla_ImgUrl));
+                                lock (DelPlc)
+                                {
+                                    if (System.IO.File.Exists(path))
+                                    {
+                                        System.IO.File.Delete(path);
+                                    }
+                                }
+                                dbTran.Commit();
+                                return Json(new Respond());
+                            case 1:
+                                return Json(new Respond("This place has some dependencies.", status.forignKeyError));
+                            case 2:
+                                return Json(new Respond("Something went wrong. Contact devloper team.", status.dbError));
+                            default:
+                                return Json(new Respond("Something went wrong. Contact devloper team.", status.unknownError));
                         }
                     }
-                    int result = db.Database.SqlQuery<int>("DeletePlace @Id", new SqlParameter("@Id", Id)).Single();
-                    return Json(new Respond("", result));
-                }
-                catch (Exception ex)
-                {
-                    return Json(new Respond(ex.Message, 3));
+                    catch (Exception ex)
+                    {
+                        dbTran.Rollback();
+                        return Json(new Respond(ex.Message, status.unknownError));
+                    }
                 }
             }
-            return Json(new Respond("Invalid Place Id.", 3));
+            return Json(new Respond("Invalid Place Id.", status.invalidId));
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -218,12 +229,12 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new Respond("Check input fields", 1));
+                return Json(new Respond("Check input fields", status.invalidInput));
             }
             var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
             if (place == default(Place))
             {
-                return Json(new Respond("Invalid Place Id", 2));
+                return Json(new Respond("Invalid Place Id", status.invalidId));
             }
             place.Pla_Name = model.PlaceName;
             place.Pla_Discription = model.PlaceDesc;
@@ -232,7 +243,7 @@ namespace IranAudioGuide_MainServer.Controllers
             if (model.PlaceCordinates != null)
             {
                 if (!model.PlaceCordinates.Contains(','))
-                    return Json(new Respond("Enter X and Y cordinates and seprate them with \",\".", 1));
+                    return Json(new Respond("Enter X and Y cordinates and seprate them with \",\".", status.ivalidCordinates));
                 try
                 {
                     List<double> cordinates = (from c in model.PlaceCordinates.Split(',')
@@ -242,30 +253,26 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 catch (Exception)
                 {
-                    return Json(new Respond("Enter percise cordinates.", 1));
+                    return Json(new Respond("Enter percise cordinates.", status.ivalidCordinates));
                 }
             }
             try
             {
-                using (var dbTran = db.Database.BeginTransaction())
-                {
-                    if (place.Pla_isOnline)
-                        db.UpdateLogs.Add(new UpdateLog() { Pla_ID = place.Pla_Id });
-                    db.SaveChanges();
-                    dbTran.Commit();
-                }
+                if (place.Pla_isOnline)
+                    db.UpdateLogs.Add(new UpdateLog() { Pla_ID = place.Pla_Id });
+                db.SaveChanges();
             }
             catch (Exception ex)
             {
-                return Json(new Respond(ex.Message, 3));
+                return Json(new Respond(ex.Message, status.unknownError));
             }
             return Json(new Respond());
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult GetPlaces(int PageNum, bool isOnline = false)
+        public JsonResult GetPlaces(int PageNum)
         {
-            var places = GetPlaces(isOnline);
+            var places = GetPlaces();
             int pagesLen = (places.Count() % pagingLen == 0) ? places.Count() / pagingLen : (places.Count() / pagingLen) + 1;
             int remain = places.Count - (PageNum * pagingLen);
             //Gernerate Indexes
@@ -283,29 +290,71 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return Json(Places);
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult GetAllPlaces()
+        {
+            var places = GetPlaces();
+            int counter = 0;
+            foreach (var place in places)
+            {
+                place.Index = ++counter;
+            }
+            return Json(places);
+        }
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult GoOnline(Guid PlaceId)
         {
-            try
+            using (var dbTrans = db.Database.BeginTransaction())
             {
-                var place = db.Places.Where(x => x.Pla_Id == PlaceId).FirstOrDefault();
-                if (place == default(Place))
+                try
                 {
-                    return Json(new Respond("Invalid Place Id.", 2));
-                }
-                using (var dbTrans = db.Database.BeginTransaction())
-                {
+                    var place = db.Places.Where(x => x.Pla_Id == PlaceId).FirstOrDefault();
+                    if (place == default(Place))
+                    {
+                        dbTrans.Rollback();
+                        return Json(new Respond("Invalid Place Id.", status.invalidId));
+                    }
                     place.Pla_isOnline = true;
                     db.UpdateLogs.Add(new UpdateLog() { Pla_ID = place.Pla_Id });
                     db.SaveChanges();
                     dbTrans.Commit();
+                    return Json(new Respond());
                 }
-                return Json(new Respond());
+                catch (Exception ex)
+                {
+                    dbTrans.Rollback();
+                    return Json(new Respond(ex.Message, status.unknownError));
+                }
             }
-            catch (Exception ex)
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult GoOffline(Guid PlaceId)
+        {
+            using (var dbTrans = db.Database.BeginTransaction())
             {
-                return Json(new Respond(ex.Message, 3));
+                try
+                {
+                    var place = db.Places.Where(x => x.Pla_Id == PlaceId).FirstOrDefault();
+                    if (place == default(Place))
+                    {
+                        dbTrans.Rollback();
+                        return Json(new Respond("Invalid Place Id.", status.invalidId));
+                    }
+                    place.Pla_isOnline = false;
+                    db.UpdateLogs.Add(new UpdateLog() { Pla_ID = place.Pla_Id });
+                    db.SaveChanges();
+                    dbTrans.Commit();
+                    return Json(new Respond());
+                }
+                catch (Exception ex)
+                {
+                    dbTrans.Rollback();
+                    return Json(new Respond(ex.Message, status.unknownError));
+                }
             }
         }
         [HttpPost]
@@ -314,14 +363,14 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new Respond("Check input fields", 1));
+                return Json(new Respond("Check input fields", status.invalidInput));
             }
             try
             {
                 var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                 if (place == default(Place))
                 {
-                    return Json(new Respond("Wronge PlaceId", 2));
+                    return Json(new Respond("Invalid PlaceId", status.invalidId));
                 }
                 string path = Server.MapPath(string.Format("~/images/Places/{0}", model.ImageName));
                 lock (ChangeImgLock)
@@ -334,18 +383,14 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 if (place.Pla_isOnline)
                 {
-                    using (var dbTran = db.Database.BeginTransaction())
-                    {
-                        db.UpdateLogs.Add(new UpdateLog() { Pla_ID = model.PlaceId });
-                        db.SaveChanges();
-                        dbTran.Commit();
-                    }
+                    db.UpdateLogs.Add(new UpdateLog() { Pla_ID = model.PlaceId });
+                    db.SaveChanges();
                 }
                 return Json(new Respond());
             }
             catch (Exception ex)
             {
-                return Json(new Respond(ex.Message, 3));
+                return Json(new Respond(ex.Message, status.unknownError));
             }
         }
         [HttpPost]
@@ -354,17 +399,17 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new Respond("Check input fields", 1));
+                return Json(new Respond("Check input fields", status.invalidInput));
             }
             if (!(model.NewImage != null && model.NewImage.ContentLength > 0 && IsImage(model.NewImage)))
             {
-                return Json(new Respond("Only jpg, png, gif, and jpeg are allowed.", 3));
+                return Json(new Respond("Only jpg, png, gif, and jpeg are allowed.", status.invalidFileFormat));
             };
-            try
+            using (var dbTran = db.Database.BeginTransaction())
             {
-                var img = new Image() { Pla_Id = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault() };
-                using (var dbTran = db.Database.BeginTransaction())
+                try
                 {
+                    var img = new Image() { Pla_Id = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault() };
                     var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     db.Images.Add(img);
                     db.SaveChanges();
@@ -378,12 +423,13 @@ namespace IranAudioGuide_MainServer.Controllers
                     db.SaveChanges();
                     dbTran.Commit();
 
+                    return Json(new Respond());
                 }
-                return Json(new Respond());
-            }
-            catch (Exception ex)
-            {
-                return Json(new Respond(ex.Message, 3));
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    return Json(new Respond(ex.Message, status.unknownError));
+                }
             }
         }
         [HttpPost]
@@ -397,21 +443,21 @@ namespace IranAudioGuide_MainServer.Controllers
                     var img = db.Images.Where(x => x.Img_Id == imgId).FirstOrDefault();
                     if (img == default(Image))
                     {
-                        return Json(new Respond("Invalid Image Id", 2));
+                        return Json(new Respond("Invalid Image Id", status.invalidId));
                     }
                     string path = Server.MapPath(string.Format("~/images/Places/Extras/{0}", img.Img_Name));
+                    db.Images.Remove(img);
+                    db.SaveChanges();
                     if (System.IO.File.Exists(path))
                     {
                         System.IO.File.Delete(path);
                     }
-                    db.Images.Remove(img);
-                    db.SaveChanges();
                 }
                 return Json(new Respond());
             }
             catch (Exception ex)
             {
-                return Json(new Respond(ex.Message, 3));
+                return Json(new Respond(ex.Message, status.unknownError));
             }
         }
         [HttpPost]
@@ -420,21 +466,19 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                 var img = db.Images.Where(x => x.Img_Id == model.ImageId).FirstOrDefault();
                 if (img == default(Image))
                 {
-                    return Json(new Respond("Invalid Image Id", 2));
+                    return Json(new Respond("Invalid Image Id", status.invalidId));
                 }
                 img.Img_Description = model.ImageDesc;
-                if (place.Pla_isOnline)
-                    db.UpdateLogs.Add(new UpdateLog() { Img_Id = img.Img_Id });
+                db.UpdateLogs.Add(new UpdateLog() { Img_Id = img.Img_Id });
                 db.SaveChanges();
                 return Json(new Respond());
             }
             catch (Exception ex)
             {
-                return Json(new Respond(ex.Message, 3));
+                return Json(new Respond(ex.Message, status.unknownError));
             }
         }
         [HttpPost]
@@ -449,23 +493,24 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new OK(false));
+                return Json(new Respond("Check input fields", status.invalidInput));
             }
             var city = new city() { Cit_Name = model.CityName, Cit_Description = model.CityDesc };
-            try
+            using (var dbTran = db.Database.BeginTransaction())
             {
-                using (var dbTran = db.Database.BeginTransaction())
+                try
                 {
                     db.Cities.Add(city);
                     db.UpdateLogs.Add(new UpdateLog() { Cit_ID = city.Cit_Id });
                     db.SaveChanges();
                     dbTran.Commit();
+                    return Json(new Respond());
                 }
-                return Json(new OK());
-            }
-            catch (Exception)
-            {
-                return Json(new OK(false));
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    return Json(new Respond(ex.Message, status.unknownError));
+                }
             }
         }
         [HttpPost]
@@ -473,7 +518,17 @@ namespace IranAudioGuide_MainServer.Controllers
         public JsonResult DelCity(int Id)
         {
             int result = db.Database.SqlQuery<int>("DeleteCity @Id", new SqlParameter("@Id", Id)).Single();
-            return Json(new Respond("", result));
+            switch (result)
+            {
+                case 0:
+                    return Json(new Respond());
+                case 1:
+                    return Json(new Respond("This city has some places.", status.forignKeyError));
+                case 2:
+                    return Json(new Respond("Something went wrong. Contact devloper team.", status.dbError));
+                default:
+                    return Json(new Respond("Something went wrong. Contact devloper team.", status.unknownError));
+            }
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -492,16 +547,13 @@ namespace IranAudioGuide_MainServer.Controllers
                     Cities.GetRange(PageNum * pagingLen, remain)
                 , pagesLen));
         }
-        private List<PlaceVM> GetPlaces(bool isOnline)
+        private List<PlaceVM> GetPlaces()
         {
-            List<PlaceVM> Places;
             try
             {
-                if (isOnline)
-                {
-                    Places =
+                List<PlaceVM> Places =
                     (from place in db.Places
-                     where place.Pla_isOnline && !place.Pla_Deactive
+                     where !place.Pla_Deactive
                      orderby place.Pla_Id descending
                      select new PlaceVM()
                      {
@@ -512,28 +564,9 @@ namespace IranAudioGuide_MainServer.Controllers
                          CityName = place.Pla_city.Cit_Name,
                          PlaceAddress = place.Pla_Address,
                          PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
-                         PlaceCityId = place.Pla_city.Cit_Id
+                         PlaceCityId = place.Pla_city.Cit_Id,
+                         isOnline = place.Pla_isOnline
                      }).ToList();
-                }
-                else
-                {
-
-                    Places =
-                        (from place in db.Places
-                         where !place.Pla_Deactive
-                         orderby place.Pla_Id descending
-                         select new PlaceVM()
-                         {
-                             PlaceId = place.Pla_Id,
-                             ImgUrl = place.Pla_ImgUrl,
-                             PlaceDesc = place.Pla_Discription,
-                             PlaceName = place.Pla_Name,
-                             CityName = place.Pla_city.Cit_Name,
-                             PlaceAddress = place.Pla_Address,
-                             PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
-                             PlaceCityId = place.Pla_city.Cit_Id
-                         }).ToList();
-                }
                 return Places;
             }
             catch (Exception ex)
@@ -653,6 +686,13 @@ namespace IranAudioGuide_MainServer.Controllers
             // linq from Henrik Stenbæk
             return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
         }
+        private bool IsAudioFile(string path)
+        {
+            string[] mediaExtensions = {
+                ".WAV", ".MID", ".MIDI", ".WMA", ".MP3", ".OGG", ".RMA"
+            };
+            return -1 != Array.IndexOf(mediaExtensions, Path.GetExtension(path).ToUpperInvariant());
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -660,13 +700,6 @@ namespace IranAudioGuide_MainServer.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-        private bool IsAudioFile(string path)
-        {
-            string[] mediaExtensions = {
-                ".WAV", ".MID", ".MIDI", ".WMA", ".MP3", ".OGG", ".RMA"
-            };
-            return -1 != Array.IndexOf(mediaExtensions, Path.GetExtension(path).ToUpperInvariant());
         }
     }
 }

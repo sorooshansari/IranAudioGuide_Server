@@ -24,7 +24,7 @@
 
         </div>
     </section>
-    <!-- Online Place list -->
+    @*<!-- Online Place list -->
     <section id="OnlinePlaces" class="two">
         <div class="container">
 
@@ -89,7 +89,7 @@
                         <td>
                             <div role="button" tabindex="0" class="btn btn-danger btn-block rmvPlc"
                                  ng-click="OnlineRemovePlace(place.PlaceId, place.PlaceName)">
-                                <span class="fa fa-remove"></span> Remove
+                                <span class="fa fa-trash-o"></span> Remove
                             </div>
                         </td>
                     </tr>
@@ -114,7 +114,7 @@
             </table>
 
         </div>
-    </section>
+    </section>*@
 
 
     <!-- Place list -->
@@ -124,13 +124,6 @@
             <header>
                 <h2>Places</h2>
             </header>
-
-            <p>
-                Easily manage places audios by select them to fill player,
-                then you can add new audios or remove them.
-                Also, by pressing edit button you can edit place information like name,
-                adding extra images or change existing ones.
-            </p>
             <div id="Player" class="Player">
                 <div class="row head">
                     <div class="player-image 3u">
@@ -148,11 +141,6 @@
                                     <li class="next" ng-click="Audio_next()"></li>
                                 </ul>
                             </li>
-                            @*<li class="12u$ pb">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" ng-style="audioProgress">
-                                        {{}}
-                                    </div>
-                                </li>*@
                         </ul>
                     </div>
                     <div class="2u$">
@@ -170,7 +158,7 @@
                             <div class="9u white">{{audio.Aud_Name}}</div>
                             <div class="2u$">
                                 <a href="" ng-click="removeAudio(audio.Aud_Id)" class="btn btn-danger btn-block">
-                                    <i class="fa fa-remove"></i>
+                                    <i class="fa fa-trash-o"></i>
                                     remove
                                 </a>
                             </div>
@@ -184,7 +172,7 @@
                         <td>#</td>
                         <td>Name</td>
                         <td>City</td>
-                        <td>Get Online</td>
+                        <td>Status</td>
                         <td>Edit</td>
                         <td>Remove</td>
                     </tr>
@@ -195,9 +183,13 @@
                         <td>{{place.PlaceName}}</td>
                         <td>{{place.CityName}}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-block"
+                            <button ng-show="place.isOnline" type="button" class="btn btn-success btn-block"
+                                    ng-click="ShowGetOfflineModal(place.PlaceId, place.PlaceName)">
+                                <span class="fa fa-toggle-on"></span> Online
+                            </button>
+                            <button ng-show="!place.isOnline" type="button" class="btn btn-warning btn-block"
                                     ng-click="ShowGetOnlineModal(place.PlaceId, place.PlaceName)">
-                                <span class="fa fa-globe"></span> Go Online
+                                <span class="fa fa-toggle-off"></span> Offline
                             </button>
                         </td>
                         <td>
@@ -209,7 +201,7 @@
                         <td>
                             <div role="button" tabindex="0" class="btn btn-danger btn-block rmvPlc"
                                  ng-click="RemovePlace(place.PlaceId, place.PlaceName)">
-                                <span class="fa fa-remove"></span> Remove
+                                <span class="fa fa-trash-o"></span> Remove
                             </div>
                         </td>
                     </tr>
@@ -259,11 +251,6 @@
                     <div class="6u 12u$(mobile)">
                         <input type="text" ng-model="NewPlace.PlaceName" name="PlaceName" required placeholder="Place name*" />
                     </div>
-                    @*<div class="6u 12u$(mobile)">
-                            <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
-                                 ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-                                 ngf-resize="{width: 100, height: 100}">Select</div>
-                        </div>*@
                     <div class="4u 9u(mobile)">
                         <input type="text" name="imgUrl" placeholder="Place image*" disabled />
                     </div>
@@ -275,9 +262,10 @@
                         <label for="Image" class="btn-primary">Choose</label>
                     </div>
                     <div class="6u 12u$(mobile)">
-                        <select ng-model="NewPlace.PlaceCityId" name="PlaceCityId" required>
+                        <select ng-options="city.CityID as city.CityName for city in AllCities"
+                                ng-model="NewPlace.PlaceCityId"
+                                name="PlaceCityId" required>
                             <option value="">Select City*</option>
-                            <option ng-repeat="city in AllCities" value="{{city.CityID}}">{{city.CityName}}</option>
                         </select>
                     </div>
                     <div class="6u$ 12u$(mobile)">
@@ -303,10 +291,6 @@
             <header>
                 <h2>Cities</h2>
             </header>
-            <p>
-                Create new city just by filling its name (filling description box is optional).
-                This information will be used to categorize places.
-            </p>
             <table class="default" id="ctyTbl">
                 <thead>
                     <tr>
@@ -323,7 +307,7 @@
                         <td><p>{{city.CityDesc}}</p></td>
                         <td>
                             <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" ng-click="RemoveCity(city.CityID, city.CityName)">
-                                <span class="fa fa-remove"></span> Remove
+                                <span class="fa fa-trash-o"></span> Remove
                             </div>
                         </td>
                     </tr>
@@ -362,8 +346,8 @@
             <form name="NewCityForm" role="form" ng-submit="AddCity(NewCity, NewCityForm)" novalidate>
                 <div class="row">
                     <div class="6u$ 12u$(mobile)">
-                        <div class="formError" ng-show="NewCityForm.$submitted || NewCityForm.CityName.$touched">
-                            <p class="text-danger" ng-show="NewCityForm.CityName.$error.required">City name must be fill.</p>
+                        <div class="formError" ng-show="(NewCityForm.$submitted || NewCityForm.CityName.$touched) && NewCityForm.CityName.$error.required">
+                            <p class="text-danger">City name must be fill.</p>
                         </div>
                         <input type="text" ng-model="NewCity.CityName" name="CityName" required placeholder="City name*" />
                     </div>
@@ -416,7 +400,7 @@
         </div>
         <div class="modal-dialog" role="document">
 
-            <form role="form" name="NewAudioForm" ng-submit="AddAudio(NewAudioVM)">
+            <form role="form" name="NewAudioForm" ng-submit="AddAudio(NewAudioVM, NewAudioForm)" ng-init="NewAudioVM.invalidFile = true;NewAudioVM.FileChanged = false;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="text-primary">Add New Audio</h3>
@@ -427,7 +411,15 @@
                     <div class="modal-body" style="padding: 15px;">
                         <div class="row">
                             <div class="12u$">
-                                <input type="text" ng-model="NewAudioVM.AudioName" name="AudioName" required placeholder="Audio name*" />
+                                <div class="formError">
+                                    <p class="text-danger" ng-show="(NewAudioFormSubmitted || NewAudioForm.AudioName.$touched) && NewAudioForm.AudioName.$error.required">
+                                        Audio name must be fill.
+                                    </p>
+                                    <p class="text-danger" ng-show="(NewAudioFormSubmitted || NewAudioVM.FileChanged) && NewAudioVM.invalidFile">
+                                        Audio must be a mp3 file.
+                                    </p>
+                                </div>
+                                <input id="AudioName" name="AudioName" type="text" ng-model="NewAudioVM.AudioName" required placeholder="Audio name*" />
                             </div>
                             <div class="9u">
                                 <input type="text" name="AudioUrl" placeholder="Audio*" disabled />
@@ -436,14 +428,14 @@
                                 <input class="inputfile" type="file"
                                        file-model="NewAudioVM.AudioFile"
                                        onchange="angular.element(this).scope().SetAudioName(this)"
-                                       id="Audio" name="Audio" required />
+                                       id="Audio" name="Audio" required validFile/>
                                 <label for="Audio" class="btn-primary">Choose</label>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <input type="button" id="NewAudioModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
-                        <input type="submit" class="addBtn" value="Add Audio" />
+                        <input type="submit" ng-click="NewAudioFormSubmitted=true" class="addBtn" value="Add Audio" />
                     </div>
                 </div>
             </form>
@@ -541,7 +533,7 @@
                                     <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true" name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImages">
                                         <img src="../images/Places/Extras/{{img.ImageName}}" />
                                         <i ng-click="EditEIDescModal(img)" ng-show="img.rmvShow" class="btn fa fa-pencil text-blue EditDescBtn"></i>
-                                        <i ng-click="RemoveExtraImg(img.ImageId)" ng-show="img.rmvShow" class="btn fa fa-remove text-red rmvBtn"></i>
+                                        <i ng-click="RemoveExtraImg(img.ImageId)" ng-show="img.rmvShow" class="btn fa fa-trash-o text-red rmvBtn"></i>
                                     </div>
                                 </div>
                             </div>
@@ -549,9 +541,9 @@
                                 <input type="text" ng-model="EditPlaceVM.PlaceName" name="PlaceName" required placeholder="Place name*" />
                             </div>
                             <div class="6u 12u$(mobile)">
-                                <select ng-model="EditPlaceVM.PlaceCityId" name="PlaceCityId" required>
-                                    <option ng-repeat="city in AllCities" value="{{city.CityID}}">{{city.CityName}}</option>
-                                </select>
+                                <select ng-options="city.CityID as city.CityName for city in AllCities"
+                                        ng-model="EditPlaceVM.PlaceCityId"
+                                        name="PlaceCityId" required></select>
                             </div>
                             <div class="6u$ 12u$(mobile)">
                                 <input type="text" ng-model="EditPlaceVM.PlaceCordinates" value="" name="PlaceCordinates" placeholder="Place Cordinates" />
@@ -576,7 +568,7 @@
     <!-- Edit Extra Image Description Modal -->
     <div class="modal fade" id="EditEIDescModal" tabindex="-1" role="dialog" aria-labelledby="EditEIDescModalLabel">
         <div class="modal-dialog" role="document">
-            <form role="form" name="EditEIDescForm" ng-submit="EditEIDesc(EditEIDescVM)">
+            <form role="form" id="EditEIDescForm" name="EditEIDescForm" ng-submit="EditEIDesc(EditEIDescVM, EditEIDescForm)">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="text-primary">Edit Image Description</h3>
@@ -587,7 +579,10 @@
                     <div class="modal-body" style="padding: 15px;">
                         <div class="row">
                             <div class="12u$">
-                                <textarea ng-model="EditEIDescVM.Desc" placeholder="Image Description" rows="3"></textarea>
+                                <div class="formError" ng-show="(EditEIDescForm.$submitted || EditEIDescForm.Desc.$touched) && EditEIDescForm.Desc.$error.required">
+                                    <p class="text-danger">Image description must be fill.</p>
+                                </div>
+                                <textarea id="Desc" name="Desc" ng-model="EditEIDescVM.Desc" placeholder="Image Description" rows="3" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -624,8 +619,39 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="button" id="EditEIDescModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
-                        <input type="submit" class="addBtn" value="Get Online" />
+                        <input type="button" id="GoOnlineModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
+                        <input type="submit" class="addBtn" value="Make Online" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Get Place Offline -->
+    <div class="modal fade" id="GoOfflineModal" tabindex="-1" role="dialog" aria-labelledby="GoOfflineModalLabel">
+        <div class="modal-dialog" role="document">
+            <form role="form" name="GoOfflineForm" ng-submit="GoOffline(GetOfflineVM.Id)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-primary">Edit Image Description</h3>
+                        <a href="" ng-click="hide('#GoOfflineModal')">
+                            <i class="fa fa-2x fa-times ModalDismissIco"></i>
+                        </a>
+                    </div>
+                    <div class="modal-body" style="padding: 15px;">
+                        <div class="row">
+                            <div class="12u$">
+                                <h4>
+                                    Do you want to remove <span class="text-primary">"{{GetOfflineVM.Name}}"</span> from online places?
+                                </h4>
+                                <h5>
+                                    Note: Only online places are seeing by the users.
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" id="GoOfflineModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
+                        <input type="submit" class="addBtn" value="Make Offline" />
                     </div>
                 </div>
             </form>

@@ -185,6 +185,7 @@ namespace IranAudioGuide_MainServer.Models
         public string ImgUrl { get; set; }
         public string PlaceAddress { get; set; }
         public string PlaceCordinates { get; set; }
+        public bool isOnline { get; set; }
     }
     public class ImageVM
     {
@@ -195,7 +196,6 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class EditEIDescVM
     {
-        public Guid PlaceId { get; set; }
         public Guid ImageId { get; set; }
         public string ImageDesc { get; set; }
     }
@@ -245,14 +245,25 @@ namespace IranAudioGuide_MainServer.Models
         }
         public bool success { get; set; }
     }
+    public enum status
+    {
+        success = 0,
+        invalidInput = 1,
+        ivalidCordinates = 2,
+        invalidFileFormat = 3,
+        unknownError = 4,
+        dbError = 5,
+        invalidId = 6,
+        forignKeyError = 7
+    }
     public class Respond
     {
-        public Respond(string content = "", int status = 0)
+        public Respond(string content = "", status status = status.success)
         {
             this.status = status;
             this.content = content;
         }
-        public int status { get; set; }
+        public status status { get; set; }
         public string content { get; set; }
     }
 }

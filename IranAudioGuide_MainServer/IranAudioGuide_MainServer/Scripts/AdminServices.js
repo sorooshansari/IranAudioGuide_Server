@@ -4,6 +4,20 @@
     var OnlinePlaces = [];
     var ExtraImages = [];
     return {
+        GetAll: function (PageNum) {
+            method = 'POST';
+            url = '/Admin/GetAllPlaces';
+            $http({ method: method, url: url}).
+              then(function (response) {
+                  $rootScope.allPlaces = angular.copy(response.data);
+                  $rootScope.$broadcast('LoadPlaces', {});
+                  $rootScope.$broadcast('LoadFirstPlaceAudios', {});
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
         Get: function (PageNum) {
             method = 'POST';
             url = '/Admin/GetPlaces';
@@ -55,7 +69,7 @@
             }).
               then(function (response) {
                   if (response.data.status == 0) {
-                      $rootScope.$broadcast('UpdatePlaces', {});
+                      $rootScope.$broadcast('placeAdded', {});
                   }
                   else {
                       $rootScope.$broadcast('UpdatePlaceValidationSummery', {
@@ -156,12 +170,13 @@
               });
             return;
         },
-        ChangeImage: function (ImageName, NewImage) {
+        ChangeImage: function (ImageName, NewImage, id) {
             method = 'POST';
             url = '/Admin/ChangePlaceImage';
             var fd = new FormData();
             fd.append('ImageName', ImageName);
             fd.append('NewImage', NewImage);
+            fd.append('PlaceId', id);
             $http({
                 method: method,
                 url: url,
@@ -290,9 +305,37 @@
             data = { PlaceId: PlaceId };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
+                  $('#GoOfflineModal').modal('show');
                   switch (response.data.status) {
                       case 0:
-                          $rootScope.$broadcast('UpdateBothPlaces', {});
+                          $rootScope.$broadcast('UpdatePlaces', {});
+                          break;
+                      case 2:
+                          $rootScope.$broadcast('InvalidId', {});
+                          console.log(response.data.content);
+                          break;
+                      case 3:
+                          $rootScope.$broadcast('PlaceUnknownError', {});
+                          console.log(response.data.content);
+                          break;
+                      default:
+
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        GoOffline: function (PlaceId) {
+            method = 'POST';
+            url = '/Admin/GoOffline';
+            data = { PlaceId: PlaceId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  $('#GoOfflineModal').modal('hide');
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdatePlaces', {});
                           break;
                       case 2:
                           $rootScope.$broadcast('InvalidId', {});
@@ -351,11 +394,14 @@
             data = { CityName: NewCity.CityName, CityDesc: NewCity.CityDesc };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
-                  if (response.data.success) {
-                      $rootScope.$broadcast('UpdateCities', {});
+                  switch (response.data.status) {
+                      case respondstatus.success:
+                          $rootScope.$broadcast('cityAdded', {});
+                          break;
+                      default:
+                          console.log("Server failed to add City.");
+                          break;
                   }
-                  else
-                      console.log("Server failed to add City.");
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);
@@ -368,21 +414,19 @@
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   switch (response.data.status) {
-                      case 0:
+                      case respondstatus.success:
                           $rootScope.$broadcast('UpdateCities', {});
                           break;
-                      case 1:
+                      case respondstatus.forignKeyError:
                           $rootScope.$broadcast('CityForignKeyError', {
                               CityID: CityID,
                               CityName: CityName
                           });
                           break;
-                      case 2:
-                          $rootScope.$broadcast('CityUnknownError', {});
-                          console.log("Server failed to add City.");
-                          break;
                       default:
-
+                          $rootScope.$broadcast('CityUnknownError', {});
+                          console.log("Server failed to remove City.");
+                          break;
                   }
               }, function (response) {
                   console.log("Request failed");
@@ -439,7 +483,10 @@
             fd.append('PlaceId', placeId);
             fd.append('AudioName', model.AudioName);
             fd.append('AudioFile', model.AudioFile);
-            //fd = getModelAsFormData(model);
+            console.log(model.AudioFile);
+            for (var pair of fd.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
             $http({
                 method: method,
                 url: url,
@@ -457,9 +504,10 @@
                       $rootScope.$broadcast('UpdateAudioValidationSummery', {
                           data: response.data.content
                       });
-                      console.log("Server failed to add Place.");
+                      console.log("Server failed to add Audio.");
                   }
               }, function (response) {
+                  $rootScope.ShowOverlay = false;
                   console.log("Request failed");
                   console.log("status:" + response.status);
               });
@@ -492,3 +540,14 @@
         }
     }
 }]);
+var respondstatus =
+{
+    success : 0,
+    invalidInput : 1,
+    ivalidCordinates : 2,
+    invalidFileFormat : 3,
+    unknownError : 4,
+    dbError : 5,
+    invalidId : 6,
+    forignKeyError : 7
+}
