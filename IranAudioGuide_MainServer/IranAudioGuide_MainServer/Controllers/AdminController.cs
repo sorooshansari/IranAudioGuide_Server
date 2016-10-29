@@ -26,6 +26,87 @@ namespace IranAudioGuide_MainServer.Controllers
 
             return View(GetCurrentUserInfo());
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult AddTip(AddTipVM model)
+        {
+            try
+            {
+                Tip newTip = new Tip()
+                {
+                    Tip_Category = db.TipCategories.Where(x => x.TiC_Id == model.TipCategoryId).First(),
+                    Tip_Content = model.content
+                };
+                db.Tips.Add(newTip);
+                db.SaveChanges();
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+                throw;
+            }
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public JsonResult RemoveTip(Guid Id)
+        {
+            try
+            {
+                db.Tips.Remove(db.Tips.Where(x => x.Tip_Id == Id).FirstOrDefault());
+                db.SaveChanges();
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+                throw;
+            }
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult GetAllTips()
+        {
+            try
+            {
+                List<TipVM> res = (from t in db.Tips
+                                   select new TipVM()
+                                   {
+                                       Content = t.Tip_Content,
+                                       id = t.Tip_Id,
+                                       TipcategoryID = t.Tip_Category.TiC_Id
+                                   }).ToList();
+                return Json(res);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult GetTipCategoriess()
+        {
+            try
+            {
+                List<TipCategoriesVM> res = (from c in db.TipCategories
+                                   select new TipCategoriesVM()
+                                   {
+                                       Class = c.TiC_Class,
+                                       id = c.TiC_Id,
+                                       unicode = c.TiC_Unicode,
+                                       name = c.TiC_Name
+                                   }).ToList();
+                return Json(res);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult Audios(string PlaceId)

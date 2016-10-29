@@ -273,7 +273,7 @@ angular.module('AdminPage.controllers', [])
         $scope.NextPlace = function () {
             //if ($rootScope.PlacePagesLen - $rootScope.PlaceCurrentPage > 1)
             //    $scope.places = PlaceServices.Get($rootScope.PlaceCurrentPage + 1);
-            if ($scope.PlacePagesLen - $scope.PlaceCurrentPage > 1){
+            if ($scope.PlacePagesLen - $scope.PlaceCurrentPage > 1) {
                 $scope.places = angular.copy($rootScope.allPlaces.slice(($scope.PlaceCurrentPage + 1) * paging, ($scope.PlaceCurrentPage + 2) * paging));
                 $scope.PlaceCurrentPage++;
             }
@@ -359,6 +359,9 @@ angular.module('AdminPage.controllers', [])
             $scope.selectedPlace.Img = Place.ImgUrl;
             $scope.selectedPlace.Id = Place.PlaceId;
             $scope.EditPlaceVM = angular.copy(Place);
+            $scope.selectedPlace.Tips = [
+                { id: '1', Content: 'vgjhbkn lm vybjnk' },
+                { id: '2', Content: 'kl;dhjv; h/dm h;gb' }];
             $('#EditPlaceModal').modal('show');
         };
         $scope.EditPlace = function (EditPlaceVM) {
@@ -411,6 +414,18 @@ angular.module('AdminPage.controllers', [])
             console.log(data);
             //to be fill
         });
+        //Tips
+        $scope.allTips = [
+            { id: '1', Class: 'ion-android-walk', name: '&#xf3bb; transportation', uniCode: '&#xf3bb;' },
+            { id: '2', Class: 'ion-ios-pulse-strong', name: '&#xf492; rough trak', uniCode: '&#xf492;' }];
+        $scope.GetTipName = function (id) {
+            for (var i = 0; i < $scope.allTips.length; i++) {
+                if ($scope.allTips[i].id == id) {
+                    return $scope.allTips[i].uniCode;
+                }
+            }
+            return '&#xf101;';
+        }
 
         //City stuff
         $scope.CityNameValidator = "hidden";

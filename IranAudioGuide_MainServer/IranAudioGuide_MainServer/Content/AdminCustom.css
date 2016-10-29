@@ -548,26 +548,78 @@ form textarea {
     color: #449d44;
 }
 
-.text-green:hover {
-    color: #449d44;
-}
+    .text-green:hover {
+        color: #449d44;
+    }
 
 .rmvBtn {
     position: absolute;
     top: 50%;
     left: 65%;
 }
-.EditDescBtn{
+
+.EditDescBtn {
     position: absolute;
     top: 50%;
     left: 35%;
 }
-.addImgBtn{
+
+.addImgBtn {
     position: absolute;
     top: 45%;
     left: 45%;
-    font-weight:400 !important;
+    font-weight: 400 !important;
 }
-.addImgBtn:hover > .PImg{
-    opacity: 0.8;
+
+    .addImgBtn:hover > .PImg {
+        opacity: 0.8;
+    }
+
+.lessPaddingRow {
+    margin: -5px 0 -1px -5px;
+}
+
+    .lessPaddingRow div {
+        padding: 5px 0px 0px 5px;
+    }
+    
+    .lessPaddingRow textarea {
+        max-height: 64px;
+        padding: 0.5em 1em;
+    }
+    .lessPaddingRow input[type=button]{
+        max-height: 64px;
+        padding: 0.5em 2.25em;
+    }
+
+.header {
+    margin: 0;
+    padding-bottom: 0px;
+}
+
+    .header hr, .header span {
+        padding: 0px;
+    }
+
+    .header span {
+        text-align: center;
+    }
+
+.fourPointFiveU {
+    width: 37.5% !important;
+}
+
+@media screen and (max-width: 960px) {
+    .modal-dialog {
+        width: 95%;
+    }
+    .addBtn{
+        width: 100%
+    }
+}
+
+@media screen and (min-width: 961px) {
+    .modal-dialog {
+        width: 900px;
+    }
 }

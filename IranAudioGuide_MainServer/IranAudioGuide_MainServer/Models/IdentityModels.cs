@@ -56,6 +56,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Pla_Discription { get; set; }
         public List<Audio> Pla_Audios { get; set; }
         public List<Image> Pla_ExtraImages { get; set; }
+        public List<Tip> Pla_Tips { get; set; }
         public city Pla_city { get; set; }
         public double Pla_cordinate_X { get; set; }
         public double Pla_cordinate_Y { get; set; }
@@ -81,6 +82,24 @@ namespace IranAudioGuide_MainServer.Models
         public virtual Place Pla_Id { get; set; }
         public string Img_Description { get; set; }
     }
+    public class Tip
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Tip_Id { get; set; }
+        public TipCategory Tip_Category { get; set; }
+        public string Tip_Content { get; set; }
+
+    }
+    public class TipCategory
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid TiC_Id { get; set; }
+        public string TiC_Class { get; set; }
+        public string TiC_Unicode { get; set; }
+        public string TiC_Name { get; set; }
+    }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -100,6 +119,8 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<city> Cities { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<UpdateLog> UpdateLogs { get; set; }
+        public DbSet<Tip> Tips { get; set; }
+        public DbSet<TipCategory> TipCategories { get; set; }
         //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_MainServer.Models.ApplicationUser> ApplicationUsers { get; set; }
     }

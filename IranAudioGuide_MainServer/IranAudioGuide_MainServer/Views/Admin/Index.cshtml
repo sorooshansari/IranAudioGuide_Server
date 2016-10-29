@@ -25,96 +25,96 @@
         </div>
     </section>
     @*<!-- Online Place list -->
-    <section id="OnlinePlaces" class="two">
-        <div class="container">
+        <section id="OnlinePlaces" class="two">
+            <div class="container">
 
-            <header>
-                <h2>Online Places</h2>
-            </header>
+                <header>
+                    <h2>Online Places</h2>
+                </header>
 
-            <p>
-                These are the places that users see in their applications.
-            </p>
-            <div id="Player" class="Player">
-                <div class="row head">
-                    <div class="player-image 3u">
-                        <img src="../images/Places/{{OnlinePlaceimage}}" />
-                    </div>
-                    <div class="7u">
-                        <ul>
-                            <li class="12u$">
-                                <h4 class="AudioTitle">{{OnlineAudioTitle}}</h4>
-                            </li>
-                            <li class="12u$">
-                                <ul class="nav-pills buttons">
-                                    <li class="prev" ng-click="OnlineAudio_prev()"></li>
-                                    <li class="{{OnlinePlayStatus}}" ng-click="OnlineAudio_Play()"></li>
-                                    <li class="next" ng-click="OnlineAudio_next()"></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <ul class="audiosList">
-                    <li ng-repeat="audio in OnlineAudios" ng-click="OnlineLoadAudio(audio.Index)" class="listItem">
-                        <div class="row">
-                            <div class="1u white">{{audio.Index}}.</div>
-                            <div class="11u white">{{audio.Aud_Name}}</div>
+                <p>
+                    These are the places that users see in their applications.
+                </p>
+                <div id="Player" class="Player">
+                    <div class="row head">
+                        <div class="player-image 3u">
+                            <img src="../images/Places/{{OnlinePlaceimage}}" />
                         </div>
-                    </li>
-                </ul>
-            </div>
-            <table class="default" id="OnlinePlaceTbl">
-                <thead>
-                    <tr>
-                        <td>#</td>
-                        <td>Name</td>
-                        <td>City</td>
-                        <td>Info</td>
-                        <td>Remove</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="hoverable" ng-click="OnlineLoadPlaceAudios(place.PlaceId)" ng-repeat="place in OnlinePlaces">
-                        <td>{{place.Index}}</td>
-                        <td>{{place.PlaceName}}</td>
-                        <td>{{place.CityName}}</td>
-                        <td>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-block"
-                                    ng-click="OnlineShowEditPlaceModal(place)">
-                                <span class="fa fa-info"></span> Info
-                            </button>
-                        </td>
-                        <td>
-                            <div role="button" tabindex="0" class="btn btn-danger btn-block rmvPlc"
-                                 ng-click="OnlineRemovePlace(place.PlaceId, place.PlaceName)">
-                                <span class="fa fa-trash-o"></span> Remove
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="6">
-                            <ul class="nav nav-tabs nav-justified">
-                                <li>
-                                    <a href="" ng-click="OnlinePreviousPlace()"><span class="fa fa-chevron-left"></span> Previus</a>
+                        <div class="7u">
+                            <ul>
+                                <li class="12u$">
+                                    <h4 class="AudioTitle">{{OnlineAudioTitle}}</h4>
                                 </li>
-                                <li>
-                                    <a class="text-primary">page {{OnlinePlaceCurrentPage + 1}} (out of {{OnlinePlacePagesLen}} pages)</a>
-                                </li>
-                                <li>
-                                    <a href="" ng-click="OnlineNextPlace()">Next <span class="fa fa-chevron-right"></span></a>
+                                <li class="12u$">
+                                    <ul class="nav-pills buttons">
+                                        <li class="prev" ng-click="OnlineAudio_prev()"></li>
+                                        <li class="{{OnlinePlayStatus}}" ng-click="OnlineAudio_Play()"></li>
+                                        <li class="next" ng-click="OnlineAudio_next()"></li>
+                                    </ul>
                                 </li>
                             </ul>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+                        </div>
+                    </div>
+                    <ul class="audiosList">
+                        <li ng-repeat="audio in OnlineAudios" ng-click="OnlineLoadAudio(audio.Index)" class="listItem">
+                            <div class="row">
+                                <div class="1u white">{{audio.Index}}.</div>
+                                <div class="11u white">{{audio.Aud_Name}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <table class="default" id="OnlinePlaceTbl">
+                    <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Name</td>
+                            <td>City</td>
+                            <td>Info</td>
+                            <td>Remove</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hoverable" ng-click="OnlineLoadPlaceAudios(place.PlaceId)" ng-repeat="place in OnlinePlaces">
+                            <td>{{place.Index}}</td>
+                            <td>{{place.PlaceName}}</td>
+                            <td>{{place.CityName}}</td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-block"
+                                        ng-click="OnlineShowEditPlaceModal(place)">
+                                    <span class="fa fa-info"></span> Info
+                                </button>
+                            </td>
+                            <td>
+                                <div role="button" tabindex="0" class="btn btn-danger btn-block rmvPlc"
+                                     ng-click="OnlineRemovePlace(place.PlaceId, place.PlaceName)">
+                                    <span class="fa fa-trash-o"></span> Remove
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li>
+                                        <a href="" ng-click="OnlinePreviousPlace()"><span class="fa fa-chevron-left"></span> Previus</a>
+                                    </li>
+                                    <li>
+                                        <a class="text-primary">page {{OnlinePlaceCurrentPage + 1}} (out of {{OnlinePlacePagesLen}} pages)</a>
+                                    </li>
+                                    <li>
+                                        <a href="" ng-click="OnlineNextPlace()">Next <span class="fa fa-chevron-right"></span></a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
 
-        </div>
-    </section>*@
+            </div>
+        </section>*@
 
 
     <!-- Place list -->
@@ -228,7 +228,7 @@
         </div>
     </section>
 
-    <!-- New Audio -->
+    <!-- New Place -->
     <section id="NewPlace" class="three">
         <div class="container">
 
@@ -428,7 +428,7 @@
                                 <input class="inputfile" type="file"
                                        file-model="NewAudioVM.AudioFile"
                                        onchange="angular.element(this).scope().SetAudioName(this)"
-                                       id="Audio" name="Audio" required validFile/>
+                                       id="Audio" name="Audio" required validFile />
                                 <label for="Audio" class="btn-primary">Choose</label>
                             </div>
                         </div>
@@ -505,7 +505,7 @@
                 <div class="f_circleG" id="frotateG_08"></div>
             </div>
         </div>
-        <div class="modal-dialog" style="width: 900px;" role="document">
+        <div class="modal-dialog" role="document">
 
             <form role="form" name="EditPlaceForm" ng-submit="EditPlace(EditPlaceVM)">
                 <div class="modal-content">
@@ -529,6 +529,13 @@
                                 <img ng-click="ClickPlaceImg('#PlaceExtraImage')" src="../images/file_add.png" />
                             </div>
                             <div ng-show="selectedPlace.ExtraImages.length" class="12u$ PlaceExtraImage">
+                                <div class="12u$ row header">
+                                    <hr class="4u fourPointFiveU" />
+                                    <span class="3u">
+                                        Extra Images
+                                    </span>
+                                    <hr class="4u$ fourPointFiveU" />
+                                </div>
                                 <div class="row">
                                     <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true" name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImages">
                                         <img src="../images/Places/Extras/{{img.ImageName}}" />
@@ -536,6 +543,52 @@
                                         <i ng-click="RemoveExtraImg(img.ImageId)" ng-show="img.rmvShow" class="btn fa fa-trash-o text-red rmvBtn"></i>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!--tips-->
+                            <div class="12u$ row header">
+                                <hr class="5u" />
+                                <span class="2u">
+                                    Tips
+                                </span>
+                                <hr class="5u$" />
+                            </div>
+                            <table ng-show="selectedPlace.Tips.length" class="default 12u$" id="placeTbl" style="font-family:'Ionicons', Arial; margin-left: 3%;">
+                                <tbody>
+                                    <tr class="hoverable" ng-repeat="tip in selectedPlace.Tips">
+                                        <td ng-bind-html="GetTipName(tip.id)"></td>
+                                        <td>{{tip.Content}}</td>
+                                        <td class="2u$">
+                                            <div role="button" tabindex="0" class="btn btn-danger btn-block"
+                                                 ng-click="RemoveTip(tip.id)">
+                                                <span class="fa fa-trash-o"></span> Remove
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="12u$ row lessPaddingRow">
+                                <div class="3u 12u$(mobile)">
+                                    <select ng-model="newTip.categoryId" name="PlaceTip" style="font-family:'Ionicons', Arial">
+                                        <option value="">Select</option>
+                                        <option ng-repeat="tip in allTips" ng-bind-html="tip.name" value="{{tip.id}}"></option>
+                                    </select>
+                                </div>
+                                <div class="7u 12u$(mobile)">
+                                    <textarea type="text" ng-model="newTip.content" name="TipContent" rows="1" placeholder="Tip Content"></textarea>
+                                </div>
+                                <div class="2u$ 12u$(mobile)">
+                                    <input ng-click="AddTip(newTip)" type="button" class="addBtn" name="TipContent" value="Add" />
+                                </div>
+                            </div>
+                            <!--/tips-->
+                            <!--Edit Basic Infoes-->
+                            <div class="12u$ row header">
+                                <hr class="4u" />
+                                <span class="4u">
+                                    Edit Basic Informations
+                                </span>
+                                <hr class="4u$" />
                             </div>
                             <div class="6u$ 12u$(mobile)">
                                 <input type="text" ng-model="EditPlaceVM.PlaceName" name="PlaceName" required placeholder="Place name*" />
@@ -554,11 +607,12 @@
                             <div class="12u$">
                                 <textarea ng-model="EditPlaceVM.PlaceAddress" name="PlaceAddress" rows="1" placeholder="Place Address"></textarea>
                             </div>
+                            <div class="12u$" style="float:right;">
+                                @*<input type="button" id="EditPlaceModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />*@
+                                <input type="submit" class="addBtn" value="Save Changes" />
+                            </div>
+                            <!--/Edit Basic Infoes-->
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" id="EditPlaceModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
-                        <input type="submit" class="addBtn" value="Save Changes" />
                     </div>
                 </div>
             </form>

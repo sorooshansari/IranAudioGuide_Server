@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -49,6 +51,47 @@ namespace IranAudioGuide_MainServer.Models
                 }
             }
             return res;
+        }
+        public void AddTipCategory(string name, string Class, string unicode)
+        {
+            TipCategory tc = new TipCategory()
+            {
+                TiC_Class = Class,
+                TiC_Name = name,
+                TiC_Unicode = unicode
+            };
+            using (var db = new ApplicationDbContext())
+            {
+                db.TipCategories.Add(tc);
+                db.SaveChanges();
+            }
+        }
+        public void AddUser(string Email, string Pass, string ImgUrl, string FullName, string Role, ApplicationDbContext context)
+        {
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            if (UserManager.FindByName(Email) == null)
+            {
+                var user = new ApplicationUser()
+                {
+                    UserName = Email,
+                    Email = Email,
+                    FullName = FullName,
+                    ImgUrl = ImgUrl
+                };
+                UserManager.Create(user, Pass);
+                UserManager.AddToRole(user.Id, Role);
+            }
+        }
+        public void RoleCreator(ApplicationDbContext context, string roleName)
+        {
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            IdentityResult roleResult;
+
+            // Check to see if Role Exists, if not create it
+            if (!RoleManager.RoleExists(roleName))
+            {
+                roleResult = RoleManager.Create(new IdentityRole(roleName));
+            }
         }
     }
 }

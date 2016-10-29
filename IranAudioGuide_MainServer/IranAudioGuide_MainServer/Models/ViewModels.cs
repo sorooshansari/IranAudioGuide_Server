@@ -9,6 +9,24 @@ namespace IranAudioGuide_MainServer.Models
     public class ViewModels
     {
     }
+    public class AddTipVM
+    {
+        public string content { get; set; }
+        public Guid TipCategoryId { get; set; }
+    }
+    public class TipCategoriesVM
+    {
+        public Guid id { get; set; }
+        public string Class { get; set; }
+        public string unicode { get; set; }
+        public string name { get; set; }
+    }
+    public class TipVM
+    {
+        public Guid id { get; set; }
+        public Guid TipcategoryID { get; set; }
+        public string Content { get; set; }
+    }
     public class AuthorizedUser
     {
         public string GoogleId { get; set; }
