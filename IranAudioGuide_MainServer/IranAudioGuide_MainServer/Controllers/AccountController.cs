@@ -85,6 +85,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     string UserRole = UserManager.GetRoles(user.Id).FirstOrDefault();
                     if (UserRole == "Admin")
                         return RedirectToAction("Index", "Admin");
+                    else if (UserRole == "AppUser")
+                        return RedirectToAction("Index", "User");
                     else
                         return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:

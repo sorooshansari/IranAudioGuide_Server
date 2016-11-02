@@ -211,6 +211,7 @@
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Migrations\201607261519234_AddCommands.cs" />
     <Compile Include="Migrations\201607261519234_AddCommands.Designer.cs">
       <DependentUpon>201607261519234_AddCommands.cs</DependentUpon>
@@ -222,6 +223,10 @@
     <Compile Include="Migrations\201610081139335_uuidAdded.cs" />
     <Compile Include="Migrations\201610081139335_uuidAdded.Designer.cs">
       <DependentUpon>201610081139335_uuidAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611020740580_AddUserAmini.cs" />
+    <Compile Include="Migrations\201611020740580_AddUserAmini.Designer.cs">
+      <DependentUpon>201611020740580_AddUserAmini.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -305,10 +310,15 @@
     <Content Include="images\tracklistarrow-48-16-0.png" />
     <Content Include="images\volume-24-24-0.png" />
     <Content Include="images\WindowsStore.png" />
+    <Content Include="Scripts\UserControllers.js" />
     <Content Include="Scripts\AdminControllers.js" />
+    <Content Include="Scripts\UserCustom.js" />
     <Content Include="Scripts\AdminCustom.js" />
+    <Content Include="Scripts\UserDirectives.js" />
     <Content Include="Scripts\AdminDirectives.js" />
+    <Content Include="Scripts\UserMain.js" />
     <Content Include="Scripts\AdminMain.js" />
+    <Content Include="Scripts\UserServices.js" />
     <Content Include="Scripts\AdminServices.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -1185,6 +1195,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\apiTest\Index.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1212,6 +1224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610081139335_uuidAdded.resx">
       <DependentUpon>201610081139335_uuidAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611020740580_AddUserAmini.resx">
+      <DependentUpon>201611020740580_AddUserAmini.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
