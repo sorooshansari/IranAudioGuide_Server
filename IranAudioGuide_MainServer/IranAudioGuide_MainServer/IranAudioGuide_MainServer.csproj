@@ -228,6 +228,14 @@
     <Compile Include="Migrations\201611020740580_AddUserAmini.Designer.cs">
       <DependentUpon>201611020740580_AddUserAmini.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611020844423_TipCategoryUpdated.cs" />
+    <Compile Include="Migrations\201611020844423_TipCategoryUpdated.Designer.cs">
+      <DependentUpon>201611020844423_TipCategoryUpdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611021048040_TipUpdated.cs" />
+    <Compile Include="Migrations\201611021048040_TipUpdated.Designer.cs">
+      <DependentUpon>201611021048040_TipUpdated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1229,6 +1237,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611020740580_AddUserAmini.resx">
       <DependentUpon>201611020740580_AddUserAmini.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611020844423_TipCategoryUpdated.resx">
+      <DependentUpon>201611020844423_TipCategoryUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611021048040_TipUpdated.resx">
+      <DependentUpon>201611021048040_TipUpdated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

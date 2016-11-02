@@ -31,21 +31,28 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public JsonResult AddTip(AddTipVM model)
         {
-            try
+            using (var dbTran = db.Database.BeginTransaction())
             {
-                Tip newTip = new Tip()
+                try
                 {
-                    Tip_Category = db.TipCategories.Where(x => x.TiC_Id == model.TipCategoryId).First(),
-                    Tip_Content = model.content
-                };
-                db.Tips.Add(newTip);
-                db.SaveChanges();
-                return Json(true);
-            }
-            catch (Exception ex)
-            {
-                return Json(false);
-                throw;
+                    Tip newTip = new Tip()
+                    {
+                        Tip_Category = db.TipCategories.Where(x => x.TiC_Id == model.TipCategoryId).First(),
+                        Tip_Content = model.content,
+
+                    };
+                    db.Tips.Add(newTip);
+                    db.SaveChanges();
+                    db.Places.Where(x => x.Pla_Id == model.PlaceId).First().Pla_Tips.Add(newTip);
+                    db.SaveChanges();
+                    dbTran.Commit();
+                    return Json(true);
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    return Json(false);
+                }
             }
         }
         [HttpGet]
@@ -66,11 +73,13 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult GetAllTips()
+        public JsonResult GetPlaceTips(Guid placeId)
         {
             try
             {
+                Place place = db.Places.Where(x => x.Pla_Id == placeId).First();
                 List<TipVM> res = (from t in db.Tips
+                                   where place.Pla_Tips.Contains(t)
                                    select new TipVM()
                                    {
                                        Content = t.Tip_Content,
@@ -87,18 +96,20 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult GetTipCategoriess()
+        public JsonResult GetTipCategories()
         {
             try
             {
                 List<TipCategoriesVM> res = (from c in db.TipCategories
-                                   select new TipCategoriesVM()
-                                   {
-                                       Class = c.TiC_Class,
-                                       id = c.TiC_Id,
-                                       unicode = c.TiC_Unicode,
-                                       name = c.TiC_Name
-                                   }).ToList();
+                                             orderby c.TiC_Priority
+                                             select new TipCategoriesVM()
+                                             {
+                                                 Class = c.TiC_Class,
+                                                 id = c.TiC_Id,
+                                                 unicode = c.TiC_Unicode,
+                                                 name = c.TiC_Name,
+                                                 iconicName = c.TiC_Unicode + " " + c.TiC_Name
+                                             }).ToList();
                 return Json(res);
             }
             catch (Exception ex)

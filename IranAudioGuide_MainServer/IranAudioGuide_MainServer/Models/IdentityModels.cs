@@ -99,6 +99,7 @@ namespace IranAudioGuide_MainServer.Models
         public string TiC_Class { get; set; }
         public string TiC_Unicode { get; set; }
         public string TiC_Name { get; set; }
+        public int TiC_Priority { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

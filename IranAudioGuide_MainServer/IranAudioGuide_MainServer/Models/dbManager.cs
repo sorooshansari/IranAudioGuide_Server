@@ -52,18 +52,22 @@ namespace IranAudioGuide_MainServer.Models
             }
             return res;
         }
-        public void AddTipCategory(string name, string Class, string unicode)
+        public void AddTipCategory(string name, string Class, string unicode, int priority)
         {
             TipCategory tc = new TipCategory()
             {
                 TiC_Class = Class,
                 TiC_Name = name,
-                TiC_Unicode = unicode
+                TiC_Unicode = unicode,
+                TiC_Priority = priority
             };
             using (var db = new ApplicationDbContext())
             {
-                db.TipCategories.Add(tc);
-                db.SaveChanges();
+                if (db.TipCategories.Where(x=>x.TiC_Priority == priority).FirstOrDefault() == default(TipCategory))
+                {
+                    db.TipCategories.Add(tc);
+                    db.SaveChanges();
+                }
             }
         }
         public void AddUser(string Email, string Pass, string ImgUrl, string FullName, string Role, ApplicationDbContext context)

@@ -553,10 +553,10 @@
                                 </span>
                                 <hr class="5u$" />
                             </div>
-                            <table ng-show="selectedPlace.Tips.length" class="default 12u$" id="placeTbl" style="font-family:'Ionicons', Arial; margin-left: 3%;">
+                            <table ng-show="selectedPlace.PlaceTips.length" class="default 12u$" id="placeTbl" style="font-family:'Ionicons', Arial; margin-left: 3%;">
                                 <tbody>
-                                    <tr class="hoverable" ng-repeat="tip in selectedPlace.Tips">
-                                        <td ng-bind-html="GetTipName(tip.id)"></td>
+                                    <tr class="hoverable" ng-repeat="tip in selectedPlace.PlaceTips">
+                                        <td ng-bind-html="GetTipuniCode(tip.id)"></td>
                                         <td>{{tip.Content}}</td>
                                         <td class="2u$">
                                             <div role="button" tabindex="0" class="btn btn-danger btn-block"
@@ -571,14 +571,14 @@
                                 <div class="3u 12u$(mobile)">
                                     <select ng-model="newTip.categoryId" name="PlaceTip" style="font-family:'Ionicons', Arial">
                                         <option value="">Select</option>
-                                        <option ng-repeat="tip in allTips" ng-bind-html="tip.name" value="{{tip.id}}"></option>
+                                        <option ng-repeat="tip in allTipCategories" ng-bind-html="tip.iconicName" value="{{tip.id}}"></option>
                                     </select>
                                 </div>
                                 <div class="7u 12u$(mobile)">
                                     <textarea type="text" ng-model="newTip.content" name="TipContent" rows="1" placeholder="Tip Content"></textarea>
                                 </div>
                                 <div class="2u$ 12u$(mobile)">
-                                    <input ng-click="AddTip(newTip)" type="button" class="addBtn" name="TipContent" value="Add" />
+                                    <input ng-click="AddTip(newTip, EditPlaceVM.PlaceId)" type="button" class="addBtn" name="TipContent" value="Add" />
                                 </div>
                             </div>
                             <!--/tips-->

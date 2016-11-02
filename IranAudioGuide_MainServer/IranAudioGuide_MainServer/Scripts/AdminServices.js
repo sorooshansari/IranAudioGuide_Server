@@ -1,4 +1,61 @@
 ﻿angular.module('AdminPage.services', [])
+.service('TipServices', ['$rootScope', '$http', function ($rootScope, $http) {
+    var Tips = []
+    return {
+        getPlaceTips: function (placeId) {
+            method = 'POST';
+            data = { placeId: placeId };
+            url = '/Admin/GetPlaceTips';
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  angular.copy(response.data, Tips);
+                  console.log(response.data);
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return Tips;
+        },
+        AddTip: function (newTip) {
+            method = 'POST';
+            url = '/Admin/AddTip';
+            var data = {
+                'PlaceId': newTipp.PlaceId,
+                'content': newTipp.content,
+                'TipCategoryId': newTipp.categoryId
+            }
+            $http({
+                method: method,
+                url: url,
+                data: data
+            }).
+              then(function (response) {
+                  if (response.data) {
+                      $rootScope.$broadcast('TipAdded', { PlaceId: newTipp.PlaceId });
+                  }
+                  else {
+                      console.log("Server failed to add Tip.");
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        GetTipCategories: function () {
+            method = 'POST';
+            url = '/Admin/GetTipCategories';
+            $http({ method: method, url: url }).
+              then(function (response) {
+                  $rootScope.allTipCategories = angular.copy(response.data);
+                  console.log(response.data);
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        }
+    }
+}])
 .service('PlaceServices', ['$rootScope', '$http', function ($rootScope, $http) {
     var Places = [];
     var OnlinePlaces = [];
@@ -7,7 +64,7 @@
         GetAll: function (PageNum) {
             method = 'POST';
             url = '/Admin/GetAllPlaces';
-            $http({ method: method, url: url}).
+            $http({ method: method, url: url }).
               then(function (response) {
                   $rootScope.allPlaces = angular.copy(response.data);
                   $rootScope.$broadcast('LoadPlaces', {});
@@ -542,12 +599,12 @@
 }]);
 var respondstatus =
 {
-    success : 0,
-    invalidInput : 1,
-    ivalidCordinates : 2,
-    invalidFileFormat : 3,
-    unknownError : 4,
-    dbError : 5,
-    invalidId : 6,
-    forignKeyError : 7
+    success: 0,
+    invalidInput: 1,
+    ivalidCordinates: 2,
+    invalidFileFormat: 3,
+    unknownError: 4,
+    dbError: 5,
+    invalidId: 6,
+    forignKeyError: 7
 }

@@ -11,6 +11,7 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class AddTipVM
     {
+        public Guid PlaceId { get; set; }
         public string content { get; set; }
         public Guid TipCategoryId { get; set; }
     }
@@ -20,6 +21,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Class { get; set; }
         public string unicode { get; set; }
         public string name { get; set; }
+        public string iconicName { get; set; }
     }
     public class TipVM
     {

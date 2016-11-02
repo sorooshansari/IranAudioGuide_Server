@@ -23,11 +23,14 @@ namespace IranAudioGuide_MainServer.Migrations
             dbManager.AddUser("monaakhlaghi@gmail.com", "1234567890", "/images/Members/Mona.JPG", "Mona Akhlaghi", "Admin", context);
             dbManager.AddUser("sinazandi1994@gmail.com", "1234567890", "/images/Members/Sina.JPG", "Sina Zandi", "Admin", context);
 
-
             dbManager.AddUser("a_aminiasl@gmail.com", "1234567890", "/images/Members/Soroosh.JPG", "amir Amini", "AppUser", context);
 
             //AddTipCategory
-
+            dbManager.AddTipCategory("Transportation", "ion-android-walk", "&#xf3bb;", 1);
+            dbManager.AddTipCategory("Rough track", "ion-ios-pulse-strong", "&#xf492;", 2);
+            dbManager.AddTipCategory("Time", "ion-android-time", "&#xf3b3;", 3);
+            dbManager.AddTipCategory("Stuff", "ion-android-checkbox-outline", "&#xf373;", 4);
+            dbManager.AddTipCategory("Other", "ion-ios-nutrition-outline", "&#xf46f;", 5);
         }
 
     }

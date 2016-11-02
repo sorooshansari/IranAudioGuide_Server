@@ -1,7 +1,7 @@
 ﻿//Developed by Soroosh Ansari
 angular.module('AdminPage.controllers', [])
-.controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices',
-    function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices) {
+.controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices', 'TipServices',
+    function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices, TipServices) {
         //global
         var paging = 5;
         var validImgFormats = ['jpg', 'gif'];
@@ -358,10 +358,10 @@ angular.module('AdminPage.controllers', [])
             $scope.selectedPlace.ExtraImages = PlaceServices.GetExtraImages(Place.PlaceId);
             $scope.selectedPlace.Img = Place.ImgUrl;
             $scope.selectedPlace.Id = Place.PlaceId;
+            $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(Place.PlaceId);
             $scope.EditPlaceVM = angular.copy(Place);
-            $scope.selectedPlace.Tips = [
-                { id: '1', Content: 'vgjhbkn lm vybjnk' },
-                { id: '2', Content: 'kl;dhjv; h/dm h;gb' }];
+                //{ id: '1', Content: 'vgjhbkn lm vybjnk' },
+                //{ id: '2', Content: 'kl;dhjv; h/dm h;gb' }];
             $('#EditPlaceModal').modal('show');
         };
         $scope.EditPlace = function (EditPlaceVM) {
@@ -415,17 +415,25 @@ angular.module('AdminPage.controllers', [])
             //to be fill
         });
         //Tips
-        $scope.allTips = [
-            { id: '1', Class: 'ion-android-walk', name: '&#xf3bb; transportation', uniCode: '&#xf3bb;' },
-            { id: '2', Class: 'ion-ios-pulse-strong', name: '&#xf492; rough trak', uniCode: '&#xf492;' }];
-        $scope.GetTipName = function (id) {
+        $rootScope.allTipCategories = [];
+            //{ id: '1', Class: 'ion-android-walk', name: '&#xf3bb; transportation', uniCode: '&#xf3bb;' },
+        //{ id: '2', Class: 'ion-ios-pulse-strong', name: '&#xf492; rough trak', uniCode: '&#xf492;' }];
+        TipServices.GetTipCategories();
+        $scope.GetTipuniCode = function (id) {
             for (var i = 0; i < $scope.allTips.length; i++) {
-                if ($scope.allTips[i].id == id) {
-                    return $scope.allTips[i].uniCode;
+                if ($scope.allTipCategories[i].id == id) {
+                    return $scope.allTipCategories[i].uniCode;
                 }
             }
-            return '&#xf101;';
+            return '';
         }
+        $scope.AddTip = function (model, placeId) {
+            model.placeId = placeId;
+            TipServices.AddTip(model);
+        }
+        $scope.$on('TipAdded', function (event, data) {
+            $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(Place.PlaceId);
+        });
 
         //City stuff
         $scope.CityNameValidator = "hidden";
