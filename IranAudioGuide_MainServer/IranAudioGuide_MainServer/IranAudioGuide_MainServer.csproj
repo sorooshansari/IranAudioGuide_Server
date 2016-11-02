@@ -259,7 +259,9 @@
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
+    <Content Include="Content\UserMain.css" />
     <Content Include="Content\AdiminMain.css" />
+    <Content Include="Content\UserCustom.css" />
     <Content Include="Content\AdminCustom.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
