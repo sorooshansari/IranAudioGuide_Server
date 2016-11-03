@@ -432,7 +432,7 @@ angular.module('AdminPage.controllers', [])
             TipServices.AddTip(model);
         }
         $scope.$on('TipAdded', function (event, data) {
-            $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(Place.PlaceId);
+            $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(data.PlaceId);
         });
 
         //City stuff

@@ -20,9 +20,9 @@
             method = 'POST';
             url = '/Admin/AddTip';
             var data = {
-                'PlaceId': newTipp.PlaceId,
-                'content': newTipp.content,
-                'TipCategoryId': newTipp.categoryId
+                'PlaceId': newTip.placeId,
+                'content': newTip.content,
+                'TipCategoryId': newTip.categoryId
             }
             $http({
                 method: method,
@@ -31,7 +31,7 @@
             }).
               then(function (response) {
                   if (response.data) {
-                      $rootScope.$broadcast('TipAdded', { PlaceId: newTipp.PlaceId });
+                      $rootScope.$broadcast('TipAdded', { PlaceId: newTip.placeId });
                   }
                   else {
                       console.log("Server failed to add Tip.");

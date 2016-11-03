@@ -31,28 +31,21 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public JsonResult AddTip(AddTipVM model)
         {
-            using (var dbTran = db.Database.BeginTransaction())
+            try
             {
-                try
+                Tip newTip = new Tip()
                 {
-                    Tip newTip = new Tip()
-                    {
-                        Tip_Category = db.TipCategories.Where(x => x.TiC_Id == model.TipCategoryId).First(),
-                        Tip_Content = model.content,
-
-                    };
-                    db.Tips.Add(newTip);
-                    db.SaveChanges();
-                    db.Places.Where(x => x.Pla_Id == model.PlaceId).First().Pla_Tips.Add(newTip);
-                    db.SaveChanges();
-                    dbTran.Commit();
-                    return Json(true);
-                }
-                catch (Exception ex)
-                {
-                    dbTran.Rollback();
-                    return Json(false);
-                }
+                    Tip_Category = db.TipCategories.Where(x => x.TiC_Id == model.TipCategoryId).First(),
+                    Tip_Content = model.content,
+                    Pla_Id = db.Places.Where(x => x.Pla_Id == model.PlaceId).First()
+                };
+                db.Tips.Add(newTip);
+                db.SaveChanges();
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
             }
         }
         [HttpGet]
@@ -77,9 +70,8 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                Place place = db.Places.Where(x => x.Pla_Id == placeId).First();
                 List<TipVM> res = (from t in db.Tips
-                                   where place.Pla_Tips.Contains(t)
+                                   where t.Pla_Id.Pla_Id == placeId
                                    select new TipVM()
                                    {
                                        Content = t.Tip_Content,

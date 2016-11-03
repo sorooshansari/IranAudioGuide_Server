@@ -89,6 +89,7 @@ namespace IranAudioGuide_MainServer.Models
         public System.Guid Tip_Id { get; set; }
         public TipCategory Tip_Category { get; set; }
         public string Tip_Content { get; set; }
+        public virtual Place Pla_Id { get; set; }
 
     }
     public class TipCategory

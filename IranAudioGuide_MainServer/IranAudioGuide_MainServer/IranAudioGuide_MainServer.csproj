@@ -236,6 +236,10 @@
     <Compile Include="Migrations\201611021048040_TipUpdated.Designer.cs">
       <DependentUpon>201611021048040_TipUpdated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611030810254_TipVirtualPlaceId_added.cs" />
+    <Compile Include="Migrations\201611030810254_TipVirtualPlaceId_added.Designer.cs">
+      <DependentUpon>201611030810254_TipVirtualPlaceId_added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1243,6 +1247,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611021048040_TipUpdated.resx">
       <DependentUpon>201611021048040_TipUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611030810254_TipVirtualPlaceId_added.resx">
+      <DependentUpon>201611030810254_TipVirtualPlaceId_added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
