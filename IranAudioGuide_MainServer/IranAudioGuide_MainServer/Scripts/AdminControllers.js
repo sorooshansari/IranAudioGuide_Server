@@ -1,7 +1,7 @@
 ﻿//Developed by Soroosh Ansari
 angular.module('AdminPage.controllers', [])
-.controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices', 'TipServices',
-    function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices, TipServices) {
+.controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices', 'TipServices', 'StoryServices',
+    function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices, TipServices, StoryServices) {
         //global
         var paging = 5;
         var validImgFormats = ['jpg', 'gif'];
@@ -138,6 +138,128 @@ angular.module('AdminPage.controllers', [])
             $('#OnlineEditPlaceModal').modal('show');
         };
 
+        //Story Player stuff
+        $scope.StoryTitle = "...";
+        $rootScope.Storys;
+        $scope.StoryPlayStatus = "play";
+        var playingIndex;
+        //$scope.timeElapsed = "";
+        //$scope.StoryProgress = 0;
+        var Story;
+        var StoryStatus = "empty"; //empty, play, puase
+        $scope.LoadPlaceStorys = function (PlaceId) {
+            $scope.selectedPlaceId = PlaceId;
+            $scope.StoryTitle = "...";
+            StoryStatus = "empty";
+            StoryServices.Get(PlaceId);
+            //scroll("#Player");
+        };
+        $scope.$on('FillFirstStory', function (event) {
+            $scope.loadStory(1);
+        });
+        $scope.loadStory = function (StoryIndex) {
+            playingIndex = StoryIndex;
+            angular.forEach($rootScope.Storys, function (value, key) {
+                if (value.Index == StoryIndex) {
+                    if (StoryStatus != "empty") {
+                        Story.pause();
+                        $scope.StoryPlayStatus = "play";
+                    }
+                    $scope.StoryTitle = value.Name;
+                    var src = "../Stories/" + value.Url;
+                    Story = new Story(src);
+                    StoryStatus = "pause";
+                    return;
+                }
+            });
+        }
+        $scope.Story_Play = function () {
+            switch (StoryStatus) {
+                case "empty":
+                    break;
+                case "play":
+                    //clearInterval(timer);
+                    Story.pause();
+                    //$scope.timeElapsed = "";
+                    //$scope.StoryProgress = 0;
+                    $scope.StoryPlayStatus = "play";
+                    StoryStatus = "pause";
+                    break;
+                case "pause":
+                    Story.play();
+                    //var timer = setInterval(updateProgress, 1000);
+                    $scope.StoryPlayStatus = "pause";
+                    StoryStatus = "play";
+                    break;
+                default:
+
+            }
+        };
+        $scope.Story_prev = function () {
+            if (playingIndex > 1) {
+                if (StoryStatus == "play")
+                    $scope.Story_Play(); //first pause the playing Story
+                $scope.loadStory(playingIndex - 1);
+                $scope.Story_Play();
+            }
+        };
+        $scope.Story_next = function () {
+            if ($rootScope.Storys.length > playingIndex) {
+                if (StoryStatus == "play")
+                    $scope.Story_Play(); //first pause the playing Story
+                $scope.loadStory(playingIndex + 1);
+                $scope.Story_Play();
+            }
+        };
+
+
+        //Story Stuff
+        $scope.NewStory = function () {
+            $('#NewStoryModal').modal('show');
+        };
+        $scope.SetStoryName = function (o) {
+            $scope.NewStoryVM.FileChanged = true;
+            var StoryUrl = o.files[0].name;
+            var ext = StoryUrl.substring(StoryUrl.lastIndexOf('.') + 1).toLowerCase();
+            if (validStoryFormats.indexOf(ext) !== -1) {
+                NewStoryForm.StoryUrl.value = StoryUrl;
+                $scope.NewStoryVM.invalidFile = false;
+            }
+            else {
+                NewStoryForm.StoryUrl.value = '';
+                $scope.NewStoryVM.invalidFile = true;
+            }
+        }
+        $scope.AddStory = function (model, form) {
+            console.log(model);
+            if (form.$valid && !model.invalidFile) {
+                $rootScope.ShowOverlay = true;
+                StoryServices.Add(model, $scope.selectedPlaceId);
+            }
+        };
+        $scope.removeStory = function (StoryId) {
+            StoryServices.Remove(StoryId);
+        }
+        $scope.$on('UpdateStorys', function (event) {
+            $scope.LoadPlaceStorys($scope.selectedPlaceId);
+        });
+        $scope.$on('UpdateStoryValidationSummery', function (event, args) {
+            //$scope.additionalError = args.data;
+            //scroll("#NewPlace");
+        });
+        $scope.$on('RemoveStoryError', function (event, args) {
+            $scope.ForignKeyErrorBody = 'Error on removing story.<br/>' + args.content + '<br/>Contact site developer to get more information.'
+            $scope.DelSubsBtn = "hidden";
+            $('#ForignKeyErrorModal').modal('show');
+        });
+        $scope.$on('LoadFirstPlaceStorys', function (event) {
+            if ($scope.places.length > 0) {
+                $scope.LoadPlaceStorys($scope.places[0].PlaceId);
+            }
+        });
+
+
+
         //Player stuff
         $scope.selectedPlaceId;
         $rootScope.placeimage = "160x100.png";
@@ -213,7 +335,6 @@ angular.module('AdminPage.controllers', [])
                 $scope.Audio_Play();
             }
         };
-
         //Audio Stuff
         $scope.NewAudio = function () {
             $('#NewAudioModal').modal('show');
@@ -419,10 +540,10 @@ angular.module('AdminPage.controllers', [])
             //{ id: '1', Class: 'ion-android-walk', name: '&#xf3bb; transportation', uniCode: '&#xf3bb;' },
         //{ id: '2', Class: 'ion-ios-pulse-strong', name: '&#xf492; rough trak', uniCode: '&#xf492;' }];
         TipServices.GetTipCategories();
-        $scope.GetTipuniCode = function (id) {
-            for (var i = 0; i < $scope.allTips.length; i++) {
+        $scope.GetTipUniCode = function (id) {
+            for (var i = 0; i < $scope.allTipCategories.length; i++) {
                 if ($scope.allTipCategories[i].id == id) {
-                    return $scope.allTipCategories[i].uniCode;
+                    return $scope.allTipCategories[i].unicode;
                 }
             }
             return '';
@@ -432,6 +553,17 @@ angular.module('AdminPage.controllers', [])
             TipServices.AddTip(model);
         }
         $scope.$on('TipAdded', function (event, data) {
+            $scope.newTip = {
+                categoryId: '',
+                content: ''
+            };
+            $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(data.PlaceId);
+        });
+        $scope.RemoveTip = function (TipId) {
+            TipServices.RemoveTip(TipId);
+        }
+        $scope.$on('TipRemoved', function (event, data) {
+            console.log(data);
             $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(data.PlaceId);
         });
 

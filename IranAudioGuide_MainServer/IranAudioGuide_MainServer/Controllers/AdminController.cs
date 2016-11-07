@@ -48,7 +48,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(false);
             }
         }
-        [HttpGet]
+
+        [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult RemoveTip(Guid Id)
         {
@@ -64,6 +65,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 throw;
             }
         }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult GetPlaceTips(Guid placeId)
@@ -110,6 +112,104 @@ namespace IranAudioGuide_MainServer.Controllers
             }
 
         }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult Storys(string PlaceId)
+        {
+            if (PlaceId.Length > 0)
+            {
+                string imgUrl = PlaceImg(PlaceId);
+                if (imgUrl != null)
+                {
+                    return Json(new StoryViewVM()
+                    {
+                        Storys = GetStorys(PlaceId),
+                        PlaceImage = imgUrl
+                    });
+                }
+                return Json(new StoryViewVM()
+                {
+                    Storys = GetStorys(PlaceId),
+                    respond = new Respond(content: "Error. Couldn't find any image.", status: status.invalidInput)
+                });
+            }
+            return Json(new StoryViewVM()
+            {
+                respond = new Respond(content: "Fatal error. Invalid Place Id.", status: status.invalidInput)
+            });
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult AddStory(NewStoryVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new Respond("Check input fields", status.invalidInput));
+            }
+            if (model.StoryFile.ContentLength > 0 && IsAudioFile(model.StoryFile.FileName))
+            {
+                using (var dbTran = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
+                        var Story = new Story()
+                        {
+                            Sto_Name = model.StoryName,
+                            Pla_Id = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault()
+                        };
+                        db.Storys.Add(Story);
+                        db.SaveChanges(); //Save Story and generate Sto_Id
+                        string id = Convert.ToString(Story.Sto_Id);
+                        string extention = Path.GetExtension(model.StoryFile.FileName);
+                        string path = string.Format("~/Stories/{0}{1}", id, extention);
+                        model.StoryFile.SaveAs(Server.MapPath(path));
+                        Story.Sto_Url = string.Format("{0}{1}", id, extention);
+                        if (place.Pla_isOnline)
+                            //db.UpdateLogs.Add(new UpdateLog() { Sto_Id = Story.Sto_Id });
+                        db.SaveChanges();
+                        dbTran.Commit();
+                        return Json(new Respond());
+                    }
+                    catch (Exception ex)
+                    {
+                        dbTran.Rollback();
+                        return Json(new Respond(ex.Message, status.unknownError));
+                    }
+                }
+            }
+            return Json(new Respond("Only WAV, MID, MIDI, WMA, MP3, OGG, and RMA are allowed.", status.invalidFileFormat));
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult DelStory(Guid Id)
+        {
+            var Story = db.Storys.Where(x => x.Sto_Id == Id).FirstOrDefault();
+            if (Story != default(Story))
+            {
+                try
+                {
+                    string path = Server.MapPath(string.Format("~/Stories/{0}", Story.Sto_Url));
+                    db.Storys.Remove(Story);
+                    db.SaveChanges();
+                    lock (DelAdo)
+                    {
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                    }
+                    return Json(new Respond());
+                }
+                catch (Exception ex)
+                {
+                    return Json(new Respond(ex.Message, status.unknownError));
+                }
+            }
+            return Json(new Respond("Invalid Story Id", status.invalidInput));
+        }
+
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult Audios(string PlaceId)
@@ -696,6 +796,25 @@ namespace IranAudioGuide_MainServer.Controllers
 
                 throw ex;
             }
+        }
+
+        private List<StoryVM> GetStorys(string PlaceId)
+        {
+            List<StoryVM> Storys = (from a in db.Storys
+                                    where a.Pla_Id == db.Places.Where(x => x.Pla_Id.ToString() == PlaceId).FirstOrDefault()
+                                    select new StoryVM()
+                                    {
+                                        Discription = a.Sto_Discription,
+                                        Name = a.Sto_Name,
+                                        Url = a.Sto_Url,
+                                        Id = a.Sto_Id
+                                    }).ToList();
+            int counter = 0;
+            foreach (var item in Storys)
+            {
+                item.Index = ++counter;
+            }
+            return Storys;
         }
         private List<AudioVM> GetAudios(string PlaceId)
         {

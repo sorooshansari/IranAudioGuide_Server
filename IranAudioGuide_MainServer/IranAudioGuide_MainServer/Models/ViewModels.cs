@@ -230,6 +230,34 @@ namespace IranAudioGuide_MainServer.Models
         public string ImageName { get; set; }
         public HttpPostedFileBase NewImage { get; set; }
     }
+    public class StoryViewVM
+    {
+        public StoryViewVM()
+        {
+            respond = new Respond();
+        }
+        public List<StoryVM> Storys { get; set; }
+        public string PlaceImage { get; set; }
+        public Respond respond { get; set; }
+    }
+    public class StoryVM
+    {
+        public int Index { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string Discription { get; set; }
+    }
+    public class NewStoryVM
+    {
+        [Required]
+        public System.Guid PlaceId { get; set; }
+        [Required]
+        public string StoryName { get; set; }
+        [Required]
+        public HttpPostedFileBase StoryFile { get; set; }
+    }
+
     public class AudioViewVM
     {
         public AudioViewVM()

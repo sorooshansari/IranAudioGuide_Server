@@ -34,7 +34,24 @@
                       $rootScope.$broadcast('TipAdded', { PlaceId: newTip.placeId });
                   }
                   else {
-                      console.log("Server failed to add Tip.");
+                      alert("Server failed to add Tip.");
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        RemoveTip: function (TipId, placeId) {
+            method = 'POST';
+            url = '/Admin/RemoveTip';
+            data = { Id: TipId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  if (response.data) {
+                      $rootScope.$broadcast('TipRemoved', { PlaceId: placeId });
+                  }
+                  else {
+                      alert("Server failed to add Tip.");
                   }
               }, function (response) {
                   console.log("Request failed");
@@ -585,6 +602,112 @@
                               content: response.data.content
                           });
                           console.log("Server failed to remove audio.");
+                          console.log(response.data.content);
+                          break;
+                      default:
+
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        }
+    }
+}])
+
+.service('StoryServices', ['$rootScope', '$http', function ($rootScope, $http) {
+    var getModelAsFormData = function (data) {
+        var dataAsFormData = new FormData();
+        angular.forEach(data, function (value, key) {
+            dataAsFormData.append(key, value);
+        });
+        return dataAsFormData;
+    };
+    return {
+        Get: function (PlaceId) {
+            method = 'POST';
+            url = '/Admin/Storys';
+            data = { PlaceId: PlaceId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  var temp = [];
+                  $rootScope.placeimage = response.data.PlaceImage;
+                  $rootScope.Storys = angular.copy(response.data.Storys);
+                  $rootScope.$broadcast('FillFirstStory', {});
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        OnlineGet: function (PlaceId) {
+            method = 'POST';
+            url = '/Admin/Storys';
+            data = { PlaceId: PlaceId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  var temp = [];
+                  $rootScope.OnlinePlaceimage = response.data.PlaceImage;
+                  $rootScope.OnlineStorys = angular.copy(response.data.Storys);
+                  $rootScope.$broadcast('OnlineFillFirstStory', {});
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        Add: function (model, placeId) {
+            method = 'POST';
+            url = '/Admin/AddStory';
+            var fd = new FormData();
+            fd.append('PlaceId', placeId);
+            fd.append('StoryName', model.StoryName);
+            fd.append('StoryFile', model.StoryFile);
+            console.log(model.StoryFile);
+            for (var pair of fd.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).
+              then(function (response) {
+                  $rootScope.ShowOverlay = false;
+                  $rootScope.hide('#NewStoryModal');
+                  if (response.data.status == 0) {
+                      $rootScope.$broadcast('UpdateStorys', {});
+                  }
+                  else {
+                      $rootScope.$broadcast('UpdateStoryValidationSummery', {
+                          data: response.data.content
+                      });
+                      console.log("Server failed to add Story.");
+                  }
+              }, function (response) {
+                  $rootScope.ShowOverlay = false;
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        Remove: function (StoryId) {
+            method = 'POST';
+            url = '/Admin/DelStory';
+            data = { Id: StoryId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdateStorys', {});
+                          break;
+                      case 1:
+                          $rootScope.$broadcast('RemoveStoryError', {
+                              content: response.data.content
+                          });
+                          console.log("Server failed to remove story.");
                           console.log(response.data.content);
                           break;
                       default:

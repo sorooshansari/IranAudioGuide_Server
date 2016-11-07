@@ -129,8 +129,11 @@
                     <div class="player-image 3u">
                         <img src="../images/Places/{{placeimage}}" />
                     </div>
-                    <div class="7u">
+                    <div class="3u">
                         <ul>
+                            <li class="12u$">
+                                <h6 class="">Audios</h6>
+                            </li>
                             <li class="12u$">
                                 <h4 class="AudioTitle">{{AudioTitle}}</h4>
                             </li>
@@ -143,21 +146,57 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="4u">
+                        <ul>
+                            <li class="12u$">
+                                <h6 class="">Stories</h6>
+                            </li>
+                            <li class="12u$">
+                                <h4 class="StoryTitle">{{StoryTitle}}</h4>
+                            </li>
+                            <li class="12u$">
+                                <ul class="nav-pills buttons">
+                                    <li class="prev" ng-click="Story_prev()"></li>
+                                    <li class="{{PlayStatus}}" ng-click="Story_Play()"></li>
+                                    <li class="next" ng-click="Story_next()"></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="2u$">
                         <a ng-show="selectedPlaceId != null" href="" ng-click="NewAudio()" class="btn btn-primary btn-block">
                             <i class="fa fa-plus"></i>
                             Add Audio
                         </a>
+                        <a ng-show="selectedPlaceId != null" href="" ng-click="NewStory()" class="btn btn-success btn-block">
+                            <i class="fa fa-plus"></i>
+                            Add Story
+                        </a>
                     </div>
                 </div>
+                <h5 ng-show="audios.length">Audios</h5>
                 <ul class="audiosList">
-                    @*<li ng-show="!audios.length">Add audio.</li>*@
                     <li ng-repeat="audio in audios" ng-click="loadAudio(audio.Index)" class="listItem">
                         <div class="row">
                             <div class="1u white">{{audio.Index}}.</div>
                             <div class="9u white">{{audio.Aud_Name}}</div>
                             <div class="2u$">
                                 <a href="" ng-click="removeAudio(audio.Aud_Id)" class="btn btn-danger btn-block">
+                                    <i class="fa fa-trash-o"></i>
+                                    remove
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <h5 ng-show="Storys.length">Stories</h5>
+                <ul class="StorysList">
+                    <li ng-repeat="story in Storys" ng-click="loadStory(Story.Index)" class="listItem">
+                        <div class="row">
+                            <div class="1u white">{{Story.Index}}.</div>
+                            <div class="9u white">{{Story.Name}}</div>
+                            <div class="2u$">
+                                <a href="" ng-click="removeStory(Story.Id)" class="btn btn-danger btn-block">
                                     <i class="fa fa-trash-o"></i>
                                     remove
                                 </a>
@@ -383,6 +422,66 @@
             </div>
         </div>
     </div>
+    <!-- NewStory Modal -->
+    <div class="modal fade" id="NewStoryModal" tabindex="-1" role="dialog" aria-labelledby="NewStoryModalLabel">
+        <!--overlay-->
+        <div ng-show="ShowOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
+            <div id="floatingCirclesG">
+                <div class="f_circleG" id="frotateG_01"></div>
+                <div class="f_circleG" id="frotateG_02"></div>
+                <div class="f_circleG" id="frotateG_03"></div>
+                <div class="f_circleG" id="frotateG_04"></div>
+                <div class="f_circleG" id="frotateG_05"></div>
+                <div class="f_circleG" id="frotateG_06"></div>
+                <div class="f_circleG" id="frotateG_07"></div>
+                <div class="f_circleG" id="frotateG_08"></div>
+            </div>
+        </div>
+        <div class="modal-dialog" role="document">
+
+            <form role="form" name="NewStoryForm" ng-submit="AddStory(NewStoryVM, NewStoryForm)" ng-init="NewStoryVM.invalidFile = true;NewStoryVM.FileChanged = false;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-primary">Add New Story</h3>
+                        <a href="" ng-click="hide('#NewStoryModal')">
+                            <i class="fa fa-2x fa-times ModalDismissIco"></i>
+                        </a>
+                    </div>
+                    <div class="modal-body" style="padding: 15px;">
+                        <div class="row">
+                            <div class="12u$">
+                                <div class="formError">
+                                    <p class="text-danger" ng-show="(NewStoryFormSubmitted || NewStoryForm.StoryName.$touched) && NewStoryForm.StoryName.$error.required">
+                                        Story name must be fill.
+                                    </p>
+                                    <p class="text-danger" ng-show="(NewStoryFormSubmitted || NewStoryVM.FileChanged) && NewStoryVM.invalidFile">
+                                        Story must be a mp3 file.
+                                    </p>
+                                </div>
+                                <input id="StoryName" name="StoryName" type="text" ng-model="NewStoryVM.StoryName" required placeholder="Story name*" />
+                            </div>
+                            <div class="9u">
+                                <input type="text" name="StoryUrl" placeholder="Story*" disabled />
+                            </div>
+                            <div class="3u$ lessPading">
+                                <input class="inputfile" type="file"
+                                       file-model="NewStoryVM.StoryFile"
+                                       onchange="angular.element(this).scope().SetStoryName(this)"
+                                       id="Story" name="Story" required validFile />
+                                <label for="Story" class="btn-primary">Choose</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" id="NewStoryModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
+                        <input type="submit" ng-click="NewStoryFormSubmitted=true" class="addBtn" value="Add Story" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <!-- NewAudio Modal -->
     <div class="modal fade" id="NewAudioModal" tabindex="-1" role="dialog" aria-labelledby="NewAudioModalLabel">
         <!--overlay-->
@@ -556,11 +655,11 @@
                             <table ng-show="selectedPlace.PlaceTips.length" class="default 12u$" id="placeTbl" style="font-family:'Ionicons', Arial; margin-left: 3%;">
                                 <tbody>
                                     <tr class="hoverable" ng-repeat="tip in selectedPlace.PlaceTips">
-                                        <td ng-bind-html="GetTipuniCode(tip.id)"></td>
+                                        <td class="1u" ng-bind-html="GetTipUniCode(tip.TipcategoryID)"></td>
                                         <td>{{tip.Content}}</td>
                                         <td class="2u$">
                                             <div role="button" tabindex="0" class="btn btn-danger btn-block"
-                                                 ng-click="RemoveTip(tip.id)">
+                                                 ng-click="RemoveTip(tip.id, selectedPlace.Id)">
                                                 <span class="fa fa-trash-o"></span> Remove
                                             </div>
                                         </td>
@@ -578,7 +677,7 @@
                                     <textarea type="text" ng-model="newTip.content" name="TipContent" rows="1" placeholder="Tip Content"></textarea>
                                 </div>
                                 <div class="2u$ 12u$(mobile)">
-                                    <input ng-click="AddTip(newTip, EditPlaceVM.PlaceId)" type="button" class="addBtn" name="TipContent" value="Add" />
+                                    <input ng-disabled="!newTip.categoryId || !newTip.content.length" ng-click="AddTip(newTip, EditPlaceVM.PlaceId)" type="button" class="addBtn" name="TipContent" value="Add" />
                                 </div>
                             </div>
                             <!--/tips-->

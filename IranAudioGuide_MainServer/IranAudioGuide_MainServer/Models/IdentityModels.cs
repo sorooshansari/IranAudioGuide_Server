@@ -45,6 +45,16 @@ namespace IranAudioGuide_MainServer.Models
         public string Aud_Discription { get; set; }
         public virtual Place Pla_Id { get; set; }
     }
+    public class Story
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Sto_Id { get; set; }
+        public string Sto_Name { get; set; }
+        public string Sto_Url { get; set; }
+        public string Sto_Discription { get; set; }
+        public virtual Place Pla_Id { get; set; }
+    }
     public class Place
     {
         [Key]
@@ -117,6 +127,7 @@ namespace IranAudioGuide_MainServer.Models
             return new ApplicationDbContext();
         }
         public DbSet<Audio> Audios { get; set; }
+        public DbSet<Story> Storys { get; set; }
         public DbSet<Place> Places { get; set; }
         public DbSet<city> Cities { get; set; }
         public DbSet<Image> Images { get; set; }
