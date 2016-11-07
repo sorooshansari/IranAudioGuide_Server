@@ -65,6 +65,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Pla_TumbImgUrl { get; set; }
         public string Pla_Discription { get; set; }
         public List<Audio> Pla_Audios { get; set; }
+        public List<Story> Pla_Stories { get; set; }
         public List<Image> Pla_ExtraImages { get; set; }
         public List<Tip> Pla_Tips { get; set; }
         public city Pla_city { get; set; }
@@ -73,14 +74,6 @@ namespace IranAudioGuide_MainServer.Models
         public string Pla_Address { get; set; }
         public bool Pla_Deactive { get; set; }
         public bool Pla_isOnline { get; set; }
-    }
-    public class city
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Cit_Id { get; set; }
-        public string Cit_Name { get; set; }
-        public string Cit_Description { get; set; }
     }
 
     public class Image
@@ -112,6 +105,32 @@ namespace IranAudioGuide_MainServer.Models
         public string TiC_Name { get; set; }
         public int TiC_Priority { get; set; }
     }
+    public class city
+    {
+        public city()
+        {
+            Cit_Packages = new HashSet<Package>();
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Cit_Id { get; set; }
+        public string Cit_Name { get; set; }
+        public string Cit_Description { get; set; }
+        public virtual ICollection<Package> Cit_Packages { get; set; }
+    }
+    public class Package
+    {
+        public Package()
+        {
+            Pac_Cities = new HashSet<city>();
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Pac_Id { get; set; }
+        public string Pac_Name { get; set; }
+        public int Pac_Price { get; set; }
+        public virtual ICollection<city> Pac_Cities { get; set; }
+    }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -130,6 +149,7 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<Story> Storys { get; set; }
         public DbSet<Place> Places { get; set; }
         public DbSet<city> Cities { get; set; }
+        public DbSet<Package> Packages { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<UpdateLog> UpdateLogs { get; set; }
         public DbSet<Tip> Tips { get; set; }

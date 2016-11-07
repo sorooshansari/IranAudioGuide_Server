@@ -244,6 +244,10 @@
     <Compile Include="Migrations\201611070836180_Story_Added.Designer.cs">
       <DependentUpon>201611070836180_Story_Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611071015241_Package_Added.cs" />
+    <Compile Include="Migrations\201611071015241_Package_Added.Designer.cs">
+      <DependentUpon>201611071015241_Package_Added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1258,6 +1262,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611070836180_Story_Added.resx">
       <DependentUpon>201611070836180_Story_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611071015241_Package_Added.resx">
+      <DependentUpon>201611071015241_Package_Added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
