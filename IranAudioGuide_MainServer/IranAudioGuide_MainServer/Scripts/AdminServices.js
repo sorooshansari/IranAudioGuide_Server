@@ -86,6 +86,7 @@
                   $rootScope.allPlaces = angular.copy(response.data);
                   $rootScope.$broadcast('LoadPlaces', {});
                   $rootScope.$broadcast('LoadFirstPlaceAudios', {});
+                  $rootScope.$broadcast('LoadFirstPlaceStorys', {});
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);
@@ -640,22 +641,6 @@
               });
             return;
         },
-        OnlineGet: function (PlaceId) {
-            method = 'POST';
-            url = '/Admin/Storys';
-            data = { PlaceId: PlaceId };
-            $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  var temp = [];
-                  $rootScope.OnlinePlaceimage = response.data.PlaceImage;
-                  $rootScope.OnlineStorys = angular.copy(response.data.Storys);
-                  $rootScope.$broadcast('OnlineFillFirstStory', {});
-              }, function (response) {
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
-              });
-            return;
-        },
         Add: function (model, placeId) {
             method = 'POST';
             url = '/Admin/AddStory';
@@ -675,7 +660,7 @@
                 headers: { 'Content-Type': undefined }
             }).
               then(function (response) {
-                  $rootScope.ShowOverlay = false;
+                  $rootScope.NewStoryShowOverlay = false;
                   $rootScope.hide('#NewStoryModal');
                   if (response.data.status == 0) {
                       $rootScope.$broadcast('UpdateStorys', {});

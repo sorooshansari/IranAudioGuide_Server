@@ -206,6 +206,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PlaceAddress { get; set; }
         public string PlaceCordinates { get; set; }
         public bool isOnline { get; set; }
+        public bool isPrimary { get; set; }
     }
     public class ImageVM
     {

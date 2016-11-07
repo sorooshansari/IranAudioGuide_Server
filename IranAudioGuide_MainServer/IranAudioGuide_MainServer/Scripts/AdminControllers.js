@@ -10,6 +10,7 @@ angular.module('AdminPage.controllers', [])
             $(modal).modal('hide');
         }
         $rootScope.ShowOverlay = false;
+        $rootScope.NewStoryShowOverlay = false;
         $rootScope.EditOverlay = false;
         function scroll(id) {
             var dest = 0;
@@ -138,6 +139,11 @@ angular.module('AdminPage.controllers', [])
             $('#OnlineEditPlaceModal').modal('show');
         };
 
+        //Story nad Audio Stuff
+        $scope.LoadPlaceAudiosAndStories = function (placeId) {
+            $scope.LoadPlaceStorys(placeId);
+            $scope.LoadPlaceAudios(placeId);
+        };
         //Story Player stuff
         $scope.StoryTitle = "...";
         $rootScope.Storys;
@@ -167,7 +173,7 @@ angular.module('AdminPage.controllers', [])
                     }
                     $scope.StoryTitle = value.Name;
                     var src = "../Stories/" + value.Url;
-                    Story = new Story(src);
+                    Story = new Audio(src);
                     StoryStatus = "pause";
                     return;
                 }
@@ -212,16 +218,16 @@ angular.module('AdminPage.controllers', [])
             }
         };
 
-
         //Story Stuff
         $scope.NewStory = function () {
+            console.log("hi");
             $('#NewStoryModal').modal('show');
         };
         $scope.SetStoryName = function (o) {
             $scope.NewStoryVM.FileChanged = true;
             var StoryUrl = o.files[0].name;
             var ext = StoryUrl.substring(StoryUrl.lastIndexOf('.') + 1).toLowerCase();
-            if (validStoryFormats.indexOf(ext) !== -1) {
+            if (validAudioFormats.indexOf(ext) !== -1) {
                 NewStoryForm.StoryUrl.value = StoryUrl;
                 $scope.NewStoryVM.invalidFile = false;
             }
@@ -233,7 +239,7 @@ angular.module('AdminPage.controllers', [])
         $scope.AddStory = function (model, form) {
             console.log(model);
             if (form.$valid && !model.invalidFile) {
-                $rootScope.ShowOverlay = true;
+                $rootScope.NewStoryShowOverlay = true;
                 StoryServices.Add(model, $scope.selectedPlaceId);
             }
         };

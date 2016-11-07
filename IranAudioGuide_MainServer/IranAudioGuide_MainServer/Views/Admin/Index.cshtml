@@ -152,12 +152,12 @@
                                 <h6 class="">Stories</h6>
                             </li>
                             <li class="12u$">
-                                <h4 class="StoryTitle">{{StoryTitle}}</h4>
+                                <h4 class="AudioTitle">{{StoryTitle}}</h4>
                             </li>
                             <li class="12u$">
                                 <ul class="nav-pills buttons">
                                     <li class="prev" ng-click="Story_prev()"></li>
-                                    <li class="{{PlayStatus}}" ng-click="Story_Play()"></li>
+                                    <li class="{{StoryPlayStatus}}" ng-click="Story_Play()"></li>
                                     <li class="next" ng-click="Story_next()"></li>
                                 </ul>
                             </li>
@@ -190,8 +190,8 @@
                     </li>
                 </ul>
                 <h5 ng-show="Storys.length">Stories</h5>
-                <ul class="StorysList">
-                    <li ng-repeat="story in Storys" ng-click="loadStory(Story.Index)" class="listItem">
+                <ul class="audiosList">
+                    <li ng-repeat="Story in Storys" ng-click="loadStory(Story.Index)" class="listItem">
                         <div class="row">
                             <div class="1u white">{{Story.Index}}.</div>
                             <div class="9u white">{{Story.Name}}</div>
@@ -211,16 +211,20 @@
                         <td>#</td>
                         <td>Name</td>
                         <td>City</td>
+                        <td><i class="fa fa-check-square-o"></i></td>
                         <td>Status</td>
                         <td>Edit</td>
                         <td>Remove</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="hoverable" ng-click="LoadPlaceAudios(place.PlaceId)" ng-repeat="place in places">
+                    <tr class="hoverable" ng-click="LoadPlaceAudiosAndStories(place.PlaceId)" ng-repeat="place in places">
                         <td>{{place.Index}}</td>
                         <td>{{place.PlaceName}}</td>
                         <td>{{place.CityName}}</td>
+                        <td>
+                            <input ng-disabled="!place.isOnline" type="checkbox" ng-model="place.isPrimary"/>
+                        </td>
                         <td>
                             <button ng-show="place.isOnline" type="button" class="btn btn-success btn-block"
                                     ng-click="ShowGetOfflineModal(place.PlaceId, place.PlaceName)">
@@ -247,7 +251,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                             <ul class="nav nav-tabs nav-justified">
                                 <li>
                                     <a href="" ng-click="PreviousPlace()"><span class="fa fa-chevron-left"></span> Previus</a>
@@ -425,7 +429,7 @@
     <!-- NewStory Modal -->
     <div class="modal fade" id="NewStoryModal" tabindex="-1" role="dialog" aria-labelledby="NewStoryModalLabel">
         <!--overlay-->
-        <div ng-show="ShowOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
+        <div ng-show="NewStoryShowOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
             <div id="floatingCirclesG">
                 <div class="f_circleG" id="frotateG_01"></div>
                 <div class="f_circleG" id="frotateG_02"></div>

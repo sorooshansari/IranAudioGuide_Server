@@ -248,6 +248,10 @@
     <Compile Include="Migrations\201611071015241_Package_Added.Designer.cs">
       <DependentUpon>201611071015241_Package_Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611071324003_Place_isPrimary_added.cs" />
+    <Compile Include="Migrations\201611071324003_Place_isPrimary_added.Designer.cs">
+      <DependentUpon>201611071324003_Place_isPrimary_added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -279,6 +283,11 @@
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
+    <Content Include="Audios\133145aa-e5a4-e611-80c5-d4ae52c647ec.mp3" />
+    <Content Include="Audios\4bc36204-e8a4-e611-80c5-d4ae52c647ec.mp3" />
+    <Content Include="Audios\4e645467-e5a4-e611-80c5-d4ae52c647ec.mp3" />
+    <Content Include="Audios\5cf4a6c0-6f9b-e611-80c5-d4ae52c647ec.mp3" />
+    <Content Include="Audios\6a64a613-e8a4-e611-80c5-d4ae52c647ec.mp3" />
     <Content Include="Content\UserMain.css" />
     <Content Include="Content\AdiminMain.css" />
     <Content Include="Content\UserCustom.css" />
@@ -1188,6 +1197,7 @@
     <Content Include="Scripts\skel.min.js" />
     <Content Include="Scripts\util.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Stories\c6acebdd-e8a4-e611-80c5-d4ae52c647ec.mp3" />
     <Content Include="Views\Admin\loading-overlay-template.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1222,10 +1232,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Audios\" />
     <Folder Include="images\Places\Extras\" />
     <Folder Include="images\Places\TumbnailImages\" />
-    <Folder Include="Stories\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1265,6 +1273,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611071015241_Package_Added.resx">
       <DependentUpon>201611071015241_Package_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611071324003_Place_isPrimary_added.resx">
+      <DependentUpon>201611071324003_Place_isPrimary_added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

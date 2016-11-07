@@ -74,6 +74,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Pla_Address { get; set; }
         public bool Pla_Deactive { get; set; }
         public bool Pla_isOnline { get; set; }
+        public bool Pla_isPrimary { get; set; }
     }
 
     public class Image
