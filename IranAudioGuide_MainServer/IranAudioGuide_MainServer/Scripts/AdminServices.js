@@ -173,6 +173,12 @@
                               PlaceName: PlaceName
                           });
                           break;
+                      case 7:
+                          $rootScope.$broadcast('RemoveOnlinePlaceError', {
+                              PlaceID: PlaceID,
+                              PlaceName: PlaceName
+                          });
+                          break;
                       case 2:
                           $rootScope.$broadcast('PlaceUnknownError', {});
                           console.log("Server failed to remove Place.");
@@ -245,11 +251,10 @@
               });
             return;
         },
-        ChangeImage: function (ImageName, NewImage, id) {
+        ChangeImage: function (NewImage, id) {
             method = 'POST';
             url = '/Admin/ChangePlaceImage';
             var fd = new FormData();
-            fd.append('ImageName', ImageName);
             fd.append('NewImage', NewImage);
             fd.append('PlaceId', id);
             $http({

@@ -228,7 +228,6 @@ namespace IranAudioGuide_MainServer.Models
     public class ChangeImageVM
     {
         public Guid PlaceId { get; set; }
-        public string ImageName { get; set; }
         public HttpPostedFileBase NewImage { get; set; }
     }
     public class StoryViewVM
@@ -303,7 +302,8 @@ namespace IranAudioGuide_MainServer.Models
         unknownError = 4,
         dbError = 5,
         invalidId = 6,
-        forignKeyError = 7
+        forignKeyError = 7,
+        removeOnlinePlace = 8
     }
     public class Respond
     {

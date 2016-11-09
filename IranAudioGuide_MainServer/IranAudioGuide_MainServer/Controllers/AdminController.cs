@@ -370,6 +370,10 @@ namespace IranAudioGuide_MainServer.Controllers
         public JsonResult DelPlace(Guid Id)
         {
             var place = db.Places.Where(x => x.Pla_Id == Id).FirstOrDefault();
+            if (place.Pla_isOnline)
+            {
+                return Json(new Respond("We can't remove Online places. First make it offline.", status.removeOnlinePlace));
+            }
             if (place != default(Place))
             {
                 using (var dbTran = db.Database.BeginTransaction())
@@ -575,20 +579,24 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     return Json(new Respond("Invalid PlaceId", status.invalidId));
                 }
-                string path = Server.MapPath(string.Format("~/images/Places/{0}", model.ImageName));
+                string oldPath = Server.MapPath(string.Format("~/images/Places/{0}", place.Pla_ImgUrl));
+                string imgName = Path.GetFileNameWithoutExtension(place.Pla_ImgUrl);
+                string extention = Path.GetExtension(model.NewImage.FileName);
+                string newPath = Server.MapPath(string.Format("~/images/Places/{0}{1}",imgName, extention));
                 lock (ChangeImgLock)
                 {
-                    if (System.IO.File.Exists(path))
+                    if (System.IO.File.Exists(oldPath))
                     {
-                        System.IO.File.Delete(path);
+                        System.IO.File.Delete(oldPath);
                     }
-                    model.NewImage.SaveAs(path);
+                    model.NewImage.SaveAs(newPath);
+                    place.Pla_ImgUrl = string.Format("{0}{1}", imgName, extention);
                 }
                 if (place.Pla_isOnline)
                 {
                     db.UpdateLogs.Add(new UpdateLog() { Pla_ID = model.PlaceId });
-                    db.SaveChanges();
                 }
+                db.SaveChanges();
                 return Json(new Respond());
             }
             catch (Exception ex)

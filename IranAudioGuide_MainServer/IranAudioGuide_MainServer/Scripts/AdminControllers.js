@@ -459,6 +459,11 @@ angular.module('AdminPage.controllers', [])
             $scope.DelSubsBtn = "hidden";
             $('#ForignKeyErrorModal').modal('show');
         });
+        $scope.$on('RemoveOnlinePlaceError', function (event, args) {
+            $scope.ForignKeyErrorBody = 'This place (<span class="text-danger">' + args.PlaceName + '</span>) is online.<br />Removing online places is unallowable.'
+            $scope.DelSubsBtn = "hidden";
+            $('#ForignKeyErrorModal').modal('show');
+        });
         $scope.$on('PlaceUnknownError', function (event) {
             $scope.ForignKeyErrorBody = 'Unknown error prevent removing place. Contact site developer to get more information.'
             $scope.DelSubsBtn = "hidden";
@@ -511,7 +516,7 @@ angular.module('AdminPage.controllers', [])
         $scope.ChangeImg = function (NewImage) {
             console.log($scope.selectedPlace);
             $rootScope.EditOverlay = true;
-            PlaceServices.ChangeImage($scope.selectedPlace.Img, NewImage.files[0], $scope.selectedPlace.Id)
+            PlaceServices.ChangeImage(NewImage.files[0], $scope.selectedPlace.Id)
         };
         $scope.AddExtraImage = function (image) {
             PlaceServices.AddExtraImage(image.files[0], $scope.EditPlaceVM.PlaceId);
@@ -546,6 +551,7 @@ angular.module('AdminPage.controllers', [])
         });
         $scope.$on('UpdatePlaceImage', function (event) {
             $scope.selectedPlace.Img = $scope.selectedPlace.Img + "?" + new Date().getMilliseconds();
+            $rootScope.placeimage = $scope.selectedPlace.Img;
         });
         $scope.$on('UpdateImageValidationSummery', function (event, data) {
             console.log(data);
