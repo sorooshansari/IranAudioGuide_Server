@@ -139,10 +139,17 @@ angular.module('AdminPage.controllers', [])
             $('#OnlineEditPlaceModal').modal('show');
         };
 
-        //Story nad Audio Stuff
+        //Story and Audio Stuff
         $scope.LoadPlaceAudiosAndStories = function (placeId) {
             $scope.LoadPlaceStorys(placeId);
             $scope.LoadPlaceAudios(placeId);
+            for (var i = 0; i < $scope.places.length; i++) {
+                if ($scope.places[i].PlaceId == placeId) {
+                    $scope.places[i].selected = true;
+                }
+                else
+                    $scope.places[i].selected = false;
+            }
         };
         //Story Player stuff
         $scope.StoryTitle = "...";
@@ -391,6 +398,9 @@ angular.module('AdminPage.controllers', [])
         $scope.PlaceCurrentPage = 0;
         $rootScope.allPlaces = [];
         PlaceServices.GetAll();
+        $scope.SwichPrimaryStatus = function (placeId) {
+            PlaceServices.SwichPrimaryStatus(placeId);
+        }
         $scope.$on('LoadPlaces', function (event) {
             $scope.places = angular.copy($rootScope.allPlaces.slice(0, paging));
             $scope.PlacePagesLen = Math.floor($rootScope.allPlaces.length / paging);
@@ -445,7 +455,7 @@ angular.module('AdminPage.controllers', [])
             scroll("#NewPlace");
         });
         $scope.$on('PlaceForignKeyError', function (event, args) {
-            $scope.ForignKeyErrorBody = 'This place (<span class="text-danger">' + args.PlaceName + '</span>) has one or more audios.<br />To remove this place, first you have to delete it\'s audios.'
+            $scope.ForignKeyErrorBody = 'This place (<span class="text-danger">' + args.PlaceName + '</span>) has some dependencies.<br />To remove this place, first you have to remove it\'s dependencies.'
             $scope.DelSubsBtn = "hidden";
             $('#ForignKeyErrorModal').modal('show');
         });
@@ -483,7 +493,7 @@ angular.module('AdminPage.controllers', [])
         $scope.selectedPlace = {};
         $scope.ShowEditPlaceModal = function (Place) {
             $scope.selectedPlace.ExtraImages = PlaceServices.GetExtraImages(Place.PlaceId);
-            $scope.selectedPlace.Img = Place.ImgUrl;
+            $scope.selectedPlace.Img = Place.ImgUrl + "?" + new Date().getMilliseconds();
             $scope.selectedPlace.Id = Place.PlaceId;
             $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(Place.PlaceId);
             $scope.EditPlaceVM = angular.copy(Place);
@@ -565,8 +575,8 @@ angular.module('AdminPage.controllers', [])
             };
             $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(data.PlaceId);
         });
-        $scope.RemoveTip = function (TipId) {
-            TipServices.RemoveTip(TipId);
+        $scope.RemoveTip = function (TipId, placeId) {
+            TipServices.RemoveTip(TipId, placeId);
         }
         $scope.$on('TipRemoved', function (event, data) {
             console.log(data);

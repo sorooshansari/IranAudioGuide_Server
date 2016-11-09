@@ -167,7 +167,7 @@
                       case 0:
                           $rootScope.$broadcast('UpdatePlaces', {});
                           break;
-                      case 1:
+                      case 7:
                           $rootScope.$broadcast('PlaceForignKeyError', {
                               PlaceID: PlaceID,
                               PlaceName: PlaceName
@@ -380,7 +380,7 @@
             data = { PlaceId: PlaceId };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
-                  $('#GoOfflineModal').modal('show');
+                  $('#GoOnlineModal').modal('hide');
                   switch (response.data.status) {
                       case 0:
                           $rootScope.$broadcast('UpdatePlaces', {});
@@ -408,6 +408,32 @@
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   $('#GoOfflineModal').modal('hide');
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdatePlaces', {});
+                          break;
+                      case 2:
+                          $rootScope.$broadcast('InvalidId', {});
+                          console.log(response.data.content);
+                          break;
+                      case 3:
+                          $rootScope.$broadcast('PlaceUnknownError', {});
+                          console.log(response.data.content);
+                          break;
+                      default:
+
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        SwichPrimaryStatus: function (PlaceId) {
+            method = 'POST';
+            url = '/Admin/SwichPrimaryStatus';
+            data = { PlaceId: PlaceId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
                   switch (response.data.status) {
                       case 0:
                           $rootScope.$broadcast('UpdatePlaces', {});
@@ -526,25 +552,9 @@
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   var temp = [];
-                  $rootScope.placeimage = response.data.PlaceImage;
+                  $rootScope.placeimage = response.data.PlaceImage + "?" + new Date().getMilliseconds();
                   $rootScope.audios = angular.copy(response.data.audios);
                   $rootScope.$broadcast('FillFirstAudio', {});
-              }, function (response) {
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
-              });
-            return;
-        },
-        OnlineGet: function (PlaceId) {
-            method = 'POST';
-            url = '/Admin/Audios';
-            data = { PlaceId: PlaceId };
-            $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  var temp = [];
-                  $rootScope.OnlinePlaceimage = response.data.PlaceImage;
-                  $rootScope.OnlineAudios = angular.copy(response.data.audios);
-                  $rootScope.$broadcast('OnlineFillFirstAudio', {});
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);
@@ -632,7 +642,7 @@
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   var temp = [];
-                  $rootScope.placeimage = response.data.PlaceImage;
+                  $rootScope.placeimage = response.data.PlaceImage + "?" + new Date().getMilliseconds();
                   $rootScope.Storys = angular.copy(response.data.Storys);
                   $rootScope.$broadcast('FillFirstStory', {});
               }, function (response) {

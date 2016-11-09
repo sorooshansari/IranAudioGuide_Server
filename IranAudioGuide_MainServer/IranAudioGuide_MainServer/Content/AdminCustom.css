@@ -625,3 +625,6 @@ form textarea {
         width: 900px;
     }
 }
+.selectedRow {
+    background-color: lightblue !important;
+}

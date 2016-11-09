@@ -489,6 +489,25 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        public JsonResult SwichPrimaryStatus(Guid PlaceId) {
+            try
+            {
+                var place = db.Places.Where(x => x.Pla_Id == PlaceId).FirstOrDefault();
+                if (place == default(Place))
+                {
+                    return Json(new Respond("Invalid Place Id.", status.invalidId));
+                }
+                place.Pla_isPrimary = !place.Pla_isPrimary;
+                db.SaveChanges();
+                return Json(new Respond());
+            }
+            catch (Exception ex)
+            {
+                return Json(new Respond(ex.Message, status.unknownError));
+            }
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public JsonResult GoOnline(Guid PlaceId)
         {
             using (var dbTrans = db.Database.BeginTransaction())
@@ -749,7 +768,8 @@ namespace IranAudioGuide_MainServer.Controllers
                          PlaceAddress = place.Pla_Address,
                          PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
                          PlaceCityId = place.Pla_city.Cit_Id,
-                         isOnline = place.Pla_isOnline
+                         isOnline = place.Pla_isOnline,
+                         isPrimary = place.Pla_isPrimary
                      }).ToList();
                 return Places;
             }
