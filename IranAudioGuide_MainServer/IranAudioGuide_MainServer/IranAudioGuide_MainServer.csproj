@@ -252,6 +252,10 @@
     <Compile Include="Migrations\201611071324003_Place_isPrimary_added.Designer.cs">
       <DependentUpon>201611071324003_Place_isPrimary_added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611090936112_updateLog_updated.cs" />
+    <Compile Include="Migrations\201611090936112_updateLog_updated.Designer.cs">
+      <DependentUpon>201611090936112_updateLog_updated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1276,6 +1280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611071324003_Place_isPrimary_added.resx">
       <DependentUpon>201611071324003_Place_isPrimary_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611090936112_updateLog_updated.resx">
+      <DependentUpon>201611090936112_updateLog_updated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
