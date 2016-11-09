@@ -203,6 +203,7 @@ namespace IranAudioGuide_MainServer.Models
         public string CityName { get; set; }
         public int PlaceCityId { get; set; }
         public string ImgUrl { get; set; }
+        public string TumbImgUrl { get; set; }
         public string PlaceAddress { get; set; }
         public string PlaceCordinates { get; set; }
         public bool isOnline { get; set; }
@@ -299,7 +300,8 @@ namespace IranAudioGuide_MainServer.Models
         Story,
         Tip,
         ExtraImage,
-        city
+        City,
+        Place
     }
     public enum status
     {

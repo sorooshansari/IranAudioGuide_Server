@@ -285,6 +285,40 @@
                   console.log("status:" + response.status);
               });
         },
+        ChangeTumbImg: function (NewImage, id) {
+            method = 'POST';
+            url = '/Admin/ChangePlaceTumbImage';
+            var fd = new FormData();
+            fd.append('NewImage', NewImage);
+            fd.append('PlaceId', id);
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).
+              then(function (response) {
+                  $rootScope.EditOverlay = false;
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdatePlaceTumbImage', {});
+                          break;
+                      case 1:
+                          $rootScope.$broadcast('UpdateImageValidationSummery', {
+                              data: response.data.content
+                          });
+                          break;
+                      case 3:
+                          console.log(response.data.content);
+                          break;
+                      default:
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
         GetExtraImages: function (PlaceId) {
             method = 'POST';
             url = '/Admin/GetExtraImages';

@@ -126,10 +126,10 @@
             </header>
             <div id="Player" class="Player">
                 <div class="row head">
-                    <div class="player-image 3u">
+                    <div class="player-image 3u 6u$(mobile)">
                         <img src="../images/Places/{{placeimage}}" />
                     </div>
-                    <div class="3u">
+                    <div class="3u 6u(mobile)">
                         <ul>
                             <li class="12u$">
                                 <h6 class="">Audios</h6>
@@ -146,7 +146,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="4u">
+                    <div class="4u 6u$(mobile)">
                         <ul>
                             <li class="12u$">
                                 <h6 class="">Stories</h6>
@@ -163,7 +163,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="2u$">
+                    <div class="2u$ 12u$(mobile)">
                         <a ng-show="selectedPlaceId != null" href="" ng-click="NewAudio()" class="btn btn-primary btn-block">
                             <i class="fa fa-plus"></i>
                             Add Audio
@@ -628,6 +628,12 @@
                                        onchange="angular.element(this).scope().ChangeImg(this)" />
                                 <img class="PImg" ng-click="ClickPlaceImg('#PlaceImage')" src="../images/Places/{{selectedPlace.Img}}" />
                                 <i ng-click="ClickPlaceImg('#PlaceImage')" ng-show="selectedPlace.rmvShow" class="btn fa fa-2x fa-pencil-square-o text-blue addImgBtn"></i>
+                            </div>
+                            <div ng-mouseleave="selectedPlace.rmvTumbShow = false" ng-mousemove="selectedPlace.rmvTumbShow = true" class="place-image 2u 3u(mobile) ImgHoverable">
+                                <input id="PlaceTumbImage" name="PlaceTumbImage" type="file" file-model="PlaceImage" class="hidden"
+                                       onchange="angular.element(this).scope().ChangeTumbImg(this)" />
+                                <img class="PImg" ng-click="ClickPlaceImg('#PlaceTumbImage')" src="../images/Places/TumbnailImages/{{selectedPlace.TumbImgUrl}}" />
+                                <i ng-click="ClickPlaceImg('#PlaceTumbImage')" ng-show="selectedPlace.rmvTumbShow" class="btn fa fa-2x fa-pencil-square-o text-blue addImgBtn"></i>
                             </div>
                             <div class="place-image 1u$" style="float: right;">
                                 <input id="PlaceExtraImage" name="PlaceExtraImage" type="file" file-model="PlaceExtraImage" class="hidden"

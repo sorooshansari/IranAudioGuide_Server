@@ -135,6 +135,7 @@ angular.module('AdminPage.controllers', [])
         $scope.OnlineShowEditPlaceModal = function (Place) {
             $scope.OnlineSelectedPlace.ExtraImages = PlaceServices.GetExtraImages(Place.PlaceId);
             $scope.OnlineSelectedPlace.Img = Place.ImgUrl;
+            $scope.selectedPlace.TumbImgUrl = place.TumbImgUrl;
             $scope.OnlineEditPlaceVM = angular.copy(Place);
             $('#OnlineEditPlaceModal').modal('show');
         };
@@ -499,6 +500,7 @@ angular.module('AdminPage.controllers', [])
         $scope.ShowEditPlaceModal = function (Place) {
             $scope.selectedPlace.ExtraImages = PlaceServices.GetExtraImages(Place.PlaceId);
             $scope.selectedPlace.Img = Place.ImgUrl + "?" + new Date().getMilliseconds();
+            $scope.selectedPlace.TumbImgUrl = Place.TumbImgUrl + "?" + new Date().getMilliseconds();
             $scope.selectedPlace.Id = Place.PlaceId;
             $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(Place.PlaceId);
             $scope.EditPlaceVM = angular.copy(Place);
@@ -514,9 +516,12 @@ angular.module('AdminPage.controllers', [])
             $(id).click();
         };
         $scope.ChangeImg = function (NewImage) {
-            console.log($scope.selectedPlace);
             $rootScope.EditOverlay = true;
             PlaceServices.ChangeImage(NewImage.files[0], $scope.selectedPlace.Id)
+        };
+        $scope.ChangeTumbImg = function (NewImage) {
+            $rootScope.EditOverlay = true;
+            PlaceServices.ChangeTumbImg(NewImage.files[0], $scope.selectedPlace.Id)
         };
         $scope.AddExtraImage = function (image) {
             PlaceServices.AddExtraImage(image.files[0], $scope.EditPlaceVM.PlaceId);
@@ -552,6 +557,9 @@ angular.module('AdminPage.controllers', [])
         $scope.$on('UpdatePlaceImage', function (event) {
             $scope.selectedPlace.Img = $scope.selectedPlace.Img + "?" + new Date().getMilliseconds();
             $rootScope.placeimage = $scope.selectedPlace.Img;
+        });
+        $scope.$on('UpdatePlaceTumbImage', function (event) {
+            $scope.selectedPlace.TumbImgUrl = $scope.selectedPlace.TumbImgUrl + "?" + new Date().getMilliseconds();
         });
         $scope.$on('UpdateImageValidationSummery', function (event, data) {
             console.log(data);

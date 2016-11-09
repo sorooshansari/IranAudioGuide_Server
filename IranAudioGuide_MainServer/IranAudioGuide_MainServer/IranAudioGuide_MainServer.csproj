@@ -343,6 +343,7 @@
     <Content Include="images\pic03.jpg" />
     <Content Include="images\pic04.jpg" />
     <Content Include="images\pic05.jpg" />
+    <Content Include="images\Places\TumbnailImages\thumbnail.jpg" />
     <Content Include="images\playpause-48-48-1.png" />
     <Content Include="images\playstore.png" />
     <Content Include="images\prevnext-48-48-1.png" />
@@ -1241,7 +1242,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\Places\Extras\" />
-    <Folder Include="images\Places\TumbnailImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
