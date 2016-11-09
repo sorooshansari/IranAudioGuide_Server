@@ -245,6 +245,7 @@
                         </td>
                         <td>
                             <a class="btn btn-danger btn-block rmvPlc"
+                               ng-disabled="place.isOnline"
                                  ng-click="RemovePlace(place.PlaceId, place.PlaceName)">
                                 <span class="fa fa-trash-o"></span> Remove
                             </a>

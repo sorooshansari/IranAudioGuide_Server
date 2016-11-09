@@ -36,6 +36,7 @@ namespace IranAudioGuide_MainServer.Models
         public System.Guid? Img_Id { get; set; }
         public System.Guid? Sto_Id { get; set; }
         public System.Guid? Tip_Id { get; set; }
+        public System.Guid? Ima_Id { get; set; }
         public bool isRemoved { get; set; }
     }
     public class Audio

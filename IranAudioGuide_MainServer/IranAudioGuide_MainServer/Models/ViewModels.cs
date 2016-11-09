@@ -293,6 +293,14 @@ namespace IranAudioGuide_MainServer.Models
         }
         public bool success { get; set; }
     }
+    public enum updatedTable
+    {
+        Audio,
+        Story,
+        Tip,
+        ExtraImage,
+        city
+    }
     public enum status
     {
         success = 0,

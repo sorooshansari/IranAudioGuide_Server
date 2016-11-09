@@ -924,6 +924,39 @@ namespace IranAudioGuide_MainServer.Controllers
             };
             return -1 != Array.IndexOf(mediaExtensions, Path.GetExtension(path).ToUpperInvariant());
         }
+        private void UpdateLog(updatedTable updatedTable, Guid id, bool remove = false, int cityId = 0)
+        {
+            switch (updatedTable)
+            {
+                case updatedTable.Audio:
+                    db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Aud_Id == id));
+                    db.UpdateLogs.Add(new UpdateLog() { Aud_Id = id, isRemoved = remove });
+                    db.SaveChanges();
+                    break;
+                case updatedTable.Story:
+                    db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Sto_Id == id));
+                    db.UpdateLogs.Add(new UpdateLog() { Sto_Id = id, isRemoved = remove });
+                    db.SaveChanges();
+                    break;
+                case updatedTable.Tip:
+                    db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Tip_Id == id));
+                    db.UpdateLogs.Add(new UpdateLog() { Tip_Id = id, isRemoved = remove });
+                    db.SaveChanges();
+                    break;
+                case updatedTable.ExtraImage:
+                    db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Ima_Id == id));
+                    db.UpdateLogs.Add(new UpdateLog() { Ima_Id = id, isRemoved = remove });
+                    db.SaveChanges();
+                    break;
+                case updatedTable.city:
+                    db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Cit_ID == cityId));
+                    db.UpdateLogs.Add(new UpdateLog() { Cit_ID = cityId, isRemoved = remove });
+                    db.SaveChanges();
+                    break;
+                default:
+                    break;
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
