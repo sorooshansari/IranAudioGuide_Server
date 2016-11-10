@@ -19,34 +19,95 @@ namespace IranAudioGuide_MainServer.Models
                 _dbManager = value;
             }
         }
-        public GetAllVM GetUpdate(int LastUpdateNumber)
+        public GetUpdateVM GetUpdate(int LastUpdateNumber)
         {
-            List<DataTable> dt;
-            if (LastUpdateNumber == 0)
-                dt = dbManager.MultiTableResultSP("GetAll");
-            else
+            var SP = new SqlParameter("@UpdateNumber", LastUpdateNumber);
+            var dt = dbManager.MultiTableResultSP("GetUpdates", SP);
+            var res = new GetUpdateVM()
             {
-                var SP = new SqlParameter("@UpdateNumber", LastUpdateNumber);
-                dt = dbManager.MultiTableResultSP("GetUpdates", SP);
-            }
-            var res = new GetAllVM()
-            {
-                Places = FillPlaceVM(dt[0]),
-                Audios = FillAudioVM(dt[1]),
-                Cities = FillCityVM(dt[2]),
-                Images = FillImageVM(dt[3]),
-                UpdateNumber = GetNumFromdataTable(dt[4])
+                UpdateNumber = GetNumFromdataTable(dt[0], "LastUpdate"),
+                Places = FillPlaceVM(dt[1]),
+                Audios = FillAudioVM(dt[2]),
+                Stories = FillAudioVM(dt[3]),
+                Images = FillImageVM(dt[4]),
+                Tips = FillTipVM(dt[5]),
+                Cities = FillCityVM(dt[6]),
+                RemovedEntries = new RemovedEntries()
+                {
+                    Places = GetTableIds(dt[7]),
+                    Audios = GetTableIds(dt[8]),
+                    Stories = GetTableIds(dt[9]),
+                    Images = GetTableIds(dt[10]),
+                    Tips = GetTableIds(dt[1]),
+                    Cities = GetIntTableIds(dt[11])
+                }
             };
             return res;
         }
-        private int GetNumFromdataTable(DataTable dataTable)
+        public GetAllVM GetAllEtries()
+        {
+            var dt = dbManager.MultiTableResultSP("GetAll");
+            var res = new GetAllVM()
+            {
+                UpdateNumber = GetNumFromdataTable(dt[0], "LastUpdate"),
+                Places = FillPlaceVM(dt[1]),
+                Audios = FillAudioVM(dt[2]),
+                Stories = FillAudioVM(dt[3]),
+                Images = FillImageVM(dt[4]),
+                Tips = FillTipVM(dt[5]),
+                Cities = FillCityVM(dt[6]),
+                TipCategories = FillTipCategoriesVM(dt[7])
+            };
+            return res;
+        }
+        private int GetNumFromdataTable(DataTable dataTable, string columnName)
         {
             int res = 0;
             if (dataTable.Rows.Count > 0)
-                res = (dataTable.Rows[0]["LastUpdate"] == DBNull.Value) ? 0 : (int)dataTable.Rows[0]["LastUpdate"];
+                res = (dataTable.Rows[0][columnName] == DBNull.Value) ? 0 : (int)dataTable.Rows[0][columnName];
             return res;
         }
-
+        private List<Guid> GetTableIds(DataTable dt)
+        {
+            List<Guid> res = new List<Guid>();
+            foreach (DataRow dr in dt.Rows)
+                res.Add((Guid)dr["Id"]);
+            return res;
+        }
+        private List<int> GetIntTableIds(DataTable dt)
+        {
+            List<int> res = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+                res.Add((int)dr["Id"]);
+            return res;
+        }
+        private List<TipsFullInfo> FillTipVM(DataTable dataTable)
+        {
+            List<TipsFullInfo> res = new List<TipsFullInfo>();
+            foreach (DataRow dr in dataTable.Rows)
+                res.Add(new TipsFullInfo()
+                {
+                    PlaceId = (Guid)dr["PlaceId"],
+                    ID = (Guid)dr["Id"],
+                    CategoryId = (Guid)dr["CategoryId"],
+                    Content = (dr["Content"] == DBNull.Value) ? string.Empty : dr["Content"].ToString()
+                });
+            return res;
+        }
+        private List<TipCategoriesFullInfo> FillTipCategoriesVM(DataTable dataTable)
+        {
+            List<TipCategoriesFullInfo> res = new List<TipCategoriesFullInfo>();
+            foreach (DataRow dr in dataTable.Rows)
+                res.Add(new TipCategoriesFullInfo()
+                {
+                    ID = (Guid)dr["Id"],
+                    Class = (dr["Class"] == DBNull.Value) ? string.Empty : dr["Class"].ToString(),
+                    Name = (dr["Name"] == DBNull.Value) ? string.Empty : dr["Name"].ToString(),
+                    Unicode = (dr["TipUnicode"] == DBNull.Value) ? string.Empty : dr["TipUnicode"].ToString(),
+                    Priority = (dr["TipPriority"] == DBNull.Value) ? 10 : (int)dr["TipPriority"]
+                });
+            return res;
+        }
         private List<ImagesFullInfno> FillImageVM(DataTable dataTable)
         {
             List<ImagesFullInfno> res = new List<ImagesFullInfno>();

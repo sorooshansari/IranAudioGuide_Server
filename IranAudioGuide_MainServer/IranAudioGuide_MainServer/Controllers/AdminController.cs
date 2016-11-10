@@ -407,7 +407,6 @@ namespace IranAudioGuide_MainServer.Controllers
                                         System.IO.File.Delete(path);
                                     }
                                 }
-                                UpdateLog(updatedTable.Place, place.Pla_Id, true);
                                 dbTran.Commit();
                                 return Json(new Respond());
                             case 1:
@@ -539,6 +538,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     return Json(new Respond("Invalid Place Id.", status.invalidId));
                 }
                 place.Pla_isOnline = true;
+                UpdateLog(updatedTable.Place, place.Pla_Id);
                 db.SaveChanges();
                 return Json(new Respond());
             }
@@ -559,6 +559,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     return Json(new Respond("Invalid Place Id.", status.invalidId));
                 }
                 place.Pla_isOnline = false;
+                UpdateLog(updatedTable.Place, place.Pla_Id, true);
                 db.SaveChanges();
                 return Json(new Respond());
             }
