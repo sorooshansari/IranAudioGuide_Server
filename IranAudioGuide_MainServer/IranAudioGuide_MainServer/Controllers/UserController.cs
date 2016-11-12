@@ -15,6 +15,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "AppUser")]
         public ActionResult Index()
         {
+            ViewBag.View = Views.UserIndex;
             return View(GetCurrentUserInfo());
         }
         private UserInfo GetCurrentUserInfo()

@@ -106,7 +106,8 @@ namespace IranAudioGuide_MainServer.Models
         Index = 1,
         Register,
         Login,
-        AdminIndex
+        AdminIndex,
+        UserIndex
     }
     public class AdminIndexVM
     {
@@ -203,9 +204,11 @@ namespace IranAudioGuide_MainServer.Models
         public string CityName { get; set; }
         public int PlaceCityId { get; set; }
         public string ImgUrl { get; set; }
+        public string TumbImgUrl { get; set; }
         public string PlaceAddress { get; set; }
         public string PlaceCordinates { get; set; }
         public bool isOnline { get; set; }
+        public bool isPrimary { get; set; }
     }
     public class ImageVM
     {
@@ -227,9 +230,36 @@ namespace IranAudioGuide_MainServer.Models
     public class ChangeImageVM
     {
         public Guid PlaceId { get; set; }
-        public string ImageName { get; set; }
         public HttpPostedFileBase NewImage { get; set; }
     }
+    public class StoryViewVM
+    {
+        public StoryViewVM()
+        {
+            respond = new Respond();
+        }
+        public List<StoryVM> Storys { get; set; }
+        public string PlaceImage { get; set; }
+        public Respond respond { get; set; }
+    }
+    public class StoryVM
+    {
+        public int Index { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string Discription { get; set; }
+    }
+    public class NewStoryVM
+    {
+        [Required]
+        public System.Guid PlaceId { get; set; }
+        [Required]
+        public string StoryName { get; set; }
+        [Required]
+        public HttpPostedFileBase StoryFile { get; set; }
+    }
+
     public class AudioViewVM
     {
         public AudioViewVM()
@@ -265,6 +295,15 @@ namespace IranAudioGuide_MainServer.Models
         }
         public bool success { get; set; }
     }
+    public enum updatedTable
+    {
+        Audio,
+        Story,
+        Tip,
+        ExtraImage,
+        City,
+        Place
+    }
     public enum status
     {
         success = 0,
@@ -274,7 +313,8 @@ namespace IranAudioGuide_MainServer.Models
         unknownError = 4,
         dbError = 5,
         invalidId = 6,
-        forignKeyError = 7
+        forignKeyError = 7,
+        removeOnlinePlace = 8
     }
     public class Respond
     {
@@ -285,5 +325,11 @@ namespace IranAudioGuide_MainServer.Models
         }
         public status status { get; set; }
         public string content { get; set; }
+    }
+
+    public class userpackage
+    {
+        public int uuid { get; set; }
+        public List<CityVM> usercities { get; set; }
     }
 }

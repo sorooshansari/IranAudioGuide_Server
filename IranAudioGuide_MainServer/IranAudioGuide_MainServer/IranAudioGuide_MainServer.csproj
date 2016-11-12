@@ -236,6 +236,30 @@
     <Compile Include="Migrations\201611021048040_TipUpdated.Designer.cs">
       <DependentUpon>201611021048040_TipUpdated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611030810254_TipVirtualPlaceId_added.cs" />
+    <Compile Include="Migrations\201611030810254_TipVirtualPlaceId_added.Designer.cs">
+      <DependentUpon>201611030810254_TipVirtualPlaceId_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611070836180_Story_Added.cs" />
+    <Compile Include="Migrations\201611070836180_Story_Added.Designer.cs">
+      <DependentUpon>201611070836180_Story_Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611071015241_Package_Added.cs" />
+    <Compile Include="Migrations\201611071015241_Package_Added.Designer.cs">
+      <DependentUpon>201611071015241_Package_Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611071324003_Place_isPrimary_added.cs" />
+    <Compile Include="Migrations\201611071324003_Place_isPrimary_added.Designer.cs">
+      <DependentUpon>201611071324003_Place_isPrimary_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611090936112_updateLog_updated.cs" />
+    <Compile Include="Migrations\201611090936112_updateLog_updated.Designer.cs">
+      <DependentUpon>201611090936112_updateLog_updated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611091017117_updateLog_updated2.cs" />
+    <Compile Include="Migrations\201611091017117_updateLog_updated2.Designer.cs">
+      <DependentUpon>201611091017117_updateLog_updated2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -252,6 +276,7 @@
     <Compile Include="Models\dbTools.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -267,6 +292,11 @@
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
+    <Content Include="Audios\133145aa-e5a4-e611-80c5-d4ae52c647ec.mp3" />
+    <Content Include="Audios\4bc36204-e8a4-e611-80c5-d4ae52c647ec.mp3" />
+    <Content Include="Audios\4e645467-e5a4-e611-80c5-d4ae52c647ec.mp3" />
+    <Content Include="Audios\5cf4a6c0-6f9b-e611-80c5-d4ae52c647ec.mp3" />
+    <Content Include="Audios\6a64a613-e8a4-e611-80c5-d4ae52c647ec.mp3" />
     <Content Include="Content\UserMain.css" />
     <Content Include="Content\AdiminMain.css" />
     <Content Include="Content\UserCustom.css" />
@@ -314,6 +344,7 @@
     <Content Include="images\pic03.jpg" />
     <Content Include="images\pic04.jpg" />
     <Content Include="images\pic05.jpg" />
+    <Content Include="images\Places\TumbnailImages\thumbnail.jpg" />
     <Content Include="images\playpause-48-48-1.png" />
     <Content Include="images\playstore.png" />
     <Content Include="images\prevnext-48-48-1.png" />
@@ -1176,6 +1207,7 @@
     <Content Include="Scripts\skel.min.js" />
     <Content Include="Scripts\util.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Stories\c6acebdd-e8a4-e611-80c5-d4ae52c647ec.mp3" />
     <Content Include="Views\Admin\loading-overlay-template.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1210,9 +1242,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Audios\" />
     <Folder Include="images\Places\Extras\" />
-    <Folder Include="images\Places\TumbnailImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1243,6 +1273,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611021048040_TipUpdated.resx">
       <DependentUpon>201611021048040_TipUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611030810254_TipVirtualPlaceId_added.resx">
+      <DependentUpon>201611030810254_TipVirtualPlaceId_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611070836180_Story_Added.resx">
+      <DependentUpon>201611070836180_Story_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611071015241_Package_Added.resx">
+      <DependentUpon>201611071015241_Package_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611071324003_Place_isPrimary_added.resx">
+      <DependentUpon>201611071324003_Place_isPrimary_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611090936112_updateLog_updated.resx">
+      <DependentUpon>201611090936112_updateLog_updated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611091017117_updateLog_updated2.resx">
+      <DependentUpon>201611091017117_updateLog_updated2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

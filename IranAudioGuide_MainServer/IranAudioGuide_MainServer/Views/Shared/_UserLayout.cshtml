@@ -2,7 +2,7 @@
 @model UserInfo
 
 @{
-    string hrefPrefix = (ViewBag.View == null || (Views)ViewBag.View != Views.AdminIndex) ? Url.Action("Index", "Admin") : "";
+    string hrefPrefix = (ViewBag.View == null || (Views)ViewBag.View != Views.UserIndex) ? Url.Action("Index", "User") : "";
 }
 
 <!DOCTYPE html>
