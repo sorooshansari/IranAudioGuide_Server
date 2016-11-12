@@ -302,6 +302,8 @@ form textarea {
 
     .Player .AudioTitle {
         color: white;
+        overflow: hidden;
+        height: 1.5em;
     }
 
     .Player .buttons {
@@ -622,4 +624,7 @@ form textarea {
     .modal-dialog {
         width: 900px;
     }
+}
+.selectedRow {
+    background-color: lightblue !important;
 }

@@ -1,7 +1,7 @@
 ﻿//Developed by Soroosh Ansari
 angular.module('AdminPage.controllers', [])
-.controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices', 'TipServices',
-    function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices, TipServices) {
+.controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices', 'TipServices', 'StoryServices',
+    function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices, TipServices, StoryServices) {
         //global
         var paging = 5;
         var validImgFormats = ['jpg', 'gif'];
@@ -10,6 +10,7 @@ angular.module('AdminPage.controllers', [])
             $(modal).modal('hide');
         }
         $rootScope.ShowOverlay = false;
+        $rootScope.NewStoryShowOverlay = false;
         $rootScope.EditOverlay = false;
         function scroll(id) {
             var dest = 0;
@@ -134,9 +135,144 @@ angular.module('AdminPage.controllers', [])
         $scope.OnlineShowEditPlaceModal = function (Place) {
             $scope.OnlineSelectedPlace.ExtraImages = PlaceServices.GetExtraImages(Place.PlaceId);
             $scope.OnlineSelectedPlace.Img = Place.ImgUrl;
+            $scope.selectedPlace.TumbImgUrl = place.TumbImgUrl;
             $scope.OnlineEditPlaceVM = angular.copy(Place);
             $('#OnlineEditPlaceModal').modal('show');
         };
+
+        //Story and Audio Stuff
+        $scope.LoadPlaceAudiosAndStories = function (placeId) {
+            $scope.LoadPlaceStorys(placeId);
+            $scope.LoadPlaceAudios(placeId);
+            for (var i = 0; i < $scope.places.length; i++) {
+                if ($scope.places[i].PlaceId == placeId) {
+                    $scope.places[i].selected = true;
+                }
+                else
+                    $scope.places[i].selected = false;
+            }
+        };
+        //Story Player stuff
+        $scope.StoryTitle = "...";
+        $rootScope.Storys;
+        $scope.StoryPlayStatus = "play";
+        var playingIndex;
+        //$scope.timeElapsed = "";
+        //$scope.StoryProgress = 0;
+        var Story;
+        var StoryStatus = "empty"; //empty, play, puase
+        $scope.LoadPlaceStorys = function (PlaceId) {
+            $scope.selectedPlaceId = PlaceId;
+            $scope.StoryTitle = "...";
+            StoryStatus = "empty";
+            StoryServices.Get(PlaceId);
+            //scroll("#Player");
+        };
+        $scope.$on('FillFirstStory', function (event) {
+            $scope.loadStory(1);
+        });
+        $scope.loadStory = function (StoryIndex) {
+            playingIndex = StoryIndex;
+            angular.forEach($rootScope.Storys, function (value, key) {
+                if (value.Index == StoryIndex) {
+                    if (StoryStatus != "empty") {
+                        Story.pause();
+                        $scope.StoryPlayStatus = "play";
+                    }
+                    $scope.StoryTitle = value.Name;
+                    var src = "../Stories/" + value.Url;
+                    Story = new Audio(src);
+                    StoryStatus = "pause";
+                    return;
+                }
+            });
+        }
+        $scope.Story_Play = function () {
+            switch (StoryStatus) {
+                case "empty":
+                    break;
+                case "play":
+                    //clearInterval(timer);
+                    Story.pause();
+                    //$scope.timeElapsed = "";
+                    //$scope.StoryProgress = 0;
+                    $scope.StoryPlayStatus = "play";
+                    StoryStatus = "pause";
+                    break;
+                case "pause":
+                    Story.play();
+                    //var timer = setInterval(updateProgress, 1000);
+                    $scope.StoryPlayStatus = "pause";
+                    StoryStatus = "play";
+                    break;
+                default:
+
+            }
+        };
+        $scope.Story_prev = function () {
+            if (playingIndex > 1) {
+                if (StoryStatus == "play")
+                    $scope.Story_Play(); //first pause the playing Story
+                $scope.loadStory(playingIndex - 1);
+                $scope.Story_Play();
+            }
+        };
+        $scope.Story_next = function () {
+            if ($rootScope.Storys.length > playingIndex) {
+                if (StoryStatus == "play")
+                    $scope.Story_Play(); //first pause the playing Story
+                $scope.loadStory(playingIndex + 1);
+                $scope.Story_Play();
+            }
+        };
+
+        //Story Stuff
+        $scope.NewStory = function () {
+            console.log("hi");
+            $('#NewStoryModal').modal('show');
+        };
+        $scope.SetStoryName = function (o) {
+            $scope.NewStoryVM.FileChanged = true;
+            var StoryUrl = o.files[0].name;
+            var ext = StoryUrl.substring(StoryUrl.lastIndexOf('.') + 1).toLowerCase();
+            if (validAudioFormats.indexOf(ext) !== -1) {
+                NewStoryForm.StoryUrl.value = StoryUrl;
+                $scope.NewStoryVM.invalidFile = false;
+            }
+            else {
+                NewStoryForm.StoryUrl.value = '';
+                $scope.NewStoryVM.invalidFile = true;
+            }
+        }
+        $scope.AddStory = function (model, form) {
+            console.log(model);
+            if (form.$valid && !model.invalidFile) {
+                $rootScope.NewStoryShowOverlay = true;
+                StoryServices.Add(model, $scope.selectedPlaceId);
+            }
+        };
+        $scope.removeStory = function (StoryId) {
+            StoryServices.Remove(StoryId);
+        }
+        $scope.$on('UpdateStorys', function (event) {
+            $scope.LoadPlaceStorys($scope.selectedPlaceId);
+        });
+        $scope.$on('UpdateStoryValidationSummery', function (event, args) {
+            //$scope.additionalError = args.data;
+            //scroll("#NewPlace");
+        });
+        $scope.$on('RemoveStoryError', function (event, args) {
+            $scope.ForignKeyErrorBody = 'Error on removing story.<br/>' + args.content + '<br/>Contact site developer to get more information.'
+            $scope.DelSubsBtn = "hidden";
+            $('#ForignKeyErrorModal').modal('show');
+        });
+        $scope.$on('LoadFirstPlaceStorys', function (event) {
+            if ($scope.places.length > 0) {
+                $scope.LoadPlaceStorys($scope.places[0].PlaceId);
+            }
+        });
+
+
 
         //Player stuff
         $scope.selectedPlaceId;
@@ -213,7 +349,6 @@ angular.module('AdminPage.controllers', [])
                 $scope.Audio_Play();
             }
         };
-
         //Audio Stuff
         $scope.NewAudio = function () {
             $('#NewAudioModal').modal('show');
@@ -264,6 +399,9 @@ angular.module('AdminPage.controllers', [])
         $scope.PlaceCurrentPage = 0;
         $rootScope.allPlaces = [];
         PlaceServices.GetAll();
+        $scope.SwichPrimaryStatus = function (placeId) {
+            PlaceServices.SwichPrimaryStatus(placeId);
+        }
         $scope.$on('LoadPlaces', function (event) {
             $scope.places = angular.copy($rootScope.allPlaces.slice(0, paging));
             $scope.PlacePagesLen = Math.floor($rootScope.allPlaces.length / paging);
@@ -318,7 +456,12 @@ angular.module('AdminPage.controllers', [])
             scroll("#NewPlace");
         });
         $scope.$on('PlaceForignKeyError', function (event, args) {
-            $scope.ForignKeyErrorBody = 'This place (<span class="text-danger">' + args.PlaceName + '</span>) has one or more audios.<br />To remove this place, first you have to delete it\'s audios.'
+            $scope.ForignKeyErrorBody = 'This place (<span class="text-danger">' + args.PlaceName + '</span>) has some dependencies.<br />To remove this place, first you have to remove it\'s dependencies.'
+            $scope.DelSubsBtn = "hidden";
+            $('#ForignKeyErrorModal').modal('show');
+        });
+        $scope.$on('RemoveOnlinePlaceError', function (event, args) {
+            $scope.ForignKeyErrorBody = 'This place (<span class="text-danger">' + args.PlaceName + '</span>) is online.<br />Removing online places is unallowable.'
             $scope.DelSubsBtn = "hidden";
             $('#ForignKeyErrorModal').modal('show');
         });
@@ -356,7 +499,8 @@ angular.module('AdminPage.controllers', [])
         $scope.selectedPlace = {};
         $scope.ShowEditPlaceModal = function (Place) {
             $scope.selectedPlace.ExtraImages = PlaceServices.GetExtraImages(Place.PlaceId);
-            $scope.selectedPlace.Img = Place.ImgUrl;
+            $scope.selectedPlace.Img = Place.ImgUrl + "?" + new Date().getMilliseconds();
+            $scope.selectedPlace.TumbImgUrl = Place.TumbImgUrl + "?" + new Date().getMilliseconds();
             $scope.selectedPlace.Id = Place.PlaceId;
             $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(Place.PlaceId);
             $scope.EditPlaceVM = angular.copy(Place);
@@ -372,9 +516,12 @@ angular.module('AdminPage.controllers', [])
             $(id).click();
         };
         $scope.ChangeImg = function (NewImage) {
-            console.log($scope.selectedPlace);
             $rootScope.EditOverlay = true;
-            PlaceServices.ChangeImage($scope.selectedPlace.Img, NewImage.files[0], $scope.selectedPlace.Id)
+            PlaceServices.ChangeImage(NewImage.files[0], $scope.selectedPlace.Id)
+        };
+        $scope.ChangeTumbImg = function (NewImage) {
+            $rootScope.EditOverlay = true;
+            PlaceServices.ChangeTumbImg(NewImage.files[0], $scope.selectedPlace.Id)
         };
         $scope.AddExtraImage = function (image) {
             PlaceServices.AddExtraImage(image.files[0], $scope.EditPlaceVM.PlaceId);
@@ -409,6 +556,10 @@ angular.module('AdminPage.controllers', [])
         });
         $scope.$on('UpdatePlaceImage', function (event) {
             $scope.selectedPlace.Img = $scope.selectedPlace.Img + "?" + new Date().getMilliseconds();
+            $rootScope.placeimage = $scope.selectedPlace.Img;
+        });
+        $scope.$on('UpdatePlaceTumbImage', function (event) {
+            $scope.selectedPlace.TumbImgUrl = $scope.selectedPlace.TumbImgUrl + "?" + new Date().getMilliseconds();
         });
         $scope.$on('UpdateImageValidationSummery', function (event, data) {
             console.log(data);
@@ -419,10 +570,10 @@ angular.module('AdminPage.controllers', [])
             //{ id: '1', Class: 'ion-android-walk', name: '&#xf3bb; transportation', uniCode: '&#xf3bb;' },
         //{ id: '2', Class: 'ion-ios-pulse-strong', name: '&#xf492; rough trak', uniCode: '&#xf492;' }];
         TipServices.GetTipCategories();
-        $scope.GetTipuniCode = function (id) {
-            for (var i = 0; i < $scope.allTips.length; i++) {
+        $scope.GetTipUniCode = function (id) {
+            for (var i = 0; i < $scope.allTipCategories.length; i++) {
                 if ($scope.allTipCategories[i].id == id) {
-                    return $scope.allTipCategories[i].uniCode;
+                    return $scope.allTipCategories[i].unicode;
                 }
             }
             return '';
@@ -432,7 +583,18 @@ angular.module('AdminPage.controllers', [])
             TipServices.AddTip(model);
         }
         $scope.$on('TipAdded', function (event, data) {
-            $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(Place.PlaceId);
+            $scope.newTip = {
+                categoryId: '',
+                content: ''
+            };
+            $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(data.PlaceId);
+        });
+        $scope.RemoveTip = function (TipId, placeId) {
+            TipServices.RemoveTip(TipId, placeId);
+        }
+        $scope.$on('TipRemoved', function (event, data) {
+            console.log(data);
+            $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(data.PlaceId);
         });
 
         //City stuff

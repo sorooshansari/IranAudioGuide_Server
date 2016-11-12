@@ -27,9 +27,14 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         [HttpPost]
         // POST: api/AppManager/GetUpdates/5
-        public GetAllVM GetUpdates(int LastUpdateNumber)
+        public GetUpdateVM GetUpdates(int LastUpdateNumber)
         {
             return dbTools.GetUpdate(LastUpdateNumber);
+        }
+        // POST: api/AppManager/GetAll
+        public GetAllVM GetAll(int LastUpdateNumber)
+        {
+            return dbTools.GetAllEtries();
         }
         [HttpPost]
         public async Task<CreateingUserResult> AutenticateGoogleUser(GoogleUserInfo user)

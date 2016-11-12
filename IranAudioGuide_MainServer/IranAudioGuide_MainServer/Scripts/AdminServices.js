@@ -20,9 +20,9 @@
             method = 'POST';
             url = '/Admin/AddTip';
             var data = {
-                'PlaceId': newTipp.PlaceId,
-                'content': newTipp.content,
-                'TipCategoryId': newTipp.categoryId
+                'PlaceId': newTip.placeId,
+                'content': newTip.content,
+                'TipCategoryId': newTip.categoryId
             }
             $http({
                 method: method,
@@ -31,10 +31,27 @@
             }).
               then(function (response) {
                   if (response.data) {
-                      $rootScope.$broadcast('TipAdded', { PlaceId: newTipp.PlaceId });
+                      $rootScope.$broadcast('TipAdded', { PlaceId: newTip.placeId });
                   }
                   else {
-                      console.log("Server failed to add Tip.");
+                      alert("Server failed to add Tip.");
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        RemoveTip: function (TipId, placeId) {
+            method = 'POST';
+            url = '/Admin/RemoveTip';
+            data = { Id: TipId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  if (response.data) {
+                      $rootScope.$broadcast('TipRemoved', { PlaceId: placeId });
+                  }
+                  else {
+                      alert("Server failed to add Tip.");
                   }
               }, function (response) {
                   console.log("Request failed");
@@ -69,6 +86,7 @@
                   $rootScope.allPlaces = angular.copy(response.data);
                   $rootScope.$broadcast('LoadPlaces', {});
                   $rootScope.$broadcast('LoadFirstPlaceAudios', {});
+                  $rootScope.$broadcast('LoadFirstPlaceStorys', {});
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);
@@ -149,8 +167,14 @@
                       case 0:
                           $rootScope.$broadcast('UpdatePlaces', {});
                           break;
-                      case 1:
+                      case 7:
                           $rootScope.$broadcast('PlaceForignKeyError', {
+                              PlaceID: PlaceID,
+                              PlaceName: PlaceName
+                          });
+                          break;
+                      case 7:
+                          $rootScope.$broadcast('RemoveOnlinePlaceError', {
                               PlaceID: PlaceID,
                               PlaceName: PlaceName
                           });
@@ -227,11 +251,10 @@
               });
             return;
         },
-        ChangeImage: function (ImageName, NewImage, id) {
+        ChangeImage: function (NewImage, id) {
             method = 'POST';
             url = '/Admin/ChangePlaceImage';
             var fd = new FormData();
-            fd.append('ImageName', ImageName);
             fd.append('NewImage', NewImage);
             fd.append('PlaceId', id);
             $http({
@@ -246,6 +269,40 @@
                   switch (response.data.status) {
                       case 0:
                           $rootScope.$broadcast('UpdatePlaceImage', {});
+                          break;
+                      case 1:
+                          $rootScope.$broadcast('UpdateImageValidationSummery', {
+                              data: response.data.content
+                          });
+                          break;
+                      case 3:
+                          console.log(response.data.content);
+                          break;
+                      default:
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        ChangeTumbImg: function (NewImage, id) {
+            method = 'POST';
+            url = '/Admin/ChangePlaceTumbImage';
+            var fd = new FormData();
+            fd.append('NewImage', NewImage);
+            fd.append('PlaceId', id);
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).
+              then(function (response) {
+                  $rootScope.EditOverlay = false;
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdatePlaceTumbImage', {});
                           break;
                       case 1:
                           $rootScope.$broadcast('UpdateImageValidationSummery', {
@@ -362,7 +419,7 @@
             data = { PlaceId: PlaceId };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
-                  $('#GoOfflineModal').modal('show');
+                  $('#GoOnlineModal').modal('hide');
                   switch (response.data.status) {
                       case 0:
                           $rootScope.$broadcast('UpdatePlaces', {});
@@ -390,6 +447,32 @@
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   $('#GoOfflineModal').modal('hide');
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdatePlaces', {});
+                          break;
+                      case 2:
+                          $rootScope.$broadcast('InvalidId', {});
+                          console.log(response.data.content);
+                          break;
+                      case 3:
+                          $rootScope.$broadcast('PlaceUnknownError', {});
+                          console.log(response.data.content);
+                          break;
+                      default:
+
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        SwichPrimaryStatus: function (PlaceId) {
+            method = 'POST';
+            url = '/Admin/SwichPrimaryStatus';
+            data = { PlaceId: PlaceId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
                   switch (response.data.status) {
                       case 0:
                           $rootScope.$broadcast('UpdatePlaces', {});
@@ -508,25 +591,9 @@
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   var temp = [];
-                  $rootScope.placeimage = response.data.PlaceImage;
+                  $rootScope.placeimage = response.data.PlaceImage + "?" + new Date().getMilliseconds();
                   $rootScope.audios = angular.copy(response.data.audios);
                   $rootScope.$broadcast('FillFirstAudio', {});
-              }, function (response) {
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
-              });
-            return;
-        },
-        OnlineGet: function (PlaceId) {
-            method = 'POST';
-            url = '/Admin/Audios';
-            data = { PlaceId: PlaceId };
-            $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  var temp = [];
-                  $rootScope.OnlinePlaceimage = response.data.PlaceImage;
-                  $rootScope.OnlineAudios = angular.copy(response.data.audios);
-                  $rootScope.$broadcast('OnlineFillFirstAudio', {});
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);
@@ -585,6 +652,96 @@
                               content: response.data.content
                           });
                           console.log("Server failed to remove audio.");
+                          console.log(response.data.content);
+                          break;
+                      default:
+
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        }
+    }
+}])
+
+.service('StoryServices', ['$rootScope', '$http', function ($rootScope, $http) {
+    var getModelAsFormData = function (data) {
+        var dataAsFormData = new FormData();
+        angular.forEach(data, function (value, key) {
+            dataAsFormData.append(key, value);
+        });
+        return dataAsFormData;
+    };
+    return {
+        Get: function (PlaceId) {
+            method = 'POST';
+            url = '/Admin/Storys';
+            data = { PlaceId: PlaceId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  var temp = [];
+                  $rootScope.placeimage = response.data.PlaceImage + "?" + new Date().getMilliseconds();
+                  $rootScope.Storys = angular.copy(response.data.Storys);
+                  $rootScope.$broadcast('FillFirstStory', {});
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        Add: function (model, placeId) {
+            method = 'POST';
+            url = '/Admin/AddStory';
+            var fd = new FormData();
+            fd.append('PlaceId', placeId);
+            fd.append('StoryName', model.StoryName);
+            fd.append('StoryFile', model.StoryFile);
+            console.log(model.StoryFile);
+            for (var pair of fd.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).
+              then(function (response) {
+                  $rootScope.NewStoryShowOverlay = false;
+                  $rootScope.hide('#NewStoryModal');
+                  if (response.data.status == 0) {
+                      $rootScope.$broadcast('UpdateStorys', {});
+                  }
+                  else {
+                      $rootScope.$broadcast('UpdateStoryValidationSummery', {
+                          data: response.data.content
+                      });
+                      console.log("Server failed to add Story.");
+                  }
+              }, function (response) {
+                  $rootScope.ShowOverlay = false;
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        Remove: function (StoryId) {
+            method = 'POST';
+            url = '/Admin/DelStory';
+            data = { Id: StoryId };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdateStorys', {});
+                          break;
+                      case 1:
+                          $rootScope.$broadcast('RemoveStoryError', {
+                              content: response.data.content
+                          });
+                          console.log("Server failed to remove story.");
                           console.log(response.data.content);
                           break;
                       default:
