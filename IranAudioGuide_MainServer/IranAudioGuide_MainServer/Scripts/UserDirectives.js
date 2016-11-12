@@ -1,4 +1,4 @@
-﻿angular.module('AdminPage.directives', [])
+﻿angular.module('UserPage.directives', [])
 .directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',

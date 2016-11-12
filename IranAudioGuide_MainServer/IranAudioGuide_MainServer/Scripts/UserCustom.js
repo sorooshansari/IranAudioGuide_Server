@@ -1,4 +1,4 @@
-﻿angular.module('AdminPage', ['AdminPage.controllers', 'AdminPage.services', 'AdminPage.directives'])
+﻿angular.module('UserPage', ['UserPage.controllers', 'UserPage.services', 'UserPage.directives'])
 .config(function ($sceProvider) {
     $sceProvider.enabled(false);
 })

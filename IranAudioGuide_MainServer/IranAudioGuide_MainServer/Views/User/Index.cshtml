@@ -93,52 +93,13 @@
                     </div>
 
                     <div class="3u$">
-                        <ul ng-controller="checkboxController">
-                            @*<li>
-                                <input type="checkbox" id="city0" /> <label for="city0">All</label>
-                            </li>*@ 
+                        <ul style="text-align: left;">
                             <li>
-                                <input type="checkbox" id="city0" value="All" ng-click="checkAll()" ng-model="selectedAll">All 
+                                <input type="checkbox" id="city0" value="All" ng-model="selectedAll">All 
                             </li>
-                            <li>
-                                <input type="checkbox" id="city1" value="Shiraz">Shiraz
+                            <li ng-repeat="item in Items">
+                                <input ng-checked="selectedAll" type="checkbox" id="{{item.id}}" value="Shiraz">{{item.Name}}
                             </li>
-                            <li>
-                                <input type="checkbox" id="city2" value="Tehran">Tehrane
-                            </li>
-                            <li>
-                                <input type="checkbox" id="city3" value="Yazd" />Yazd
-                            </li>
-                            <li> 
-                                <input type="checkbox" id="city4"value="Esfehan" />Esfahan
-                            </li>
-                           
-                            <li>
-                                <input type="checkbox" id="city5" value="Tabriz" />Tabriz
-                            </li>
-                           
-
-                            <li> <input type="checkbox" id="city6"value="Kashan" />Kashan
-                            </li>
-                           
-                            <li>
-                                <input type="checkbox" id="city7" value="Keran" />Esfahan
-                            </li>
-                            @*<li> 
-                                <input type="checkbox" id="city1" value="Shiraz">Shiraz 
-                            </li>*@
-                            @*<li>
-                                <input type="checkbox" id="city1" />
-                                <label for="city1">Shiraz</label>
-                            </li>*@
-                            @*<li>
-                                <input type="checkbox" id="city2" />
-                                <label for="city2">Tehran</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="city3" />
-                                <label for="city3">Esfehan</label>
-                            </li>*@
                         </ul>
                     </div>
                     <div class="3u$">
