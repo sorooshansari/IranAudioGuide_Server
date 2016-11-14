@@ -44,7 +44,7 @@ namespace IranAudioGuide_MainServer.Models
             };
             return res;
         }
-        public GetAllVM GetAllEtries()
+        public GetAllVM GetAllEntries()
         {
             var dt = dbManager.MultiTableResultSP("GetAll");
             var res = new GetAllVM()

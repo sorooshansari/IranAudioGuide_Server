@@ -18,6 +18,7 @@ namespace IranAudioGuide_MainServer.Controllers
         private Object DelExtraImg = new Object();
         private Object DelAdo = new Object();
         private Object DelPlc = new Object();
+        private const string storagePrefix = "http://iranaudioguide.com/";
         // GET: Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
