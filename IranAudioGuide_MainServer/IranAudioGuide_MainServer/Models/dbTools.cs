@@ -38,8 +38,8 @@ namespace IranAudioGuide_MainServer.Models
                     Audios = GetTableIds(dt[8]),
                     Stories = GetTableIds(dt[9]),
                     Images = GetTableIds(dt[10]),
-                    Tips = GetTableIds(dt[1]),
-                    Cities = GetIntTableIds(dt[11])
+                    Tips = GetTableIds(dt[11]),
+                    Cities = GetIntTableIds(dt[12])
                 }
             };
             return res;

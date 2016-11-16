@@ -302,13 +302,9 @@ BEGIN
 		WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 0
 	)
 	--GETING REMOVED ENTITIES
-	SELECT p.Id AS Id FROM [dbo].AllPlaces() p
-	WHERE p.Id IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
-	)
+	SELECT Pla_ID AS Id
+	FROM [dbo].[UpdateLogs]
+	WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
 
 	SELECT a.Id AS Id FROM [dbo].AllAudios() a
 	WHERE a.Id IN

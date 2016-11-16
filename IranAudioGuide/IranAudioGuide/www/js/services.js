@@ -123,23 +123,24 @@ angular.module('app.services', [])
             }).then(function (data) {
                 console.log(data);
                 switch (data.data) {
-                    case 0: {
+                    case 0: {//     Creating user was successful
                         window.localStorage.setItem("Skipped", false);
                         window.localStorage.setItem("Authenticated", true);
                         window.localStorage.setItem("User_Name", user.name);
                         window.localStorage.setItem("User_Email", user.email);
                         window.localStorage.setItem("User_GoogleId", user.google_id);
                         FileServices.DownloadProfilePic(user.picture, profilePath);
+                        break;
                     }
-                    case 1: {
+                    case 1: {//     This user was existed
                         alert("Authenticating user failed");
                         break;
                     }
-                    case 2: {
+                    case 2: {//     Creating user failed
                         alert("Authenticating user failed");
                         break;
                     }
-                    case 3: {
+                    case 3: {//     Creating user with different uuid
                         alert("You have already signed in with a different device.");
                         break;
                     }
@@ -272,15 +273,32 @@ angular.module('app.services', [])
 .service('ApiServices', ['$http', '$rootScope', function ($http, $rootScope) {
     return {
         GetAll: function (LUN) {
-            method = 'post';
-            url = 'http://iranaudioguide.com/api/AppManager/GetUpdates?LastUpdateNumber=' + LUN;
-            $http({ method: method, url: url }).
-              then(function (response) {
-                  //var Tables = angular.copy(response.data);
-                  $rootScope.$broadcast('PopulateTables', { Data: response.data });
-              }, function (response) {
-                  $rootScope.$broadcast('ServerConnFailed', { error: response.data });
-              });
+            if (LUN == 0) {
+                method = 'post';
+                url = 'http://iranaudioguide.com/api/AppManager/GetAll';
+                $http({ method: method, url: url }).
+                  then(function (response) {
+                      console.log("getAll:");
+                      console.log(response);
+                      $rootScope.$broadcast('PopulateTables', { Data: response.data });
+                  }, function (response) {
+                      $rootScope.$broadcast('ServerConnFailed', { error: response.data });
+                  });
+            }
+            else {
+                method = 'post';
+                data = { LastUpdateNumber: LUN };
+                url = 'http://iranaudioguide.com/api/AppManager/GetUpdates?LastUpdateNumber=' + LUN;
+                $http({ method: method, url: url, data: data }).
+                  then(function (response) {
+                      console.log("GetUpdates:");
+                      console.log(response);
+                      //var Tables = angular.copy(response.data);
+                      $rootScope.$broadcast('UpdateTables', { Data: response.data });
+                  }, function (response) {
+                      $rootScope.$broadcast('ServerConnFailed', { error: response.data });
+                  });
+            }
         }
     }
 }])
@@ -323,6 +341,16 @@ angular.module('app.services', [])
             Aud_Dirty integer\
             )");
             $cordovaSQLite.execute(db, "\
+            CREATE TABLE IF NOT EXISTS Stories\
+            (\
+            Sto_Id blob PRIMARY KEY,\
+            Sto_PlaceId blob,\
+            Sto_Name text,\
+            Sto_Url text,\
+            Sto_desc text,\
+            Sto_Dirty integer\
+            )");
+            $cordovaSQLite.execute(db, "\
             CREATE TABLE IF NOT EXISTS Images\
             (\
             Img_Id blob PRIMARY KEY,\
@@ -332,11 +360,28 @@ angular.module('app.services', [])
             Img_Dirty integer\
             )");
             $cordovaSQLite.execute(db, "\
+            CREATE TABLE IF NOT EXISTS Tips\
+            (\
+            Tip_Id blob PRIMARY KEY,\
+            Tip_PlaceId blob,\
+            Tip_CategoryId blob,\
+            Tip_Contetnt text\
+            )");
+            $cordovaSQLite.execute(db, "\
             CREATE TABLE IF NOT EXISTS Cities\
             (\
             Cit_Id integer PRIMARY KEY,\
             Cit_Name text,\
             Cit_Dirty integer\
+            )");
+            $cordovaSQLite.execute(db, "\
+            CREATE TABLE IF NOT EXISTS TipCategories\
+            (\
+            TiC_Id blob PRIMARY KEY,\
+            TiC_Class text,\
+            TiC_Unicode text,\
+            TiC_Name text,\
+            Cit_Priiority integer\
             )");
         },
         populatePlaces: function (Places) {
@@ -368,7 +413,7 @@ angular.module('app.services', [])
                     , 1
                     , 1])
                     .then(function (result) {
-                        console.log("INSERT ID -> " + result.insertId);
+                        console.log("Places INSERT ID -> " + result.insertId);
                     }, function (error) {
                         console.error(error);
                     });
@@ -387,14 +432,38 @@ angular.module('app.services', [])
                     VALUES (?,?,?,?,?,?)";
             for (var i = 0; i < Audios.length; i++) {
                 $cordovaSQLite.execute(db, query,
-                    [Audios[i].Id
+                    [Audios[i].ID
                     , Audios[i].PlaceId
                     , Audios[i].Name
                     , Audios[i].Url
                     , Audios[i].Desc
                     , 1])
                     .then(function (result) {
-                        console.log("INSERT ID -> " + result.insertId);
+                        console.log("Audios INSERT ID -> " + result.insertId);
+                    }, function (error) {
+                        console.error(error);
+                    });
+            }
+        },
+        populateStories: function (Stories) {
+            var query = "INSERT OR REPLACE INTO Stories\
+                    (Sto_Id\
+                    ,Sto_PlaceId\
+                    ,Sto_Name\
+                    ,Sto_Url\
+                    ,Sto_desc\
+                    ,Sto_Dirty)\
+                    VALUES (?,?,?,?,?,?)";
+            for (var i = 0; i < Stories.length; i++) {
+                $cordovaSQLite.execute(db, query,
+                    [Stories[i].ID
+                    , Stories[i].PlaceId
+                    , Stories[i].Name
+                    , Stories[i].Url
+                    , Stories[i].Desc
+                    , 1])
+                    .then(function (result) {
+                        console.log("Stories INSERT ID -> " + result.insertId);
                     }, function (error) {
                         console.error(error);
                     });
@@ -406,17 +475,60 @@ angular.module('app.services', [])
                     Img_PlaceId,\
                     Img_Url,\
                     Img_desc,\
-                    Img_Dirty\
+                    Img_Dirty)\
                     VALUES (?,?,?,?,?)";
             for (var i = 0; i < Images.length; i++) {
                 $cordovaSQLite.execute(db, query,
-                    [Images[i].Id
+                    [Images[i].ID
                     , Images[i].PlaceId
                     , Images[i].Url
                     , Images[i].Desc
                     , 1])
                     .then(function (result) {
-                        console.log("INSERT ID -> " + result.insertId);
+                        console.log("Images INSERT ID -> " + result.insertId);
+                    }, function (error) {
+                        console.error(error);
+                    });
+            }
+        },
+        populateTips: function (Tips) {
+            var query = "INSERT OR REPLACE INTO Tips\
+                    (Tip_Id,\
+                    Tip_PlaceId,\
+                    Tip_CategoryId,\
+                    Tip_Contetnt)\
+                    VALUES (?,?,?,?)";
+            for (var i = 0; i < Tips.length; i++) {
+                $cordovaSQLite.execute(db, query,
+                    [Tips[i].ID
+                    , Tips[i].PlaceId
+                    , Tips[i].CategoryId
+                    , Tips[i].Content])
+                    .then(function (result) {
+                        console.log("Tips INSERT ID -> " + result.insertId);
+                    }, function (error) {
+                        console.error(error);
+                    });
+            }
+        },
+        populateTipCategories: function (TipCategories) {
+            var query = "INSERT OR REPLACE INTO TipCategories\
+                    (\
+                    TiC_Id,\
+                    TiC_Class,\
+                    TiC_Unicode,\
+                    TiC_Name,\
+                    Cit_Priiority)\
+                    VALUES (?,?,?,?,?)";
+            for (var i = 0; i < TipCategories.length; i++) {
+                $cordovaSQLite.execute(db, query,
+                    [TipCategories[i].ID
+                    , TipCategories[i].Class
+                    , TipCategories[i].Unicode
+                    , TipCategories[i].Name
+                    , TipCategories[i].Priority])
+                    .then(function (result) {
+                        console.log("TipCategories INSERT ID -> " + result.insertId);
                     }, function (error) {
                         console.error(error);
                     });
@@ -434,11 +546,24 @@ angular.module('app.services', [])
                     , Cities[i].Name
                     , 1])
                     .then(function (result) {
-                        console.log("INSERT ID -> " + result.insertId);
+                        console.log("Cities INSERT ID -> " + result.insertId);
                     }, function (error) {
                         console.error(error);
                     });
             }
+        },
+        deleteFromTable: function (tableName, tableIdColumn, IDs) {
+            var stringIDs = IDs.map(String);
+            var args = stringIDs.join(", ");
+            var query = "\
+            DELETE FROM " + tableName + "\
+            WHERE " + tableIdColumn + " IN (" + args +")";
+            $cordovaSQLite.execute(db, query)
+                    .then(function (result) {
+                        console.log("deleted IDs --> " + args);
+                    }, function (error) {
+                        console.error(error);
+                    });
         },
         CleanPlaceTumbnail: function (PlaceID) {
             var query = "\

@@ -34,7 +34,7 @@ angular.module('app.controllers', [])
         }
         else {
             fillMenu();
-            navigator.splashscreen.show();
+            //navigator.splashscreen.show();
             $rootScope.waitingUpdates = -1;
             dbServices.openDB();
             var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
@@ -63,11 +63,33 @@ angular.module('app.controllers', [])
     });
     $rootScope.$on('PopulateTables', function (event, Data) {
         console.log(Data);
+        updateNumber = Data.Data.UpdateNumber;
         dbServices.populatePlaces(Data.Data.Places);
         dbServices.populateAudios(Data.Data.Audios);
-        dbServices.populateCities(Data.Data.Cities);
+        dbServices.populateStories(Data.Data.Stories);
         dbServices.populateImages(Data.Data.Images);
+        dbServices.populateTips(Data.Data.Tips);
+        dbServices.populateCities(Data.Data.Cities);
+        dbServices.populateTipCategories(Data.Data.TipCategories);
+    });
+    var DelRemovedEntities = function (RemovedEntries) {
+        dbServices.deleteFromTable('Places', 'Pla_Id', RemovedEntries.Places);
+        dbServices.deleteFromTable('Audios', 'Aud_Id', RemovedEntries.Audios);
+        dbServices.deleteFromTable('Stories', 'Sto_Id', RemovedEntries.Stories);
+        dbServices.deleteFromTable('Images', 'Img_Id', RemovedEntries.Images);
+        dbServices.deleteFromTable('Tips', 'Tip_Id', RemovedEntries.Tips);
+        dbServices.deleteFromTable('Cities', 'Cit_Id', RemovedEntries.Cities);
+    }
+    $rootScope.$on('UpdateTables', function (event, Data) {
+        console.log(Data);
         updateNumber = Data.Data.UpdateNumber;
+        dbServices.populatePlaces(Data.Data.Places);
+        dbServices.populateAudios(Data.Data.Audios);
+        dbServices.populateStories(Data.Data.Stories);
+        dbServices.populateImages(Data.Data.Images);
+        dbServices.populateTips(Data.Data.Tips);
+        dbServices.populateCities(Data.Data.Cities);
+        DelRemovedEntities(Data.Data.RemovedEntries);
     });
     $rootScope.$on('CheckWaitingUpdates', function (event) {
         if ($rootScope.waitingUpdates == 0) {
@@ -77,7 +99,7 @@ angular.module('app.controllers', [])
     });
     $rootScope.$on('ServerConnFailed', function (event, error) {
         console.log(error);
-        alert("try again.");
+        alert("Cannot connect to server. Pleas check your internet connection and try again.");
         var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
         if (LstUpdtNum == 0)
             ApiServices.GetAll(LstUpdtNum);
