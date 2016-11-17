@@ -212,63 +212,19 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201607261519234_AddCommands.cs" />
-    <Compile Include="Migrations\201607261519234_AddCommands.Designer.cs">
-      <DependentUpon>201607261519234_AddCommands.cs</DependentUpon>
+    <Compile Include="Migrations\201611170848081_CreateDB.cs" />
+    <Compile Include="Migrations\201611170848081_CreateDB.Designer.cs">
+      <DependentUpon>201611170848081_CreateDB.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610040750363_userAutenticateBaseGoogleAdded.cs" />
-    <Compile Include="Migrations\201610040750363_userAutenticateBaseGoogleAdded.Designer.cs">
-      <DependentUpon>201610040750363_userAutenticateBaseGoogleAdded.cs</DependentUpon>
+    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
+    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610081139335_uuidAdded.cs" />
-    <Compile Include="Migrations\201610081139335_uuidAdded.Designer.cs">
-      <DependentUpon>201610081139335_uuidAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611020740580_AddUserAmini.cs" />
-    <Compile Include="Migrations\201611020740580_AddUserAmini.Designer.cs">
-      <DependentUpon>201611020740580_AddUserAmini.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611020844423_TipCategoryUpdated.cs" />
-    <Compile Include="Migrations\201611020844423_TipCategoryUpdated.Designer.cs">
-      <DependentUpon>201611020844423_TipCategoryUpdated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611021048040_TipUpdated.cs" />
-    <Compile Include="Migrations\201611021048040_TipUpdated.Designer.cs">
-      <DependentUpon>201611021048040_TipUpdated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611030810254_TipVirtualPlaceId_added.cs" />
-    <Compile Include="Migrations\201611030810254_TipVirtualPlaceId_added.Designer.cs">
-      <DependentUpon>201611030810254_TipVirtualPlaceId_added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611070836180_Story_Added.cs" />
-    <Compile Include="Migrations\201611070836180_Story_Added.Designer.cs">
-      <DependentUpon>201611070836180_Story_Added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611071015241_Package_Added.cs" />
-    <Compile Include="Migrations\201611071015241_Package_Added.Designer.cs">
-      <DependentUpon>201611071015241_Package_Added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611071324003_Place_isPrimary_added.cs" />
-    <Compile Include="Migrations\201611071324003_Place_isPrimary_added.Designer.cs">
-      <DependentUpon>201611071324003_Place_isPrimary_added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611090936112_updateLog_updated.cs" />
-    <Compile Include="Migrations\201611090936112_updateLog_updated.Designer.cs">
-      <DependentUpon>201611090936112_updateLog_updated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611091017117_updateLog_updated2.cs" />
-    <Compile Include="Migrations\201611091017117_updateLog_updated2.Designer.cs">
-      <DependentUpon>201611091017117_updateLog_updated2.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607261253081_FirstMigration.cs" />
-    <Compile Include="Migrations\201607261253081_FirstMigration.Designer.cs">
-      <DependentUpon>201607261253081_FirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountTools.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApiViewModels.cs" />
@@ -324,7 +280,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="images\AppleStore.png" />
     <Content Include="images\appstore.png" />
-    <Content Include="images\banner_h.jpg" />
     <Content Include="images\banner.jpg" />
     <Content Include="images\banner_t.jpg" />
     <Content Include="images\file_add.png" />
@@ -1248,44 +1203,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607261253081_FirstMigration.resx">
-      <DependentUpon>201607261253081_FirstMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611170848081_CreateDB.resx">
+      <DependentUpon>201611170848081_CreateDB.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607261519234_AddCommands.resx">
-      <DependentUpon>201607261519234_AddCommands.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610040750363_userAutenticateBaseGoogleAdded.resx">
-      <DependentUpon>201610040750363_userAutenticateBaseGoogleAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610081139335_uuidAdded.resx">
-      <DependentUpon>201610081139335_uuidAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611020740580_AddUserAmini.resx">
-      <DependentUpon>201611020740580_AddUserAmini.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611020844423_TipCategoryUpdated.resx">
-      <DependentUpon>201611020844423_TipCategoryUpdated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611021048040_TipUpdated.resx">
-      <DependentUpon>201611021048040_TipUpdated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611030810254_TipVirtualPlaceId_added.resx">
-      <DependentUpon>201611030810254_TipVirtualPlaceId_added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611070836180_Story_Added.resx">
-      <DependentUpon>201611070836180_Story_Added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611071015241_Package_Added.resx">
-      <DependentUpon>201611071015241_Package_Added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611071324003_Place_isPrimary_added.resx">
-      <DependentUpon>201611071324003_Place_isPrimary_added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611090936112_updateLog_updated.resx">
-      <DependentUpon>201611090936112_updateLog_updated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611091017117_updateLog_updated2.resx">
-      <DependentUpon>201611091017117_updateLog_updated2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

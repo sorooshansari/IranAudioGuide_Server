@@ -401,11 +401,16 @@ namespace IranAudioGuide_MainServer.Controllers
                         {
                             case 0:
                                 string path = Server.MapPath(string.Format("~/images/Places/{0}", place.Pla_ImgUrl));
+                                string tumbPath = Server.MapPath(string.Format("~/images/Places/TumbnailImages/{0}", place.Pla_ImgUrl));
                                 lock (DelPlc)
                                 {
                                     if (System.IO.File.Exists(path))
                                     {
                                         System.IO.File.Delete(path);
+                                    }
+                                    if (System.IO.File.Exists(tumbPath))
+                                    {
+                                        System.IO.File.Delete(tumbPath);
                                     }
                                 }
                                 dbTran.Commit();
