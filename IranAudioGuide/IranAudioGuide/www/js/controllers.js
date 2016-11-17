@@ -201,7 +201,12 @@ angular.module('app.controllers', [])
     $scope.Places = Places.range(2, 5);
 
 })
-
+.controller('packagesCtrl', function ($rootScope, $ionicHistory) {
+    console.log("soroosh");
+    goBack = function () {
+        $ionicHistory.backView();
+    }
+})
 .controller('searchCtrl', function ($scope, dbServices) {
     $scope.Cities = [{ Cit_Id: "0", Cit_Name: "All" }];
     var AllPlaces = [];

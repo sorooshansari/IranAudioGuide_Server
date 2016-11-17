@@ -36,7 +36,11 @@ angular.module('app.routes', [])
         templateUrl: 'templates/recoverPassword.html',
         controller: 'recoverPasswordCtrl'
     })
-
+    .state('packages', {
+        url: '/packages',
+        templateUrl: 'templates/packages.html',
+        controller: 'packagesCtrl'
+    })
     .state('tabsController', {
         url: '/page1',
         templateUrl: 'templates/tabsController.html',
