@@ -45,6 +45,14 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
     $rootScope.googleLogin = function () {
         AuthServices.Google(device.uuid);
     };
+
+    $rootScope.ShowPackage = function () {
+        $ionicHistory.nextViewOptions({
+            disableBack: false
+        });
+        $state.go('packages');
+    };
+
 });
 function checkConnection() {
     var networkState = navigator.connection.type;
