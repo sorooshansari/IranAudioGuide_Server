@@ -557,7 +557,7 @@ angular.module('app.services', [])
             var args = stringIDs.join(", ");
             var query = "\
             DELETE FROM " + tableName + "\
-            WHERE " + tableIdColumn + " IN (" + args +")";
+            WHERE " + tableIdColumn + " IN (" + args + ")";
             $cordovaSQLite.execute(db, query)
                     .then(function (result) {
                         console.log("deleted IDs --> " + args);
@@ -655,6 +655,22 @@ angular.module('app.services', [])
             }, function (error) {
                 console.error(error);
             });
+        },
+        SelectAllTableData: function (tableName, TableIdName, Id) {
+            //var query = "\
+            //    SELECT *\
+            //    FROM "+ tableName + " JOIN Cities\
+            //    WHERE " + TableIdName + " = ?";
+            var query = "\
+                SELECT *\
+                FROM ? JOIN Cities\
+                WHERE ? = ?";
+            $cordovaSQLite.execute(db, query, [tableName, TableIdName, Id])
+                .then(function (result) {
+                    $rootScope.$broadcast('SelectAllQueryCompleted', { tableName: tableName, result: result });
+                }, function (error) {
+                    console.error(error);
+                });
         }
     }
 }])
