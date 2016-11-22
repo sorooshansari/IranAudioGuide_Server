@@ -377,6 +377,7 @@
     <Content Include="fonts\ionicons.woff" />
     <Content Include="fonts\ionicons.ttf" />
     <Content Include="fonts\ionicons.eot" />
+    <Content Include="App_Code\IAG_Helper.cshtml" />
     <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
@@ -1157,6 +1158,7 @@
     <Content Include="Scripts\util.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Admin\loading-overlay-template.html" />
+    <Content Include="Views\Shared\ContactEmailTemplate.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

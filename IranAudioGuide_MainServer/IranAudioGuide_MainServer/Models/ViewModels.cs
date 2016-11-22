@@ -9,6 +9,14 @@ namespace IranAudioGuide_MainServer.Models
     public class ViewModels
     {
     }
+    public class ContactEmailVM
+    {
+        public string email { get; set; }
+        public string message { get; set; }
+        public string number { get; set; }
+        public string name { get; set; }
+        public string Subject { get; set; }
+    }
     public class AddTipVM
     {
         public Guid PlaceId { get; set; }
