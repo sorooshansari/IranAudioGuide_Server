@@ -1,5 +1,20 @@
 angular.module('app.services', [])
+.factory('TitleService', ['$q', '$timeout', function ($q, $timeout) {
 
+    var provideNewTitle = function (id) {
+        var deferred = $q.defer();
+
+        $timeout(function () {
+            deferred.resolve(id);
+        });
+
+        return deferred.promise;
+    };
+
+    return {
+        getTitle: provideNewTitle
+    };
+}])
 .factory('SlideShows', function () {
     var SlideShow = [
         {
@@ -675,48 +690,48 @@ angular.module('app.services', [])
                 SELECT *\
                 FROM Places\
                 WHERE Pla_Id = ?";
-            $cordovaSQLite.execute(db, query, [Id])
-                .then(function (result) {
-                    $rootScope.$broadcast('PlaceInfoesLoaded', { result: result });
-                }, function (error) {
-                    console.error(error);
-                });
+            return $cordovaSQLite.execute(db, query, [Id]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceInfoesLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
         },
         LoadPlaceAudios: function (PlaceId) {
             var query = "\
                 SELECT *\
                 FROM Audios\
                 WHERE Aud_PlaceId = ?";
-            $cordovaSQLite.execute(db, query, [PlaceId])
-                .then(function (result) {
-                    $rootScope.$broadcast('PlaceAudiosLoaded', { result: result });
-                }, function (error) {
-                    console.error(error);
-                });
+            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceAudiosLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
         },
         LoadPlaceStories: function (PlaceId) {
             var query = "\
                 SELECT *\
                 FROM Stories\
                 WHERE Sto_PlaceId = ?";
-            $cordovaSQLite.execute(db, query, [PlaceId])
-                .then(function (result) {
-                    $rootScope.$broadcast('PlaceStoriesLoaded', { result: result });
-                }, function (error) {
-                    console.error(error);
-                });
+            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceStoriesLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
         },
         LoadPlaceImages: function (PlaceId) {
             var query = "\
                 SELECT *\
                 FROM Images\
                 WHERE Img_PlaceId = ?";
-            $cordovaSQLite.execute(db, query, [PlaceId])
-                .then(function (result) {
-                    $rootScope.$broadcast('PlaceImagesLoaded', { result: result });
-                }, function (error) {
-                    console.error(error);
-                });
+            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceImagesLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
         },
         LoadPlaceTips: function (PlaceId) {
             var query = "\
@@ -727,12 +742,12 @@ angular.module('app.services', [])
                 ORDER BY\
                     Cit_Priiority ASC,\
                     Tip_Id ASC;";
-            $cordovaSQLite.execute(db, query, [PlaceId])
-                .then(function (result) {
-                    $rootScope.$broadcast('PlaceTipsLoaded', { result: result });
-                }, function (error) {
-                    console.error(error);
-                });
+            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceTipsLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
         }
     }
 }])
@@ -756,17 +771,19 @@ angular.module('app.services', [])
             var options = {};
 
             $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-              .then(function (result) {// Success!
-                  //dbServices.CleanPlaceExtraImage(ImageId);
-                  $rootScope.$broadcast('callDbServicesFunctions', { functionName: 'CleanPlaceExtraImage', params: [ImageId] });
-                  $rootScope.$broadcast('PlaceExtraImageDownloaded', { Img_Url: targetPath, Img_Id: ImageId, Img_desc: imgDesc });
-              }, function (err) {// Error
-                  console.log(err);
-              }, function (progress) {
-                  //$timeout(function () {
-                  //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
-                  //});
-              });
+                .then(function (result) {// Success!
+                    $rootScope.$broadcast('PlaceExtraImageDownloaded', {
+                        Img_Url: targetPath,
+                        Img_Id: ImageId,
+                        Img_desc: imgDesc
+                    });
+                }, function (err) {// Error
+                    console.log(err);
+                }, function (progress) {
+                    //$timeout(function () {
+                    //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                    //});
+                });
         },
         DownloadTumbNail: function (fileName, placeId) {
             console.log('star: ' + fileName);
@@ -799,18 +816,18 @@ angular.module('app.services', [])
             var trustHosts = true;
             var options = {};
 
-            $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-              .then(function (result) {// Success!
-                  //dbServices.CleanPlaceImage(placeId);
-                  $rootScope.$broadcast('callDbServicesFunctions', { functionName: 'CleanPlaceImage', params: [placeId] });
-                  $rootScope.$broadcast('PlaceImageDownloaded', { PlaceImgPath: targetPath });
-              }, function (err) {// Error
-                  console.log(err);
-              }, function (progress) {
-                  //$timeout(function () {
-                  //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
-                  //});
-              });
+            return $cordovaFileTransfer.download(url, targetPath, options, trustHosts);
+            //.then(function (result) {// Success!
+            //    //dbServices.CleanPlaceImage(placeId);
+            //    $rootScope.$broadcast('callDbServicesFunctions', { functionName: 'CleanPlaceImage', params: [placeId] });
+            //    $rootScope.$broadcast('PlaceImageDownloaded', { PlaceImgPath: targetPath });
+            //}, function (err) {// Error
+            //    console.log(err);
+            //}, function (progress) {
+            //    //$timeout(function () {
+            //    //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+            //    //});
+            //});
         },
         DownloadProfilePic: function (url, dest) {
             console.log(url);
