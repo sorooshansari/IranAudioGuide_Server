@@ -382,7 +382,10 @@ angular.module('app.controllers', [])
                     Name: res.item(i).Sto_Name,
                     url: res.item(i).Sto_Url,
                     description: res.item(i).Sto_desc,
-                    downloaded: !res.item(i).Sto_Dirty
+                    downloaded: !res.item(i).Sto_Dirty,
+                    downloadProgress: 0,
+                    downloading: false,
+                    playing: false
                 });
             }
         }, function (error) {
@@ -440,10 +443,39 @@ angular.module('app.controllers', [])
         console.error(error);
     });
 
+    //player stuff
+    $rootScope.player = {};
+    $rootScope.CreateNewTrack = function (track, isAudio) {
+        if ($rootScope.player.hasMedia) {
+            $rootScope.player.Media.stop();
+            $rootScope.player.Media.release();
+        }
+        var Path;
+        if (isAudio)
+            Path = cordova.file.dataDirectory + "/PlaceAudio_dir/" + fileName;
+        else
+            Path = cordova.file.dataDirectory + "/PlaceStory_dir/" + fileName;
+        $rootScope.player.Media = new Media(src, mediaSuccess, mediaError, mediaStatus);
+        $rootScope.player.hasMedia = true;
+        $rootScope.player.trackInfo = track;
+    }
+    var mediaSuccess = function (res) {
+        console.log("media success: ", res);
+    }
+    var mediaError = function (err) {
+        console.log("media error: ", err);
+    }
+    var mediaStatus = function (status) {
+        console.log("media status: ", status);
+    }
+    //Audio stuffs
     $scope.audioClicked = function (idx) {
         var audio = $scope.PlaceInfo.Audios[idx];
         if (!audio.downloaded) {
             downloadAudio(idx);
+        }
+        else {
+
         }
     }
     var downloadAudio = function (idx) {
@@ -458,7 +490,32 @@ angular.module('app.controllers', [])
                 console.log(err);
             }, function (progress) {
                 $timeout(function () {
-                    $scope.PlaceInfo.Audios[idx].downloadProgress = 
+                    $scope.PlaceInfo.Audios[idx].downloadProgress =
+                        Math.floor((progress.loaded / progress.total) * 100);
+                });
+            });
+    }
+
+    //Story stuffs
+    $scope.StoryClicked = function (idx) {
+        var story = $scope.PlaceInfo.Stories[idx];
+        if (!audio.downloaded) {
+            downloadStory(idx);
+        }
+    }
+    var downloadStory = function (idx) {
+        $scope.PlaceInfo.Stories[idx].downloading = true;
+        var story = $scope.PlaceInfo.Stories[idx];
+        FileServices.DownloadStory(story.url)
+            .then(function (result) {// Success!
+                dbServices.CleanAudio(story.Id);
+                $scope.PlaceInfo.Stories[idx].downloading = false;
+                $scope.PlaceInfo.Stories[idx].downloaded = true;
+            }, function (err) {// Error
+                console.log(err);
+            }, function (progress) {
+                $timeout(function () {
+                    $scope.PlaceInfo.Stories[idx].downloadProgress =
                         Math.floor((progress.loaded / progress.total) * 100);
                 });
             });
