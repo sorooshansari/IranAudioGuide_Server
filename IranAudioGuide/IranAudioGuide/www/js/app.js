@@ -1,7 +1,7 @@
 
 angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngCordova', 'ngCordovaOauth'])
 
-.run(function ($ionicPlatform, $rootScope, $ionicLoading, $ionicHistory, $state, AuthServices) {
+.run(function ($ionicPlatform, $rootScope, $ionicLoading, $ionicHistory, $state, AuthServices, dbServices) {
     $ionicPlatform.ready(function () {
         //checkConnection();
 
@@ -45,6 +45,28 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
     $rootScope.googleLogin = function () {
         AuthServices.Google(device.uuid);
     };
+
+    $rootScope.ShowPackage = function () {
+        $ionicHistory.nextViewOptions({
+            disableBack: false
+        });
+        $state.go('packages');
+    };
+    $rootScope.$on('callDbServicesFunctions', function (event, Data) {
+        switch (Data.functionName) {
+            case 'CleanPlaceImage':
+                dbServices.CleanPlaceImage(Data.params[0]);
+                break;
+            case 'CleanPlaceTumbnail':
+                dbServices.CleanPlaceTumbnail(Data.params[0]);
+                break;
+            case 'CleanPlaceExtraImage':
+                dbServices.CleanPlaceExtraImage(Data.params[0]);
+                break;
+            default:
+                break;
+        }
+    });
 });
 function checkConnection() {
     var networkState = navigator.connection.type;

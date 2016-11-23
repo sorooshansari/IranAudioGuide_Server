@@ -39,7 +39,16 @@ namespace IranAudioGuide_MainServer
             var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
             mail.Subject = message.Subject;
             mail.Body = message.Body;
-
+            mail.IsBodyHtml = true;
+             
+            try
+            {
+                client.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(1);
+            }
             return Task.FromResult(0);
         }
     }

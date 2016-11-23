@@ -18,6 +18,7 @@ namespace IranAudioGuide_MainServer.Controllers
         private Object DelExtraImg = new Object();
         private Object DelAdo = new Object();
         private Object DelPlc = new Object();
+        private const string storagePrefix = "http://iranaudioguide.com/";
         // GET: Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
@@ -400,11 +401,16 @@ namespace IranAudioGuide_MainServer.Controllers
                         {
                             case 0:
                                 string path = Server.MapPath(string.Format("~/images/Places/{0}", place.Pla_ImgUrl));
+                                string tumbPath = Server.MapPath(string.Format("~/images/Places/TumbnailImages/{0}", place.Pla_ImgUrl));
                                 lock (DelPlc)
                                 {
                                     if (System.IO.File.Exists(path))
                                     {
                                         System.IO.File.Delete(path);
+                                    }
+                                    if (System.IO.File.Exists(tumbPath))
+                                    {
+                                        System.IO.File.Delete(tumbPath);
                                     }
                                 }
                                 dbTran.Commit();

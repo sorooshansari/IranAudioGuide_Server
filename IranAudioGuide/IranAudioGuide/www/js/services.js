@@ -1,5 +1,4 @@
 angular.module('app.services', [])
-
 .factory('SlideShows', function () {
     var SlideShow = [
         {
@@ -123,23 +122,24 @@ angular.module('app.services', [])
             }).then(function (data) {
                 console.log(data);
                 switch (data.data) {
-                    case 0: {
+                    case 0: {//     Creating user was successful
                         window.localStorage.setItem("Skipped", false);
                         window.localStorage.setItem("Authenticated", true);
                         window.localStorage.setItem("User_Name", user.name);
                         window.localStorage.setItem("User_Email", user.email);
                         window.localStorage.setItem("User_GoogleId", user.google_id);
                         FileServices.DownloadProfilePic(user.picture, profilePath);
+                        break;
                     }
-                    case 1: {
+                    case 1: {//     This user was existed
                         alert("Authenticating user failed");
                         break;
                     }
-                    case 2: {
+                    case 2: {//     Creating user failed
                         alert("Authenticating user failed");
                         break;
                     }
-                    case 3: {
+                    case 3: {//     Creating user with different uuid
                         alert("You have already signed in with a different device.");
                         break;
                     }
@@ -194,7 +194,7 @@ angular.module('app.services', [])
                             window.localStorage.setItem("Skipped", false);
                             window.localStorage.setItem("Authenticated", true);
                             var user = data.data;
-                            if (user.GoogleId != null) {
+                            if (user.GoogleId !== null) {
                                 window.localStorage.setItem("User_Name", user.FullName);
                                 window.localStorage.setItem("User_Email", user.Email);
                                 window.localStorage.setItem("User_GoogleId", user.GoogleId);
@@ -272,15 +272,32 @@ angular.module('app.services', [])
 .service('ApiServices', ['$http', '$rootScope', function ($http, $rootScope) {
     return {
         GetAll: function (LUN) {
-            method = 'post';
-            url = 'http://iranaudioguide.com/api/AppManager/GetUpdates?LastUpdateNumber=' + LUN;
-            $http({ method: method, url: url }).
-              then(function (response) {
-                  //var Tables = angular.copy(response.data);
-                  $rootScope.$broadcast('PopulateTables', { Data: response.data });
-              }, function (response) {
-                  $rootScope.$broadcast('ServerConnFailed', { error: response.data });
-              });
+            if (LUN == 0) {
+                method = 'post';
+                url = 'http://iranaudioguide.com/api/AppManager/GetAll';
+                $http({ method: method, url: url }).
+                  then(function (response) {
+                      console.log("getAll:");
+                      console.log(response);
+                      $rootScope.$broadcast('PopulateTables', { Data: response.data });
+                  }, function (response) {
+                      $rootScope.$broadcast('ServerConnFailed', { error: response.data });
+                  });
+            }
+            else {
+                method = 'post';
+                data = { LastUpdateNumber: LUN };
+                url = 'http://iranaudioguide.com/api/AppManager/GetUpdates?LastUpdateNumber=' + LUN;
+                $http({ method: method, url: url, data: data }).
+                  then(function (response) {
+                      console.log("GetUpdates:");
+                      console.log(response);
+                      //var Tables = angular.copy(response.data);
+                      $rootScope.$broadcast('UpdateTables', { Data: response.data });
+                  }, function (response) {
+                      $rootScope.$broadcast('ServerConnFailed', { error: response.data });
+                  });
+            }
         }
     }
 }])
@@ -323,6 +340,16 @@ angular.module('app.services', [])
             Aud_Dirty integer\
             )");
             $cordovaSQLite.execute(db, "\
+            CREATE TABLE IF NOT EXISTS Stories\
+            (\
+            Sto_Id blob PRIMARY KEY,\
+            Sto_PlaceId blob,\
+            Sto_Name text,\
+            Sto_Url text,\
+            Sto_desc text,\
+            Sto_Dirty integer\
+            )");
+            $cordovaSQLite.execute(db, "\
             CREATE TABLE IF NOT EXISTS Images\
             (\
             Img_Id blob PRIMARY KEY,\
@@ -332,11 +359,28 @@ angular.module('app.services', [])
             Img_Dirty integer\
             )");
             $cordovaSQLite.execute(db, "\
+            CREATE TABLE IF NOT EXISTS Tips\
+            (\
+            Tip_Id blob PRIMARY KEY,\
+            Tip_PlaceId blob,\
+            Tip_CategoryId blob,\
+            Tip_Contetnt text\
+            )");
+            $cordovaSQLite.execute(db, "\
             CREATE TABLE IF NOT EXISTS Cities\
             (\
             Cit_Id integer PRIMARY KEY,\
             Cit_Name text,\
             Cit_Dirty integer\
+            )");
+            $cordovaSQLite.execute(db, "\
+            CREATE TABLE IF NOT EXISTS TipCategories\
+            (\
+            TiC_Id blob PRIMARY KEY,\
+            TiC_Class text,\
+            TiC_Unicode text,\
+            TiC_Name text,\
+            Cit_Priiority integer\
             )");
         },
         populatePlaces: function (Places) {
@@ -368,7 +412,7 @@ angular.module('app.services', [])
                     , 1
                     , 1])
                     .then(function (result) {
-                        console.log("INSERT ID -> " + result.insertId);
+                        console.log("Places INSERT ID -> " + result.insertId);
                     }, function (error) {
                         console.error(error);
                     });
@@ -387,14 +431,38 @@ angular.module('app.services', [])
                     VALUES (?,?,?,?,?,?)";
             for (var i = 0; i < Audios.length; i++) {
                 $cordovaSQLite.execute(db, query,
-                    [Audios[i].Id
+                    [Audios[i].ID
                     , Audios[i].PlaceId
                     , Audios[i].Name
                     , Audios[i].Url
                     , Audios[i].Desc
                     , 1])
                     .then(function (result) {
-                        console.log("INSERT ID -> " + result.insertId);
+                        console.log("Audios INSERT ID -> " + result.insertId);
+                    }, function (error) {
+                        console.error(error);
+                    });
+            }
+        },
+        populateStories: function (Stories) {
+            var query = "INSERT OR REPLACE INTO Stories\
+                    (Sto_Id\
+                    ,Sto_PlaceId\
+                    ,Sto_Name\
+                    ,Sto_Url\
+                    ,Sto_desc\
+                    ,Sto_Dirty)\
+                    VALUES (?,?,?,?,?,?)";
+            for (var i = 0; i < Stories.length; i++) {
+                $cordovaSQLite.execute(db, query,
+                    [Stories[i].ID
+                    , Stories[i].PlaceId
+                    , Stories[i].Name
+                    , Stories[i].Url
+                    , Stories[i].Desc
+                    , 1])
+                    .then(function (result) {
+                        console.log("Stories INSERT ID -> " + result.insertId);
                     }, function (error) {
                         console.error(error);
                     });
@@ -406,17 +474,60 @@ angular.module('app.services', [])
                     Img_PlaceId,\
                     Img_Url,\
                     Img_desc,\
-                    Img_Dirty\
+                    Img_Dirty)\
                     VALUES (?,?,?,?,?)";
             for (var i = 0; i < Images.length; i++) {
                 $cordovaSQLite.execute(db, query,
-                    [Images[i].Id
+                    [Images[i].ID
                     , Images[i].PlaceId
                     , Images[i].Url
                     , Images[i].Desc
                     , 1])
                     .then(function (result) {
-                        console.log("INSERT ID -> " + result.insertId);
+                        console.log("Images INSERT ID -> " + result.insertId);
+                    }, function (error) {
+                        console.error(error);
+                    });
+            }
+        },
+        populateTips: function (Tips) {
+            var query = "INSERT OR REPLACE INTO Tips\
+                    (Tip_Id,\
+                    Tip_PlaceId,\
+                    Tip_CategoryId,\
+                    Tip_Contetnt)\
+                    VALUES (?,?,?,?)";
+            for (var i = 0; i < Tips.length; i++) {
+                $cordovaSQLite.execute(db, query,
+                    [Tips[i].ID
+                    , Tips[i].PlaceId
+                    , Tips[i].CategoryId
+                    , Tips[i].Content])
+                    .then(function (result) {
+                        console.log("Tips INSERT ID -> " + result.insertId);
+                    }, function (error) {
+                        console.error(error);
+                    });
+            }
+        },
+        populateTipCategories: function (TipCategories) {
+            var query = "INSERT OR REPLACE INTO TipCategories\
+                    (\
+                    TiC_Id,\
+                    TiC_Class,\
+                    TiC_Unicode,\
+                    TiC_Name,\
+                    Cit_Priiority)\
+                    VALUES (?,?,?,?,?)";
+            for (var i = 0; i < TipCategories.length; i++) {
+                $cordovaSQLite.execute(db, query,
+                    [TipCategories[i].ID
+                    , TipCategories[i].Class
+                    , TipCategories[i].Unicode
+                    , TipCategories[i].Name
+                    , TipCategories[i].Priority])
+                    .then(function (result) {
+                        console.log("TipCategories INSERT ID -> " + result.insertId);
                     }, function (error) {
                         console.error(error);
                     });
@@ -434,11 +545,24 @@ angular.module('app.services', [])
                     , Cities[i].Name
                     , 1])
                     .then(function (result) {
-                        console.log("INSERT ID -> " + result.insertId);
+                        console.log("Cities INSERT ID -> " + result.insertId);
                     }, function (error) {
                         console.error(error);
                     });
             }
+        },
+        deleteFromTable: function (tableName, tableIdColumn, IDs) {
+            var stringIDs = IDs.map(String);
+            var args = stringIDs.join(", ");
+            var query = "\
+            DELETE FROM " + tableName + "\
+            WHERE " + tableIdColumn + " IN (" + args + ")";
+            $cordovaSQLite.execute(db, query)
+                    .then(function (result) {
+                        console.log("deleted IDs --> " + args);
+                    }, function (error) {
+                        console.error(error);
+                    });
         },
         CleanPlaceTumbnail: function (PlaceID) {
             var query = "\
@@ -447,6 +571,7 @@ angular.module('app.services', [])
             WHERE Pla_Id = ?";
             $cordovaSQLite.execute(db, query, [PlaceID])
                     .then(function (result) {
+                        console.log("placeTumbImageCleaned");
                         $rootScope.waitingUpdates--;
                     }, function (error) {
                         console.error(error);
@@ -459,6 +584,31 @@ angular.module('app.services', [])
             WHERE Pla_Id = ?";
             $cordovaSQLite.execute(db, query, [PlaceID])
                     .then(function (result) {
+                        console.log("placeImageCleaned");
+                    }, function (error) {
+                        console.error(error);
+                    });
+        },
+        CleanPlaceExtraImage: function (ImageId) {
+            var query = "\
+            UPDATE Images\
+            SET Img_Dirty = 0\
+            WHERE Img_Id = ?";
+            $cordovaSQLite.execute(db, query, [ImageId])
+                    .then(function (result) {
+                        console.log("placeExtraImageCleaned");
+                    }, function (error) {
+                        console.error(error);
+                    });
+        },
+        CleanAudio: function (AudioId) {
+            var query = "\
+            UPDATE Audios\
+            SET Aud_Dirty = 0\
+            WHERE Aud_Id = ?";
+            $cordovaSQLite.execute(db, query, [AudioId])
+                    .then(function (result) {
+                        console.log("Audio Cleaned: ", result);
                     }, function (error) {
                         console.error(error);
                     });
@@ -530,13 +680,77 @@ angular.module('app.services', [])
             }, function (error) {
                 console.error(error);
             });
+        },
+        LoadPlaceInfos: function (Id) {
+            var query = "\
+                SELECT *\
+                FROM Places\
+                WHERE Pla_Id = ?";
+            return $cordovaSQLite.execute(db, query, [Id]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceInfoesLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
+        },
+        LoadPlaceAudios: function (PlaceId) {
+            var query = "\
+                SELECT *\
+                FROM Audios\
+                WHERE Aud_PlaceId = ?";
+            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceAudiosLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
+        },
+        LoadPlaceStories: function (PlaceId) {
+            var query = "\
+                SELECT *\
+                FROM Stories\
+                WHERE Sto_PlaceId = ?";
+            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceStoriesLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
+        },
+        LoadPlaceImages: function (PlaceId) {
+            var query = "\
+                SELECT *\
+                FROM Images\
+                WHERE Img_PlaceId = ?";
+            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceImagesLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
+        },
+        LoadPlaceTips: function (PlaceId) {
+            var query = "\
+                SELECT Tip_Id, TiC_Class, Tip_Contetnt\
+                FROM Tips JOIN TipCategories\
+                ON Tips.Tip_CategoryId = TipCategories.TiC_Id\
+                WHERE Tip_PlaceId = ?\
+                ORDER BY\
+                    Cit_Priiority ASC,\
+                    Tip_Id ASC;";
+            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            //.then(function (result) {
+            //    $rootScope.$broadcast('PlaceTipsLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
         }
     }
 }])
 .service('FileServices', ['$rootScope', '$cordovaFile', '$cordovaFileTransfer', function ($rootScope, $cordovaFile, $cordovaFileTransfer) {
     return {
         createDirs: function () {
-            Dirs = ["TumbNameil_dir", "PlacePic_dir", "PlaceAudio_dir", "Extras_dir", "ProfilePic_dir"];
+            Dirs = ["TumbNameil_dir", "PlacePic_dir", "PlaceAudio_dir", "PlaceStory_dir", "Extras_dir", "ProfilePic_dir"];
             for (var i = 0; i < Dirs.length; i++) {
                 $cordovaFile.createDir(cordova.file.dataDirectory, Dirs[i], false)
                   .then(function (success) {
@@ -545,6 +759,27 @@ angular.module('app.services', [])
                       console.log(error);
                   });
             }
+        },
+        DownloadExtraImage: function (fileName, ImageId, imgDesc) {
+            var url = "http://iranaudioguide.com/images/Places/Extras/" + fileName;
+            var targetPath = cordova.file.dataDirectory + "Extras_dir/" + fileName;
+            var trustHosts = true;
+            var options = {};
+
+            $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+                .then(function (result) {// Success!
+                    $rootScope.$broadcast('PlaceExtraImageDownloaded', {
+                        Img_Url: targetPath,
+                        Img_Id: ImageId,
+                        Img_desc: imgDesc
+                    });
+                }, function (err) {// Error
+                    console.log(err);
+                }, function (progress) {
+                    //$timeout(function () {
+                    //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                    //});
+                });
         },
         DownloadTumbNail: function (fileName, placeId) {
             console.log('star: ' + fileName);
@@ -555,6 +790,8 @@ angular.module('app.services', [])
 
             $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
               .then(function (result) {
+                  //dbServices.CleanPlaceTumbnail(placeId);
+                  $rootScope.$broadcast('callDbServicesFunctions', { functionName: 'CleanPlaceTumbnail', params: [placeId] });
                   $rootScope.waitingUpdates--;
                   $rootScope.$broadcast('CheckWaitingUpdates');
                   // Success!
@@ -569,24 +806,24 @@ angular.module('app.services', [])
                   //});
               });
         },
-        DownloadImage: function (fileName, placeId) {
+        DownloadPlaceImage: function (fileName, placeId) {
             var url = "http://iranaudioguide.com/images/Places/" + fileName;
             var targetPath = cordova.file.dataDirectory + "/PlacePic_dir/" + fileName;
             var trustHosts = true;
             var options = {};
 
-            $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-              .then(function (result) {
-                  //dbServices.CleanPlaceImage(placeId);
-                  // Success!
-              }, function (err) {
-                  console.log(err);
-                  // Error
-              }, function (progress) {
-                  //$timeout(function () {
-                  //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
-                  //});
-              });
+            return $cordovaFileTransfer.download(url, targetPath, options, trustHosts);
+            //.then(function (result) {// Success!
+            //    //dbServices.CleanPlaceImage(placeId);
+            //    $rootScope.$broadcast('callDbServicesFunctions', { functionName: 'CleanPlaceImage', params: [placeId] });
+            //    $rootScope.$broadcast('PlaceImageDownloaded', { PlaceImgPath: targetPath });
+            //}, function (err) {// Error
+            //    console.log(err);
+            //}, function (progress) {
+            //    //$timeout(function () {
+            //    //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+            //    //});
+            //});
         },
         DownloadProfilePic: function (url, dest) {
             console.log(url);
@@ -608,7 +845,15 @@ angular.module('app.services', [])
                   //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
                   //});
               });
-        }
+        },
+        DownloadAudio: function (fileName) {
+            var url = "http://iranaudioguide.com/Audios/" + fileName;
+            var targetPath = cordova.file.dataDirectory + "/PlaceAudio_dir/" + fileName;
+            var trustHosts = true;
+            var options = {};
+
+            return $cordovaFileTransfer.download(url, targetPath, options, trustHosts);
+        },
     }
 }]);
 

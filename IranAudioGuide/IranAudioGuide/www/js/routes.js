@@ -36,7 +36,11 @@ angular.module('app.routes', [])
         templateUrl: 'templates/recoverPassword.html',
         controller: 'recoverPasswordCtrl'
     })
-
+    .state('packages', {
+        url: '/packages',
+        templateUrl: 'templates/packages.html',
+        controller: 'packagesCtrl'
+    })
     .state('tabsController', {
         url: '/page1',
         templateUrl: 'templates/tabsController.html',
@@ -87,6 +91,11 @@ angular.module('app.routes', [])
         params: {
             id: 'salam'
         },
+        //resolve : {
+        //    pageTitle: function (PlaceServices, $stateParams) {
+        //        return PlaceServices.getTitle($stateParams.id)
+        //    }
+        //},
         views: {
             'tab3': {
                 templateUrl: 'templates/place.html',
