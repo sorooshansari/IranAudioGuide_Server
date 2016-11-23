@@ -26,7 +26,7 @@
         </div>
     </section>
     
-    <section id="Cities" class="four">
+    <section id="Pakages" class="four">
         <div class="container">
             <header>
                 <h2>packages</h2>
@@ -83,26 +83,26 @@
                     <hr />
                 </div>
             </div><!-- /.col -->
-            <form name="PackegeyForm" role="form" ng-submit="" novalidate>
+            <form name="PackegeyForm" role="form" ng-submit="AddPackage(NewPackage, PackegeyForm, Items)" novalidate>
                 <div class="row">
                     <div class="6u 12u$(mobile)">
-                        <input type="text" name="PackageName" required placeholder="Package name*" />
+                        <input ng-model="NewPackage.Name" type="text" name="PackageName" required placeholder="Package name*" />
                     </div>
                     <div class="6u$ 12u$(mobile)">
-                        <input type="text" name="PackagePrice" required placeholder="Package Price*" />
+                        <input ng-model="NewPackage.Price" type="text" name="PackagePrice" required placeholder="Package Price*" />
                     </div>
 
-                    <div class="3u$">
-                        <ul style="text-align: left;">
+                    <div class="6u$">
+                        <ul style="text-align: left; border:1px solid #a1a1a1 ; background: padding-box) "; >
                             <li>
                                 <input type="checkbox" id="city0" value="All" ng-model="selectedAll">All 
                             </li>
                             <li ng-repeat="item in Items">
-                                <input ng-checked="selectedAll" type="checkbox" id="{{item.id}}" value="Shiraz">{{item.Name}}
+                                <input ng-model="item.isSelected" ng-checked="selectedAll" type="checkbox" id="{{item.id}}" value="{{item.id}}">{{item.Name}}
                             </li>
                         </ul>
                     </div>
-                    <div class="3u$">
+                    <div class="6u$ ">
                         <input type="submit" value="Add package" />
                     </div>
                 </div>

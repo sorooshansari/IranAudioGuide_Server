@@ -9,6 +9,44 @@ namespace IranAudioGuide_MainServer.Models
     public class ViewModels
     {
     }
+
+    public class NewPackage
+    {
+        [Required]
+        [Display(Name = "Package name")]
+        public string PackageName { get; set; }
+
+        [Display(Name = "Package description")]
+        public string PackageDesc { get; set; }
+
+        [Display(Name = "Package price")]
+        public int PackagePrice { get; set; }
+
+        [Display(Name = "Package Cities")]
+        public List<int> Cities { get; set; }
+    }
+
+    public class PackageVM
+    {
+        public int Index { get; internal set; }
+        public Guid PackageId { get; set; }
+        public string PackageName { get; set; }
+        public int PackagePrice { get; set; }
+        public List<CityVM> PackageCities { get; set; }
+    }
+    public class GetPackagesVM
+    {
+        private Package Packges;
+                
+        public GetPackagesVM(List<PackageVM> Packages, int PagesLen)
+        {
+            this.Packages = Packages;
+            this.PagesLen = PagesLen;
+        }
+        public List<PackageVM> Packages { get; set; }
+        public int PagesLen { get; set; }
+    }
+
     public class AddTipVM
     {
         public Guid PlaceId { get; set; }
@@ -121,6 +159,8 @@ namespace IranAudioGuide_MainServer.Models
         public NewAudioVM NewAudio { get; set; }
         public NewCity NewCity { get; set; }
         public List<CityVM> Cities { get; set; }
+
+        public List<PackageVM> Packages { get; set; }
     }
     public class UserInfo
     {
@@ -171,6 +211,7 @@ namespace IranAudioGuide_MainServer.Models
         public List<CityVM> Cities { get; set; }
         public int PagesLen { get; set; }
     }
+
     public class NewPlace
     {
         [Required]

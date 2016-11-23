@@ -244,3 +244,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /IranAudioGuide_MainServer/IranAudioGuide_MainServer/Audios
+/IranAudioGuide_MainServer/SQLQuery1.sql
