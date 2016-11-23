@@ -273,20 +273,22 @@ angular.module('app.controllers', [])
     });
 })
 
-.controller('placeCtrl', function ($scope, dbServices, FileServices, AudioServices, $rootScope, $ionicLoading, $stateParams, $ionicSlideBoxDelegate) {
+.controller('placeCtrl', function ($scope, dbServices, FileServices, AudioServices, $timeout, $rootScope, $ionicLoading, $stateParams, $ionicSlideBoxDelegate) {
     var defaultImageSource = 'img/default-thumbnail.jpg';
-
+    $scope.percentClasspercentClass = function (percent) {
+        return 'p' + percent.toString();
+    };
     $scope.$on("$ionicView.beforeEnter", function (event, data) {
         // handle event
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
-        $scope.ShowContent = false;
+        //$ionicLoading.show({
+        //    template: 'Loading...'
+        //});
+        //$scope.ShowContent = false;
 
     });
     $scope.$on("$ionicView.afterEnter", function (event, data) {
-        $scope.ShowContent = true;
-        $ionicLoading.hide();
+        //$scope.ShowContent = true;
+        //$ionicLoading.hide();
     });
 
     $scope.ModifyText = function (str) {
@@ -295,7 +297,7 @@ angular.module('app.controllers', [])
     }
     $scope.ChooseClass = function (isDownloaded, isPlaying) {
         if (!isDownloaded)
-            return 'ion-locked';
+            return 'ion-android-download';
         if (isPlaying)
             return 'ion-pause';
         return 'ion-play';
@@ -361,6 +363,8 @@ angular.module('app.controllers', [])
                     url: res.item(i).Aud_Url,
                     description: res.item(i).Aud_desc,
                     downloaded: !res.item(i).Aud_Dirty,
+                    downloadProgress: 0,
+                    downloading: false,
                     playing: false
                 });
             }
@@ -409,8 +413,6 @@ angular.module('app.controllers', [])
         }, function (error) {
             console.error(error);
         });
-
-
     $scope.$on('PlaceExtraImageDownloaded', function (event, Data) {
         dbServices.CleanPlaceExtraImage(Data.Img_Id);
         $scope.PlaceInfo.ExtraImages.push({
@@ -438,14 +440,29 @@ angular.module('app.controllers', [])
         console.error(error);
     });
 
-
-    $scope.showRef = true;
-    $scope.showHideRef = function () {
-        if ($scope.showRef)
-            $scope.showRef = false;
-        else
-            $scope.showRef = true;
-    };
+    $scope.audioClicked = function (idx) {
+        var audio = $scope.PlaceInfo.Audios[idx];
+        if (!audio.downloaded) {
+            downloadAudio(idx);
+        }
+    }
+    var downloadAudio = function (idx) {
+        $scope.PlaceInfo.Audios[idx].downloading = true;
+        var audio = $scope.PlaceInfo.Audios[idx];
+        FileServices.DownloadAudio(audio.url)
+            .then(function (result) {// Success!
+                dbServices.CleanAudio(audio.Id);
+                $scope.PlaceInfo.Audios[idx].downloading = false;
+                $scope.PlaceInfo.Audios[idx].downloaded = true;
+            }, function (err) {// Error
+                console.log(err);
+            }, function (progress) {
+                $timeout(function () {
+                    $scope.PlaceInfo.Audios[idx].downloadProgress = 
+                        Math.floor((progress.loaded / progress.total) * 100);
+                });
+            });
+    }
 
 
     $scope.Audios = AudioServices.all();

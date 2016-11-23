@@ -1,11 +1,12 @@
-<ion-view title="{{pageTitle}}" id="page6">
-    <ion-content ng-show="ShowContent" padding="true" class="has-header">
+<ion-view title="" id="page6">
+    <ion-content padding="true" class="has-header">
         <div class="list card" id="cameraTabDefaultPage-card21">
             <ion-item class="item-icon-left  item-divider">
                 <i class="icon ion-pin"></i>{{PlaceInfo.PlaceName}}
             </ion-item>
             <div class="item item-image">
-                <img src="{{PlaceInfo.PlaceImage}}" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+                <img src="{{PlaceInfo.PlaceImage}}"
+                     width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
             </div>
             <div class="item-body">
                 <div style="color:#000000;">
@@ -13,19 +14,28 @@
                 </div>
                 <ion-list ng-show="PlaceInfo.Audios.length" id="AudiosCard">
                     <ion-item ng-repeat="audio in PlaceInfo.Audios" class="item-icon-left positive">
-                        <i class="icon dark"
-                           ng-class="ChooseClass(audio.downloaded, audio.playing)"></i>
+                        <!--<i ng-hide="audio.downloading" class="icon dark"
+                           ng-click="audioClicked($index)"
+                           ng-class="ChooseClass(audio.downloaded, audio.playing)"></i>-->
+                        <!--<div ng-show="audio.downloading" 
+                             ng-class="percentClass(audio.downloadProgress)" 
+                             class="c100 small dark">
+                            <span>{{audio.downloadProgress}}%</span>
+                            <div class="slice">
+                                <div class="bar"></div>
+                                <div class="fill"></div>
+                            </div>
+                        </div>-->
+                        <div class="c100 p12 small dark">
+                            <span>12%</span>
+                            <div class="slice">
+                                <div class="bar"></div>
+                                <div class="fill"></div>
+                            </div>
+                        </div>
                         {{audio.Name}}
                         <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
                     </ion-item>
-                    <!--<ion-item class="item-icon-left positive" id="cameraTabDefaultPage-list-item8">
-                        <i class="icon ion-pause"></i>Who was Soroosh
-                        <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
-                    </ion-item>
-                    <ion-item class="item-icon-left positive" id="cameraTabDefaultPage-list-item9">
-                        <i class="icon ion-play"></i>Who was Mona
-                        <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
-                    </ion-item>-->
                 </ion-list>
             </div>
         </div>
@@ -39,14 +49,10 @@
                               ng-repeat="story in PlaceInfo.Stories" id="cameraTabDefaultPage-list-item17">
                         <i class="icon dark"
                            ng-class="ChooseClass(story.downloaded, story.playing)"></i>
-                        
+
                         {{story.Name}}
                         <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
                     </ion-item>
-                    <!--<ion-item class="item-icon-left balanced" id="cameraTabDefaultPage-list-item10">
-                        <i class="icon ion-ios-pause"></i>Soroosh Story
-                        <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
-                    </ion-item>-->
                 </ion-list>
             </div>
         </div>
@@ -54,10 +60,11 @@
             <ion-item class="item-icon-left  item-divider">
                 <i class="icon ion-images"></i>Galery Item
             </ion-item>
-            <ion-slide-box slide-interval="5000" auto-play="true" does-continue="true" 
+            <ion-slide-box auto-play="false" does-continue="false"
                            on-slide-changed="slideHasChanged($index)">
                 <ion-slide ng-repeat="img in PlaceInfo.ExtraImages" class="margin">
-                    <img src="{{img.path}}" style="display: block; margin-left: auto; margin-right: auto; width:100%; height:auto;">
+                    <img src="{{img.path}}"
+                         style="display: block; margin-left: auto; margin-right: auto; width:100%; height:auto;">
                 </ion-slide>
             </ion-slide-box>
             <div class="item item-body">
@@ -74,49 +81,15 @@
             </ion-item>
             <div id="cameraTabDefaultPage-container3">
                 <div class="item item-body" id="cameraTabDefaultPage-list-item-container12">
-                    <ion-list id="cameraTabDefaultPage-list6">
-                        <ion-list ng-repeat="tip in PlaceInfo.Tips">
-                            <ion-item class="item-icon-left">
-                                <i ng-class="tip.Class" class="icon"></i>
-                                {{tip.Content}}
-                            </ion-item>
-                            <!--<ion-item class="item-icon-left" id="cameraTabDefaultPage-list-item36">
-                                <i class="icon ion-ios-pulse-strong"></i>
-                                rough trak
-                            </ion-item>
-                            <ion-item class="item-icon-left" id="cameraTabDefaultPage-list-item37">
-                                <i class="icon ion-android-time"></i>
-                                time
-                            </ion-item>
-                            <ion-item class="item-icon-left" id="cameraTabDefaultPage-list-item37">
-                                <i class="icon ion-android-checkbox-outline"></i>
-                                stuff
-                            </ion-item>
-                            <ion-item class="item-icon-left" id="cameraTabDefaultPage-list-item37">
-                                <i class="icon ion-ios-nutrition-outline"></i>
-                                others
-                            </ion-item>-->
-                        </ion-list>
+                    <ion-list ng-repeat="tip in PlaceInfo.Tips">
+                        <ion-item class="item-icon-left">
+                            <i ng-class="tip.Class" class="icon"></i>
+                            {{tip.Content}}
+                        </ion-item>
                     </ion-list>
                 </div>
             </div>
         </div>
-        <!--<div class="list card" id="card-refrences">
-            <ion-item class="item-icon-left item-divider" id="refrences-header" ng-click="showHideRef()">
-                <i class="icon ion-link"></i>Refrences
-            </ion-item>
-            <div id="container-refrences" class="my-show-hide-animation" ng-hide="showRef">
-                <div class="item item-body" id="refrences-list-item-container">
-                    <ion-list id="refrences-list">
-                        <ion-list id="refrences-list">
-                            <ion-item id="refrences-list-item1">refrence 1</ion-item>
-                            <ion-item id="refrences-list-item2">refrence 2</ion-item>
-                            <ion-item id="refrences-list-item3">refrence 3</ion-item>
-                        </ion-list>
-                    </ion-list>
-                </div>
-            </div>
-        </div>-->
     </ion-content>
 </ion-view>
 <style>

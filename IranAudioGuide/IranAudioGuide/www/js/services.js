@@ -1,20 +1,4 @@
 angular.module('app.services', [])
-.factory('TitleService', ['$q', '$timeout', function ($q, $timeout) {
-
-    var provideNewTitle = function (id) {
-        var deferred = $q.defer();
-
-        $timeout(function () {
-            deferred.resolve(id);
-        });
-
-        return deferred.promise;
-    };
-
-    return {
-        getTitle: provideNewTitle
-    };
-}])
 .factory('SlideShows', function () {
     var SlideShow = [
         {
@@ -617,6 +601,18 @@ angular.module('app.services', [])
                         console.error(error);
                     });
         },
+        CleanAudio: function (AudioId) {
+            var query = "\
+            UPDATE Audios\
+            SET Aud_Dirty = 0\
+            WHERE Aud_Id = ?";
+            $cordovaSQLite.execute(db, query, [AudioId])
+                    .then(function (result) {
+                        console.log("Audio Cleaned: ", result);
+                    }, function (error) {
+                        console.error(error);
+                    });
+        },
         dbTest: function () {
             console.log("places");
             var query = "SELECT * FROM Places";
@@ -849,7 +845,15 @@ angular.module('app.services', [])
                   //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
                   //});
               });
-        }
+        },
+        DownloadAudio: function (fileName) {
+            var url = "http://iranaudioguide.com/Audios/" + fileName;
+            var targetPath = cordova.file.dataDirectory + "/PlaceAudio_dir/" + fileName;
+            var trustHosts = true;
+            var options = {};
+
+            return $cordovaFileTransfer.download(url, targetPath, options, trustHosts);
+        },
     }
 }]);
 
