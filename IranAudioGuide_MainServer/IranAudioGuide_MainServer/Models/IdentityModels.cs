@@ -135,6 +135,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Pac_Name { get; set; }
         public int Pac_Price { get; set; }
         public virtual ICollection<city> Pac_Cities { get; set; }
+        public object pac_Cities { get; internal set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

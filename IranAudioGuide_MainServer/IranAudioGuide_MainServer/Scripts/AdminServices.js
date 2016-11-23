@@ -753,7 +753,77 @@
               });
         }
     }
+}])
+
+.service('PackageServices', ['$rootScope', '$http', function ($rootScope, $http) {
+    var AllPackages = [];
+    var Packages = [];
+    var Success = false;
+    return {
+        All: function () {
+            method = 'POST';
+            url = '/Admin/GetPackages';
+            return $http({ method: method, url: url})
+                .then(function (response) {
+                    $rootScope.AllPackages = angular.copy(response.data);
+                    $rootScope.$broadcast('LoadPackages', {});
+                }, function (response) {
+                    console.log("Request failed");
+                    console.log("status:" + response.status);
+                });
+        },
+        AddPackage: function (NewPackage) {
+            method = 'POST';
+            url = '/Admin/AddPackage';
+            data = { PackageName: NewPackage.Name, PackagePrice: NewPackage.Price, Cities: NewPackage.Cities };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  switch (response.data.status) {
+                      case respondstatus.success:
+                          $rootScope.$broadcast('packageAdded', {});
+                          break;
+                      default:
+                          console.log("Server failed to add Package.");
+                          break;
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        },
+        RemovePackage: function (PackageID, PackageName) {
+            method = 'POST';
+            url = '/Admin/DelPackage';
+            data = { Id: PackageID };
+            $http({ method: method, url: url, data: data }).
+              then(function (response) {
+                  switch (response.data.status) {
+                      case respondstatus.success:
+                          $rootScope.$broadcast('UpdatePackages', {});
+                          break;
+                      case respondstatus.forignKeyError:
+                          $rootScope.$broadcast('PackageForignKeyError', {
+                              PackageID: PackageID,
+                              PackageName: PackageName
+                          });
+                          break;
+                      default:
+                          $rootScope.$broadcast('PackageUnknownError', {
+                          });
+                          console.log("Server failed to remove Package.");
+                          break;
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+        }
+
+    };
 }]);
+
+
+
 var respondstatus =
 {
     success: 0,

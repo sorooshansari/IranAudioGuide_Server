@@ -229,24 +229,24 @@
                         </td>
                         <td>
                             <a ng-show="place.isOnline" class="btn btn-success btn-block"
-                                    ng-click="ShowGetOfflineModal(place.PlaceId, place.PlaceName)">
+                               ng-click="ShowGetOfflineModal(place.PlaceId, place.PlaceName)">
                                 <span class="fa fa-toggle-on"></span> Online
                             </a>
                             <a ng-show="!place.isOnline" class="btn btn-warning btn-block"
-                                    ng-click="ShowGetOnlineModal(place.PlaceId, place.PlaceName)">
+                               ng-click="ShowGetOnlineModal(place.PlaceId, place.PlaceName)">
                                 <span class="fa fa-toggle-off"></span> Offline
                             </a>
                         </td>
                         <td>
                             <a class="btn btn-primary btn-block"
-                                    ng-click="ShowEditPlaceModal(place)">
+                               ng-click="ShowEditPlaceModal(place)">
                                 <span class="fa fa-edit"></span> Edit
                             </a>
                         </td>
                         <td>
                             <a class="btn btn-danger btn-block rmvPlc"
                                ng-disabled="place.isOnline"
-                                 ng-click="RemovePlace(place.PlaceId, place.PlaceName)">
+                               ng-click="RemovePlace(place.PlaceId, place.PlaceName)">
                                 <span class="fa fa-trash-o"></span> Remove
                             </a>
                         </td>
@@ -299,6 +299,7 @@
                     </div>
                     <div class="4u 9u(mobile)">
                         <input type="text" name="imgUrl" placeholder="Place image*" disabled />
+
                     </div>
                     <div class="2u$ 3u$(mobile) lessPading">
                         <input class="inputfile" type="file"
@@ -329,7 +330,102 @@
                 </div>
             </form>
         </div>
+    </section>z
+    <section id="Packages" class="four">
+        <div class="container">
+            <header>
+                <h2>packages</h2>
+            </header>
+            <table class="default" id="pkgTbl">
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Name</td>
+                        <td>Price</td>
+                        <td>  cities</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="package in packages">
+                        <td>{{package.Index}} </td>
+                        <td>{{package.PackageName}}</td>
+                        <td>{{package.PackagePrice}}</td>
+                        <td>
+                            <ul ng-repeat="city in package.PackageCities">
+                                <li>{{city.CityName}}</li>
+                            </ul>
+                        </td>
+                        <td>
+
+                            <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" ng-click="RemovePackage(package.PackageID, package.PackageName)">
+                                <span class="fa fa-trash-o"></span> Remove
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <ul class="nav nav-tabs nav-justified">
+                                <li>
+                                    <a href="" ng-click="PreviousPackage()"><span class="fa fa-chevron-left"></span> Previus</a>
+                                </li>
+                                <li>
+                                    <a class="text-primary">page {{PackageCurrentPage + 1}} (out of {{PackagePagesLen}} pages)</a>
+                                </li>
+                                <li>
+                                    <a href="" ng-click="NextPackage()">Next <span class="fa fa-chevron-right"></span></a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="row myDivider">
+                <div class="3u">
+                    <hr />
+                </div>
+                <div class="6u">
+                    <span>
+                        Add new Package
+                    </span>
+                </div>
+                <div class="3u$">
+                    <hr />
+                </div>
+            </div><!-- /.col -->
+            <form name="PackageForm" role="form" ng-submit="AddPackage(NewPackage, PackageForm, Items)" novalidate>
+                <div class="row">
+                    <div class="6u 12u$(mobile)">
+                        <input ng-model="NewPackage.Name" type="text" name="PackageName" required placeholder="Package name*" />
+                    </div>
+                    <div class="6u$ 12u$(mobile)">
+                        <input ng-model="NewPackage.Price" type="text" name="PackagePrice" required placeholder="Package Price*" />
+                    </div>
+                    @*<div class="6u$ 12u$(mobile)">
+                            <input ng-model="NewCity.CityName" type="text" name="Packagecities" required placeholder="Package cities*" />
+                        </div>*@
+
+                    <div class="6u$">
+                        <ul id="pkgcities" style="text-align: left; border:1px solid #a1a1a1 ; background: padding-box) " ;>
+                            <li>
+                                <input type="checkbox" id="city0" value="All" ng-model="selectedAll">All
+                            </li>
+                            <li ng-repeat="city in cities">
+                                <input ng-model="city.isSelected" ng-checked="selectedAll" type="checkbox" id="{{city.CityID}}" value="{{city.CityID}}">{{city.CityName}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="6u$ ">
+                        <input type="submit" value="Add package" />
+                    </div>
+                </div>
+
+            </form>
+        </div>
     </section>
+
 
     <!-- Cities List -->
     <section id="Cities" class="four">

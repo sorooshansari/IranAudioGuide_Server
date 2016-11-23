@@ -869,6 +869,7 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return null;
             }
+
         }
 
         private List<StoryVM> GetStorys(string PlaceId)
@@ -1008,6 +1009,107 @@ namespace IranAudioGuide_MainServer.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        
+
+        //private List<Guid> GetPackageCities(Guid pac_Id)
+        //{
+        //    List<Guid> packageCities = (from c in db.PackageCities
+        //                                where c.Package_Pac_Id = pac_Id
+        //                                select c.city_Cit_Id).ToList();
+        //    return packageCities;
+        //}
+        
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult GetPackages()
+        {
+            List<PackageVM> packages = (from p in db.Packages
+                                        orderby p.Pac_Id descending
+                                        select new PackageVM()
+                                        {
+                                            PackageName = p.Pac_Name,
+                                            PackageId = p.Pac_Id,
+                                            PackagePrice = p.Pac_Price,
+                                            PackageCities = (from c in db.Cities
+                                                             where
+                                                             (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
+                                                             select new CityVM()
+                                                             {
+                                                                 CityDesc = c.Cit_Description,
+                                                                 CityID = c.Cit_Id
+                                                                 ,
+                                                                 CityName = c.Cit_Name
+                                                             }).ToList()
+                                        }).ToList();
+
+
+            int counter = 0;
+            foreach (var item in packages)
+            {
+                item.Index = ++counter;
+            }
+            return Json(packages);
+        }
+        
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult AddPackage(NewPackage model)
+
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new Respond("Check input fields", status.invalidInput));
+            }
+
+            var package = new Package()
+            {
+                Pac_Name = model.PackageName,
+                Pac_Price = model.PackagePrice,
+                pac_Cities = model.Cities
+            };
+            using (var dbTran = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Packages.Add(package);
+                    db.SaveChanges();
+                    foreach (var cityId in model.Cities)
+                    {
+                        package.Pac_Cities.Add(db.Cities.Where(x => x.Cit_Id == cityId).FirstOrDefault());
+                    }
+                    db.SaveChanges();
+                    dbTran.Commit();
+                    return Json(new Respond());
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    return Json(new Respond(ex.Message, status.unknownError));
+                }
+            }
+        }
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult DelPackage(int Id)
+        {
+            int result = db.Database.SqlQuery<int>("DeletePackage @Id", new SqlParameter("@Id", Id)).Single();
+            switch (result)
+            {
+                case 0:
+                    //UpdateLog(updatedTable.Package, Guid.Empty, true, Id);
+                    return Json(new Respond());
+                case 1:
+                    return Json(new Respond("This package has some cities.", status.forignKeyError));
+                case 2:
+                    return Json(new Respond("Something went wrong. Contact devloper team.", status.dbError));
+                default:
+                    return Json(new Respond("Something went wrong. Contact devloper team.", status.unknownError));
+            }
         }
     }
 }

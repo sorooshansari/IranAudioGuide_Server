@@ -1,7 +1,7 @@
 ﻿//Developed by Soroosh Ansari
 angular.module('UserPage.controllers', [])
-.controller('UserController', ['$scope',
-    function ($scope) {
+.controller('UserController', ['$scope','PackageServices',
+    function ($scope, PackageServices) {
 
         $scope.Items = [{
             Name: "Shiraz",
@@ -28,5 +28,12 @@ angular.module('UserPage.controllers', [])
         //    });
 
         //};
-
+        $scope.AddPackage = function (NewPackage, form, items) {
+            if (form.$valid) {
+                NewPackage.Cities = []
+                PackageServices.AddPackage(NewPackage);
+            }
+        };
+        
     }]);
+
