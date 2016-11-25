@@ -854,6 +854,14 @@ angular.module('app.services', [])
 
             return $cordovaFileTransfer.download(url, targetPath, options, trustHosts);
         },
+        DownloadStory: function (fileName) {
+            var url = "http://iranaudioguide.com/Stories/" + fileName;
+            var targetPath = cordova.file.dataDirectory + "/PlaceStory_dir/" + fileName;
+            var trustHosts = true;
+            var options = {};
+
+            return $cordovaFileTransfer.download(url, targetPath, options, trustHosts);
+        }
     }
 }]);
 

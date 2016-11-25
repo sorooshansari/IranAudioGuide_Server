@@ -1,7 +1,7 @@
 ﻿//Developed by Soroosh Ansari
 angular.module('AdminPage.controllers', [])
-.controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices', 'TipServices', 'StoryServices',
-    function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices, TipServices, StoryServices) {
+.controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices', 'TipServices', 'StoryServices', 'PackageServices',
+    function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices, TipServices, StoryServices, PackageServices) {
         //global
         var paging = 5;
         var validImgFormats = ['jpg', 'gif'];
@@ -504,8 +504,8 @@ angular.module('AdminPage.controllers', [])
             $scope.selectedPlace.Id = Place.PlaceId;
             $scope.selectedPlace.PlaceTips = TipServices.getPlaceTips(Place.PlaceId);
             $scope.EditPlaceVM = angular.copy(Place);
-                //{ id: '1', Content: 'vgjhbkn lm vybjnk' },
-                //{ id: '2', Content: 'kl;dhjv; h/dm h;gb' }];
+            //{ id: '1', Content: 'vgjhbkn lm vybjnk' },
+            //{ id: '2', Content: 'kl;dhjv; h/dm h;gb' }];
             $('#EditPlaceModal').modal('show');
         };
         $scope.EditPlace = function (EditPlaceVM) {
@@ -567,7 +567,7 @@ angular.module('AdminPage.controllers', [])
         });
         //Tips
         $rootScope.allTipCategories = [];
-            //{ id: '1', Class: 'ion-android-walk', name: '&#xf3bb; transportation', uniCode: '&#xf3bb;' },
+        //{ id: '1', Class: 'ion-android-walk', name: '&#xf3bb; transportation', uniCode: '&#xf3bb;' },
         //{ id: '2', Class: 'ion-ios-pulse-strong', name: '&#xf492; rough trak', uniCode: '&#xf492;' }];
         TipServices.GetTipCategories();
         $scope.GetTipUniCode = function (id) {
@@ -645,4 +645,87 @@ angular.module('AdminPage.controllers', [])
             $('#ForignKeyErrorModal').modal('show');
         });
 
+
+
+        // Amir section
+        //Package stuff
+        $scope.PackageNameValidator = "hidden";
+        $rootScope.PackagePagesLen;
+        $rootScope.PackageCurrentPage;
+        var AllPackages = [];
+        $scope.packages = [];
+        PackageServices.All()
+            .then(function (response) {
+                AllPackages = angular.copy(response.data);
+
+            }, function (response) {
+                console.log("Request failed");
+                console.log("status:" + response.status);
+            });
+
+       // $scope.packages = PackageServices.All();
+        $scope.$on('LoadPackages', function (event) {
+            $scope.packages = angular.copy($rootScope.AllPackages.slice(0, paging));
+            $scope.PackagePagesLen = Math.floor($rootScope.AllPackages.length / paging);
+            if (($rootScope.AllPackages.length / paging > $scope.PackagePagesLen))
+                $scope.PackagePagesLen++;
+        });
+        $scope.PreviousPackage = function () {
+            if ($rootScope.PackageCurrentPage > 0)
+                $scope.packages = PackageServices.Get($rootScope.PackageCurrentPage - 1);
+        };
+        $scope.NextPackage = function () {
+            if ($rootScope.PackagePagesLen - $rootScope.PackageCurrentPage > 1)
+                $scope.packages = PackageServices.Get($rootScope.PackageCurrentPage + 1);
+        };
+
+       
+
+        $scope.$on('PackageAdded', function (event) {
+            $scope.NewPackage = {
+                PackageName: '',
+                PackageDesc: '',
+                PackagePrice: '',
+
+            };
+            $scope.PackageForm.$setPristine();
+            $scope.PackageForm.$setUntouched();
+            $scope.PackageForm.$submitted = false;
+            $scope.$broadcast('UpdatePackages', {});
+        });
+        $scope.RemovePackage = function (PackageID, PackageName) {
+            PackageServices.RemovePackage(PackageID, PackageName);
+        };
+        $scope.$on('UpdatePackage', function (event) {
+            $scope.packages = PackageServices.Get(0);
+            $scope.AllPackage = PackageServices.All();
+            scroll("#Packages");
+        });
+
+        $scope.$on('PackageUnknownError', function (event) {
+            $scope.ForignKeyErrorBody = 'Unknown error prevent removing Package. Contact site developer to get more information.'
+            $scope.DelSubsBtn = "hidden";
+            $('#ForignKeyErrorModal').modal('show');
+        });
+
+
+
+
+        $scope.AddPackage = function (NewPackage, form, items) {
+            if (form.$valid) {
+                NewPackage.Cities = []                   //foreach selected city -add it to package
+
+                //angular.forEach($scope.cities, function (item) {
+                //    if (item.isSelected) {
+                //        NewPackage.Cities.push(item.CityID);
+                //    }
+                //});
+
+                PackageServices.AddPackage(NewPackage);
+            }
+        };
+
+
+
     }]);
+
