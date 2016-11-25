@@ -17,8 +17,8 @@
                         <!--<i ng-hide="audio.downloading" class="icon dark"
                            ng-click="audioClicked($index)"
                            ng-class="ChooseClass(audio.downloaded, audio.playing)"></i>-->
-                        <!--<div ng-show="audio.downloading" 
-                             ng-class="percentClass(audio.downloadProgress)" 
+                        <!--<div ng-show="audio.downloading"
+                             ng-class="percentClass(audio.downloadProgress)"
                              class="c100 small dark">
                             <span>{{audio.downloadProgress}}%</span>
                             <div class="slice">
@@ -26,10 +26,11 @@
                                 <div class="fill"></div>
                             </div>
                         </div>-->
-                        <div class="c100 p12 small dark">
-                            <span>12%</span>
+                        <i ng-show="false" class="icon dark icon-play-circle"></i>
+                        <div ng-show="true" style="position:absolute; left:14px; font-size:20px" class="c100 p12">
+                            <span></span>
                             <div class="slice">
-                                <div class="bar"></div>
+                                <div class="cbar"></div>
                                 <div class="fill"></div>
                             </div>
                         </div>
