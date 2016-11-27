@@ -121,12 +121,12 @@
 
 
 
-.cbar
-{
-            -webkit-transition: all .5s ease;
-        -moz-transition: all .5s ease;
-        transition: all .5s ease;
+.cbar {
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    transition: all .5s ease;
 }
+
 .c100.p1 .cbar {
     -webkit-transform: rotate(3.6deg);
     -moz-transform: rotate(3.6deg);

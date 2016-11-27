@@ -1,107 +1,447 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-family: sans-serif;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;font-size: 10px;-webkit-tap-highlight-color: rgba(0,0,0,0);">
-<head style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;"> <!-- So that mobile will display zoomed in -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;"> <!-- enable media queries for windows phone 8 -->
-    <meta name="format-detection" content="telephone=no" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;"> <!-- disable auto telephone linking in iOS -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style type="text/css" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-        @import url('https://fonts.googleapis.com/css?family=Bree+Serif|Roboto+Condensed|Titillium+Web|Quicksand|Cantarell|Material+Icons');
+﻿
 
 
 
-        .noisy {
-            position: relative;
-            overflow: hidden;
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Responsive Email Template</title>
+    <style type="text/css">
+        /* ----- Custom Font Import ----- */
+        @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin,latin-ext);
+
+        /* ----- Text Styles ----- */
+        table {
+            font-family: 'Lato', Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-font-smoothing: antialiased;
+            font-smoothing: antialiased;
         }
 
-            .noisy:after {
-                content: '';
-                display: block;
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                opacity: .15;
-                background-image: url('https://lh5.googleusercontent.com/40UudOf8T7oNMlMFMzivBLL7OcbBK6RQSixWfsx1LNlo4bLPRF64YFNfDdq5t7iuGDWxaoZwvmCPg6c=w1920-h857');
-                background-image: none\9;
+        @media only screen and (max-width: 700px) {
+            /* ----- Base styles ----- */
+            .full-width-container {
+                padding: 0 !important;
             }
 
+            .container {
+                width: 100% !important;
+            }
+
+            /* ----- Header ----- */
+            .header td {
+                padding: 30px 15px 30px 15px !important;
+            }
+
+            /* ----- Projects list ----- */
+            .projects-list {
+                display: block !important;
+            }
+
+                .projects-list tr {
+                    display: block !important;
+                }
+
+                .projects-list td {
+                    display: block !important;
+                }
+
+                .projects-list tbody {
+                    display: block !important;
+                }
+
+                .projects-list img {
+                    margin: 0 auto 25px auto;
+                }
+
+            /* ----- Half block ----- */
+            .half-block {
+                display: block !important;
+            }
+
+                .half-block tr {
+                    display: block !important;
+                }
+
+                .half-block td {
+                    display: block !important;
+                }
+
+            .half-block__image {
+                width: 100% !important;
+                background-size: cover;
+            }
+
+            .half-block__content {
+                width: 100% !important;
+                box-sizing: border-box;
+                padding: 25px 15px 25px 15px !important;
+            }
+
+            /* ----- Hero subheader ----- */
+            .hero-subheader__title {
+                padding: 80px 15px 15px 15px !important;
+                font-size: 35px !important;
+            }
+
+            .hero-subheader__content {
+                padding: 0 15px 90px 15px !important;
+            }
+
+            /* ----- Title block ----- */
+            .title-block {
+                padding: 0 15px 0 15px;
+            }
+
+            /* ----- Paragraph block ----- */
+            .paragraph-block__content {
+                padding: 25px 15px 18px 15px !important;
+            }
+
+            /* ----- Info bullets ----- */
+            .info-bullets {
+                display: block !important;
+            }
+
+                .info-bullets tr {
+                    display: block !important;
+                }
+
+                .info-bullets td {
+                    display: block !important;
+                }
+
+                .info-bullets tbody {
+                    display: block;
+                }
+
+            .info-bullets__icon {
+                text-align: center;
+                padding: 0 0 15px 0 !important;
+            }
+
+            .info-bullets__content {
+                text-align: center;
+            }
+
+            .info-bullets__block {
+                padding: 25px !important;
+            }
+
+            /* ----- CTA block ----- */
+            .cta-block__title {
+                padding: 35px 15px 0 15px !important;
+            }
+
+            .cta-block__content {
+                padding: 20px 15px 27px 15px !important;
+            }
+
+            .cta-block__button {
+                padding: 0 15px 0 15px !important;
+            }
+        }
     </style>
+
+    <!--[if gte mso 9]><xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml><![endif]-->
 </head>
 
-<body style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;margin: 0;font-family: &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size: 14px;line-height: 1.42857143;color: #333;background-color: #fff;">
-    <div class="container-fluid noisy msgbody" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: 0px;margin-top: 5px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;box-shadow: 3px 1px 5px #999;width: 99%;position: relative;overflow: hidden;">
-        <div class="row LogoRoW" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;margin-right: -15px;margin-left: -15px;">
-            <div class="col-xs-1 RowHead" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 50px;padding-right: 15px;padding-left: 15px;float: left;width: 35px !important;padding: 20px 0px;margin: 0;text-align: center;">
+<body style="padding: 0; margin: 0;" bgcolor="#eeeeee">
+    <span style="color:transparent !important; overflow:hidden !important; display:none !important; line-height:0px !important; height:0 !important; opacity:0 !important; visibility:hidden !important; width:0 !important; mso-hide:all;">This is your preheader text for this email (Read more about email preheaders here - https://goo.gl/e60hyK)</span>
 
-            </div>
-            <div class="col-xs-11 " style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 1px;padding-right: 15px;padding-left: 15px;float: left;width: 91.66666667%;">
-                <img src="IAGLogo2.png" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;border: 0;vertical-align: middle;page-break-inside: avoid;max-width: 100%!important;max-height: 150px;">
-            </div>
-        </div>
-        <div class="row contentRow" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;margin-right: -15px;margin-left: -15px;">
-            <div id="Sbj" class="col-xs-12" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 1px;padding-right: 15px;padding-left: 15px;float: left;width: 100%;display: flex;">
-                <div class="col-xs-1 Color1 RowHead" style="border-top-right-radius: 15px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 50px;padding-right: 15px;padding-left: 15px;float: left;width: 35px !important;background-color: rgb(81, 70, 108);padding: 20px 0px;margin: 0;text-align: center;">
-                    <i class="RH-icon fa fa-angle-double-right" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline-block;font: normal normal normal 14px/1 FontAwesome;font-size: x-large;text-rendering: auto;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;color: whitesmoke;z-index: 100;">
-                    </i>
-                </div>
-                <div class="col-xs-11 Contentcol" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 1px;padding-right: 15px;padding-left: 24px;float: left;width: 100%;padding: 20px;margin: 0;font-family: 'Bree Serif';font-size: 22px;font-weight: normal;color: rgb(81, 70, 108);text-shadow: 0px 1px 2px grey;background-color: white;border-top-right-radius: 20px;">
-                    #Subject#
-                </div>
-            </div>
-            <div id="DateTime" class="col-xs-12 " style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 1px;padding-right: 15px;padding-left: 15px;float: left;width: 100%;display: flex;">
-                <div class="col-xs-1 Color2 RowHead" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 50px;padding-right: 15px;padding-left: 15px;float: left;width: 35px !important;background-color: #8590a9;padding: 20px 0px;margin: 0;text-align: center;">
-                    <i style="font-family: 'Material Icons Extended'; -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline-block;font: normal normal normal 14px/1 FontAwesome;font-size: x-large;text-rendering: auto;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;color: whitesmoke;z-index: 100;">
-                        mail_outline
-                    </i>
-                </div>
-                <div class="col-xs-11 Contentcol" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 1px;padding-right: 15px;padding-left: 24px;float: left;width: 100%;padding: 20px;margin: 0;font-family: 'QuickSand';font-size: 15px;font-weight: bold;color: #8590a9;text-shadow: 0px 1px 2px grey;background-color: white;">
-                    #Date#
-                </div>
-            </div>
-            <div id="Message" class="col-xs-12" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 1px;padding-right: 15px;padding-left: 15px;float: left;width: 100%;display: flex;">
-                <div class="col-xs-1 Color3 RowHead" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 50px;padding-right: 15px;padding-left: 15px;float: left;width: 35px !important;background-color: #009688;padding: 20px 0px;margin: 0;text-align: center;">
-                    <i class="RH-icon fa fa-comment-o" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline-block;font: normal normal normal 14px/1 FontAwesome;font-size: x-large;text-rendering: auto;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;color: whitesmoke;z-index: 100;">
-                    </i>
-                </div>
-                <div class="col-xs-11 Contentcol" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 1px;padding-right: 15px;padding-left: 24px;float: left;width: 100%;padding: 20px;margin: 0;">
-                    <div id="subj" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-family: Titillium Web, Serif;font-size: 18px;font-weight: 600;color: #374550;text-shadow: 0px 1px 2px grey;margin-bottom: 20px;">#Subject#</div>
-                    <p id="Msgtext" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;orphans: 3;widows: 3;margin: 0 0 10px;font-family: 'Roboto', Arial, sans-serif;font-size: 14px;line-height: 20px;text-align: left;color: #333333;text-shadow: 0px 1px 1px grey;font-weight: 300;">
-                        #message#
-                    </p>
-                </div>
-            </div>
-            <div id="Footer" class="col-xs-12" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 1px;padding-right: 15px;padding-left: 15px;float: left;width: 100%;display: flex;">
-                <div class="col-xs-1 Color4 RowHead" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 50px;padding-right: 15px;padding-left: 15px;float: left;width: 35px !important;background-color: #000;padding: 20px 0px;margin: 0;text-align: center;">
-                    <i class="RH-icon fa fa-align-left" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline-block;font: normal normal normal 14px/1 FontAwesome;font-size: x-large;text-rendering: auto;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;color: whitesmoke;z-index: 100;">
-                    </i>
-                </div>
-                <div class="col-xs-11 Contentcol" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;min-height: 1px;padding-right: 15px;padding-left: 24px;float: left;width: 100%;padding: 20px;margin: 0;font-family: Cantarell, sans-serif;font-size: 12px;line-height: 16px;color: #ffffff;text-shadow: 1px 1px 0px #000000;background-color: #222;">
-                    Sent From Contact Form ©#Year# IranAudioGuideTeam
-                    <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;"><br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-                    <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">IranAudioGuideTeam</strong><br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-                    <span class="ios-footer" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-                        Shiraz<br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-                        Iran<br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-                    </span>
-                    <a href="http://iranaudioguide.com" style="color: #009688;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;background-color: transparent;text-decoration: underline;">iranaudioguide.com</a><br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-                    <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+    <!-- / Full width container -->
+    <table class="full-width-container" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" bgcolor="#eeeeee" style="width: 100%; height: 100%; padding: 30px 0 30px 0;">
+        <tbody>
+            <tr>
+                <td align="center" valign="top">
+                    <!-- / 700px container -->
+                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="700" bgcolor="#ffffff" style="width: 700px;">
+                        <tbody>
+                            <tr>
+                                <td align="center" valign="top">
+                                    <!-- / Header -->
+                                    <table class="container header" border="0" cellpadding="0" cellspacing="0" width="620" style="width: 620px;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 30px 0 30px 0; border-bottom: solid 1px #eeeeee;" align="left">
+                                                    <a href="#" style="font-size: 30px; text-decoration: none; color: #000000;">MP</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- /// Header -->
+                                    <!-- / Hero subheader -->
+                                    <!-- /// Hero subheader -->
+                                    <!-- / Title -->
+                                    <!-- /// Title -->
+                                    <!-- / Projects list -->
+                                    <!-- /// Projects list -->
+                                    <!-- / Title -->
 
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+                                    <table class="container title-block" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" valign="top">
+                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="620" style="width: 620px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border-bottom: solid 1px #eeeeee; padding: 35px 0 18px 0; font-size: 26px;" align="left">#Subject#</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table><table class="container title-block" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" valign="top">
+                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="620" style="width: 620px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border-bottom: solid 1px #eeeeee; padding: 35px 0 18px 0; font-size: 26px;" align="left">#Date#</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- /// Title -->
+                                    <!-- / Paragraph -->
+                                    <table class="container paragraph-block" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" valign="top">
+                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="620" style="width: 620px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="paragraph-block__content" style="padding: 25px 0 18px 0; font-size: 16px; line-height: 27px; color: #969696;" align="left">
+                                                                #message#
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- /// Paragraph -->
+                                    <!-- / Half block -->
+                                    <!-- /// Half block -->
+                                    <!-- / Half block -->
+                                    <!-- /// Half block -->
+                                    <!-- / Divider -->
+                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-top: 25px;" align="center">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center">
+                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="620" align="center" style="border-bottom: solid 1px #eeeeee; width: 620px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="center">&nbsp;</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- /// Divider -->
+                                    <!-- / CTA Block -->
+                                    <table class="container cta-block" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" valign="top">
+                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="620" style="width: 620px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="cta-block__title" style="padding: 35px 0 0 0; font-size: 26px; text-align: center;">About Us</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="cta-block__content" style="padding: 20px 0 27px 0; font-size: 16px; line-height: 27px; color: #969696; text-align: center;">
+                                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                                                    consequat.
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td align="center">
+                                                                    <table class="container" border="0" cellpadding="0" cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="cta-block__button" width="230" align="center" style="width: 200px;">
+                                                                                    <a href="http://slicejack.com/" style="border: 3px solid #eeeeee; color: #969696; text-decoration: none; padding: 15px 45px; text-transform: uppercase; display: block; text-align: center; font-size: 16px;">Visit Us</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- /// CTA Block -->
+                                    <!-- / Divider -->
+                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-top: 25px;" align="center">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center">
+                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="620" align="center" style="border-bottom: solid 1px #eeeeee; width: 620px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="center">&nbsp;</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- /// Divider -->
+                                    <!-- / Info Bullets -->
+                                    <table class="container info-bullets" border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center">
+                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="620" align="center" style="width: 620px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="info-bullets__block" style="padding: 30px 30px 15px 30px;" align="center">
+                                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="info-bullets__icon" style="padding: 0 15px 0 0;">
+                                                                                    <img src="img/img13.png">
+                                                                                </td>
+
+                                                                                <td class="info-bullets__content" style="color: #969696; font-size: 16px;">contact@example.com</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+
+                                                                <td class="info-bullets__block" style="padding: 30px 30px 15px 30px;" align="center">
+                                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="info-bullets__icon" style="padding: 0 15px 0 0;">
+                                                                                    <img src="img/img11.png">
+                                                                                </td>
+
+                                                                                <td class="info-bullets__content" style="color: #969696; font-size: 16px;">(541) 754-3010</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="info-bullets__block" style="padding: 30px;" align="center">
+                                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="info-bullets__icon" style="padding: 0 15px 0 0;">
+                                                                                    <img src="img/img12.png">
+                                                                                </td>
+
+                                                                                <td class="info-bullets__content" style="color: #969696; font-size: 16px;">New York, 222 West 23rd</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+
+                                                                <td class="info-bullets__block" style="padding: 30px;" align="center">
+                                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="info-bullets__icon" style="padding: 0 15px 0 0;">
+                                                                                    <img src="img/img12.png">
+                                                                                </td>
+
+                                                                                <td class="info-bullets__content" style="color: #969696; font-size: 16px;">Paris, Champ de Mars 54</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- /// Info Bullets -->
+                                    <!-- / Social nav -->
+                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center">
+                                                    <table class="container" border="0" cellpadding="0" cellspacing="0" width="620" align="center" style="border-top: 1px solid #eeeeee; width: 620px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="center" style="padding: 30px 0 30px 0;">
+                                                                    <a href="#">
+                                                                        <img src="img/img7.png" border="0">
+                                                                    </a>
+                                                                </td>
+
+                                                                <td align="center" style="padding: 30px 0 30px 0;">
+                                                                    <a href="#">
+                                                                        <img src="img/img8.png" border="0">
+                                                                    </a>
+                                                                </td>
+
+                                                                <td align="center" style="padding: 30px 0 30px 0;">
+                                                                    <a href="#">
+                                                                        <img src="img/img9.png" border="0">
+                                                                    </a>
+                                                                </td>
+
+                                                                <td align="center" style="padding: 30px 0 30px 0;">
+                                                                    <a href="#">
+                                                                        <img src="img/img10.png" border="0">
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- /// Social nav -->
+                                    <!-- / Footer -->
+                                    <!-- /// Footer -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
 </body>
-
-
-
 </html>
-
-
 
 
 
