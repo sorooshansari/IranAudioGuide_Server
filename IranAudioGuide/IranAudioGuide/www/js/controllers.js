@@ -291,6 +291,9 @@ angular.module('app.controllers', [])
         //$scope.ShowContent = true;
         //$ionicLoading.hide();
     });
+    $scope.$on("$ionicView.leave", function (event, data) {
+        //freePlayer();
+    });
 
     $scope.ModifyText = function (str) {
         str = str || "";
@@ -446,19 +449,85 @@ angular.module('app.controllers', [])
 
     //player stuff
     $rootScope.player = {};
-    $rootScope.CreateNewTrack = function (track, isAudio) {
+    var freePlayer = function () {
+        var oldIdx = $rootScope.player.idx;
+        $rootScope.player.Media.stop();
+        $rootScope.player.Media.release();
+        $rootScope.player.hasMedia = false;
+        if ($rootScope.player.isAudio)
+            $scope.PlaceInfo.Audios[oldIdx].playing = false;
+        else
+            $scope.PlaceInfo.Stories[oldIdx].playing = false;
+    }
+    var CreateNewTrack = function (track, isAudio, idx) {
         if ($rootScope.player.hasMedia) {
-            $rootScope.player.Media.stop();
-            $rootScope.player.Media.release();
+            freePlayer()
         }
         var Path;
         if (isAudio)
-            Path = cordova.file.dataDirectory + "/PlaceAudio_dir/" + fileName;
+            Path = cordova.file.dataDirectory + "/PlaceAudio_dir/" + track.url;
         else
-            Path = cordova.file.dataDirectory + "/PlaceStory_dir/" + fileName;
-        $rootScope.player.Media = new Media(src, mediaSuccess, mediaError, mediaStatus);
+            Path = cordova.file.dataDirectory + "/PlaceStory_dir/" + track.url;
+        $rootScope.player.Media = new Media(Path, mediaSuccess, mediaError, mediaStatus);
         $rootScope.player.hasMedia = true;
         $rootScope.player.trackInfo = track;
+        $rootScope.player.isAudio = isAudio;
+        $rootScope.player.idx = idx;
+    }
+    var pauseTrack = function(){
+        $rootScope.player.Media.pause();
+    };
+    var playTrack = function(){
+        $rootScope.player.Media.play();
+    };
+    var playPause = function (idx, isAudio) {
+        var track;
+        if (isAudio) {
+            track = $scope.PlaceInfo.Audios[idx];
+            if (track.playing) {
+                pauseTrack();
+                $scope.PlaceInfo.Audios[idx].playing = false;
+            }
+            else {
+                if ($rootScope.player.hasMedia && track.Id === $rootScope.player.trackInfo.Id) {
+                    playTrack();
+                    $scope.PlaceInfo.Audios[idx].playing = true;
+                }
+                else {
+                    CreateNewTrack(track, isAudio, idx);
+                    playTrack();
+                    $scope.PlaceInfo.Audios[idx].playing = true;
+                }
+            }
+        }
+        else {
+            track = $scope.PlaceInfo.Stories[idx];
+            if (track.playing) {
+                pauseTrack();
+                $scope.PlaceInfo.Stories[idx].playing = false;
+            }
+            else {
+                if (track.Id === $rootScope.player.trackInfo.Id) {
+                    playTrack();
+                    $scope.PlaceInfo.Stories[idx].playing = true;
+                }
+                else {
+                    CreateNewTrack(track, isAudio, idx);
+                    playTrack();
+                }
+            }
+        }
+    }
+    var iOSPlayOptions = {
+        numberOfLoops: 1,
+        playAudioWhenScreenIsLocked: true
+    }
+    var mediaStatusCallback = function (status) {
+        if (status === 1) {
+            $ionicLoading.show({ template: 'Loading...' });
+        } else {
+            $ionicLoading.hide();
+        }
     }
     var mediaSuccess = function (res) {
         console.log("media success: ", res);
@@ -469,16 +538,7 @@ angular.module('app.controllers', [])
     var mediaStatus = function (status) {
         console.log("media status: ", status);
     }
-    //Audio stuffs
-    $scope.audioClicked = function (idx) {
-        var audio = $scope.PlaceInfo.Audios[idx];
-        if (!audio.downloaded) {
-            downloadAudio(idx);
-        }
-        else {
-            console.log(idx);
-        }
-    }
+
     var downloadAudio = function (idx) {
         $scope.PlaceInfo.Audios[idx].downloading = true;
         var audio = $scope.PlaceInfo.Audios[idx];
@@ -488,13 +548,26 @@ angular.module('app.controllers', [])
                 $scope.PlaceInfo.Audios[idx].downloading = false;
                 $scope.PlaceInfo.Audios[idx].downloaded = true;
             }, function (err) {// Error
-                console.log(err);
+                $scope.PlaceInfo.Audios[idx].downloading = false;
+                $scope.PlaceInfo.Audios[idx].downloaded = false;
             }, function (progress) {
                 $timeout(function () {
                     $scope.PlaceInfo.Audios[idx].downloadProgress =
                         Math.floor((progress.loaded / progress.total) * 100);
                 });
             });
+    }
+
+    //Audio stuffs
+    $scope.audioClicked = function (idx) {
+        var audio = $scope.PlaceInfo.Audios[idx];
+        if (!audio.downloaded) {
+            downloadAudio(idx);
+        }
+        else {
+            console.log(idx);
+            playPause(idx, true);//isAudio = True
+        }
     }
 
     //Story stuffs
@@ -514,6 +587,8 @@ angular.module('app.controllers', [])
                 $scope.PlaceInfo.Stories[idx].downloaded = true;
             }, function (err) {// Error
                 console.log(err);
+                $scope.PlaceInfo.Stories[idx].downloading = false;
+                $scope.PlaceInfo.Stories[idx].downloaded = false;
             }, function (progress) {
                 $timeout(function () {
                     $scope.PlaceInfo.Stories[idx].downloadProgress =
@@ -530,38 +605,6 @@ angular.module('app.controllers', [])
         $rootScope.audio.index = audio.index;
         $rootScope.audio.title = audio.title;
         $rootScope.audio.media.play();
-    }
-    $scope.playPause = function (audio) {
-        if ($rootScope.audio.media === null) { //No audio loaded yet
-            playNewAudio(audio);
-            audio.icoStatus = 'pause';
-        }
-        else if ($rootScope.audio.index !== audio.index) { //another audio is playing, so first pause the playing one
-            $rootScope.audio.media.release();
-            $scope.Audios[$rootScope.audio.index].icoStatus = 'play';
-            playNewAudio(audio);
-            audio.icoStatus = 'pause';
-        }
-        else if (audio.icoStatus === 'pause') {//same audio is playing
-            $rootScope.audio.media.pause();
-            audio.icoStatus = 'play';
-        }
-        else { //play paused audio
-            $rootScope.audio.media.play();
-            audio.icoStatus = 'pause';
-        }
-    }
-
-    var iOSPlayOptions = {
-        numberOfLoops: 1,
-        playAudioWhenScreenIsLocked: true
-    }
-    var mediaStatusCallback = function (status) {
-        if (status === 1) {
-            $ionicLoading.show({ template: 'Loading...' });
-        } else {
-            $ionicLoading.hide();
-        }
     }
     //var play = function (id) {
     //    //$cordovaMedia.play(media);

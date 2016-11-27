@@ -14,18 +14,6 @@
                 </div>
                 <ion-list ng-show="PlaceInfo.Audios.length" id="AudiosCard">
                     <ion-item ng-repeat="audio in PlaceInfo.Audios" class="item-icon-left positive">
-                        <!--<i ng-hide="audio.downloading" class="icon dark"
-                           ng-click="audioClicked($index)"
-                           ng-class="ChooseClass(audio.downloaded, audio.playing)"></i>-->
-                        <!--<div ng-show="audio.downloading"
-                             ng-class="percentClass(audio.downloadProgress)"
-                             class="c100 small dark">
-                            <span>{{audio.downloadProgress}}%</span>
-                            <div class="slice">
-                                <div class="bar"></div>
-                                <div class="fill"></div>
-                            </div>
-                        </div>-->
                         <i ng-show="!audio.downloading" 
                            ng-click="audioClicked($index)"
                            ng-class="ChooseClass(audio.downloaded, audio.playing)" 
