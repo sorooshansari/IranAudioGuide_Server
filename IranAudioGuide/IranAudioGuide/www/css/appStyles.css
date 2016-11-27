@@ -1,4 +1,16 @@
-﻿body {
+﻿@font-face {
+  font-family: "Arcon";
+  src: url("../lib/ionic/fonts/Arcon-Rounded-Regular.otf");
+  font-weight: normal;
+  font-style: normal; }
+
+* {
+
+    font-family:'Arcon';
+}
+body {
+
+    
 }
 
 .center {
@@ -47,4 +59,13 @@
 
 .bar-transparent .platform-ios.platform-cordova:not(.fullscreen) .has-header {
     top: 0px;
+}
+
+
+.item-content img
+{
+    left: 0px !important;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 1px 1px 3px #888;
 }

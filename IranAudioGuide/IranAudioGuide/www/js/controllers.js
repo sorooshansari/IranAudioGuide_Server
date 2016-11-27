@@ -275,7 +275,7 @@ angular.module('app.controllers', [])
 
 .controller('placeCtrl', function ($scope, dbServices, FileServices, AudioServices, $timeout, $rootScope, $ionicLoading, $stateParams, $ionicSlideBoxDelegate) {
     var defaultImageSource = 'img/default-thumbnail.jpg';
-    $scope.percentClasspercentClass = function (percent) {
+    $scope.percentClass = function (percent) {
         return 'p' + percent.toString();
     };
     $scope.$on("$ionicView.beforeEnter", function (event, data) {
@@ -475,7 +475,7 @@ angular.module('app.controllers', [])
             downloadAudio(idx);
         }
         else {
-
+            console.log(idx);
         }
     }
     var downloadAudio = function (idx) {
