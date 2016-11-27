@@ -92,6 +92,7 @@ angular.module('app.controllers', [])
         DelRemovedEntities(Data.Data.RemovedEntries);
     });
     $rootScope.$on('CheckWaitingUpdates', function (event) {
+        console.log("waitingUpdates: ",$rootScope.waitingUpdates);
         if ($rootScope.waitingUpdates === 0) {
             window.localStorage.setItem("LastUpdateNumber", updateNumber);
             GoHome();
@@ -239,9 +240,9 @@ angular.module('app.controllers', [])
                 }
             }
             else {
-                for (var i = 0; i < AllPlaces.length; i++)
-                    if (SelectedCityId === 0 || AllPlaces[i].CityId === SelectedCityId)
-                        tempList.push(AllPlaces[i]);
+                for (var j = 0; j < AllPlaces.length; j++)
+                    if (SelectedCityId === 0 || AllPlaces[j].CityId === SelectedCityId)
+                        tempList.push(AllPlaces[j]);
                 $scope.selectedPlaces = tempList;
             }
         };

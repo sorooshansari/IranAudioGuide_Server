@@ -272,7 +272,7 @@ angular.module('app.services', [])
 .service('ApiServices', ['$http', '$rootScope', function ($http, $rootScope) {
     return {
         GetAll: function (LUN) {
-            if (LUN == 0) {
+            if (LUN === 0) {
                 method = 'post';
                 url = 'http://iranaudioguide.com/api/AppManager/GetAll';
                 $http({ method: method, url: url }).
@@ -573,8 +573,11 @@ angular.module('app.services', [])
                     .then(function (result) {
                         console.log("placeTumbImageCleaned");
                         $rootScope.waitingUpdates--;
+                        $rootScope.$broadcast('CheckWaitingUpdates');
                     }, function (error) {
                         console.error(error);
+                        $rootScope.waitingUpdates--;
+                        $rootScope.$broadcast('CheckWaitingUpdates');
                     });
         },
         CleanPlaceImage: function (PlaceID) {
@@ -792,8 +795,6 @@ angular.module('app.services', [])
               .then(function (result) {
                   //dbServices.CleanPlaceTumbnail(placeId);
                   $rootScope.$broadcast('callDbServicesFunctions', { functionName: 'CleanPlaceTumbnail', params: [placeId] });
-                  $rootScope.waitingUpdates--;
-                  $rootScope.$broadcast('CheckWaitingUpdates');
                   // Success!
               }, function (err) {
                   console.log(err);
