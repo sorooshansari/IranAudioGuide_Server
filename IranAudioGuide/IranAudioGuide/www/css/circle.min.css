@@ -119,8 +119,6 @@
     clip: rect(0,1em,1em,.5em)
 }
 
-
-
 .cbar {
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
