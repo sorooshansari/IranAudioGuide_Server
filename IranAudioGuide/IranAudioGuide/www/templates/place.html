@@ -41,8 +41,19 @@
                 <ion-list id="StoriesCard">
                     <ion-item class="item-icon-left balanced"
                               ng-repeat="story in PlaceInfo.Stories" id="cameraTabDefaultPage-list-item17">
-                        <i class="icon dark"
-                           ng-class="ChooseClass(story.downloaded, story.playing)"></i>
+                        <i ng-show="!story.downloading"
+                           ng-click="StoryClicked($index)"
+                           ng-class="ChooseClass(story.downloaded, story.playing)"
+                           class="icon dark"></i>
+                        <div ng-show="story.downloading"
+                             ng-class="percentClass(story.downloadProgress)"
+                             style="position:absolute; left:14px; font-size:20px" class="c100">
+                            <span></span>
+                            <div class="slice">
+                                <div class="cbar"></div>
+                                <div class="fill"></div>
+                            </div>
+                        </div>
 
                         {{story.Name}}
                         <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
