@@ -280,12 +280,7 @@ angular.module('app.controllers', [])
         return 'p' + percent.toString();
     };
     $scope.$on("$ionicView.beforeEnter", function (event, data) {
-        // handle event
-        //$ionicLoading.show({
-        //    template: 'Loading...'
-        //});
-        //$scope.ShowContent = false;
-
+        checkPlayer();
     });
     $scope.$on("$ionicView.afterEnter", function (event, data) {
         //$scope.ShowContent = true;
@@ -449,6 +444,19 @@ angular.module('app.controllers', [])
 
     //player stuff
     $rootScope.player = {};
+    var checkPlayer = function () {
+        console.log("player has media", $rootScope.player.hasMedia);
+        console.log("player track", $rootScope.player.trackInfo);
+        if($rootScope.player.hasMedia){
+            if ($rootScope.player.PlaceId === placeId) {
+                var idx = $rootScope.player.idx;
+                if ($rootScope.player.isAudio)
+                    $scope.PlaceInfo.Audios[idx].playing = $rootScope.player.playing;
+                else
+                    $scope.PlaceInfo.Stories[idx].playing = $rootScope.player.playing;
+            }
+        }
+    };
     var freePlayer = function () {
         var oldIdx = $rootScope.player.idx;
         $rootScope.player.Media.stop();
@@ -458,7 +466,7 @@ angular.module('app.controllers', [])
             $scope.PlaceInfo.Audios[oldIdx].playing = false;
         else
             $scope.PlaceInfo.Stories[oldIdx].playing = false;
-    }
+    };
     var CreateNewTrack = function (track, isAudio, idx) {
         if ($rootScope.player.hasMedia) {
             freePlayer()
@@ -473,48 +481,56 @@ angular.module('app.controllers', [])
         $rootScope.player.trackInfo = track;
         $rootScope.player.isAudio = isAudio;
         $rootScope.player.idx = idx;
-    }
+        $rootScope.player.PlaceId = placeId;
+    };
     var pauseTrack = function(){
         $rootScope.player.Media.pause();
+        $rootScope.player.playing = false;
     };
     var playTrack = function(){
         $rootScope.player.Media.play();
+        $rootScope.player.playing = true;
     };
     var playPause = function (idx, isAudio) {
         var track;
         if (isAudio) {
             track = $scope.PlaceInfo.Audios[idx];
-            if (track.playing) {
-                pauseTrack();
-                $scope.PlaceInfo.Audios[idx].playing = false;
-            }
-            else {
-                if ($rootScope.player.hasMedia && track.Id === $rootScope.player.trackInfo.Id) {
-                    playTrack();
-                    $scope.PlaceInfo.Audios[idx].playing = true;
+            if ($rootScope.player.hasMedia &&
+                $rootScope.player.isAudio &&
+                track.Id === $rootScope.player.trackInfo.Id) {
+                if (track.playing) {
+                    pauseTrack();
+                    $scope.PlaceInfo.Audios[idx].playing = false;
                 }
                 else {
-                    CreateNewTrack(track, isAudio, idx);
                     playTrack();
                     $scope.PlaceInfo.Audios[idx].playing = true;
                 }
+            }
+            else {
+                CreateNewTrack(track, isAudio, idx);
+                playTrack();
+                $scope.PlaceInfo.Audios[idx].playing = true;
             }
         }
         else {
             track = $scope.PlaceInfo.Stories[idx];
-            if (track.playing) {
-                pauseTrack();
-                $scope.PlaceInfo.Stories[idx].playing = false;
-            }
-            else {
-                if (track.Id === $rootScope.player.trackInfo.Id) {
+            if ($rootScope.player.hasMedia &&
+                !$rootScope.player.isAudio &&
+                track.Id === $rootScope.player.trackInfo.Id) {
+                if (track.playing) {
+                    pauseTrack();
+                    $scope.PlaceInfo.Stories[idx].playing = false;
+                }
+                else {
                     playTrack();
                     $scope.PlaceInfo.Stories[idx].playing = true;
                 }
-                else {
-                    CreateNewTrack(track, isAudio, idx);
-                    playTrack();
-                }
+            }
+            else {
+                CreateNewTrack(track, isAudio, idx);
+                playTrack();
+                $scope.PlaceInfo.Stories[idx].playing = true;
             }
         }
     }
@@ -539,6 +555,18 @@ angular.module('app.controllers', [])
         console.log("media status: ", status);
     }
 
+
+    //Audio stuffs
+    $scope.audioClicked = function (idx) {
+        var audio = $scope.PlaceInfo.Audios[idx];
+        if (!audio.downloaded) {
+            downloadAudio(idx);
+        }
+        else {
+            console.log(idx);
+            playPause(idx, true);//isAudio = True
+        }
+    }
     var downloadAudio = function (idx) {
         $scope.PlaceInfo.Audios[idx].downloading = true;
         var audio = $scope.PlaceInfo.Audios[idx];
@@ -558,23 +586,15 @@ angular.module('app.controllers', [])
             });
     }
 
-    //Audio stuffs
-    $scope.audioClicked = function (idx) {
-        var audio = $scope.PlaceInfo.Audios[idx];
-        if (!audio.downloaded) {
-            downloadAudio(idx);
-        }
-        else {
-            console.log(idx);
-            playPause(idx, true);//isAudio = True
-        }
-    }
-
     //Story stuffs
     $scope.StoryClicked = function (idx) {
         var story = $scope.PlaceInfo.Stories[idx];
         if (!audio.downloaded) {
             downloadStory(idx);
+        }
+        else {
+            console.log(idx);
+            playPause(idx, false);//isAudio = false
         }
     }
     var downloadStory = function (idx) {
