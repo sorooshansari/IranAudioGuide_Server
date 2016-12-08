@@ -92,5 +92,6 @@ namespace IranAudioGuide_MainServer.Models
         public string Address { get; set; }
         public int CityId { get; set; }
         public int UpdateNumber { get; set; }
+        public bool isPrimary { get; set; }
     }
 }

@@ -9,13 +9,22 @@
             <img src="img/GOG0VawRCSCIDJocTSdR_places.jpg" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
         </div>-->
         <ion-list>
-            <ion-item class="item-remove-animate item-thumbnail-left item-icon-right homeItems" ng-repeat="place in Places" type="item-text-wrap"  ui-sref="tabsController.place">
+            <ion-item class="item-remove-animate item-thumbnail-left item-icon-right homeItems"
+                      ng-repeat="place in Places" type="item-text-wrap" 
+                      ui-sref="tabsController.place({id: '{{place.Id}}'})">
                 <img ng-src="{{place.logo}}">
                 <h2 style="color:black;">{{place.name}}</h2>
                 <p style="font-size: 0.69em; background: #666;color: #fff;padding: 0px 6px;display: inline-block;border-radius: 3px;">{{place.city}}</p>
                 <p>{{place.address}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
-                <ion-option-button class="likeBtn text-center" ng-click="favorito(place)"><i class="icon ion-bookmark positive"></i></ion-option-button>
+                <ion-option-button ng-show="!place.bookmarked" 
+                                   ng-click="bookmark(place.Id)" class="likeBtn text-center">
+                    <i class="icon ion-bookmark dark"></i>
+                </ion-option-button>
+                <ion-option-button ng-show="place.bookmarked"
+                                   class="likeBtn text-center">
+                    <i class="icon ion-bookmark positive"></i>
+                </ion-option-button>
             </ion-item>
         </ion-list>
         <!--<ion-list>

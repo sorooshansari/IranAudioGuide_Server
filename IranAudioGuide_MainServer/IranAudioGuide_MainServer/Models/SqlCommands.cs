@@ -106,7 +106,8 @@ RETURNS
 	X FLOAT,
 	Y FLOAT,
 	Adr NVARCHAR(MAX),
-	CityId INT
+	CityId INT,
+    isPrimary BIT
 )
 AS
 BEGIN
@@ -120,6 +121,7 @@ BEGIN
 		  ,[Pla_cordinate_Y]
 		  ,[Pla_Address]
 		  ,[Pla_city_Cit_Id]
+		  ,[Pla_isPrimary]
 	  FROM [dbo].[Places]
 	 WHERE Pla_Deactive = 0 AND
 		   Pla_isOnline = 1

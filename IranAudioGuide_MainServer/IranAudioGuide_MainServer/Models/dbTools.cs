@@ -162,7 +162,8 @@ namespace IranAudioGuide_MainServer.Models
                     CX = (double)dr["X"],
                     CY = (double)dr["Y"],
                     Address = (dr["Adr"] == DBNull.Value) ? string.Empty : dr["Adr"].ToString(),
-                    CityId = (int)dr["CityId"]
+                    CityId = (int)dr["CityId"],
+                    isPrimary = (bool)dr["isPrimary"]
                 });
             return res;
         }

@@ -326,6 +326,8 @@ angular.module('app.services', [])
             Pla_c_y real,\
             Pla_address text,\
             Pla_CityId integer,\
+            Pla_isPrimary integer,\
+            Pla_bookmarked integer,\
             Pla_Dirty_imgUrl integer,\
             Pla_Dirty_TNImgUrl integer\
             )");
@@ -395,9 +397,11 @@ angular.module('app.services', [])
                     Pla_c_y,\
                     Pla_address,\
                     Pla_CityId,\
+                    Pla_isPrimary,\
+                    Pla_bookmarked,\
                     Pla_Dirty_imgUrl,\
                     Pla_Dirty_TNImgUrl)\
-                    VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             for (var i = 0; i < Places.length; i++) {
                 $cordovaSQLite.execute(db, query,
                     [Places[i].Id
@@ -409,6 +413,8 @@ angular.module('app.services', [])
                     , Places[i].CY
                     , Places[i].Address
                     , Places[i].CityId
+                    , (Places[i].isPrimary) ? 1 : 0
+                    , 0
                     , 1
                     , 1])
                     .then(function (result) {
@@ -416,6 +422,39 @@ angular.module('app.services', [])
                     }, function (error) {
                         console.error(error);
                     });
+                if (Places[i].isPrimary) {
+                    $rootScope.waitingUpdates++;
+                    var id = Places[i].Id;
+                    var url = Places[i].ImgUrl;
+                    FileServices.DownloadPlaceImage(url, id)
+                        .then(function (result) {
+                            console.log("place image downloaded: ", url);
+                            var query = "\
+                                UPDATE Places\
+                                SET Pla_Dirty_imgUrl = 0\
+                                WHERE Pla_Id = ?";
+                            $cordovaSQLite.execute(db, query, [id])
+                                    .then(function (result) {
+                                        console.log("place image cleaned: ", id);
+                                        $rootScope.waitingUpdates--;
+                                        $rootScope.$broadcast('CheckWaitingUpdates');
+                                    }, function (error) {
+                                        console.error(error);
+                                        $rootScope.waitingUpdates--;
+                                        $rootScope.$broadcast('CheckWaitingUpdates');
+                                    });
+                            // Success!
+                        }, function (err) {
+                            console.log(err);
+                            $rootScope.waitingUpdates--;
+                            $rootScope.$broadcast('CheckWaitingUpdates');
+                            // Error
+                        }, function (progress) {
+                            //$timeout(function () {
+                            //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                            //});
+                        });
+                }
                 FileServices.DownloadTumbNail(Places[i].TNImgUrl, Places[i].Id);
             }
             $rootScope.$broadcast('CheckWaitingUpdates');
@@ -551,18 +590,59 @@ angular.module('app.services', [])
                     });
             }
         },
-        deleteFromTable: function (tableName, tableIdColumn, IDs) {
-            var stringIDs = IDs.map(String);
+        removeAudioFiles: function (AudioIds) {
+            var stringIDs = AudioIds.map(String);
             var args = stringIDs.join(", ");
             var query = "\
-            DELETE FROM " + tableName + "\
-            WHERE " + tableIdColumn + " IN (" + args + ")";
-            $cordovaSQLite.execute(db, query)
-                    .then(function (result) {
-                        console.log("deleted IDs --> " + args);
-                    }, function (error) {
-                        console.error(error);
-                    });
+                SELECT Aud_Url\
+                FROM Audios\
+                WHERE Aud_Id IN (" + args + ")";
+            return $cordovaSQLite.execute(db, query)
+            .then(function (result) {
+                var res = result.rows;
+                console.log("to remove audios:", res)
+                for (var i = 0; i < res.length; i++) {
+                    var file = res.item(i).Aud_Url;
+                    FileServices.RemoveTrack(file, 1);
+                }
+            }, function (error) {
+                console.error(error);
+            });
+        },
+        removeStoryFiles: function (StoryIds) {
+            var stringIDs = StoryIds.map(String);
+            var args = stringIDs.join(", ");
+            var query = "\
+                SELECT Sto_Url\
+                FROM Stories\
+                WHERE Sto_Id IN (" + args + ")";
+            return $cordovaSQLite.execute(db, query)
+            .then(function (result) {
+                var res = result.rows;
+                console.log("to remove stories:", res)
+                for (var i = 0; i < res.length; i++) {
+                    var file = res.item(i).Sto_Url;
+                    FileServices.RemoveTrack(file, 0);
+                }
+            }, function (error) {
+                console.error(error);
+            });
+        },
+        deleteFromTable: function (tableName, tableIdColumn, IDs) {
+            for (var i = 0; i < IDs.length - 1; i++) {
+                var query = "\
+                DELETE FROM " + tableName + "\
+                WHERE " + tableIdColumn + " = ?";
+                console.log(query);
+                $cordovaSQLite.execute(db, query, IDs[i])
+                        .then(function (result) {
+                            console.log("deleted IDs --> " + result);
+                        }, function (error) {
+                            console.log("IDs --> ", IDs[i]);
+                            console.error(error);
+                        });
+            }
+
         },
         CleanPlaceTumbnail: function (PlaceID) {
             var query = "\
@@ -615,6 +695,20 @@ angular.module('app.services', [])
                     }, function (error) {
                         console.error(error);
                     });
+        },
+        bookmarkePlace: function (PlaceID) {
+            var query = "\
+            UPDATE Places\
+            SET Pla_bookmarked = 1\
+            WHERE Pla_Id = ?";
+            return $cordovaSQLite.execute(db, query, [PlaceID]);
+        },
+        unbookmarkePlace: function (PlaceID) {
+            var query = "\
+            UPDATE Places\
+            SET Pla_bookmarked = 0\
+            WHERE Pla_Id = ?";
+            return $cordovaSQLite.execute(db, query, [PlaceID]);
         },
         dbTest: function () {
             console.log("places");
@@ -673,7 +767,9 @@ angular.module('app.services', [])
                     Pla_Id,\
                     Pla_Name,\
                     Pla_TNImgUrl,\
+                    Pla_imgUrl,\
                     Pla_address,\
+                    Pla_bookmarked,\
                     Cit_Name,\
                     Pla_CityId\
                 FROM Places JOIN Cities\
@@ -683,6 +779,38 @@ angular.module('app.services', [])
             }, function (error) {
                 console.error(error);
             });
+        },
+        LoadPrimaryPlaces: function () {
+            var query = "\
+                SELECT\
+                    Pla_Id,\
+                    Pla_Name,\
+                    Pla_TNImgUrl,\
+                    Pla_imgUrl,\
+                    Pla_address,\
+                    Pla_bookmarked,\
+                    Cit_Name,\
+                    Pla_CityId\
+                FROM Places JOIN Cities\
+                ON Places.Pla_CityId = Cities.Cit_Id\
+                WHERE Places.Pla_isPrimary = 1";
+            return $cordovaSQLite.execute(db, query);
+        },
+        LoadBookmarkedPlaces: function () {
+            var query = "\
+                SELECT\
+                    Pla_Id,\
+                    Pla_Name,\
+                    Pla_TNImgUrl,\
+                    Pla_imgUrl,\
+                    Pla_address,\
+                    Pla_bookmarked,\
+                    Cit_Name,\
+                    Pla_CityId\
+                FROM Places JOIN Cities\
+                ON Places.Pla_CityId = Cities.Cit_Id\
+                WHERE Places.Pla_bookmarked = 1";
+            return $cordovaSQLite.execute(db, query);
         },
         LoadPlaceInfos: function (Id) {
             var query = "\
@@ -862,6 +990,25 @@ angular.module('app.services', [])
             var options = {};
 
             return $cordovaFileTransfer.download(url, targetPath, options, trustHosts);
+        },
+        RemoveTrack: function (file, isAudio) {
+            var path;
+            if (isAudio)
+                path = cordova.file.dataDirectory + "/PlaceAudio_dir/";
+            else
+                path = cordova.file.dataDirectory + "/PlaceStory_dir/";
+
+            $cordovaFile.checkFile(path, file)
+                .then(function (success) {
+                    $cordovaFile.removeFile(path, file)
+                        .then(function (success) {
+                            console.log("fileRemoved", success)
+                        }, function (error) {
+                            // error
+                        });
+                }, function (error) {
+                    // error
+                });
         }
     }
 }]);

@@ -79,8 +79,23 @@ angular.module('app.routes', [])
 
     .state('tabsController.place', {
         url: '/page5',
+        params: {
+            id: 'salam'
+        },
         views: {
             'tab1': {
+                templateUrl: 'templates/place.html',
+                controller: 'placeCtrl'
+            }
+        }
+    })
+    .state('tabsController.placeBookmarked', {
+        url: '/placeBookmarked',
+        params: {
+            id: 'salam'
+        },
+        views: {
+            'tab2': {
                 templateUrl: 'templates/place.html',
                 controller: 'placeCtrl'
             }
@@ -91,11 +106,6 @@ angular.module('app.routes', [])
         params: {
             id: 'salam'
         },
-        //resolve : {
-        //    pageTitle: function (PlaceServices, $stateParams) {
-        //        return PlaceServices.getTitle($stateParams.id)
-        //    }
-        //},
         views: {
             'tab3': {
                 templateUrl: 'templates/place.html',
