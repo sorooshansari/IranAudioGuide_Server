@@ -278,6 +278,7 @@
     <Content Include="fonts\ionicons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="logo.png" />
     <Content Include="images\AppleStore.png" />
     <Content Include="images\appstore.png" />
     <Content Include="images\banner.jpg" />

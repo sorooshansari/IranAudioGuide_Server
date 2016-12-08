@@ -3,11 +3,30 @@
     string downloadSection = (ViewBag.View == null) ? "/Home/Index/#cta" : ((Views)ViewBag.View == Views.Index) ? "#cta" : "/Home/Index/#cta";
 }
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="title" content="Best audio guide application for iran travel" />
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
+<head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
+    <meta name="title" content="Best audio guide application for Iran travel" />
     <meta name="Description"
-          content="Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+          content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran,
+           ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+
+    <meta property="og:title" content="Best audio guide application for Iran travel" />
+    <meta property="og:site_name" content="Iran Audio Guide" />
+    <meta property="og:type" content="Audio Guide" />
+    <meta property="og:image" content="http://iranaudioguide.com/logo.jpg" />
+    <meta property="og:url" content="http://iranaudioguide.com" />
+    <meta property="og:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran,
+           ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+    <meta property="fb:admins" content="USER_ID" />
+
+    <meta property="twitter:card" content="Iran Audio Guide" />
+    <meta property="twitter:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran,
+           ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+    <meta property="twitter:url" content="http://iranaudioguide.com" />
+    <meta property="twitter:title" content="Best audio guide application for Iran travel" />
+    <meta property="twitter:image" content="http://iranaudioguide.com/logo.png" />
+
+
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,8 +55,8 @@
                             <ul>
                                 <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                                 <li><a href="@downloadSection">Download</a></li>
-                                <li><a href="@Url.Action("Register","Account")">Register</a></li>
-                                <li><a href="@Url.Action("Login","Account")">Log in</a></li>
+                                <li><a rel="nofollow" href="@Url.Action("Register","Account")">Register</a></li>
+                                <li><a rel="nofollow" href="@Url.Action("Login","Account")">Log in</a></li>
                             </ul>
                         </section>
                     </li>
@@ -46,7 +65,12 @@
         </header>
 
         @RenderBody()
-
+        <div style="position:absolute !important; z-index:-1000000;">
+            <!-- Begin WebGozar.com Counter code -->
+            <script type="text/javascript" language="javascript" src="http://www.webgozar.ir/c.aspx?Code=3649976&amp;t=counter"></script>
+            <noscript><a href="http://www.webgozar.com/counter/stats.aspx?code=3649976" target="_blank">&#1570;&#1605;&#1575;&#1585;</a></noscript>
+            <!-- End WebGozar.com Counter code -->
+        </div>
 
     </div>
 
