@@ -1,0 +1,38 @@
+<ion-view title="" id="loginPage" class="gradiantBG">
+    <ion-nav-bar class="bar-stable bar-transparent">
+        <ion-nav-back-button></ion-nav-back-button>
+        <ion-nav-buttons side="right">
+            <button ng-click="Skip()" class="button button-clear">Skip</button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header" scroll="true">
+        <form id="loginForm" class="list ">
+            <div class="spacer" style="width: 300px; height: 20px;"></div>
+            <h3 id="login-heading1" style="color:#000000;text-align:center;" class="">Welcome back</h3>
+            <p id="login-markdown2" style="color:#000000;text-align:center;" class="">Login to your account to start</p>
+            <div class="spacer" style="width: 300px; height: 23px;"></div>
+            <button ng-click="googleLogin()" id="login-button4" class="button button-assertive button-block icon-left ion-social-google-outline">Google</button>
+            <p id="login-markdown3" style="color:#000000;text-align:center;" class="">or</p>
+            <ion-list id="login-list1" class="">
+                <label class="item item-input " id="login-input3">
+                    <span class="intputLable ion-email"></span>
+                    <input name="email" ng-model-options="{ debounce: 1000 }" ng-model="user.email" type="email" placeholder="Email" ng-minlength="5" required>
+                </label>
+                <label class="item item-input" id="login-input4">
+                    <span class="intputLable ion-key"></span>
+                    <input name="password" ng-model-options="{ debounce: 500 }" ng-model="user.password" type="password" placeholder="Password" ng-minlength="6" required>
+                </label>
+                <div class="padding assertive">
+                    <!--<p ng-show="signupForm.email.$error.required">* Email is required</p>-->
+                    <p ng-show="signupForm.email.$invalid && !signupForm.email.$pristine">* Invalid email address</p>
+                    <p ng-show="signupForm.email.$error.minlength">* Emal must be longer than 5 characters</p>
+                    <!--<p ng-show="signupForm.password.$error.required">* Password is required</p>-->
+                    <p ng-show="signupForm.password.$error.minlength">* Password must be longer than 6 characters</p>
+                </div>
+                <button id="login-button1" ng-click="logIn(user)" ng-disabled="signupForm.$invalid" class="button button-positive button-block icon-left ion-log-in ListBtn">Log in</button>
+            </ion-list>
+            <button ui-sref="recoverPassword" id="login-button12" class="button button-dark button-small button-block button-clear">Forget your password</button>
+            <button ui-sref="signup" id="login-button2" class="button button-light  button-block button-clear">Or create an account</button>
+        </form>
+    </ion-content>
+</ion-view>
