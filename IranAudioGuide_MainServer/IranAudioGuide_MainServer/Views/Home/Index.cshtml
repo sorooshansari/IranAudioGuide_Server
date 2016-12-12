@@ -35,9 +35,10 @@
             </p>
         </header>
         <ul class="icons major">
-            <li><a href="#"><span class="icon fa-apple major style1"><span class="label">App Store</span></span></a></li>
-            <li><a href="#"><span class="icon fa-android major style2"><span class="label">Google Play</span></span></a></li>
-            <li><a href="#"><span class="icon fa-windows major style3"><span class="label">Windows Store</span></span></a></li>
+            <li  class="tooltips"><a href="#"><span class="icon fa-apple major style1"><span>Apple Store</span></span></a></li>
+            <li  class="tooltips"><a href="~/Download/IranAudioGuide.apk"><span class="icon fa-cloud-download major style3"><span>Local</span></span></a></li>
+            <li  class="tooltips"><a href="#"><span class="icon fa-android major style2"><span>Google Play</span></span></a></li>
+
         </ul>
     </div>
 </section>
@@ -45,7 +46,7 @@
 <!-- Two -->
 <section id="two" class="wrapper alt style2">
     <section class="spotlight">
-        <div class="image"><img src="~/images/pic01.jpg" alt="providing you with accurate information" /></div>
+        <div class="image"><img src="~/images/accurate3.svg" alt="providing you with accurate information" /></div>
         <div class="content">
             <h2>
                 providing you with accurate information<br />
@@ -56,7 +57,7 @@
     </section>
     <section class="spotlight">
         <div class="image">
-            <img src="~/images/pic02.jpg" alt="liberating you to visit attractions with your own pace" />
+            <img src="~/images/feather2.svg" alt="liberating you to visit attractions with your own pace" />
         </div><div class="content">
             <h2>
                 liberating you to visit attractions with your own pace <br />
@@ -66,7 +67,7 @@
         </div>
     </section>
     <section class="spotlight">
-        <div class="image"><img src="~/images/pic03.jpg" alt="Choose what to listen to" /></div>
+        <div class="image"><img src="~/images/hand-01.svg" alt="Choose what to listen to" /></div>
         <div class="content">
             <h2>
                 Choose what to listen to <br />
@@ -88,11 +89,11 @@
             </p>
         </header>
         <ul class="features">
-            <li class="icon fa-info-circle">
+            <li class="icon fa-map-signs">
                 <h3>Visiting tips</h3>
                 <p>Iran audio guide will provide you with tips for visiting every attraction, maps and all you need to know about modern Iran</p>
             </li>
-            <li class="icon fa-map-signs">
+            <li class="icon fa-info">
                 <h3>Attraction guide</h3>
                 <p>Iran audio guide will guide you step by step in every attraction. Advising you at what to look at and details not to miss</p>
             </li>
@@ -100,7 +101,7 @@
                 <h3>History</h3>
                 <p>Iran audio guide tell you Iran’s millenniums of history, historic stories, wars, victories and envasions </p>
             </li>
-            <li class="icon fa-superpowers">
+            <li class="icon fa-users">
                 <h3>Significant figures</h3>
                 <p>Iran audio guide will open up the story and achievements of Kings, poets, scientist and other significant people for you</p>
             </li>
@@ -127,14 +128,20 @@
             @*<h2>Get it from your store</h2>*@
         </div>
         <div class="row">
-            <div class="col-sm-3 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-                <a href="#" class="">
-                    <img src="~/images/AppleStore.png" />
+            <div class="col-sm-3 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+                <a  class="tooltips">
+                    <img src="~/images/as.png" />
+                    <span class="csspan">Coming Soon!</span>
                 </a>
             </div>
-            <div class="col-sm-3 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <div class="col-sm-3 col-sm-offset-1 col-xs-10 col-xs-offset-1">
                 <a href="#" class="">
-                    <img src="~/images/googlePlay.png" />
+                    <img src="~/images/lc.png" />
+                </a>
+            </div>
+            <div class="col-sm-3 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+                <a href="#" class="">
+                    <img src="~/images/gp.png" />
                 </a>
             </div>
             @*<div class="col-md-3 col-sm-offset-1">
@@ -149,16 +156,16 @@
 <!-- Footer -->
 <footer id="footer">
     <ul class="icons">
-        <li><a href="#" 
-               class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" 
-               class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-        <li><a href="#" 
-               class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" 
-               class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+        <li><a target="_blank" href="https://www.twitter.com/iranaudioguide" 
+               class="icon fa-twitter tooltips"><span>Twitter</span></a></li>
+        <li><a target="_blank" href="https://www.facebook.com/iranaudioguide" 
+               class="icon fa-facebook tooltips"><span>Facebook</span></a></li>
+        <li><a target="_blank" href="https://www.instagram.com/iranaudioguide" 
+               class="icon fa-instagram tooltips"><span>Instagram</span></a></li>
+        <li><a target="_blank" href="https://www.telegram.me/iranaudioguide" 
+               class="icon fa-telegram tooltips"><span>Telegram</span></a></li>
         <li><a href="mailto:info@iranaudioguide.com" 
-               class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+               class="icon fa-envelope-o tooltips"><span>Email</span></a></li>
     </ul>
     <ul id="copyright" class="copyright">
         <li>&copy; @DateTime.Now.Year - Soroosh Developer Team</li>

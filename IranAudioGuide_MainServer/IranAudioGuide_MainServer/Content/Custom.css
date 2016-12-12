@@ -1,24 +1,101 @@
-﻿body {
+﻿@font-face {
+    font-family: 'arcon';
+    src: url('../fonts/arcon-regular-webfont.woff2') format('woff2'),
+         url('../fonts/arcon-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'arconR';
+    src: url('../fonts/arcon-rounded-regular-webfont.woff2') format('woff2'),
+         url('../fonts/arcon-rounded-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Dosis|Raleway');
+
+body {
+font-family: 'Dosis', sans-serif;
+    text-shadow: 1px 1px 2px #191919;
+}
+.spotlight .image img {
+    border-radius: 0;
+    width: 70%;
+    margin: 0 auto;
+}
+.csspan{
+    bottom:95px !important;
+    background-color: white !important;
+    color: black !important;
+    text-shadow:none;
+            -moz-transition: all 0.1s ease;
+        -webkit-transition: all 0.1s ease;
+        -ms-transition: all 0.1s ease;
+        transition: all 0.1s ease;
+}
+.csspan:after
+{
+        border-top: 8px solid #fff !important;
 }
 
 .icons a,
 .row a {
     border-bottom: none;
+        text-decoration: none;
 }
-
+.icon.major {
+        box-shadow: 0px 0px 3px #1f1f1f;
+            border-radius: 18px;
+}
+.wrapper.style1 {
+    background-color: #007fa3;
+}
+.wrapper.style1 header.major p {
+    color: #dfdfdf;
+}
+section h2, section h3, section h4, section h5, section h6 {
+    font-family: 'arconR' !important;
+}
+.icon h3, .icon p
+{
+        text-shadow: 1px 1px 1px #191919;
+}
 .icon.style1 {
-    background-color: white;
-    color: #999999;
+    background-color: black;
+    color:#fff;
+    		-moz-transition: all 0.5s ease;
+		-webkit-transition: all 0.5s ease;
+		-ms-transition: all 0.5s ease;
+		transition: all 0.5s ease;
+}
+.icon.style1:hover {
+        color:#a5a5a5;
+		-moz-transition: all 0.5s ease;
+		-webkit-transition: all 0.5s ease;
+		-ms-transition: all 0.5s ease;
+		transition: all 0.5s ease;
 }
 
-.icon.icon.style2 {
-    background-color: white;
-    color: #A4C639;
+.icon.style2 {
+background-color: #a4c639;
+    color: #ffffff;
+        		-moz-transition: all 0.5s ease;
+		-webkit-transition: all 0.5s ease;
+		-ms-transition: all 0.5s ease;
+		transition: all 0.5s ease;
 }
-
+.icon.style2:hover {
+        color:#a5a5a5;
+		-moz-transition: all 0.5s ease;
+		-webkit-transition: all 0.5s ease;
+		-ms-transition: all 0.5s ease;
+		transition: all 0.5s ease;
+}
 .icon.style3 {
     background-color: white;
-    color: #00a1f1;
+    color: #505393;
 }
 
 .row img {
@@ -50,6 +127,7 @@
         /*color: #2c3e50;*/
         margin: 0;
         font-size: 36px;
+            font-family: 'arconR';
     }
 
     .underlined-title h2 {
@@ -57,10 +135,11 @@
         text-transform: uppercase;
         font-weight: 700;
         /*color: #95a5a6;*/
+            font-family: 'arconR';
     }
 
     .underlined-title hr {
-        width: 15%;
+        width: 30%;
         border-width: 3px;
         margin-left: auto;
         margin-right: auto;
@@ -75,6 +154,9 @@
     .underlined-title hr {
         margin-top: 5%;
     }
+    .csspan{
+    bottom:70px !important;
+}
 }
 
 @media (min-width: 400px) and (max-width: 767px) {
@@ -134,3 +216,134 @@
     margin-left: 0;
     margin-top: 0.5em;
 }
+
+
+
+/*tooltip*/
+
+
+li.tooltips {
+    position: relative;
+    display: inline;
+}
+
+    li.tooltips span span {
+        position: absolute;
+        width: 100px;
+        color: #FFFFFF;
+        background: #000000;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        /*visibility: hidden;*/
+        border-radius: 6px;
+        bottom: 70px;
+        left: 50%;
+        margin-left: 0px;
+        z-index: 999;
+        font-size: 15px;
+        opacity: 0;
+        transform: rotate(45deg);
+        -moz-transition: all 0.5s ease;
+        -webkit-transition: all 0.5s ease;
+        -ms-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+
+        li.tooltips span span:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid #000000;
+            border-right: 8px solid transparent;
+            border-left: 8px solid transparent;
+        }
+
+
+li:hover.tooltips span span {
+    /* visibility: visible; */
+    opacity: 0.8;
+    bottom: 70px;
+    left: 50%;
+    margin-left: 0px;
+    z-index: 999;
+    -moz-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+
+
+
+
+
+
+/*tooltip*/
+#footer .icons a {
+        top: 0px;
+            -moz-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+#footer .icons a:hover {
+        top: 5px;
+            -moz-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+a.tooltips {
+  position: relative;
+  display: inline;
+}
+a.tooltips span {
+  position: absolute;
+    width: 100px;
+    color: #FFFFFF;
+    background: #000000;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    opacity: 0;
+    /* visibility: hidden; */
+    bottom: 35px;
+    left: 50%;
+    margin-left: -50px;
+    border-radius: 6px;
+    font-size: 12px;
+    -moz-transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+}
+a.tooltips span:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-top: 8px solid #000000;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+a:hover.tooltips span {
+    /*visibility: visible;*/
+    opacity: 0.8;
+    bottom: 35px;
+    left: 50%;
+    margin-left: -50px;
+    z-index: 999;
+            -moz-transition: all 1s ease;
+        -webkit-transition: all 1s ease;
+        -ms-transition: all 1s ease;
+        transition: all 1s ease;
+}
+
