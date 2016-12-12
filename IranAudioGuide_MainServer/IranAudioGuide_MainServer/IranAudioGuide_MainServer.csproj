@@ -1157,6 +1157,8 @@
     <Content Include="Scripts\skel.min.js" />
     <Content Include="Scripts\util.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="robots.txt" />
+    <Content Include="sitemap.xml" />
     <Content Include="Views\Admin\loading-overlay-template.html" />
     <Content Include="Views\Shared\ContactEmailTemplate.html" />
     <Content Include="Web.config" />

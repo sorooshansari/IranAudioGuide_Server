@@ -1,0 +1,50 @@
+<ion-view title="{{PageTitle}}" id="page4">
+    <ion-content padding="false" class="has-header">
+        <form class="list">
+
+            <!--<label class="item item-select ic-selected" id="page-select1" data-componentid="select1">-->
+            <label class="item item-select ic-selected">
+                <span class="input-label" aria-label="Select City" id="_label-2">Select City</span>
+                <select ng-change="CitySelected(SelectedCity)" ng-model="SelectedCity">
+                    <option ng-repeat="c in Cities" value="{{c.Cit_Id}}">{{c.Cit_Name}}</option>
+                </select>
+            </label>
+            <!--<ion-item>
+                <ion-label>Select City</ion-label>
+                <ion-select ng-model="SelectedCity">
+                    <ion-option value="0" checked="true">All</ion-option>
+                    <ion-option ng-repeat="c in Cities" value="{{c.Cit_Id}}">{{c.Cit_Name}}</ion-option>
+                </ion-select>
+            </ion-item>-->
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="search" ng-model="search"
+                       ng-change='searchPlaces(search)'
+                       placeholder="Place Name">
+                <i class="icon ion-close-circled ClearBtn" ng-show="search.length" ng-click="Clear()"></i>
+            </label>
+            <ion-list>
+                <ion-item class="item-remove-animate item-thumbnail-left item-icon-right homeItems"
+                          ng-repeat="place in selectedPlaces" type="item-text-wrap" 
+                          ui-sref="tabsController.placeSearched({id: '{{place.Id}}'})">
+                    <img ng-src="{{place.logo}}">
+                    <h2 style="color:black;">{{place.name}}</h2>
+                    <p style="font-size: 0.69em; background: #666;color: #fff;padding: 0px 6px;display: inline-block;border-radius: 3px;">{{place.city}}</p>
+                    <p>{{place.address}}</p>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                    <ion-option-button class="likeBtn text-center" ng-click="favorito(place)"><i class="icon ion-bookmark positive"></i></ion-option-button>
+                </ion-item>
+            </ion-list>
+            <!--<ion-item class="item-thumbnail-left" ui-sref="tabsController.place">
+                <img src="img/CtTmSqiIQri2k7gMGImu_place.jpg">
+                <h2>Title</h2>
+                <p style="white-space:normal;">Item</p>
+            </ion-item>
+            <ion-item class="item-thumbnail-left" ui-sref="tabsController.place">
+                <img src="img/mPWnavImQtqsFn7rje9p_place.jpg">
+                <h2>Title</h2>
+                <p style="white-space:normal;">Item</p>
+            </ion-item>-->
+        </form>
+    </ion-content>
+</ion-view>

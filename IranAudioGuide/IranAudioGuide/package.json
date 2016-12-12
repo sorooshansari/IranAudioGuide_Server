@@ -1,7 +1,7 @@
 {
-  "name": "tourapp",
+  "name": "iran_audio_guide",
   "version": "1.1.1",
-  "description": "tourApp: An Ionic project",
+  "description": "Iran Audio Guide: Best audio guide application for iran travel",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",

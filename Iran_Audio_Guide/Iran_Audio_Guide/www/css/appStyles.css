@@ -1,0 +1,71 @@
+﻿@font-face {
+  font-family: "Arcon";
+  src: url("../lib/ionic/fonts/Arcon-Rounded-Regular.otf");
+  font-weight: normal;
+  font-style: normal; }
+
+* {
+
+    font-family:'Arcon';
+}
+body {
+
+    
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.noBoarder {
+    border: none !important;
+}
+
+.player {
+    margin: 0;
+    padding: 0;
+}
+
+.ClearBtn {
+    margin-right: 5%;
+}
+
+.ListBtn {
+    border-radius: 0px 0px 0px 0px;
+    margin-top: 0px !important;
+}
+
+.intputLable {
+    width: 25px;
+}
+
+.gradiantBG {
+    background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 28%, rgba(237,237,237,1) 100%);
+}
+
+.bar-transparent .bar.bar-header {
+    background: rgba(255,255,255,0);
+    border-bottom-width: 0;
+}
+
+    .bar-transparent .bar.bar-header h1 {
+        color: black !important;
+    }
+
+.bar-transparent .scroll-content {
+    overflow: visible !important;
+}
+
+.bar-transparent .platform-ios.platform-cordova:not(.fullscreen) .has-header {
+    top: 0px;
+}
+
+
+.item-content img
+{
+    left: 0px !important;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 1px 1px 3px #888;
+}
