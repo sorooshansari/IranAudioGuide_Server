@@ -40,6 +40,12 @@ font-family: 'Dosis', sans-serif;
         border-top: 8px solid #fff !important;
 }
 
+.dlrow
+{
+    padding-left:0px !important;
+    margin-left:7.33333333% !important;
+}
+
 .icons a,
 .row a {
     border-bottom: none;
@@ -106,6 +112,10 @@ background-color: #a4c639;
     .col-xs-offset-point5 {
         margin-left: 4.16666666%;
     }
+    .dlrow
+{
+    padding-left:1.5em !important;
+}
 }
 
 @media (min-width: 768px) {
