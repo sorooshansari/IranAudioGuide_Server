@@ -21,6 +21,13 @@ font-family: 'Dosis', sans-serif;
     text-shadow: 1px 1px 2px #191919;
 }
 
+#footer .icons a:hover {
+    color: #00a293;
+}
+#menu li i {
+    margin-right: 10px;
+    font-size: 20px;
+}
 .form-horizontal .form-group {
     margin-left: 0px;
     margin-right: 0px;
@@ -317,7 +324,7 @@ li.tooltips {
 
     li.tooltips span span {
         position: absolute;
-        width: 100px;
+        width: 130px;
         color: #FFFFFF;
         background: #000000;
         height: 30px;
@@ -327,7 +334,7 @@ li.tooltips {
         border-radius: 6px;
         bottom: 70px;
         left: 50%;
-        margin-left: 0px;
+        margin-left: -10px;
         z-index: 999;
         font-size: 15px;
         opacity: 0;
@@ -356,9 +363,9 @@ li.tooltips {
 li:hover.tooltips span span {
     /* visibility: visible; */
     opacity: 0.8;
-    bottom: 70px;
-    left: 50%;
-    margin-left: 0px;
+        bottom: 70px;
+        left: 50%;
+        margin-left: -10px;
     z-index: 999;
     -moz-transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
