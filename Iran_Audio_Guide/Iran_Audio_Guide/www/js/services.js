@@ -302,28 +302,25 @@ angular.module('app.services', [])
     }
 }])
 .service('dbServices', ['$rootScope', '$cordovaSQLite', 'FileServices', function ($rootScope, $cordovaSQLite, FileServices) {
-    var db = null;
-    function test(query, list) {
-
-        db.transaction(function (tx) {
-
-            tx.executeSql(query, [list], function (tx, res) {
-                console.log("insertId: " + res.insertId + " -- probably 1");
-                console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
-            },
-            function (tx, error) {
-                console.log('INSERT error: ' + error.message);
-            });
-        }, function (error) {
-            console.log('transaction error: ' + error.message);
-        }, function () {
-            console.log('transaction ok');
-        });
-    }
+    //var db = null;
+    
     return {
         openDB: function () {
-            //db = $cordovaSQLite.openDB({ name: 'IAG.db', iosDatabaseLocation: 'default' });
-            db = window.sqlitePlugin.openDatabase({ name: 'IAG.db', location: 'default' });
+            var isIOS = ionic.Platform.isIOS();
+            var isAndroid = ionic.Platform.isAndroid();
+            console.log(isIOS, isAndroid);
+            if (isAndroid) {
+                db = window.sqlitePlugin.openDatabase({ name: 'IAG.db', location: 'default' });
+            }
+            if (isIOS) {
+                db = window.sqlitePlugin.openDatabase({ name: 'IAG.db', iosDatabaseLocation: 'Library' }, successcb, errorcb);
+            }
+            var successcb = function () {
+                alert("db open: success");
+            };
+            var errorcb = function (err) {
+                alert("db open: error--> " + err);
+            };
         },
         initiate: function () {
             //if (isAndroid) {
@@ -403,18 +400,12 @@ angular.module('app.services', [])
             TiC_Name text,\
             Cit_Priiority integer\
             )"], function () {
+                alert('Create database OK');
                 console.log('Create database OK');
-            }, function(error) {
+            }, function (error) {
+                alert('SQL batch ERROR: ' + error.message);
                 console.log('SQL batch ERROR: ' + error.message);
             });
-            //var query = "INSERT OR REPLACE INTO test\
-            //        (Id,\
-            //        name,\
-            //        family\)\
-            //        VALUES (?,?,?)";
-            //test(query, [1
-            //        , 'soroosh'
-            //        , 'ansari']);
         },
         populatePlaces: function (Places) {
             $rootScope.waitingUpdates = Places.length || 0;
@@ -434,8 +425,7 @@ angular.module('app.services', [])
                     Pla_Dirty_TNImgUrl)\
                     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             for (var i = 0; i < Places.length; i++) {
-                $cordovaSQLite.execute(db, query,
-                    [Places[i].Id
+                db.executeSql(query, [Places[i].Id
                     , Places[i].Name
                     , Places[i].ImgUrl
                     , Places[i].TNImgUrl
@@ -447,12 +437,14 @@ angular.module('app.services', [])
                     , (Places[i].isPrimary) ? 1 : 0
                     , 0
                     , 1
-                    , 1])
-                    .then(function (result) {
-                        console.log("Places INSERT ID -> " + result.insertId);
-                    }, function (error) {
-                        console.error(error);
+                    , 1],
+                    function (res) {
+
+                    },
+                    function (error) {
+                        console.error('error: ' + error.message);
                     });
+                
                 if (Places[i].isPrimary) {
                     $rootScope.waitingUpdates++;
                     var id = Places[i].Id;
@@ -464,16 +456,26 @@ angular.module('app.services', [])
                                 UPDATE Places\
                                 SET Pla_Dirty_imgUrl = 0\
                                 WHERE Pla_Id = ?";
-                            $cordovaSQLite.execute(db, query, [id])
-                                    .then(function (result) {
-                                        console.log("place image cleaned: ", id);
-                                        $rootScope.waitingUpdates--;
-                                        $rootScope.$broadcast('CheckWaitingUpdates');
-                                    }, function (error) {
-                                        console.error(error);
-                                        $rootScope.waitingUpdates--;
-                                        $rootScope.$broadcast('CheckWaitingUpdates');
-                                    });
+                            db.executeSql(query, [id],
+                            function (res) {
+                                console.log("place image cleaned: ", id);
+                                $rootScope.waitingUpdates--;
+                                $rootScope.$broadcast('CheckWaitingUpdates');
+                            },
+                            function (error) {
+                                $rootScope.waitingUpdates--;
+                                $rootScope.$broadcast('CheckWaitingUpdates');
+                            });
+                            //$cordovaSQLite.execute(db, query, [id])
+                            //        .then(function (result) {
+                            //            console.log("place image cleaned: ", id);
+                            //            $rootScope.waitingUpdates--;
+                            //            $rootScope.$broadcast('CheckWaitingUpdates');
+                            //        }, function (error) {
+                            //            console.error(error);
+                            //            $rootScope.waitingUpdates--;
+                            //            $rootScope.$broadcast('CheckWaitingUpdates');
+                            //        });
                             // Success!
                         }, function (err) {
                             console.log(err);
@@ -499,20 +501,46 @@ angular.module('app.services', [])
                     ,Aud_desc\
                     ,Aud_Dirty)\
                     VALUES (?,?,?,?,?,?)";
-            for (var i = 0; i < Audios.length; i++) {
-                $cordovaSQLite.execute(db, query,
-                    [Audios[i].ID
-                    , Audios[i].PlaceId
-                    , Audios[i].Name
-                    , Audios[i].Url
-                    , Audios[i].Desc
-                    , 1])
-                    .then(function (result) {
-                        console.log("Audios INSERT ID -> " + result.insertId);
-                    }, function (error) {
-                        console.error(error);
+            var AudiosList = [];
+
+            db.transaction(function (tx) {
+                for (var i = 0; i < Audios.length; i++) {
+                    tx.executeSql(query, [Audios[i].ID
+                        , Audios[i].PlaceId
+                        , Audios[i].Name
+                        , Audios[i].Url
+                        , Audios[i].Desc
+                        , 1],
+                    function (tx, res) {
+                        //console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+                    },
+                    function (tx, error) {
+                        alert('INSERT error: ' + error.message);
+                        console.error('error: ' + error.message);
                     });
-            }
+                }
+            }, function (error) {
+                alert('transaction error: ' + error.message);
+                console.log('transaction error: ' + error.message);
+                return false;
+            }, function () {
+                //alert(query);
+                console.log('transaction ok');
+                return true;
+            });
+            //$cordovaSQLite.execute(db, query,
+            //    [Audios[i].ID
+            //    , Audios[i].PlaceId
+            //    , Audios[i].Name
+            //    , Audios[i].Url
+            //    , Audios[i].Desc
+            //    , 1])
+            //    .then(function (result) {
+            //        console.log("Audios INSERT ID -> " + result.insertId);
+            //    }, function (error) {
+            //        console.error(error);
+            //    });
+
         },
         populateStories: function (Stories) {
             var query = "INSERT OR REPLACE INTO Stories\
@@ -523,20 +551,47 @@ angular.module('app.services', [])
                     ,Sto_desc\
                     ,Sto_Dirty)\
                     VALUES (?,?,?,?,?,?)";
-            for (var i = 0; i < Stories.length; i++) {
-                $cordovaSQLite.execute(db, query,
-                    [Stories[i].ID
-                    , Stories[i].PlaceId
-                    , Stories[i].Name
-                    , Stories[i].Url
-                    , Stories[i].Desc
-                    , 1])
-                    .then(function (result) {
-                        console.log("Stories INSERT ID -> " + result.insertId);
-                    }, function (error) {
-                        console.error(error);
-                    });
-            }
+            db.transaction(function (tx) {
+                for (var i = 0; i < Stories.length; i++) {
+                    tx.executeSql(query,
+                        [Stories[i].ID
+                        , Stories[i].PlaceId
+                        , Stories[i].Name
+                        , Stories[i].Url
+                        , Stories[i].Desc
+                        , 1],
+                        function (tx, res) {
+                            //console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+                        },
+                        function (tx, error) {
+                            alert('INSERT error: ' + error.message);
+                            console.error('error: ' + error.message);
+                        });
+                }
+            }, function (error) {
+                alert('transaction error: ' + error.message);
+                console.log('transaction error: ' + error.message);
+                return false;
+            }, function () {
+                //alert(query);
+                console.log('transaction ok');
+                return true;
+            });
+            
+            //for (var i = 0; i < Stories.length; i++) {
+            //    $cordovaSQLite.execute(db, query,
+            //        [Stories[i].ID
+            //        , Stories[i].PlaceId
+            //        , Stories[i].Name
+            //        , Stories[i].Url
+            //        , Stories[i].Desc
+            //        , 1])
+            //        .then(function (result) {
+            //            console.log("Stories INSERT ID -> " + result.insertId);
+            //        }, function (error) {
+            //            console.error(error);
+            //        });
+            //}
         },
         populateImages: function (Images) {
             var query = "INSERT OR REPLACE INTO Images\
@@ -546,19 +601,45 @@ angular.module('app.services', [])
                     Img_desc,\
                     Img_Dirty)\
                     VALUES (?,?,?,?,?)";
-            for (var i = 0; i < Images.length; i++) {
-                $cordovaSQLite.execute(db, query,
-                    [Images[i].ID
-                    , Images[i].PlaceId
-                    , Images[i].Url
-                    , Images[i].Desc
-                    , 1])
-                    .then(function (result) {
-                        console.log("Images INSERT ID -> " + result.insertId);
-                    }, function (error) {
-                        console.error(error);
-                    });
-            }
+            db.transaction(function (tx) {
+                for (var i = 0; i < Images.length; i++) {
+                    tx.executeSql(query,
+                        [Images[i].ID
+                        , Images[i].PlaceId
+                        , Images[i].Url
+                        , Images[i].Desc
+                        , 1],
+                        function (tx, res) {
+                            //console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+                        },
+                        function (tx, error) {
+                            alert('INSERT error: ' + error.message);
+                            console.error('error: ' + error.message);
+                        });
+                }
+            }, function (error) {
+                alert('transaction error: ' + error.message);
+                console.log('transaction error: ' + error.message);
+                return false;
+            }, function () {
+                //alert(query);
+                console.log('transaction ok');
+                return true;
+            });
+
+            //for (var i = 0; i < Images.length; i++) {
+            //    $cordovaSQLite.execute(db, query,
+            //        [Images[i].ID
+            //        , Images[i].PlaceId
+            //        , Images[i].Url
+            //        , Images[i].Desc
+            //        , 1])
+            //        .then(function (result) {
+            //            console.log("Images INSERT ID -> " + result.insertId);
+            //        }, function (error) {
+            //            console.error(error);
+            //        });
+            //}
         },
         populateTips: function (Tips) {
             var query = "INSERT OR REPLACE INTO Tips\
@@ -567,18 +648,43 @@ angular.module('app.services', [])
                     Tip_CategoryId,\
                     Tip_Contetnt)\
                     VALUES (?,?,?,?)";
-            for (var i = 0; i < Tips.length; i++) {
-                $cordovaSQLite.execute(db, query,
-                    [Tips[i].ID
-                    , Tips[i].PlaceId
-                    , Tips[i].CategoryId
-                    , Tips[i].Content])
-                    .then(function (result) {
-                        console.log("Tips INSERT ID -> " + result.insertId);
-                    }, function (error) {
-                        console.error(error);
-                    });
-            }
+            db.transaction(function (tx) {
+                for (var i = 0; i < Tips.length; i++) {
+                    tx.executeSql(query,
+                        [Tips[i].ID
+                        , Tips[i].PlaceId
+                        , Tips[i].CategoryId
+                        , Tips[i].Content],
+                        function (tx, res) {
+                            //console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+                        },
+                        function (tx, error) {
+                            alert('INSERT error: ' + error.message);
+                            console.error('error: ' + error.message);
+                        });
+                }
+            }, function (error) {
+                alert('transaction error: ' + error.message);
+                console.log('transaction error: ' + error.message);
+                return false;
+            }, function () {
+                //alert(query);
+                console.log('transaction ok');
+                return true;
+            });
+                        
+            //for (var i = 0; i < Tips.length; i++) {
+            //    $cordovaSQLite.execute(db, query,
+            //        [Tips[i].ID
+            //        , Tips[i].PlaceId
+            //        , Tips[i].CategoryId
+            //        , Tips[i].Content])
+            //        .then(function (result) {
+            //            console.log("Tips INSERT ID -> " + result.insertId);
+            //        }, function (error) {
+            //            console.error(error);
+            //        });
+            //}
         },
         populateTipCategories: function (TipCategories) {
             var query = "INSERT OR REPLACE INTO TipCategories\
@@ -589,19 +695,45 @@ angular.module('app.services', [])
                     TiC_Name,\
                     Cit_Priiority)\
                     VALUES (?,?,?,?,?)";
-            for (var i = 0; i < TipCategories.length; i++) {
-                $cordovaSQLite.execute(db, query,
-                    [TipCategories[i].ID
-                    , TipCategories[i].Class
-                    , TipCategories[i].Unicode
-                    , TipCategories[i].Name
-                    , TipCategories[i].Priority])
-                    .then(function (result) {
-                        console.log("TipCategories INSERT ID -> " + result.insertId);
-                    }, function (error) {
-                        console.error(error);
-                    });
-            }
+            db.transaction(function (tx) {
+                for (var i = 0; i < TipCategories.length; i++) {
+                    tx.executeSql(query,
+                        [TipCategories[i].ID
+                        , TipCategories[i].Class
+                        , TipCategories[i].Unicode
+                        , TipCategories[i].Name
+                        , TipCategories[i].Priority],
+                        function (tx, res) {
+                            //console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+                        },
+                        function (tx, error) {
+                            alert('INSERT error: ' + error.message);
+                            console.error('error: ' + error.message);
+                        });
+                }
+            }, function (error) {
+                alert('transaction error: ' + error.message);
+                console.log('transaction error: ' + error.message);
+                return false;
+            }, function () {
+                //alert(query);
+                console.log('transaction ok');
+                return true;
+            });
+
+            //for (var i = 0; i < TipCategories.length; i++) {
+            //    $cordovaSQLite.execute(db, query,
+            //        [TipCategories[i].ID
+            //        , TipCategories[i].Class
+            //        , TipCategories[i].Unicode
+            //        , TipCategories[i].Name
+            //        , TipCategories[i].Priority])
+            //        .then(function (result) {
+            //            console.log("TipCategories INSERT ID -> " + result.insertId);
+            //        }, function (error) {
+            //            console.error(error);
+            //        });
+            //}
         },
         populateCities: function (Cities) {
             var query = "INSERT OR REPLACE INTO Cities\
@@ -609,17 +741,41 @@ angular.module('app.services', [])
                     ,Cit_Name\
                     ,Cit_Dirty)\
                     VALUES (?,?,?)";
-            for (var i = 0; i < Cities.length; i++) {
-                $cordovaSQLite.execute(db, query,
-                    [Cities[i].Id
-                    , Cities[i].Name
-                    , 1])
-                    .then(function (result) {
-                        console.log("Cities INSERT ID -> " + result.insertId);
-                    }, function (error) {
-                        console.error(error);
-                    });
-            }
+            db.transaction(function (tx) {
+                for (var i = 0; i < Cities.length; i++) {
+                    tx.executeSql(query,
+                        [Cities[i].Id
+                        , Cities[i].Name
+                        , 1],
+                        function (tx, res) {
+                            //console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+                        },
+                        function (tx, error) {
+                            alert('INSERT error: ' + error.message);
+                            console.error('error: ' + error.message);
+                        });
+                }
+            }, function (error) {
+                alert('transaction error: ' + error.message);
+                console.log('transaction error: ' + error.message);
+                return false;
+            }, function () {
+                //alert(query);
+                console.log('transaction ok');
+                return true;
+            });
+                        
+            //for (var i = 0; i < Cities.length; i++) {
+            //    $cordovaSQLite.execute(db, query,
+            //        [Cities[i].Id
+            //        , Cities[i].Name
+            //        , 1])
+            //        .then(function (result) {
+            //            console.log("Cities INSERT ID -> " + result.insertId);
+            //        }, function (error) {
+            //            console.error(error);
+            //        });
+            //}
         },
         removeAudioFiles: function (AudioIds) {
             var stringIDs = AudioIds.map(String);
@@ -628,17 +784,40 @@ angular.module('app.services', [])
                 SELECT Aud_Url\
                 FROM Audios\
                 WHERE Aud_Id IN (" + args + ")";
-            return $cordovaSQLite.execute(db, query)
-            .then(function (result) {
-                var res = result.rows;
-                console.log("to remove audios:", res)
-                for (var i = 0; i < res.length; i++) {
-                    var file = res.item(i).Aud_Url;
-                    FileServices.RemoveTrack(file, 1);
-                }
-            }, function (error) {
-                console.error(error);
-            });
+            var queryRemove = "\
+                DELETE FROM Audios\
+                WHERE Aud_Id IN (" + args + ")";
+            db.executeSql(query, [],
+                function (res) {
+                    var result = res.rows;
+                    console.log("to remove audios:", result)
+                    for (var i = 0; i < result.length; i++) {
+                        var file = result.item(i).Aud_Url;
+                        FileServices.RemoveTrack(file, 1);
+                    }
+                    db.executeSql(queryRemove, [],
+                        function (res) {
+                            console.log("Audios removed");
+                        },
+                        function (error) {
+                            console.log("Audios removing failed");
+                        });
+                },
+                function (error) {
+                    console.log('error: ' + error.message);
+                });
+
+            //$cordovaSQLite.execute(db, query)
+            //.then(function (result) {
+            //    var res = result.rows;
+            //    console.log("to remove audios:", res)
+            //    for (var i = 0; i < res.length; i++) {
+            //        var file = res.item(i).Aud_Url;
+            //        FileServices.RemoveTrack(file, 1);
+            //    }
+            //}, function (error) {
+            //    console.error(error);
+            //});
         },
         removeStoryFiles: function (StoryIds) {
             var stringIDs = StoryIds.map(String);
@@ -647,31 +826,62 @@ angular.module('app.services', [])
                 SELECT Sto_Url\
                 FROM Stories\
                 WHERE Sto_Id IN (" + args + ")";
-            return $cordovaSQLite.execute(db, query)
-            .then(function (result) {
-                var res = result.rows;
-                console.log("to remove stories:", res)
-                for (var i = 0; i < res.length; i++) {
-                    var file = res.item(i).Sto_Url;
-                    FileServices.RemoveTrack(file, 0);
-                }
-            }, function (error) {
-                console.error(error);
-            });
+            var queryRemove = "\
+                DELETE FROM Stories\
+                WHERE Sto_Id IN (" + args + ")";
+            db.executeSql(query, [],
+                function (res) {
+                    var result = res.rows;
+                    console.log("to remove stories:", result)
+                    for (var i = 0; i < result.length; i++) {
+                        var file = result.item(i).Sto_Url;
+                        FileServices.RemoveTrack(file, 0);
+                    }
+                    db.executeSql(queryRemove, [],
+                        function (res) {
+                            console.log("stories removed");
+                        },
+                        function (error) {
+                            console.log("stories removing failed");
+                        });
+                },
+                function (error) {
+                    console.log('error: ' + error.message);
+                });
+
+            //$cordovaSQLite.execute(db, query)
+            //.then(function (result) {
+            //    var res = result.rows;
+            //    console.log("to remove stories:", res)
+            //    for (var i = 0; i < res.length; i++) {
+            //        var file = res.item(i).Sto_Url;
+            //        FileServices.RemoveTrack(file, 0);
+            //    }
+            //}, function (error) {
+            //    console.error(error);
+            //});
         },
         deleteFromTable: function (tableName, tableIdColumn, IDs) {
             for (var i = 0; i < IDs.length - 1; i++) {
                 var query = "\
                 DELETE FROM " + tableName + "\
                 WHERE " + tableIdColumn + " = ?";
-                console.log(query);
-                $cordovaSQLite.execute(db, query, IDs[i])
-                        .then(function (result) {
-                            console.log("deleted IDs --> " + result);
-                        }, function (error) {
-                            console.log("IDs --> ", IDs[i]);
-                            console.error(error);
-                        });
+                db.executeSql(query,
+                        IDs[i],
+                function (res) {
+                    console.log("removed from: " + tableName);
+                },
+                function (error) {
+                    console.log("removing from: " + tableName + " failed");
+                });
+
+                //$cordovaSQLite.execute(db, query, IDs[i])
+                //        .then(function (result) {
+                //            console.log("deleted IDs --> " + result);
+                //        }, function (error) {
+                //            console.log("IDs --> ", IDs[i]);
+                //            console.error(error);
+                //        });
             }
 
         },
@@ -680,117 +890,147 @@ angular.module('app.services', [])
             UPDATE Places\
             SET Pla_Dirty_TNImgUrl = 0\
             WHERE Pla_Id = ?";
-            $cordovaSQLite.execute(db, query, [PlaceID])
-                    .then(function (result) {
-                        console.log("placeTumbImageCleaned");
-                        $rootScope.waitingUpdates--;
-                        $rootScope.$broadcast('CheckWaitingUpdates');
-                    }, function (error) {
-                        console.error(error);
-                        $rootScope.waitingUpdates--;
-                        $rootScope.$broadcast('CheckWaitingUpdates');
-                    });
+            db.executeSql(query,
+                        [PlaceID],
+                function (res) {
+                    console.log("placeTumbImageCleaned");
+                    $rootScope.waitingUpdates--;
+                    $rootScope.$broadcast('CheckWaitingUpdates');
+                },
+                function (error) {
+                    console.error("place TumbImage Cleaning failed");
+                    $rootScope.waitingUpdates--;
+                    $rootScope.$broadcast('CheckWaitingUpdates');
+                });
+
+            //$cordovaSQLite.execute(db, query, [PlaceID])
+            //        .then(function (result) {
+            //            console.log("placeTumbImageCleaned");
+            //            $rootScope.waitingUpdates--;
+            //            $rootScope.$broadcast('CheckWaitingUpdates');
+            //        }, function (error) {
+            //            console.error(error);
+            //            $rootScope.waitingUpdates--;
+            //            $rootScope.$broadcast('CheckWaitingUpdates');
+            //        });
         },
         CleanPlaceImage: function (PlaceID) {
             var query = "\
             UPDATE Places\
             SET Pla_Dirty_imgUrl = 0\
             WHERE Pla_Id = ?";
-            $cordovaSQLite.execute(db, query, [PlaceID])
-                    .then(function (result) {
-                        console.log("placeImageCleaned");
-                    }, function (error) {
-                        console.error(error);
-                    });
+            db.executeSql(query,
+                        [PlaceID],
+                function (res) {
+                    console.log("placeImageCleaned");
+                },
+                function (error) {
+                    console.log("placeImageCleaned");
+                });
+
+            //$cordovaSQLite.execute(db, query, [PlaceID])
+            //        .then(function (result) {
+            //            console.log("placeImageCleaned");
+            //        }, function (error) {
+            //            console.error(error);
+            //        });
         },
         CleanPlaceExtraImage: function (ImageId) {
             var query = "\
             UPDATE Images\
             SET Img_Dirty = 0\
             WHERE Img_Id = ?";
-            $cordovaSQLite.execute(db, query, [ImageId])
-                    .then(function (result) {
-                        console.log("placeExtraImageCleaned");
-                    }, function (error) {
-                        console.error(error);
-                    });
+            db.executeSql(query,
+                        [ImageId],
+                function (res) {
+                    console.log("placeExtraImageCleaned");
+                },
+                function (error) {
+                    console.log("place ExtraImage Cleaning failed");
+                });
+
+            //$cordovaSQLite.execute(db, query, [ImageId])
+            //        .then(function (result) {
+            //            console.log("placeExtraImageCleaned");
+            //        }, function (error) {
+            //            console.error(error);
+            //        });
         },
         CleanAudio: function (AudioId) {
             var query = "\
             UPDATE Audios\
             SET Aud_Dirty = 0\
             WHERE Aud_Id = ?";
-            $cordovaSQLite.execute(db, query, [AudioId])
-                    .then(function (result) {
-                        console.log("Audio Cleaned: ", result);
-                    }, function (error) {
-                        console.error(error);
-                    });
+            db.executeSql(query,
+                        [AudioId],
+                function (res) {
+                    console.log("Audio Cleaned");
+                },
+                function (error) {
+                    console.log("Audio Cleaning failed");
+                });
+
+            //$cordovaSQLite.execute(db, query, [AudioId])
+            //        .then(function (result) {
+            //            console.log("Audio Cleaned: ", result);
+            //        }, function (error) {
+            //            console.error(error);
+            //        });
         },
         bookmarkePlace: function (PlaceID) {
             var query = "\
             UPDATE Places\
             SET Pla_bookmarked = 1\
             WHERE Pla_Id = ?";
-            return $cordovaSQLite.execute(db, query, [PlaceID]);
+            db.executeSql(query,
+                        [PlaceID],
+                function (res) {
+                    $rootScope.$broadcast('PlaceBookmarked', { placeId: PlaceID });
+                    console.log("Place bookmarked");
+                },
+                function (error) {
+                    console.log("Place bookmarking failed");
+                });
+
+            //return $cordovaSQLite.execute(db, query, [PlaceID]);
         },
         unbookmarkePlace: function (PlaceID) {
             var query = "\
             UPDATE Places\
             SET Pla_bookmarked = 0\
             WHERE Pla_Id = ?";
-            return $cordovaSQLite.execute(db, query, [PlaceID]);
-        },
-        dbTest: function () {
-            console.log("places");
-            var query = "SELECT * FROM Places";
-            $cordovaSQLite.execute(db, query).then(function (result) {
-                for (var i = 0; i < result.rows.length; i++) {
-                    console.log(result.rows.item(i));
-                }
-            }, function (error) {
-                console.error(error);
-            });
-            console.log("Audios");
-            query = "SELECT * FROM Audios";
-            $cordovaSQLite.execute(db, query).then(function (result) {
-                for (var i = 0; i < result.rows.length; i++) {
-                    console.log(result.rows.item(i));
-                }
-            }, function (error) {
-                console.error(error);
-            });
-            console.log("Images");
-            query = "SELECT * FROM Images";
-            $cordovaSQLite.execute(db, query).then(function (result) {
-                for (var i = 0; i < result.rows.length; i++) {
-                    console.log(result.rows.item(i));
-                }
-            }, function (error) {
-                console.error(error);
-            });
-            console.log("cities");
-            query = "SELECT * FROM Cities";
-            $cordovaSQLite.execute(db, query).then(function (result) {
-                for (var i = 0; i < result.rows.length; i++) {
-                    console.log(result.rows.item(i));
-                }
-            }, function (error) {
-                console.error(error);
-            });
+            db.executeSql(query,
+                        [PlaceID],
+                function (res) {
+                    $rootScope.$broadcast('PlaceUnbookmarked', { placeId: PlaceID });
+                    console.log("Place unbookmarked");
+                },
+                function (error) {
+                    console.log("Place bookmarking failed");
+                });
+
+            //return $cordovaSQLite.execute(db, query, [PlaceID]);
         },
         LoadAllCities: function () {
-            var Cities = [];
             var query = "\
                 SELECT\
                     Cit_Id,\
                     Cit_Name\
                 FROM Cities";
-            $cordovaSQLite.execute(db, query).then(function (result) {
-                $rootScope.$broadcast('FillCities', { result: result });
-            }, function (error) {
-                console.error(error);
+            db.executeSql(query, [],
+            function (res) {
+                console.log(query, res);
+                $rootScope.$broadcast('FillCities', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
             });
+
+            //$cordovaSQLite.execute(db, query).then(function (result) {
+            //    $rootScope.$broadcast('FillCities', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
         },
         LoadAllPlaces: function () {
             var query = "\
@@ -805,11 +1045,20 @@ angular.module('app.services', [])
                     Pla_CityId\
                 FROM Places JOIN Cities\
                 ON Places.Pla_CityId = Cities.Cit_Id";
-            $cordovaSQLite.execute(db, query).then(function (result) {
-                $rootScope.$broadcast('FillPlaces', { result: result });
-            }, function (error) {
-                console.error(error);
+            db.executeSql(query, [],
+            function (res) {
+                console.log(query, res);
+                $rootScope.$broadcast('FillPlaces', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
             });
+
+            //$cordovaSQLite.execute(db, query).then(function (result) {
+            //    $rootScope.$broadcast('FillPlaces', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
         },
         LoadPrimaryPlaces: function () {
             var query = "\
@@ -825,7 +1074,16 @@ angular.module('app.services', [])
                 FROM Places JOIN Cities\
                 ON Places.Pla_CityId = Cities.Cit_Id\
                 WHERE Places.Pla_isPrimary = 1";
-            return $cordovaSQLite.execute(db, query);
+            db.executeSql(query, [],
+            function (res) {
+                console.log(query, res);
+                $rootScope.$broadcast('PrimaryPlacesLoaded', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
+            });
+
+            //return $cordovaSQLite.execute(db, query);
         },
         LoadBookmarkedPlaces: function () {
             var query = "\
@@ -841,14 +1099,33 @@ angular.module('app.services', [])
                 FROM Places JOIN Cities\
                 ON Places.Pla_CityId = Cities.Cit_Id\
                 WHERE Places.Pla_bookmarked = 1";
-            return $cordovaSQLite.execute(db, query);
+            db.executeSql(query, [],
+            function (res) {
+                console.log(query, res);
+                $rootScope.$broadcast('BookmarkedPlacesLoaded', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
+            });
+
+            //return $cordovaSQLite.execute(db, query);
         },
         LoadPlaceInfos: function (Id) {
             var query = "\
                 SELECT *\
                 FROM Places\
                 WHERE Pla_Id = ?";
-            return $cordovaSQLite.execute(db, query, [Id]);
+            db.executeSql(query, [Id],
+            function (res) {
+                console.log(query, res);
+                $rootScope.$broadcast('PlaceInfoesLoaded', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
+            });
+
+            //return $cordovaSQLite.execute(db, query, [Id]);
+
             //.then(function (result) {
             //    $rootScope.$broadcast('PlaceInfoesLoaded', { result: result });
             //}, function (error) {
@@ -860,7 +1137,17 @@ angular.module('app.services', [])
                 SELECT *\
                 FROM Audios\
                 WHERE Aud_PlaceId = ?";
-            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            db.executeSql(query, [PlaceId],
+            function (res) {
+                console.log(query, res);
+                $rootScope.$broadcast('PlaceAudiosLoaded', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
+            });
+
+            //return $cordovaSQLite.execute(db, query, [PlaceId]);
+
             //.then(function (result) {
             //    $rootScope.$broadcast('PlaceAudiosLoaded', { result: result });
             //}, function (error) {
@@ -872,7 +1159,17 @@ angular.module('app.services', [])
                 SELECT *\
                 FROM Stories\
                 WHERE Sto_PlaceId = ?";
-            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            db.executeSql(query, [PlaceId],
+            function (res) {
+                console.log(query, res);
+                $rootScope.$broadcast('PlaceStoriesLoaded', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
+            });
+
+            //return $cordovaSQLite.execute(db, query, [PlaceId]);
+
             //.then(function (result) {
             //    $rootScope.$broadcast('PlaceStoriesLoaded', { result: result });
             //}, function (error) {
@@ -884,7 +1181,17 @@ angular.module('app.services', [])
                 SELECT *\
                 FROM Images\
                 WHERE Img_PlaceId = ?";
-            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            db.executeSql(query, [PlaceId],
+            function (res) {
+                console.log(query, res);
+                $rootScope.$broadcast('PlaceImagesLoaded', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
+            });
+
+            //return $cordovaSQLite.execute(db, query, [PlaceId]);
+
             //.then(function (result) {
             //    $rootScope.$broadcast('PlaceImagesLoaded', { result: result });
             //}, function (error) {
@@ -900,7 +1207,17 @@ angular.module('app.services', [])
                 ORDER BY\
                     Cit_Priiority ASC,\
                     Tip_Id ASC;";
-            return $cordovaSQLite.execute(db, query, [PlaceId]);
+            db.executeSql(query, [PlaceId],
+            function (res) {
+                console.log(query, res);
+                $rootScope.$broadcast('PlaceTipsLoaded', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
+            });
+
+            //return $cordovaSQLite.execute(db, query, [PlaceId]);
+
             //.then(function (result) {
             //    $rootScope.$broadcast('PlaceTipsLoaded', { result: result });
             //}, function (error) {

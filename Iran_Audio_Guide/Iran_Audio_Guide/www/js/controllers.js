@@ -33,25 +33,30 @@ angular.module('app.controllers', [])
             $state.go('firstPage');
         }
         else {
-            fillMenu();
-            //navigator.splashscreen.show();
-            $rootScope.waitingUpdates = -1;
-            dbServices.openDB();
-            var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
-            if (LstUpdtNum === 0) {
-                FileServices.createDirs();
-                dbServices.initiate();
-                var networkState = navigator.connection.type;
-                while (networkState === Connection.NONE)
-                    alert('check internet connection');
-                //$cordovaDialogs.alert('check your internet connection and try again.', 'Network error', 'Try again')
-                ApiServices.GetAll(0);
+            try {
+                fillMenu();
+                //navigator.splashscreen.show();
+                $rootScope.waitingUpdates = -1;
+                dbServices.openDB();
+                var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
+                if (LstUpdtNum === 0) {
+                    FileServices.createDirs();
+                    dbServices.initiate();
+                    var networkState = navigator.connection.type;
+                    while (networkState === Connection.NONE)
+                        alert('check internet connection');
+                    //$cordovaDialogs.alert('check your internet connection and try again.', 'Network error', 'Try again')
+                    ApiServices.GetAll(0);
+                }
+                else {
+                    if (navigator.connection.type === Connection.NONE)
+                        GoHome();
+                    else
+                        ApiServices.GetAll(LstUpdtNum);
+                }
             }
-            else {
-                if (navigator.connection.type === Connection.NONE)
-                    GoHome();
-                else
-                    ApiServices.GetAll(LstUpdtNum);
+            catch (err) {
+                alert(err.message);
             }
         }
     };
@@ -181,47 +186,46 @@ angular.module('app.controllers', [])
         console.log("ready");
     });
     $scope.$on("$ionicView.beforeEnter", function (event, data) {
-        dbServices.LoadPrimaryPlaces()
-            .then(function (result) {
-                AllPlaces = [];
-                SlideShows = [];
-                var res = result.rows;
-                for (var i = 0; i < res.length; i++) {
-                    AllPlaces.push({
-                        Id: res.item(i).Pla_Id,
-                        name: res.item(i).Pla_Name,
-                        logo: cordova.file.dataDirectory + "/TumbNameil_dir/" + res.item(i).Pla_TNImgUrl,
-                        address: res.item(i).Pla_address,
-                        city: res.item(i).Cit_Name,
-                        CityId: res.item(i).Pla_CityId,
-                        bookmarked: res.item(i).Pla_bookmarked
-                    });
-                    SlideShows.push({
-                        id: res.item(i).Pla_Id,
-                        title: res.item(i).Pla_Name,
-                        URL: cordova.file.dataDirectory + "/PlacePic_dir/" + res.item(i).Pla_imgUrl
-                    });
-                }
-                $scope.SlideShows = SlideShows;
-                $ionicSlideBoxDelegate.update();
-                $scope.Places = AllPlaces;
-            }, function (error) {
-                console.error(error);
+        dbServices.LoadPrimaryPlaces();
+    });
+    $scope.$on("PrimaryPlacesLoaded", function (event, data) {
+        AllPlaces = [];
+        SlideShows = [];
+        console.log("data", data);
+        var res = data.result.rows;
+        for (var i = 0; i < res.length; i++) {
+            AllPlaces.push({
+                Id: res.item(i).Pla_Id,
+                name: res.item(i).Pla_Name,
+                logo: cordova.file.dataDirectory + "/TumbNameil_dir/" + res.item(i).Pla_TNImgUrl,
+                address: res.item(i).Pla_address,
+                city: res.item(i).Cit_Name,
+                CityId: res.item(i).Pla_CityId,
+                bookmarked: res.item(i).Pla_bookmarked
             });
+            SlideShows.push({
+                id: res.item(i).Pla_Id,
+                title: res.item(i).Pla_Name,
+                URL: cordova.file.dataDirectory + "/PlacePic_dir/" + res.item(i).Pla_imgUrl
+            });
+        }
+        console.log("places", AllPlaces);
+        console.log("SlideShows", SlideShows);
+        $scope.SlideShows = SlideShows;
+        $scope.Places = AllPlaces;
+        $ionicSlideBoxDelegate.update();
     });
     $scope.bookmark = function (placeId) {
-        dbServices.bookmarkePlace(placeId)
-            .then(function (result) {
-                for (var i = 0; i < $scope.Places.length; i++) {
-                    if ($scope.Places[i].Id === placeId) {
-                        $scope.Places[i].bookmarked = 1;
-                        break;
-                    }
-                }
-            }, function (error) {
-                console.error(error);
-            });
+        dbServices.bookmarkePlace(placeId);
     };
+    $scope.$on("PlaceBookmarked", function (event, data) {
+        for (var i = 0; i < $scope.Places.length; i++) {
+            if ($scope.Places[i].Id === data.placeId) {
+                $scope.Places[i].bookmarked = 1;
+                break;
+            }
+        }
+    });
 })
 .controller('favoritsCtrl', function ($scope, dbServices) {
     $scope.PageTitle = "Bookmarks"
@@ -230,40 +234,35 @@ angular.module('app.controllers', [])
         updatePlaces();
     });
     var updatePlaces = function () {
-        dbServices.LoadBookmarkedPlaces()
-            .then(function (result) {
-                AllPlaces = [];
-                var res = result.rows;
-                for (var i = 0; i < res.length; i++) {
-                    AllPlaces.push({
-                        Id: res.item(i).Pla_Id,
-                        name: res.item(i).Pla_Name,
-                        logo: cordova.file.dataDirectory + "/TumbNameil_dir/" + res.item(i).Pla_TNImgUrl,
-                        address: res.item(i).Pla_address,
-                        city: res.item(i).Cit_Name,
-                        CityId: res.item(i).Pla_CityId,
-                        bookmarked: res.item(i).Pla_bookmarked
-                    });
-                }
-                $scope.Places = AllPlaces;
-            }, function (error) {
-                console.error(error);
+        dbServices.LoadBookmarkedPlaces();
+    };
+    $scope.$on("PrimaryPlacesLoaded", function (event, data) {
+        AllPlaces = [];
+        var res = data.result.rows;
+        for (var i = 0; i < res.length; i++) {
+            AllPlaces.push({
+                Id: res.item(i).Pla_Id,
+                name: res.item(i).Pla_Name,
+                logo: cordova.file.dataDirectory + "/TumbNameil_dir/" + res.item(i).Pla_TNImgUrl,
+                address: res.item(i).Pla_address,
+                city: res.item(i).Cit_Name,
+                CityId: res.item(i).Pla_CityId,
+                bookmarked: res.item(i).Pla_bookmarked
             });
-    };
+        }
+        $scope.Places = AllPlaces;
+    });
     $scope.defavorito = function (placeId) {
-        dbServices.unbookmarkePlace(placeId)
-                    .then(function (result) {
-                        console.log("place unbookmarked");
-                        for (var i = 0; i < $scope.Places.length; i++) {
-                            if ($scope.Places[i].Id === placeId) {
-                                $scope.Places.splice(i, 1);
-                                break;
-                            }
-                        }
-                    }, function (error) {
-                        console.error(error);
-                    });
+        dbServices.unbookmarkePlace(placeId);
     };
+    $scope.$on("PlaceBookmarked", function (event, data) {
+        for (var i = 0; i < $scope.Places.length; i++) {
+            if ($scope.Places[i].Id === data.placeId) {
+                $scope.Places.splice(i, 1);
+                break;
+            }
+        }
+    });
 })
 .controller('packagesCtrl', function ($rootScope, $ionicHistory) {
     console.log("soroosh");
@@ -380,104 +379,95 @@ angular.module('app.controllers', [])
 
     //loading place basic infoes
     $scope.PlaceInfo.PlaceId = placeId;
-    dbServices.LoadPlaceInfos(placeId)
-        .then(function (d) {
-            var res = d.rows.item(0);
+    dbServices.LoadPlaceInfos(placeId);
+    $scope.$on('PlaceInfoesLoaded', function (event, data) {
+        var res = data.result.rows.item(0);
+        $scope.pageTitle = res.Pla_Name;
+        $timeout(function () {
             $scope.pageTitle = res.Pla_Name;
-            $timeout(function () {
-                $scope.pageTitle = res.Pla_Name;
-            }, 500);
-            if (res.Pla_Dirty_imgUrl) {
-                $scope.PlaceInfo.PlaceImage = defaultImageSource;
-                FileServices.DownloadPlaceImage(res.Pla_imgUrl, placeId)
-                    .then(function (result) {// Success!
-                        dbServices.CleanPlaceImage(placeId);
-                        $scope.PlaceInfo.PlaceImage = cordova.file.dataDirectory + "/PlacePic_dir/" + res.Pla_imgUrl;
-                    }, function (err) {// Error
-                        console.log(err);
-                    }, function (progress) {
-                        //$timeout(function () {
-                        //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
-                        //});
-                    });
-            }
-            else
-                $scope.PlaceInfo.PlaceImage = cordova.file.dataDirectory + "/PlacePic_dir/" + res.Pla_imgUrl;
+        }, 500);
+        if (res.Pla_Dirty_imgUrl) {
+            $scope.PlaceInfo.PlaceImage = defaultImageSource;
+            FileServices.DownloadPlaceImage(res.Pla_imgUrl, placeId)
+                .then(function (result) {// Success!
+                    dbServices.CleanPlaceImage(placeId);
+                    $scope.PlaceInfo.PlaceImage = cordova.file.dataDirectory + "/PlacePic_dir/" + res.Pla_imgUrl;
+                }, function (err) {// Error
+                    console.log(err);
+                }, function (progress) {
+                    //$timeout(function () {
+                    //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                    //});
+                });
+        }
+        else
+            $scope.PlaceInfo.PlaceImage = cordova.file.dataDirectory + "/PlacePic_dir/" + res.Pla_imgUrl;
 
-            $scope.PlaceInfo.PlaceName = res.Pla_Name;
-            $scope.PlaceInfo.PlaceDescription = res.Pla_desc;
-            $scope.PlaceInfo.PlaceCordinateX = res.Pla_c_x;
-            $scope.PlaceInfo.PlaceCordinateY = res.Pla_c_y;
-            $scope.PlaceInfo.Placeaddress = res.Pla_address;
-            $scope.PlaceInfo.PlaceCityId = res.Pla_CityId;
-        }, function (error) {
-            console.error(error);
-        });
+        $scope.PlaceInfo.PlaceName = res.Pla_Name;
+        $scope.PlaceInfo.PlaceDescription = res.Pla_desc;
+        $scope.PlaceInfo.PlaceCordinateX = res.Pla_c_x;
+        $scope.PlaceInfo.PlaceCordinateY = res.Pla_c_y;
+        $scope.PlaceInfo.Placeaddress = res.Pla_address;
+        $scope.PlaceInfo.PlaceCityId = res.Pla_CityId;
+    });
 
     //loading place audios
-    dbServices.LoadPlaceAudios(placeId)
-        .then(function (Data) {
-            var res = Data.rows;
-            for (var i = 0; i < res.length; i++) {
-                $scope.PlaceInfo.Audios.push({
-                    Id: res.item(i).Aud_Id,
-                    Name: res.item(i).Aud_Name,
-                    url: res.item(i).Aud_Url,
-                    description: res.item(i).Aud_desc,
-                    downloaded: !res.item(i).Aud_Dirty,
-                    downloadProgress: 0,
-                    downloading: false,
-                    playing: false
-                });
-            }
-        }, function (error) {
-            console.error(error);
-        });
+    dbServices.LoadPlaceAudios(placeId);
+    $scope.$on('PlaceAudiosLoaded', function (event, Data) {
+        var res = Data.result.rows;
+        for (var i = 0; i < res.length; i++) {
+            $scope.PlaceInfo.Audios.push({
+                Id: res.item(i).Aud_Id,
+                Name: res.item(i).Aud_Name,
+                url: res.item(i).Aud_Url,
+                description: res.item(i).Aud_desc,
+                downloaded: !res.item(i).Aud_Dirty,
+                downloadProgress: 0,
+                downloading: false,
+                playing: false
+            });
+        }
+    });
 
     //loading place Stories
-    dbServices.LoadPlaceStories(placeId)
-        .then(function (Data) {
-            var res = Data.rows;
-            for (var i = 0; i < res.length; i++) {
-                $scope.PlaceInfo.Stories.push({
-                    Id: res.item(i).Sto_Id,
-                    Name: res.item(i).Sto_Name,
-                    url: res.item(i).Sto_Url,
-                    description: res.item(i).Sto_desc,
-                    downloaded: !res.item(i).Sto_Dirty,
-                    downloadProgress: 0,
-                    downloading: false,
-                    playing: false
-                });
-            }
-        }, function (error) {
-            console.error(error);
-        });
+    dbServices.LoadPlaceStories(placeId);
+    $scope.$on('PlaceStoriesLoaded', function (event, Data) {
+        var res = Data.result.rows;
+        for (var i = 0; i < res.length; i++) {
+            $scope.PlaceInfo.Stories.push({
+                Id: res.item(i).Sto_Id,
+                Name: res.item(i).Sto_Name,
+                url: res.item(i).Sto_Url,
+                description: res.item(i).Sto_desc,
+                downloaded: !res.item(i).Sto_Dirty,
+                downloadProgress: 0,
+                downloading: false,
+                playing: false
+            });
+        }
+    });
 
     //loading place extra images
-    dbServices.LoadPlaceImages(placeId)
-        .then(function (Data) {
-            var res = Data.rows;
-            for (var i = 0; i < res.length; i++) {
-                if (res.item(i).Img_Dirty) {
-                    FileServices.DownloadExtraImage(res.item(i).Img_Url, res.item(i).Img_Id, res.item(i).Img_desc);
-                }
-                else {
-                    $scope.PlaceInfo.ExtraImages.push({
-                        Id: res.item(i).Img_Id,
-                        description: res.item(i).Img_desc,
-                        path: cordova.file.dataDirectory + "Extras_dir/" + res.item(i).Img_Url
-                    });
-                    $ionicSlideBoxDelegate.update();
-                }
-
-                if ($scope.PlaceInfo.ExtraImages.length === 1)
-                    $scope.ExtraImageMarkDown = $scope.PlaceInfo.ExtraImages[0].description;
+    dbServices.LoadPlaceImages(placeId);
+    $scope.$on('PlaceImagesLoaded', function (event, Data) {
+        var res = Data.result.rows;
+        for (var i = 0; i < res.length; i++) {
+            if (res.item(i).Img_Dirty) {
+                FileServices.DownloadExtraImage(res.item(i).Img_Url, res.item(i).Img_Id, res.item(i).Img_desc);
             }
-            //$ionicSlideBoxDelegate.update()
-        }, function (error) {
-            console.error(error);
-        });
+            else {
+                $scope.PlaceInfo.ExtraImages.push({
+                    Id: res.item(i).Img_Id,
+                    description: res.item(i).Img_desc,
+                    path: cordova.file.dataDirectory + "Extras_dir/" + res.item(i).Img_Url
+                });
+                $ionicSlideBoxDelegate.update();
+            }
+
+            if ($scope.PlaceInfo.ExtraImages.length === 1)
+                $scope.ExtraImageMarkDown = $scope.PlaceInfo.ExtraImages[0].description;
+        }
+    });
     $scope.$on('PlaceExtraImageDownloaded', function (event, Data) {
         dbServices.CleanPlaceExtraImage(Data.Img_Id);
         $scope.PlaceInfo.ExtraImages.push({
@@ -491,9 +481,9 @@ angular.module('app.controllers', [])
     });
 
     //loading place Tips
-    dbServices.LoadPlaceTips($scope.PlaceInfo.PlaceId)
-    .then(function (Data) {
-        var res = Data.rows;
+    dbServices.LoadPlaceTips($scope.PlaceInfo.PlaceId);
+    $scope.$on('PlaceTipsLoaded', function (event, Data) {
+        var res = Data.result.rows;
         for (var i = 0; i < res.length; i++) {
             $scope.PlaceInfo.Tips.push({
                 Id: res.item(i).Tip_Id,
@@ -501,8 +491,6 @@ angular.module('app.controllers', [])
                 Content: res.item(i).Tip_Contetnt
             });
         }
-    }, function (error) {
-        console.error(error);
     });
 
     //player stuff

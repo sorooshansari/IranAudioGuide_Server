@@ -1,7 +1,8 @@
 {
-    "name": "Iran_Audio_Guide",
-    "version": "1.0.0",
-    "private": true,
-    "dependencies": {
-    }
+  "name": "Iran_Audio_Guide",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@ionic/cloud-angular": "^0.8.0"
+  }
 }
