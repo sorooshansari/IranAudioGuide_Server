@@ -1,6 +1,6 @@
-@using IranAudioGuide_MainServer.Models
+﻿@using IranAudioGuide_MainServer.Models
 @{
-    string downloadSection = (ViewBag.View == null) ? "/Home/Index/#cta" : ((Views)ViewBag.View == Views.Index) ? "#cta" : "/Home/Index/#cta";
+    string downloadSection = (ViewBag.View == null) ? "/Home/Index/#Download_Application" : ((Views)ViewBag.View == Views.Index) ? "#Download_Application" : "/Home/Index/#Download_Application";
 }
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="~/Content/main.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/ie9.css" /><![endif]-->
-    <link rel="stylesheet" href="~/Content/Custom.css" />
+    <link rel="stylesheet" href="~/Content/Custom1.css" />
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="landing">
