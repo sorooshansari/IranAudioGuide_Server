@@ -1,6 +1,7 @@
 ﻿@using IranAudioGuide_MainServer.Models
 @{
     string downloadSection = (ViewBag.View == null) ? "/Home/Index/#Download_Application" : ((Views)ViewBag.View == Views.Index) ? "#Download_Application" : "/Home/Index/#Download_Application";
+    string contactSection = (ViewBag.View == null) ? "/Home/Index/#contact" : ((Views)ViewBag.View == Views.Index) ? "#contact" : "/Home/Index/#contact";
 }
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
@@ -50,10 +51,11 @@
                         <a href="#menu" class="menuToggle"><span>Menu</span></a>
                         <section id="menu">
                             <ul>
-                                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-                                <li><a href="@downloadSection">Download</a></li>
+                                <li><a href="@Url.Action("Index", "Home")">Iran Audio Guide</a></li>
+                                <li><a class="scrolly"  href="@downloadSection">Download</a></li>
                                 <li><a rel="nofollow" href="@Url.Action("Register","Account")">Register</a></li>
                                 <li><a rel="nofollow" href="@Url.Action("Login","Account")">Log in</a></li>
+                                <li><a class="scrolly"  rel="nofollow" href="@contactSection">Contact Us</a></li>
                             </ul>
                         </section>
                     </li>

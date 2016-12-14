@@ -16,6 +16,7 @@ namespace IranAudioGuide_MainServer.Models
         public string number { get; set; }
         public string name { get; set; }
         public string Subject { get; set; }
+        public bool sent { get; set; }
     }
     public class NewPackage
     {
