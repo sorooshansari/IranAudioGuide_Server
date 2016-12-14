@@ -2378,7 +2378,11 @@
 			display: block;
 			position: relative;
 			text-align: left;
-			width: 50%;
+    width: 48%;
+    /* border-top-right-radius: 50px; */
+    /* border-bottom-left-radius: 50px; */
+    margin-left: 0px;
+    margin-bottom: -20px;
 		}
 
 			.features li:nth-child(1) {
