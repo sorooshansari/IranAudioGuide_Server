@@ -14,7 +14,8 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.View = Views.Index;
             return View();
         }
-        public ActionResult ContactEmailSender(ContactEmailVM model)
+        [HttpPost]
+        public JsonResult ContactEmailSender(ContactEmailVM model)
         {
             System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/ContactEmailTemplate.html"));
             string body = sr.ReadToEnd();
@@ -35,7 +36,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 Destination = "danialby@gmail.com",
                 Subject = "Contact message"
             });
-            return View("Index");
+            model = new ContactEmailVM() { sent = true };
+            return Json(true);
         }
     }
 }

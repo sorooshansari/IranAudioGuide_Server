@@ -1,6 +1,7 @@
 ﻿@using IranAudioGuide_MainServer.Models
 @{
     string downloadSection = (ViewBag.View == null) ? "/Home/Index/#Download_Application" : ((Views)ViewBag.View == Views.Index) ? "#Download_Application" : "/Home/Index/#Download_Application";
+    string contactSection = (ViewBag.View == null) ? "/Home/Index/#contact" : ((Views)ViewBag.View == Views.Index) ? "#contact" : "/Home/Index/#contact";
 }
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
@@ -50,10 +51,11 @@
                         <a href="#menu" class="menuToggle"><span>Menu</span></a>
                         <section id="menu">
                             <ul>
-                                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-                                <li><a href="@downloadSection">Download</a></li>
-                                <li><a rel="nofollow" href="@Url.Action("Register","Account")">Register</a></li>
-                                <li><a rel="nofollow" href="@Url.Action("Login","Account")">Log in</a></li>
+                                <li><a href="@Url.Action("Index", "Home")" style="color: #3c3e6d; text-shadow: none; font-size: 16px; font-weight: bold;"><i class="fa fa-home"></i>Iran Audio Guide</a></li>
+                                <li><a class="scrolly"  href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>
+                                <li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>
+                                <li><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
+                                <li><a class="scrolly"  rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>Contact Us</a></li>
                             </ul>
                         </section>
                     </li>
