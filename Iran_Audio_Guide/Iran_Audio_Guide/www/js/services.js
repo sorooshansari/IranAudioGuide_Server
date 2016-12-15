@@ -28,7 +28,7 @@ angular.module('app.services', [])
         },
         get: function (Slide_id) {
             for (var i = 0; i < SlideShow.length; i++) {
-                if (SlideShow[i].id === parseInt(Slide_id)) {
+                if (SlideShow[i].id == parseInt(Slide_id)) {
                     return SlideShow[i];
                 }
             }
@@ -74,7 +74,7 @@ angular.module('app.services', [])
         },
         get: function (id_local) {
             for (var i = 0; i < Places.length; i++) {
-                if (Places[i].id === parseInt(id_local)) {
+                if (Places[i].id == parseInt(id_local)) {
                     return Places[i];
                 }
             }
@@ -104,7 +104,7 @@ angular.module('app.services', [])
         },
         get: function (Audio_ID) {
             for (var i = 0; i < Audios.length; i++) {
-                if (Audios[i].id === parseInt(Audio_ID)) {
+                if (Audios[i].id == parseInt(Audio_ID)) {
                     return Audios[i];
                 }
             }
@@ -272,7 +272,7 @@ angular.module('app.services', [])
 .service('ApiServices', ['$http', '$rootScope', function ($http, $rootScope) {
     return {
         GetAll: function (LUN) {
-            if (LUN === 0) {
+            if (LUN == 0) {
                 method = 'post';
                 url = 'http://iranaudioguide.com/api/AppManager/GetAll';
                 $http({ method: method, url: url }).
@@ -308,7 +308,6 @@ angular.module('app.services', [])
         openDB: function () {
             var isIOS = ionic.Platform.isIOS();
             var isAndroid = ionic.Platform.isAndroid();
-            console.log(isIOS, isAndroid);
             if (isAndroid) {
                 db = window.sqlitePlugin.openDatabase({ name: 'IAG.db', location: 'default' });
             }
@@ -978,14 +977,14 @@ angular.module('app.services', [])
             //        });
         },
         bookmarkePlace: function (PlaceID) {
+            var id = PlaceID;
             var query = "\
             UPDATE Places\
             SET Pla_bookmarked = 1\
             WHERE Pla_Id = ?";
-            db.executeSql(query,
-                        [PlaceID],
+            db.executeSql(query, [id],
                 function (res) {
-                    $rootScope.$broadcast('PlaceBookmarked', { placeId: PlaceID });
+                    $rootScope.$broadcast('PlaceBookmarked', { placeId: id });
                     console.log("Place bookmarked");
                 },
                 function (error) {
@@ -995,14 +994,14 @@ angular.module('app.services', [])
             //return $cordovaSQLite.execute(db, query, [PlaceID]);
         },
         unbookmarkePlace: function (PlaceID) {
+            var id = PlaceID;
             var query = "\
             UPDATE Places\
             SET Pla_bookmarked = 0\
             WHERE Pla_Id = ?";
-            db.executeSql(query,
-                        [PlaceID],
+            db.executeSql(query, [id],
                 function (res) {
-                    $rootScope.$broadcast('PlaceUnbookmarked', { placeId: PlaceID });
+                    $rootScope.$broadcast('PlaceUnbookmarked', { placeId: id });
                     console.log("Place unbookmarked");
                 },
                 function (error) {
@@ -1019,7 +1018,6 @@ angular.module('app.services', [])
                 FROM Cities";
             db.executeSql(query, [],
             function (res) {
-                console.log(query, res);
                 $rootScope.$broadcast('FillCities', { result: res });
             },
             function (error) {
@@ -1047,7 +1045,6 @@ angular.module('app.services', [])
                 ON Places.Pla_CityId = Cities.Cit_Id";
             db.executeSql(query, [],
             function (res) {
-                console.log(query, res);
                 $rootScope.$broadcast('FillPlaces', { result: res });
             },
             function (error) {
@@ -1076,7 +1073,6 @@ angular.module('app.services', [])
                 WHERE Places.Pla_isPrimary = 1";
             db.executeSql(query, [],
             function (res) {
-                console.log(query, res);
                 $rootScope.$broadcast('PrimaryPlacesLoaded', { result: res });
             },
             function (error) {
@@ -1101,7 +1097,6 @@ angular.module('app.services', [])
                 WHERE Places.Pla_bookmarked = 1";
             db.executeSql(query, [],
             function (res) {
-                console.log(query, res);
                 $rootScope.$broadcast('BookmarkedPlacesLoaded', { result: res });
             },
             function (error) {
@@ -1117,7 +1112,6 @@ angular.module('app.services', [])
                 WHERE Pla_Id = ?";
             db.executeSql(query, [Id],
             function (res) {
-                console.log(query, res);
                 $rootScope.$broadcast('PlaceInfoesLoaded', { result: res });
             },
             function (error) {
@@ -1139,7 +1133,6 @@ angular.module('app.services', [])
                 WHERE Aud_PlaceId = ?";
             db.executeSql(query, [PlaceId],
             function (res) {
-                console.log(query, res);
                 $rootScope.$broadcast('PlaceAudiosLoaded', { result: res });
             },
             function (error) {
@@ -1161,7 +1154,6 @@ angular.module('app.services', [])
                 WHERE Sto_PlaceId = ?";
             db.executeSql(query, [PlaceId],
             function (res) {
-                console.log(query, res);
                 $rootScope.$broadcast('PlaceStoriesLoaded', { result: res });
             },
             function (error) {
@@ -1183,7 +1175,6 @@ angular.module('app.services', [])
                 WHERE Img_PlaceId = ?";
             db.executeSql(query, [PlaceId],
             function (res) {
-                console.log(query, res);
                 $rootScope.$broadcast('PlaceImagesLoaded', { result: res });
             },
             function (error) {
@@ -1209,7 +1200,6 @@ angular.module('app.services', [])
                     Tip_Id ASC;";
             db.executeSql(query, [PlaceId],
             function (res) {
-                console.log(query, res);
                 $rootScope.$broadcast('PlaceTipsLoaded', { result: res });
             },
             function (error) {

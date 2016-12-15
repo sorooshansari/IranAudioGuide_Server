@@ -39,17 +39,17 @@ angular.module('app.controllers', [])
                 $rootScope.waitingUpdates = -1;
                 dbServices.openDB();
                 var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
-                if (LstUpdtNum === 0) {
+                if (LstUpdtNum == 0) {
                     FileServices.createDirs();
                     dbServices.initiate();
                     var networkState = navigator.connection.type;
-                    while (networkState === Connection.NONE)
+                    while (networkState == Connection.NONE)
                         alert('check internet connection');
                     //$cordovaDialogs.alert('check your internet connection and try again.', 'Network error', 'Try again')
                     ApiServices.GetAll(0);
                 }
                 else {
-                    if (navigator.connection.type === Connection.NONE)
+                    if (navigator.connection.type == Connection.NONE)
                         GoHome();
                     else
                         ApiServices.GetAll(LstUpdtNum);
@@ -101,7 +101,7 @@ angular.module('app.controllers', [])
     });
     $rootScope.$on('CheckWaitingUpdates', function (event) {
         console.log("waitingUpdates: ", $rootScope.waitingUpdates);
-        if ($rootScope.waitingUpdates === 0) {
+        if ($rootScope.waitingUpdates == 0) {
             window.localStorage.setItem("LastUpdateNumber", updateNumber);
             GoHome();
         }
@@ -110,7 +110,7 @@ angular.module('app.controllers', [])
         console.log(error);
         alert("Cannot connect to server. Pleas check your internet connection and try again.");
         var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
-        if (LstUpdtNum === 0)
+        if (LstUpdtNum == 0)
             ApiServices.GetAll(LstUpdtNum);
         else
             GoHome();
@@ -178,19 +178,22 @@ angular.module('app.controllers', [])
 .controller('recoverPasswordCtrl', function ($scope) {
 
 })
-.controller('homeCtrl', function ($scope, dbServices, $ionicPlatform, $ionicSlideBoxDelegate) {
+.controller('homeCtrl', function ($scope, dbServices, $ionicPlatform, $ionicLoading, $ionicSlideBoxDelegate) {
     $scope.PageTitle = 'Iran Audio Guide'
-    $scope.SlideShows = [];
-    $scope.Places = [];
-    $ionicPlatform.ready(function () {
-        console.log("ready");
+    $scope.SlideShows = {};
+    $scope.Places = {};
+    $ionicLoading.show({
+        template: 'Loading...'
     });
-    $scope.$on("$ionicView.beforeEnter", function (event, data) {
+    $ionicPlatform.ready(function () {
         dbServices.LoadPrimaryPlaces();
     });
+    $scope.$on("$ionicView.beforeEnter", function (event, data) {
+
+    });
     $scope.$on("PrimaryPlacesLoaded", function (event, data) {
-        AllPlaces = [];
-        SlideShows = [];
+        var AllPlaces = [];
+        var SlideShows = [];
         console.log("data", data);
         var res = data.result.rows;
         for (var i = 0; i < res.length; i++) {
@@ -209,19 +212,27 @@ angular.module('app.controllers', [])
                 URL: cordova.file.dataDirectory + "/PlacePic_dir/" + res.item(i).Pla_imgUrl
             });
         }
-        console.log("places", AllPlaces);
-        console.log("SlideShows", SlideShows);
-        $scope.SlideShows = SlideShows;
-        $scope.Places = AllPlaces;
+        $scope.SlideShows = angular.copy(SlideShows);
         $ionicSlideBoxDelegate.update();
+        $scope.Places = angular.copy(AllPlaces);
+        $ionicLoading.hide();
+        console.log($scope.SlideShows);
     });
     $scope.bookmark = function (placeId) {
         dbServices.bookmarkePlace(placeId);
     };
     $scope.$on("PlaceBookmarked", function (event, data) {
         for (var i = 0; i < $scope.Places.length; i++) {
-            if ($scope.Places[i].Id === data.placeId) {
+            if ($scope.Places[i].Id == data.placeId) {
                 $scope.Places[i].bookmarked = 1;
+                break;
+            }
+        }
+    });
+    $scope.$on("PlaceUnbookmarked", function (event, data) {
+        for (var i = 0; i < $scope.Places.length; i++) {
+            if ($scope.Places[i].Id == data.placeId) {
+                $scope.Places[i].bookmarked = 0;
                 break;
             }
         }
@@ -229,14 +240,14 @@ angular.module('app.controllers', [])
 })
 .controller('favoritsCtrl', function ($scope, dbServices) {
     $scope.PageTitle = "Bookmarks"
-    $scope.Places = [];
-    $scope.$on("$ionicView.beforeEnter", function (event, data) {
-        updatePlaces();
-    });
-    var updatePlaces = function () {
-        dbServices.LoadBookmarkedPlaces();
-    };
-    $scope.$on("PrimaryPlacesLoaded", function (event, data) {
+    //$scope.$on("$ionicView.beforeEnter", function (event, data) {
+    //    updatePlaces();
+    //});
+    //var updatePlaces = function () {
+    //    dbServices.LoadBookmarkedPlaces();
+    //};
+    dbServices.LoadBookmarkedPlaces();
+    $scope.$on("BookmarkedPlacesLoaded", function (event, data) {
         AllPlaces = [];
         var res = data.result.rows;
         for (var i = 0; i < res.length; i++) {
@@ -255,13 +266,19 @@ angular.module('app.controllers', [])
     $scope.defavorito = function (placeId) {
         dbServices.unbookmarkePlace(placeId);
     };
-    $scope.$on("PlaceBookmarked", function (event, data) {
+    $scope.$on("PlaceUnbookmarked", function (event, data) {
+        console.log(data);
         for (var i = 0; i < $scope.Places.length; i++) {
-            if ($scope.Places[i].Id === data.placeId) {
+            if ($scope.Places[i].Id == data.placeId) {
                 $scope.Places.splice(i, 1);
+                $scope.$apply();
                 break;
             }
         }
+    });
+    $scope.$on("PlaceBookmarked", function (event, data) {
+        dbServices.LoadBookmarkedPlaces();
+        $scope.$apply();
     });
 })
 .controller('packagesCtrl', function ($rootScope, $ionicHistory) {
@@ -272,6 +289,7 @@ angular.module('app.controllers', [])
 })
 .controller('searchCtrl', function ($scope, dbServices) {
     $scope.Cities = [{ Cit_Id: "0", Cit_Name: "All" }];
+    $scope.selectedPlaces = {};
     var AllPlaces = [];
     var SelectedCityId = 0;
     document.addEventListener('deviceready', function () {
@@ -280,33 +298,35 @@ angular.module('app.controllers', [])
         dbServices.LoadAllPlaces();
         $scope.PageTitle = "Search"
         $scope.Clear = function () {
-            console.log('clear');
+            $scope.search = '';
         }
         $scope.CitySelected = function (id) {
             SelectedCityId = id;
             var tempList = [];
             for (var i = 0; i < AllPlaces.length; i++)
-                if (id === 0 || AllPlaces[i].CityId === id)
+                if (id == 0 || AllPlaces[i].CityId == id)
                     tempList.push(AllPlaces[i]);
-            $scope.selectedPlaces = tempList;
+
+            $scope.selectedPlaces = angular.copy(tempList);
         };
         $scope.searchPlaces = function (word) {
+            var tempList = [];
             $scope.selectedPlaces = [];
             if (word !== '') {
-                var tempList = [];
+                var re = new RegExp(word, 'i');
                 for (var i = 0; i < AllPlaces.length; i++) {
-                    if (AllPlaces[i].name.indexOf(word) > -1 &&
-                        (SelectedCityId === 0 || AllPlaces[i].CityId === SelectedCityId))
+                    if (re.test(AllPlaces[i].name) &&
+                        (SelectedCityId == 0 || AllPlaces[i].CityId == SelectedCityId))
                         tempList.push(AllPlaces[i]);
-                    $scope.selectedPlaces = tempList;
                 }
             }
             else {
                 for (var j = 0; j < AllPlaces.length; j++)
-                    if (SelectedCityId === 0 || AllPlaces[j].CityId === SelectedCityId)
+                    if (SelectedCityId == 0 || AllPlaces[j].CityId == SelectedCityId)
                         tempList.push(AllPlaces[j]);
-                $scope.selectedPlaces = tempList;
             }
+
+            $scope.selectedPlaces = angular.copy(tempList);
         };
         $scope.$on('FillCities', function (event, result) {
             var res = result.result.rows;
@@ -331,7 +351,8 @@ angular.module('app.controllers', [])
                     CityId: res.item(i).Pla_CityId
                 });
             }
-            $scope.selectedPlaces = AllPlaces;
+
+            $scope.selectedPlaces = angular.copy(AllPlaces);
         });
     });
 })
@@ -464,7 +485,7 @@ angular.module('app.controllers', [])
                 $ionicSlideBoxDelegate.update();
             }
 
-            if ($scope.PlaceInfo.ExtraImages.length === 1)
+            if ($scope.PlaceInfo.ExtraImages.length == 1)
                 $scope.ExtraImageMarkDown = $scope.PlaceInfo.ExtraImages[0].description;
         }
     });
@@ -475,7 +496,7 @@ angular.module('app.controllers', [])
             description: Data.Img_desc,
             path: Data.Img_Url
         });
-        if ($scope.PlaceInfo.ExtraImages.length === 1)
+        if ($scope.PlaceInfo.ExtraImages.length == 1)
             $scope.ExtraImageMarkDown = $scope.PlaceInfo.ExtraImages[0].description;
         $ionicSlideBoxDelegate.update();
     });
@@ -499,7 +520,7 @@ angular.module('app.controllers', [])
         console.log("player has media", $rootScope.player.hasMedia);
         console.log("player track", $rootScope.player.trackInfo);
         if ($rootScope.player.hasMedia) {
-            if ($rootScope.player.PlaceId === placeId) {
+            if ($rootScope.player.PlaceId == placeId) {
                 var idx = $rootScope.player.idx;
                 if ($rootScope.player.isAudio)
                     $scope.PlaceInfo.Audios[idx].playing = $rootScope.player.playing;
@@ -548,7 +569,7 @@ angular.module('app.controllers', [])
             track = $scope.PlaceInfo.Audios[idx];
             if ($rootScope.player.hasMedia &&
                 $rootScope.player.isAudio &&
-                track.Id === $rootScope.player.trackInfo.Id) {
+                track.Id == $rootScope.player.trackInfo.Id) {
                 if (track.playing) {
                     pauseTrack();
                     $scope.PlaceInfo.Audios[idx].playing = false;
@@ -568,7 +589,7 @@ angular.module('app.controllers', [])
             track = $scope.PlaceInfo.Stories[idx];
             if ($rootScope.player.hasMedia &&
                 !$rootScope.player.isAudio &&
-                track.Id === $rootScope.player.trackInfo.Id) {
+                track.Id == $rootScope.player.trackInfo.Id) {
                 if (track.playing) {
                     pauseTrack();
                     $scope.PlaceInfo.Stories[idx].playing = false;
@@ -590,7 +611,7 @@ angular.module('app.controllers', [])
         playAudioWhenScreenIsLocked: true
     }
     var mediaStatusCallback = function (status) {
-        if (status === 1) {
+        if (status == 1) {
             $ionicLoading.show({ template: 'Loading...' });
         } else {
             $ionicLoading.hide();
