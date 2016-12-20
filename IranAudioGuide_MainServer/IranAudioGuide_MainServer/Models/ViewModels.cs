@@ -11,12 +11,13 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class ContactEmailVM
     {
+        [Required]
         public string email { get; set; }
+        [Required]
         public string message { get; set; }
-        public string number { get; set; }
+        [Required]
         public string name { get; set; }
-        public string Subject { get; set; }
-        public bool sent { get; set; }
+        public string subject { get; set; }
     }
     public class NewPackage
     {
