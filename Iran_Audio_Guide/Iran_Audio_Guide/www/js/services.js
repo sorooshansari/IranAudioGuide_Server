@@ -36,52 +36,81 @@ angular.module('app.services', [])
         }
     };
 })
-.factory('Places', function () {
+.factory('player', function ($rootScope) {
+    var _player = {
+        Media: null,
+        hasMedia: false,
+        trackInfo: null,
+        isAudio: null,
+        idx: null,
+        PlaceId: null,
+        playing: false,
+        position: 0,
+        length: 0
+    }
 
-    var Places = [{
-        id: 0,
-        name: 'Eram Garden',
-        city: 'Shiraz',
-        address: 'Fars, Shiraz, District 1, Eram Street',
-        logo: 'img/1.jpg'
-    }, {
-        id: 1,
-        name: 'Naranjestan Qavam',
-        city: 'Shiraz',
-        address: 'Fars, Shiraz, Lotf Ali Khan Zand St',
-        logo: 'img/2.jpg'
-    }, {
-        id: 2,
-        name: 'Nasir ol Molk Mosque',
-        city: 'Shiraz',
-        address: 'Fars, Shiraz, Lotf Ali Khan Zand St',
-        logo: 'img/3.jpg'
-    },
-    {
-        id: 5,
-        name: 'Tomb of hafez',
-        city: 'Shiraz',
-        address: 'Fars, Shiraz, District 3',
-        logo: 'img/6.jpg'
-    }];
+    var _free = function () {
+        var oldIdx = _player.idx;
+        _player.Media.stop();
+        _player.Media.release();
+        _player.Media = null;
+        _player.hasMedia = false;
+    };
+    var _new = function (track, isAudio, idx, placeId) {
+        if (_player.hasMedia) _free();
+        var mediaDir = (isAudio) ? "/PlaceAudio_dir/" : "/PlaceStory_dir/";
+        var Path = cordova.file.dataDirectory + mediaDir + track.url;
+        _player.Media = new Media(Path, mediaSuccess, mediaError, mediaStatus);
+        _player.hasMedia = true;
+        _player.trackInfo = track;
+        _player.isAudio = isAudio;
+        _player.idx = idx;
+        _player.PlaceId = placeId;
+    };
+    var _pause = function () {
+        _player.Media.pause();
+        _player.playing = false;
+        $rootScope.$broadcast('playerUpdated', {});
+    };
+    var _play = function () {
+        _player.Media.play();
+        _player.playing = true;
+        $rootScope.$broadcast('playerUpdated', {});
+    };
+    var mediaStatusCallback = function (status) {
+        if (status == 1) {
+            $ionicLoading.show({ template: 'Loading...' });
+        } else {
+            $ionicLoading.hide();
+        }
+    };
+    var mediaSuccess = function (res) {
+        console.log("media success: ", res);
+    };
+    var mediaError = function (err) {
+        console.log("media error: ", err);
+    };
+    var mediaStatus = function (status) {
+        console.log("media status: ", status);
+    };
 
     return {
-        all: function () {
-            return Places;
+        info: function () {
+            return _player;
         },
-        remove: function (place) {
-            Places.splice(Places.indexOf(place), 1);
+        play: function () {
+            _play();
         },
-        get: function (id_local) {
-            for (var i = 0; i < Places.length; i++) {
-                if (Places[i].id == parseInt(id_local)) {
-                    return Places[i];
-                }
-            }
-            return null;
+        pause: function () {
+            _pause();
         },
-        range: function (from, to) {
-            return Places.slice(from, to);
+        New: function (track, isAudio, idx, placeId) {
+            _new(track, isAudio, idx, placeId);
+        },
+        free: function () {
+            var oldPlayer = _player;
+            _free();
+            return oldPlayer;
         }
     };
 })

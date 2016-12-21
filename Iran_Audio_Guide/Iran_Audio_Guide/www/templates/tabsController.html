@@ -42,16 +42,13 @@
                         </div>
                     </ion-item>
                     <div class="list">
-
-                        <div class="item item-divider center item-stable">
-                            Who was hafez
+                        <div ng-show="SPinfo.hasMedia" ng-bind="SPinfo.trackInfo.Name" class="item item-divider center item-stable">
                         </div>
 
-                        <div class="item player" href="#">
+                        <div class="item player">
                             <div class="row">
-                                <div class="col col-offset-10"><i class="icon ion-ios-skipbackward"></i></div>
-                                <div class="col"><i class="icon ion-play"></i></div>
-                                <div class="col"><i class="icon ion-ios-skipforward"></i></div>
+                                <div class="col col-offset-10"><i class="icon ion-arrow-return-right"></i>10s</div>
+                                <div class="col"><i ng-click="SPplayPause()" ng-class="SPchooseClass(SPinfo.playing)" class="icon"></i></div>
                                 <div class="col">10s<i class="icon ion-arrow-return-left"></i></div>
                             </div>
                             <div class="list">
@@ -71,9 +68,9 @@
                             Who was hafez
                         </a>
                     </div>
-                    <a ng-click="ShowPackage()" class="button button-balanced button-block">
+                    <!--<a ng-click="ShowPackage()" class="button button-balanced button-block">
                         Packages
-                    </a>
+                    </a>-->
             </ion-content>
             <ion-footer-bar class="bar-stable">
                 <h5 style="text-align:center; width: 100%;">Made with <i class="icon ion-ios-heart assertive"></i> on planet earth</h5>

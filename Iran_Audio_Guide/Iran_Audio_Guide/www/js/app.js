@@ -1,7 +1,7 @@
 
 angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngCordova', 'ngCordovaOauth'])
 
-.run(function ($ionicPlatform, $rootScope, $ionicLoading, $ionicHistory, $state, AuthServices, dbServices) {
+.run(function ($ionicPlatform, $rootScope, $ionicLoading, $ionicHistory, $state, AuthServices, dbServices, player) {
     $ionicPlatform.ready(function () {
         //checkConnection();
 
@@ -19,6 +19,24 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         $rootScope.audio.media = null;
         console.log(device.uuid);
     });
+
+    //sidePlayer
+    $rootScope.SPinfo = player.info();
+    $rootScope.$on('playerUpdated', function () {
+        $rootScope.SPinfo = player.info();
+    });
+    $rootScope.SPchooseClass = function (isPlaying) {
+        return (isPlaying) ? 'ion-pause' : 'ion-play';
+    };
+    $rootScope.SPplayPause = function () {
+        if ($rootScope.SPinfo.playing)
+            player.pause();
+        else
+            player.play();
+    };
+
+
+
     $rootScope.$on('LoadDefaultUser', function () {
         console.log("Load Default User");
         window.localStorage.setItem("User_Name", "");
