@@ -149,12 +149,19 @@
     </div>
 </section>
 
-
+<style>
+    .input-group .ng-invalid{
+        border: red 3px solid;
+    }
+    .input-group .ng-untouched{
+        border: none !important;
+    }
+</style>
 
 <!-- Footer -->
 <footer id="footer">
     <div id="contact" class="form-container">
-        <form class="form-horizontal">
+        <form name="contactForm" class="form-horizontal" ng-submit="ContactUs(ContactFormModel, contactForm)">
             <fieldset>
                 <legend style="color:#ffffff;">Feel free to Contact Us...</legend>
                 <br />
@@ -162,7 +169,7 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input id="prependedtext" name="prependedtext" class="form-control" placeholder="Name" type="text" required="">
+                            <input ng-model="ContactFormModel.name" id="name" name="name" class="form-control" placeholder="Name" type="text" required="">
                         </div>
 
                     </div>
@@ -172,7 +179,7 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input id="Email" name="Email" class="form-control" placeholder="Email" type="text" required="">
+                            <input ng-model="ContactFormModel.email" id="Email" name="Email" class="form-control" placeholder="Email" type="email" required="">
                         </div>
 
                     </div>
@@ -182,7 +189,7 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                            <input id="Phone" name="Phone" class="form-control" placeholder="Phone Number" type="text">
+                            <input ng-model="ContactFormModel.subject" id="Subject" name="Subject" class="form-control" placeholder="Subject" type="text">
                         </div>
 
                     </div>
@@ -192,7 +199,7 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-commenting"></i></span>
-                            <textarea id="Message" name="Message" class="form-control" required=""></textarea>
+                            <textarea ng-model="ContactFormModel.message" id="Message" name="Message" class="form-control" required=""></textarea>
                         </div>
 
                     </div>
@@ -208,6 +215,7 @@
             </fieldset>
         </form>
 
+        
     </div>
 
     <ul class="icons">
@@ -227,3 +235,15 @@
         <li>Developer: <a rel="author" href="https://plus.google.com/112268338441138496929">Soroosh Ansari Mehr</a></li>
     </ul>
 </footer>
+<div ng-show="overlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
+    <div id="floatingCirclesG">
+        <div class="f_circleG" id="frotateG_01"></div>
+        <div class="f_circleG" id="frotateG_02"></div>
+        <div class="f_circleG" id="frotateG_03"></div>
+        <div class="f_circleG" id="frotateG_04"></div>
+        <div class="f_circleG" id="frotateG_05"></div>
+        <div class="f_circleG" id="frotateG_06"></div>
+        <div class="f_circleG" id="frotateG_07"></div>
+        <div class="f_circleG" id="frotateG_08"></div>
+    </div>
+</div>
