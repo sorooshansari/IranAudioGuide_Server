@@ -33,30 +33,25 @@ angular.module('app.controllers', [])
             $state.go('firstPage');
         }
         else {
-            try {
-                fillMenu();
-                //navigator.splashscreen.show();
-                $rootScope.waitingUpdates = -1;
-                dbServices.openDB();
-                var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
-                if (LstUpdtNum == 0) {
-                    FileServices.createDirs();
-                    dbServices.initiate();
-                    var networkState = navigator.connection.type;
-                    while (networkState == Connection.NONE)
-                        alert('check internet connection');
-                    //$cordovaDialogs.alert('check your internet connection and try again.', 'Network error', 'Try again')
-                    ApiServices.GetAll(0);
-                }
-                else {
-                    if (navigator.connection.type == Connection.NONE)
-                        GoHome();
-                    else
-                        ApiServices.GetAll(LstUpdtNum);
-                }
+            fillMenu();
+            //navigator.splashscreen.show();
+            $rootScope.waitingUpdates = -1;
+            dbServices.openDB();
+            var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
+            if (LstUpdtNum == 0) {
+                FileServices.createDirs();
+                dbServices.initiate();
+                var networkState = navigator.connection.type;
+                while (networkState == Connection.NONE)
+                    alert('check internet connection');
+                //$cordovaDialogs.alert('check your internet connection and try again.', 'Network error', 'Try again')
+                ApiServices.GetAll(0);
             }
-            catch (err) {
-                alert(err.message);
+            else {
+                if (navigator.connection.type == Connection.NONE)
+                    GoHome();
+                else
+                    ApiServices.GetAll(LstUpdtNum);
             }
         }
     };

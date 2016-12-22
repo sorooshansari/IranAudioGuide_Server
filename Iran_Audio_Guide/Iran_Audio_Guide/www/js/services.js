@@ -36,7 +36,7 @@ angular.module('app.services', [])
         }
     };
 })
-.factory('player', function ($rootScope) {
+.factory('player', function ($rootScope, $interval) {
     var _player = {
         Media: null,
         hasMedia: false,
@@ -46,15 +46,16 @@ angular.module('app.services', [])
         PlaceId: null,
         playing: false,
         position: 0,
-        length: 0
+        duration: 0
     }
-
     var _free = function () {
         var oldIdx = _player.idx;
         _player.Media.stop();
         _player.Media.release();
         _player.Media = null;
         _player.hasMedia = false;
+        _player.position = 0;
+        _player.duration = 0;
     };
     var _new = function (track, isAudio, idx, placeId) {
         if (_player.hasMedia) _free();
@@ -66,24 +67,74 @@ angular.module('app.services', [])
         _player.isAudio = isAudio;
         _player.idx = idx;
         _player.PlaceId = placeId;
+        _player.duration = _player.Media.getDuration();
+        var counter = 0;
+        var timerDur = setInterval(function () {
+            counter = counter + 100;
+            if (counter > 2000) {
+                clearInterval(timerDur);
+            }
+            var dur = _player.Media.getDuration();
+            if (dur > 0) {
+                clearInterval(timerDur);
+                _player.duration = parseInt(dur);
+            }
+        }, 100);
+        $rootScope.$broadcast('playerUpdated', {});
     };
+    var mediaTimer;
     var _pause = function () {
         _player.Media.pause();
         _player.playing = false;
+        $interval.cancel(mediaTimer);
         $rootScope.$broadcast('playerUpdated', {});
     };
     var _play = function () {
         _player.Media.play();
         _player.playing = true;
+
+        mediaTimer = $interval(function () {
+            // get media position
+            _player.Media.getCurrentPosition(
+                // success callback
+                function (position) {
+                    if (position > -1) {
+                        _player.position = parseInt(position);
+                    }
+                    $rootScope.$broadcast('positionUpdated', { position: parseInt(position) });
+                },
+                // error callback
+                function (e) {
+                    console.log("Error getting pos=" + e);
+                }
+            );
+        }, 1000);
+
         $rootScope.$broadcast('playerUpdated', {});
     };
-    var mediaStatusCallback = function (status) {
-        if (status == 1) {
-            $ionicLoading.show({ template: 'Loading...' });
-        } else {
-            $ionicLoading.hide();
-        }
-    };
+    var _seekTo = function (t) {
+        _player.Media.seekTo(t);
+        _player.Media.getCurrentPosition(
+                // success callback
+                function (position) {
+                    if (position > -1) {
+                        _player.position = parseInt(position);
+                    }
+                    $rootScope.$broadcast('positionUpdated', { position: parseInt(position) });
+                },
+                // error callback
+                function (e) {
+                    console.log("Error getting pos=" + e);
+                }
+            );
+    }
+    //var mediaStatusCallback = function (status) {
+    //    if (status == 1) {
+    //        $ionicLoading.show({ template: 'Loading...' });
+    //    } else {
+    //        $ionicLoading.hide();
+    //    }
+    //};
     var mediaSuccess = function (res) {
         console.log("media success: ", res);
     };
@@ -111,6 +162,12 @@ angular.module('app.services', [])
             var oldPlayer = _player;
             _free();
             return oldPlayer;
+        },
+        getPos: function () {
+            return _player.position;
+        },
+        seekTo: function (t) {
+            _seekTo(t);
         }
     };
 })
@@ -332,7 +389,7 @@ angular.module('app.services', [])
 }])
 .service('dbServices', ['$rootScope', '$cordovaSQLite', 'FileServices', function ($rootScope, $cordovaSQLite, FileServices) {
     //var db = null;
-    
+
     return {
         openDB: function () {
             var isIOS = ionic.Platform.isIOS();
@@ -472,7 +529,7 @@ angular.module('app.services', [])
                     function (error) {
                         console.error('error: ' + error.message);
                     });
-                
+
                 if (Places[i].isPrimary) {
                     $rootScope.waitingUpdates++;
                     var id = Places[i].Id;
@@ -605,7 +662,7 @@ angular.module('app.services', [])
                 console.log('transaction ok');
                 return true;
             });
-            
+
             //for (var i = 0; i < Stories.length; i++) {
             //    $cordovaSQLite.execute(db, query,
             //        [Stories[i].ID
@@ -700,7 +757,7 @@ angular.module('app.services', [])
                 console.log('transaction ok');
                 return true;
             });
-                        
+
             //for (var i = 0; i < Tips.length; i++) {
             //    $cordovaSQLite.execute(db, query,
             //        [Tips[i].ID
@@ -792,7 +849,7 @@ angular.module('app.services', [])
                 console.log('transaction ok');
                 return true;
             });
-                        
+
             //for (var i = 0; i < Cities.length; i++) {
             //    $cordovaSQLite.execute(db, query,
             //        [Cities[i].Id
