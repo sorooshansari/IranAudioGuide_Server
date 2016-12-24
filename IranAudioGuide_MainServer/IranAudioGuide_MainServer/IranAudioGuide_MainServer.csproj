@@ -1181,6 +1181,7 @@
     <Content Include="Scripts\util.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Admin\loading-overlay-template.html" />
+    <Content Include="Views\Shared\AutoRespondEmailTemplate.html" />
     <Content Include="Views\Shared\ContactEmailTemplate.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
