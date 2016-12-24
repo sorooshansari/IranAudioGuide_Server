@@ -1,7 +1,7 @@
 
 angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngCordova', 'ngCordovaOauth'])
 
-.run(function ($ionicPlatform, $rootScope, $ionicLoading, $ionicHistory, $state, AuthServices, dbServices) {
+.run(function ($ionicPlatform, $rootScope, $ionicLoading, $ionicHistory, $state, $interval, AuthServices, dbServices, player) {
     $ionicPlatform.ready(function () {
         //checkConnection();
 
@@ -19,6 +19,54 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         $rootScope.audio.media = null;
         console.log(device.uuid);
     });
+
+    //sidePlayer
+    var mediaPercent = function (p, t) {
+        return parseInt((p / t) * 100);
+    };
+    $rootScope.SPduration = 0;
+    $rootScope.SPposition = 0;
+    $rootScope.SPinfo = player.info();
+    $rootScope.SPrange = 0;
+    $rootScope.$on('playerUpdated', function () {
+        $rootScope.SPinfo = player.info();
+        $rootScope.SPposition = player.getPos();
+        $rootScope.SPrange = mediaPercent($rootScope.SPposition, $rootScope.SPinfo.duration);
+    });
+    $rootScope.$on('positionUpdated', function (event, data) {
+        $rootScope.SPposition = data.position;
+        $rootScope.SPrange = mediaPercent(data.position, $rootScope.SPinfo.duration);
+    });
+    $rootScope.SPchooseClass = function (isPlaying) {
+        return (isPlaying) ? 'ion-pause' : 'ion-play';
+    };
+    $rootScope.SPplayPause = function () {
+        if ($rootScope.SPinfo.playing)
+            player.pause();
+        else
+            player.play();
+    };
+    $rootScope.MMSS = function (t) {
+        var minutes = parseInt(t / 60) % 60;
+        var seconds = t % 60;
+        return (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+    };
+    $rootScope.stepBackward = function () {
+        var t = ($rootScope.SPposition > 10) ? ($rootScope.SPposition - 10)*1000 : 0;
+        player.seekTo(t);
+    };
+
+    $rootScope.stepforward = function () {
+        var t = ($rootScope.SPinfo.duration - $rootScope.SPposition > 10) ? ($rootScope.SPposition + 10) * 1000 : $rootScope.SPinfo.duration * 1000 - 1;
+        player.seekTo(t);
+    };
+    $rootScope.SPrangeChanged = function () {
+        var t = ($rootScope.SPrange *10) * $rootScope.SPinfo.duration;
+        console.log("range changed", t);
+        player.seekTo(t);
+    };
+
+
     $rootScope.$on('LoadDefaultUser', function () {
         console.log("Load Default User");
         window.localStorage.setItem("User_Name", "");

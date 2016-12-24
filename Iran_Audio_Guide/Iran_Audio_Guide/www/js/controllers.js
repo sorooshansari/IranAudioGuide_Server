@@ -33,30 +33,25 @@ angular.module('app.controllers', [])
             $state.go('firstPage');
         }
         else {
-            try {
-                fillMenu();
-                //navigator.splashscreen.show();
-                $rootScope.waitingUpdates = -1;
-                dbServices.openDB();
-                var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
-                if (LstUpdtNum == 0) {
-                    FileServices.createDirs();
-                    dbServices.initiate();
-                    var networkState = navigator.connection.type;
-                    while (networkState == Connection.NONE)
-                        alert('check internet connection');
-                    //$cordovaDialogs.alert('check your internet connection and try again.', 'Network error', 'Try again')
-                    ApiServices.GetAll(0);
-                }
-                else {
-                    if (navigator.connection.type == Connection.NONE)
-                        GoHome();
-                    else
-                        ApiServices.GetAll(LstUpdtNum);
-                }
+            fillMenu();
+            //navigator.splashscreen.show();
+            $rootScope.waitingUpdates = -1;
+            dbServices.openDB();
+            var LstUpdtNum = window.localStorage.getItem("LastUpdateNumber") || 0;
+            if (LstUpdtNum == 0) {
+                FileServices.createDirs();
+                dbServices.initiate();
+                var networkState = navigator.connection.type;
+                while (networkState == Connection.NONE)
+                    alert('check internet connection');
+                //$cordovaDialogs.alert('check your internet connection and try again.', 'Network error', 'Try again')
+                ApiServices.GetAll(0);
             }
-            catch (err) {
-                alert(err.message);
+            else {
+                if (navigator.connection.type == Connection.NONE)
+                    GoHome();
+                else
+                    ApiServices.GetAll(LstUpdtNum);
             }
         }
     };
@@ -356,22 +351,99 @@ angular.module('app.controllers', [])
         });
     });
 })
+.controller('playerCtrl', function ($rootScope, $ionicHistory) {
+    console.log("soroosh");
 
-.controller('placeCtrl', function ($scope, dbServices, FileServices, AudioServices, $timeout, $rootScope, $ionicLoading, $stateParams, $ionicSlideBoxDelegate) {
+})
+
+.controller('placeCtrl', function ($scope, dbServices, FileServices, AudioServices, player, $timeout, $rootScope, $ionicLoading, $stateParams, $ionicSlideBoxDelegate) {
     var defaultImageSource = 'img/default-thumbnail.jpg';
+
+
+    $scope.PlaceInfo = {
+        Audios: [],
+        Stories: [],
+        ExtraImages: [],
+        Tips: []
+    };
+    var placeId = $stateParams.id;
+
     $scope.percentClass = function (percent) {
         return 'p' + percent.toString();
     };
-    $scope.$on("$ionicView.beforeEnter", function (event, data) {
-        checkPlayer();
+    //player stuff
+    var searchById = function (arr, id) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].Id == id)
+                return i;
+        }
+    };
+    var checkPlayer = function () {
+        var info = player.info();
+        console.log(info);
+        if (info.hasMedia) {
+            if (info.PlaceId == placeId) {
+                if (info.isAudio) {
+                    var idx = searchById($scope.PlaceInfo.Audios, info.trackInfo.Id);
+                    $scope.PlaceInfo.Audios[idx].playing = info.playing;
+                }
+                else {
+                    var idx = searchById($scope.PlaceInfo.Stories, info.trackInfo.Id);
+                    $scope.PlaceInfo.Stories[idx].playing = info.playing;
+                }
+            }
+        }
+    };
+    $scope.$on('playerUpdated', function () {
+        var info = player.info();
+        if (info.isAudio) {
+            for (var i = 0; i < $scope.PlaceInfo.Audios.length; i++) {
+                if ($scope.PlaceInfo.Audios[i].Id == info.trackInfo.Id)
+                    $scope.PlaceInfo.Audios[i].playing = info.playing;
+                else
+                    $scope.PlaceInfo.Audios[i].playing = false;
+            }
+        }
+        else {
+            for (var i = 0; i < $scope.PlaceInfo.Stories.length; i++) {
+                if ($scope.PlaceInfo.Stories[i].Id == info.trackInfo.Id)
+                    $scope.PlaceInfo.Stories[i].playing = info.playing;
+                else
+                    $scope.PlaceInfo.Stories[i].playing = false;
+            }
+        }
     });
-    $scope.$on("$ionicView.afterEnter", function (event, data) {
-        //$scope.ShowContent = true;
-        //$ionicLoading.hide();
-    });
-    $scope.$on("$ionicView.leave", function (event, data) {
-        freePlayer();
-    });
+
+    //var freePlayer = function () {
+    //    var oldInfo = player.free();
+    //    if (oldInfo.isAudio)
+    //        $scope.PlaceInfo.Audios[oldInfo.idx].playing = false;
+    //    else
+    //        $scope.PlaceInfo.Stories[oldInfo.idx].playing = false;
+    //};
+    var playPause = function (idx, isAudio) {
+        var info = player.info();
+        var track;
+        track = $scope.PlaceInfo.Audios[idx];
+        if (info.hasMedia &&
+            track.Id == info.trackInfo.Id) {
+            if (track.playing) {
+                player.pause();
+            }
+            else {
+                player.play();
+                $scope.PlaceInfo.Audios[idx].playing = true;
+            }
+        }
+        else {
+            player.New(track, isAudio, idx, placeId);
+            player.play();
+        }
+    }
+    var iOSPlayOptions = {
+        numberOfLoops: 1,
+        playAudioWhenScreenIsLocked: true
+    }
 
     $scope.ModifyText = function (str) {
         str = str || "";
@@ -390,13 +462,16 @@ angular.module('app.controllers', [])
     }
 
 
-    $scope.PlaceInfo = {
-        Audios: [],
-        Stories: [],
-        ExtraImages: [],
-        Tips: []
-    };
-    var placeId = $stateParams.id;
+    $scope.$on("$ionicView.beforeEnter", function (event, data) {
+
+    });
+    $scope.$on("$ionicView.afterEnter", function (event, data) {
+        checkPlayer();
+    });
+    $scope.$on("$ionicView.leave", function (event, data) {
+        //freePlayer();
+    });
+
 
     //loading place basic infoes
     $scope.PlaceInfo.PlaceId = placeId;
@@ -514,118 +589,7 @@ angular.module('app.controllers', [])
         }
     });
 
-    //player stuff
-    $rootScope.player = {};
-    var checkPlayer = function () {
-        console.log("player has media", $rootScope.player.hasMedia);
-        console.log("player track", $rootScope.player.trackInfo);
-        if ($rootScope.player.hasMedia) {
-            if ($rootScope.player.PlaceId == placeId) {
-                var idx = $rootScope.player.idx;
-                if ($rootScope.player.isAudio)
-                    $scope.PlaceInfo.Audios[idx].playing = $rootScope.player.playing;
-                else
-                    $scope.PlaceInfo.Stories[idx].playing = $rootScope.player.playing;
-            }
-        }
-    };
-    var freePlayer = function () {
-        var oldIdx = $rootScope.player.idx;
-        $rootScope.player.Media.stop();
-        $rootScope.player.Media.release();
-        $rootScope.player.hasMedia = false;
-        if ($rootScope.player.isAudio)
-            $scope.PlaceInfo.Audios[oldIdx].playing = false;
-        else
-            $scope.PlaceInfo.Stories[oldIdx].playing = false;
-    };
-    var CreateNewTrack = function (track, isAudio, idx) {
-        if ($rootScope.player.hasMedia) {
-            freePlayer()
-        }
-        var Path;
-        if (isAudio)
-            Path = cordova.file.dataDirectory + "/PlaceAudio_dir/" + track.url;
-        else
-            Path = cordova.file.dataDirectory + "/PlaceStory_dir/" + track.url;
-        $rootScope.player.Media = new Media(Path, mediaSuccess, mediaError, mediaStatus);
-        $rootScope.player.hasMedia = true;
-        $rootScope.player.trackInfo = track;
-        $rootScope.player.isAudio = isAudio;
-        $rootScope.player.idx = idx;
-        $rootScope.player.PlaceId = placeId;
-    };
-    var pauseTrack = function () {
-        $rootScope.player.Media.pause();
-        $rootScope.player.playing = false;
-    };
-    var playTrack = function () {
-        $rootScope.player.Media.play();
-        $rootScope.player.playing = true;
-    };
-    var playPause = function (idx, isAudio) {
-        var track;
-        if (isAudio) {
-            track = $scope.PlaceInfo.Audios[idx];
-            if ($rootScope.player.hasMedia &&
-                $rootScope.player.isAudio &&
-                track.Id == $rootScope.player.trackInfo.Id) {
-                if (track.playing) {
-                    pauseTrack();
-                    $scope.PlaceInfo.Audios[idx].playing = false;
-                }
-                else {
-                    playTrack();
-                    $scope.PlaceInfo.Audios[idx].playing = true;
-                }
-            }
-            else {
-                CreateNewTrack(track, isAudio, idx);
-                playTrack();
-                $scope.PlaceInfo.Audios[idx].playing = true;
-            }
-        }
-        else {
-            track = $scope.PlaceInfo.Stories[idx];
-            if ($rootScope.player.hasMedia &&
-                !$rootScope.player.isAudio &&
-                track.Id == $rootScope.player.trackInfo.Id) {
-                if (track.playing) {
-                    pauseTrack();
-                    $scope.PlaceInfo.Stories[idx].playing = false;
-                }
-                else {
-                    playTrack();
-                    $scope.PlaceInfo.Stories[idx].playing = true;
-                }
-            }
-            else {
-                CreateNewTrack(track, isAudio, idx);
-                playTrack();
-                $scope.PlaceInfo.Stories[idx].playing = true;
-            }
-        }
-    }
-    var iOSPlayOptions = {
-        numberOfLoops: 1,
-        playAudioWhenScreenIsLocked: true
-    }
-    var mediaStatusCallback = function (status) {
-        if (status == 1) {
-            $ionicLoading.show({ template: 'Loading...' });
-        } else {
-            $ionicLoading.hide();
-        }
-    }
-    var mediaSuccess = function (res) {
-        console.log("media success: ", res);
-    }
-    var mediaError = function (err) {
-        console.log("media error: ", err);
-    }
-    var mediaStatus = function (status) {
-        console.log("media status: ", status);
-    }
+
 
 
     //Audio stuffs
