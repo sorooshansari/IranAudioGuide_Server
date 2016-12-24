@@ -250,6 +250,7 @@
     <Content Include="assets\js\util.js" />
     <Content Include="Content\loading.css" />
     <Content Include="images\as.png" />
+    <Content Include="images\bars.svg" />
     <Content Include="images\gp.png" />
     <Content Include="images\lc.png" />
     <Content Include="Content\UserMain.css" />
@@ -314,6 +315,9 @@
     <Content Include="images\tracklistarrow-48-16-0.png" />
     <Content Include="images\volume-24-24-0.png" />
     <Content Include="images\WindowsStore.png" />
+    <Content Include="Scripts\angular-countUp.js" />
+    <Content Include="Scripts\angular-scroll-spy.js" />
+    <Content Include="Scripts\countUp.js" />
     <Content Include="Scripts\HomeControllers.js" />
     <Content Include="Scripts\HomeCustom.js" />
     <Content Include="Scripts\UserControllers.js" />

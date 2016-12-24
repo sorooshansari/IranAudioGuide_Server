@@ -186,6 +186,12 @@ background-color: #a4c639;
         #contact {
     width: 90%;
 }
+       .contactoverlay
+        {
+            width:100% !important;
+            left:0 !important;
+                height: 68% !important;
+        }
 }
 
 @media (min-width: 768px) {

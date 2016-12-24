@@ -2,7 +2,7 @@
     ViewBag.Title = "Iran Audio Guide";
 }
 @model IranAudioGuide_MainServer.Models.ContactEmailVM
-<!-- Banner -->
+
 <section id="banner">
     <div class="inner">
         <h2>Iran Audio Guide</h2>
@@ -40,6 +40,12 @@
             <li  class="tooltips"><a><span class="icon fa-android major style2"><span>Coming Soon</span></span></a></li>
 
         </ul>
+        <section style="font-size:x-large;">
+            We are honored to have <br />
+            <h2 style="margin:0;" count-up id="numberAnimation" end-val="873.4" scroll-spy-event="elementFirstScrolledIntoView" scroll-spy></h2>
+            Users
+
+        </section>
     </div>
 </section>
 
@@ -49,7 +55,7 @@
         <div class="image"><img src="~/images/accurate3.svg" alt="providing you with accurate information" /></div>
         <div class="content">
             <h2>
-                providing you with accurate information<br />
+                Providing you with accurate information<br />
 
             </h2>
             <p>To guide you through the discovery of Iran and all its millenniums of history </p>
@@ -60,10 +66,10 @@
             <img src="~/images/feather2.svg" alt="liberating you to visit attractions with your own pace" />
         </div><div class="content">
             <h2>
-                liberating you to visit attractions with your own pace <br />
+                Liberating you to visit attractions with your own pace <br />
 
             </h2>
-            <p>No worries about being late or missing the expalantions,take your time and wonder, take photos, ...</p>
+            <p>No worries about being late or missing the explanations,take your time and wonder, take photos, ...</p>
         </div>
     </section>
     <section class="spotlight">
@@ -84,8 +90,7 @@
         <header class="major">
             <h2>Where ever, when ever, which ever, how ever  </h2>
             <p>
-                while walking, sitting, photographing. In the hotel, on the way, in the plane, on the bus. In the morning, at night, in any hour you choose this guide will narrate what ever you feel like listening too.Pause the tracks, listen later. Just be sure to truely discover Iran with Iran audio guide.<br />
-
+                While walking, sitting, photographing. In the hotel, on the way, in the plane, on the bus. In the morning, at night, in any hour you choose this guide will narrate what ever you feel like listening too.Pause the tracks, listen later. Just be sure to truly discover Iran with Iran audio guide.<br />
             </p>
         </header>
         <ul class="features">
@@ -93,7 +98,7 @@
                 <h3>Visiting tips</h3>
                 <p>Iran audio guide will provide you with tips for visiting every attraction, maps and all you need to know about modern Iran</p>
             </li>
-            <li class="icon fa-info">
+            <li class="icon fa-flag">
                 <h3>Attraction guide</h3>
                 <p>Iran audio guide will guide you step by step in every attraction. Advising you at what to look at and details not to miss</p>
             </li>
@@ -152,27 +157,60 @@
 
 
 <style>
-    .input-group .ng-invalid {
-        border: red 3px solid;
+    .sorooshInvalid {
+        background-color:#de0000;
     }
+
+    /*.input-group .ng-invalid {
+        border: red 3px solid;
+    }*/
 
     .input-group .ng-untouched {
         border: none !important;
     }
+    header.major 
+    {
+    margin: 0px 0 3em 0 !important;
+    }
+    #contact .form-control
+    {    
+        background: rgba(144, 144, 144, 0.65) !important; 
+    }
+    body.landing #footer 
+    {
+        background-color: rgba(29, 36, 42, 0.6);
+    }
+    .contactoverlay
+    {
+    position: absolute;
+    margin-top: -440px;
+    /* left: 0; */
+    width: 45%;
+    height: 70%;
+    background-color: rgba(29, 36, 42, 0.7);
+    border-radius: 15px;
+    /* padding: 10px; */
+    z-index: 5000;
+    }
+
+    .contactoverlay img
+    {
+        width:7%;
+        margin-top:165px;
+    }
 </style>
 <!-- Footer -->
 <footer id="footer">
-
-    <div id="contact" class="form-container">
+<div id="contact" class="form-container">
         <form name="contactForm" class="form-horizontal" ng-submit="ContactUs(ContactFormModel, contactForm)">
             <fieldset>
-                <legend style="color:#ffffff;">Feel free to Contact Us...</legend>
+                <legend style="color:#ffffff;">Feel free to Contact us...</legend>
                 <br />
                 <div class="form-group">
                     <div class="col-xs-12">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input ng-model="ContactFormModel.name" id="name" name="name" class="form-control" placeholder="Name" type="text" required="">
+                            <span ng-class="ValidationClass(0)" class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input ng-blur="validator($event, 0)" ng-model="ContactFormModel.name" id="name" name="name" class="form-control" placeholder="Name" type="text" required="">
                         </div>
 
                     </div>
@@ -181,8 +219,8 @@
                 <div class="form-group">
                     <div class="col-xs-12">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input ng-model="ContactFormModel.email" id="Email" name="Email" class="form-control" placeholder="Email" type="email" required="">
+                            <span ng-class="ValidationClass(1)" class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input ng-blur="validator($event, 1)" ng-model="ContactFormModel.email" id="Email4" name="Email" class="form-control" placeholder="Email" type="email" required="">
                         </div>
 
                     </div>
@@ -191,7 +229,7 @@
                 <div class="form-group">
                     <div class="col-xs-12">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
                             <input ng-model="ContactFormModel.subject" id="Subject" name="Subject" class="form-control" placeholder="Subject" type="text">
                         </div>
 
@@ -201,8 +239,8 @@
                 <div class="form-group">
                     <div class="col-xs-12">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-commenting"></i></span>
-                            <textarea ng-model="ContactFormModel.message" id="Message" name="Message" class="form-control" required=""></textarea>
+                            <span ng-class="ValidationClass(3)" class="input-group-addon"><i class="fa fa-commenting"></i></span>
+                            <textarea ng-blur="validator($event, 3)" ng-model="ContactFormModel.message" id="Message" name="Message" class="form-control" placeholder="Your Message..." required=""></textarea>
                         </div>
 
                     </div>
@@ -217,6 +255,30 @@
 
             </fieldset>
         </form>
+
+
+
+
+
+
+
+
+
+
+  <!--<Contact overlay> -->
+
+    <div class="contactoverlay">
+        <img src="~/images/bars.svg"/>
+    </div>
+
+    
+
+
+    <!--</Contact overlay> -->
+
+
+
+
 
 
     </div>

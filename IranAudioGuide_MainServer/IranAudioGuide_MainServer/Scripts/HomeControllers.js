@@ -32,7 +32,14 @@ angular.module('HomePage.controllers', [])
                   });
             }
         };
+        valid = [true, true, true, true];
+        $scope.ValidationClass = function (i) {
+            return (valid[i]) ? '' : 'sorooshInvalid';
+        }
+        $scope.validator = function (e, i) {
+            valid[i] = (e.target.classList.contains('ng-invalid')) ? false : true;
 
+        }
     }]);
 
 

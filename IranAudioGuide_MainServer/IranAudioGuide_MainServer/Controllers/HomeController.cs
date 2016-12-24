@@ -40,7 +40,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     Body = body,
                     Destination = "danialby@gmail.com",
-                    Subject = "Contact message"
+                    Subject = model.name + " - " + model.email
                 });
 
                 return Json(new Respond());
