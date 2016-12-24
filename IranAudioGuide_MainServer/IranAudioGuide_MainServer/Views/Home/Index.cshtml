@@ -35,9 +35,9 @@
             </p>
         </header>
         <ul class="icons major">
-            <li  class="tooltips"><a><span class="icon fa-apple major style1"><span>Coming Soon</span></span></a></li>
-            <li  class="tooltips"><a href="~/Download/IranAudioGuide.apk"><span class="icon fa-cloud-download major style3"><span>Download Now</span></span></a></li>
-            <li  class="tooltips"><a><span class="icon fa-android major style2"><span>Coming Soon</span></span></a></li>
+            <li class="tooltips"><a><span class="icon fa-apple major style1"><span>Coming Soon</span></span></a></li>
+            <li class="tooltips"><a href="~/Download/IranAudioGuide.apk"><span class="icon fa-cloud-download major style3"><span>Download Now</span></span></a></li>
+            <li class="tooltips"><a><span class="icon fa-android major style2"><span>Coming Soon</span></span></a></li>
 
         </ul>
         <section style="font-size:x-large;">
@@ -133,7 +133,7 @@
         </div>
         <div class="row">
             <div class="col-sm-3 col-sm-offset-1 col-xs-10 col-xs-offset-1 dlrow">
-                <a  class="tooltips">
+                <a class="tooltips">
                     <img alt="Get it from App Store" src="~/images/as.png" />
                     <span class="csspan">Coming Soon!</span>
                 </a>
@@ -158,7 +158,7 @@
 
 <style>
     .sorooshInvalid {
-        background-color:#de0000;
+        background-color: #de0000;
     }
 
     /*.input-group .ng-invalid {
@@ -168,40 +168,47 @@
     .input-group .ng-untouched {
         border: none !important;
     }
-    header.major 
-    {
-    margin: 0px 0 3em 0 !important;
-    }
-    #contact .form-control
-    {    
-        background: rgba(144, 144, 144, 0.65) !important; 
-    }
-    body.landing #footer 
-    {
-        background-color: rgba(29, 36, 42, 0.6);
-    }
-    .contactoverlay
-    {
-    position: absolute;
-    margin-top: -440px;
-    /* left: 0; */
-    width: 45%;
-    height: 70%;
-    background-color: rgba(29, 36, 42, 0.7);
-    border-radius: 15px;
-    /* padding: 10px; */
-    z-index: 5000;
+
+    header.major {
+        margin: 0px 0 3em 0 !important;
     }
 
-    .contactoverlay img
-    {
-        width:7%;
-        margin-top:165px;
+    #contact .form-control {
+        background: rgba(144, 144, 144, 0.65) !important;
     }
+
+    body.landing #footer {
+        background-color: rgba(29, 36, 42, 0.6);
+    }
+
+    .contactoverlay {
+        position: absolute;
+        margin-top: -440px;
+        /* left: 0; */
+        width: 45%;
+        height: 70%;
+        background-color: rgba(29, 36, 42, 0.7);
+        border-radius: 15px;
+        /* padding: 10px; */
+        z-index: 5000;
+    }
+
+        .contactoverlay img {
+            width: 7%;
+            margin-top: 165px;
+        }
+
+        .contactoverlay p {
+            margin-top: 165px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(79, 79, 79, 0.53);
+            width: 50%;
+        }
 </style>
 <!-- Footer -->
 <footer id="footer">
-<div id="contact" class="form-container">
+    <div id="contact" class="form-container">
         <form name="contactForm" class="form-horizontal" ng-submit="ContactUs(ContactFormModel, contactForm)">
             <fieldset>
                 <legend style="color:#ffffff;">Feel free to Contact us...</legend>
@@ -255,60 +262,38 @@
 
             </fieldset>
         </form>
-
-
-
-
-
-
-
-
-
-
-  <!--<Contact overlay> -->
-
-    <div class="contactoverlay">
-        <img src="~/images/bars.svg"/>
-    </div>
-
-    
-
-
-    <!--</Contact overlay> -->
-
-
-
-
-
-
+        <!--<Contact overlay> -->
+        <div ng-show="overlay" class="contactoverlay">
+            <img ng-show="!sent" src="~/images/bars.svg" />
+            <p ng-show="sent" ng-bind="sentMessage"></p>
+        </div>
+        <!--</Contact overlay> -->
     </div>
 
     <ul class="icons">
-        <li><a target="_blank" href="https://www.twitter.com/iranaudioguide" 
-               class="icon fa-twitter tooltips"><span>Twitter</span></a></li>
-        <li><a target="_blank" href="https://www.facebook.com/iranaudioguide" 
-               class="icon fa-facebook tooltips"><span>Facebook</span></a></li>
-        <li><a target="_blank" href="https://www.instagram.com/iranaudioguideapp/" 
-               class="icon fa-instagram tooltips"><span>Instagram</span></a></li>
-        <li><a target="_blank" href="https://www.telegram.me/iranaudioguide" 
-               class="icon fa-telegram tooltips"><span>Telegram</span></a></li>
-        <li><a href="mailto:info@iranaudioguide.com" 
-               class="icon fa-envelope-o tooltips"><span>Email</span></a></li>
+        <li>
+            <a target="_blank" href="https://www.twitter.com/iranaudioguide"
+               class="icon fa-twitter tooltips"><span>Twitter</span></a>
+        </li>
+        <li>
+            <a target="_blank" href="https://www.facebook.com/iranaudioguide"
+               class="icon fa-facebook tooltips"><span>Facebook</span></a>
+        </li>
+        <li>
+            <a target="_blank" href="https://www.instagram.com/iranaudioguideapp/"
+               class="icon fa-instagram tooltips"><span>Instagram</span></a>
+        </li>
+        <li>
+            <a target="_blank" href="https://www.telegram.me/iranaudioguide"
+               class="icon fa-telegram tooltips"><span>Telegram</span></a>
+        </li>
+        <li>
+            <a href="mailto:info@iranaudioguide.com"
+               class="icon fa-envelope-o tooltips"><span>Email</span></a>
+        </li>
     </ul>
     <ul id="copyright" class="copyright">
         <li>&copy; @DateTime.Now.Year - Soroosh Developer Team</li>
         <li>Developer: <a rel="author" href="https://plus.google.com/112268338441138496929">Soroosh Ansari Mehr</a></li>
     </ul>
 </footer>
-<div ng-show="overlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
-    <div id="floatingCirclesG">
-        <div class="f_circleG" id="frotateG_01"></div>
-        <div class="f_circleG" id="frotateG_02"></div>
-        <div class="f_circleG" id="frotateG_03"></div>
-        <div class="f_circleG" id="frotateG_04"></div>
-        <div class="f_circleG" id="frotateG_05"></div>
-        <div class="f_circleG" id="frotateG_06"></div>
-        <div class="f_circleG" id="frotateG_07"></div>
-        <div class="f_circleG" id="frotateG_08"></div>
-    </div>
-</div>

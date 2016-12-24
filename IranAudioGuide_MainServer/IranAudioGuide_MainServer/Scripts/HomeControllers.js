@@ -1,7 +1,7 @@
 ﻿//Developed by Soroosh Ansari
 angular.module('HomePage.controllers', [])
-.controller('HomeController', ['$scope', '$http',
-    function ($scope, $http) {
+.controller('HomeController', ['$scope', '$http','$timeout',
+    function ($scope, $http, $timeout) {
         $scope.ContactUs = function (model, form) {
             $scope.overlay = true;
             if (form.$valid && !model.invalidFile) {
@@ -13,19 +13,25 @@ angular.module('HomePage.controllers', [])
                     name: model.name,
                     subject: model.subject
                 };
+                $scope.sent = false;
+                $scope.overlay = true;
                 $http({ method: method, url: url, data: data }).
                   then(function (response) {
                       switch (response.data.status) {
                           case respondstatus.success:
-                              alert("eamil sent.");
-                              break;
-                          case respondstatus.invalidInput:
-                              alert("invalid input: " + response.data.content);
+                              $scope.sentMessage = "Email sent.";
+                              $scope.sent = true;
                               break;
                           default:
-                              alert("email sending failed: " + response.data.content);
+                              $scope.sentMessage = "Email sending failed: " + response.data.content;
+                              $scope.sent = true;
                               break;
                       }
+                      $timeout(function () {
+                          $scope.overlay = false;
+                          $scope.contactForm.$setPristine();
+                          $scope.ContactFormModel = {};
+                      }, 1000);
                   }, function (response) {
                       console.log("Request failed");
                       console.log("status:" + response.status);
