@@ -21,9 +21,63 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
     });
 
     //sidePlayer
+    $rootScope.SPtracks = [];
+    $rootScope.$on('PlayerHistoryUpdated', function (event, Data) {
+        dbServices.LoadTopPlayerHistory();
+    });
+    $rootScope.$on('FillPlayerHistory', function (event, Data) {
+        var res = Data.result.rows;
+        var tracks = [];
+        for (var i = 0; i < res.length; i++) {
+            tracks.push({
+                Id: res.item(i).PlH_trackId,
+                Name: res.item(i).PlH_Name,
+                url: res.item(i).PlH_Url,
+                isAudio: res.item(i).PlH_isAudio,
+                placeId: res.item(i).PlH_PlaceId,
+                playing: false
+            });
+            $rootScope.SPtracks = angular.copy(tracks);
+        }
+    });
     var mediaPercent = function (p, t) {
         return parseInt((p / t) * 100);
     };
+    var setTrackPlaying = function (id) {
+        for (var i = 0; i < $rootScope.SPtracks.length; i++) {
+            if ($rootScope.SPtracks[i].Id == id)
+                $rootScope.SPtracks[i].playing = true;
+            else
+                $rootScope.SPtracks[i].playing = false;
+        }
+    };
+    $rootScope.loadTrack = function (trakInfo) {
+        var info = player.info();
+        if (info.hasMedia &&
+            trakInfo.Id == info.trackInfo.Id) {
+            if (trakInfo.playing) {
+                player.pause();
+            }
+            else {
+                player.play();
+                $scope.PlaceInfo.Audios[idx].playing = true;
+            }
+        }
+        else {
+            var track = {
+                Id: trakInfo.Id,
+                Name: trakInfo.Name,
+                url: trakInfo.Id.url,
+                description: '',
+                downloaded: true,
+                downloadProgress: 0,
+                downloading: false,
+                playing: false
+            }
+            player.New(track, trakInfo.isAudio, 0, trakInfo.placeId);
+            player.play();
+        }
+    }
     $rootScope.SPduration = 0;
     $rootScope.SPposition = 0;
     $rootScope.SPinfo = player.info();

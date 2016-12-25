@@ -36,7 +36,7 @@ angular.module('app.services', [])
         }
     };
 })
-.factory('player', function ($rootScope, $interval) {
+.factory('player', function ($rootScope, $interval, dbServices) {
     var _player = {
         Media: null,
         hasMedia: false,
@@ -59,6 +59,14 @@ angular.module('app.services', [])
     };
     var _new = function (track, isAudio, idx, placeId) {
         if (_player.hasMedia) _free();
+        var playerHistoryInfo = {
+            name: track.name,
+            isAudio: (isAudio) ? 1 : 0,
+            trackId: track.id,
+            placeId: placeId,
+            url: track.url
+        };
+        dbServices.AddToPlayerHistory(playerHistoryInfo);
         var mediaDir = (isAudio) ? "/PlaceAudio_dir/" : "/PlaceStory_dir/";
         var Path = cordova.file.dataDirectory + mediaDir + track.url;
         _player.Media = new Media(Path, mediaSuccess, mediaError, mediaStatus);
@@ -484,6 +492,16 @@ angular.module('app.services', [])
             TiC_Unicode text,\
             TiC_Name text,\
             Cit_Priiority integer\
+            )"
+            , "\
+            CREATE TABLE IF NOT EXISTS PlayerHistory\
+            (\
+            PlH_Id integer PRIMARY KEY,\
+            PlH_Name text,\
+            PlH_isAudio integer,\
+            PlH_trackId blob,\
+            PlH_PlaceId blob,\
+            PlH_Url text\
             )"], function () {
                 alert('Create database OK');
                 console.log('Create database OK');
@@ -1041,6 +1059,20 @@ angular.module('app.services', [])
             //            console.error(error);
             //        });
         },
+        CleanStory: function (StoryId) {
+            var query = "\
+            UPDATE Stories\
+            SET Sto_Dirty = 0\
+            WHERE Sto_Id = ?";
+            db.executeSql(query,
+                        [StoryId],
+                function (res) {
+                    console.log("Story Cleaned");
+                },
+                function (error) {
+                    console.log("Story Cleaning failed");
+                });
+        },
         CleanAudio: function (AudioId) {
             var query = "\
             UPDATE Audios\
@@ -1296,6 +1328,69 @@ angular.module('app.services', [])
 
             //.then(function (result) {
             //    $rootScope.$broadcast('PlaceTipsLoaded', { result: result });
+            //}, function (error) {
+            //    console.error(error);
+            //});
+        },
+        AddToPlayerHistory: function (PH) {
+            var queryDelete = "DELETE FROM PlayerHistory\
+            WHERE PlH_trackId = ?\
+                AND PlH_isAudio = ?"
+            var query = "INSERT INTO PlayerHistory\
+                    (PlH_Name,\
+                    PlH_isAudio,\
+                    PlH_trackId,\
+                    PlH_PlaceId,\
+                    PlH_Url)\
+                    VALUES (?,?,?,?,?)";
+            db.transaction(function (tx) {
+                tx.executeSql(queryDelete,
+                    [PH.trackId,
+                    PH.isAudio],
+                    function (tx, res) {
+                        console.log('res: ', res);
+                    },
+                    function (tx, error) {
+                        console.error('error: ' + error.message);
+                    });
+                tx.executeSql(query,
+                    [PH.name,
+                    PH.isAudio,
+                    PH.trackId,
+                    PH.placeId,
+                    PH.url],
+                    function (tx, res) {
+                        console.log('res: ', res);
+                    },
+                    function (tx, error) {
+                        $rootScope.$broadcast('PlayerHistoryUpdated', { result: res });
+                        console.error('error: ' + error.message);
+                    });
+            }, function (error) {
+                console.log('transaction error: ' + error.message);
+                return false;
+            }, function () {
+                return true;
+            });
+        },
+        LoadTopPlayerHistory: function () {
+            var query = "\
+                SELECT *\
+                FROM (\
+                    SELECT *\
+                    FROM PlayerHistory\
+                    ORDER BY Id ASC LIMIT 10)\
+                ORDER BY Id DESC";
+            db.executeSql(query, [],
+            function (res) {
+                $rootScope.$broadcast('FillPlayerHistory', { result: res });
+            },
+            function (error) {
+                console.log('error: ' + error.message);
+            });
+
+            //$cordovaSQLite.execute(db, query).then(function (result) {
+            //    $rootScope.$broadcast('FillPlaces', { result: result });
             //}, function (error) {
             //    console.error(error);
             //});

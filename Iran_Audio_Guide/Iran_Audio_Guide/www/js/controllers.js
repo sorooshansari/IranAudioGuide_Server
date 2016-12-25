@@ -1,7 +1,7 @@
 angular.module('app.controllers', [])
 .controller('primaryPageCtrl', function ($scope, $rootScope, $ionicPlatform, ApiServices, dbServices, FileServices, $ionicHistory, $state) {
     console.log("Primary Page");
-    var start = 0, SplashTime = 3000;
+    var start = 0, SplashTime = 1000;
     var updateNumber = 0;
 
     $ionicPlatform.ready(function () {
@@ -112,6 +112,7 @@ angular.module('app.controllers', [])
         //$cordovaDialogs.alert("Couldn’t connect to server, check your internet connection and try again.", 'Network error', 'Try again');
     });
     var GoHome = function () {
+        dbServices.LoadTopPlayerHistory();
         var end = new Date().getTime();
         var time = end - start;
         if (time < SplashTime)
@@ -380,7 +381,6 @@ angular.module('app.controllers', [])
     };
     var checkPlayer = function () {
         var info = player.info();
-        console.log(info);
         if (info.hasMedia) {
             if (info.PlaceId == placeId) {
                 if (info.isAudio) {
@@ -403,6 +403,8 @@ angular.module('app.controllers', [])
                 else
                     $scope.PlaceInfo.Audios[i].playing = false;
             }
+            for (var i = 0; i < $scope.PlaceInfo.Stories.length; i++)
+                $scope.PlaceInfo.Stories[i].playing = false;
         }
         else {
             for (var i = 0; i < $scope.PlaceInfo.Stories.length; i++) {
@@ -411,6 +413,8 @@ angular.module('app.controllers', [])
                 else
                     $scope.PlaceInfo.Stories[i].playing = false;
             }
+            for (var i = 0; i < $scope.PlaceInfo.Audios.length; i++)
+                $scope.PlaceInfo.Audios[i].playing = false;
         }
     });
 
@@ -424,16 +428,13 @@ angular.module('app.controllers', [])
     var playPause = function (idx, isAudio) {
         var info = player.info();
         var track;
-        track = $scope.PlaceInfo.Audios[idx];
+        track = (isAudio) ? $scope.PlaceInfo.Audios[idx] : $scope.PlaceInfo.Stories[idx];
         if (info.hasMedia &&
             track.Id == info.trackInfo.Id) {
-            if (track.playing) {
+            if (track.playing)
                 player.pause();
-            }
-            else {
+            else
                 player.play();
-                $scope.PlaceInfo.Audios[idx].playing = true;
-            }
         }
         else {
             player.New(track, isAudio, idx, placeId);
@@ -473,7 +474,7 @@ angular.module('app.controllers', [])
     });
 
 
-    //loading place basic infoes
+    //loading place basic infos
     $scope.PlaceInfo.PlaceId = placeId;
     dbServices.LoadPlaceInfos(placeId);
     $scope.$on('PlaceInfoesLoaded', function (event, data) {
@@ -638,7 +639,7 @@ angular.module('app.controllers', [])
         var story = $scope.PlaceInfo.Stories[idx];
         FileServices.DownloadStory(story.url)
             .then(function (result) {// Success!
-                dbServices.CleanAudio(story.Id);
+                dbServices.CleanStory(story.Id);
                 $scope.PlaceInfo.Stories[idx].downloading = false;
                 $scope.PlaceInfo.Stories[idx].downloaded = true;
             }, function (err) {// Error
