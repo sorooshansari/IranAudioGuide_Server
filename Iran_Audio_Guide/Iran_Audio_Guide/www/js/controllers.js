@@ -600,7 +600,6 @@ angular.module('app.controllers', [])
             downloadAudio(idx);
         }
         else {
-            console.log(idx);
             playPause(idx, true);//isAudio = True
         }
     }
@@ -630,7 +629,6 @@ angular.module('app.controllers', [])
             downloadStory(idx);
         }
         else {
-            console.log(idx);
             playPause(idx, false);//isAudio = false
         }
     }

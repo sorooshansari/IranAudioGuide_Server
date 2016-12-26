@@ -22,23 +22,30 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
 
     //sidePlayer
     $rootScope.SPtracks = [];
-    $rootScope.$on('PlayerHistoryUpdated', function (event, Data) {
+    $rootScope.$on('PlayerHistoryUpdated', function (event) {
         dbServices.LoadTopPlayerHistory();
     });
     $rootScope.$on('FillPlayerHistory', function (event, Data) {
+        console.log(Data.result);
         var res = Data.result.rows;
         var tracks = [];
         for (var i = 0; i < res.length; i++) {
-            tracks.push({
+            var newTrack = {
                 Id: res.item(i).PlH_trackId,
                 Name: res.item(i).PlH_Name,
                 url: res.item(i).PlH_Url,
                 isAudio: res.item(i).PlH_isAudio,
                 placeId: res.item(i).PlH_PlaceId,
                 playing: false
-            });
-            $rootScope.SPtracks = angular.copy(tracks);
+            };
+            var info = player.info();
+            if (info.hasMedia &&
+                res.item(i).PlH_trackId == info.trackInfo.Id) {
+                newTrack.playing = info.playing;
+            }
+            tracks.push(newTrack);
         }
+        $rootScope.SPtracks = tracks;
     });
     var mediaPercent = function (p, t) {
         return parseInt((p / t) * 100);
@@ -51,7 +58,7 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
                 $rootScope.SPtracks[i].playing = false;
         }
     };
-    $rootScope.loadTrack = function (trakInfo) {
+    $rootScope.loadSPtrack = function (trakInfo) {
         var info = player.info();
         if (info.hasMedia &&
             trakInfo.Id == info.trackInfo.Id) {
@@ -60,14 +67,13 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
             }
             else {
                 player.play();
-                $scope.PlaceInfo.Audios[idx].playing = true;
             }
         }
         else {
             var track = {
                 Id: trakInfo.Id,
                 Name: trakInfo.Name,
-                url: trakInfo.Id.url,
+                url: trakInfo.url,
                 description: '',
                 downloaded: true,
                 downloadProgress: 0,
@@ -86,6 +92,12 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         $rootScope.SPinfo = player.info();
         $rootScope.SPposition = player.getPos();
         $rootScope.SPrange = mediaPercent($rootScope.SPposition, $rootScope.SPinfo.duration);
+        for (var i = 0; i < $rootScope.SPtracks.length; i++) {
+            if ($rootScope.SPtracks[i].Id == $rootScope.SPinfo.trackInfo.Id)
+                $rootScope.SPtracks[i].playing = $rootScope.SPinfo.playing;
+            else
+                $rootScope.SPtracks[i].playing = false;
+        }
     });
     $rootScope.$on('positionUpdated', function (event, data) {
         $rootScope.SPposition = data.position;
@@ -106,16 +118,16 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         return (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
     };
     $rootScope.stepBackward = function () {
-        var t = ($rootScope.SPposition > 10) ? ($rootScope.SPposition - 10)*1000 : 0;
+        var t = ($rootScope.SPposition > 10) ? ($rootScope.SPposition - 10) * 1000 : 0;
         player.seekTo(t);
     };
 
-    $rootScope.stepforward = function () {
+    $rootScope.stepForward = function () {
         var t = ($rootScope.SPinfo.duration - $rootScope.SPposition > 10) ? ($rootScope.SPposition + 10) * 1000 : $rootScope.SPinfo.duration * 1000 - 1;
         player.seekTo(t);
     };
     $rootScope.SPrangeChanged = function () {
-        var t = ($rootScope.SPrange *10) * $rootScope.SPinfo.duration;
+        var t = ($rootScope.SPrange * 10) * $rootScope.SPinfo.duration;
         console.log("range changed", t);
         player.seekTo(t);
     };

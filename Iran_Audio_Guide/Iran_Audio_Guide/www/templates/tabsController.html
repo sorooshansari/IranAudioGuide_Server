@@ -1,4 +1,3 @@
-
 <ion-view title="Tabs Controller" id="page1">
     <ion-side-menus enable-menu-with-back-views="true" data-componentid="side-menu21">
         <ion-side-menu-content>
@@ -41,35 +40,40 @@
                             </a>
                         </div>
                     </ion-item>
-                    <div class="list">
-                        <div ng-show="SPinfo.hasMedia" ng-bind="SPinfo.trackInfo.Name" class="item item-divider center item-stable">
-                        </div>
+                    <ion-item style="padding-left:0px;padding-right:0px;">
+                        <ion-item-divider ng-show="SPinfo.hasMedia" ng-bind="SPinfo.trackInfo.Name" class="center item-stable">
+                        </ion-item-divider>
 
-                        <div class="item player">
+                        <ion-item class="player">
                             <div class="row">
-                                <div ng-click="stepforward()" class="col col-offset-10"><i class="icon ion-arrow-return-right"></i>10s</div>
+                                <div ng-click="stepForward()" class="col col-offset-10"><i class="icon ion-arrow-return-right"></i>10s</div>
                                 <div class="col"><i ng-click="SPplayPause()" ng-class="SPchooseClass(SPinfo.playing)" class="icon"></i></div>
                                 <div ng-click="stepBackward()" class="col">10s<i class="icon ion-arrow-return-left"></i></div>
                             </div>
                             <div class="list">
-                                <div class="item range noBoarder">
+                                <ion-item class="range noBoarder">
                                     <i ng-bind="MMSS(SPposition)"></i>
                                     <input type="range" name="volume" min="0" max="100"
                                            ng-model="SPrange" disabled>
                                     <i ng-bind="MMSS(SPinfo.duration)"></i>
-                                </div>
+                                </ion-item>
                             </div>
-                        </div>
-                        <div ng-show="SPtracks.lenght" class="item item-divider">
-                            Recently Played
-                        </div>
+                        </ion-item>
+                        <ion-list ng-show="SPtracks.length">
+                            <ion-item-divider class="item-stable">
+                                Recently Played
+                            </ion-item-divider>
+                            <ion-item no-lines ng-repeat="track in SPtracks" class="item-icon-left">
+                                <i ng-click="loadSPtrack(track)" ng-class="SPchooseClass(track.playing)" class="icon"></i>
+                                {{track.Name}}
+                                <!--<ion-option-button ui-sref="tabsController.place({id: '{{track.placeId}}'})">
+                                    <i class="icon ion-arrow-graph-down-right"></i>
+                                </ion-option-button>-->
+                            </ion-item>
+                        </ion-list>
+                    </ion-item>
 
-                        <a ng-click="loadSPtrack(track)" ng-repeat="track in SPtracks" class="item item-icon-left">
-                            <i ng-class="SPchooseClass(track.playing)" class="icon"></i>
-                            {{track.Name}}
-                            <ion-option-button><i class="icon ion-trash-a assertive"></i></ion-option-button>
-                        </a>
-                    </div>
+
                     <!--<a ng-click="ShowPackage()" class="button button-balanced button-block">
                         Packages
                     </a>-->
