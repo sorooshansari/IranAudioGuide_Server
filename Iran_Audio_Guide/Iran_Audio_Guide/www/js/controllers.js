@@ -417,14 +417,6 @@ angular.module('app.controllers', [])
                 $scope.PlaceInfo.Audios[i].playing = false;
         }
     });
-
-    //var freePlayer = function () {
-    //    var oldInfo = player.free();
-    //    if (oldInfo.isAudio)
-    //        $scope.PlaceInfo.Audios[oldInfo.idx].playing = false;
-    //    else
-    //        $scope.PlaceInfo.Stories[oldInfo.idx].playing = false;
-    //};
     var playPause = function (idx, isAudio) {
         var info = player.info();
         var track;
@@ -441,10 +433,10 @@ angular.module('app.controllers', [])
             player.play();
         }
     }
-    var iOSPlayOptions = {
-        numberOfLoops: 1,
-        playAudioWhenScreenIsLocked: true
-    }
+    //var iOSPlayOptions = {
+    //    numberOfLoops: 1,
+    //    playAudioWhenScreenIsLocked: true
+    //}
 
     $scope.ModifyText = function (str) {
         str = str || "";

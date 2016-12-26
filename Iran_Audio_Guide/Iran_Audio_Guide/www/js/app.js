@@ -107,10 +107,17 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         return (isPlaying) ? 'ion-pause' : 'ion-play';
     };
     $rootScope.SPplayPause = function () {
-        if ($rootScope.SPinfo.playing)
-            player.pause();
-        else
-            player.play();
+        if (!$rootScope.SPinfo.hasMedia) {
+            if ($rootScope.SPtracks.length > 0) {
+                $rootScope.loadSPtrack($rootScope.SPtracks[0]);
+            }
+        }
+        else {
+            if ($rootScope.SPinfo.playing)
+                player.pause();
+            else
+                player.play();
+        }
     };
     $rootScope.MMSS = function (t) {
         var minutes = parseInt(t / 60) % 60;
