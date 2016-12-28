@@ -69,3 +69,11 @@ body {
     border-bottom-right-radius: 10px;
     box-shadow: 1px 1px 3px #888;
 }
+
+
+        .spinner svg {
+  width: 45px;
+  height: 45px;
+  stroke: rgba(255,255,255,1);
+  fill: rgba(255,255,255,1);
+}
