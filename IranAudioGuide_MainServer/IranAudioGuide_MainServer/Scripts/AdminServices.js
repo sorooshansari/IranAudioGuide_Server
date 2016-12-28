@@ -763,60 +763,19 @@
         All: function () {
             method = 'POST';
             url = '/Admin/GetPackages';
-            return $http({ method: method, url: url})
-                .then(function (response) {
-                    $rootScope.AllPackages = angular.copy(response.data);
-                    $rootScope.$broadcast('LoadPackages', {});
-                }, function (response) {
-                    console.log("Request failed");
-                    console.log("status:" + response.status);
-                });
+            return $http({ method: method, url: url });
         },
         AddPackage: function (NewPackage) {
             method = 'POST';
             url = '/Admin/AddPackage';
             data = { PackageName: NewPackage.Name, PackagePrice: NewPackage.Price, Cities: NewPackage.Cities };
-            $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  switch (response.data.status) {
-                      case respondstatus.success:
-                          $rootScope.$broadcast('packageAdded', {});
-                          break;
-                      default:
-                          console.log("Server failed to add Package.");
-                          break;
-                  }
-              }, function (response) {
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
-              });
+            return $http({ method: method, url: url, data: data });
         },
         RemovePackage: function (PackageID, PackageName) {
             method = 'POST';
             url = '/Admin/DelPackage';
             data = { Id: PackageID };
-            $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  switch (response.data.status) {
-                      case respondstatus.success:
-                          $rootScope.$broadcast('UpdatePackages', {});
-                          break;
-                      case respondstatus.forignKeyError:
-                          $rootScope.$broadcast('PackageForignKeyError', {
-                              PackageID: PackageID,
-                              PackageName: PackageName
-                          });
-                          break;
-                      default:
-                          $rootScope.$broadcast('PackageUnknownError', {
-                          });
-                          console.log("Server failed to remove Package.");
-                          break;
-                  }
-              }, function (response) {
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
-              });
+            return $http({ method: method, url: url, data: data });
         }
 
     };
