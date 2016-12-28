@@ -251,6 +251,13 @@
     <Content Include="Content\loading.css" />
     <Content Include="images\as.png" />
     <Content Include="images\bars.svg" />
+    <Content Include="images\blockpics\accurate_information.jpg" />
+    <Content Include="images\blockpics\DSC_1419e.jpg" />
+    <Content Include="images\blockpics\whattolisten.jpg" />
+    <Content Include="images\blockpics\DSC_1449 %282%29.JPG" />
+    <Content Include="images\blockpics\DSC_1557 %282%29 %282%29.JPG" />
+    <Content Include="images\blockpics\DSC_3562 %282%29.jpg" />
+    <Content Include="images\blockpics\yourownpace.jpg" />
     <Content Include="images\gp.png" />
     <Content Include="images\lc.png" />
     <Content Include="Content\UserMain.css" />

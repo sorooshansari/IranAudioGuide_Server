@@ -442,9 +442,185 @@ a:hover.tooltips span {
     left: 50%;
     margin-left: -50px;
     z-index: 999;
-            -moz-transition: all 1s ease;
-        -webkit-transition: all 1s ease;
-        -ms-transition: all 1s ease;
-        transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
 }
 
+
+#banner
+{
+    background-attachment: fixed !important;
+}
+
+
+
+
+/*#region detblocks */
+
+.image {
+        background-attachment: fixed !important;
+        background-repeat: no-repeat;
+        height: 360px;
+        margin: -15px;
+        margin-top: 20px;
+        margin-left: 120px;
+        margin-right: 100px;
+        box-shadow: 0px 0px 10px black;
+        background-size: contain;
+        border-radius: 6px !important;
+        width: 27% !important;
+    }
+
+    .image1 {
+        background-image: url(../../images/blockpics/accurate_information.jpg);
+        background-position: 8% 0%;
+    }
+
+    .image2 {
+        background-image: url(../../images/blockpics/yourownpace.jpg);
+        background-position: 91% 0%;
+    }
+
+    .image3 {
+        background-image: url(../../images/blockpics/whattolisten.jpg);
+        background-position: 8% 0%;
+    }
+
+
+@media (min-width:992px) and (max-width:1199px)
+{
+    .image {
+        width: 40% !important;
+    }
+
+    .image1 {
+        background-position: 6% 0%;
+    }
+
+    .image2 {
+        background-position: 91% 0%;
+    }
+
+    .image3 {
+        background-position: 6% 0%;
+    }
+}
+
+
+@media (max-width: 980px) and (min-width: 769px) 
+{
+    .spotlight .content {
+        padding: 1em 3em 0em 8em !important;
+        max-width: none;
+        text-align: center;
+        width: 100%;
+        margin-top: -280px;
+        position: absolute !important;
+    }
+
+    .image {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    height: 360px;
+    margin: 30px;
+    margin-top: 20px;
+    margin-right: 100px;
+    box-shadow: 0px 0px 10px black;
+    background-size: contain;
+    border-radius: 6px !important;
+    width: 59% !important;
+}
+    .image {
+            background-position: 6% 30% !important
+    }
+    .image2
+    {
+        margin-right:30px;
+        background-position:90% 30% !important;
+    }
+
+    .spotlightv
+    {
+        text-align:right !important;
+    }
+}
+
+@media (max-width: 768px)  and (min-width:426px){
+    .image {
+        margin-right: 20px !important;
+        margin-left: 20px !important;
+        margin-top: 20px;
+        /* margin-left: 120px; */
+        border-radius: 6px !important;
+        background-size: contain;
+        width: 50% !important;
+        height: 460px;
+        background-position: 6% 30% !important;
+    }
+        .spotlight .content {
+        padding: 0em 3em 0em 4em !important;   
+        max-width: none;
+        text-align: center;
+        width: 100%;
+        margin-top: -280px;
+        position: absolute !important;
+    }
+            .image2
+    {
+        margin-right:30px;
+        background-position:90% 30% !important;
+    }
+
+    .spotlightv
+    {
+        text-align:right !important;
+    }
+}
+
+@media (max-width: 426px) and (min-width:320px)
+{
+    .image {
+    margin-right: 20px !important;
+    margin-left: 20px !important;
+    margin-top: 20px;
+    /* margin-left: 120px; */
+    border-radius: 6px !important;
+    width: 90% !important;
+    background-position: 27% 100% !important;
+                background-size: cover;
+}
+            .spotlight .content {
+        padding: 5em 3em 0em 4em !important;   
+        max-width: none;
+        text-align: center;
+        width: 100%;
+        margin-top: -280px;
+        position: absolute !important;
+    }
+                            .image2 {
+    background-position: 110% 0% !important;
+}
+}
+
+
+@media (max-width: 376px) and (min-width:320px) {
+        .image {
+    width: 90% !important;
+}
+                .image2 {
+    background-position: 110% 0% !important;
+}
+                                .image3 {
+    background-position: 110% 0% !important;
+}
+}
+@media (max-width: 321px) {
+        .image {
+    width: 88% !important;
+}
+        .image2 {
+    background-position: 91% 0% !important;
+}
+}
