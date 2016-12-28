@@ -110,14 +110,6 @@
                     animate();
                 }
 
-                // re-animate on click
-                var reanimateOnClick = angular.isDefined($scope.reanimateOnClick) ? $scope.reanimateOnClick : true;
-                if (reanimateOnClick) {
-                    $el.on('click', function() {
-                        animate();
-                    });
-                }
-
                 $scope.$watch('endVal', function (newValue, oldValue) {
                     if (newValue === null || newValue === oldValue) {
                         return;

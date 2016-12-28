@@ -458,21 +458,6 @@ a:hover.tooltips span {
 
 
 /*#region detblocks */
-
-.image {
-        background-attachment: fixed !important;
-        background-repeat: no-repeat;
-        height: 360px;
-        margin: -15px;
-        margin-top: 20px;
-        margin-left: 120px;
-        margin-right: 100px;
-        box-shadow: 0px 0px 10px black;
-        background-size: contain;
-        border-radius: 6px !important;
-        width: 27% !important;
-    }
-
     .image1 {
         background-image: url(../../images/blockpics/accurate_information.jpg);
         background-position: 8% 0%;
@@ -487,12 +472,28 @@ a:hover.tooltips span {
         background-image: url(../../images/blockpics/whattolisten.jpg);
         background-position: 8% 0%;
     }
+.image {
+
+    background-repeat: no-repeat;
+    height: 500px;
+    margin: -15px;
+    margin-top: 20px;
+    margin-left: 120px;
+    margin-right: 100px;
+    box-shadow: 0px 0px 10px black;
+    background-size: contain;
+    border-radius: 6px !important;
+    width: auto !important;
+    background-attachment: local !important;
+    }
+
+
 
 
 @media (min-width:992px) and (max-width:1199px)
 {
     .image {
-        width: 40% !important;
+        width: auto !important;
     }
 
     .image1 {
@@ -505,6 +506,14 @@ a:hover.tooltips span {
 
     .image3 {
         background-position: 6% 0%;
+    }
+    .spotlight .content
+    {
+            padding: 2em 4em 0.1em 0em;
+    }
+        .spotlightv .content
+    {
+            padding: 2em 0em 0.1em 8em;
     }
 }
 
@@ -521,16 +530,16 @@ a:hover.tooltips span {
     }
 
     .image {
-    background-attachment: fixed;
+    background-attachment: local;
     background-repeat: no-repeat;
-    height: 360px;
+    height: 500px;
     margin: 30px;
     margin-top: 20px;
     margin-right: 100px;
     box-shadow: 0px 0px 10px black;
     background-size: contain;
     border-radius: 6px !important;
-    width: 59% !important;
+    width: auto !important;
 }
     .image {
             background-position: 6% 30% !important
@@ -555,8 +564,8 @@ a:hover.tooltips span {
         /* margin-left: 120px; */
         border-radius: 6px !important;
         background-size: contain;
-        width: 50% !important;
-        height: 460px;
+        width: auto !important;
+        height: 500px;
         background-position: 6% 30% !important;
     }
         .spotlight .content {
@@ -579,48 +588,163 @@ a:hover.tooltips span {
     }
 }
 
-@media (max-width: 426px) and (min-width:320px)
-{
+@media (max-width: 426px) and (min-width:376px) {
     .image {
-    margin-right: 20px !important;
-    margin-left: 20px !important;
-    margin-top: 20px;
-    /* margin-left: 120px; */
-    border-radius: 6px !important;
-    width: 90% !important;
-    background-position: 27% 100% !important;
-                background-size: cover;
-}
-            .spotlight .content {
-        padding: 5em 3em 0em 4em !important;   
+        margin: 20px auto !important;
+        width: auto !important;
+    }
+
+    .spotlight .content {
+        padding: 5em 3em 0em 4em !important;
         max-width: none;
         text-align: center;
         width: 100%;
         margin-top: -280px;
         position: absolute !important;
     }
-                            .image2 {
-    background-position: 110% 0% !important;
-}
+
+    .image2 {
+        background-position: 110% 0% !important;
+    }
+
+    .spotlight {
+        text-align: center;
+    }
 }
 
 
 @media (max-width: 376px) and (min-width:320px) {
-        .image {
-    width: 90% !important;
+    .image {
+        width: auto !important;
+        margin: 20px auto !important;
+    }
+
+    .image2 {
+        background-position: 110% 0% !important;
+    }
+
+    .image3 {
+        background-position: 110% 0% !important;
+    }
+
+    .spotlight .content {
+        padding: 5em 3em 0em 4em !important;
+        max-width: none;
+        text-align: center;
+        width: 100%;
+        margin-top: -280px;
+        position: absolute !important;
+    }
+
+    .spotlight {
+        text-align: center;
+    }
 }
-                .image2 {
-    background-position: 110% 0% !important;
-}
-                                .image3 {
-    background-position: 110% 0% !important;
-}
-}
+
 @media (max-width: 321px) {
-        .image {
-    width: 88% !important;
+    .image {
+        width: auto !important;
+        margin: 0px auto !important;
+        border-radius: 0px !important;
+    }
+
+    .image2 {
+        background-position: 91% 0% !important;
+    }
+
+    .spotlight .content {
+        padding: 1em 3em 0em 4em !important;
+    }
+
+    .spotlight {
+        text-align: center;
+    }
 }
-        .image2 {
-    background-position: 91% 0% !important;
-}
-}
+
+
+
+
+
+
+
+        #page-wrapper {
+            overflow-x: hidden !important;
+        }
+
+        .sorooshInvalid {
+            background-color: #de0000;
+        }
+
+        /*.input-group .ng-invalid {
+            border: red 3px solid;
+        }*/
+
+        .input-group .ng-untouched {
+            border: none !important;
+        }
+
+        header.major {
+            margin: 0px 0 3em 0 !important;
+        }
+
+        #contact .form-control {
+            background: rgba(144, 144, 144, 0.65) !important;
+        }
+
+        body.landing #footer {
+            background-color: rgba(29, 36, 42, 0.6);
+        }
+
+        .contactoverlay {
+            position: absolute;
+            margin-top: -440px;
+            /* left: 0; */
+            width: 45%;
+            height: 70%;
+            background-color: rgba(29, 36, 42, 0.7);
+            border-radius: 15px;
+            /* padding: 10px; */
+            z-index: 5000;
+        }
+
+        .contactoverlay img {
+            width: 7%;
+            margin-top: 165px;
+        }
+
+        .contactoverlay p {
+            margin-top: 165px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(79, 79, 79, 0.53);
+            width: 50%;
+        }
+
+        .spotlight .image img {
+    /* margin: -25px auto; */
+    border-radius: 5px;
+    width: auto;
+    height: 500px;
+    /* box-shadow: 2px 2px 10px #9E9E9E; */
+        }
+
+
+        .spotlight .image {
+            -webkit-filter: grayscale(70%);
+            -webkit-transition: .5s ease-in-out;
+            -moz-filter: grayscale(70%);
+            -moz-transition: .5s ease-in-out;
+            -o-filter: grayscale(70%);
+            -o-transition: .5s ease-in-out;
+            filter: grayscale(70%);
+        }
+
+        .spotlight .image:hover {
+            -webkit-filter: grayscale(0%);
+            -webkit-transition: .5s ease-in-out;
+            -moz-filter: grayscale(0%);
+            -moz-transition: .5s ease-in-out;
+            -o-filter: grayscale(0%);
+            -o-transition: .5s ease-in-out;
+            filter: grayscale(0%);
+        }
