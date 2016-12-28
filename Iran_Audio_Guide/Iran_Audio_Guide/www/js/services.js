@@ -1096,6 +1096,34 @@ angular.module('app.services', [])
             //            console.error(error);
             //        });
         },
+        DirtyStory: function (StoryId) {
+            var query = "\
+            UPDATE Stories\
+            SET Sto_Dirty = 1\
+            WHERE Sto_Id = ?";
+            db.executeSql(query,
+                        [StoryId],
+                function (res) {
+                    console.log("Story dirtied");
+                },
+                function (error) {
+                    console.log("Story dirtying failed");
+                });
+        },
+        DirtyAudio: function (AudioId) {
+            var query = "\
+            UPDATE Audios\
+            SET Aud_Dirty = 1\
+            WHERE Aud_Id = ?";
+            db.executeSql(query,
+                        [AudioId],
+                function (res) {
+                    console.log("Audio dirtied");
+                },
+                function (error) {
+                    console.log("Audio dirtying failed");
+                });
+        },
         bookmarkePlace: function (PlaceID) {
             var id = PlaceID;
             var query = "\

@@ -372,6 +372,7 @@ angular.module('app.controllers', [])
     $scope.percentClass = function (percent) {
         return 'p' + percent.toString();
     };
+    
     //player stuff
     var searchById = function (arr, id) {
         for (var i = 0; i < arr.length; i++) {
@@ -645,26 +646,16 @@ angular.module('app.controllers', [])
     }
 
 
-    $scope.Audios = AudioServices.all();
-    var playNewAudio = function (audio) {
-        var audioPath = "file:///android_asset/www/audio/" + audio.URL;
-        $rootScope.audio.media = new Media(audioPath, null, null, mediaStatusCallback);
-        $rootScope.audio.index = audio.index;
-        $rootScope.audio.title = audio.title;
-        $rootScope.audio.media.play();
+    //remove track
+    $scope.removeTrack = function (id, idx, isAudio) {
+        FileServices.removeTrack(id, isAudio);
+        if (isAudio) {
+            dbServices.DirtyAudio(id);
+            $scope.PlaceInfo.Audios[idx].downloaded = false;
+        }
+        else {
+            dbServices.DirtyStory(id);
+            $scope.PlaceInfo.Stories[idx].downloaded = false;
+        }
     }
-    //var play = function (id) {
-    //    //$cordovaMedia.play(media);
-    //    media.play();
-    //    $rootScope.AudioPlayed = true;
-    //    document.getElementById("i-" + id).classList.remove('ion-play');
-    //    document.getElementById("i-" + id).classList.add('ion-pause');
-    //}
-    //var pause = function (id) {
-    //    //$cordovaMedia.pause(media);
-    //    media.pause();
-    //    $rootScope.AudioPlayed = false;
-    //    document.getElementById("i-" + id).classList.remove('ion-pause');
-    //    document.getElementById("i-" + id).classList.add('ion-play');
-    //}
 });
