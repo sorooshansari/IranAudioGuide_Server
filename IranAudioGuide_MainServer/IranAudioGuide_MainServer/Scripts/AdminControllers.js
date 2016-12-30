@@ -649,83 +649,125 @@ angular.module('AdminPage.controllers', [])
 
         // Amir section
         //Package stuff
-        $scope.PackageNameValidator = "hidden";
-        $rootScope.PackagePagesLen;
-        $rootScope.PackageCurrentPage;
+        //$scope.PackageNameValidator = "hidden";
+        $scope.PackagePagesLen;
+        $scope.PackageCurrentPage;
         var AllPackages = [];
         $scope.packages = [];
-        PackageServices.All()
-            .then(function (response) {
-                AllPackages = angular.copy(response.data);
-
-            }, function (response) {
-                console.log("Request failed");
-                console.log("status:" + response.status);
-            });
-
-       // $scope.packages = PackageServices.All();
-        $scope.$on('LoadPackages', function (event) {
-            $scope.packages = angular.copy($rootScope.AllPackages.slice(0, paging));
-            $scope.PackagePagesLen = Math.floor($rootScope.AllPackages.length / paging);
-            if (($rootScope.AllPackages.length / paging > $scope.PackagePagesLen))
+        var setPckagesPagingInfo = function () {
+            $scope.PackagePagesLen = Math.floor(AllPackages.length / paging);
+            if ((AllPackages.length / paging > $scope.PackagePagesLen))
                 $scope.PackagePagesLen++;
-        });
-        $scope.PreviousPackage = function () {
-            if ($rootScope.PackageCurrentPage > 0)
-                $scope.packages = PackageServices.Get($rootScope.PackageCurrentPage - 1);
         };
+
         $scope.NextPackage = function () {
-            if ($rootScope.PackagePagesLen - $rootScope.PackageCurrentPage > 1)
-                $scope.packages = PackageServices.Get($rootScope.PackageCurrentPage + 1);
+            if ($scope.PackagePagesLen - $scope.PackageCurrentPage > 1) {
+                $scope.packages = angular.copy(AllPackages.slice(($scope.PlaceCPackageCurrentPageurrentPage + 1) * paging, ($scope.PlacePackageCurrentPageCurrentPage + 2) * paging));
+                $scope.PackageCurrentPage++;
+            }
         };
-
-       
-
-        $scope.$on('PackageAdded', function (event) {
+        $scope.PreviousPackage = function () {
+            if ($scope.PackageCurrentPage > 0) {
+                $scope.packages = angular.copy(AllPackages.slice(($scope.PackageCurrentPage - 1) * paging, $scope.PackageCurrentPage * paging));
+                $scope.PackageCurrentPage--;
+            }
+        };
+        var getPackages = function () {
+            PackageServices.All()
+                .then(function (response) {
+                    AllPackages = response.data;
+                    $scope.packages = AllPackages.slice(0, paging);
+                    setPckagesPagingInfo();
+                }, function (response) {
+                    console.error("Request failed:", response.status);
+                });
+        };
+        var resetAddPackageForm = function () {
             $scope.NewPackage = {
                 PackageName: '',
-                PackageDesc: '',
-                PackagePrice: '',
-
+                PackagePrice: ''
             };
+            for (var i = 0; i < $scope.cities.length; i++)
+                $scope.cities[i].isSelected = false;
             $scope.PackageForm.$setPristine();
             $scope.PackageForm.$setUntouched();
             $scope.PackageForm.$submitted = false;
-            $scope.$broadcast('UpdatePackages', {});
-        });
-        $scope.RemovePackage = function (PackageID, PackageName) {
-            PackageServices.RemovePackage(PackageID, PackageName);
-        };
-        $scope.$on('UpdatePackage', function (event) {
-            $scope.packages = PackageServices.Get(0);
-            $scope.AllPackage = PackageServices.All();
+            getPackages();
             scroll("#Packages");
-        });
+        };
 
-        $scope.$on('PackageUnknownError', function (event) {
-            $scope.ForignKeyErrorBody = 'Unknown error prevent removing Package. Contact site developer to get more information.'
-            $scope.DelSubsBtn = "hidden";
-            $('#ForignKeyErrorModal').modal('show');
-        });
+        //$scope.RemovePackage = function (PackageID, PackageName) {
+        //    PackageServices.RemovePackage(PackageID, PackageName)
+        //      .then(function (response) {
+        //          switch (response.data.status) {
+        //              case respondstatus.success:
+        //                  getPackages();
+        //                  scroll("#Packages");
+        //                  break;
+        //              case respondstatus.forignKeyError:
+        //                  console.error("forign key error.")
+        //                  break;
+        //              default:
+        //                  console.error("Server failed to remove Package.");
+        //                  break;
+        //          }
+        //      }, function (response) {
+        //          console.error("Server failed to add Package.");
+        //      });
+        //};
 
-
-
-
-        $scope.AddPackage = function (NewPackage, form, items) {
+        $scope.AddPackage = function (NewPackage, form) {
             if (form.$valid) {
-                NewPackage.Cities = []                   //foreach selected city -add it to package
-
-                //angular.forEach($scope.cities, function (item) {
-                //    if (item.isSelected) {
-                //        NewPackage.Cities.push(item.CityID);
-                //    }
-                //});
-
-                PackageServices.AddPackage(NewPackage);
+                var cities = [];
+                for (var i = 0; i < $scope.cities.length; i++) {
+                    if ($scope.cities[i].isSelected) {
+                        cities.push($scope.cities[i].CityID);
+                    }
+                }
+                if (cities.length) {
+                    $scope.selectCityInvalid = false;
+                    NewPackage.Cities = cities;
+                    PackageServices.AddPackage(NewPackage)
+                      .then(function (response) {
+                          switch (response.data.status) {
+                              case respondstatus.success:
+                                  resetAddPackageForm();
+                                  break;
+                              default:
+                                  console.error("Server failed to add Package.");
+                                  break;
+                          }
+                      }, function (response) {
+                          console.log("Request failed");
+                          console.log("status:" + response.status);
+                      });
+                }
+                else
+                    $scope.selectCityInvalid = true;
             }
         };
+        $scope.selectCityInvalid = true;
+        $scope.pkgcitiesTouched = false;
+        $scope.checkSelectedCities = function () {
+            $scope.pkgcitiesTouched = true;
+            for (var i = 0; i < $scope.cities.length; i++)
+                if ($scope.cities[i].isSelected) {
+                    $scope.selectCityInvalid = false;
+                    return true;
+                }
+            $scope.selectCityInvalid = true;
+            return false;
+        };
+        $scope.choosInputClass = function (invalid, touched, submitted) {
+            return (invalid && (touched || submitted)) ? "sorooshInvalid" : "";
+        };
+        $scope.selectAllCities = function (isSelected) {
+            $scope.pkgcitiesTouched = true;
+            $scope.selectCityInvalid = !isSelected;
+            for (var i = 0; i < $scope.cities.length; i++)
+                $scope.cities[i].isSelected = isSelected;
+        };
 
-
-
+        getPackages();
     }]);
 

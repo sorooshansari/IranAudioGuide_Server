@@ -28,9 +28,11 @@ namespace IranAudioGuide_MainServer.Models
         [Display(Name = "Package description")]
         public string PackageDesc { get; set; }
 
+        [Required]
         [Display(Name = "Package price")]
         public int PackagePrice { get; set; }
 
+        [Required]
         [Display(Name = "Package Cities")]
         public List<int> Cities { get; set; }
     }

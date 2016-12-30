@@ -19,6 +19,12 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         $rootScope.audio.media = null;
         console.log(device.uuid);
     });
+    $ionicPlatform.on('resume', function () {
+
+    });
+    $ionicPlatform.on('pause', function () {
+        //Do something here on entering background
+    });
 
     //sidePlayer
     $rootScope.SPtracks = [];

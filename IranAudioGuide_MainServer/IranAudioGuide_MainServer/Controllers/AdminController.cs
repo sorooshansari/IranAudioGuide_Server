@@ -1057,7 +1057,6 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult AddPackage(NewPackage model)
-
         {
             if (!ModelState.IsValid)
             {

@@ -24,98 +24,6 @@
 
         </div>
     </section>
-    @*<!-- Online Place list -->
-        <section id="OnlinePlaces" class="two">
-            <div class="container">
-
-                <header>
-                    <h2>Online Places</h2>
-                </header>
-
-                <p>
-                    These are the places that users see in their applications.
-                </p>
-                <div id="Player" class="Player">
-                    <div class="row head">
-                        <div class="player-image 3u">
-                            <img src="../images/Places/{{OnlinePlaceimage}}" />
-                        </div>
-                        <div class="7u">
-                            <ul>
-                                <li class="12u$">
-                                    <h4 class="AudioTitle">{{OnlineAudioTitle}}</h4>
-                                </li>
-                                <li class="12u$">
-                                    <ul class="nav-pills buttons">
-                                        <li class="prev" ng-click="OnlineAudio_prev()"></li>
-                                        <li class="{{OnlinePlayStatus}}" ng-click="OnlineAudio_Play()"></li>
-                                        <li class="next" ng-click="OnlineAudio_next()"></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <ul class="audiosList">
-                        <li ng-repeat="audio in OnlineAudios" ng-click="OnlineLoadAudio(audio.Index)" class="listItem">
-                            <div class="row">
-                                <div class="1u white">{{audio.Index}}.</div>
-                                <div class="11u white">{{audio.Aud_Name}}</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <table class="default" id="OnlinePlaceTbl">
-                    <thead>
-                        <tr>
-                            <td>#</td>
-                            <td>Name</td>
-                            <td>City</td>
-                            <td>Info</td>
-                            <td>Remove</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="hoverable" ng-click="OnlineLoadPlaceAudios(place.PlaceId)" ng-repeat="place in OnlinePlaces">
-                            <td>{{place.Index}}</td>
-                            <td>{{place.PlaceName}}</td>
-                            <td>{{place.CityName}}</td>
-                            <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary btn-block"
-                                        ng-click="OnlineShowEditPlaceModal(place)">
-                                    <span class="fa fa-info"></span> Info
-                                </button>
-                            </td>
-                            <td>
-                                <div role="button" tabindex="0" class="btn btn-danger btn-block rmvPlc"
-                                     ng-click="OnlineRemovePlace(place.PlaceId, place.PlaceName)">
-                                    <span class="fa fa-trash-o"></span> Remove
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="6">
-                                <ul class="nav nav-tabs nav-justified">
-                                    <li>
-                                        <a href="" ng-click="OnlinePreviousPlace()"><span class="fa fa-chevron-left"></span> Previus</a>
-                                    </li>
-                                    <li>
-                                        <a class="text-primary">page {{OnlinePlaceCurrentPage + 1}} (out of {{OnlinePlacePagesLen}} pages)</a>
-                                    </li>
-                                    <li>
-                                        <a href="" ng-click="OnlineNextPlace()">Next <span class="fa fa-chevron-right"></span></a>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-
-            </div>
-        </section>*@
-
 
     <!-- Place list -->
     <section id="PlaceList" class="two">
@@ -330,7 +238,7 @@
                 </div>
             </form>
         </div>
-    </section>z
+    </section>
     <section id="Packages" class="four">
         <div class="container">
             <header>
@@ -343,7 +251,7 @@
                         <td>Name</td>
                         <td>Price</td>
                         <td>  cities</td>
-                        <td></td>
+                        @*<td></td>*@
                     </tr>
                 </thead>
                 <tbody>
@@ -356,12 +264,12 @@
                                 <li>{{city.CityName}}</li>
                             </ul>
                         </td>
-                        <td>
+                        @*<td>
 
                             <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" ng-click="RemovePackage(package.PackageID, package.PackageName)">
                                 <span class="fa fa-trash-o"></span> Remove
                             </div>
-                        </td>
+                        </td>*@
                     </tr>
                 </tbody>
                 <tfoot>
@@ -395,25 +303,31 @@
                     <hr />
                 </div>
             </div><!-- /.col -->
-            <form name="PackageForm" role="form" ng-submit="AddPackage(NewPackage, PackageForm, Items)" novalidate>
+            <style>
+                .sorooshInvalid {
+                    background-color: #de0000 !important;
+                }
+            </style>
+            <form name="PackageForm" role="form" ng-submit="AddPackage(NewPackage, PackageForm, cities)" novalidate>
                 <div class="row">
                     <div class="6u 12u$(mobile)">
-                        <input ng-model="NewPackage.Name" type="text" name="PackageName" required placeholder="Package name*" />
+                        <input ng-class="choosInputClass(PackageForm.PackageName.$invalid, PackageForm.PackageName.$touched, PackageForm.$submitted)" 
+                               ng-model="NewPackage.Name" type="text" name="PackageName" placeholder="Package name*" required />
                     </div>
                     <div class="6u$ 12u$(mobile)">
-                        <input ng-model="NewPackage.Price" type="text" name="PackagePrice" required placeholder="Package Price*" />
+                        <input ng-class="choosInputClass(PackageForm.PackagePrice.$invalid, PackageForm.PackagePrice.$touched, PackageForm.$submitted)"
+                               ng-model="NewPackage.Price" type="text" name="PackagePrice" placeholder="Package Price*" required />
                     </div>
-                    @*<div class="6u$ 12u$(mobile)">
-                            <input ng-model="NewCity.CityName" type="text" name="Packagecities" required placeholder="Package cities*" />
-                        </div>*@
-
                     <div class="6u$">
-                        <ul id="pkgcities" style="text-align: left; border:1px solid #a1a1a1 ; background: padding-box) " ;>
+                        <ul ng-class="choosInputClass(selectCityInvalid, pkgcitiesTouched, PackageForm.$submitted)"
+                            name="pkgcities" style="text-align: left; border:1px solid #a1a1a1 ; background: padding-box) " ;>
                             <li>
-                                <input type="checkbox" id="city0" value="All" ng-model="selectedAll">All
+                                <input type="checkbox" id="city0" value="All" ng-model="allSelected" ng-change="selectAllCities(allSelected)">All
                             </li>
                             <li ng-repeat="city in cities">
-                                <input ng-model="city.isSelected" ng-checked="selectedAll" type="checkbox" id="{{city.CityID}}" value="{{city.CityID}}">{{city.CityName}}
+                                <input ng-model="city.isSelected"
+                                       ng-change="checkSelectedCities()"
+                                       type="checkbox" value="{{city.CityID}}">{{city.CityName}}
                             </li>
                         </ul>
                     </div>

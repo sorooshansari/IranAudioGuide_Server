@@ -648,7 +648,7 @@ angular.module('app.controllers', [])
 
     //remove track
     $scope.removeTrack = function (id, idx, isAudio) {
-        FileServices.removeTrack(id, isAudio);
+        FileServices.RemoveTrack(id, isAudio);
         if (isAudio) {
             dbServices.DirtyAudio(id);
             $scope.PlaceInfo.Audios[idx].downloaded = false;

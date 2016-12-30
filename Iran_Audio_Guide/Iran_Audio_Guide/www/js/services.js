@@ -1097,32 +1097,68 @@ angular.module('app.services', [])
             //        });
         },
         DirtyStory: function (StoryId) {
+            var queryDelete = "DELETE FROM PlayerHistory\
+            WHERE PlH_trackId = ?\
+                AND PlH_isAudio = 0"
             var query = "\
             UPDATE Stories\
             SET Sto_Dirty = 1\
             WHERE Sto_Id = ?";
-            db.executeSql(query,
-                        [StoryId],
-                function (res) {
-                    console.log("Story dirtied");
-                },
-                function (error) {
-                    console.log("Story dirtying failed");
-                });
+            db.transaction(function (tx) {
+                tx.executeSql(queryDelete,
+                    [StoryId],
+                    function (tx, res) {
+                        tx.executeSql(query,
+                            [StoryId],
+                            function (tx, res) {
+                                $rootScope.$broadcast('PlayerHistoryUpdated', {});
+                                console.log("Story dirtied");
+                            },
+                            function (tx, error) {
+                                console.error('Story dirtying failed: ' + error.message);
+                            });
+                    },
+                    function (tx, error) {
+                        console.error('error: ' + error.message);
+                    });
+
+            }, function (error) {
+                console.error('transaction error: ' + error.message);
+            }, function () {
+                console.log("Done.");
+            });
         },
         DirtyAudio: function (AudioId) {
+            var queryDelete = "DELETE FROM PlayerHistory\
+            WHERE PlH_trackId = ?\
+                AND PlH_isAudio = 1"
             var query = "\
             UPDATE Audios\
             SET Aud_Dirty = 1\
             WHERE Aud_Id = ?";
-            db.executeSql(query,
-                        [AudioId],
-                function (res) {
-                    console.log("Audio dirtied");
-                },
-                function (error) {
-                    console.log("Audio dirtying failed");
-                });
+            db.transaction(function (tx) {
+                tx.executeSql(queryDelete,
+                    [AudioId],
+                    function (tx, res) {
+                        tx.executeSql(query,
+                            [AudioId],
+                            function (tx, res) {
+                                $rootScope.$broadcast('PlayerHistoryUpdated', {});
+                                console.log("Audio dirtied");
+                            },
+                            function (tx, error) {
+                                console.error('Audio dirtying failed: ' + error.message);
+                            });
+                    },
+                    function (tx, error) {
+                        console.error('error: ' + error.message);
+                    });
+
+            }, function (error) {
+                console.error('transaction error: ' + error.message);
+            }, function () {
+                console.log("Done.");
+            });
         },
         bookmarkePlace: function (PlaceID) {
             var id = PlaceID;
@@ -1396,7 +1432,7 @@ angular.module('app.services', [])
                     });
 
             }, function (error) {
-                error.log('transaction error: ' + error.message);
+                console.error('transaction error: ' + error.message);
             }, function () {
                 console.log("Done.");
             });
@@ -1415,10 +1451,10 @@ angular.module('app.services', [])
                     $rootScope.$broadcast('FillPlayerHistory', { result: res });
                 },
                 function (tx, error) {
-                    error.log('error: ' + error.message);
+                    console.error('error: ' + error.message);
                 });
             }, function (error) {
-                error.log('transaction error: ' + error.message);
+                console.error('transaction error: ' + error.message);
             }, function () {
                 console.log("Done.");
             });
