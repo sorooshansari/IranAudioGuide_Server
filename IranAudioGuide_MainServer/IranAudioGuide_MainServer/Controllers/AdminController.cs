@@ -1010,7 +1010,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             base.Dispose(disposing);
         }
-        
+
 
         //private List<Guid> GetPackageCities(Guid pac_Id)
         //{
@@ -1019,32 +1019,31 @@ namespace IranAudioGuide_MainServer.Controllers
         //                                select c.city_Cit_Id).ToList();
         //    return packageCities;
         //}
-        
+
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult GetPackages()
         {
-            List<PackageVM> packages = (from p in db.Packages
-                                        orderby p.Pac_Id descending
-                                        select new PackageVM()
-                                        {
-                                            PackageName = p.Pac_Name,
-                                            PackageId = p.Pac_Id,
-                                            PackagePrice = p.Pac_Price,
-                                            PackageCities = (from c in db.Cities
-                                                             where
-                                                             (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-                                                             select new CityVM()
-                                                             {
-                                                                 CityDesc = c.Cit_Description,
-                                                                 CityID = c.Cit_Id
-                                                                 ,
-                                                                 CityName = c.Cit_Name
-                                                             }).ToList()
-                                        }).ToList();
-
-
+            List<PackageVM> packages =
+                (from p in db.Packages
+                 orderby p.Pac_Id descending
+                 select new PackageVM()
+                 {
+                     PackageName = p.Pac_Name,
+                     PackageId = p.Pac_Id,
+                     PackagePrice = p.Pac_Price,
+                     PackageCities =
+                     (from c in db.Cities
+                      where
+                      (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
+                      select new CityVM()
+                      {
+                          CityDesc = c.Cit_Description,
+                          CityID = c.Cit_Id,
+                          CityName = c.Cit_Name
+                      }).ToList()
+                 }).ToList();
             int counter = 0;
             foreach (var item in packages)
             {
@@ -1052,7 +1051,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return Json(packages);
         }
-        
+
 
         [HttpPost]
         [Authorize(Roles = "Admin")]

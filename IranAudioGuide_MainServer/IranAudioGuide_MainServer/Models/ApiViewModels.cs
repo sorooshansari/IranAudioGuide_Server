@@ -8,6 +8,17 @@ namespace IranAudioGuide_MainServer.Models
     public class ApiViewModels
     {
     }
+    public class GetPackagesVM
+    {
+        public List<ApiPackageVM> packages { get; set; }
+    }
+    public class ApiPackageVM
+    {
+        public System.Guid Id { get; set; }
+        public string Name { get; set; }
+        public int Price { get; set; }
+        public List<CitiesFullInfno> Cities { get; set; }
+    }
     public class RemovedEntries
     {
         public List<Guid> Places { get; set; }
