@@ -211,6 +211,7 @@
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PymentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Migrations\201611170848081_CreateDB.cs" />
     <Compile Include="Migrations\201611170848081_CreateDB.Designer.cs">
@@ -1233,6 +1234,7 @@
     <Folder Include="Download\" />
     <Folder Include="images\Places\Extras\" />
     <Folder Include="Stories\" />
+    <Folder Include="Views\Pyment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

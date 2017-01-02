@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using System;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -25,6 +26,46 @@ namespace IranAudioGuide_MainServer.Models
         public gender gender { get; set; }
         public string Picture { get; set; }
         public string uuid { get; set; }
+    }
+    public class Payment
+    {
+        public Payment()
+        {
+            InsertDatetime = DateTime.Now;
+        }
+
+
+        [Key]
+        [Display(Name = "PaymentId")]
+        public int PaymentId { get; set; }
+
+        [Display(Name = "ReferenceNumber")]
+        [MaxLength(100)]
+        public string ReferenceNumber { get; set; }
+
+        [Display(Name = "SaleReferenceId")]
+        public long SaleReferenceId { get; set; }
+
+        [Display(Name = "StatusPayment")]
+        [MaxLength(100)]
+        public string StatusPayment { get; set; }
+
+        // فقط در صورتی که این فید ترو باشد پرداخت موفق بوده است
+        [Display(Name = "PaymentFinished")]
+        public bool PaymentFinished { get; set; }
+
+        [Display(Name = "Amount")]
+        public long Amount { get; set; }
+
+        [Display(Name = "BankName")]
+        [MaxLength(50)]
+        public string BankName { get; set; }
+
+        [Display(Name = "UserId")]
+        public int UserId { get; set; }
+
+        [Display(Name = "InsertDatetime")]
+        public DateTime InsertDatetime { get; set; }
     }
     public class UpdateLog {
         [Key]
@@ -160,6 +201,7 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<UpdateLog> UpdateLogs { get; set; }
         public DbSet<Tip> Tips { get; set; }
         public DbSet<TipCategory> TipCategories { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_MainServer.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
