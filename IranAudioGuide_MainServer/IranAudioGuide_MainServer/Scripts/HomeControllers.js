@@ -19,7 +19,7 @@ angular.module('HomePage.controllers', [])
                   then(function (response) {
                       switch (response.data.status) {
                           case respondstatus.success:
-                              $scope.sentMessage = "Email sent.";
+                              $scope.sentMessage = "Thanks! Your message sent successfully!.";
                               $scope.sent = true;
                               break;
                           default:

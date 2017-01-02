@@ -259,6 +259,8 @@
     <Content Include="images\blockpics\DSC_3562 %282%29.jpg" />
     <Content Include="images\blockpics\yourownpace.jpg" />
     <Content Include="images\gp.png" />
+    <Content Include="images\IAGSITELOGO.png" />
+    <Content Include="images\IAGSmallWhiteLogo.png" />
     <Content Include="images\lc.png" />
     <Content Include="Content\UserMain.css" />
     <Content Include="Content\AdiminMain.css" />

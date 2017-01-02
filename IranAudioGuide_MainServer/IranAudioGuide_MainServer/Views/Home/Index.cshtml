@@ -4,6 +4,9 @@
 @model IranAudioGuide_MainServer.Models.ContactEmailVM
 <section id="banner">
     <div class="inner">
+        <div id="logo">
+            <img src="~/images/IAGSITELOGO.png" />
+        </div>
         <h2>Iran Audio Guide</h2>
         <p>
 
@@ -21,7 +24,7 @@
 </section>
 
 <!-- One -->
-<section id="one" class="wrapper style1 special">
+<section id="one" class="wrapper style1 special" style="background-color:#505393 !important; padding: 2em 0 0em 0;">
     <div class="inner">
         <header class="major">
             <h2>
@@ -30,7 +33,6 @@
             </h2>
             <p>
                 Download Iran Audio Guide application for free and see for yourself<br />
-
             </p>
         </header>
         <ul class="icons major">
@@ -39,9 +41,9 @@
             <li class="tooltips"><a><span class="icon fa-android major style2"><span>Coming Soon</span></span></a></li>
 
         </ul>
-        <section style="font-size:x-large;">
-            We are honored to have <br />
-            <h2 style="margin:0;" count-up id="numberAnimation" end-val="873.4" scroll-spy-event="elementFirstScrolledIntoView" scroll-spy></h2>
+        <section id="usercounter" style="font-size:x-large; display:inline-flex; padding-bottom:70px;">
+            We are honored to have
+            <h2 style="margin: 0px; padding: 0px 10px 0px 10px; font-size: larger; color: cyan; line-height:inherit;" count-up id="numberAnimation" end-val="873.4" scroll-spy-event="elementFirstScrolledIntoView" scroll-spy></h2>
             Users
 
         </section>
@@ -49,9 +51,9 @@
 </section>
 
 <!-- Two -->
-<section id="two" class="wrapper alt style2">
+<section id="two" class="wrapper alt style2" style="background-color:transparent !important">
     <section class="spotlight">
-        <div class="image image1"><img  src="~/images/blockpics/accurate_information.jpg" alt="providing you with accurate information" /></div>
+        <div class="image image1"><img src="~/images/blockpics/accurate_information.jpg" alt="providing you with accurate information" /></div>
         <div class="content">
             <h2>
                 Providing you with accurate information<br />
@@ -60,9 +62,22 @@
             <p>To guide you through the discovery of Iran and all its millenniums of history </p>
         </div>
     </section>
-    <section class="spotlight spotlightv">
-        <div class="image image2">
-            <img  src="~/images/blockpics/yourownpace.jpg" alt="liberating you to visit attractions with your own pace" />
+
+    <section class="spotlight  spotlightv" style="background-color:transparent !important;">
+        <div class="image image2"><img src="/images/blockpics/whattolisten.jpg" alt="Choose what to listen to" class=""></div>
+        <div class="content">
+            <h2 class="">
+                Choose what to listen to <br>
+
+            </h2>
+            <p class="">Listen to the tracks your interested in, choose among all the content available</p>
+        </div>
+    </section>
+
+
+    <section class="spotlight">
+        <div class="image image3">
+            <img src="~/images/blockpics/yourownpace.jpg" alt="liberating you to visit attractions with your own pace" />
         </div><div class="content">
             <h2>
                 Liberating you to visit attractions with your own pace <br />
@@ -71,19 +86,14 @@
             <p>No worries about being late or missing the explanations,take your time and wonder, take photos, ...</p>
         </div>
     </section>
-    <section class="spotlight">
-        <div class="image image3"><img  src="~/images/blockpics/whattolisten.jpg" alt="Choose what to listen to" /></div>
-        <div class="content">
-            <h2>
-                Choose what to listen to <br />
-
-            </h2>
-            <p>Listen to the tracks your interested in, choose among all the content available</p>
-        </div>
-    </section>
 </section>
 
 <!-- Three -->
+
+
+
+
+
 <section id="three" class="wrapper style3 special">
     <div class="inner">
         <header class="major">
@@ -131,19 +141,19 @@
             <hr />
         </div>
         <div class="row">
-            <div class="col-sm-3 col-sm-offset-1 col-xs-10 col-xs-offset-1 dlrow">
+            <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
                 <a class="tooltips">
                     <img alt="Get it from App Store" src="~/images/as.png" />
                     <span class="csspan">Coming Soon!</span>
                 </a>
             </div>
-            <div class="col-sm-3 col-sm-offset-1 col-xs-10 col-xs-offset-1 dlrow">
+            <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
                 <a class="tooltips">
                     <img alt="Download" src="~/images/lc.png" />
                     <span class="csspan">Download Now</span>
                 </a>
             </div>
-            <div class="col-sm-3 col-sm-offset-1 col-xs-10 col-xs-offset-1 dlrow">
+            <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
                 <a class="tooltips">
                     <img alt="Get it from Google Play" src="~/images/gp.png" />
                     <span class="csspan">Coming Soon!</span>
@@ -240,7 +250,7 @@
         </li>
     </ul>
     <ul id="copyright" class="copyright">
-        <li>&copy; @DateTime.Now.Year - Soroosh Developer Team</li>
+        <li>© 2017 - Soroosh Developer Team</li>
         <li>Developer: <a rel="author" href="https://plus.google.com/112268338441138496929">Soroosh Ansari Mehr</a></li>
     </ul>
 </footer>
