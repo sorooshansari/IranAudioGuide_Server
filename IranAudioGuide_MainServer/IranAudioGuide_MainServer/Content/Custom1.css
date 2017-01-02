@@ -668,6 +668,7 @@ a:hover.tooltips span {
         right: 0;
         margin-top: -280px;
         position: absolute !important;
+            text-shadow: 0px 0px 6px #000000 !important;
     }
 
     #usercounter {
@@ -683,9 +684,6 @@ a:hover.tooltips span {
     #logo img {
         width: 85px !important;
     }
-    body {
-    text-shadow: 0px 0px 6px #000000 !important;
-}
 }
 
 @media (max-width: 426px) and (min-width:376px) {
@@ -702,6 +700,7 @@ a:hover.tooltips span {
         width: 100%;
         margin-top: -280px;
         position: absolute !important;
+            text-shadow: 0px 0px 6px #000000 !important;
     }
 
     .image2 {
@@ -733,9 +732,6 @@ a:hover.tooltips span {
     #logo img {
         width: 85px !important;
     }
-        body {
-    text-shadow: 0px 0px 6px #000000 !important;
-}
 }
 
 
@@ -765,6 +761,7 @@ a:hover.tooltips span {
         width: 100%;
         margin-top: -280px;
         position: absolute !important;
+        text-shadow: 0px 0px 6px #000000 !important;
     }
 
     .spotlight {
@@ -784,9 +781,10 @@ a:hover.tooltips span {
     #logo img {
         width: 85px !important;
     }
-        body {
-    text-shadow: 0px 0px 6px #000000 !important;
-}
+
+    #HomeLink{
+        font-size: 13px !important;
+    }
 }
 
 /*@media (max-width: 321px) {
@@ -945,4 +943,13 @@ ul.actions {
 #header h1
 {
     left:4.25em !important;
+}
+
+#HomeLink
+{
+    color: rgb(60, 62, 109) !important;
+    text-shadow: none;
+    font-size: 16px; 
+    font-weight: bold;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

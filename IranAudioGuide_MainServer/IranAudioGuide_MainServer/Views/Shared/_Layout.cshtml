@@ -45,14 +45,14 @@
         <!-- Header -->
         <header id="header" class="alt">
 
-            <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="index.html">Iran Audio Guide</a></h1>
+            <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home")">Iran Audio Guide</a></h1>
             <nav id="nav">
                 <ul>
                     <li class="special">
                         <a href="#menu" class="menuToggle"><span>Menu</span></a>
                         <section id="menu">
                             <ul>
-                                <li><a href="@Url.Action("Index", "Home")" style="color: #3c3e6d; text-shadow: none; font-size: 16px; font-weight: bold;"><i class="fa fa-home"></i>Iran Audio Guide</a></li>
+                                <li><a id="HomeLink" href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i>Iran Audio Guide</a></li>
                                 <li><a class="scrolly"  href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>
                                 <li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>
                                 <li><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
