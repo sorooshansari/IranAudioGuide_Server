@@ -1,0 +1,74 @@
+﻿@model IranAudioGuide_MainServer.Models.PackageVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <h4>PackageVM</h4>
+        <hr />
+
+        <ul>
+            <li>@User.Identity.Name</li>
+        </ul>
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PackageId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PackageId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PackageName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PackageName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PackagePrice)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PackagePrice)
+            </dd>
+
+        </dl>
+
+        <dl class="dl-horizontal">
+            @foreach (var item in Model.PackageCities)
+            {
+                <dt>
+                    City Name
+                </dt>
+
+                <dd>
+                    @item.CityName
+                </dd>
+                <dt>
+                    City Description
+                </dt>
+
+                <dd>
+                    @item.CityDesc
+                </dd>
+            }
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Purchase", "Purchase", new { packageId = Model.PackageId })
+    </p>
+</body>
+</html>

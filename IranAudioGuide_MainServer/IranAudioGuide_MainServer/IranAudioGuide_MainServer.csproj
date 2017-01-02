@@ -80,6 +80,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -211,7 +213,7 @@
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PymentController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Migrations\201611170848081_CreateDB.cs" />
     <Compile Include="Migrations\201611170848081_CreateDB.Designer.cs">
@@ -236,6 +238,11 @@
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\Zarinpal\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1191,6 +1198,30 @@
     <Content Include="Scripts\skel.min.js" />
     <Content Include="Scripts\util.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="Service References\Zarinpal\configuration91.svcinfo" />
+    <None Include="Service References\Zarinpal\configuration.svcinfo" />
+    <Content Include="Service References\Zarinpal\IranAudioGuide_MainServer.Zarinpal.GetUnverifiedTransactionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Zarinpal\IranAudioGuide_MainServer.Zarinpal.PaymentRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Zarinpal\IranAudioGuide_MainServer.Zarinpal.PaymentRequestWithExtraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Zarinpal\IranAudioGuide_MainServer.Zarinpal.PaymentVerificationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Zarinpal\IranAudioGuide_MainServer.Zarinpal.PaymentVerificationWithExtraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Zarinpal\IranAudioGuide_MainServer.Zarinpal.RefreshAuthorityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\Zarinpal\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Views\Admin\loading-overlay-template.html" />
     <Content Include="Views\Shared\AutoRespondEmailTemplate.html" />
     <Content Include="Views\Shared\ContactEmailTemplate.html" />
@@ -1226,6 +1257,8 @@
     <Content Include="Views\Shared\_UserLayout.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Pyment\Index.cshtml" />
+    <None Include="Service References\Zarinpal\PaymentGatewayImplementationService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1234,7 +1267,6 @@
     <Folder Include="Download\" />
     <Folder Include="images\Places\Extras\" />
     <Folder Include="Stories\" />
-    <Folder Include="Views\Pyment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1251,6 +1283,12 @@
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

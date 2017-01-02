@@ -11,28 +11,23 @@ namespace IranAudioGuide_MainServer.Models
     {
 
     }
-
-
-    //public class PackageVM
-    //{
-    //    public int PackageId { get; set; }
-    //    public string PackageName { get; set; }
-    //    public string PackageDesc { get; set; }
-    //    public decimal PackagePrice { get; set; }
-    //}
-
-    //public class GetPackagesVM
-    //{
-    //    public GetPackagesVM(List<PackageVM> Places, int PagesLen)
-    //    {
-    //        this.Packages = Places;
-    //        this.PagesLen = PagesLen;
-    //    }
-    //    public List<PackageVM> Packages { get; set; }
-    //    public int PagesLen { get; set; }
-    //}
-
-
+    public class WebPaymentReqVM
+    {
+        public Guid packageId { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+    public class AppPaymentReqVM
+    {
+        public string email { get; set; }
+        public string uuid { get; set; }
+        public Guid packageId { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+    public class paymentInfoVM
+    {
+        public string userEmail { get; set; }
+        public PackageVM package { get; set; }
+    }
 
 
 }
