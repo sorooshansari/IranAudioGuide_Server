@@ -8,8 +8,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <h2>Register to our website!</h2>
-                <p>Suspendisse ac pretium sapien, placerat lacinia enim. Fusce eu elit quis lacus cursus mollis. In feugiat diam id sem consectetur, id accumsan risus venenatis.</p>
+                <h2>Join us! <br />It only takes a minute!</h2>
+                <p id="regdet">By registering you will access to all Iran Audio Guide has to offer. Hopefully you will soon agree that its quite worth while</p>
 
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
@@ -17,20 +17,29 @@
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div class="col-md-8">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
-                        </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                            </div>
+                            </div>
                     </div>
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div class="col-md-8">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
-                        </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-"></i></span>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                            </div>
+                            </div>
                     </div>
                     @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div class="col-md-8">
-                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
-                        </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-hand-peace-o"></i></span>
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                                </div>
+                            </div>
                     </div>
 
                     <div class="form-group">
