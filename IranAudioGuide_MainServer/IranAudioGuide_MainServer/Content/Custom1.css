@@ -289,7 +289,7 @@ section h2, section h3, section h4, section h5, section h6 {
 /*Regiser*/
 .content-block {
     width: 100%;
-    padding: 60px 0 60px 0;
+    padding: 50px 0 60px 0;
     z-index: 100;
     position: relative;
     min-height: 100vh;
@@ -297,7 +297,7 @@ section h2, section h3, section h4, section h5, section h6 {
 
 @media (min-width: 992px) {
     .content-block {
-        padding-top: 28vh;
+        padding-top: 20vh;
     }
 }
 /*.min-height-600px
@@ -881,7 +881,8 @@ body.landing #footer {
 }
 
 
-.spotlight .image {
+
+.grayscale {
     -webkit-filter: grayscale(70%);
     -webkit-transition: .5s ease-in-out;
     -moz-filter: grayscale(70%);
@@ -890,7 +891,6 @@ body.landing #footer {
     -o-transition: .5s ease-in-out;
     filter: grayscale(70%);
 }
-
     .spotlight .image:hover {
         -webkit-filter: grayscale(0%);
         -webkit-transition: .5s ease-in-out;
@@ -957,4 +957,9 @@ ul.actions {
 #menu ul li a
 {
     font-size:0.8em;
+}
+
+#regdet
+{
+    margin: 0px 0px 2em;
 }
