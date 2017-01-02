@@ -1,6 +1,6 @@
 ﻿//Developed by Soroosh Ansari
 angular.module('HomePage.controllers', [])
-.controller('HomeController', ['$scope', '$http','$timeout',
+.controller('HomeController', ['$scope', '$http', '$timeout',
     function ($scope, $http, $timeout) {
         $scope.ContactUs = function (model, form) {
             $scope.overlay = true;
@@ -46,6 +46,28 @@ angular.module('HomePage.controllers', [])
             valid[i] = (e.target.classList.contains('ng-invalid')) ? false : true;
 
         }
+        $scope.$on('elementScrolledIntoView', function (event, data) {
+            if (data === 'accurate_information_section') {
+                // do something
+            }
+            if (data === 'whattolisten_section') {
+                // do something
+            }
+            if (data === 'yourownpace_section') {
+                // do something
+            }
+        });
+        $scope.$on('elementScrolledOutOfView', function (event, data) {
+            if (data === 'accurate_information_section') {
+                // do something
+            }
+            if (data === 'whattolisten_section') {
+                // do something
+            }
+            if (data === 'yourownpace_section') {
+                // do something
+            }
+        });
     }]);
 
 
