@@ -39,7 +39,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 EmailService.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
                 {
                     Body = body,
-                    Destination = "danialby@gmail.com",
+                    Destination = "monaakhlaghi@gmail.com",
                     Subject = model.name + " - " + model.email
                 });
 
