@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <div class="col-md-8">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
                             </div>
                             </div>
@@ -36,20 +36,21 @@
                     <div class="form-group">
                         <div class="col-md-8">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-hand-peace-o"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-check-square-o"></i></span>
                                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
                                 </div>
                             </div>
                     </div>
 
+                <!-- Button -->
                     <div class="form-group">
                         <div class="col-md-8">
-                            <input type="submit" class="btn btn-default btn-block" value="Register" />
+                            <button id="regbtn" type="submit" name="regbtn" class="btn btn-inverse"><i class="fa fa-user-plus"></i>Register</button>
                         </div>
                     </div>
                 }
                 <div class="form-group">
-                    <a href="@Url.Action("Login","Account")">Already have an account?</a>
+                    <a class="TextLink" href="@Url.Action("Login","Account")">Already have an account?</a>
                 </div>
             </div>
             <!-- /.col -->

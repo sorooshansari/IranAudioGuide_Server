@@ -8,9 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <h2>Everything is awesome!</h2>
-                <p>By registering you will access to all Iran Audio Guide has to offer. Hopefully you will soon agree that its quite worth while.</p>
-
+                <h2>Use your Login Credentials to access your profile.</h2>
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
@@ -36,12 +34,13 @@
                             @Html.LabelFor(m => m.RememberMe)
                         </div>
                     </div>
+                <!-- Button -->
                     <div class="form-group">
                         <div class="col-md-8">
-                            <input type="submit" class="btn btn-default btn-block" value="Sign in" />
+                            <button id="signbtn" type="submit" name="signbtn" class="btn btn-inverse"><i class="fa fa-sign-in"></i>Login</button>
                         </div>
                     </div>
-                    <p>
+                    <p class="TextLinkp">
                         @Html.ActionLink("Register as a new user", "Register")
                     </p>
                 }

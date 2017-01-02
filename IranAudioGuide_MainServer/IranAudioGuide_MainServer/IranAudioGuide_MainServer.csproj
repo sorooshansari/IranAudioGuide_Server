@@ -248,7 +248,9 @@
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
+    <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\loading.css" />
+    <Content Include="Content\toggle.css" />
     <Content Include="images\as.png" />
     <Content Include="images\bars.svg" />
     <Content Include="images\blockpics\accurate_information.jpg" />
