@@ -81,7 +81,17 @@ input[type="text"], input[type="password"], input[type="email"], select:focus, t
     color: #00a293;
     width: 100%;
 }
+#regbtn
+{
+        box-shadow: inset 0 0 0 2px #00a293;
+    color: #00a293;
+    width: 100%;
+}
 
+#regbtn:hover {
+    background-color: #00a293;
+    color: #fff !important;
+}
 #Message {
     background: rgba(144, 144, 144, 0.25) !important;
     border: none;
@@ -93,10 +103,6 @@ input[type="text"], input[type="password"], input[type="email"], select:focus, t
     border-radius: 0;
     width: 70%;
     margin: 0 auto;
-}
-
-.spotlight {
-    height: 400px !important;
 }
 
 .csspan {
@@ -881,6 +887,15 @@ body.landing #footer {
 }
 
 
+.notgrayscale {
+    -webkit-filter: grayscale(0%);
+    -webkit-transition: .5s ease-in-out;
+    -moz-filter: grayscale(0%);
+    -moz-transition: .5s ease-in-out;
+    -o-filter: grayscale(0%);
+    -o-transition: .5s ease-in-out;
+    filter: grayscale(0%);
+}
 
 .grayscale {
     -webkit-filter: grayscale(70%);
@@ -904,7 +919,7 @@ body.landing #footer {
 
 .spotlight {
     background-color: #191919 !important;
-
+        height: 400px !important;
 }
 .spotlightv
 {
@@ -962,4 +977,62 @@ ul.actions {
 #regdet
 {
     margin: 0px 0px 2em;
+}
+
+.btn-google {
+    color: #dd4b39;
+    background-color: #fff;
+    /* border-color: rgba(0,0,0,0.2); */
+    display: flex !important;
+    font-size: medium !important;
+    text-transform: capitalize;
+    letter-spacing: 3px;
+    border: none;
+    box-shadow: 0px 0px 10px #ffffff;
+    border-radius: 50px;
+}
+.btn-google:hover {
+    color: #fff;
+    background-color: #dd4b39;
+    /* border-color: rgba(0,0,0,0.2); */
+    border: none;
+    box-shadow: 0px 0px 10px #ffffff;
+    border-radius: 50px;
+}
+.btn-google i
+{
+        padding-right: 5px;
+    font-size: 20px;
+}
+
+#socialLoginList
+{
+    width: 80% !important;
+    margin: 0 10%;
+}
+
+.text-danger {
+    color: #ff4844 !important;
+}
+
+.TextLink:hover
+{
+        color: #d42b1f !important;
+}
+
+.TextLinkp a:hover
+{
+        color: #d42b1f !important;
+}
+
+#signbtn {
+    box-shadow: inset 0 0 0 2px #00a293;
+    color: #00a293;
+    width: 100%;
+}
+
+#signbtn:hover
+{
+        background-color: #00a293;
+    color: #fff !important;
 }
