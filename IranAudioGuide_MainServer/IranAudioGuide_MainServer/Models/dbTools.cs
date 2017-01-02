@@ -19,6 +19,13 @@ namespace IranAudioGuide_MainServer.Models
                 _dbManager = value;
             }
         }
+        public GetPackagesVM GetPackagesByCity(int cityId)
+        {
+            var SP = new SqlParameter("@cityId", cityId);
+            var dt = dbManager.MultiTableResultSP("GetPackagesByCity", SP);
+            throw new NotImplementedException();
+        }
+
         public GetUpdateVM GetUpdate(int LastUpdateNumber)
         {
             var SP = new SqlParameter("@UpdateNumber", LastUpdateNumber);

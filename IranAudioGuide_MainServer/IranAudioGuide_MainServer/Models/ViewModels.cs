@@ -45,18 +45,6 @@ namespace IranAudioGuide_MainServer.Models
         public int PackagePrice { get; set; }
         public List<CityVM> PackageCities { get; set; }
     }
-    public class GetPackagesVM
-    {
-        private Package Packges;
-                
-        public GetPackagesVM(List<PackageVM> Packages, int PagesLen)
-        {
-            this.Packages = Packages;
-            this.PagesLen = PagesLen;
-        }
-        public List<PackageVM> Packages { get; set; }
-        public int PagesLen { get; set; }
-    }
 
     public class AddTipVM
     {
@@ -377,11 +365,5 @@ namespace IranAudioGuide_MainServer.Models
         }
         public status status { get; set; }
         public string content { get; set; }
-    }
-
-    public class userpackage
-    {
-        public int uuid { get; set; }
-        public List<CityVM> usercities { get; set; }
     }
 }

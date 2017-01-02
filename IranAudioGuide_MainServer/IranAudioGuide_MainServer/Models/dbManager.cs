@@ -63,7 +63,7 @@ namespace IranAudioGuide_MainServer.Models
             };
             using (var db = new ApplicationDbContext())
             {
-                if (db.TipCategories.Where(x=>x.TiC_Priority == priority).FirstOrDefault() == default(TipCategory))
+                if (db.TipCategories.Where(x => x.TiC_Priority == priority).FirstOrDefault() == default(TipCategory))
                 {
                     db.TipCategories.Add(tc);
                     db.SaveChanges();

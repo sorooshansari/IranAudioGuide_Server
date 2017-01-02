@@ -26,6 +26,12 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
         [HttpPost]
+        // POST: api/AppManager/GetPackages/5
+        public GetPackagesVM GetPackages(int cityId)
+        {
+            return dbTools.GetPackagesByCity(cityId);
+        }
+        [HttpPost]
         // POST: api/AppManager/GetUpdates/5
         public GetUpdateVM GetUpdates(int LastUpdateNumber)
         {
