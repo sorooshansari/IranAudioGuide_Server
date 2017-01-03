@@ -73,6 +73,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 return View("Error.cshtml");
             }
         }
+        [HttpPost]
         [Authorize(Roles = "AppUser")]
         public async Task<ActionResult> Index(WebPaymentReqVM info)
         {
@@ -105,13 +106,12 @@ namespace IranAudioGuide_MainServer.Controllers
                 return View("Error.cshtml");
             }
         }
-        [HttpPost]
         [Authorize(Roles = "AppUser")]
-        public async Task<ActionResult> Purchase(Guid packageId, string bankName)
+        public ActionResult Purchase(Guid packageId, string bankName)
         {
             try
             {
-                var user = await UserManager.FindByNameAsync(User.Identity.Name);
+                var user = db.Users.Where(x=>x.UserName == User.Identity.Name).First();
                 var package = db.Packages.Find(packageId);
                 if (package == null)
                     return RedirectToAction("Index", new WebPaymentReqVM()
@@ -119,7 +119,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         packageId = packageId,
                         ErrorMessage = "Error in finding package"
                     });
-                string redirectPage = "http://localhost:16915/Pyment/Return";
+                string redirectPage = "http://localhost:8462/Payment/Return";
                 var payment = new Payment()
                 {
                     Amount = package.Pac_Price,
@@ -165,7 +165,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.BankName = "درگاه پرداخت نامشخص است";
                 ViewBag.Message = "پاسخی از درگاه پرداخت دریافت نشده";
                 ViewBag.SaleReferenceId = "**************";
-                ViewBag.Image = "~/Images/notaccept.png";
+                ViewBag.Image = "~/images/notaccept.png";
             }
             return View();
         }
@@ -221,7 +221,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 // 6- آدرس برگشت از درگاه
 
                 // ارسال اطلاعات به درگاه
-                int status = zp.PaymentRequest(merchantCode, (int)price, "Purchase from Iran Audio Guide", "monaakhlaghi@gmail.com", "", redirectPage + "?PaymentId=" + paymentId.ToString(), out authority);
+                int status = zp.PaymentRequest(merchantCode, (int)price, "Iran Audio Guide", "monaakhlaghi@gmail.com", "", redirectPage + "?PaymentId=" + paymentId.ToString(), out authority);
 
                 // بررسی وضعیت
                 if (status == 100)
@@ -275,7 +275,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
                             ViewBag.Message = "پرداخت با موفقیت انجام شد.";
                             ViewBag.SaleReferenceId = refId;
-                            ViewBag.Image = "~/Images/accept.png";
+                            ViewBag.Image = "../images/accept.png";
 
                         }
                         else
@@ -284,7 +284,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
                             ViewBag.Message = PaymentResult.ZarinPal(Convert.ToString(status));
                             ViewBag.SaleReferenceId = "**************";
-                            ViewBag.Image = "~/Images/notaccept.png";
+                            ViewBag.Image = "../images/notaccept.png";
                         }
 
                     }
@@ -294,20 +294,20 @@ namespace IranAudioGuide_MainServer.Controllers
 
                         ViewBag.Message = "پرداخت ناموفق بود";
                         ViewBag.SaleReferenceId = "**************";
-                        ViewBag.Image = "~/Images/notaccept.png";
+                        ViewBag.Image = "../images/notaccept.png";
                     }
                 }
                 else
                 {
                     ViewBag.SaleReferenceId = "**************";
-                    ViewBag.Image = "~/Images/notaccept.png";
+                    ViewBag.Image = "../images/notaccept.png";
                     ViewBag.Message = "پاسخی از درگاه بانکی دریافت نشد";
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.SaleReferenceId = "**************";
-                ViewBag.Image = "~/Images/notaccept.png";
+                ViewBag.Image = "../images/notaccept.png";
                 ViewBag.Message = "مشکلی در پرداخت به وجود آمده است ، در صورتیکه وجه پرداختی از حساب بانکی شما کسر شده است آن مبلغ به صورت خودکار برگشت داده خواهد شد";
             }
         }

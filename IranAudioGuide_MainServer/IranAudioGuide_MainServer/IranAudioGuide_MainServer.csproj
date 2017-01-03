@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701030945504_paymentAdded.cs" />
+    <Compile Include="Migrations\201701030945504_paymentAdded.Designer.cs">
+      <DependentUpon>201701030945504_paymentAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -259,6 +263,7 @@
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\loading.css" />
     <Content Include="Content\toggle.css" />
+    <Content Include="images\accept.png" />
     <Content Include="images\as.png" />
     <Content Include="images\bars.svg" />
     <Content Include="images\blockpics\accurate_information.jpg" />
@@ -323,6 +328,7 @@
     <Content Include="images\Members\Hamed.jpg" />
     <Content Include="images\Members\Mona.jpg" />
     <Content Include="images\Members\Soroosh.JPG" />
+    <Content Include="images\notaccept.png" />
     <Content Include="images\pic01.jpg" />
     <Content Include="images\pic02.jpg" />
     <Content Include="images\pic03.jpg" />
@@ -1259,8 +1265,9 @@
     <Content Include="Views\Shared\_UserLayout.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Pyment\Index.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
     <None Include="Service References\Zarinpal\PaymentGatewayImplementationService.wsdl" />
+    <Content Include="Views\Payment\Return.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1284,6 +1291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030945504_paymentAdded.resx">
+      <DependentUpon>201701030945504_paymentAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
