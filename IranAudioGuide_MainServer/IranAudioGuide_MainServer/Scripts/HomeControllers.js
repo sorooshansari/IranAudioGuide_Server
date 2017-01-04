@@ -1,6 +1,6 @@
 ﻿//Developed by Soroosh Ansari
 angular.module('HomePage.controllers', [])
-.controller('HomeController', ['$scope', '$http','$timeout',
+.controller('HomeController', ['$scope', '$http', '$timeout',
     function ($scope, $http, $timeout) {
         $scope.ContactUs = function (model, form) {
             $scope.overlay = true;

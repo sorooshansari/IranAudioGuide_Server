@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "Iran Audio Guide";
 }
-@model IranAudioGuide_MainServer.Models.ContactEmailVM
 <section id="banner">
     <div class="inner">
         <div id="logo">
@@ -41,19 +40,21 @@
             <li class="tooltips"><a><span class="icon fa-android major style2"><span>Coming Soon</span></span></a></li>
 
         </ul>
-        <section id="usercounter" style="font-size:x-large; display:inline-flex; padding-bottom:70px;">
+        @*<section id="usercounter" style="font-size:x-large; display:inline-flex; padding-bottom:70px;">
             We are honored to have
             <h2 style="margin: 0px; padding: 0px 10px 0px 10px; font-size: larger; color: cyan; line-height:inherit;" count-up id="numberAnimation" end-val="873.4" scroll-spy-event="elementFirstScrolledIntoView" scroll-spy></h2>
             Users
 
-        </section>
+        </section>*@
     </div>
 </section>
 
 <!-- Two -->
 <section id="two" class="wrapper alt style2" style="background-color:transparent !important">
     <section class="spotlight">
-        <div class="image image1"><img src="~/images/blockpics/accurate_information.jpg" alt="providing you with accurate information" /></div>
+        <div class="image image1 grayscale">
+            <img id="accurate_information" src="~/images/blockpics/accurate_information.jpg" alt="accurate information about Iran" scroll-spy />
+        </div>
         <div class="content">
             <h2>
                 Providing you with accurate information<br />
@@ -64,7 +65,9 @@
     </section>
 
     <section class="spotlight  spotlightv" style="background-color:transparent !important;">
-        <div class="image image2"><img src="/images/blockpics/whattolisten.jpg" alt="Choose what to listen to" class=""></div>
+        <div class="image image2 grayscale">
+            <img id="whattolisten" src="/images/blockpics/whattolisten.jpg" alt="Choose what to listen to" scroll-spy-event="elementScrolledIntoView" scroll-spy />
+        </div>
         <div class="content">
             <h2 class="">
                 Choose what to listen to <br>
@@ -76,8 +79,8 @@
 
 
     <section class="spotlight">
-        <div class="image image3">
-            <img src="~/images/blockpics/yourownpace.jpg" alt="liberating you to visit attractions with your own pace" />
+        <div class="image image3 grayscale">
+            <img id="yourownpace" src="~/images/blockpics/yourownpace.jpg" alt="visit attractions with your own pace" scroll-spy/>
         </div><div class="content">
             <h2>
                 Liberating you to visit attractions with your own pace <br />

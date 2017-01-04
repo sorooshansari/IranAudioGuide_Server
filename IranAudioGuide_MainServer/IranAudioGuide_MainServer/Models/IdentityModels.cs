@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using System;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -26,7 +27,50 @@ namespace IranAudioGuide_MainServer.Models
         public string Picture { get; set; }
         public string uuid { get; set; }
     }
-    public class UpdateLog {
+    public class Payment
+    {
+        public Payment()
+        {
+            InsertDatetime = DateTime.Now;
+        }
+        [Key]
+        [Display(Name = "Payment Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid PaymentId { get; set; }
+
+        [Display(Name = "Reference Number")]
+        [MaxLength(100)]
+        public string ReferenceNumber { get; set; }
+
+        [Display(Name = "Sale Reference Id")]
+        public long SaleReferenceId { get; set; }
+
+        [Display(Name = "Status Payment")]
+        [MaxLength(100)]
+        public string StatusPayment { get; set; }
+
+        // فقط در صورتی که این فید ترو باشد پرداخت موفق بوده است
+        [Display(Name = "Payment Finished")]
+        public bool PaymentFinished { get; set; }
+
+        [Display(Name = "Amount")]
+        public long Amount { get; set; }
+
+        [Display(Name = "Bank Name")]
+        [MaxLength(50)]
+        public string BankName { get; set; }
+
+        [Display(Name = "User")]
+        public ApplicationUser User { get; set; }
+
+        [Display(Name = "Package")]
+        public Package Package { get; set; }
+
+        [Display(Name = "Insert Datetime")]
+        public DateTime InsertDatetime { get; set; }
+    }
+    public class UpdateLog
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UpL_Id { get; set; }
@@ -133,7 +177,7 @@ namespace IranAudioGuide_MainServer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public System.Guid Pac_Id { get; set; }
         public string Pac_Name { get; set; }
-        public int Pac_Price { get; set; }
+        public long Pac_Price { get; set; }
         public virtual ICollection<city> Pac_Cities { get; set; }
         public object pac_Cities { get; internal set; }
     }
@@ -160,6 +204,7 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<UpdateLog> UpdateLogs { get; set; }
         public DbSet<Tip> Tips { get; set; }
         public DbSet<TipCategory> TipCategories { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_MainServer.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
