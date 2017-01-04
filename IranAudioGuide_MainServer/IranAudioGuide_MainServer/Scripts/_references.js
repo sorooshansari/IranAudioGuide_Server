@@ -35,6 +35,7 @@
 /// <reference path="countup.js" />
 /// <reference path="homecontrollers.js" />
 /// <reference path="homecustom.js" />
+/// <reference path="homewithoutscrolly.min.js" />
 /// <reference path="ie/html5shiv.js" />
 /// <reference path="ie/respond.min.js" />
 /// <reference path="ionic.bundle.min.js" />

@@ -261,8 +261,13 @@
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
     <Content Include="Content\bootstrap-social.css" />
+    <Content Include="Content\Custom3.css" />
     <Content Include="Content\loading.css" />
+    <Content Include="Content\bootstrap-social.min.css" />
+    <Content Include="Content\styles.min.css" />
+    <Content Include="Content\toggle.min.css" />
     <Content Include="Content\toggle.css" />
+    <Content Include="IAGSITELOGO.png" />
     <Content Include="images\accept.png" />
     <Content Include="images\as.png" />
     <Content Include="images\bars.svg" />
@@ -274,7 +279,6 @@
     <Content Include="images\blockpics\DSC_3562 %282%29.jpg" />
     <Content Include="images\blockpics\yourownpace.jpg" />
     <Content Include="images\gp.png" />
-    <Content Include="IAGSITELOGO.png" />
     <Content Include="images\IAGSITELOGO.png" />
     <Content Include="images\IAGSmallWhiteLogo.png" />
     <Content Include="images\lc.png" />
@@ -286,7 +290,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Custom1.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\ie8.css" />
@@ -300,7 +303,7 @@
     <Content Include="Content\ionic.min.css" />
     <Content Include="Content\ionicons.css" />
     <Content Include="Content\ionicons.min.css" />
-    <Content Include="Content\main.css" />
+    <Content Include="Content\main2.css" />
     <Content Include="Content\style-library-1.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -346,6 +349,12 @@
     <Content Include="Scripts\countUp.js" />
     <Content Include="Scripts\HomeControllers.js" />
     <Content Include="Scripts\HomeCustom.js" />
+    <Content Include="Scripts\angular-scroll-spy.min.js" />
+    <Content Include="Scripts\countUp.min.js" />
+    <Content Include="Scripts\angular-countUp.min.js" />
+    <Content Include="Scripts\HomeWIthoutScrolly.min.js" />
+    <Content Include="Scripts\main.min.js" />
+    <Content Include="Scripts\util.min.js" />
     <Content Include="Scripts\UserControllers.js" />
     <Content Include="Scripts\AdminControllers.js" />
     <Content Include="Scripts\UserCustom.js" />

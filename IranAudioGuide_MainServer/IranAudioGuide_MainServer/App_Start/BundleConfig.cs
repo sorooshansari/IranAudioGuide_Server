@@ -26,6 +26,20 @@ namespace IranAudioGuide_MainServer
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/minCss").Include(
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/bootstrap-social.min.css",
+                      "~/Content/toggle.min.css",
+                      "~/Content/styles.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/minJs").Include(
+                        "~/Scripts/jquery.min.js",
+                        "~/Scripts/jquery.scrollex.min.js",
+                        "~/Scripts/jquery.scrolly.min.js",
+                        "~/Scripts/skel.min.js",
+                        "~/Scripts/util.min.js",
+                        "~/Scripts/main.min.js",
+                        "~/Scripts/angular.min.js"));
         }
     }
 }
