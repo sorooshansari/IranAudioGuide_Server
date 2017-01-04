@@ -50,5 +50,9 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
+        public ActionResult test()
+        {
+            return View("Error");
+        }
     }
 }

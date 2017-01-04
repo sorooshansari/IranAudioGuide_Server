@@ -1233,6 +1233,7 @@
     <Folder Include="Audios\" />
     <Folder Include="Download\" />
     <Folder Include="images\Places\Extras\" />
+    <Folder Include="images\slidepics\" />
     <Folder Include="Stories\" />
   </ItemGroup>
   <ItemGroup>

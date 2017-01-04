@@ -208,7 +208,14 @@ angular.module('app.controllers', [])
                 URL: cordova.file.dataDirectory + "/PlacePic_dir/" + res.item(i).Pla_imgUrl
             });
         }
-        $scope.SlideShows = angular.copy(SlideShows);
+        //$scope.SlideShows = angular.copy(SlideShows);
+        $scope.SlideShows = [
+            'images/slidepics/s1.jpg',
+            'images/slidepics/s2.jpg',
+            'images/slidepics/s3.jpg',
+            'images/slidepics/s4.jpg',
+            'images/slidepics/s5.jpg'
+        ];
         $ionicSlideBoxDelegate.update();
         $scope.Places = angular.copy(AllPlaces);
         $ionicLoading.hide();

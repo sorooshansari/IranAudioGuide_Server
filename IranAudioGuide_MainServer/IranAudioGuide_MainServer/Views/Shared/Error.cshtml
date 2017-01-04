@@ -1,9 +1,26 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
-
+@using IranAudioGuide_MainServer.Models
 @{
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
 
+<style type="text/css">
+    #page-wrapper{
+        height: 100vh;
+        background: none !important;
+    }
+    .spotlightv{
+        margin-top:25vh;
+    }
+</style>
+
+<section class="spotlight  spotlightv">
+    <div class="image image2"><img src="/images/blockpics/whattolisten.jpg" alt="Choose what to listen to" class=""></div>
+    <div class="content">
+        <h2 class="">
+            Choose what to listen to <br>
+        </h2>
+        <p class="">Listen to the tracks your interested in, choose among all the content available</p>
+    </div>
+</section>
