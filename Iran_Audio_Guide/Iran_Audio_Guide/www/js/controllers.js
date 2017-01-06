@@ -167,7 +167,42 @@ angular.module('app.controllers', [])
         $ionicLoading.show({
             template: 'Loading...'
         });
-        AuthServices.Register(user.email, user.password, device.uuid);
+        AuthServices.Register(user.email, user.password, device.uuid)
+        .then(function (data) {
+            console.log(data);
+            switch (data.data) {
+                case 0: { //success
+                    window.localStorage.setItem("User_Email", email);
+                    window.localStorage.setItem("Skipped", false);
+                    window.localStorage.setItem("Authenticated", true);
+                    $rootScope.$broadcast('LoadDefaultUser', {});
+                    break;
+                }
+                case 1: { //userExists
+                    $ionicLoading.hide();
+                    alert("This email is already regestered. Please go to log in.");
+                    $state.go('login');
+                    break;
+                }
+                case 2: { //fail
+                    $ionicLoading.hide();
+                    alert("Connecting to server failed.");
+                    break;
+                }
+                case 3: { //uuidMissMatch
+                    $ionicLoading.hide();
+                    alert("This email registered on another device, try another account.");
+                    break;
+                }
+                case 4: { //googleUser
+                    $ionicLoading.hide();
+                    alert("you allready registered with google. Please sign in with it.");
+                    AuthServices.Google(device.uuid);
+                    break;
+                }
+                default:
+            }
+        });
     }
 })
 

@@ -72,7 +72,13 @@ namespace IranAudioGuide_MainServer.Models
         {
             var appUser = await UserManager.FindByNameAsync(Email);
             if (appUser != null)
+            {
+                if (appUser.uuid != uuid)
+                    return CreateingUserResult.uuidMissMatch;
+                if (appUser.GoogleId.Length > 0)
+                    return CreateingUserResult.googleUser;
                 return CreateingUserResult.userExists;
+            }
             var user = new ApplicationUser() { UserName = Email, Email = Email, uuid = uuid };
             var result = await UserManager.CreateAsync(user, password);
             if (result.Succeeded)

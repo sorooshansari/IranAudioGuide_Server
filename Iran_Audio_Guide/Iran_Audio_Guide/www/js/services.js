@@ -247,32 +247,10 @@ angular.module('app.services', [])
             Register: function (email, password, uuid) {
                 var AppUser = { email: email, password: password, uuid: uuid };
                 console.log(AppUser);
-                $http({
+                return $http({
                     url: 'http://iranaudioguide.com/api/AppManager/ResgisterAppUser',
                     method: 'POST',
                     data: AppUser
-                }).then(function (data) {
-                    console.log(data);
-                    switch (data.data) {
-                        case 0: {
-                            window.localStorage.setItem("User_Email", email);
-                            window.localStorage.setItem("Skipped", false);
-                            window.localStorage.setItem("Authenticated", true);
-                            $rootScope.$broadcast('LoadDefaultUser', {});
-                            break;
-                        }
-                        case 1: {
-                            $ionicLoading.hide();
-                            alert("This email is already regestered. Please go to log in.")
-                            break;
-                        }
-                        case 2: {
-                            $ionicLoading.hide();
-                            alert("Connecting to server failed.")
-                            break;
-                        }
-                        default:
-                    }
                 });
             },
             logIn: function (email, password, uuid) {

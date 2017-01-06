@@ -200,7 +200,11 @@ namespace IranAudioGuide_MainServer.Models
         //
         // Summary:
         //     Creating user with different uuid
-        uuidMissMatch = 3
+        uuidMissMatch = 3,
+        //
+        // Summary:
+        //     This is a google user, just update its password
+        googleUser = 4
     }
     public enum SignInResults
     {
