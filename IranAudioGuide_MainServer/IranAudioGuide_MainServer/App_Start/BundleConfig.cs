@@ -29,6 +29,7 @@ namespace IranAudioGuide_MainServer
             bundles.Add(new StyleBundle("~/Content/minCss").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/bootstrap-social.min.css",
+                      "~/Content/font-awesome.min.css",
                       "~/Content/toggle.min.css",
                       "~/Content/styles.min.css"));
 

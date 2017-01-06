@@ -45,6 +45,10 @@ namespace IranAudioGuide_MainServer.Models
                 _userManager = value;
             }
         }
+        public Task<ApplicationUser> getUser(string username, string uuid)
+        {
+            return UserManager.FindByNameAsync(username);
+        }
         public async Task<AuthorizedUser> AutorizeAppUser(string username, string password, string uuid)
         {
             var user = await UserManager.FindByNameAsync(username);

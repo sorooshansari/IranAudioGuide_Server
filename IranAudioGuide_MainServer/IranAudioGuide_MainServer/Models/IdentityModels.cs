@@ -27,6 +27,15 @@ namespace IranAudioGuide_MainServer.Models
         public string Picture { get; set; }
         public string uuid { get; set; }
     }
+    public class TempUsers
+    {
+        [Key]
+        [Display(Name = "Temporary User Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TeU_Id { get; set; }
+        [Display(Name = "unified unique identifier")]
+        public string TeU_UUId { get; set; }
+    }
     public class Payment
     {
         public Payment()
@@ -205,6 +214,7 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<Tip> Tips { get; set; }
         public DbSet<TipCategory> TipCategories { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<TempUsers> TempUsers { get; set; }
         //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_MainServer.Models.ApplicationUser> ApplicationUsers { get; set; }
     }

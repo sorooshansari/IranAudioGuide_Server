@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -19,11 +20,84 @@ namespace IranAudioGuide_MainServer.Models
                 _dbManager = value;
             }
         }
+        public SkippedUserVM skipUser(string uuid)
+        {
+            var res = new SkippedUserVM();
+            try
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    var existingTempUsers = db.TempUsers.Where(x => x.TeU_UUId == uuid).Count();
+                    if (existingTempUsers > 0)
+                        res.status = skippedUserStatus.uuidExist;
+                    else
+                    {
+                        var existingPrimaryUsers = db.Users.Where(x => x.uuid == uuid).Count();
+                        if (existingPrimaryUsers > 0)
+                            res.status = skippedUserStatus.uuidExistInPraimaryUsers;
+                        else
+                        {
+                            db.TempUsers.Add(new TempUsers() { TeU_UUId = uuid });
+                            db.SaveChanges();
+                            res.status = skippedUserStatus.uuidAdded;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.status = skippedUserStatus.unknownError;
+                res.errorMessage = ex.Message;
+            }
+            return res;
+        }
         public GetPackagesVM GetPackagesByCity(int cityId)
         {
-            var SP = new SqlParameter("@cityId", cityId);
-            var dt = dbManager.MultiTableResultSP("GetPackagesByCity", SP);
-            throw new NotImplementedException();
+            //var SP = new SqlParameter("@cityId", cityId);
+            //var dt = dbManager.MultiTableResultSP("GetPackagesByCity", SP);
+            //throw new NotImplementedException();
+            List<PackageVM> res = new List<PackageVM>();
+            string error = "";
+            try
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    res = (from p in db.Packages
+                           orderby p.Pac_Price ascending
+                           where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(cityId)
+                           select new PackageVM()
+                           {
+                               PackageName = p.Pac_Name,
+                               PackageId = p.Pac_Id,
+                               PackagePrice = p.Pac_Price,
+                               PackageCities =
+                               (from c in db.Cities
+                                where
+                                (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
+                                select new CityVM()
+                                {
+                                    CityDesc = c.Cit_Description,
+                                    CityID = c.Cit_Id,
+                                    CityName = c.Cit_Name
+                                }).ToList()
+                           }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+            return new GetPackagesVM { packages = res, errorMessage = error };
+        }
+
+        public List<int> GetAutorizedCities(string userId)
+        {
+            var SP = new SqlParameter("@UserID", userId);
+            var dt = dbManager.TableResultSP("GetAutorizedCities", SP);
+            var res = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+                res.Add((int)dr["cityID"]);
+            return res;
         }
 
         public GetUpdateVM GetUpdate(int LastUpdateNumber)
