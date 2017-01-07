@@ -25,6 +25,34 @@ namespace IranAudioGuide_MainServer.Controllers
                 _acTools = value;
             }
         }
+        public SkippedUserVM skippedUser(string uuid)
+        {
+            return dbTools.skipUser(uuid);
+        }
+        [HttpPost]
+        public async Task<AutorizedCitiesVM> GetAutorizedCities(string username, string uuid)
+        {
+            var res = new AutorizedCitiesVM();
+            try
+            {
+                var user = await acTools.getUser(username, uuid);
+                res.status =
+                    (user == null) ? getUserStatus.notUser :
+                    (user.uuid != uuid) ? getUserStatus.uuidMissMatch :
+                    (!user.EmailConfirmed) ? getUserStatus.notConfirmed :
+                    getUserStatus.confirmed;
+
+               
+                if (res.status == getUserStatus.confirmed)
+                    res.cities = dbTools.GetAutorizedCities(user.Id);
+            }
+            catch (Exception ex)
+            {
+                res.status = getUserStatus.unknownError;
+                res.errorMessage = ex.Message;
+            }
+            return res;
+        }
         [HttpPost]
         // POST: api/AppManager/GetPackages/5
         public GetPackagesVM GetPackages(int cityId)

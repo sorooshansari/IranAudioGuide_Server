@@ -9,6 +9,21 @@ namespace IranAudioGuide_MainServer.Models
     public class ViewModels
     {
     }
+    public enum skippedUserStatus
+    {
+        uuidExist = 1,
+        uuidAdded = 2,
+        unknownError = 3,
+        uuidExistInPraimaryUsers = 4
+    }
+    public enum getUserStatus
+    {
+        confirmed = 1,
+        notUser = 2,
+        uuidMissMatch = 3,
+        notConfirmed = 4,
+        unknownError = 5
+    }
     public class PaymentResult
     {
         #region نمایش پیغام های نتیجه پرداخت زرین پال

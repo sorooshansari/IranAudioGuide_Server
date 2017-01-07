@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201701030945504_paymentAdded.Designer.cs">
       <DependentUpon>201701030945504_paymentAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701061119499_tempUserTableAdded.cs" />
+    <Compile Include="Migrations\201701061119499_tempUserTableAdded.Designer.cs">
+      <DependentUpon>201701061119499_tempUserTableAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -1305,6 +1309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701030945504_paymentAdded.resx">
       <DependentUpon>201701030945504_paymentAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701061119499_tempUserTableAdded.resx">
+      <DependentUpon>201701061119499_tempUserTableAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

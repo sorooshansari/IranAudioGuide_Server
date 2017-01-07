@@ -367,6 +367,20 @@ BEGIN
 		FROM [dbo].[UpdateLogs]
 		WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 1
 	)
+END",@"
+CREATE PROCEDURE GetAutorizedCities
+	@UserID AS nvarchar(128)
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+    SELECT dbo.Packagecities.city_Cit_Id AS cityID
+	FROM  dbo.Packagecities INNER JOIN
+			 dbo.Packages ON dbo.Packagecities.Package_Pac_Id = dbo.Packages.Pac_Id INNER JOIN
+			 dbo.Payments ON dbo.Packages.Pac_Id = dbo.Payments.Package_Pac_Id INNER JOIN
+			 dbo.AspNetUsers ON dbo.Payments.User_Id = dbo.AspNetUsers.Id
+	WHERE (dbo.AspNetUsers.Id = @UserID) AND (dbo.Payments.PaymentFinished = 1)
+	GROUP BY dbo.Packagecities.city_Cit_Id
 END"
         };
     }
