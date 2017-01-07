@@ -1277,6 +1277,7 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <None Include="Service References\Zarinpal\PaymentGatewayImplementationService.wsdl" />
     <Content Include="Views\Payment\Return.cshtml" />
+    <Content Include="Views\Shared\CheckOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

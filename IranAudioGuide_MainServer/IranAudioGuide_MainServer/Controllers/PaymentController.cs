@@ -38,7 +38,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 _userManager = value;
             }
         }
-        // GET: Pyment
+        // GET: Payment
         [AllowAnonymous]
         public async Task<ActionResult> Index(AppPaymentReqVM info)
         {
@@ -46,7 +46,7 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user.uuid != info.uuid || !user.EmailConfirmed)
-                    return View("Error.cshtml");
+                    return View("Error");
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 PackageVM package = (from p in db.Packages
                                      where p.Pac_Id == info.packageId
@@ -70,7 +70,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error.cshtml");
+                return View("Error");
             }
         }
         [HttpPost]
@@ -81,7 +81,7 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
                 if (!user.EmailConfirmed)
-                    return View("Error.cshtml");
+                    return View("Error");
                 PackageVM package = (from p in db.Packages
                                      where p.Pac_Id == info.packageId
                                      select new PackageVM()
@@ -103,7 +103,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error.cshtml");
+                return View("Error");
             }
         }
         [Authorize(Roles = "AppUser")]
