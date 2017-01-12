@@ -1,9 +1,28 @@
 ﻿
 @using IranAudioGuide_MainServer.Models
 @{
-    ViewBag.Title = "CheckOut";
+    ViewBag.Title = "PaymentRef";
 }
+<script type="text/javascript">
+    var time_left = 10;
+    var cinterval;
 
+    function time_dec() {
+        time_left--;
+        document.getElementById('countdown').innerHTML = time_left;
+        if (time_left == 0) {
+            var originalstring = document.getElementById('countdown2').innerHTML;
+            var newstring = originalstring.replace('seconds', 'second');
+            document.getElementById('countdown2').innerHTML = newstring;
+            var url = document.getElementById("url").getAttribute("value");
+
+            window.location.replace(url);
+            clearInterval(cinterval);
+        }
+    }
+
+    cinterval = setInterval('time_dec()', 1000);
+</script>
 
 <style type="text/css">
     #page-wrapper {
@@ -144,15 +163,26 @@ position: relative;
     }
 </style>
 
-<section id="CheckOutSection">
+<section id="PaymentRefSection" onload="time_dec()">
     <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
         <div class="col-xs-12 checkout-content chkout-img">
             <img src="~/images/IAGSITELOGO.png" />
-            <h1>CheckOut Details</h1>
+            <h1><i class="fa fa-check" style="color:lightgreen; font-size:45px;"></i>Successful Payment!</h1>
         </div>
 
         <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
 
+
+            <div class="col-xs-12" style="text-align:left;">
+                <p>
+                    Your payment was successful! <br /> Now you can use your purchased package inside Iran Audio Guide Application.
+                    <br /> You will be redirected to your account profile after <input id="url" type="hidden" value="http://localhost:8462/User/" /><span id="countdown2"><span id="countdown" style="color:red;">10</span> seconds</span>.
+                </p>
+            </div>
+            <div class="col-xs-12 checkout-content chkout-img">
+                <br />
+                <h1>Payment Details</h1>
+            </div>
             <table id="ChkTable" class="table-mybordered table-condensed" style="width: 100%;  border-radius:10px;  margin-bottom: 0px !important;border-top:none !important;  color: #144482; text-shadow:none; text-align:center;">
                 <tr style="background-color: #144482 !important; color: white; border-top-left-radius:10px; border-top-right-radius:10px; border-top:none !important; ">
                     <td class="_1sttd" style="border-top-left-radius:10px; border-top:none !important;  ">Package</td>
@@ -180,19 +210,73 @@ position: relative;
                     </td>
                 </tr>
             </table>
-            <div class="col-xs-12" style="text-align:center;">
-            </div>
-            <div class="col-xs-12" style="text-align:right;">
-                
-                <a class="btn btn-sm btn-default" style="width:100px;">Cancel</a>
-                <a class="btn btn-default" style="width:120px; background-color:#144482; color:white;">Press to Buy</a>
+
+
+
+
+
+
+
+
+            <div class="col-xs-12 checkout-content chkout-img">
+                <h1><i class="fa fa-close" style="color:red; font-size:45px;"></i>Unsuccessful Payment!</h1>
             </div>
 
-        </div>
-        <div class="col-xs-12" style="text-align:center;">
-    <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
-            <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarrinPal Logo above</p>
-</div>
+            <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
+
+
+                <div class="col-xs-12" style="text-align:left;">
+                    <p>
+                        Your payment was unsuccessful! <br />
+                        <br /> You will be redirected to your account profile after <input id="url" type="hidden" value="http://localhost:8462/User/" /><span id="countdown2"><span id="countdown" style="color:red;">10</span> seconds</span>.
+                    </p>
+                </div>
+                <div class="col-xs-12 checkout-content chkout-img">
+                    <br />
+                    <h1>Payment Details</h1>
+                </div>
+                <table id="ChkTable" class="table-mybordered table-condensed" style="width: 100%;  border-radius:10px;  margin-bottom: 0px !important;border-top:none !important;  color: #144482; text-shadow:none; text-align:center;">
+                    <tr style="background-color: #144482 !important; color: white; border-top-left-radius:10px; border-top-right-radius:10px; border-top:none !important; ">
+                        <td class="_1sttd" style="border-top-left-radius:10px; border-top:none !important;  ">Package</td>
+                        <td class="_2ndtd" style="border-top-right-radius:10px; border-top:none !important; ">Price (Toman)</td>
+                    </tr>
+                    <tr id="pkgrow">
+                        <td class="_1sttd"><i class="fa fa-circle"></i> Shiraz - Perspolis</td>
+                        <td class="_2ndtd">5.00</td>
+                    </tr>
+                </table>
+                <hr style="border-bottom: solid 10px #144482; margin: 0px !important;" />
+                <table class="table-mybordered tbldotted table-condensed" style="width: 100%; margin-bottom: 10px;  color: #144482; text-shadow:none; text-align:center;     background-color: white;">
+                    <tr>
+                        <td class="_1sttd"><div class="col-xs-12">Discount</div>@*<br /><div class="col-xs-6" style="display:inline-flex;">Code: <input style="height:30px;" type="text" /></div>*@</td>
+                        <td class="_2ndtd">0.00</td>
+                    </tr>
+                    <tr>
+                        <td class="_1sttd">Total Price</td>
+                        <td class="_2ndtd" style="color:black;">5.00</td>
+                    </tr>
+                    <tr style="background-color:white;">
+                        <td class="_1sttd">Payment Gateway</td>
+                        <td class="_2ndtd">
+                            <img style="width:75px;" src="~/images/icon-128x128.png" />
+                        </td>
+                    </tr>
+                </table>
+
+
+
+
+
+
+
+
+                <div class="col-xs-12" style="text-align:right;">
+
+                    <a class="btn btn-sm btn-default" style="width:100px;">Cancel</a>
+                    <a class="btn btn-default" style="width:120px; background-color:#144482; color:white;">Press to Buy</a>
+                </div>
+
+            </div>
     </div>
 </section>
 

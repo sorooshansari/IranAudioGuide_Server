@@ -23,38 +23,64 @@
 
     #header.alt {
         background: #144482 !important;
-            border-bottom:thin solid white;
+        border-bottom: thin solid white;
     }
+
     body {
-    background: #144482;
-}
-
-
-    #ErrorSection
-    {
-    /* position: absolute; */
-    margin-top: 100px;
-    height: 400px;
-    width: 100%;
+        background: #144482;
     }
 
-    .error-content
-    {
-                float:right;
+    #MainSection {
+        /* position: absolute; */
+        margin-top: 100px;
+        height: 400px;
+        width: 100%;
     }
-    .err-text
-    {
-            padding: 3em;
-    padding-top: 175px;
+
+    .Main-content {
+        float: right;
     }
+
+    .Main-text {
+        padding: 3em;
+        padding-top: 175px;
+    }
+
+    #infocontainer {
+        background-color: #f1f1f1;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        box-shadow: 0px 0px 10px black;
+        height: 85vh;
+        margin-top: 50px;
+    }
+
+
+    .err-img {
+        text-align: center;
+    }
+
+        .err-img img {
+            width: 80%;
+        }
+
+    .err-text {
+        padding: 3em 0em 2em 0em;
+    }
+
+        .err-text h1, .err-text p {
+            color: #144482 !important;
+            text-shadow: 1px 1px 2px #808080 !important;
+            line-height: 25px;
+        }
 </style>
 
 <section id="ErrorSection">
-    <div class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
-        <div class="col-md-4 col-sm-8 col-xs-12 error-content err-img">
-           <img src="~/images/IAGSITELOGO.png" style="width:100%;" />
+    <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
+        <div class="col-md-4 col-sm-8 col-xs-10 error-content err-img">
+            <img src="~/images/IAGSITELOGO.png" />
         </div>
-        <div class="col-md-8  col-sm-10 col-xs-12 error-content err-text">
+        <div class="col-md-4  col-sm-10 col-xs-12 error-content err-text">
             <h1 style="font-size:xx-large;">Error - 404</h1>
             <h1>Sorry, The Page you entered not found!</h1>
             <p>what are you doing here?</p>
