@@ -14,6 +14,7 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.View = Views.Index;
             return View();
         }
+
         [HttpPost]
         public JsonResult ContactEmailSender(ContactEmailVM model)
         {
@@ -50,9 +51,17 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
-        public ActionResult test()
+        public ActionResult Error()
         {
             return View("Error");
+        }
+        public ActionResult CheckOut()
+        {
+            return View("CheckOut");
+        }
+        public ActionResult PaymentRef()
+        {
+            return View("PaymentRef");
         }
     }
 }

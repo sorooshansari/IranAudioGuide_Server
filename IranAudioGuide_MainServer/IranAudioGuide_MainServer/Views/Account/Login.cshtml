@@ -19,7 +19,7 @@
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
                         </div>
                     </div>
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div class="col-md-8">
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })

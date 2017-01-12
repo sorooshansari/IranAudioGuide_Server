@@ -285,6 +285,7 @@
     <Content Include="images\gp.png" />
     <Content Include="images\IAGSITELOGO.png" />
     <Content Include="images\IAGSmallWhiteLogo.png" />
+    <Content Include="images\icon-128x128.png" />
     <Content Include="images\lc.png" />
     <Content Include="Content\UserMain.css" />
     <Content Include="Content\AdiminMain.css" />
@@ -1281,6 +1282,8 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <None Include="Service References\Zarinpal\PaymentGatewayImplementationService.wsdl" />
     <Content Include="Views\Payment\Return.cshtml" />
+    <Content Include="Views\Shared\CheckOut.cshtml" />
+    <Content Include="Views\Shared\PaymentRef.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

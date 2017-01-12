@@ -523,7 +523,7 @@ a:hover.tooltips span {
     background-size: contain;
     border-radius: 6px !important;
     width: auto !important;
-    background-attachment: local !important;
+    3 !important;
 }
 
 .features p {
@@ -1036,3 +1036,4 @@ ul.actions {
         background-color: #00a293;
     color: #fff !important;
 }
+

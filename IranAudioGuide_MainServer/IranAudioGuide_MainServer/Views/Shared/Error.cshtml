@@ -6,21 +6,85 @@
 
 
 <style type="text/css">
-    #page-wrapper{
+    #page-wrapper {
         height: 100vh;
         background: none !important;
     }
-    .spotlightv{
-        margin-top:25vh;
+
+    .spotlightv {
+        margin-top: 25vh;
     }
+
+    #header.alt h1 {
+        /*-ms-pointer-events: none;*/
+        /* pointer-events: none; */
+        opacity: 1 !important;
+    }
+
+    #header.alt {
+        background: #144482 !important;
+        border-bottom: thin solid white;
+    }
+
+    body {
+        background: #144482;
+    }
+
+    #MainSection {
+        /* position: absolute; */
+        margin-top: 100px;
+        height: 400px;
+        width: 100%;
+    }
+
+    .Main-content {
+        float: right;
+    }
+
+    .Main-text {
+        padding: 3em;
+        padding-top: 175px;
+    }
+
+    #infocontainer {
+        background-color: #f1f1f1;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        box-shadow: 0px 0px 10px black;
+        height: 85vh;
+        margin-top: 50px;
+    }
+
+
+    .err-img {
+        text-align: center;
+    }
+
+        .err-img img {
+            width: 80%;
+        }
+
+    .err-text {
+        padding: 3em 0em 2em 0em;
+    }
+
+        .err-text h1, .err-text p {
+            color: #144482 !important;
+            text-shadow: 1px 1px 2px #808080 !important;
+            line-height: 25px;
+        }
 </style>
 
-<section class="spotlight  spotlightv">
-    <div class="image image2"><img src="/images/blockpics/whattolisten.jpg" alt="Choose what to listen to" class=""></div>
-    <div class="content">
-        <h2 class="">
-            Choose what to listen to <br>
-        </h2>
-        <p class="">Listen to the tracks your interested in, choose among all the content available</p>
+<section id="ErrorSection">
+    <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
+        <div class="col-md-4 col-sm-8 col-xs-10 error-content err-img">
+            <img src="~/images/IAGSITELOGO.png" />
+        </div>
+        <div class="col-md-4  col-sm-10 col-xs-12 error-content err-text">
+            <h1 style="font-size:xx-large;">Error - 404</h1>
+            <h1>Sorry, The Page you entered not found!</h1>
+            <p>what are you doing here?</p>
+            <a href="/">Go back to Iran Audio Guide home page</a>
+        </div>
     </div>
 </section>
