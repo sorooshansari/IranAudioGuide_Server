@@ -16,12 +16,17 @@
                     <ion-option ng-repeat="c in Cities" value="{{c.Cit_Id}}">{{c.Cit_Name}}</ion-option>
                 </ion-select>
             </ion-item>-->
+            <!--<ion-toolbar color="primary">
+                <ion-searchbar (input)="searchPlaces($event)"></ion-searchbar>
+            </ion-toolbar>-->
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="search" ng-model="search"
                        ng-change='searchPlaces(search)'
                        placeholder="Place Name">
-                <i class="icon ion-close-circled ClearBtn" ng-show="search.length" ng-click="Clear()"></i>
+                <span style="min-width: 20px;" class="ClearBtn" ng-show="search.length" ng-click="Clear()">
+                    <i class="icon ion-close-circled"></i>
+                </span>
             </label>
             <ion-list>
                 <ion-item class="item-remove-animate item-thumbnail-left item-icon-right homeItems"

@@ -17,7 +17,6 @@ angular.module('app', ['ionic', 'ionic.service.core', 'app.controllers', 'app.ro
         }
         $rootScope.audio = {};
         $rootScope.audio.media = null;
-        console.log(device.uuid);
     });
     $ionicPlatform.on('resume', function () {
 

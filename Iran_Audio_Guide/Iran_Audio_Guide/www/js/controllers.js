@@ -1,5 +1,5 @@
 angular.module('app.controllers', [])
-.controller('primaryPageCtrl', function ($scope, $rootScope, $ionicPlatform, ApiServices, dbServices, FileServices, $ionicHistory, $state) {
+.controller('primaryPageCtrl', function ($scope, $rootScope, $ionicPlatform, ApiServices, dbServices, FileServices, $ionicHistory, $state, appPrimaryData) {
     console.log("Primary Page");
     var start = 0, SplashTime = 1000;
     var updateNumber = 0;
@@ -58,11 +58,9 @@ angular.module('app.controllers', [])
 
     $scope.$on('$ionicView.enter', function () {
         // code to run each time view is entered
-        console.log("tester");
         AutenticateAndLoadData();
     });
     $rootScope.$on('PopulateTables', function (event, Data) {
-        console.log(Data);
         updateNumber = Data.Data.UpdateNumber;
         dbServices.populatePlaces(Data.Data.Places);
         dbServices.populateAudios(Data.Data.Audios);
@@ -73,7 +71,6 @@ angular.module('app.controllers', [])
         dbServices.populateTipCategories(Data.Data.TipCategories);
     });
     var DelRemovedEntities = function (RemovedEntries) {
-        console.log("RemovedEntries.Places: ", RemovedEntries.Places);
         dbServices.deleteFromTable('Places', 'Pla_Id', RemovedEntries.Places);
         dbServices.removeAudioFiles(RemovedEntries.Audios);
         dbServices.deleteFromTable('Audios', 'Aud_Id', RemovedEntries.Audios);
@@ -84,7 +81,6 @@ angular.module('app.controllers', [])
         dbServices.deleteFromTable('Cities', 'Cit_Id', RemovedEntries.Cities);
     };
     $rootScope.$on('UpdateTables', function (event, Data) {
-        console.log(Data);
         updateNumber = Data.Data.UpdateNumber;
         dbServices.populatePlaces(Data.Data.Places);
         dbServices.populateAudios(Data.Data.Audios);
@@ -98,9 +94,10 @@ angular.module('app.controllers', [])
         console.log("waitingUpdates: ", $rootScope.waitingUpdates);
         if ($rootScope.waitingUpdates == 0) {
             window.localStorage.setItem("LastUpdateNumber", updateNumber);
-            GoHome();
+            appPrimaryData.init();
         }
     });
+
     $rootScope.$on('ServerConnFailed', function (event, error) {
         console.log(error);
         alert("Cannot connect to server. Pleas check your internet connection and try again.");
@@ -108,15 +105,29 @@ angular.module('app.controllers', [])
         if (LstUpdtNum == 0)
             ApiServices.GetAll(LstUpdtNum);
         else
-            GoHome();
+            appPrimaryData.init();
         //$cordovaDialogs.alert("Couldn’t connect to server, check your internet connection and try again.", 'Network error', 'Try again');
     });
+
+
+    $rootScope.$on('primaryDataLoaded', function (event) {
+        console.log("WaitingPrimaryData: ", $rootScope.WaitingPrimaryData);
+        if ($rootScope.WaitingPrimaryData == 0) {
+            GoHome();
+        }
+    });
+    $rootScope.$on('primaryDataFailed', function (event) {
+        console.error("primaryDataFailed, WaitingPrimaryData: ", $rootScope.WaitingPrimaryData);
+        alert("Something went wronge, please restart the application.");
+        ionic.Platform.exitApp();
+    });
+
     var GoHome = function () {
         dbServices.LoadTopPlayerHistory();
         var end = new Date().getTime();
         var time = end - start;
         if (time < SplashTime)
-            setTimeout(function () {
+            $timeout(function () {
                 $state.go('tabsController.home');
                 navigator.splashscreen.hide();
             }, SplashTime - time);
@@ -209,84 +220,47 @@ angular.module('app.controllers', [])
 .controller('recoverPasswordCtrl', function ($scope) {
 
 })
-.controller('homeCtrl', function ($scope, dbServices, $ionicPlatform, $ionicLoading, $ionicSlideBoxDelegate) {
+.controller('homeCtrl', function ($scope, appPrimaryData) {
     $scope.PageTitle = 'Iran Audio Guide'
-    $scope.SlideShows = {};
-    $scope.Places = {};
-    $ionicLoading.show({
-        template: 'Loading...'
-    });
-    $ionicPlatform.ready(function () {
-        dbServices.LoadPrimaryPlaces();
-    });
+    $scope.options = {
+        loop: true,
+        autoplay:2000,
+        autoplayDisableOnInteraction: false,
+        autoplayStopOnLast: false,
+        effect: 'fade',
+        speed: 500,
+        paginationHide: true
+    }
+    $scope.Cities = {};
+    //$ionicLoading.show({
+    //    template: 'Loading...'
+    //});
+    $scope.Cities = appPrimaryData.getCities();
+
+
+
     $scope.$on("$ionicView.beforeEnter", function (event, data) {
 
     });
-    $(".rslides").responsiveSlides({
-        auto: true,             // Boolean: Animate automatically, true or false
-        speed: 1000,            // Integer: Speed of the transition, in milliseconds
-        timeout: 5000,          // Integer: Time between slide transitions, in milliseconds
-        //pager: false,           // Boolean: Show pager, true or false
-        //nav: false,             // Boolean: Show navigation, true or false
-        //random: false,          // Boolean: Randomize the order of the slides, true or false
-        //pause: false,           // Boolean: Pause on hover, true or false
-        //pauseControls: true,    // Boolean: Pause when hovering controls, true or false
-        //prevText: "Previous",   // String: Text for the "previous" button
-        //nextText: "Next",       // String: Text for the "next" button
-        //maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
-        //navContainer: "",       // Selector: Where controls should be appended to, default is after the 'ul'
-        //manualControls: "",     // Selector: Declare custom pager navigation
-        namespace: "rslides"   // String: Change the default namespace used
-        //before: function () { },   // Function: Before callback
-        //after: function () { }     // Function: After callback
-    });
-    $scope.$on("PrimaryPlacesLoaded", function (event, data) {
-        var AllPlaces = [];
-        
-        console.log("data", data);
-        var res = data.result.rows;
-        for (var i = 0; i < res.length; i++) {
-            AllPlaces.push({
-                Id: res.item(i).Pla_Id,
-                name: res.item(i).Pla_Name,
-                logo: cordova.file.dataDirectory + "/TumbNameil_dir/" + res.item(i).Pla_TNImgUrl,
-                address: res.item(i).Pla_address,
-                city: res.item(i).Cit_Name,
-                CityId: res.item(i).Pla_CityId,
-                bookmarked: res.item(i).Pla_bookmarked
-            });
-            //SlideShows.push({
-            //    id: res.item(i).Pla_Id,
-            //    title: res.item(i).Pla_Name,
-            //    URL: cordova.file.dataDirectory + "/PlacePic_dir/" + res.item(i).Pla_imgUrl
-            //});
-        }
-        //$scope.SlideShows = angular.copy(SlideShows);
-
-        //$ionicSlideBoxDelegate.update();
-        $scope.Places = angular.copy(AllPlaces);
-        $ionicLoading.hide();
-        //console.log($scope.SlideShows);
-    });
-    $scope.bookmark = function (placeId) {
-        dbServices.bookmarkePlace(placeId);
-    };
-    $scope.$on("PlaceBookmarked", function (event, data) {
-        for (var i = 0; i < $scope.Places.length; i++) {
-            if ($scope.Places[i].Id == data.placeId) {
-                $scope.Places[i].bookmarked = 1;
-                break;
-            }
-        }
-    });
-    $scope.$on("PlaceUnbookmarked", function (event, data) {
-        for (var i = 0; i < $scope.Places.length; i++) {
-            if ($scope.Places[i].Id == data.placeId) {
-                $scope.Places[i].bookmarked = 0;
-                break;
-            }
-        }
-    });
+    //$scope.bookmark = function (placeId) {
+    //    dbServices.bookmarkePlace(placeId);
+    //};
+    //$scope.$on("PlaceBookmarked", function (event, data) {
+    //    for (var i = 0; i < $scope.Places.length; i++) {
+    //        if ($scope.Places[i].Id == data.placeId) {
+    //            $scope.Places[i].bookmarked = 1;
+    //            break;
+    //        }
+    //    }
+    //});
+    //$scope.$on("PlaceUnbookmarked", function (event, data) {
+    //    for (var i = 0; i < $scope.Places.length; i++) {
+    //        if ($scope.Places[i].Id == data.placeId) {
+    //            $scope.Places[i].bookmarked = 0;
+    //            break;
+    //        }
+    //    }
+    //});
 })
 .controller('favoritsCtrl', function ($scope, dbServices) {
     $scope.PageTitle = "Bookmarks"

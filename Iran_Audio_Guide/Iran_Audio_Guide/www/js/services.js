@@ -1,38 +1,80 @@
 angular.module('app.services', [])
-.factory('SlideShows', function () {
-    var SlideShow = [
-        {
-            id: 0,
-            URL: 'img/1.jpg',
-            title: 'soroosh'
-        },
-    {
-        id: 1,
-        URL: 'img/2.jpg',
-        title: 'ansari'
-    },
-    {
-        id: 2,
-        URL: 'img/3.jpg',
-        title: 'mehr'
-    },
-    {
-        id: 3,
-        URL: 'img/6.jpg',
-        title: 'Hafez'
-    }];
-
-    return {
-        all: function () {
-            return SlideShow;
-        },
-        get: function (Slide_id) {
-            for (var i = 0; i < SlideShow.length; i++) {
-                if (SlideShow[i].id == parseInt(Slide_id)) {
-                    return SlideShow[i];
-                }
+.factory('appPrimaryData', function ($rootScope) {
+    var _Cities = [];
+    var _Places = [];
+    var _bookMarkedPlaces = [];
+    var loadCities = function () {
+        var query = "\
+                SELECT\
+                    Cit_Id,\
+                    Cit_Name,\
+                    Cit_Desc,\
+                    Cit_ImageUrl\
+                FROM Cities";
+        db.executeSql(query, [],
+        function (res) {
+            var rows = res.rows;
+            for (var i = 0; i < rows.length; i++) {
+                _Cities.push({
+                    Id: rows.item(i).Cit_Id,
+                    Name: rows.item(i).Cit_Name,
+                    Desc: rows.item(i).Cit_Desc,
+                    ImageUrl: cordova.file.dataDirectory + "/Cities_dir/" + rows.item(i).Cit_ImageUrl
+                });
             }
-            return null;
+            $rootScope.WaitingPrimaryData--;
+            $rootScope.$broadcast('primaryDataLoaded', {});
+        },
+        function (error) {
+            console.log('error: ' + error.message);
+            $rootScope.$broadcast('primaryDataFailed', {});
+        });
+    };
+    var loadPlaces = function () {
+        var query = "\
+                SELECT\
+                    Pla_Id,\
+                    Pla_Name,\
+                    Pla_TNImgUrl,\
+                    Pla_imgUrl,\
+                    Pla_address,\
+                    Pla_bookmarked,\
+                    Cit_Name,\
+                    Pla_CityId\
+                FROM Places JOIN Cities\
+                ON Places.Pla_CityId = Cities.Cit_Id";
+        db.executeSql(query, [],
+        function (res) {
+            var rows = res.rows;
+            for (var i = 0; i < rows.length; i++) {
+                _Places.push({
+                    Id: rows.item(i).Pla_Id,
+                    name: rows.item(i).Pla_Name,
+                    logo: cordova.file.dataDirectory + "/TumbNameil_dir/" + rows.item(i).Pla_TNImgUrl,
+                    address: rows.item(i).Pla_address,
+                    city: rows.item(i).Cit_Name,
+                    CityId: rows.item(i).Pla_CityId
+                });
+            }
+            $rootScope.WaitingPrimaryData--;
+            $rootScope.$broadcast('primaryDataLoaded', {});
+        },
+        function (error) {
+            console.log('error: ' + error.message);
+            $rootScope.$broadcast('primaryDataFailed', {});
+        });
+    };
+    return {
+        init: function () {
+            $rootScope.WaitingPrimaryData = 2;
+            loadCities();
+            loadPlaces();
+        },
+        getCities: function () {
+            return _Cities;
+        },
+        getPlaces: function () {
+            return _Places;
         }
     };
 })
@@ -346,14 +388,21 @@ angular.module('app.services', [])
 .service('ApiServices', ['$http', '$rootScope', function ($http, $rootScope) {
     return {
         GetAll: function (LUN) {
+            var uuid = device.uuid;
             if (LUN == 0) {
                 method = 'post';
-                url = 'http://iranaudioguide.com/api/AppManager/GetAll';
+                url = 'http://iranaudioguide.com/api/AppManager/GetAll?uuid=' + uuid;
                 $http({ method: method, url: url }).
                   then(function (response) {
-                      console.log("getAll:");
-                      console.log(response);
-                      $rootScope.$broadcast('PopulateTables', { Data: response.data });
+                      if (response.data.ErrorMessage.length > 0) {
+                          console.error("GetAll 0-->", response.data.ErrorMessage);
+                          alert("We cant connect to server. Please try again later.");
+                      }
+                      else {
+                          console.log("getAll:");
+                          console.log(response);
+                          $rootScope.$broadcast('PopulateTables', { Data: response.data });
+                      }
                   }, function (response) {
                       $rootScope.$broadcast('ServerConnFailed', { error: response.data });
                   });
@@ -361,13 +410,17 @@ angular.module('app.services', [])
             else {
                 method = 'post';
                 data = { LastUpdateNumber: LUN };
-                url = 'http://iranaudioguide.com/api/AppManager/GetUpdates?LastUpdateNumber=' + LUN;
+                url = 'http://iranaudioguide.com/api/AppManager/GetUpdates?LastUpdateNumber=' + LUN + '&uuid=' + uuid;
                 $http({ method: method, url: url, data: data }).
                   then(function (response) {
-                      console.log("GetUpdates:");
-                      console.log(response);
-                      //var Tables = angular.copy(response.data);
-                      $rootScope.$broadcast('UpdateTables', { Data: response.data });
+                      if (response.data.ErrorMessage.length > 0) {
+                          console.error("GetAll " + LUN + "-->", response.data.ErrorMessage);
+                      }
+                      else {
+                          console.log("GetUpdates:");
+                          console.log(response);
+                          $rootScope.$broadcast('UpdateTables', { Data: response.data });
+                      }
                   }, function (response) {
                       $rootScope.$broadcast('ServerConnFailed', { error: response.data });
                   });
@@ -383,16 +436,19 @@ angular.module('app.services', [])
             var isIOS = ionic.Platform.isIOS();
             var isAndroid = ionic.Platform.isAndroid();
             if (isAndroid) {
-                db = window.sqlitePlugin.openDatabase({ name: 'IAG.db', location: 'default' });
+                db = window.sqlitePlugin.openDatabase({ name: 'IAG.db', location: 'default' }, successcb, errorcb);
             }
-            if (isIOS) {
+            else if (isIOS) {
                 db = window.sqlitePlugin.openDatabase({ name: 'IAG.db', iosDatabaseLocation: 'Library' }, successcb, errorcb);
             }
+            else {
+                alert("we cant detect your platform.");
+            }
             var successcb = function () {
-                alert("db open: success");
+                console.log("db open: success");
             };
             var errorcb = function (err) {
-                alert("db open: error--> " + err);
+                console.error("db open: error--> " + err);
             };
         },
         initiate: function () {
@@ -462,6 +518,8 @@ angular.module('app.services', [])
             (\
             Cit_Id integer PRIMARY KEY,\
             Cit_Name text,\
+            Cit_Desc text,\
+            Cit_ImageUrl text,\
             Cit_Dirty integer\
             )"
             , "\
@@ -822,13 +880,17 @@ angular.module('app.services', [])
             var query = "INSERT OR REPLACE INTO Cities\
                     (Cit_Id\
                     ,Cit_Name\
+                    ,Cit_Desc\
+                    ,Cit_ImageUrl\
                     ,Cit_Dirty)\
-                    VALUES (?,?,?)";
+                    VALUES (?,?,?,?,?)";
             db.transaction(function (tx) {
                 for (var i = 0; i < Cities.length; i++) {
                     tx.executeSql(query,
                         [Cities[i].Id
                         , Cities[i].Name
+                        , Cities[i].Desc
+                        , Cities[i].ImageUrl
                         , 1],
                         function (tx, res) {
                             //console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
@@ -945,26 +1007,32 @@ angular.module('app.services', [])
             //});
         },
         deleteFromTable: function (tableName, tableIdColumn, IDs) {
-            for (var i = 0; i < IDs.length - 1; i++) {
-                var query = "\
+            if (IDs.length > 0) {
+                paramlist = '?';
+                for (var i = 0; i < IDs.length - 1; i++) {
+                    paramlist = paramlist + ', ?';
+                }
+                db.transaction(function (tx) {
+                    for (var i = 0; i < IDs.length; i++) {
+                        var query = "\
                 DELETE FROM " + tableName + "\
-                WHERE " + tableIdColumn + " = ?";
-                db.executeSql(query,
-                        IDs[i],
-                function (res) {
-                    console.log("removed from: " + tableName);
-                },
-                function (error) {
-                    console.log("removing from: " + tableName + " failed");
-                });
+                WHERE " + tableIdColumn + " IN (" + paramlist + ")";
+                        tx.executeSql(query,
+                                IDs,
+                        function (tx, res) {
+                            console.log("removed from: " + tableName, "rowsAffected: " + res.rowsAffected);
+                        },
+                        function (tx, error) {
+                            console.log("removing from: " + tableName + " failed");
+                        });
+                    }
 
-                //$cordovaSQLite.execute(db, query, IDs[i])
-                //        .then(function (result) {
-                //            console.log("deleted IDs --> " + result);
-                //        }, function (error) {
-                //            console.log("IDs --> ", IDs[i]);
-                //            console.error(error);
-                //        });
+
+                }, function (error) {
+                    console.log('transaction error: ' + error.message);
+                }, function () {
+                    console.log('transaction ok');
+                });
             }
 
         },
@@ -1176,7 +1244,9 @@ angular.module('app.services', [])
             var query = "\
                 SELECT\
                     Cit_Id,\
-                    Cit_Name\
+                    Cit_Name,\
+                    Cit_Desc,\
+                    Cit_ImageUrl\
                 FROM Cities";
             db.executeSql(query, [],
             function (res) {
@@ -1436,13 +1506,61 @@ angular.module('app.services', [])
             }, function () {
                 console.log("Done.");
             });
+        },
+        test: function () {
+            var placeId = "810b44cb-b8d8-e611-80c5-d4ae52c647ec";
+            db.transaction(function (tx) {
+                var query = "select * from Places where Pla_Id = ?";
+
+                tx.executeSql(query, [placeId], function (tx, resultSet) {
+                    console.log("test1 completed.");
+
+                    for (var i = 0; i < resultSet.rows.length; i++) {
+                        console.log("test primary " + i + ": ", resultSet.rows.item(i).Pla_Id);
+                    }
+
+                    var queryRm = "DELETE FROM Places WHERE Pla_Id = ?";
+
+                    tx.executeSql(queryRm, [placeId], function (tx, res) {
+                        console.log("removeId: " + res.insertId);
+                        console.log("rowsAffected: " + res.rowsAffected);
+
+                        tx.executeSql(query, [placeId], function (tx, resultSet) {
+                            console.log("test2 completed.");
+                            for (var i = 0; i < resultSet.rows.length; i++) {
+                                console.log("test2 primary " + i + ": ", resultSet.rows.item(i).Pla_Id);
+                            }
+
+                        },
+                        function (tx, error) {
+                            console.log('SELECT error: ' + error.message);
+                        });
+
+
+                    },
+                    function (tx, error) {
+                        console.log('DELETE error: ' + error.message);
+                    });
+
+                },
+                function (tx, error) {
+                    console.log('SELECT error: ' + error.message);
+                });
+
+
+
+            }, function (error) {
+                console.log('transaction error: ' + error.message);
+            }, function () {
+                console.log('transaction ok');
+            });
         }
     }
 }])
 .service('FileServices', ['$rootScope', '$cordovaFile', '$cordovaFileTransfer', function ($rootScope, $cordovaFile, $cordovaFileTransfer) {
     return {
         createDirs: function () {
-            Dirs = ["TumbNameil_dir", "PlacePic_dir", "PlaceAudio_dir", "PlaceStory_dir", "Extras_dir", "ProfilePic_dir"];
+            Dirs = ["TumbNameil_dir", "PlacePic_dir", "PlaceAudio_dir", "PlaceStory_dir", "Extras_dir", "ProfilePic_dir", "Cities_dir"];
             for (var i = 0; i < Dirs.length; i++) {
                 $cordovaFile.createDir(cordova.file.dataDirectory, Dirs[i], false)
                   .then(function (success) {

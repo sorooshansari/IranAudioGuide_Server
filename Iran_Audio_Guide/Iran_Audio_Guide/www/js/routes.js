@@ -69,6 +69,9 @@ angular.module('app.routes', [])
 
     .state('tabsController.search', {
         url: '/page4',
+        params: {
+            id: '0'
+        },
         views: {
             'tab3': {
                 templateUrl: 'templates/search.html',
