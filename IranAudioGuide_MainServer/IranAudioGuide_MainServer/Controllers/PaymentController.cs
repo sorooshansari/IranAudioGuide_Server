@@ -119,7 +119,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         packageId = packageId,
                         ErrorMessage = "Error in finding package"
                     });
-                string redirectPage = "http://localhost:8462/Payment/Return";
+                string redirectPage = "http://iranaudioguide.com/Payment/Return";
                 var payment = new Payment()
                 {
                     Amount = package.Pac_Price,
