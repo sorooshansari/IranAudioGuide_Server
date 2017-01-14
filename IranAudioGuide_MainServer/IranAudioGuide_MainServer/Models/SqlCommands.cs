@@ -63,13 +63,17 @@ RETURNS
 @Cities TABLE 
 (
 	Id INT,
-	Name NVARCHAR(MAX)
+	Name NVARCHAR(MAX),
+	Descript NVARCHAR(MAX),
+	ImageUrl NVARCHAR(MAX)
 )
 AS
 BEGIN
 	INSERT @Cities
 	SELECT [Cit_Id]
 		  ,[Cit_Name]
+		  ,[Cit_Description]
+		  ,[Cit_ImageUrl]
 	  FROM [dbo].[cities]
 	RETURN 
 END", @"

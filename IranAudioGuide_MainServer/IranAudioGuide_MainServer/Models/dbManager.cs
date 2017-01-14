@@ -33,9 +33,15 @@ namespace IranAudioGuide_MainServer.Models
             using (var con = new SqlConnection(connstring))
             {
                 string paramList = "";
-                foreach (var p in parameters)
-                    paramList += string.Format(" {0}", p.ParameterName);
-                var command = string.Format("exec {0}{1}", SP, paramList);
+                if (parameters.Length > 0)
+                {
+                    paramList = parameters[0].ParameterName;
+                }
+                for (int i = 1; i < parameters.Length; i++)
+                {
+                    paramList += string.Format(", {0}", parameters[i].ParameterName);
+                }
+                var command = string.Format("exec {0} {1}", SP, paramList);
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand(command, con))
                 {

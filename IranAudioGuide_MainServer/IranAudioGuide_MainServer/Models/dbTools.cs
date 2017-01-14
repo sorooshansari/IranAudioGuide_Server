@@ -20,37 +20,37 @@ namespace IranAudioGuide_MainServer.Models
                 _dbManager = value;
             }
         }
-        public SkippedUserVM skipUser(string uuid)
-        {
-            var res = new SkippedUserVM();
-            try
-            {
-                using (var db = new ApplicationDbContext())
-                {
-                    var existingTempUsers = db.TempUsers.Where(x => x.TeU_UUId == uuid).Count();
-                    if (existingTempUsers > 0)
-                        res.status = skippedUserStatus.uuidExist;
-                    else
-                    {
-                        var existingPrimaryUsers = db.Users.Where(x => x.uuid == uuid).Count();
-                        if (existingPrimaryUsers > 0)
-                            res.status = skippedUserStatus.uuidExistInPraimaryUsers;
-                        else
-                        {
-                            db.TempUsers.Add(new TempUsers() { TeU_UUId = uuid });
-                            db.SaveChanges();
-                            res.status = skippedUserStatus.uuidAdded;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                res.status = skippedUserStatus.unknownError;
-                res.errorMessage = ex.Message;
-            }
-            return res;
-        }
+        //public SkippedUserVM skipUser(string uuid)
+        //{
+        //    var res = new SkippedUserVM();
+        //    try
+        //    {
+        //        using (var db = new ApplicationDbContext())
+        //        {
+        //            var existingTempUsers = db.TempUsers.Where(x => x.TeU_UUId == uuid).Count();
+        //            if (existingTempUsers > 0)
+        //                res.status = skippedUserStatus.uuidExist;
+        //            else
+        //            {
+        //                var existingPrimaryUsers = db.Users.Where(x => x.uuid == uuid).Count();
+        //                if (existingPrimaryUsers > 0)
+        //                    res.status = skippedUserStatus.uuidExistInPraimaryUsers;
+        //                else
+        //                {
+        //                    db.TempUsers.Add(new TempUsers() { TeU_UUId = uuid });
+        //                    db.SaveChanges();
+        //                    res.status = skippedUserStatus.uuidAdded;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        res.status = skippedUserStatus.unknownError;
+        //        res.errorMessage = ex.Message;
+        //    }
+        //    return res;
+        //}
         public GetPackagesVM GetPackagesByCity(int cityId)
         {
             //var SP = new SqlParameter("@cityId", cityId);
@@ -100,10 +100,13 @@ namespace IranAudioGuide_MainServer.Models
             return res;
         }
 
-        public GetUpdateVM GetUpdate(int LastUpdateNumber)
+        public GetUpdateVM GetUpdate(int LastUpdateNumber, string uuid)
         {
-            var SP = new SqlParameter("@UpdateNumber", LastUpdateNumber);
-            var dt = dbManager.MultiTableResultSP("GetUpdates", SP);
+            var SP1 = new SqlParameter("@UpdateNumber", LastUpdateNumber);
+            SP1.SqlDbType = SqlDbType.Int;
+            var SP2 = new SqlParameter("@uuid", uuid);
+            SP1.SqlDbType = SqlDbType.NVarChar;
+            var dt = dbManager.MultiTableResultSP("GetUpdates", SP1, SP2);
             var res = new GetUpdateVM()
             {
                 UpdateNumber = GetNumFromdataTable(dt[0], "LastUpdate"),
@@ -125,9 +128,11 @@ namespace IranAudioGuide_MainServer.Models
             };
             return res;
         }
-        public GetAllVM GetAllEntries()
+        public GetAllVM GetAllEntries(string uuid)
         {
-            var dt = dbManager.MultiTableResultSP("GetAll");
+            var SP = new SqlParameter("@uuid", uuid);
+            SP.SqlDbType = SqlDbType.NVarChar;
+            var dt = dbManager.MultiTableResultSP("GetAll", SP);
             var res = new GetAllVM()
             {
                 UpdateNumber = GetNumFromdataTable(dt[0], "LastUpdate"),
@@ -209,7 +214,9 @@ namespace IranAudioGuide_MainServer.Models
                 res.Add(new CitiesFullInfno()
                 {
                     Id = (int)dr["Id"],
-                    Name = (dr["Name"] == DBNull.Value) ? string.Empty : dr["Name"].ToString()
+                    Name = (dr["Name"] == DBNull.Value) ? string.Empty : dr["Name"].ToString(),
+                    Desc = (dr["Descript"] == DBNull.Value) ? string.Empty : dr["Descript"].ToString(),
+                    ImageUrl = (dr["ImageUrl"] == DBNull.Value) ? string.Empty : dr["ImageUrl"].ToString()
                 });
             return res;
         }

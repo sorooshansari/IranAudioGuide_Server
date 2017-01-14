@@ -42,7 +42,14 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class GetUpdateVM
     {
-
+        public GetUpdateVM()
+        {
+            ErrorMessage = string.Empty;
+        }
+        public GetUpdateVM(string error)
+        {
+            ErrorMessage = error;
+        }
         public int UpdateNumber { get; set; }
         public List<PlaceFullInfo> Places { get; set; }
         public List<AudioFullInfo> Audios { get; set; }
@@ -51,9 +58,18 @@ namespace IranAudioGuide_MainServer.Models
         public List<TipsFullInfo> Tips { get; set; }
         public List<CitiesFullInfno> Cities { get; set; }
         public RemovedEntries RemovedEntries { get; set; }
+        public string ErrorMessage { get; set; }
     }
     public class GetAllVM
     {
+        public GetAllVM()
+        {
+            ErrorMessage = string.Empty;
+        }
+        public GetAllVM(string error)
+        {
+            ErrorMessage = error;
+        }
         public int UpdateNumber { get; set; }
         public List<PlaceFullInfo> Places { get; set; }
         public List<AudioFullInfo> Audios { get; set; }
@@ -62,6 +78,7 @@ namespace IranAudioGuide_MainServer.Models
         public List<TipsFullInfo> Tips { get; set; }
         public List<CitiesFullInfno> Cities { get; set; }
         public List<TipCategoriesFullInfo> TipCategories { get; set; }
+        public string ErrorMessage { get; set; }
     }
     public class TipCategoriesFullInfo
     {
@@ -89,6 +106,8 @@ namespace IranAudioGuide_MainServer.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public string Desc { get; set; }
     }
     public class AudioFullInfo
     {

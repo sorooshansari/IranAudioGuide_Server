@@ -25,10 +25,10 @@ namespace IranAudioGuide_MainServer.Controllers
                 _acTools = value;
             }
         }
-        public SkippedUserVM skippedUser(string uuid)
-        {
-            return dbTools.skipUser(uuid);
-        }
+        //public SkippedUserVM skippedUser(string uuid)
+        //{
+        //    return dbTools.skipUser(uuid);
+        //}
         [HttpPost]
         public async Task<AutorizedCitiesVM> GetAutorizedCities(string username, string uuid)
         {
@@ -42,7 +42,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     (!user.EmailConfirmed) ? getUserStatus.notConfirmed :
                     getUserStatus.confirmed;
 
-               
+
                 if (res.status == getUserStatus.confirmed)
                     res.cities = dbTools.GetAutorizedCities(user.Id);
             }
@@ -61,15 +61,33 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         [HttpPost]
         // POST: api/AppManager/GetUpdates/5
-        public GetUpdateVM GetUpdates(int LastUpdateNumber)
+        public GetUpdateVM GetUpdates(int LastUpdateNumber, string uuid)
         {
-            return dbTools.GetUpdate(LastUpdateNumber);
+            GetUpdateVM res;
+            try
+            {
+                res = dbTools.GetUpdate(LastUpdateNumber, uuid);
+            }
+            catch (Exception ex)
+            {
+                res = new GetUpdateVM(ex.Message);
+            }
+            return res;
         }
         // POST: api/AppManager/GetAll
         [HttpPost]
-        public GetAllVM GetAll()
+        public GetAllVM GetAll(string uuid)
         {
-            return dbTools.GetAllEntries();
+            GetAllVM res;
+            try
+            {
+                res = dbTools.GetAllEntries(uuid);
+            }
+            catch (Exception ex)
+            {
+                res = new GetAllVM(ex.Message);
+            }
+            return res;
         }
         [HttpPost]
         public async Task<CreateingUserResult> AutenticateGoogleUser(GoogleUserInfo user)

@@ -51,17 +51,17 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
-        public ActionResult Error()
-        {
-            return View("Error");
-        }
-        public ActionResult CheckOut()
-        {
-            return View("CheckOut");
-        }
-        public ActionResult PaymentRef()
-        {
-            return View("PaymentRef");
-        }
+        //public ActionResult Error()
+        //{
+        //    return View("Error");
+        //}
+        //public ActionResult CheckOut()
+        //{
+        //    return View("CheckOut");
+        //}
+        //public ActionResult PaymentRef()
+        //{
+        //    return View("PaymentRef");
+        //}
     }
 }
