@@ -75,7 +75,7 @@ namespace IranAudioGuide_MainServer.Models
             {
                 if (appUser.uuid != uuid)
                     return CreateingUserResult.uuidMissMatch;
-                if (appUser.GoogleId.Length > 0)
+                if (appUser.GoogleId != null && appUser.GoogleId.Length > 0)
                     return CreateingUserResult.googleUser;
                 return CreateingUserResult.userExists;
             }
