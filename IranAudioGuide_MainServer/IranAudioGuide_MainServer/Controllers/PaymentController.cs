@@ -119,7 +119,8 @@ namespace IranAudioGuide_MainServer.Controllers
                         packageId = packageId,
                         ErrorMessage = "Error in finding package"
                     });
-                string redirectPage = "http://iranaudioguide.com/Payment/Return";
+                string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+                string redirectPage = baseUrl+"/Payment/Return";
                 var payment = new Payment()
                 {
                     Amount = package.Pac_Price,
@@ -134,38 +135,39 @@ namespace IranAudioGuide_MainServer.Controllers
                 db.SaveChanges();
 
                 Guid paymentId = payment.PaymentId;
-                string error = ZarinpalPayment(package.Pac_Price, redirectPage, paymentId);
+                string error = ZarinpalPayment(package.Pac_Price, redirectPage, paymentId, package.Pac_Name);
                 if (error.Length > 0)
-                    return RedirectToAction("Index", new WebPaymentReqVM()
-                    {
-                        packageId = packageId,
-                        ErrorMessage = error
-                    });
+                {
+                    ViewBag.Message = error;
+                    ViewBag.SaleReferenceId = "**************";
+                    ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
+                    return View("Return");
+                }
                 else
                     return RedirectToAction("Index", new WebPaymentReqVM() { packageId = packageId });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", new WebPaymentReqVM()
-                {
-                    packageId = packageId,
-                    ErrorMessage = ex.Message
-                });
+                ViewBag.Message = ex.Message;
+                ViewBag.SaleReferenceId = "**************";
+                ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
+                return View("Return");
             }
         }
         public ActionResult Return(string paymentId)
         {
             try
             {
-                ViewBag.BankName = "درگاه واسط زرین پال";
+                ViewBag.BankName = "ZarinPal Payment Gateway";
                 ZarinpalReturn();
             }
             catch
             {
-                ViewBag.BankName = "درگاه پرداخت نامشخص است";
-                ViewBag.Message = "پاسخی از درگاه پرداخت دریافت نشده";
+                ViewBag.BankName = "Your payment gateway is not specified";
+                ViewBag.Message = "No response from payment gateway";
+                ViewBag.ErrDesc = "There is no response from your payment gateway!";
                 ViewBag.SaleReferenceId = "**************";
-                ViewBag.Image = "~/images/notaccept.png";
+                ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
             }
             return View();
         }
@@ -199,7 +201,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
-        private string ZarinpalPayment(long price, string redirectPage, Guid paymentId)
+        private string ZarinpalPayment(long price, string redirectPage, Guid paymentId, string packageName)
         {
             try
             {
@@ -211,17 +213,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
                 string merchantCode = "2beca824-a5a6-11e6-8157-005056a205be";
 
-                // نکته:» مبلغ به صورت تومان به درگاه زرین پال ارسال می شود
-
-                // 1- کد پذیرنده
-                // 2- مبلغ به تومان
-                // 3- توضیح
-                // 4- ایمیل
-                // 5- موبایل
-                // 6- آدرس برگشت از درگاه
-
-                // ارسال اطلاعات به درگاه
-                int status = zp.PaymentRequest(merchantCode, (int)price, "Iran Audio Guide", "monaakhlaghi@gmail.com", "", redirectPage + "?PaymentId=" + paymentId.ToString(), out authority);
+                int status = zp.PaymentRequest(merchantCode, (int)price, packageName, "monaakhlaghi@gmail.com", "", redirectPage + "?PaymentId=" + paymentId.ToString(), out authority);
 
                 // بررسی وضعیت
                 if (status == 100)
@@ -244,7 +236,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-                return "در حال حاظر امکان اتصال به این درگاه وجود ندارد " + ex.Message;
+                return "At the moment there is no possibility of connecting to this port.<br/>Error Message:" + ex.Message;
             }
         }
 
@@ -273,10 +265,10 @@ namespace IranAudioGuide_MainServer.Controllers
                         {
                             UpdatePayment(paymentId, status.ToString(), refId, Request.QueryString["Authority"].ToString(), true);
 
-                            ViewBag.Message = "پرداخت با موفقیت انجام شد.";
+                            ViewBag.Message = "Payment completed successfully.";
                             ViewBag.SaleReferenceId = refId;
-                            ViewBag.Image = "../images/accept.png";
-
+                            ViewBag.Image = "<i class=\"fa fa-check\" style=\"color: lightgreen; font-size:35px; vertical-align:sub; \"></i>";
+                            ViewBag.ErrDesc = "You have access to the package below. Thank you for your purchase! <br />";
                         }
                         else
                         {
@@ -284,7 +276,8 @@ namespace IranAudioGuide_MainServer.Controllers
 
                             ViewBag.Message = PaymentResult.ZarinPal(Convert.ToString(status));
                             ViewBag.SaleReferenceId = "**************";
-                            ViewBag.Image = "../images/notaccept.png";
+                            ViewBag.Image = "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
+                            ViewBag.ErrDesc = "Your payment process does not completed on it's way.";
                         }
 
                     }
@@ -292,23 +285,26 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         UpdatePayment(paymentId, Request.QueryString["Status"].ToString(), 0, Request.QueryString["Authority"].ToString(), false);
 
-                        ViewBag.Message = "پرداخت ناموفق بود";
+                        ViewBag.Message = "Sorry, Your payment was unsuccessful!";
                         ViewBag.SaleReferenceId = "**************";
-                        ViewBag.Image = "../images/notaccept.png";
+                        ViewBag.Image ="<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
+                        ViewBag.ErrDesc = "Your payment process does not completed on it's way.";
                     }
                 }
                 else
                 {
+                    ViewBag.Message = "No response from bank gateway.";
                     ViewBag.SaleReferenceId = "**************";
-                    ViewBag.Image = "../images/notaccept.png";
-                    ViewBag.Message = "پاسخی از درگاه بانکی دریافت نشد";
+                    ViewBag.Image = "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
+                    ViewBag.ErrDesc = "Sorry, please try again in a few minutes.";
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.SaleReferenceId = "**************";
-                ViewBag.Image = "../images/notaccept.png";
-                ViewBag.Message = "مشکلی در پرداخت به وجود آمده است ، در صورتیکه وجه پرداختی از حساب بانکی شما کسر شده است آن مبلغ به صورت خودکار برگشت داده خواهد شد";
+                ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
+                ViewBag.Message = "Problem occurred in payment process. ";
+                ViewBag.ErrDesc = "If the payment is deducted from your bank account, The amount will be automatically returned.";
             }
         }
         private long FindAmountPayment(Guid paymentId)

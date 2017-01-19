@@ -1,21 +1,184 @@
 ﻿
+@model IranAudioGuide_MainServer.Models.PackageVM
 @{
-    Layout = null;
+    ViewBag.Title = "PaymentRef";
 }
+@*
+    <script type="text/javascript">
+        var time_left = 10;
+        var cinterval;
 
-<!DOCTYPE html>
+        function time_dec() {
+            time_left--;
+            document.getElementById('countdown').innerHTML = time_left;
+            if (time_left == 0) {
+                var originalstring = document.getElementById('countdown2').innerHTML;
+                var newstring = originalstring.replace('seconds', 'second');
+                document.getElementById('countdown2').innerHTML = newstring;
+                var url = document.getElementById("url").getAttribute("value");
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Return</title>
-</head>
-<body>
-    <div> 
-        @ViewBag.BankName <br />
-        @ViewBag.Message <br />
-        @ViewBag.SaleReferenceId <br />
-        <img src="@ViewBag.Image" />
+                window.location.replace(url);
+                clearInterval(cinterval);
+            }
+        }
+
+        cinterval = setInterval('time_dec()', 1000);
+    </script>*@
+
+<style type="text/css">
+    #page-wrapper {
+        height: 100vh;
+        background: none !important;
+    }
+
+    .spotlightv {
+        margin-top: 25vh;
+    }
+
+    #header.alt h1 {
+        /*-ms-pointer-events: none;*/
+        /* pointer-events: none; */
+        opacity: 1 !important;
+    }
+
+    #header.alt {
+        background: #144482 !important;
+        border-bottom: thin solid white;
+    }
+
+    body {
+        background: #144482;
+    }
+
+    #MainSection {
+        /* position: absolute; */
+        margin-top: 100px;
+        height: 400px;
+        width: 100%;
+    }
+
+    .Main-content {
+        float: right;
+    }
+
+    .Main-text {
+        padding: 3em;
+        padding-top: 175px;
+    }
+
+    #infocontainer {
+        background-color: #f1f1f1;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        box-shadow: 0px 0px 10px black;
+        min-height: 85vh;
+        margin-top: 45px;
+        margin-bottom: 30px;
+    }
+
+    .chkout-img {
+        text-align: center;
+    }
+
+        .chkout-img img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+    .chkout-text {
+        padding: 1em 0em 2em 0em;
+        margin: 0 auto;
+    }
+
+        .chkout-text h1, .chkout-text p {
+            color: #144482 !important;
+            text-shadow: 1px 1px 2px #808080 !important;
+            line-height: 25px;
+        }
+
+    ._1sttd {
+        font-size: 14px;
+        width: 50%;
+        border-right: 1px solid #144482 !important;
+        vertical-align: middle;
+        font-weight: 600;
+    }
+
+        ._1sttd i {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            font-size: large;
+        }
+
+        ._1sttd .col-xs-12 {
+            padding-left: 25px;
+        }
+
+    ._2ndtd {
+        width: 50%;
+    }
+
+    .table-mybordered > thead > tr > th, .table-mybordered > tbody > tr > th, .table-mybordered > tfoot > tr > th, .table-mybordered > thead > tr > td, .table-mybordered > tbody > tr > td, .table-mybordered > tfoot > tr > td {
+        border: 1px solid #b6b6b6;
+        /*border-left: none !important;
+        border-right: none !important;*/
+    }
+
+    table tbody tr {
+        background: none !important;
+    }
+
+    .desc {
+        font-weight: 600;
+        font-size: x-small;
+        padding: 0 10px !important;
+    }
+
+    .purchasebtn {
+        width: 120px;
+        background-color: #144482;
+        color: white;
+        font-size: small;
+    }
+</style>
+
+<section id="PaymentRefSection" onload="time_dec()">
+    <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
+        <div class="col-xs-12 checkout-content chkout-img">
+            <img src="~/images/IAGSITELOGO.png" />
+            <h1>@Html.Raw(ViewBag.Image) @ViewBag.Message</h1>
+        </div>
+
+        <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
+
+            <div class="col-xs-12" style="text-align:center;">
+                <p>
+                    @Html.Raw(ViewBag.ErrDesc)
+                </p>
+            </div>
+
+
+
+
+            <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
+                <table class="table-mybordered tbldotted table-condensed" style="width: 100%; border-radius: 10px 10px 0px 0px; margin: 0px 0px 10px; color: rgb(20, 68, 130); text-shadow: none; text-align: center; background-color: transparent;">
+                    <tbody>
+                        <tr>
+                            <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-briefcase"></i>Package Name</div></td>
+                            <td class="_2ndtd desc" style="background-color: transparent;">#PackageName</td>
+                        </tr>
+                        <tr>
+                            <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-key"></i>Reference ID</div></td>
+                            <td class="_2ndtd desc" style="background-color:transparent;">@ViewBag.SaleReferenceId</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-xs-12" style="text-align:right;">
+                    <a class="btn btn-sm btn-default purchasebtn" style="width:100px; font-size:small;">Continue</a>
+                    </div>
+                </div>
+        </div>
     </div>
-</body>
-</html>
+</section>
+
