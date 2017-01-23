@@ -3,6 +3,7 @@ angular.module('AdminPage.controllers', [])
 .controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices', 'TipServices', 'StoryServices', 'PackageServices',
     function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices, TipServices, StoryServices, PackageServices) {
         //global
+        var placePaging = 10;
         var paging = 5;
         var validImgFormats = ['jpg', 'gif'];
         var validAudioFormats = ['mp3'];
@@ -26,6 +27,9 @@ angular.module('AdminPage.controllers', [])
         };
         $scope.SetImageName = function (o) {
             NewPlaceForm.imgUrl.value = o.files[0].name;
+        }
+        $scope.SetCityImageName = function (o) {
+            NewCityForm.cityImgUrl.value = o.files[0].name;
         }
 
         //Online Player stuff
@@ -403,16 +407,16 @@ angular.module('AdminPage.controllers', [])
             PlaceServices.SwichPrimaryStatus(placeId);
         }
         $scope.$on('LoadPlaces', function (event) {
-            $scope.places = angular.copy($rootScope.allPlaces.slice(0, paging));
-            $scope.PlacePagesLen = Math.floor($rootScope.allPlaces.length / paging);
-            if (($rootScope.allPlaces.length / paging > $scope.PlacePagesLen))
+            $scope.places = angular.copy($rootScope.allPlaces.slice(0, placePaging));
+            $scope.PlacePagesLen = Math.floor($rootScope.allPlaces.length / placePaging);
+            if (($rootScope.allPlaces.length / placePaging > $scope.PlacePagesLen))
                 $scope.PlacePagesLen++;
         });
         $scope.NextPlace = function () {
             //if ($rootScope.PlacePagesLen - $rootScope.PlaceCurrentPage > 1)
             //    $scope.places = PlaceServices.Get($rootScope.PlaceCurrentPage + 1);
             if ($scope.PlacePagesLen - $scope.PlaceCurrentPage > 1) {
-                $scope.places = angular.copy($rootScope.allPlaces.slice(($scope.PlaceCurrentPage + 1) * paging, ($scope.PlaceCurrentPage + 2) * paging));
+                $scope.places = angular.copy($rootScope.allPlaces.slice(($scope.PlaceCurrentPage + 1) * placePaging, ($scope.PlaceCurrentPage + 2) * placePaging));
                 $scope.PlaceCurrentPage++;
             }
         };
@@ -420,7 +424,7 @@ angular.module('AdminPage.controllers', [])
             //if ($rootScope.PlaceCurrentPage > 0)
             //    $scope.places = PlaceServices.Get($rootScope.PlaceCurrentPage - 1);
             if ($scope.PlaceCurrentPage > 0) {
-                $scope.places = angular.copy($rootScope.allPlaces.slice(($scope.PlaceCurrentPage - 1) * paging, $scope.PlaceCurrentPage * paging));
+                $scope.places = angular.copy($rootScope.allPlaces.slice(($scope.PlaceCurrentPage - 1) * placePaging, $scope.PlaceCurrentPage * placePaging));
                 $scope.PlaceCurrentPage--;
             }
         };
@@ -616,6 +620,33 @@ angular.module('AdminPage.controllers', [])
                 CityServices.AddCity(NewCity);
             }
         };
+        $scope.EditCity = function (cityVM, form) {
+            $rootScope.EditOverlay = true;
+            if (form.$valid) {
+                CityServices.Edit(cityVM);
+            }
+        };
+        $scope.ShowEditCityModal = function (City) {
+            $scope.selectedCityImg = City.CityImageUrl + "?" + new Date().getMilliseconds();
+            $scope.EditCityVM = angular.copy(City);
+            $('#EditCityModal').modal('show');
+        };
+        $scope.ChangeCityImg = function (NewImage, id) {
+            $rootScope.EditOverlay = true;
+            CityServices.ChangeImage(NewImage.files[0], id)
+        };
+
+        $scope.$on('EditCityValidationSummery', function (event, data) {
+            console.log(data.data);
+            //to be fill
+        });
+
+        $scope.$on('EditCityUnknownError', function (event) {
+            //$scope.ForignKeyErrorBody = 'Unknown error prevent removing place. Contact site developer to get more information.'
+            //$scope.DelSubsBtn = "hidden";
+            //$('#ForignKeyErrorModal').modal('show');
+
+        });
         $scope.$on('cityAdded', function (event) {
             $scope.NewCity = {
                 CityName: '',

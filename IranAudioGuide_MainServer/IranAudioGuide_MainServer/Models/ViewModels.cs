@@ -271,6 +271,9 @@ namespace IranAudioGuide_MainServer.Models
         public string CityName { get; set; }
         [Display(Name = "City description")]
         public string CityDesc { get; set; }
+        [Required]
+        [Display(Name = "City Image")]
+        public HttpPostedFileBase CityImage { get; set; }
     }
     public class CityVM
     {
@@ -279,6 +282,20 @@ namespace IranAudioGuide_MainServer.Models
         public int CityID { get; set; }
         [Display(Name = "Name")]
         public string CityName { get; set; }
+        [Display(Name = "Description")]
+        public string CityDesc { get; set; }
+        [Display(Name = "City Image")]
+        public string CityImageUrl { get; set; }
+    }
+    public class EditCityVM
+    {
+        [Required]
+        [Display(Name = "Id")]
+        public int CityID { get; set; }
+        [Required]
+        [Display(Name = "Name")]
+        public string CityName { get; set; }
+        [Required]
         [Display(Name = "Description")]
         public string CityDesc { get; set; }
     }
@@ -367,6 +384,11 @@ namespace IranAudioGuide_MainServer.Models
     public class ChangeImageVM
     {
         public Guid PlaceId { get; set; }
+        public HttpPostedFileBase NewImage { get; set; }
+    }
+    public class ChangeCityImageVM
+    {
+        public int CityId { get; set; }
         public HttpPostedFileBase NewImage { get; set; }
     }
     public class StoryViewVM

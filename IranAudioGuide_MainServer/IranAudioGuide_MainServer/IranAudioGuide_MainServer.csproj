@@ -1280,8 +1280,6 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\apiTest\Index.cshtml" />
-    <Content Include="Views\Shared\_UserLayout.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <None Include="Service References\Zarinpal\PaymentGatewayImplementationService.wsdl" />
@@ -1296,9 +1294,11 @@
     <Folder Include="App_Data\" />
     <Folder Include="Audios\" />
     <Folder Include="Download\" />
+    <Folder Include="images\Cities\" />
     <Folder Include="images\Places\Extras\" />
     <Folder Include="images\slidepics\" />
     <Folder Include="Stories\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

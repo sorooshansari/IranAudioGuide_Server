@@ -40,52 +40,27 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
-        private List<PackageVM> GetPackages()
+        public JsonResult GetPackages()
         {
             List<PackageVM> packages = new List<PackageVM>();
 
-            //packages =(from p in db.Packages
-            //                       orderby p.Pac_Id descending
-            //                       select new PackageVM()
-            //                       {
-            //                           PackageDesc = p.Pac_Description,
-            //                           PackageId = p.Pac_Id,
-            //                           PackageName = p.Pac_Name
-            //                       }).ToList();
-
-            return packages;
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public JsonResult AddPackage(NewPackage model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Json(new Respond("Check input fields", status.invalidInput));
-            }
-            //var package = new package()
-            //{
-            //    Pac_Name = model.PackageName, 
-            //    Pac_Price = model.PackagePrice
-            //};
-            //using (var dbTran = db.Database.BeginTransaction())
-            //{
-            //    try
-            //    {
-            //        db.Packages.Add(package);
-            //        db.UpdateLogs.Add(new UpdateLog() { Pac_ID = package.Pac_Id });
-            //        db.SaveChanges();
-            //        dbTran.Commit();
-            //        return Json(new Respond());
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        dbTran.Rollback();
-            //        return Json(new Respond(ex.Message, status.unknownError));
-            //    }
-            //}
-            return Json(new Respond("Not implemented yet!", status.unknownError));
+            packages = (from p in db.Packages
+                        orderby p.Pac_Id descending
+                        select new PackageVM()
+                        {
+                            PackagePrice = p.Pac_Price,
+                            PackageId = p.Pac_Id,
+                            PackageName = p.Pac_Name,
+                            PackageCities = (from c in db.Cities
+                                             select new CityVM()
+                                             {
+                                                 CityName = c.Cit_Name,
+                                                 CityDesc = c.Cit_Description,
+                                                 CityID = c.Cit_Id,
+                                                 CityImageUrl = c.Cit_ImageUrl
+                                             }).ToList()
+                        }).ToList();
+            return Json(packages);
         }
         protected override void Dispose(bool disposing)
         {
