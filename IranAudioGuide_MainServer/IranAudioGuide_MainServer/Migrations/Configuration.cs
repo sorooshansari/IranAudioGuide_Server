@@ -18,12 +18,8 @@ namespace IranAudioGuide_MainServer.Migrations
             dbManager.RoleCreator(context, "AppUser");
 
             //Add User
-            dbManager.AddUser("sorosh.ansari@gmail.com", "1234567890", "/images/Members/Soroosh.JPG", "Soroosh Ansari", "Admin", context);
-            dbManager.AddUser("hakhlaghi@gmail.com", "1234567890", "/images/Members/Hamed.JPG", "Hamed Akhlaghi", "Admin", context);
-            dbManager.AddUser("monaakhlaghi@gmail.com", "1234567890", "/images/Members/Mona.JPG", "Mona Akhlaghi", "Admin", context);
-            dbManager.AddUser("sinazandi1994@gmail.com", "1234567890", "/images/Members/Sina.JPG", "Sina Zandi", "Admin", context);
-
-            dbManager.AddUser("a_aminiasl@gmail.com", "1234567890", "/images/Members/Soroosh.JPG", "amir Amini", "AppUser", context);
+            dbManager.AddUser("testuser@iranaudioguide.com", "1234567890", "/images/Members/Soroosh.JPG", "Soroosh Ansari", "AppUser", context);
+            dbManager.AddUser("admin@iranaudioguide.com", "1234567890", "/images/Members/Mona.JPG", "Mona Akhlaghi", "Admin", context);
 
             //AddTipCategory
             dbManager.AddTipCategory("Transportation", "ion-android-walk", "&#xf3bb;", 1);
