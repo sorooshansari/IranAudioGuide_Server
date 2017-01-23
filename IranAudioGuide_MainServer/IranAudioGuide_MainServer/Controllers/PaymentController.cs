@@ -13,6 +13,7 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     public class PaymentController : Controller
     {
+        public static string packname;
         private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -64,6 +65,7 @@ namespace IranAudioGuide_MainServer.Controllers
                                                               CityName = c.Cit_Name
                                                           }).ToList()
                                      }).First();
+                packname = package.PackageName;
                 await t;
                 ViewBag.Error = info.ErrorMessage;
                 return View(package);
@@ -144,7 +146,10 @@ namespace IranAudioGuide_MainServer.Controllers
                     return View("Return");
                 }
                 else
+                {
+                    ViewBag.Packname = packname;
                     return RedirectToAction("Index", new WebPaymentReqVM() { packageId = packageId });
+                }
             }
             catch (Exception ex)
             {
@@ -156,6 +161,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         public ActionResult Return(string paymentId)
         {
+            ViewBag.Packname = packname;
             try
             {
                 ViewBag.BankName = "ZarinPal Payment Gateway";
@@ -277,7 +283,7 @@ namespace IranAudioGuide_MainServer.Controllers
                             ViewBag.Message = PaymentResult.ZarinPal(Convert.ToString(status));
                             ViewBag.SaleReferenceId = "**************";
                             ViewBag.Image = "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
-                            ViewBag.ErrDesc = "Your payment process does not completed on it's way.";
+                            ViewBag.ErrDesc = "Your payment process does not completed.";
                         }
 
                     }
@@ -288,7 +294,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         ViewBag.Message = "Sorry, Your payment was unsuccessful!";
                         ViewBag.SaleReferenceId = "**************";
                         ViewBag.Image ="<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
-                        ViewBag.ErrDesc = "Your payment process does not completed on it's way.";
+                        ViewBag.ErrDesc = "Your payment process does not completed.";
                     }
                 }
                 else

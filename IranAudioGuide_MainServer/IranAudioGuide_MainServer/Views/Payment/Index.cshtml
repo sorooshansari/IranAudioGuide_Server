@@ -1,6 +1,8 @@
 ﻿@model IranAudioGuide_MainServer.Models.PackageVM
 
-
+@{
+    Layout = "~/Views/Shared/_PaymentLayout.cshtml";
+}
 
 
 <style type="text/css">
@@ -136,12 +138,12 @@
 
             <table id="ChkTable" class="table-mybordered table-condensed" style="width: auto;  border-radius:10px; margin:0 auto; margin-bottom: 0px !important; border-top:none !important;  color: #144482; text-shadow:none; text-align:center;">
 
-                <tr style="background-color: whitesmoke !important; color: #144482;     font-weight: bold; border-radius:10px; border:none !important; margin-bottom:10px;">
-                    <td class="_2ndtd" style="border-radius:10px 10px 0 0; border:none !important; text-transform:capitalize; font-size:medium; box-shadow: inset 0px 1px 3px #444;"><i class="fa fa-briefcase"></i><br>&nbsp;takhtejamshid</td>
+                <tr style="background-color: whitesmoke !important; color: #144482;  font-weight: bold; border-radius:10px; border:none !important; margin-bottom:10px;">
+                    <td class="_2ndtd" style="border-radius:10px 10px 0 0; border:none !important; text-transform:capitalize; font-size:medium; box-shadow: inset 0px 1px 3px #444;"><i class="fa fa-briefcase"></i><br>&nbsp;@Model.PackageName</td>
                 </tr>
 
             </table>
-            <table class="table-mybordered tbldotted table-condensed" style="width: 100%; border-radius:10px 10px 0 0; margin:0px 0 10px 0;  color: #144482; text-shadow:none; text-align:center;     background-color: transparent;">
+            <table class="table-mybordered tbldotted table-condensed" style="width: 100%; border-radius:10px 10px 0 0; margin:0px 0 10px 0;  color: #144482; text-shadow:none; text-align:center; background-color: transparent;">
                 <tr>
                     <td class="_1sttd" style="background-color:#144482 !important;  font-size:medium; color:white !important;"><i class="fa fa-map"  style="position:relative; left:0;"></i><br />Places@*<br /><div class="col-xs-6" style="display:inline-flex;">Code: <input style="height:30px;" type="text" /></div>*@</td>
                     <td class="_2ndtd" style="background-color:#144482 !important;  font-size:medium; font-weight:600; color: white !important;"><i class="fa fa-file-text"></i><br />Description</td>
@@ -174,7 +176,7 @@
         </div>
         <div class="col-xs-12" style="text-align:center;">
             <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
-            <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarrinPal Logo above</p>
+            <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarinPal Logo above</p>
         </div>
     </div>
 </section>
