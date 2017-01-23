@@ -1,8 +1,5 @@
 ﻿@using IranAudioGuide_MainServer.Models
-@{
-    string downloadSection = (ViewBag.View == null) ? "/Home/Index/#Download_Application" : ((Views)ViewBag.View == Views.Index) ? "#Download_Application" : "/Home/Index/#Download_Application";
-    string contactSection = (ViewBag.View == null) ? "/Home/Index/#contact" : ((Views)ViewBag.View == Views.Index) ? "#contact" : "/Home/Index/#contact";
-}
+
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
 <head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
@@ -31,11 +28,11 @@
 
     <title>@ViewBag.Title</title>
 
-    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
         <link href="~/Content/bootstrap-social.css" rel="stylesheet" />
         <link href="~/Content/toggle.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/Content/main2.css" />
-        <link rel="stylesheet" href="~/Content/Custom4.css" />*@
+        <link rel="stylesheet" href="~/Content/Custom4.css" />
 
     @Styles.Render("~/Content/minCss")
 
@@ -49,24 +46,7 @@
     <div id="page-wrapper">
         <!-- Header -->
         <header id="header" class="alt">
-
             <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home")">Iran Audio Guide</a></h1>
-            <nav id="nav">
-                <ul>
-                    <li class="special">
-                        <a href="#menu" class="menuToggle"><span>Menu</span></a>
-                        <section id="menu">
-                            <ul>
-                                <li><a id="HomeLink" href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i>Iran Audio Guide</a></li>
-                                <li><a class="scrolly" href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>
-                                @*<li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>*@
-                                <li><a class="scrolly" rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>Contact Us</a></li>
-                                <li><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
-                            </ul>
-                        </section>
-                    </li>
-                </ul>
-            </nav>
         </header>
 
         @RenderBody()
@@ -101,53 +81,7 @@
             .run(function () {
 
             })
-            .controller('HomeController', ['$scope', '$http', '$timeout',
-                function ($scope, $http, $timeout) {
-                    $scope.ContactUs = function (model, form) {
-                        $scope.overlay = true;
-                        if (form.$valid && !model.invalidFile) {
-                            method = 'POST';
-                            url = '/Home/ContactEmailSender';
-                            data = {
-                                email: model.email,
-                                message: model.message,
-                                name: model.name,
-                                subject: model.subject
-                            };
-                            $scope.sent = false;
-                            $scope.overlay = true;
-                            $http({ method: method, url: url, data: data }).
-                              then(function (response) {
-                                  switch (response.data.status) {
-                                      case respondstatus.success:
-                                          $scope.sentMessage = "Thanks! Your message sent successfully!.";
-                                          $scope.sent = true;
-                                          break;
-                                      default:
-                                          $scope.sentMessage = "Email sending failed: " + response.data.content;
-                                          $scope.sent = true;
-                                          break;
-                                  }
-                                  $timeout(function () {
-                                      $scope.overlay = false;
-                                      $scope.contactForm.$setPristine();
-                                      $scope.ContactFormModel = {};
-                                  }, 1000);
-                              }, function (response) {
-                                  console.log("Request failed");
-                                  console.log("status:" + response.status);
-                              });
-                        }
-                    };
-                    valid = [true, true, true, true];
-                    $scope.ValidationClass = function (i) {
-                        return (valid[i]) ? '' : 'sorooshInvalid';
-                    }
-                    $scope.validator = function (e, i) {
-                        valid[i] = (e.target.classList.contains('ng-invalid')) ? false : true;
 
-                    }
-                }]);
 
         var respondstatus =
         {
@@ -179,12 +113,6 @@
             qacct: "p-W5MYZqNRc9gad"
         });
     </script>
-
-    <noscript>
-        <div style="display:none;">
-            <img src="//pixel.quantserve.com/pixel/p-W5MYZqNRc9gad.gif" border="0" height="1" width="1" alt="Quantcast" />
-        </div>
-    </noscript>
     <!-- End Quantcast tag -->
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
