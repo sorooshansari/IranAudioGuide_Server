@@ -1287,7 +1287,6 @@
     <Content Include="Views\Shared\CheckOut.cshtml" />
     <Content Include="Views\Shared\PaymentRef.cshtml" />
     <Content Include="Views\Shared\PurchaseDetails.cshtml" />
-    <Content Include="Views\Shared\_PaymentLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
