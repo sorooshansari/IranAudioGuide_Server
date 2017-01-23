@@ -239,6 +239,8 @@
             </form>
         </div>
     </section>
+
+    <!-- Package -->
     <section id="Packages" class="four">
         <div class="container">
             <header>
@@ -354,6 +356,7 @@
                         <td>Name</td>
                         <td>Description</td>
                         <td></td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -361,6 +364,12 @@
                         <td>{{city.Index}}</td>
                         <td>{{city.CityName}}</td>
                         <td><p>{{city.CityDesc}}</p></td>
+                        <td>
+                            <a class="btn btn-primary btn-block"
+                               ng-click="ShowEditCityModal(city)">
+                                <span class="fa fa-edit"></span> Edit
+                            </a>
+                        </td>
                         <td>
                             <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" ng-click="RemoveCity(city.CityID, city.CityName)">
                                 <span class="fa fa-trash-o"></span> Remove
@@ -370,7 +379,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                             <ul class="nav nav-tabs nav-justified">
                                 <li>
                                     <a href="" ng-click="PreviousCity()"><span class="fa fa-chevron-left"></span> Previus</a>
@@ -402,10 +411,23 @@
             <form name="NewCityForm" role="form" ng-submit="AddCity(NewCity, NewCityForm)" novalidate>
                 <div class="row">
                     <div class="6u$ 12u$(mobile)">
-                        <div class="formError" ng-show="(NewCityForm.$submitted || NewCityForm.CityName.$touched) && NewCityForm.CityName.$error.required">
-                            <p class="text-danger">City name must be fill.</p>
-                        </div>
+                        <ul class="formError text-danger" ng-show="NewCityForm.$submitted">
+                            <li ng-show="NewCityForm.CityName.$error.required"><strong>City name must be fill.</strong></li>
+                            <li ng-show="NewCityForm.cityImage.$error.required"><strong>City Image must be choose.</strong></li>
+                            <li><strong>{{additionalError}}</strong></li>
+                        </ul>
                         <input type="text" ng-model="NewCity.CityName" name="CityName" required placeholder="City name*" />
+                    </div>
+                    <div class="4u 9u(mobile)">
+                        <input type="text" name="cityImgUrl" placeholder="Place image*" disabled />
+
+                    </div>
+                    <div class="2u$ 3u$(mobile) lessPading">
+                        <input class="inputfile" type="file"
+                               file-model="NewCity.cityImage"
+                               onchange="angular.element(this).scope().SetCityImageName(this)"
+                               id="cityImage" name="cityImage" required />
+                        <label for="cityImage" class="btn-primary">Choose</label>
                     </div>
                     <div class="12u$">
                         <textarea ng-model="NewCity.CityDesc" name="CityDesc" placeholder="City description" rows="2"></textarea>
@@ -605,6 +627,64 @@
             </form>
         </div>
     </div>
+
+    <!-- Edit City Modal -->
+    <div class="modal fade" id="EditCityModal" tabindex="-2" role="dialog" aria-labelledby="EditCityModalLabel">
+        <div ng-show="EditOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
+            <div id="floatingCirclesG">
+                <div class="f_circleG" id="frotateG_01"></div>
+                <div class="f_circleG" id="frotateG_02"></div>
+                <div class="f_circleG" id="frotateG_03"></div>
+                <div class="f_circleG" id="frotateG_04"></div>
+                <div class="f_circleG" id="frotateG_05"></div>
+                <div class="f_circleG" id="frotateG_06"></div>
+                <div class="f_circleG" id="frotateG_07"></div>
+                <div class="f_circleG" id="frotateG_08"></div>
+            </div>
+        </div>
+        <div class="modal-dialog" role="document">
+            <form role="form" name="EditCityForm" ng-submit="EditCity(EditCityVM, EditCityForm)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-primary">Edit City Informations</h3>
+                        <a href="" ng-click="hide('#EditCityModal')">
+                            <i class="fa fa-2x fa-times ModalDismissIco"></i>
+                        </a>
+                    </div>
+                    <div class="modal-body" style="padding: 15px;">
+                        <div class="row">
+                            <div ng-mouseleave="selectedCityRmvShow = false" ng-mousemove="selectedCityRmvShow = true" class="City-image 3u 6u(mobile) ImgHoverable">
+                                <input id="CityImage" name="CityImage" type="file" file-model="CityImage" class="hidden"
+                                       onchange="angular.element(this).scope().ChangeCityImg(this, angular.element(this).scope().EditCityVM.CityID)" />
+                                <img style="width:100%;height:auto;" class="PImg" ng-click="ClickPlaceImg('#CityImage')" src="../images/Cities/{{selectedCityImg}}" />
+                                <i ng-click="ClickPlaceImg('#CityImage')" ng-show="selectedCityRmvShow" class="btn fa fa-2x fa-pencil-square-o text-blue addImgBtn"></i>
+                            </div>
+                    
+                            <!--Edit Basic Infoes-->
+                            <div class="12u$ row header">
+                                <hr class="4u" />
+                                <span class="4u">
+                                    Edit Basic Informations
+                                </span>
+                                <hr class="4u$" />
+                            </div>
+                            <div class="6u$ 12u$(mobile)">
+                                <input type="text" ng-model="EditCityVM.CityName" name="CityName" required Cityholder="City name*" />
+                            </div>
+                            <div class="12u$">
+                                <textarea ng-model="EditCityVM.CityDesc" name="CityDesc" rows="3" Cityholder="City description"></textarea>
+                            </div>
+                            <div class="12u$" style="float:right;">
+                                <input type="submit" class="addBtn" value="Save Changes" />
+                            </div>
+                            <!--/Edit Basic Infoes-->
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <!-- Edit Place Modal -->
     <div class="modal fade" id="EditPlaceModal" tabindex="-2" role="dialog" aria-labelledby="EditPlaceModalLabel">

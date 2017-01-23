@@ -529,18 +529,95 @@
             return Cities;
         },
         AddCity: function (NewCity) {
+
             method = 'POST';
             url = '/Admin/AddCity';
-            data = { CityName: NewCity.CityName, CityDesc: NewCity.CityDesc };
+            var fd = new FormData();
+            fd.append('CityName', NewCity.CityName);
+            fd.append('CityDesc', NewCity.CityDesc || "");
+            fd.append('CityImage', NewCity.cityImage);
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).then(function (response) {
+                switch (response.data.status) {
+                    case respondstatus.success:
+                        $rootScope.$broadcast('cityAdded', {});
+                        break;
+                    default:
+                        console.log("Server failed to add City.");
+                        break;
+                }
+            }, function (response) {
+                console.log("Request failed");
+                console.log("status:" + response.status);
+            });
+        },
+        Edit: function (EditCityVM) {
+            method = 'POST';
+            url = '/Admin/EditCity';
+            data = { "CityID": EditPlaceVM.CityID, "CityName": EditPlaceVM.CityName, "CityDesc": EditPlaceVM.CityDesc };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
+                  $rootScope.EditOverlay = false;
+                  $rootScope.hide('#EditCityModal');
                   switch (response.data.status) {
-                      case respondstatus.success:
-                          $rootScope.$broadcast('cityAdded', {});
+                      case 0:
+                          $rootScope.$broadcast('UpdateCities', {});
+                          break;
+                      case 1:
+                          $rootScope.$broadcast('EditCityValidationSummery', {
+                              data: response.data.content
+                          });
+                          break;
+                      case 2:
+                          $rootScope.$broadcast('EditCityUnknownError', {});
+                          console.log("Server failed to remove City.");
+                          break;
+                      case 3:
+                          console.log(response.data.content);
                           break;
                       default:
-                          console.log("Server failed to add City.");
+                  }
+              }, function (response) {
+                  console.log("Request failed");
+                  console.log("status:" + response.status);
+              });
+            return;
+        },
+        ChangeImage: function (NewImage, id) {
+            method = 'POST';
+            url = '/Admin/ChangeCityImage';
+            var fd = new FormData();
+            fd.append('NewImage', NewImage);
+            fd.append('CityId', id);
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).
+              then(function (response) {
+                  $rootScope.EditOverlay = false;
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.hide('#EditCityModal');
+                          $rootScope.$broadcast('UpdateCities', {});
                           break;
+                      case 1:
+                          $rootScope.$broadcast('EditCityValidationSummery', {
+                              data: response.data.content
+                          });
+                          break;
+                      case 3:
+                          console.log(response.data.content);
+                          break;
+                      default:
+                          $rootScope.$broadcast('EditCityUnknownError', {});
                   }
               }, function (response) {
                   console.log("Request failed");

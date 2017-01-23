@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using IranAudioGuide_MainServer.Models;
 using System.IO;
 using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -18,6 +19,7 @@ namespace IranAudioGuide_MainServer.Controllers
         private Object DelExtraImg = new Object();
         private Object DelAdo = new Object();
         private Object DelPlc = new Object();
+        private Object DelCit = new Object();
         private const string storagePrefix = "http://iranaudioguide.com/";
         // GET: Admin
         [Authorize(Roles = "Admin")]
@@ -756,6 +758,47 @@ namespace IranAudioGuide_MainServer.Controllers
                 try
                 {
                     db.Cities.Add(city);
+                    db.SaveChanges();
+
+                    string id = Convert.ToString(city.Cit_Id);
+                    string extention = Path.GetExtension(model.CityImage.FileName);
+                    string path = string.Format("~/images/Cities/{0}{1}", id, extention);
+                    model.CityImage.SaveAs(Server.MapPath(path));
+                    city.Cit_ImageUrl = string.Format("{0}{1}", id, extention);
+
+                    UpdateLog(updatedTable.City, Guid.Empty, false, city.Cit_Id);
+                    db.SaveChanges();
+                    dbTran.Commit();
+                    return Json(new Respond());
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    return Json(new Respond(ex.Message, status.unknownError));
+                }
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult EditCity(EditCityVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new Respond("Check input fields", status.invalidInput));
+            }
+            var city = db.Cities.Where(x => x.Cit_Id == model.CityID).FirstOrDefault();
+            if (city == default(city))
+            {
+                return Json(new Respond("Invalid Place Id", status.invalidId));
+            }
+            city.Cit_Name = model.CityName;
+            city.Cit_Description = model.CityDesc;
+
+            using (var dbTran = db.Database.BeginTransaction())
+            {
+                try
+                {
                     UpdateLog(updatedTable.City, Guid.Empty, false, city.Cit_Id);
                     db.SaveChanges();
                     dbTran.Commit();
@@ -770,21 +813,129 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        public JsonResult ChangeCityImage(ChangeCityImageVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new Respond("Check input fields", status.invalidInput));
+            }
+            try
+            {
+                var city = db.Cities.Where(x => x.Cit_Id == model.CityId).FirstOrDefault();
+                if (city == default(city))
+                {
+                    return Json(new Respond("Invalid PlaceId", status.invalidId));
+                }
+                string oldPath = Server.MapPath(string.Format("~/images/Cities/{0}", city.Cit_ImageUrl));
+                string imgName = Path.GetFileNameWithoutExtension(city.Cit_ImageUrl);
+                string extention = Path.GetExtension(model.NewImage.FileName);
+                string newPath = Server.MapPath(string.Format("~/images/Cities/{0}{1}", imgName, extention));
+                lock (ChangeImgLock)
+                {
+                    if (System.IO.File.Exists(oldPath))
+                    {
+                        System.IO.File.Delete(oldPath);
+                    }
+                    model.NewImage.SaveAs(newPath);
+                }
+                string newImageName = string.Format("{0}{1}", imgName, extention);
+                if (city.Cit_ImageUrl != newImageName)
+                {
+                    using (var dbTran = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            city.Cit_ImageUrl = newImageName;
+                            UpdateLog(updatedTable.City, Guid.Empty, false, city.Cit_Id);
+                            db.SaveChanges();
+                            dbTran.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            dbTran.Rollback();
+                            return Json(new Respond(ex.Message, status.unknownError));
+                        }
+                    }
+                }
+                return Json(new Respond());
+            }
+            catch (Exception ex)
+            {
+                return Json(new Respond(ex.Message, status.unknownError));
+            }
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public JsonResult DelCity(int Id)
         {
-            int result = db.Database.SqlQuery<int>("DeleteCity @Id", new SqlParameter("@Id", Id)).Single();
-            switch (result)
+            using (var dbTran = db.Database.BeginTransaction())
             {
-                case 0:
+                try
+                {
+                    var city = db.Cities.Where(x => x.Cit_Id == Id).First();
+                    db.Cities.Remove(city);
+                    db.SaveChanges();
+                    string path = Server.MapPath(string.Format("~/images/Cities/{0}", city.Cit_ImageUrl));
+                    lock (DelCit)
+                    {
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                    }
                     UpdateLog(updatedTable.City, Guid.Empty, true, Id);
+                    db.SaveChanges();
+                    dbTran.Commit();
                     return Json(new Respond());
-                case 1:
-                    return Json(new Respond("This city has some places.", status.forignKeyError));
-                case 2:
-                    return Json(new Respond("Something went wrong. Contact devloper team.", status.dbError));
-                default:
-                    return Json(new Respond("Something went wrong. Contact devloper team.", status.unknownError));
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    return HandleException(ex);
+                }
             }
+        }
+        public virtual JsonResult HandleException(Exception exception)
+        {
+            DbUpdateConcurrencyException concurrencyEx = exception as DbUpdateConcurrencyException;
+            if (concurrencyEx != null)
+            {
+                //so something
+            }
+
+            DbUpdateException dbUpdateEx = exception as DbUpdateException;
+            if (dbUpdateEx != null)
+            {
+                if (dbUpdateEx != null
+                        && dbUpdateEx.InnerException != null
+                        && dbUpdateEx.InnerException.InnerException != null)
+                {
+                    SqlException sqlException = dbUpdateEx.InnerException.InnerException as SqlException;
+                    if (sqlException != null)
+                    {
+                        switch (sqlException.Number)
+                        {
+                            case 2627:  // Unique constraint error
+                                return Json(new Respond(exception.Message, status.unknownError));
+                            case 547:   // Constraint check violation
+                                return Json(new Respond("Forign key Error.", status.forignKeyError));
+                            case 2601:  // Duplicated key row error
+                                        // Constraint violation exception
+                                return Json(new Respond(exception.Message, status.unknownError));
+
+                            default:
+                                // A custom exception of yours for other DB issues
+                                return Json(new Respond(exception.Message, status.unknownError));
+                        }
+                    }
+
+                    //so something
+                }
+            }
+            return Json(new Respond(exception.Message, status.unknownError));
+
+            // If we're here then no exception has been thrown
+            // So add another piece of code below for other exceptions not yet handled...
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -927,7 +1078,8 @@ namespace IranAudioGuide_MainServer.Controllers
                                    {
                                        CityDesc = c.Cit_Description,
                                        CityID = c.Cit_Id,
-                                       CityName = c.Cit_Name
+                                       CityName = c.Cit_Name,
+                                       CityImageUrl = c.Cit_ImageUrl
                                    }).ToList();
             int counter = 0;
             foreach (var item in cities)
