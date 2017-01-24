@@ -559,7 +559,7 @@
         Edit: function (EditCityVM) {
             method = 'POST';
             url = '/Admin/EditCity';
-            data = { "CityID": EditPlaceVM.CityID, "CityName": EditPlaceVM.CityName, "CityDesc": EditPlaceVM.CityDesc };
+            data = { "CityID": EditCityVM.CityID, "CityName": EditCityVM.CityName, "CityDesc": EditCityVM.CityDesc };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   $rootScope.EditOverlay = false;
