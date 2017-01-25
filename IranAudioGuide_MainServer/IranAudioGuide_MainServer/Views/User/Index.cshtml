@@ -1,0 +1,217 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayouProfile.cshtml";
+}
+
+
+
+
+<link href="~/assets/profile/menu/css/bs_leftnavi.css" rel="stylesheet" />
+<div class="page-container">
+    <div class="page-content">
+        <div class="container">
+
+            <div class="row margin-top-9-percentage">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm-4 right-side-panel">
+                            <div class=" profile-sidebar ">
+                                <!-- PORTLET MAIN -->
+                                <div class="portlet light profile-sidebar-portlet">
+                                    <!-- SIDEBAR USERPIC -->
+                                    <div class="profile-userpic">
+                                        <img ng-if="user.imgUrl == null" src="~/Content/images/avatar.png" class="img-responsive" alt="">
+                                        <img ng-if="user.imgUrl != null" ng-src="user.imgUrl" class="img-responsive" alt="">
+                                    </div>
+                                    <!-- END SIDEBAR USERPIC -->
+                                    <!-- SIDEBAR USER TITLE -->
+                                    <div class="profile-usertitle">
+                                        <div class="profile-usertitle-name">
+
+                                            <i class="fa fa-user-o"></i>  {{user.FullName}}
+                                        </div>
+                                        <div class="profile-usertitle-job">
+                                            <i class="fa fa-envelope"></i>    {{user.Email}}
+                                        </div>
+                                    </div>
+                                    <!-- END SIDEBAR USER TITLE -->
+                                    <!-- SIDEBAR BUTTONS -->
+                                    <div class="profile-userbuttons">
+                                            <button type="button" class="btn btn-circle green-haze btn-sm" ng-click="deactivateMobile()">Deactivate Mobile </button>
+                                            @*<button type="button" class="btn btn-circle btn-danger btn-sm">Message</button>*@
+                                        </div>
+                                    <!-- END SIDEBAR BUTTONS -->
+                                    <!-- SIDEBAR MENU -->
+                                    @*<div class="profile-usermenu">
+                                            <ul class="nav">
+                                                <li class="active">
+                                                    <a href="extra_profile.html">
+                                                        <i class="icon-home"></i>
+                                                        Overview
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="extra_profile_account.html">
+                                                        <i class="icon-settings"></i>
+                                                        Account Settings
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="page_todo.html" target="_blank">
+                                                        <i class="icon-check"></i>
+                                                        Tasks
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="extra_profile_help.html">
+                                                        <i class="icon-info"></i>
+                                                        Help
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>*@
+                                    <!-- END MENU -->
+                                </div>
+                                <!-- END PORTLET MAIN -->
+
+                            </div>
+
+                            <!-- BEGIN PORTLET -->
+                            <div class="portlet light menu-pakages">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="icon-bar-chart theme-font hide"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">Packages</span>
+                                        @*<span class="caption-helper hide">weekly stats...</span>*@
+                                    </div>
+                                    @*<div class="actions">
+                                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                                <label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                                    <input type="radio" name="options" class="toggle" id="option1">Today
+                                                </label>
+                                                <label class="btn btn-transparent grey-salsa btn-circle btn-sm">
+                                                    <input type="radio" name="options" class="toggle" id="option2">Week
+                                                </label>
+                                                <label class="btn btn-transparent grey-salsa btn-circle btn-sm">
+                                                    <input type="radio" name="options" class="toggle" id="option2">Month
+                                                </label>
+                                            </div>
+                                        </div>*@
+                                </div>
+                                <div class="portlet-body" ng-show="isDisplayPakages">
+                                    <div class="gw-sidebar">
+                                        <div id="gw-sidebar" class="gw-sidebar">
+                                            <div class="nano-content">
+                                                <ul class="gw-nav gw-nav-list">
+                                           
+                                                    <li class="init-arrow-down" ng-repeat="pak in packages">
+                                                        <a href="javascript:void(0)"> <span class="gw-menu-text">{{pak.PackageName}}</span> <b></b> </a>
+                                                        <ul class="gw-submenu">
+                                                            <li ng-repeat="city in pak.PackageCities">
+                                                                <a ng-click="getPalaceForCity(city)">{{city.CityName}}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PORTLET -->
+                        </div>
+                        <div class="col-sm-8 left-side-panel">
+
+                            <!-- BEGIN PORTLET -->
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="icon-bar-chart theme-font hide"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">Places</span>
+
+                                    </div>
+
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="row">
+                                        <div class="col-md-12 blog-page">
+                                           
+                                            <div class="row" ng-repeat="item in city.Places">
+
+                                                <div class="col-md-12 col-sm-12 article-block">
+                                                    @*<h1 style="margin-top:0px">Places</h1>*@
+                                                    <div class="row">
+                                                    
+                                                        <div class="col-md-4 blog-img blog-tag-data" >
+
+                                                            <img src="~/images/banner2.jpg"  class="img-responsive" />
+                                                            @*<img ng-src="~/images/Places/{{item.ImgUrl}}" alt="" class="img-responsive">*@
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <i class="fa fa-map-marker"></i>
+                                                                   {{item.PlaceAddress}}
+                                                                </li>
+                                                                
+                                                            </ul>
+                                                            @*<ul class="list-inline blog-tags">
+                                                                <li>
+                                                                    <i class="fa fa-tags"></i>
+                                                                    <a href="javascript:;">
+                                                                        Technology
+                                                                    </a>
+                                                                    <a href="javascript:;">
+                                                                        Education
+                                                                    </a>
+                                                                    <a href="javascript:;">
+                                                                        Internet
+                                                                    </a>
+                                                                </li>
+                                                            </ul>*@
+                                                        </div>
+                                                        <div class="col-md-8 blog-article">
+                                                            <h3>
+                                                                <a href="page_blog_item.html">
+                                                                 {{item.PlaceName}}
+                                                                </a>
+                                                            </h3>
+                                                            <p>
+                                                           {{item.PlaceDesc}}
+                                                            </p>
+                                                            @*<a class="btn blue" ng-click="showPlaceInfo(item.PlaceId)">
+                                                                Read more <i class="m-icon-swapright m-icon-white"></i>
+                                                            </a>*@
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+                                                 
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END PORTLET -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- END PAGE CONTENT INNER -->
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT -->
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/assets/profile/menu/js/bs_leftnavi.js"></script>

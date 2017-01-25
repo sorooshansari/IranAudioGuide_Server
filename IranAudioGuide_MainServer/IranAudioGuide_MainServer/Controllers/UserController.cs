@@ -7,18 +7,20 @@ using System.Web.Mvc;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class UserController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: User
-        [Authorize(Roles = "AppUser")]
+     //   [Authorize(Roles = "AppUser")]
         public ActionResult Index()
         {
-            ViewBag.View = Views.UserIndex;
-            return View(GetCurrentUserInfo());
+            //ViewBag.View = Views.UserIndex;
+            //return View(GetCurrentUserInfo());
+            return View();
         }
-        private UserInfo GetCurrentUserInfo()
+        //[HttpGet]
+        public JsonResult GetCurrentUserInfo()
         {
             try
             {
@@ -31,7 +33,10 @@ namespace IranAudioGuide_MainServer.Controllers
                                      FullName = user.FullName,
                                      imgUrl = user.ImgUrl
                                  }).FirstOrDefault();
-                return Info;
+
+
+
+                return Json( Info);
             }
             catch (Exception ex)
             {
@@ -60,7 +65,7 @@ namespace IranAudioGuide_MainServer.Controllers
                                                  CityImageUrl = c.Cit_ImageUrl
                                              }).ToList()
                         }).ToList();
-            return Json(packages);
+            return Json(packages, JsonRequestBehavior.AllowGet);
         }
         protected override void Dispose(bool disposing)
         {

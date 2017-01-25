@@ -245,3 +245,6 @@ ModelManifest.xml
 .fake/
 /IranAudioGuide_MainServer/IranAudioGuide_MainServer/Audios
 /IranAudioGuide_MainServer/SQLQuery1.sql
+/IranAudioGuide_MainServer/IranAudioGuide_MainServer/App_Data
+*.png
+*.html

@@ -1,7 +1,7 @@
-﻿angular.module('UserPage', ['UserPage.controllers', 'UserPage.services', 'UserPage.directives'])
-.config(function ($sceProvider) {
+﻿var userApp = angular.module('userApp', []).config(function ($sceProvider) {
     $sceProvider.enabled(false);
 })
+
 .run(function () {
 
 });
