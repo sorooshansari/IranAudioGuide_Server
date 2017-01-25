@@ -308,6 +308,7 @@ public class PaymentResult
         public string CityDesc { get; set; }
         [Display(Name = "City Image")]
         public string CityImageUrl { get; set; }
+        public IList<PlaceVM> Places { get; set; }
     }
     public class EditCityVM
     {
