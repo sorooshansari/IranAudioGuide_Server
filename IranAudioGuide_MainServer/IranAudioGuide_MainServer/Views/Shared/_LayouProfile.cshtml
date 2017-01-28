@@ -56,8 +56,9 @@
                                 <li><a class="scrolly" href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>
                                 @*<li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>*@
                                 <li><a class="scrolly" rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>Contact Us</a></li>
-                                <li><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
-                            </ul>
+                                <li ng-hide="user.isAutintication"><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
+                                <li ng-show="user.isAutintication"><a rel="nofollow" href="@Url.Action("index","user")"><i class="fa fa-sign-in"></i>Profile</a></li>
+                                <li ng-show="user.isAutintication"><a href="@Url.Action("LogOff", "user")"><i class="fa fa-sign-in"></i>Log out</a></li>     </ul>
                         </section>
                     </li>
                 </ul>

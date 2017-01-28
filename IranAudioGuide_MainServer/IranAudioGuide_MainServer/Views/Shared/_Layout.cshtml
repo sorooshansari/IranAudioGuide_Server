@@ -61,7 +61,13 @@
                                 <li><a class="scrolly" href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>
                                 @*<li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>*@
                                 <li><a class="scrolly" rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>Contact Us</a></li>
-                                <li><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
+                                <li ng-hide="user.isAutintication"><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
+                               
+                                <li ng-show="user.isAutintication && user.isAdmin == false"><a rel="nofollow" href="@Url.Action("index","user")"><i class="fa fa-sign-in"></i>Profile</a></li>
+                                <li ng-show="user.isAutintication && user.isAdmin == true"><a rel="nofollow" href="@Url.Action("index","Admin")"><i class="fa fa-sign-in"></i>Profile</a></li>
+
+                                
+                                 <li ng-show="user.isAutintication"><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>Log out</a></li>
                             </ul>
                         </section>
                     </li>
@@ -103,6 +109,26 @@
             })
             .controller('HomeController', ['$scope', '$http', '$timeout',
                 function ($scope, $http, $timeout) {
+                    
+                    $scope.user = {
+                        isAutintication: false,
+                        username: "test",
+                        isAdmin: false
+                    }
+
+
+                    $http.get('/api/AppManager/GetCurrentUserInfo').success(function (result) {
+                        $scope.user.username = result.Email;
+                        if (result.RolesName[0] == "Admin")
+                            $scope.user.isAdmin = true;
+                      
+                        $scope.user.isAutintication = true;
+
+                    }).error(function (error, status, headers, config) {
+                        $scope.user.isAutintication = false;
+                    });
+
+
                     $scope.ContactUs = function (model, form) {
                         $scope.overlay = true;
                         if (form.$valid && !model.invalidFile) {

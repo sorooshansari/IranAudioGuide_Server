@@ -134,6 +134,35 @@ namespace IranAudioGuide_MainServer.Models
             return res.Succeeded;
         }
 
+
+        public ApplicationUser GetUserByName(string userName)
+        {
+            try
+            {
+                return UserManager.FindByName(userName);   
+               
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+        public IList<string> GetUserRoles(ApplicationUser user)
+        {
+            try
+            {
+               return  UserManager.GetRoles(user.Id);             
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

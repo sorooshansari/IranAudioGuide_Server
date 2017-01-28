@@ -214,6 +214,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Migrations\201611170848081_CreateDB.cs" />
     <Compile Include="Migrations\201611170848081_CreateDB.Designer.cs">
@@ -1292,6 +1293,8 @@
     <Content Include="Views\Shared\PurchaseDetails.cshtml" />
     <Content Include="Views\Shared\_LayouProfile.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1312,6 +1315,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Zarinpal\" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Migrations\201611170848081_CreateDB.resx">
       <DependentUpon>201611170848081_CreateDB.cs</DependentUpon>
     </EmbeddedResource>
@@ -1327,12 +1336,6 @@
     <EmbeddedResource Include="Migrations\201701141132429_afterNewPush.resx">
       <DependentUpon>201701141132429_afterNewPush.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

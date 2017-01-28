@@ -77,7 +77,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -343,22 +343,31 @@ namespace IranAudioGuide_MainServer.Controllers
             }
 
             // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-            switch (result)
+            var result1 = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            switch (result1)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+
+                    return Redirect("/user/index");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
                 case SignInStatus.Failure:
-                default:
-                    // If the user does not have an account, then prompt the user to create an account
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email };
+                    var r = await UserManager.CreateAsync(user);
+                    if (!r.Succeeded)
+                        return RedirectToAction("Login");
+                    var d = await UserManager.AddToRoleAsync(user.Id, "AppUser");
+                    if (!d.Succeeded)
+                        return RedirectToAction("Login");
+                    await SignInManager.SignInAsync(user, true, true);
+                    //if (!r.Succeeded)
+                    //    return RedirectToAction("Login");
+                    return RedirectToAction("Index", "User");
+
             }
+            return RedirectToAction("Login");
         }
 
         //

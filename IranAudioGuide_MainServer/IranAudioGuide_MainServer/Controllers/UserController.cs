@@ -1,4 +1,6 @@
 ﻿using IranAudioGuide_MainServer.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,73 +9,28 @@ using System.Web.Mvc;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
-   // [Authorize]
+    [Authorize]
     public class UserController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
         // GET: User
-     //   [Authorize(Roles = "AppUser")]
+        [Authorize(Roles = "AppUser")]
         public ActionResult Index()
         {
-            //ViewBag.View = Views.UserIndex;
-            //return View(GetCurrentUserInfo());
             return View();
         }
-        //[HttpGet]
-        public JsonResult GetCurrentUserInfo()
+
+    
+        public ActionResult LogOff()
         {
-            try
-            {
-                string userName = User.Identity.Name;
-                UserInfo Info = (from user in db.Users
-                                 where user.UserName == userName
-                                 select new UserInfo()
-                                 {
-                                     Email = user.Email,
-                                     FullName = user.FullName,
-                                     imgUrl = user.ImgUrl
-                                 }).FirstOrDefault();
-
-
-
-                return Json( Info);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public JsonResult GetPackages()
-        {
-            List<PackageVM> packages = new List<PackageVM>();
-
-            packages = (from p in db.Packages
-                        orderby p.Pac_Id descending
-                        select new PackageVM()
-                        {
-                            PackagePrice = p.Pac_Price,
-                            PackageId = p.Pac_Id,
-                            PackageName = p.Pac_Name,
-                            PackageCities = (from c in db.Cities
-                                             select new CityVM()
-                                             {
-                                                 CityName = c.Cit_Name,
-                                                 CityDesc = c.Cit_Description,
-                                                 CityID = c.Cit_Id,
-                                                 CityImageUrl = c.Cit_ImageUrl
-                                             }).ToList()
-                        }).ToList();
-            return Json(packages, JsonRequestBehavior.AllowGet);
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

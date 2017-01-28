@@ -286,6 +286,15 @@ public class PaymentResult
         public string Email { get; set; }
         public string imgUrl { get; set; }
     }
+    public class UserProfile
+    {
+
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string imgUrl { get; set; }
+        public IList<string> RolesName;
+       
+    }
     public class NewCity
     {
         [Required]

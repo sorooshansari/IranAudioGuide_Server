@@ -34,7 +34,7 @@ namespace IranAudioGuide_MainServer
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -60,8 +60,8 @@ namespace IranAudioGuide_MainServer
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
-                ClientSecret = "1kvO5-vGb9kkaaQRV8M1-pM-"
+                ClientId = "592360034248-5ttnhfdv42t33ii2lvt0m2nn1gcvk9rn.apps.googleusercontent.com",
+                ClientSecret = "E-ZRe5iMVYgg8oFWAfiwA-jC"
             });
         }
     }

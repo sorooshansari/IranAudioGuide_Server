@@ -1,29 +1,27 @@
 ﻿//Developed by pourmand
 userApp.controller('userController', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
+    $scope.user = {
+        isAutintication: false,
+        username: "test"
+    }
+
+
     userServices.getUser().then(function (data) {
-        console.log(data);
         $scope.user = data;
+        $scope.user.isAutintication = true;
     });
     $scope.deactivateMobile = function () {
         userServices.deactivateMobile();
     };
     $scope.getPalaceForCity = function (city) {
-
         $scope.city = city;
-        //userServices.getPalaceForCity(id).then(function (data) {
-
-        //    $scope.palces = data;
-
-        //});
     };
 
     $scope.isDisplayPakages = false;
 
-    userServices.getPackages().then(function (data) {
-        console.log(data);
-
+    userServices.getPackages().then(function (data) {   
         $scope.packages = data;
-
+        $scope.city = data[0].PackageCities[0];
         $timeout(function () {
             $scope.isDisplayPakages = true;
             nav();

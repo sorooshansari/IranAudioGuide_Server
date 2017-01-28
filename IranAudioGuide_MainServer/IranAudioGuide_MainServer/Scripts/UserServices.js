@@ -53,10 +53,10 @@
 }])
     .service('userServices', ['dataServices', function (dataServices) {
         this.getUser = function () {
-            return dataServices.get('/api/AppManager/GetCurrentUserInfo');
+            return dataServices.post('/api/userApi/GetCurrentUserInfo');
         };
         this.getPackages = function () {
-            return dataServices.get('/api/AppManager/GetPackages');
+            return dataServices.post('/api/userApi/GetPackages');
         }
         this.getPalaceForCity = function () {
             return dataServices.get();
