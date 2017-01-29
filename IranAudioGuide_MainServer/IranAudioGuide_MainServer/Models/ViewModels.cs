@@ -198,11 +198,9 @@ public class PaymentResult
     public class GoogleUserInfo
     {
         public string name { get; set; }
-        public string gender { get; set; }
         public string email { get; set; }
         public string google_id { get; set; }
         public string picture { get; set; }
-        public string profile { get; set; }
         public string uuid { get; set; }
     }
     public enum CreateingUserResult

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using IranAudioGuide_MainServer.Models;
+using System.Threading.Tasks;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -51,21 +52,36 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
-        public ActionResult Error()
+        public async Task<JsonResult> test(GoogleUserInfo user)
         {
-            return View("Error");
+            AccountTools acTools = new AccountTools();
+            var res = await acTools.CreateGoogleUser(new ApplicationUser()
+            {
+                Email = user.email,
+                GoogleId = user.google_id,
+                UserName = user.email,
+                Picture = user.picture,
+                FullName = user.name,
+                EmailConfirmed = true,
+                uuid = user.uuid
+            });
+            return Json(res);
         }
-        public ActionResult CheckOut()
-        {
-            return View("CheckOut");
-        }
-        public ActionResult PaymentRef()
-        {
-            return View("PaymentRef");
-        }
-        public ActionResult PurchaseDetails()
-        {
-            return View("PurchaseDetails");
-        }
+        //public ActionResult Error()
+        //{
+        //    return View("Error");
+        //}
+        //public ActionResult CheckOut()
+        //{
+        //    return View("CheckOut");
+        //}
+        //public ActionResult PaymentRef()
+        //{
+        //    return View("PaymentRef");
+        //}
+        //public ActionResult PurchaseDetails()
+        //{
+        //    return View("PurchaseDetails");
+        //}
     }
 }

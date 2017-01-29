@@ -259,7 +259,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\LogOutput.txt" />
     <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\js\ie\backgroundsize.min.htc" />
     <Content Include="assets\js\ie\html5shiv.js" />
@@ -272,7 +271,6 @@
     <Content Include="assets\js\util.js" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\Custom4.css" />
-    <Content Include="Content\images\avatar.png" />
     <Content Include="Content\loading.css" />
     <Content Include="Content\bootstrap-social.min.css" />
     <Content Include="Content\styles.min.css" />
@@ -1298,6 +1296,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
+    <Folder Include="App_Data\" />
     <Folder Include="assets\profile\" />
     <Folder Include="Audios\" />
     <Folder Include="Download\" />
