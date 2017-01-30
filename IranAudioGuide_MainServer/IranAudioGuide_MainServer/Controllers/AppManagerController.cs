@@ -90,6 +90,13 @@ namespace IranAudioGuide_MainServer.Controllers
             return res;
         }
         [HttpPost]
+        public async Task<IHttpActionResult> ForgotPassword(ForgotPassUser user)
+        {
+            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            var res = await acTools.ForgotPassword(user.email, user.uuid, baseUrl);
+            return Json(res);
+        }
+        [HttpPost]
         public async Task<CreateingUserResult> AutenticateGoogleUser(GoogleUserInfo user)
         {
             try
