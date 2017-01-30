@@ -191,6 +191,7 @@ public class PaymentResult
     }
     public class AppUser
     {
+        public string fullName { get; set; }
         public string email { get; set; }
         public string password { get; set; }
         public string uuid { get; set; }

@@ -68,7 +68,7 @@ namespace IranAudioGuide_MainServer.Models
             }
             return new AuthorizedUser() { Result = SignInResults.Failure };
         }
-        public async Task<CreateingUserResult> CreateAppUser(string Email, string password, string uuid, string baseUrl)
+        public async Task<CreateingUserResult> CreateAppUser(string fullName, string Email, string password, string uuid, string baseUrl)
         {
             var appUser = await UserManager.FindByNameAsync(Email);
             if (appUser != null)
@@ -79,7 +79,7 @@ namespace IranAudioGuide_MainServer.Models
                     return CreateingUserResult.googleUser;
                 return CreateingUserResult.userExists;
             }
-            var user = new ApplicationUser() { UserName = Email, Email = Email, uuid = uuid };
+            var user = new ApplicationUser() { UserName = Email, Email = Email, uuid = uuid, FullName = fullName };
             var result = await UserManager.CreateAsync(user, password);
             if (result.Succeeded)
             {

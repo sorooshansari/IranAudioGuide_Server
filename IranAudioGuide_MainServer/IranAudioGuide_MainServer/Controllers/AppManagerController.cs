@@ -115,7 +115,7 @@ namespace IranAudioGuide_MainServer.Controllers
         public async Task<IHttpActionResult> ResgisterAppUser(AppUser user)
         {
             string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
-            var res = await acTools.CreateAppUser(user.email, user.password, user.uuid, baseUrl);
+            var res = await acTools.CreateAppUser(user.fullName, user.email, user.password, user.uuid, baseUrl);
             return Json(res);
         }
         [HttpPost]
@@ -133,7 +133,6 @@ namespace IranAudioGuide_MainServer.Controllers
                 return null; 
             var userProfile = new UserProfile()
             {
-
                 Email = user.UserName,
                 FullName = user.FullName,
                 imgUrl = user.ImgUrl,
