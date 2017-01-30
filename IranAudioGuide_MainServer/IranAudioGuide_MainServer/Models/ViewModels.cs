@@ -255,6 +255,29 @@ public class PaymentResult
         //     Sign in with different uuid
         uuidMissMatch = 4
     }
+    public enum RecoverPassResults
+    {
+        //
+        // Summary:
+        //     Sign in was successful
+        Success = 0,
+        //
+        // Summary:
+        //     not user of the app
+        NotUser = 1,
+        //
+        // Summary:
+        //     Sign in requires addition verification (i.e. two factor)
+        RequiresVerification = 2,
+        //
+        // Summary:
+        //     Sign in failed
+        Failure = 3,
+        //
+        // Summary:
+        //     Sign in with different uuid
+        uuidMissMatch = 4
+    }
     public enum gender
     {
         Unknown = 0,

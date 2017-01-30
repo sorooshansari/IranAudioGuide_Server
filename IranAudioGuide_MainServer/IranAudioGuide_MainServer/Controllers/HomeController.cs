@@ -52,20 +52,13 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
-        public async Task<JsonResult> test(GoogleUserInfo user)
+        public async Task<JsonResult> test(ForgotPassUser user)
         {
             AccountTools acTools = new AccountTools();
-            var res = await acTools.CreateGoogleUser(new ApplicationUser()
-            {
-                Email = user.email,
-                GoogleId = user.google_id,
-                UserName = user.email,
-                Picture = user.picture,
-                FullName = user.name,
-                EmailConfirmed = true,
-                uuid = user.uuid
-            });
-            return Json(res);
+
+            string baseUrl = "localhost:8462";
+            var res = await acTools.ForgotPassword(user.email, user.uuid, baseUrl);
+            return Json(res, JsonRequestBehavior.AllowGet);
         }
         //public ActionResult Error()
         //{

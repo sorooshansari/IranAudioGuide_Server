@@ -100,26 +100,25 @@ namespace IranAudioGuide_MainServer.Models
             return CreateingUserResult.fail;
         }
 
-        public async Task<SignInResults> ForgotPassword(string email, string uuid, string baseUrl)
+        public async Task<RecoverPassResults> ForgotPassword(string email, string uuid, string baseUrl)
         {
             try
             {
                 var appUser = await UserManager.FindByNameAsync(email);
-                if (appUser != null)
-                {
-                    if (appUser.uuid != uuid)
-                        return SignInResults.uuidMissMatch;
-                    if (!appUser.EmailConfirmed)
-                        return SignInResults.RequiresVerification;
-                }
+                if (appUser == null)
+                    return RecoverPassResults.NotUser;
+                if (appUser.uuid != uuid)
+                    return RecoverPassResults.uuidMissMatch;
+                if (!appUser.EmailConfirmed)
+                    return RecoverPassResults.RequiresVerification;
                 string code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
                 var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, appUser.Id, code);
                 await UserManager.SendEmailAsync(appUser.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                return SignInResults.Success;
+                return RecoverPassResults.Success;
             }
             catch (Exception ex)
             {
-                return SignInResults.Failure;
+                return RecoverPassResults.Failure;
             }
         }
 
