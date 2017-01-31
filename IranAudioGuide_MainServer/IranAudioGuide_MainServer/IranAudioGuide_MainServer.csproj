@@ -256,6 +256,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Services\ChallengeResult.cs" />
+    <Compile Include="Services\ServiceIPAdress.cs" />
+    <Compile Include="Services\ServiceRecaptcha.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
