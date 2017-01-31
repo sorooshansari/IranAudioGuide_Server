@@ -25,8 +25,28 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "AppUser")]
+        public ActionResult UserProfile()
+        {
+            return View();
+        }
 
-    
+        [Authorize(Roles = "AppUser")]
+        public ActionResult PackagesPurchased()
+        {
+            return View();
+        }
+        [Authorize(Roles = "AppUser")]
+        public ActionResult Packages()
+        {
+            return View();
+        }
+        [Authorize(Roles = "AppUser")]
+        public ActionResult DeactivateMobile()
+        {
+            return View();
+        }
+
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

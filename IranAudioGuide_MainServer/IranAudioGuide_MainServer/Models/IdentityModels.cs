@@ -15,6 +15,7 @@ namespace IranAudioGuide_MainServer.Models
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
+            TimeSetUuid = null;
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
@@ -26,6 +27,8 @@ namespace IranAudioGuide_MainServer.Models
         public gender gender { get; set; }
         public string Picture { get; set; }
         public string uuid { get; set; }
+        public DateTime? TimeSetUuid { get; set; }
+
     }
     public class UserLog
     {
@@ -37,6 +40,11 @@ namespace IranAudioGuide_MainServer.Models
         public string UsL_UUId { get; set; }
         [Display(Name = "date time")]
         public DateTime UsL_DateTime { get; set; }
+    }
+    public class LogUserFailure
+    {
+        public int Id { get; set; }
+        public string IpAddress { get; set; }
     }
     public class Payment
     {
@@ -218,6 +226,7 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<TipCategory> TipCategories { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<LogUserFailure> LogUserFailures { get; set; }
         //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_MainServer.Models.ApplicationUser> ApplicationUsers { get; set; }
     }

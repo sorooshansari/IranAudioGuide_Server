@@ -11,7 +11,6 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     public class UserApiController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         [HttpPost]
         public IHttpActionResult GetCurrentUserInfo()
@@ -19,16 +18,19 @@ namespace IranAudioGuide_MainServer.Controllers
             try
             {
                 string userName = User.Identity.Name;
-                UserInfo Info = (from user in db.Users
-                                 where user.UserName == userName
-                                 select new UserInfo()
-                                 {
-                                     Email = user.Email,
-                                     FullName = user.FullName,
-                                     imgUrl = user.ImgUrl
-                                 }).FirstOrDefault();
+                using (var db = new ApplicationDbContext())
+                {
+                    UserInfo Info = (from user in db.Users
+                                     where user.UserName == userName
+                                     select new UserInfo()
+                                     {
+                                         Email = user.Email,
+                                         FullName = user.FullName,
+                                         imgUrl = user.ImgUrl
+                                     }).FirstOrDefault();
 
-                return Ok(Info);
+                    return Ok(Info);
+                }
             }
             catch (Exception ex)
             {
@@ -38,60 +40,134 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         // GET: User
         [Authorize(Roles = "AppUser")]
-        public IHttpActionResult GetPackages()
+        public IHttpActionResult GetPackagesPurchased()
         {
             try
             {
-                string userName = User.Identity.Name;
-                var list = db.Payments.Include("User").Include("Package").Include("Package.Pac_Cities")
-                       .Where(x => x.User.UserName == userName)
-                       .Where(x => x.PaymentFinished == true)
-                       .Select(p => p.Package).Select(p => new PackageVM()
-                       {
-                           PackagePrice = p.Pac_Price,
-                           PackageId = p.Pac_Id,
-                           PackageName = p.Pac_Name,
-                           PackageCities = p.Pac_Cities.Select(c => new CityVM()
+                using (var db = new ApplicationDbContext())
+                {
+                    string userName = User.Identity.Name;
+                    var list = db.Payments.Include("User").Include("Package").Include("Package.Pac_Cities")
+                           .Where(x => x.User.UserName == userName)
+                           .Where(x => x.PaymentFinished == true)
+                           .Select(p => p.Package).Select(p => new PackageVM()
                            {
-                               CityName = c.Cit_Name,
-                               CityDesc = c.Cit_Description,
-                               CityID = c.Cit_Id,
-                               CityImageUrl = c.Cit_ImageUrl,
-                               Places = (from pl in db.Places
-                                         where pl.Pla_city.Cit_Id == c.Cit_Id
-                                         select new PlaceVM()
-                                         {
-                                             PlaceName = pl.Pla_Name,
-                                             PlaceId = pl.Pla_Id,
-                                             CityName = pl.Pla_Name,
-                                             PlaceAddress = pl.Pla_Address,
-                                             PlaceDesc = pl.Pla_Discription,
-                                             ImgUrl = pl.Pla_ImgUrl,
+                               PackagePrice = p.Pac_Price,
+                               PackageId = p.Pac_Id,
+                               PackageName = p.Pac_Name,
+                               PackageCities = p.Pac_Cities.Select(c => new CityVM()
+                               {
+                                   CityName = c.Cit_Name,
+                                   CityDesc = c.Cit_Description,
+                                   CityID = c.Cit_Id,
+                                   CityImageUrl = c.Cit_ImageUrl,
+                                   Places = (from pl in db.Places
+                                             where pl.Pla_city.Cit_Id == c.Cit_Id
+                                             select new PlaceVM()
+                                             {
+                                                 PlaceName = pl.Pla_Name,
+                                                 PlaceId = pl.Pla_Id,
+                                                 CityName = pl.Pla_Name,
+                                                 PlaceAddress = pl.Pla_Address,
+                                                 PlaceDesc = pl.Pla_Discription,
+                                                 ImgUrl = pl.Pla_ImgUrl,
 
-                                         }).ToList()
-                           }).ToList()
-                       }).ToList();
+                                             }).ToList()
+                               }).ToList()
+                           }).ToList();
 
-                return Ok(list);
+                    return Ok(list);
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
+
+
+        [HttpPost]
+        [Authorize(Roles = "AppUser")]
+        public IHttpActionResult GetPackages()
+        {
+            try
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    string userName = User.Identity.Name;
+                    var list = db.Packages.Include("Package.Pac_Cities")
+                        .Select(p => new PackageVM()
+                        {
+                            PackagePrice = p.Pac_Price,
+                            PackageId = p.Pac_Id,
+                            PackageName = p.Pac_Name,
+                            PackageCities = p.Pac_Cities.Select(c => new CityVM()
+                            {
+                                CityName = c.Cit_Name,
+                                CityDesc = c.Cit_Description,
+                                CityID = c.Cit_Id,
+                                CityImageUrl = c.Cit_ImageUrl,
+                                Places = (from pl in db.Places
+                                          where pl.Pla_city.Cit_Id == c.Cit_Id
+                                          select new PlaceVM()
+                                          {
+                                              PlaceName = pl.Pla_Name,
+                                              PlaceId = pl.Pla_Id,
+                                              CityName = pl.Pla_Name,
+                                              PlaceAddress = pl.Pla_Address,
+                                              PlaceDesc = pl.Pla_Discription,
+                                              ImgUrl = pl.Pla_ImgUrl,
+
+                                          }).ToList()
+                            }).ToList()
+                        }).ToList();
+
+                    return Ok(list);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         [HttpGet]
         public IHttpActionResult DeactivateMobile()
         {
-
-            return Ok();
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            using (var db = new ApplicationDbContext())
             {
-                db.Dispose();
+                string userName = User.Identity.Name;
+                var user = db.Users.FirstOrDefault(x => x.UserName == userName);
+                // user.TimeSetUuid = new DateTime(2016, 9, 9);
+                if (user.TimeSetUuid == null)
+                {
+                    user.TimeSetUuid = DateTime.Now;
+                    user.uuid = null;
+                }
+                else
+                {
+                    var daywating = Math.Round((DateTime.Now - user.TimeSetUuid.Value).TotalDays / 30);
+                    if (daywating > 6)
+                    {
+                        user.TimeSetUuid = DateTime.Now;
+                        user.uuid = null;
+                    }
+                    else
+                        return BadRequest("You should expect to wait up to " + daywating + " months");
+                }
+                db.SaveChanges();
+
+                return Ok();
             }
-            base.Dispose(disposing);
         }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

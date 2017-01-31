@@ -1,0 +1,95 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+     .itemSelcted i {
+        float: left;
+        text-shadow: 1px 1px 1px #092f40, -1px -2px 1px #092f40;
+    }
+
+    .itemSelcted h1 span {
+        color: rgb(25, 22, 1);
+        text-shadow: 1px 1px 1px #ccc;
+    }
+
+    .itemSelcted p {
+        color: rgba(54, 56, 74, 0.72);
+    }
+
+    .ui-select-bootstrap .ui-select-choices-row:hover {
+        color: #fff !important;
+        text-decoration: none;
+        outline: 0;
+        background-color: green;
+    }
+
+    .ui-select-bootstrap .ui-select-choices-row.active .itemSelcted p {
+        color: #fff !important;
+    }
+
+    .ui-select-bootstrap .ui-select-choices-row > span:hover, .ui-select-bootstrap .ui-select-choices-row > span:focus {
+         background-color: rgb(175, 208, 236)!important;
+    }
+   .ui-select-bootstrap .ui-select-toggle > .caret {
+  
+    display: none;
+}
+
+</style>
+<div class="portlet light menu-pakages" ng-if="packages.length != 0">
+    <div class="portlet-title">
+        <div class="caption caption-md">
+            <i class="icon-bar-chart theme-font hide"></i>
+            <span class="caption-subject font-blue-madison bold uppercase">Packages </span>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        <form class="form-horizontal">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>Please select your city or location</legend>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <div class="col-md-12 ">
+                        <div class="input-group">
+                             @*multiple---$item.title*@
+                            <ui-select  ng-model="modelItem.displayStatus" theme="bootstrap">
+                                <ui-select-match placeholder="Please select your city or location">
+                                    <span ng-bind="$select.selected.title"></span>
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in pakageForSelected | filter: {title: $select.search}">
+                                    
+                                    <div class="itemSelcted">
+                                        <h1>
+                                            <i ng-class="item.iconClass"></i>
+                                            <span> {{item.title}} </span>
+                                        </h1>
+                                        <p> {{item.description}}</p>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+
+                        </div>
+  </div>
+                </div>
+
+                <!-- Text input-->
+                <!-- Success message -->
+                <div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to you shortly.</div>
+
+                <!-- Button -->
+
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+
+

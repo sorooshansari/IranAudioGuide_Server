@@ -1,11 +1,43 @@
 ﻿//Developed by pourmand
-userApp.controller('userController', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
+userApp.filter('propsFilter', function () {
+    return function (items, props) {
+        var out = [];
+
+        if (angular.isArray(items)) {
+            var keys = Object.keys(props);
+
+            items.forEach(function (item) {
+                var itemMatches = false;
+
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
+        }
+
+        return out;
+    };
+}).controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificService', function ($scope, userServices, $timeout, notific) {
     $scope.user = {
         isAutintication: false,
         username: "test"
     }
 
-
+    $scope.profile = {
+        istest: true
+    };
     userServices.getUser().then(function (data) {
         $scope.user = data;
         $scope.user.isAutintication = true;
@@ -14,19 +46,58 @@ userApp.controller('userController', ['$scope', 'userServices', '$timeout', func
         userServices.deactivateMobile();
     };
     $scope.getPalaceForCity = function (city) {
-        $scope.city = city;
+        $scope.profile.city = city;
     };
 
-    $scope.isDisplayPakages = false;
+    $scope.profile.isCompletedLoading = false;
+    $scope.getPackagesPurchased = function (event) {
 
-    userServices.getPackages().then(function (data) {   
-        $scope.packages = data;
-        $scope.city = data[0].PackageCities[0];
-        $timeout(function () {
-            $scope.isDisplayPakages = true;
-            nav();
-        }, 2000);
-    })
+        var calssName = $(event.target).find("i").attr('class');
+        var s = $(event.target).find("i").removeAttr('class').addClass("fa fa-spinner fa-spin");
+
+        userServices.getPackagesPurchased().then(function (data) {
+            if (data.length == 0) {
+                $scope.profile.packages = [];
+                $scope.profile.city = "";
+                $scope.IsShowMessage = true;
+            }
+            else {
+                $scope.profile.packages = data;
+                $scope.profile.city = data[0].PackageCities[0];
+            }
+            $timeout(function () {
+                nav();
+                $(event.target).find("i").removeAttr('class').addClass(calssName);
+            }, 2000);
+        })
+
+    }
+    $scope.deactivateMobile = function () {
+        userServices.deactivateMobile()
+            .then(function (data) {
+                console.log("deactivateMobile: suc", data);
+            }, function (error) {
+                notific.error("ERROR", error.Message);
+            });
+    }
+    $scope.getPackages = function (event) {
+
+        var element = $(event.target).find("i");
+        var calssName = element.attr('class');
+        var s = element.removeAttr('class').addClass("fa fa-spinner fa-spin");
+
+        userServices.getPackages().then(function (data) {
+            $scope.profile.packages = data;
+            element.removeAttr('class').addClass(calssName);
+            $scope.profile.isCompletedLoading = true;
+        })
+     
+    }
+    //$scope.profile.isCompletedLoading = true;
+
+    $timeout(function () {
+        angular.element('#btnGetPakage').triggerHandler('click');
+    }, 0);
     var nav = function () {
         $('.gw-nav > li > a').click(function () {
             var gw_nav = $('.gw-nav');
@@ -66,3 +137,106 @@ userApp.controller('userController', ['$scope', 'userServices', '$timeout', func
         });
     };
 }])
+.filter('propsFilter', function () {
+    return function (items, props) {
+        var out = [];
+
+        if (angular.isArray(items)) {
+            var keys = Object.keys(props);
+
+            items.forEach(function (item) {
+                var itemMatches = false;
+
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
+        }
+
+        return out;
+    };
+});
+userApp.controller('PackagesCtrl', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
+    if (typeof $scope.profile.packages == undefined)
+        return;
+    $scope.$watch("profile.packages", function (newval, oldval) {
+        if (typeof newval != undefined) {
+            initPakage();
+        }
+    });
+    var initPakage = function () {
+        //console.log($scope.profile.packages);
+        $scope.pakageForSelected = [];
+        _.each($scope.profile.packages, function (item) {
+            //set city
+            //$scope.pakageForSelected.push({
+
+            //})
+            console.log("item:",item)
+        })//end each $scope.profile.package
+    }
+    //_
+    //$scope.profile.city = data[0].PackageCities[0];
+    //    console.log("item"item)
+
+
+    //    return num * 3;
+    //}); 
+
+    var typeEachItemFoSelection = ['City', 'Place'];
+    $scope.pakageForSelected = [{
+        id: 1,
+        idItem:0,
+        type: typeEachItemFoSelection[0],
+        title: "Siraz",
+        description: "There are 3 locations for this city",
+        iconClass: "fa fa-bolt",
+       
+    },{
+        id: 2,
+        idItem:0,
+        type: typeEachItemFoSelection[1],
+        title: "Jundishapur",
+        description: "There is this place in Shiraz",
+        iconClass:  "fa fa-leaf",
+       
+    }, {
+        id: 3,
+        idItem: 0,
+        type: typeEachItemFoSelection[1],
+        title: "hafezieh",
+        description: "There is this place in Shiraz",
+        iconClass: "fa fa-leaf",
+
+    }]
+    //$scope.productStatuce = $scope.productStatuse;
+    $scope.modelItem = {
+        StatusType: $scope.pakageForSelected[0]
+    };
+    //$scope.getProductStatus = function () {
+    //    var deferred = $q.defer();
+    //    deferred.resolve($scope.productStatuce);
+    //    return deferred;
+    //};
+
+
+
+
+}]);
+
+userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
+    console.log($scope.p);
+
+}]);

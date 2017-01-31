@@ -1,0 +1,78 @@
+﻿
+@{
+    Layout = null;
+}
+<div class="portlet light " >
+    <div class="portlet-title">
+        <div class="caption caption-md">
+            <i class="icon-bar-chart theme-font hide"></i>Places OF
+            <span class="caption-subject font-blue-madison bold uppercase"> {{profile.city.CityName}}</span>
+
+        </div>
+
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-12 blog-page">
+
+                <div class="row" ng-repeat="item in profile.city.Places">
+
+                    <div class="col-md-12 col-sm-12 article-block">
+                        @*<h1 style="margin-top:0px">Places</h1>*@
+                        <div class="row">
+
+                            <div class="col-md-4 blog-img blog-tag-data">
+
+                                <img src="~/images/banner2.jpg" class="img-responsive" />
+                                @*<img ng-src="~/images/Places/{{item.ImgUrl}}" alt="" class="img-responsive">*@
+                                <ul class="list-inline">
+                                    <li>
+                                        <i class="fa fa-map-marker"></i>
+                                        {{item.PlaceAddress}}
+                                    </li>
+
+                                </ul>
+                                @*<ul class="list-inline blog-tags">
+                                        <li>
+                                            <i class="fa fa-tags"></i>
+                                            <a href="javascript:;">
+                                                Technology
+                                            </a>
+                                            <a href="javascript:;">
+                                                Education
+                                            </a>
+                                            <a href="javascript:;">
+                                                Internet
+                                            </a>
+                                        </li>
+                                    </ul>*@
+                            </div>
+                            <div class="col-md-8 blog-article">
+                                <h3>
+                                    <a href="page_blog_item.html">
+                                        {{item.PlaceName}}
+                                    </a>
+                                </h3>
+                                <p>
+                                    {{item.PlaceDesc}}
+                                </p>
+                                @*<a class="btn blue" ng-click="showPlaceInfo(item.PlaceId)">
+                                        Read more <i class="m-icon-swapright m-icon-white"></i>
+                                    </a>*@
+                            </div>
+                            <hr>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- END PORTLET -->
+        </div>
+
+    </div>
+
+</div>
+<div ng-if="IsShowMessage">
+    there is no pakage
+</div>

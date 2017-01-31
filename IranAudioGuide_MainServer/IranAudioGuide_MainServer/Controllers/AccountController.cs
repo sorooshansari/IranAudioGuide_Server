@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IranAudioGuide_MainServer.Models;
+using IranAudioGuide_MainServer.Services;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -22,7 +23,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +35,9 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -57,9 +58,12 @@ namespace IranAudioGuide_MainServer.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            var model = new LoginViewModel();
+            var serviceIpAdress = new ServiceIpAdress();
+            ViewBag.IsTheFirstLogin = serviceIpAdress.IsIpadressFailuers();
             ViewBag.View = Views.Login;
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View(model);
         }
 
         //
@@ -69,9 +73,22 @@ namespace IranAudioGuide_MainServer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            var serviceIpAdress = new ServiceIpAdress();
+            ViewBag.IsTheFirstLogin = serviceIpAdress.IsIpadressFailuers();
+            if (!ViewBag.IsTheFirstLogin)
+            {
+                var response = Request["g-recaptcha-response"];
+                if ((response == null || response == "" || !ServiceRecaptcha.IsValid(response)))
+                {
+                    ModelState.AddModelError("", ServiceRecaptcha.ErrorMessage);
+                    return View(model);
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 ViewBag.View = Views.Login;
+
                 return View(model);
             }
 
@@ -81,6 +98,7 @@ namespace IranAudioGuide_MainServer.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    serviceIpAdress.RemoveIpadressFailuers();
                     var user = UserManager.FindByName(model.Email);
                     string UserRole = UserManager.GetRoles(user.Id).FirstOrDefault();
                     if (UserRole == "Admin")
@@ -92,8 +110,14 @@ namespace IranAudioGuide_MainServer.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new
+                    {
+                        ReturnUrl = returnUrl,
+                        RememberMe = model.RememberMe
+                    });
                 case SignInStatus.Failure:
+                    serviceIpAdress.SaveIpadressFailuers();
+                    ViewBag.IsTheFirstLogin = false;
                     ModelState.AddModelError("", "Invalid username or password.");
                     return View(model);
                 default:
@@ -131,7 +155,7 @@ namespace IranAudioGuide_MainServer.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -168,7 +192,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "AppUser");
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -354,7 +378,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
                 case SignInStatus.Failure:
-                    var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email };
+                    var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
                     var r = await UserManager.CreateAsync(user);
                     if (!r.Succeeded)
                         return RedirectToAction("Login");
@@ -505,4 +529,5 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         #endregion
     }
+
 }

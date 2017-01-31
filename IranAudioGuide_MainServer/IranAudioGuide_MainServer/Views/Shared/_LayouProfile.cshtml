@@ -29,17 +29,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>@ViewBag.Title</title>    @Styles.Render("~/Content/minCss")
-    <link href="~/assets/profile/components-md.css" id="style_components" rel="stylesheet" />
+    <title>@ViewBag.Title</title>     
 
-    <link href="~/assets/profile/profile.css" rel="stylesheet" />
-    <link href="~/assets/profile/custom.css" rel="stylesheet" />
+       @Styles.Render("~/Content/minCss")
+
+
+    @*<link href="~/Scripts/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" rel="stylesheet" />*@
+
+    <script src="~/Content/toastr.min.js"></script>
+    <link href="~/Scripts/ui-select/select.min.css" rel="stylesheet" />
+    <link href="~/Content/profile.css" rel="stylesheet" />
+    <link href="~/Content/components-md.css" rel="stylesheet" />
+    <link href="~/Content/select.css" rel="stylesheet" />
+
+ @*<link href="~/assets/profile/custom.css" rel="stylesheet" />*@
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/ie9.css" /><![endif]-->
 
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </head>
-<body class="page-md landing" ng-app="userApp" ng-controller="userController">
+<body class="page-md landing" ng-app="userApp" >
     <!-- Page Wrapper -->
     <div id="page-wrapper">
         <!-- Header -->
@@ -67,13 +79,10 @@
 
         @RenderBody()
 
-
     </div>
-    <link rel="stylesheet" href="~/Content/loading.css" />
 
 
     @Scripts.Render("~/bundles/minJs")
-
     <!-- Quantcast Tag -->
     <script type="text/javascript">
         var _qevents = _qevents || [];
@@ -93,6 +102,20 @@
     </script>
 
 
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <script src="~/Scripts/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/angular.js"></script>
+
+    <script src="~/Scripts/angular-sanitize.js"></script>
+    <script src="~/Scripts/angular-animate.js"></script>*@
+    <script src="~/Scripts/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/select.min.js"></script>
+    <script src="~/Scripts/Underscore.js"></script>
+
+    <script src="~/Scripts/notify.js"></script>
+    <script src="~/Scripts/notify-metro.js"></script>
     <script src="~/Scripts/UserCustom.js"></script>
     <script src="~/Scripts/UserServices.js"></script>
     <script src="~/Scripts/UserControllers.js"></script>

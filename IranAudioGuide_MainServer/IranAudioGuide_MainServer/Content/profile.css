@@ -7,15 +7,40 @@ Portfolio
 Portfolio
 ***/
 /*Portfolio Filter*/
-.page-content {
-    background: rgba(167, 215, 239, 0.68);
-    padding: 6% 0 15px;
+.load {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(14, 113, 57);
+    text-align: center;
 }
+
+.unload {
+    display: none;
+}
+
+
+.page-content {
+     background: rgba(167, 215, 239, 0.68);
+    padding: 6% 12%;
+    min-height: 100vh;
+    height: 100%;
+}
+
 .profile-usertitle {
     text-shadow: none;
     color: #000;
-    font-size: 10pt;
-    padding: 0 0 0px 26px;
+    font-size: 91%;
+    padding: 0 0 0px 2%;
+}
+.profile-usermenu ul li {
+    border: 2px solid #90adb9;
+    margin: 15px 0 -8px 0; color: #000;
+}
+.profile-usermenu ul.nav {
+   
 }
 .blog-article h3 {
     color: #000;
@@ -25,49 +50,18 @@ Portfolio
     margin: 0;
     padding: 0;
 }
+
 .blog-article p {
     text-shadow: none;
     color: #000;
     font-size: 12pt;
 }
+
 .list-inline {
- 
     color: #1e2c33;
     font-size: 11pt;
 }
-@media screen and (max-width: 768px) {
-    .margin-top-9-percentage {
-        margin-top: 9% !important;
-    }
-}
 
-@media screen and (max-width: 766px) and (min-width: 427px) {
-    .right-side-panel .portlet-body {
-        width: 85%;
-    }
-    .right-side-panel .portlet-title{
-        display:none;
-    }
-    .right-side-panel {
-        max-width: 100% !important;
-    }
-
-    .profile-sidebar {
-        max-width: 27% !important;
-        float: left;
-        display: -webkit-inline-box;
-    }
-
-    .menu-pakages {
-        width: 72% !important;
-        float: right;
-        display: -webkit-inline-box;
-    }
-
-    .left-side-panel {
-        max-width: 100% !important;
-    }
-}
 
 .mix-filter {
     list-style: none;
@@ -176,19 +170,7 @@ Portfolio
             border: solid 1px #eee;
         }
 
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 992px) {
-    .mix-grid .mix.col-md-6.col-sm-6 .mix-details {
-        height: 50%;
-    }
-}
 
-@media (min-width: 768px) and (max-width: 991px) {
-    .mix-grid .mix a.mix-link,
-    .mix-grid .mix a.mix-preview {
-        margin-top: 5px;
-    }
-}
 /***
 Blog Page
 ***/
@@ -211,10 +193,10 @@ Blog Page
         }
 
     .blog-page hr {
-           /*margin-top: 30px !important;*/
-    border: 1px solid #8aaaba;
-    width: 94%;
-    margin: 0 3%;
+        /*margin-top: 30px !important;*/
+        border: 1px solid #8aaaba;
+        width: 94%;
+        margin: 0 3%;
     }
 
     .blog-page .article-block {
@@ -263,7 +245,7 @@ Blog Page
             }
 
         .blog-page .blog-tag-data .blog-tag-data-inner {
-            text-align: right;
+            text-align: left;
         }
 
         .blog-page .blog-tag-data img {
@@ -280,3 +262,58 @@ Blog Page
         .blog-page .blog-article h4 {
             margin-top: 0;
         }
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 992px) {
+    .mix-grid .mix.col-md-6.col-sm-6 .mix-details {
+        height: 50%;
+    }
+
+}
+@media (max-width: 992px) {
+  .page-content {
+        padding-left:3%;
+        padding-right:3%;
+    }
+
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .mix-grid .mix a.mix-link,
+    .mix-grid .mix a.mix-preview {
+        margin-top: 5px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .margin-top-9-percentage {
+        margin-top: 9% !important;
+    }
+  
+}
+
+@media screen and (max-width: 766px) and (min-width: 427px) {
+    .right-side-panel .portlet-body {
+        width: 85%;
+    }
+
+    .right-side-panel .portlet-title {
+        display: none;
+    }
+
+    .right-side-panel {
+        width: 100% !important;
+        display: flex;
+    }
+
+    .profile-sidebar {
+        max-width: 40% !important;
+            margin: 0 2%;
+    }
+
+    .menu-pakages {
+        width: 60% !important;
+    }
+
+    .left-side-panel {
+        max-width: 100% !important;
+    }
+}

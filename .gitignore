@@ -248,3 +248,5 @@ ModelManifest.xml
 /IranAudioGuide_MainServer/IranAudioGuide_MainServer/App_Data
 *.png
 *.html
+/IranAudioGuide_MainServer/IranAudioGuide_MainServer/images
+/IranAudioGuide_MainServer/test

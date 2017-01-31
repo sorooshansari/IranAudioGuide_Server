@@ -19,16 +19,32 @@
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
                         </div>
                     </div>
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div class="col-md-8">
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
                         </div>
                     </div>
+                        if (!ViewBag.IsTheFirstLogin)
+                        {
+
+
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                @* for localhost *@
+                                <div class="g-recaptcha" data-sitekey="6Ld6bBMUAAAAAOHQSbMbcULAOPXQIY9CzhRJe2-D"></div>
+                                @*  for server
+                                    <div class="g-recaptcha" data-sitekey="6LdmbRMUAAAAAJK7NTs6f4lHluxq-6ZI7efyiXsV"></div>
+                                *@
+                            </div>
+                        </div>
+                    }
+
+
                     <div class="form-group">
                         <div class="col-md-8 checkbox">
                             @*<input type="checkbox" id="RememberMe" name="RememberMe" value="true">
-                            <label for="RememberMe">Remember me?</label>*@
+                                <label for="RememberMe">Remember me?</label>*@
                             @*<input type="checkbox" id="a" name="a" value="true">*@
                             @Html.CheckBoxFor(m => m.RememberMe)
                             @Html.LabelFor(m => m.RememberMe)
