@@ -112,6 +112,7 @@ namespace IranAudioGuide_MainServer.Models
                 if (!appUser.EmailConfirmed)
                     return RecoverPassResults.RequiresVerification;
                 string code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
+                code = HttpUtility.UrlEncode(code);
                 var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, appUser.Id, code);
                 await UserManager.SendEmailAsync(appUser.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 return RecoverPassResults.Success;
