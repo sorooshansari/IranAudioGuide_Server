@@ -68,7 +68,7 @@ namespace IranAudioGuide_MainServer.Models
             }
             return new AuthorizedUser() { Result = SignInResults.Failure };
         }
-        public async Task<CreateingUserResult> CreateAppUser(string Email, string password, string uuid, string baseUrl)
+        public async Task<CreateingUserResult> CreateAppUser(string fullName, string Email, string password, string uuid, string baseUrl)
         {
             var appUser = await UserManager.FindByNameAsync(Email);
             if (appUser != null)
@@ -79,7 +79,7 @@ namespace IranAudioGuide_MainServer.Models
                     return CreateingUserResult.googleUser;
                 return CreateingUserResult.userExists;
             }
-            var user = new ApplicationUser() { UserName = Email, Email = Email, uuid = uuid };
+            var user = new ApplicationUser() { UserName = Email, Email = Email, uuid = uuid, FullName = fullName };
             var result = await UserManager.CreateAsync(user, password);
             if (result.Succeeded)
             {
@@ -99,6 +99,30 @@ namespace IranAudioGuide_MainServer.Models
             }
             return CreateingUserResult.fail;
         }
+
+        public async Task<RecoverPassResults> ForgotPassword(string email, string uuid, string baseUrl)
+        {
+            try
+            {
+                var appUser = await UserManager.FindByNameAsync(email);
+                if (appUser == null)
+                    return RecoverPassResults.NotUser;
+                if (appUser.uuid != uuid)
+                    return RecoverPassResults.uuidMissMatch;
+                if (!appUser.EmailConfirmed)
+                    return RecoverPassResults.RequiresVerification;
+                string code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
+                code = HttpUtility.UrlEncode(code);
+                var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, appUser.Id, code);
+                await UserManager.SendEmailAsync(appUser.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RecoverPassResults.Success;
+            }
+            catch (Exception ex)
+            {
+                return RecoverPassResults.Failure;
+            }
+        }
+
         public async Task<CreateingUserResult> CreateGoogleUser(ApplicationUser userInfo)
         {
             var appUser = await UserManager.FindByNameAsync(userInfo.Email);

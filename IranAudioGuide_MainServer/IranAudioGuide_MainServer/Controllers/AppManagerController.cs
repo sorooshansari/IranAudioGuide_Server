@@ -90,26 +90,39 @@ namespace IranAudioGuide_MainServer.Controllers
             return res;
         }
         [HttpPost]
+        public async Task<IHttpActionResult> ForgotPassword(ForgotPassUser user)
+        {
+            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            var res = await acTools.ForgotPassword(user.email, user.uuid, baseUrl);
+            return Json(res);
+        }
+        [HttpPost]
         public async Task<CreateingUserResult> AutenticateGoogleUser(GoogleUserInfo user)
         {
-            var res = await acTools.CreateGoogleUser(new ApplicationUser()
+            try
             {
-                Email = user.email,
-                GoogleId = user.google_id,
-                UserName = user.email,
-                Picture = user.picture,
-                FullName = user.name,
-                gender = (user.gender.ToLower() == "female") ? gender.Female : (user.gender.ToLower() == "male") ? gender.Male : gender.Unknown,
-                EmailConfirmed = true,
-                uuid = user.uuid
-            });
-            return res;
+                var res = await acTools.CreateGoogleUser(new ApplicationUser()
+                {
+                    Email = user.email,
+                    GoogleId = user.google_id,
+                    UserName = user.email,
+                    Picture = user.picture,
+                    FullName = user.name,
+                    EmailConfirmed = true,
+                    uuid = user.uuid
+                });
+                return res;
+            }
+            catch (Exception ex)
+            {
+                return CreateingUserResult.fail;
+            }
         }
         [HttpPost]
         public async Task<IHttpActionResult> ResgisterAppUser(AppUser user)
         {
             string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
-            var res = await acTools.CreateAppUser(user.email, user.password, user.uuid, baseUrl);
+            var res = await acTools.CreateAppUser(user.fullName, user.email, user.password, user.uuid, baseUrl);
             return Json(res);
         }
         [HttpPost]
@@ -127,7 +140,6 @@ namespace IranAudioGuide_MainServer.Controllers
                 return null; 
             var userProfile = new UserProfile()
             {
-
                 Email = user.UserName,
                 FullName = user.FullName,
                 imgUrl = user.ImgUrl,
