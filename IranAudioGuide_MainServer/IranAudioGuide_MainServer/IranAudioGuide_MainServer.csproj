@@ -1303,6 +1303,10 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\User\DeactivateMobile.cshtml" />
+    <Content Include="Views\User\Packages.cshtml" />
+    <Content Include="Views\User\PackagesPurchased.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
