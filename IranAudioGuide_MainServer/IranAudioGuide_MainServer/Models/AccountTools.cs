@@ -52,32 +52,40 @@ namespace IranAudioGuide_MainServer.Models
         public async Task<AuthorizedUser> AutorizeAppUser(string username, string password, string uuid)
         {
             var user = await UserManager.FindByNameAsync(username);
-            bool res = await UserManager.CheckPasswordAsync(user, password);
-            if (res)
+            var result = await SignInManager.PasswordSignInAsync(username, password, false, shouldLockout: true);
+            switch (result)
             {
-                if (user.uuid != uuid)
-                    return new AuthorizedUser() { Result = SignInResults.uuidMissMatch };
-                return new AuthorizedUser()
-                {
-                    GoogleId = user.GoogleId,
-                    Email = user.Email,
-                    FullName = user.FullName,
-                    Picture = user.Picture,
-                    Result = SignInResults.Success
-                };
+                case SignInStatus.Success:
+                    if (user.uuid != uuid)
+                        return new AuthorizedUser() { Result = SignInResults.uuidMissMatch };
+                    return new AuthorizedUser()
+                    {
+                        GoogleId = user.GoogleId,
+                        Email = user.Email,
+                        FullName = user.FullName,
+                        Picture = user.Picture,
+                        Result = SignInResults.Success
+                    };
+                case SignInStatus.LockedOut:
+                    return new AuthorizedUser() { Result = SignInResults.LockedOut };
+                case SignInStatus.RequiresVerification:
+                    return new AuthorizedUser() { Result = SignInResults.RequiresVerification };
+                case SignInStatus.Failure:
+                    return new AuthorizedUser() { Result = SignInResults.Failure };
+                default:
+                    return new AuthorizedUser() { Result = SignInResults.Failure };
             }
-            return new AuthorizedUser() { Result = SignInResults.Failure };
         }
-        public async Task<CreateingUserResult> CreateAppUser(string fullName, string Email, string password, string uuid, string baseUrl)
+        public async Task<CreatingUserResult> CreateAppUser(string fullName, string Email, string password, string uuid, string baseUrl)
         {
             var appUser = await UserManager.FindByNameAsync(Email);
             if (appUser != null)
             {
-                if (appUser.uuid != uuid)
-                    return CreateingUserResult.uuidMissMatch;
+                if (appUser.uuid != null & appUser.uuid != uuid)
+                    return CreatingUserResult.uuidMissMatch;
                 if (appUser.GoogleId != null && appUser.GoogleId.Length > 0)
-                    return CreateingUserResult.googleUser;
-                return CreateingUserResult.userExists;
+                    return CreatingUserResult.googleUser;
+                return CreatingUserResult.userExists;
             }
             var user = new ApplicationUser() { UserName = Email, Email = Email, uuid = uuid, FullName = fullName };
             var result = await UserManager.CreateAsync(user, password);
@@ -90,14 +98,14 @@ namespace IranAudioGuide_MainServer.Models
                     await UserManager.AddToRoleAsync(user.Id, "AppUser");
                     var callbackUrl = string.Format("{0}/Account/ConfirmEmail?userId={1}&code={2}", baseUrl, user.Id, code);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    return CreateingUserResult.success;
+                    return CreatingUserResult.success;
                 }
                 catch (Exception)
                 {
                     UserManager.Delete(user);
                 }
             }
-            return CreateingUserResult.fail;
+            return CreatingUserResult.fail;
         }
 
         public async Task<RecoverPassResults> ForgotPassword(string email, string uuid, string baseUrl)
@@ -123,7 +131,7 @@ namespace IranAudioGuide_MainServer.Models
             }
         }
 
-        public async Task<CreateingUserResult> CreateGoogleUser(ApplicationUser userInfo)
+        public async Task<CreatingUserResult> CreateGoogleUser(ApplicationUser userInfo)
         {
             var appUser = await UserManager.FindByNameAsync(userInfo.Email);
             if (appUser == null)
@@ -132,18 +140,18 @@ namespace IranAudioGuide_MainServer.Models
                 if (res.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(userInfo.Id, "AppUser");
-                    return CreateingUserResult.success;
+                    return CreatingUserResult.success;
                 }
             }
             else
             {
                 if (appUser.uuid == null || appUser.uuid == userInfo.uuid)
                 {
-                    return (await updateUserInfo(appUser, userInfo)) ? CreateingUserResult.success : CreateingUserResult.fail;
+                    return (await updateUserInfo(appUser, userInfo)) ? CreatingUserResult.success : CreatingUserResult.fail;
                 }
-                return CreateingUserResult.uuidMissMatch;
+                return CreatingUserResult.uuidMissMatch;
             }
-            return CreateingUserResult.fail;
+            return CreatingUserResult.fail;
         }
         private async Task<bool> updateUserInfo(ApplicationUser user, ApplicationUser NewUserInfo)
         {
@@ -163,8 +171,8 @@ namespace IranAudioGuide_MainServer.Models
         {
             try
             {
-                return UserManager.FindByName(userName);   
-               
+                return UserManager.FindByName(userName);
+
             }
             catch
             {
@@ -177,7 +185,7 @@ namespace IranAudioGuide_MainServer.Models
         {
             try
             {
-               return  UserManager.GetRoles(user.Id);             
+                return UserManager.GetRoles(user.Id);
             }
             catch
             {

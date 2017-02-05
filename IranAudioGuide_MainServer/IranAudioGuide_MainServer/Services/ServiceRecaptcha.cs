@@ -20,7 +20,7 @@ namespace IranAudioGuide_MainServer.Controllers
     public static class ServiceRecaptcha
     {
 
-        private static string _secret= "6LdmbRMUAAAAAA-nf-Mc87EAt55tTpnZd97w1kl8";
+        private static string _secret= "6LffxRMUAAAAAFe57_yXZf8bFU-NjvNnsGPFpQQK";
         public static string    ErrorMessage { get; set; }
 
         public static bool IsValid(string response)
@@ -28,14 +28,19 @@ namespace IranAudioGuide_MainServer.Controllers
          
             //secret that was generated in key value pair
             var client = new WebClient();
-            var reply = client.DownloadString($"https://www.google.com/recaptcha/api/siteverify?secret={_secret}&response={response}");
+            var url = $"https://www.google.com/recaptcha/api/siteverify?secret={_secret}&response={response}";
+            var reply = client.DownloadString(url);
 
             var captchaResponse = JsonConvert.DeserializeObject<RepaptchaResponse>(reply);
 
             // when response is false check for the error message
             if (!captchaResponse.Success)
             {
-                //if (captchaResponse.ErrorCodes.Count <= 0) return View();
+                if (captchaResponse.ErrorCodes == null || captchaResponse.ErrorCodes.Count <= 0)
+                {
+                    ErrorMessage = "Error occured. Please try again";
+                    return false;
+                }
 
                 var error = captchaResponse.ErrorCodes[0].ToLower();
                 switch (error)

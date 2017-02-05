@@ -209,7 +209,7 @@ public class PaymentResult
         public string picture { get; set; }
         public string uuid { get; set; }
     }
-    public enum CreateingUserResult
+    public enum CreatingUserResult
     {
         //
         // Summary:

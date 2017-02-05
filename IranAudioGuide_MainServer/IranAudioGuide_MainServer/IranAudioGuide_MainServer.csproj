@@ -236,6 +236,22 @@
     <Compile Include="Migrations\201701141132429_afterNewPush.Designer.cs">
       <DependentUpon>201701141132429_afterNewPush.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701281126105_add-tabel-LogUserFailure.cs" />
+    <Compile Include="Migrations\201701281126105_add-tabel-LogUserFailure.Designer.cs">
+      <DependentUpon>201701281126105_add-tabel-LogUserFailure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701291242162_add-TimeSetUuid-for-user.cs" />
+    <Compile Include="Migrations\201701291242162_add-TimeSetUuid-for-user.Designer.cs">
+      <DependentUpon>201701291242162_add-TimeSetUuid-for-user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701291340547_add-TimeSetUuid-for-user2.cs" />
+    <Compile Include="Migrations\201701291340547_add-TimeSetUuid-for-user2.Designer.cs">
+      <DependentUpon>201701291340547_add-TimeSetUuid-for-user2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701311338252_deactiveLogFildAdded.cs" />
+    <Compile Include="Migrations\201701311338252_deactiveLogFildAdded.Designer.cs">
+      <DependentUpon>201701311338252_deactiveLogFildAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -1307,6 +1323,7 @@
     <Content Include="Views\User\Packages.cshtml" />
     <Content Include="Views\User\PackagesPurchased.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
+    <Content Include="Views\Shared\customError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1348,6 +1365,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701141132429_afterNewPush.resx">
       <DependentUpon>201701141132429_afterNewPush.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701281126105_add-tabel-LogUserFailure.resx">
+      <DependentUpon>201701281126105_add-tabel-LogUserFailure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701291242162_add-TimeSetUuid-for-user.resx">
+      <DependentUpon>201701291242162_add-TimeSetUuid-for-user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701291340547_add-TimeSetUuid-for-user2.resx">
+      <DependentUpon>201701291340547_add-TimeSetUuid-for-user2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701311338252_deactiveLogFildAdded.resx">
+      <DependentUpon>201701311338252_deactiveLogFildAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
