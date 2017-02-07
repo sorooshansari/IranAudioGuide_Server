@@ -16,6 +16,8 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        string _subject = "";
+        string _message = "";
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -134,7 +136,7 @@ namespace IranAudioGuide_MainServer.Controllers
             // Require that the user has already logged in via username/password or external login
             if (!await SignInManager.HasBeenVerifiedAsync())
             {
-                return View("Error");
+
             }
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
@@ -200,7 +202,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "User");
                 }
                 AddErrors(result);
             }
@@ -217,12 +219,30 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (userId == null || code == null)
             {
-                return View("Error");
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = "Confirmation Failed!",
+                    Message = "Unknown Error"
+                });
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (result.Succeeded)
+            {
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = "Email Confirmation",
+                    Message = @"Thank you for confirming your email. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                });
+            }
+            else
+            {
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = "Confirmation Failed!",
+                    Message = result.Errors.ToString()
+                });
+            }
         }
-
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
@@ -244,16 +264,27 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = "Forgot Password",
+                        Message = @"Please check your email to reset your password. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                    });
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 code = HttpUtility.UrlEncode(code);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string baseUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
+                var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, user.Id, code);
+                //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href='" + callbackUrl + "'>here</a>");
+                string ResetLink = Url.Action("ForgotPassword", "Account", model);
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = "Reset Password",
+                    Message = string.Format(@"We sent a reset password link to <strong style='color:red;'>{1}</strong> <br /> didn't receive email? <a href={0}>Resend</a> ", ResetLink, model.Email)
+                });
             }
 
             // If we got this far, something failed, redisplay form
@@ -261,12 +292,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
         //
-        // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
+      
 
         //
         // GET: /Account/ResetPassword
@@ -291,23 +317,23 @@ namespace IranAudioGuide_MainServer.Controllers
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = "Email Confirmation",
+                    Message = @"Your password has been reset. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                });
             }
             //var code = model.Code.Replace(" ", "+");
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = "Email Confirmation",
+                    Message = @"Your password has been reset. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                });
             }
             AddErrors(result);
-            return View();
-        }
-
-        //
-        // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ResetPasswordConfirmation()
-        {
             return View();
         }
 
@@ -452,6 +478,7 @@ namespace IranAudioGuide_MainServer.Controllers
             return View();
         }
 
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -471,6 +498,24 @@ namespace IranAudioGuide_MainServer.Controllers
 
             base.Dispose(disposing);
         }
+
+
+
+        #region Danial
+        public ActionResult vmessage(string subject,string Message)
+        {
+            
+            return View("vmessage", new vmessageVM()
+            {
+                Subject = subject,
+                Message = Message
+            });
+        }
+        
+        #endregion
+
+
+
 
         #region Helpers
         // Used for XSRF protection when adding external logins

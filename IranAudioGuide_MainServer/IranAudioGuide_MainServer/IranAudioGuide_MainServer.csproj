@@ -265,6 +265,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Models\Variables.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Zarinpal\Reference.cs">
@@ -1324,6 +1325,7 @@
     <Content Include="Views\User\PackagesPurchased.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\Shared\customError.cshtml" />
+    <Content Include="Views\Account\vmessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

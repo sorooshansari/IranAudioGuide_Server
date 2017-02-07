@@ -24,7 +24,11 @@ namespace IranAudioGuide_MainServer.Models
         notConfirmed = 4,
         unknownError = 5
     }
-
+    public class vmessageVM
+    {
+        public string Subject { get; set; }
+        public string Message { get; set; }
+    }
 
 public class PaymentResult
     {
@@ -290,7 +294,8 @@ public class PaymentResult
         Register,
         Login,
         AdminIndex,
-        UserIndex
+        UserIndex,
+        vmessage
     }
     public class AdminIndexVM
     {
