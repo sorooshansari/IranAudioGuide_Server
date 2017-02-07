@@ -51,43 +51,67 @@ namespace IranAudioGuide_MainServer.Models
         //    }
         //    return res;
         //}
+
+
+        //public GetPackagesVM GetPackagesByCity(int cityId)
+        //{
+        //    //var SP = new SqlParameter("@cityId", cityId);
+        //    //var dt = dbManager.MultiTableResultSP("GetPackagesByCity", SP);
+        //    //throw new NotImplementedException();
+        //    List<PackageVM> res = new List<PackageVM>();
+        //    string error = "";
+        //    try
+        //    {
+        //        using (var db = new ApplicationDbContext())
+        //        {
+        //            res = (from p in db.Packages
+        //                   orderby p.Pac_Price ascending
+        //                   where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(cityId)
+        //                   select new PackageVM()
+        //                   {
+        //                       PackageName = p.Pac_Name,
+        //                       PackageId = p.Pac_Id,
+        //                       PackagePrice = p.Pac_Price,
+        //                       PackageCities =
+        //                       (from c in db.Cities
+        //                        where
+        //                        (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
+        //                        select new CityVM()
+        //                        {
+        //                            CityDesc = c.Cit_Description,
+        //                            CityID = c.Cit_Id,
+        //                            CityName = c.Cit_Name
+        //                        }).ToList()
+        //                   }).ToList();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        error = ex.Message;
+        //    }
+        //    return new GetPackagesVM { packages = res, errorMessage = error };
+        //}
+
+
         public GetPackagesVM GetPackagesByCity(int cityId)
         {
-            //var SP = new SqlParameter("@cityId", cityId);
-            //var dt = dbManager.MultiTableResultSP("GetPackagesByCity", SP);
-            //throw new NotImplementedException();
-            List<PackageVM> res = new List<PackageVM>();
-            string error = "";
+            GetPackagesVM res;
             try
             {
-                using (var db = new ApplicationDbContext())
+                var SP = new SqlParameter("@CityId", cityId);
+                SP.SqlDbType = SqlDbType.Int;
+                var dt = dbManager.MultiTableResultSP("GetPackages", SP);
+                res = new GetPackagesVM()
                 {
-                    res = (from p in db.Packages
-                           orderby p.Pac_Price ascending
-                           where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(cityId)
-                           select new PackageVM()
-                           {
-                               PackageName = p.Pac_Name,
-                               PackageId = p.Pac_Id,
-                               PackagePrice = p.Pac_Price,
-                               PackageCities =
-                               (from c in db.Cities
-                                where
-                                (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-                                select new CityVM()
-                                {
-                                    CityDesc = c.Cit_Description,
-                                    CityID = c.Cit_Id,
-                                    CityName = c.Cit_Name
-                                }).ToList()
-                           }).ToList();
-                }
+                    packages = FillApiPackageVM(dt[0]),
+                    cities = FillApiCitInfoVM(dt[1])
+                };
             }
             catch (Exception ex)
             {
-                error = ex.Message;
+                res = new GetPackagesVM() { errorMessage = ex.Message };
             }
-            return new GetPackagesVM { packages = res, errorMessage = error };
+            return res;
         }
 
         public List<int> GetAutorizedCities(string userId)
@@ -255,5 +279,36 @@ namespace IranAudioGuide_MainServer.Models
                 });
             return res;
         }
+
+        #region PackageInfoFiller
+
+        private List<ApiPackageVM> FillApiPackageVM(DataTable dataTable)
+        {
+            List<ApiPackageVM> res = new List<ApiPackageVM>();
+            foreach (DataRow dr in dataTable.Rows)
+                res.Add(new ApiPackageVM()
+                {
+                    Id = (Guid)dr["Id"],
+                    Name = (dr["Name"] == DBNull.Value) ? string.Empty : dr["Name"].ToString(),
+                    Price = (long)dr["Price"]
+                });
+            return res;
+        }
+        private List<ApiCitInfoVM> FillApiCitInfoVM(DataTable dataTable)
+        {
+            List<ApiCitInfoVM> res = new List<ApiCitInfoVM>();
+            foreach (DataRow dr in dataTable.Rows)
+                res.Add(new ApiCitInfoVM()
+                {
+                    CityId = (int)dr["CityId"],
+                    PackageId = (Guid)dr["PackageId"],
+                    CityName = (dr["CityName"] == DBNull.Value) ? string.Empty : dr["CityName"].ToString(),
+                    PlacesCount = (int)dr["PlacesCount"],
+                    AudiosCount = (int)dr["AudiosCount"],
+                    StoriesCount = (int)dr["StoriesCount"]
+                });
+            return res;
+        }
+        #endregion
     }
 }

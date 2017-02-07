@@ -385,6 +385,83 @@ BEGIN
 			 dbo.AspNetUsers ON dbo.Payments.User_Id = dbo.AspNetUsers.Id
 	WHERE (dbo.AspNetUsers.Id = @UserID) AND (dbo.Payments.PaymentFinished = 1)
 	GROUP BY dbo.Packagecities.city_Cit_Id
+END",
+@"CREATE PROCEDURE [dbo].[GetPackages]
+	@CityId int
+AS
+BEGIN
+	DECLARE @Packages TABLE 
+	(
+		Id uniqueidentifier,
+		Name nvarchar(MAX),
+		Price bigint
+	)
+	DECLARE @Cities TABLE 
+	(
+		Id INT
+	)
+	DECLARE @ResultCities TABLE 
+	(
+		Id INT,
+		AudioCount INT,
+		StoryCount INT
+	)
+	DECLARE @PackageCities TABLE 
+	(
+		Id INT,
+		CityName NVARCHAR(MAX),
+		PlacesCount INT,
+		AudiosCount INT,
+		StoriesCount INT
+	)
+
+	INSERT @Packages
+	SELECT dbo.Packages.Pac_Id, dbo.Packages.Pac_Name, dbo.Packages.Pac_Price
+	  FROM dbo.Packagecities INNER JOIN
+				dbo.Packages ON dbo.Packagecities.Package_Pac_Id = dbo.Packages.Pac_Id
+	 WHERE dbo.Packagecities.city_Cit_Id = @CityId
+	 
+	INSERT @Cities
+	SELECT DISTINCT city_Cit_Id
+	FROM  dbo.Packagecities 
+	WHERE Package_Pac_Id IN 
+		(SELECT Id FROM @Packages)
+
+	DECLARE @TempCityId INT
+
+	DECLARE City_CURSOR CURSOR 
+	  LOCAL STATIC READ_ONLY FORWARD_ONLY
+	FOR 
+	SELECT DISTINCT Id
+	FROM @Cities
+	
+	OPEN City_CURSOR
+	FETCH NEXT FROM City_CURSOR INTO @TempCityId
+	WHILE @@FETCH_STATUS = 0
+	BEGIN 
+		INSERT @ResultCities
+		SELECT @TempCityId, dbo.AudiosCount(P.Id), dbo.StoriesCount(P.Id)
+		FROM dbo.AllPlacesId(@TempCityId) AS P
+		GROUP BY P.Id
+
+		FETCH NEXT FROM City_CURSOR INTO @TempCityId
+	END
+	CLOSE City_CURSOR
+	DEALLOCATE City_CURSOR
+	
+	INSERT @PackageCities
+	SELECT Id, dbo.cities.Cit_Name, COUNT(*), SUM(AudioCount), SUM(StoryCount)
+	FROM @ResultCities INNER JOIN
+	dbo.cities ON dbo.cities.Cit_Id = Id
+	GROUP BY Id, dbo.cities.Cit_Name
+
+	SELECT * 
+	FROM @Packages
+
+	SELECT Package_Pac_Id AS PackageId, Id As CityId, CityName, PlacesCount, AudiosCount, StoriesCount
+	FROM dbo.Packagecities right join
+	@PackageCities ON city_Cit_Id = Id
+	WHERE Package_Pac_Id IN (SELECT Id FROM @Packages)
 END"
         };
     }
