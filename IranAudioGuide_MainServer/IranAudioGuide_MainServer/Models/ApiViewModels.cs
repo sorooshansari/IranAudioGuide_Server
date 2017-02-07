@@ -19,17 +19,39 @@ namespace IranAudioGuide_MainServer.Models
         public string errorMessage { get; set; }
         public getUserStatus status { get; set; }
     }
+    //public class GetPackagesVM
+    //{
+    //    public List<PackageVM> packages { get; set; }
+    //    public string errorMessage { get; set; }
+    //}
     public class GetPackagesVM
     {
-        public List<PackageVM> packages { get; set; }
+        public List<ApiPackageVM> packages { get; set; }
+        public List<ApiCitInfoVM> cities { get; set; }
         public string errorMessage { get; set; }
     }
     public class ApiPackageVM
     {
         public System.Guid Id { get; set; }
         public string Name { get; set; }
-        public int Price { get; set; }
-        public List<CitiesFullInfno> Cities { get; set; }
+        public long Price { get; set; }
+    }
+    public class ApiCitInfoVM
+    {
+        public Guid PackageId { get; set; }
+        public int CityId { get; set; }
+        public string CityName { get; set; }
+        public int PlacesCount { get; set; }
+        public int AudiosCount { get; set; }
+        public int StoriesCount { get; set; }
+    }
+    public class ApiCityVM
+    {
+        public System.Guid Id { get; set; }
+        public string CityName { get; set; }
+        public int PlacesCount { get; set; }
+        public int AudiosCount { get; set; }
+        public int StoriesCount { get; set; }
     }
     public class RemovedEntries
     {

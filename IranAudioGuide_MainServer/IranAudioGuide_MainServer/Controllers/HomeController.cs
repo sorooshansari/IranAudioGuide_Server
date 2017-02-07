@@ -52,12 +52,10 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
-        public async Task<JsonResult> test(ForgotPassUser user)
+        public JsonResult test(int Id)
         {
-            AccountTools acTools = new AccountTools();
-
-            string baseUrl = "localhost:8462";
-            var res = await acTools.ForgotPassword(user.email, user.uuid, baseUrl);
+            dbTools dbTools = new dbTools();
+            var res = dbTools.GetPackagesByCity(Id);
             return Json(res, JsonRequestBehavior.AllowGet);
         }
         //public ActionResult Error()
