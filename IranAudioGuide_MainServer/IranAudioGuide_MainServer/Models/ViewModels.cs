@@ -189,6 +189,11 @@ public class PaymentResult
         public string Picture { get; set; }
         public SignInResults Result { get; set; }
     }
+    public class GetAutorizedCitiesVM
+    {
+        public string username { get; set; }
+        public string uuid { get; set; }
+    }
     public class ForgotPassUser
     {
         public string email { get; set; }

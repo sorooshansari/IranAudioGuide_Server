@@ -30,15 +30,15 @@ namespace IranAudioGuide_MainServer.Controllers
         //    return dbTools.skipUser(uuid);
         //}
         [HttpPost]
-        public async Task<AutorizedCitiesVM> GetAutorizedCities(string username, string uuid)
+        public AutorizedCitiesVM GetAutorizedCities(GetAutorizedCitiesVM model)
         {
             var res = new AutorizedCitiesVM();
             try
             {
-                var user = await acTools.getUser(username, uuid);
+                var user = acTools.getUser(model.username);
                 res.status =
                     (user == null) ? getUserStatus.notUser :
-                    (user.uuid != uuid) ? getUserStatus.uuidMissMatch :
+                    (user.uuid != model.uuid) ? getUserStatus.uuidMissMatch :
                     (!user.EmailConfirmed) ? getUserStatus.notConfirmed :
                     getUserStatus.confirmed;
 
@@ -133,11 +133,12 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
 
-        public IHttpActionResult GetCurrentUserInfo() {
+        public IHttpActionResult GetCurrentUserInfo()
+        {
             string userName = User.Identity.Name;
             var user = acTools.GetUserByName(userName);
             if (user == null)
-                return null; 
+                return null;
             var userProfile = new UserProfile()
             {
                 Email = user.UserName,
@@ -162,6 +163,6 @@ namespace IranAudioGuide_MainServer.Controllers
             base.Dispose(disposing);
         }
 
-      
+
     }
 }
