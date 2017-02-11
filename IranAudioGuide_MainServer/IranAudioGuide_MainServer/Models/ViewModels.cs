@@ -544,6 +544,17 @@ public class PaymentResult
         City,
         Place
     }
+    public class CommentVm {
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        public string uuid { get; set; }
+    }
+
+    public class RequestForAppVM
+    {
+        public string Email { get; set; }
+
+    }
     public enum status
     {
         success = 0,

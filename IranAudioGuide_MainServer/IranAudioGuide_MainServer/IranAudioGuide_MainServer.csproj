@@ -252,6 +252,10 @@
     <Compile Include="Migrations\201701311338252_deactiveLogFildAdded.Designer.cs">
       <DependentUpon>201701311338252_deactiveLogFildAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702110846152_addTabel---RequestForApp-Comments.cs" />
+    <Compile Include="Migrations\201702110846152_addTabel---RequestForApp-Comments.Designer.cs">
+      <DependentUpon>201702110846152_addTabel---RequestForApp-Comments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -1399,6 +1403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701311338252_deactiveLogFildAdded.resx">
       <DependentUpon>201701311338252_deactiveLogFildAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702110846152_addTabel---RequestForApp-Comments.resx">
+      <DependentUpon>201702110846152_addTabel---RequestForApp-Comments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

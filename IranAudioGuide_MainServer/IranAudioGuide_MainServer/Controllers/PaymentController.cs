@@ -236,8 +236,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     
                 };
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
-                //if (!user.EmailConfirmed)
-                //    return View("Error");
+                if (!user.EmailConfirmed)
+                    return View("Error");
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 PackageVM package = (from p in db.Packages
                                      where p.Pac_Id == info.packageId

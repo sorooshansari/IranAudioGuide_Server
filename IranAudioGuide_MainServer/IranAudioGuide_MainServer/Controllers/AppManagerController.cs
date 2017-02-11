@@ -148,6 +148,23 @@ namespace IranAudioGuide_MainServer.Controllers
             userProfile.RolesName = acTools.GetUserRoles(user);
             return Ok(userProfile);
         }
+
+        [HttpPost]
+        public void CreateComment(CommentVm comment)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var newComment = new Comment()
+                {
+                    Message = comment.Message,
+                    uuid = comment.uuid,
+                    Subject = comment.Subject
+                };
+                db.Comments.Add(newComment);
+                db.SaveChanges();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

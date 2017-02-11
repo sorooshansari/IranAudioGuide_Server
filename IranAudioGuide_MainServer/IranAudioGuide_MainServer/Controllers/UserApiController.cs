@@ -133,7 +133,21 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
-        
+        [AllowAnonymous]
+        [HttpPost]
+        public IHttpActionResult SaveRequest(RequestForAppVM requestForApp)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var d = new RequestForApp()
+                {
+                    Email = requestForApp.Email
+                };
+                db.RequestForApps.Add(d);
+                db.SaveChanges();
+                return Ok();
+            }
+        }
 
 
         [HttpGet]
