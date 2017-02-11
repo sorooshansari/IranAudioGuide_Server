@@ -8152,3 +8152,45 @@ Transparent Button
   background: transparent;
   color: #888;
 }
+.alert-warning {
+    background-color: #f9e491;
+    border-color: #f9e491;
+    color: #c29d0b;
+}
+.btn.red:not(.btn-outline).active, .btn.red:not(.btn-outline):active, .btn.red:not(.btn-outline):hover, .open>.btn.red:not(.btn-outline).dropdown-toggle {
+    color: #fff;
+    background-color: #e12330;
+    border-color: #dc1e2b;
+}
+
+.btn.red:not(.btn-outline) {
+    color: #fff;
+    background-color: #e7505a;
+    border-color: #e7505a;
+}
+.btn.blue:not(.btn-outline).active, .btn.blue:not(.btn-outline):active, .btn.blue:not(.btn-outline):hover, .open>.btn.blue:not(.btn-outline).dropdown-toggle {
+    color: #FFF;
+    background-color: #217ebd;
+    border-color: #1f78b5;
+}
+.btn.blue:not(.btn-outline) {
+    color: #FFF;
+    background-color: #3598dc;
+    border-color: #3598dc;
+}
+.note {
+    margin: 0 0 20px;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+    border-radius: 0 4px 4px 0;
+}
+.note.note-info {
+      background-color: rgba(20, 68, 130, 0.14);
+    border-color: #144482;
+    color: #010407;
+    /* min-height: 400px; */
+    padding: 9% 4%;
+}
+.note.note-info h4{
+     color:#144482 !important;
+ }

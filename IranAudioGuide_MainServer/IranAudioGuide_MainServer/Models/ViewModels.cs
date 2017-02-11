@@ -333,6 +333,7 @@ public class PaymentResult
         public string FullName { get; set; }
         public string Email { get; set; }
         public string imgUrl { get; set; }
+        public bool IsEmailConfirmed { get; set; }
     }
     public class UserProfile
     {

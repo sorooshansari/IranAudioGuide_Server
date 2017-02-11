@@ -1,6 +1,4 @@
-﻿userApp.service('dataServices', ['$http', '$q', function ($http, $q) {
-
-
+﻿userApp.service('dataServices', ['$http', '$q', function ($http, $q) {    
     this.login = function (url, data, config) {
         var deferred = $q.defer();
         $http.post(url, data, config).success(function (response) {
@@ -50,6 +48,9 @@
 }]);
 userApp.service('userServices', ['dataServices', function (dataServices) {
     this.packages = [];
+    this.sendEmailConfirmedAgain = function () {
+        return dataServices.get('/Account/SendEmailConfirmedAgain');
+    }
     this.getUser = function () {
         return dataServices.post('/api/userApi/GetCurrentUserInfo');
     };
@@ -74,6 +75,7 @@ userApp.service('notificService', [function () {
     //jquery-notific8
     var optionsDefault = {
         positionClass: 'toast-top-center', //'toast-bottom-full-width ',// 'toast-top-center',
+        life: 5000,
     };
     toastr.options = optionsDefault;
     this.success = function (header, content) {

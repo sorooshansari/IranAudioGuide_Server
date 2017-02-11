@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IranAudioGuide_MainServer.Models;
 using IranAudioGuide_MainServer.Services;
+using System.Net.Http;
+using System.Net;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -211,7 +213,27 @@ namespace IranAudioGuide_MainServer.Controllers
             //ViewBag.View = Views.Register;
             return View(model);
         }
+      
+        [AllowAnonymous]
+     //   [ValidateAntiForgeryToken]
+        public async Task<HttpResponseMessage> SendEmailConfirmedAgain()
+        {
 
+            if (!User.Identity.IsAuthenticated)
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+
+            var UserId = User.Identity.GetUserId(); 
+            if(string.IsNullOrEmpty(UserId))
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+
+            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+            // Send an email with this link
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(UserId);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = UserId, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(UserId, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            return new HttpResponseMessage(HttpStatusCode.OK);
+
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

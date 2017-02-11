@@ -26,7 +26,8 @@ namespace IranAudioGuide_MainServer.Controllers
                                      {
                                          Email = user.Email,
                                          FullName = user.FullName,
-                                         imgUrl = user.ImgUrl
+                                         imgUrl = user.ImgUrl,
+                                         IsEmailConfirmed = user.EmailConfirmed
                                      }).FirstOrDefault();
 
                     return Ok(Info);
@@ -131,6 +132,9 @@ namespace IranAudioGuide_MainServer.Controllers
                 throw ex;
             }
         }
+
+        
+
 
         [HttpGet]
         public IHttpActionResult DeactivateMobile()

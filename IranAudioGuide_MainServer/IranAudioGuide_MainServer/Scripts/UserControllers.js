@@ -9,7 +9,7 @@ userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificSe
     $scope.profile = {
         istest: true,
         packages: [],
-        packagesPurchased:[]
+        packagesPurchased: []
     };
     userServices.getUser().then(function (data) {
         $scope.user = data;
@@ -45,7 +45,10 @@ userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificSe
                 //    nav();
                 //    $(event.target).find("i").removeAttr('class').addClass(calssName);
                 //}, 2000);
-            })
+            }, function () {
+                $(event.target).find("i").removeAttr('class').addClass(calssName);
+
+            });
         }
 
     }
@@ -60,15 +63,18 @@ userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificSe
     $scope.getPackages = function (event) {
 
         if ($scope.profile.packages.length == 0) {
-            var element = $(event.target).find("i");
-            var calssName = element.attr('class');
-            var s = element.removeAttr('class').addClass("fa fa-spinner fa-spin");
+            //var element = $(event.target).find("i");
+            //var calssName = element.attr('class');
+            //var s = element.removeAttr('class').addClass("fa fa-spinner fa-spin");
             userServices.getPackages().then(function (data) {
                 $scope.profile.packages = data;
-                element.removeAttr('class').addClass(calssName);
+               // element.removeAttr('class').addClass(calssName);
                 $scope.profile.isCompletedLoading = true;
-                $(event.target).find("i").removeAttr('class').addClass(calssName);
-            })
+               // $(event.target).find("i").removeAttr('class').addClass(calssName);
+            }, function () {
+               // $(event.target).find("i").removeAttr('class').addClass(calssName);
+
+            });
         }
 
     }
@@ -77,6 +83,17 @@ userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificSe
     $timeout(function () {
         angular.element('#btnGetPakage').triggerHandler('click');
     }, 0);
+
+
+    $scope.sendEmailConfirmedAgain = function () {
+        userServices.sendEmailConfirmedAgain().then(function (data) {
+            //"StatusCode: 200, ReasonPhrase: 'OK', Version: 1.1, Content: <null>, Headers:
+            $scope.user.IsEmailConfirmed = true;
+            notific.success("Success", "Please Check your email");
+
+        }, function (error) {
+        });
+    }
     var nav = function () {
         $('.gw-nav > li > a').click(function () {
             var gw_nav = $('.gw-nav');
@@ -361,12 +378,14 @@ userApp.controller('PackagesCtrl', ['$scope', 'userServices', '$timeout', functi
 }]);
 
 userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
-    console.log($scope.p);
-
-
+    
     $scope.$watch("profile.packagesPurchased", function (newval, oldval) {
         if (typeof newval != undefined) {
             $scope.packagesPurchased = angular.copy($scope.profile.packagesPurchased);
+            if ($scope.packagesPurchased.length == 0)
+                $scope.isShowMessage = true;
+            else
+                $scope.isShowMessage = false;
 
         }
     });
