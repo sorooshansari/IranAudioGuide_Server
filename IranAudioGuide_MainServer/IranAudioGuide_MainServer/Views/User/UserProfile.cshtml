@@ -3,11 +3,11 @@
 }
 
     <link href="~/Content/bs_leftnavi.css" rel="stylesheet" />
-    <div class="page-content" ng-show="profile.isCompletedLoading">
+    <div class="container-full page-content" ng-show="profile.isCompletedLoading">
         <div class="row margin-top-9-percentage">
-            <div class="col-md-12">
+            <div class="col-xs-12">
                 <div class="row">
-                    <div class="col-sm-4 col-xs-12 right-side-panel">
+                    <div class="col-sm-3 col-xs-12 left-side-panel">
                         <div class="profile-sidebar">
                             <!-- PORTLET MAIN -->
                             <div class="portlet light profile-sidebar-portlet">
@@ -30,7 +30,6 @@
                                 <!-- END SIDEBAR USER TITLE -->
                                 <!-- SIDEBAR BUTTONS -->
                                 <div class="profile-userbuttons">
-                                    <button type="button" class="btn btn-circle green-haze btn-sm" ng-click="deactivateMobile()">Deactivate Mobile </button>
                                     @*<button type="button" class="btn btn-circle btn-danger btn-sm">Message</button>*@
                                 </div>
                                 <!-- END SIDEBAR BUTTONS -->
@@ -43,10 +42,16 @@
                                                 Pakage
                                             </a>
                                         </li>
+                                        <li>
+                                            <a ui-sref="user.Packages" id="btnGetPakage" ng-click="getPackages($event)">
+                                                <i class="fa fa-list"></i>
+                                                Pakage
+                                            </a>
+                                        </li>
                                         <li class="active">
-                                            <a ui-sref="user.PackagesPurchased  " ng-click="getPackagesPurchased($event)">
-                                                <i class="fa fa-opencart"></i>
-                                                Purchase
+                                            <a ui-sref="user.deactivateMobile" ng-click="getPackagesPurchased($event)">
+                                                <i class="fa fa-mobile"></i>
+                                                Deactivate Mobile
                                             </a>
                                         </li>
 
@@ -60,7 +65,7 @@
 
                         <!-- BEGIN PORTLET -->
 
-                        <div class="portlet light menu-pakages" ng-if="packages.length != 0">
+                        <div class="portlet light menu-pakages" ng-show="false">
                             <div class="portlet-title">
                                 <div class="caption caption-md">
                                     <i class="icon-bar-chart theme-font hide"></i>
@@ -73,11 +78,12 @@
                                     <div id="gw-sidebar" class="gw-sidebar">
                                         <div class="nano-content">
                                             <ul class="gw-nav gw-nav-list">
-                                                <li class="init-arrow-down" ng-repeat="pak in profile.packages">
+                                                <li class="init-arrow-down" ng-repeat="pak in profile.packagesPurchased">
                                                     <a href="javascript:void(0)"> <span class="gw-menu-text">{{pak.PackageName}}</span> <b></b> </a>
                                                     <ul class="gw-submenu">
                                                         <li ng-repeat="city in pak.PackageCities">
                                                             <a ng-click="getPalaceForCity(city)">{{city.CityName}}</a>
+
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -89,7 +95,7 @@
                         </div>
                         <!-- END PORTLET -->
                     </div>
-                    <div class="col-sm-8  col-xs-12 left-side-panel">
+                    <div class="col-sm-9 col-xs-12 right-side-panel">
                         <div ui-view></div>
                     </div>
                     <!-- END PAGE CONTENT INNER -->

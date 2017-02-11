@@ -2,77 +2,93 @@
 @{
     Layout = null;
 }
-<div class="portlet light " >
-    <div class="portlet-title">
-        <div class="caption caption-md">
-            <i class="icon-bar-chart theme-font hide"></i>Places OF
-            <span class="caption-subject font-blue-madison bold uppercase"> {{profile.city.CityName}}</span>
+<link href="~/Content/sliderArrow.css" rel="stylesheet" />
+<script src="~/Scripts/responsiveslides.min.js"></script>
+<style>
+    .itemSelcted i {
+        float: left;
+        /*text-shadow: 1px 1px 1px #092f40, -1px -2px 1px #092f40;*/
+    }
 
-        </div>
+    .itemSelcted h6 span {
+        color: rgb(25, 22, 1);
+        text-shadow: 1px 1px 1px #ccc;
+    }
 
-    </div>
-    <div class="portlet-body">
-        <div class="row">
-            <div class="col-md-12 blog-page">
+    .itemSelcted p {
+        color: rgba(54, 56, 74, 0.72);
+    }
 
-                <div class="row" ng-repeat="item in profile.city.Places">
+    .ui-select-bootstrap .ui-select-choices-row:hover {
+        color: #fff !important;
+        text-decoration: none;
+        outline: 0;
+        background-color: green;
+    }
 
-                    <div class="col-md-12 col-sm-12 article-block">
-                        @*<h1 style="margin-top:0px">Places</h1>*@
-                        <div class="row">
+    .ui-select-bootstrap .ui-select-choices-row.active .itemSelcted p {
+        color: #fff !important;
+    }
 
-                            <div class="col-md-4 blog-img blog-tag-data">
+    .ui-select-bootstrap .ui-select-choices-row > span:hover, .ui-select-bootstrap .ui-select-choices-row > span:focus {
+        background-color: rgb(175, 208, 236) !important;
+    }
 
-                                <img src="~/images/banner2.jpg" class="img-responsive" />
-                                @*<img ng-src="~/images/Places/{{item.ImgUrl}}" alt="" class="img-responsive">*@
-                                <ul class="list-inline">
-                                    <li>
-                                        <i class="fa fa-map-marker"></i>
-                                        {{item.PlaceAddress}}
-                                    </li>
+    .ui-select-bootstrap .ui-select-toggle > .caret {
+        display: none;
+    }
 
-                                </ul>
-                                @*<ul class="list-inline blog-tags">
-                                        <li>
-                                            <i class="fa fa-tags"></i>
-                                            <a href="javascript:;">
-                                                Technology
-                                            </a>
-                                            <a href="javascript:;">
-                                                Education
-                                            </a>
-                                            <a href="javascript:;">
-                                                Internet
-                                            </a>
-                                        </li>
-                                    </ul>*@
-                            </div>
-                            <div class="col-md-8 blog-article">
-                                <h3>
-                                    <a href="page_blog_item.html">
-                                        {{item.PlaceName}}
-                                    </a>
-                                </h3>
-                                <p>
-                                    {{item.PlaceDesc}}
-                                </p>
-                                @*<a class="btn blue" ng-click="showPlaceInfo(item.PlaceId)">
-                                        Read more <i class="m-icon-swapright m-icon-white"></i>
-                                    </a>*@
-                            </div>
-                            <hr>
-                        </div>
+    .box-city {
+    }
+
+    .box-place {
+        margin: 0 0 0 21px;
+    }
+</style>
+@*<link href="~/Content/responsiveslides.css" rel="stylesheet" />*@
+<link href="~/Content/sliderArrow.css" rel="stylesheet" />
+<link href="~/Content/PakageTemplate.css" rel="stylesheet" />
 
 
-                    </div>
-                </div>
+<form id="PurchaseForm" name="PurchaseForm" action="/Payment/PaymentWeb">
+    <div class="initSlider row">
+
+
+        <!-- Price template4 Ends -->
+
+        <div class="col-flex PlanPricing template4" ng-repeat="pak in packagesPurchased">
+            <!-- Price template4 Starts -->
+            <div class="planName">
+                <span class="price">{{pak.PackagePrice}}IRR </span>
+                <h3>{{pak.PackageName}}</h3>
+                @*<p>{{pak.PackageName}}</p>*@
             </div>
-            <!-- END PORTLET -->
+            <div class="planFeatures">
+                <!-- Slideshow 4 -->
+                <div class="callbacks_container">
+                    <ul class="slider6 rslides">
+                        <li ng-repeat="city in pak.PackageCities">
+
+                            <img ng-src="~/images/Cities/{{city.CityImageUrl}}" />
+                            <p class="cityName">{{city.CityName}}</p>
+                            <p class="caption">{{city.CityDesc}}</p>
+                            <ul>
+                                <li ng-repeat="plc in city.Places">{{plc.PlaceName}}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <p> <a ng-click="buyPakages(pak)" class="btn btn-success btn-large">buy </a> </p>
         </div>
+
+
 
     </div>
 
-</div>
-<div ng-if="IsShowMessage">
-    there is no pakage
-</div>
+</form>
+
+<script src="~/Scripts/responsiveslides.min.js"></script>
+

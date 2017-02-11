@@ -2,13 +2,15 @@
 @{
     Layout = null;
 }
+<link href="~/Content/sliderArrow.css" rel="stylesheet" />
+<script src="~/Scripts/responsiveslides.min.js"></script>
 <style>
-     .itemSelcted i {
+    .itemSelcted i {
         float: left;
-        text-shadow: 1px 1px 1px #092f40, -1px -2px 1px #092f40;
+        /*text-shadow: 1px 1px 1px #092f40, -1px -2px 1px #092f40;*/
     }
 
-    .itemSelcted h1 span {
+    .itemSelcted h6 span {
         color: rgb(25, 22, 1);
         text-shadow: 1px 1px 1px #ccc;
     }
@@ -29,14 +31,24 @@
     }
 
     .ui-select-bootstrap .ui-select-choices-row > span:hover, .ui-select-bootstrap .ui-select-choices-row > span:focus {
-         background-color: rgb(175, 208, 236)!important;
+        background-color: rgb(175, 208, 236) !important;
     }
-   .ui-select-bootstrap .ui-select-toggle > .caret {
-  
-    display: none;
-}
+
+    .ui-select-bootstrap .ui-select-toggle > .caret {
+        display: none;
+    }
+
+    .box-city {
+    }
+
+    .box-place {
+        margin: 0 0 0 21px;
+    }
 
 </style>
+@*<link href="~/Content/responsiveslides.css" rel="stylesheet" />*@
+<link href="~/Content/sliderArrow.css" rel="stylesheet" />
+<link href="~/Content/PakageTemplate.css" rel="stylesheet" />
 <div class="portlet light menu-pakages" ng-if="packages.length != 0">
     <div class="portlet-title">
         <div class="caption caption-md">
@@ -46,28 +58,26 @@
         </div>
     </div>
     <div class="portlet-body">
-        <form class="form-horizontal">
+
+        <div class="form-horizontal">
             <fieldset>
-
-                <!-- Form Name -->
                 <legend>Please select your city or location</legend>
-
-                <!-- Text input-->
                 <div class="form-group">
                     <div class="col-md-12 ">
                         <div class="input-group">
-                             @*multiple---$item.title*@
-                            <ui-select  ng-model="modelItem.displayStatus" theme="bootstrap">
+                            @*-$select.selected.title--*@
+                            <ui-select multiple ng-model="searhPakage.item" theme="bootstrap">
                                 <ui-select-match placeholder="Please select your city or location">
-                                    <span ng-bind="$select.selected.title"></span>
+                                    <i ng-class="typeEachItemFoSelection[$item.type].icon"></i>
+                                    <span> {{$item.title}} </span>
                                 </ui-select-match>
                                 <ui-select-choices repeat="item in pakageForSelected | filter: {title: $select.search}">
-                                    
-                                    <div class="itemSelcted">
-                                        <h1>
-                                            <i ng-class="item.iconClass"></i>
+
+                                    <div ng-class="typeEachItemFoSelection[item.type].className">
+                                        <h6>
+                                            <i ng-class="typeEachItemFoSelection[item.type].icon"></i>
                                             <span> {{item.title}} </span>
-                                        </h1>
+                                        </h6>
                                         <p> {{item.description}}</p>
                                     </div>
                                 </ui-select-choices>
@@ -75,21 +85,57 @@
                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
 
                         </div>
-  </div>
+                    </div>
                 </div>
 
-                <!-- Text input-->
-                <!-- Success message -->
-                <div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to you shortly.</div>
-
-                <!-- Button -->
-
-
             </fieldset>
-        </form>
+        </div>
+
+        
+
     </div>
+
 </div>
 
+<form id="PurchaseForm" name="PurchaseForm" action="/Payment/PaymentWeb">
+    <div class="initSlider row">
 
 
+        <!-- Price template4 Ends -->
+
+        <div class="col-flex PlanPricing template4" ng-repeat="pak in listPakages">
+            <!-- Price template4 Starts -->
+            <div class="planName">
+                <span class="price">{{pak.PackagePrice}}IRR </span>
+                <h3>{{pak.PackageName}}</h3>
+                @*<p>{{pak.PackageName}}</p>*@
+            </div>
+            <div class="planFeatures">
+                <!-- Slideshow 4 -->
+                <div class="callbacks_container">
+                    <ul class="slider6 rslides">
+                        <li ng-repeat="city in pak.PackageCities">
+
+                            <img ng-src="~/images/Cities/{{city.CityImageUrl}}" />
+                            <p class="cityName">{{city.CityName}}</p>
+                            <p class="caption">{{city.CityDesc}}</p>
+                            <ul>
+                                <li ng-repeat="plc in city.Places">{{plc.PlaceName}}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <p> <a ng-click="buyPakages(pak)" class="btn btn-success btn-large">buy </a> </p>
+        </div>
+
+
+
+    </div>
+
+</form>
+
+<script src="~/Scripts/responsiveslides.min.js"></script>
 
