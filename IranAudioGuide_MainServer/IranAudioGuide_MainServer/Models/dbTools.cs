@@ -152,6 +152,8 @@ namespace IranAudioGuide_MainServer.Models
             };
             return res;
         }
+
+
         public GetAllVM GetAllEntries(string uuid)
         {
             var SP = new SqlParameter("@uuid", uuid);
@@ -308,6 +310,25 @@ namespace IranAudioGuide_MainServer.Models
                     StoriesCount = (int)dr["StoriesCount"]
                 });
             return res;
+        }
+        #endregion
+
+
+        #region comment
+
+        public void CreateComment(Comment newComment)
+        {
+            
+            var Message = new SqlParameter("@Message", newComment.Message);
+            Message.SqlDbType = SqlDbType.NVarChar;
+
+            var uuid = new SqlParameter("@uuid", newComment.uuid);
+            uuid.SqlDbType = SqlDbType.NVarChar;
+
+            var Subject = new SqlParameter("@Subject", newComment.Subject);
+            Subject.SqlDbType = SqlDbType.NVarChar;
+            
+            var dt = dbManager.MultiTableResultSP("CreateComment", Message, uuid ,Subject);
         }
         #endregion
     }

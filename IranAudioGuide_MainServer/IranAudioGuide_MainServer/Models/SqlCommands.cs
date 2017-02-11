@@ -76,7 +76,19 @@ BEGIN
 		  ,[Cit_ImageUrl]
 	  FROM [dbo].[cities]
 	RETURN 
-END", @"
+END",
+@"
+CREATE PROCEDURE [dbo].[CreateComment] 
+	@Message NVARCHAR(MAX),
+	@uuid NVARCHAR(MAX),
+	@Subject NVARCHAR(MAX)
+AS
+BEGIN
+	INSERT INTO [dbo].[Comments] (Subject, Message, CreateTime, IsRead, uuid)
+VALUES        (@Subject ,@Message, getdate() , 'False' ,@uuid)
+	
+END
+", @"
 
 CREATE FUNCTION [dbo].[AllImages]() 
 RETURNS 
