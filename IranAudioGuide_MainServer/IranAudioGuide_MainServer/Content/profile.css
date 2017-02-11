@@ -174,7 +174,16 @@ Portfolio
             border: solid 1px #eee;
         }
 
+.alert b, strong {
+    color: #c29d0b;
+    font-weight: 600;
 
+}
+.alert a {
+    color: #423917;
+    font-weight: 900;
+    text-shadow: 1px 1px 1px #f7c500;
+}
 /***
 Blog Page
 ***/

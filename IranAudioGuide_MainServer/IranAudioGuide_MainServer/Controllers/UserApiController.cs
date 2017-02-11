@@ -17,6 +17,10 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
+
+
+
+
                 string userName = User.Identity.Name;
                 using (var db = new ApplicationDbContext())
                 {
@@ -27,8 +31,22 @@ namespace IranAudioGuide_MainServer.Controllers
                                          Email = user.Email,
                                          FullName = user.FullName,
                                          imgUrl = user.ImgUrl,
-                                         IsEmailConfirmed = user.EmailConfirmed
+                                         IsEmailConfirmed = user.EmailConfirmed,
+                                         IsShowBtnDeactivatedDevice = (user.uuid == null) ? false : true,
+                                         IsDisableBtn = (user.uuid == null) ? false : true,
+                                         TimeSetUuid = user.TimeSetUuid.Value
                                      }).FirstOrDefault();
+                    
+
+                    var startDay = Info.TimeSetUuid;
+                    var endDay = DateTime.Now;
+
+                    var day = endDay.Day - startDay.Day;
+                    var month = endDay.Month - startDay.Month;
+                    var year = endDay.Year - startDay.Year;
+                    var daywating = ((year * 365) + (month * 31) + day) / 30;
+                    if (daywating < 6)
+                        Info.IsDisableBtn = true;
 
                     return Ok(Info);
                 }
@@ -157,7 +175,7 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 string userName = User.Identity.Name;
                 var user = db.Users.FirstOrDefault(x => x.UserName == userName);
-                // user.TimeSetUuid = new DateTime(2016, 9, 9);
+                //user.TimeSetUuid = new DateTime(2016, 9, 9);
                 if (user.TimeSetUuid == null)
                 {
                     user.TimeSetUuid = DateTime.Now;
@@ -165,14 +183,20 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 else
                 {
-                    var daywating = Math.Round((DateTime.Now - user.TimeSetUuid.Value).TotalDays / 30);
+                    var startDay = user.TimeSetUuid.Value;
+                    var endDay = DateTime.Now;
+
+                    var day = endDay.Day - startDay.Day;
+                    var month = endDay.Month - startDay.Month;
+                    var year = endDay.Year - startDay.Year;
+                    var daywating = ((year * 365) + (month * 31) + day) / 30;
                     if (daywating > 6)
                     {
                         user.TimeSetUuid = DateTime.Now;
                         user.uuid = null;
                     }
                     else
-                        return BadRequest("You should expect to wait up to " + daywating + " months");
+                        return BadRequest("You should expect to wait up to " + (30 * 6) + daywating + " months");
                 }
                 db.SaveChanges();
 

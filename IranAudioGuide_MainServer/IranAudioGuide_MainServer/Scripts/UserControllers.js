@@ -15,9 +15,9 @@ userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificSe
         $scope.user = data;
         $scope.user.isAutintication = true;
     });
-    $scope.deactivateMobile = function () {
-        userServices.deactivateMobile();
-    };
+    //$scope.deactivateMobile = function () {
+    //    userServices.deactivateMobile();
+    //};
     $scope.getPalaceForCity = function (city) {
         $scope.profile.city = city;
     };
@@ -55,7 +55,8 @@ userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificSe
     $scope.deactivateMobile = function () {
         userServices.deactivateMobile()
             .then(function (data) {
-                console.log("deactivateMobile: suc", data);
+                var successMsg = "you have successfully deactivated your device. the next device you sign in with, will become your active device.";
+                notific.success(successMsg);
             }, function (error) {
                 notific.error("ERROR", error.Message);
             });
@@ -88,7 +89,7 @@ userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificSe
     $scope.sendEmailConfirmedAgain = function () {
         userServices.sendEmailConfirmedAgain().then(function (data) {
             //"StatusCode: 200, ReasonPhrase: 'OK', Version: 1.1, Content: <null>, Headers:
-            $scope.user.IsEmailConfirmed = true;
+            //$scope.user.IsEmailConfirmed = true;
             notific.success("Success", "Please Check your email");
 
         }, function (error) {

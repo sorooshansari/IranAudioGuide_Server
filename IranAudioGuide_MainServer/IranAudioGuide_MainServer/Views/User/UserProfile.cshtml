@@ -36,7 +36,7 @@
                                 <!-- SIDEBAR MENU -->
                                 <div class="profile-usermenu">
                                     <ul class="nav">
-                                        <li>
+                                        <li class="active" >
                                             <a ui-sref="user.Packages" id="btnGetPakage" ng-click="getPackages($event)">
                                                 <i class="fa fa-list"></i>
                                                 Pakage
@@ -48,10 +48,10 @@
                                                 PackagesPurchased
                                             </a>
                                         </li>
-                                        <li class="active">
+                                        <li >
                                             <a ui-sref="user.deactivateMobile" ng-click="getPackagesPurchased($event)">
                                                 <i class="fa fa-mobile"></i>
-                                                Deactivate Mobile
+                                                Deactivated Device
                                             </a>
                                         </li>
 
@@ -96,25 +96,8 @@
                         <!-- END PORTLET -->
                     </div>
                     <div class="col-sm-9 col-xs-12 right-side-panel">
-                        <div class="portlet light bordered" style="margin-bottom:20px;" ng-show="user.IsEmailConfirmed == false">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="icon-share font-dark"></i>
-                                    <span class="caption-subject font-dark bold uppercase">E-mail confirmation </span>
-                                </div>
-                                
-                            </div>
-                            <div class="portlet-body">                                   
-                                <div class="alert alert-block alert-warning fade in">
-                                    <button type="button" class="close" data-dismiss="alert"></button>
-                                    <h4 class="alert-heading">Warning!</h4>
-                                    <p> Your email has not been confirmed . </p>
-                                    <p>
-                                        <a class="btn red" ng-click="sendEmailConfirmedAgain()"> Send Again </a>
-                                        @*<a class="btn blue" href="javascript:;"> Cancel </a>*@
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="alert alert-warning">
+                            <strong>Not Confirmed yet!</strong> if you have not received the confirmation email yet, click <a ng-click="sendEmailConfirmedAgain()">here</a>  to send you another
                         </div>
                         <div ui-view></div>
                     </div>

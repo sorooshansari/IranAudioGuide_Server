@@ -334,6 +334,9 @@ public class PaymentResult
         public string Email { get; set; }
         public string imgUrl { get; set; }
         public bool IsEmailConfirmed { get; set; }
+        public bool IsShowBtnDeactivatedDevice { get; set; }
+        public bool IsDisableBtn { get;  set; }
+        public DateTime TimeSetUuid { get;  set; }
     }
     public class UserProfile
     {
