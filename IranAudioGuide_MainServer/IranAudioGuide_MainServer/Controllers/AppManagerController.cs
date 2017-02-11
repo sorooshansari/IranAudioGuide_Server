@@ -97,7 +97,7 @@ namespace IranAudioGuide_MainServer.Controllers
             return Json(res);
         }
         [HttpPost]
-        public async Task<CreateingUserResult> AutenticateGoogleUser(GoogleUserInfo user)
+        public async Task<CreatingUserResult> AutenticateGoogleUser(GoogleUserInfo user)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-                return CreateingUserResult.fail;
+                return CreatingUserResult.fail;
             }
         }
         [HttpPost]

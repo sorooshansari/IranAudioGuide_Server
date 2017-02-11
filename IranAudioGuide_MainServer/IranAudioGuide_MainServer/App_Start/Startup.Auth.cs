@@ -63,8 +63,8 @@ namespace IranAudioGuide_MainServer
                 //ClientId = "751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
                 //ClientSecret = "1kvO5-vGb9kkaaQRV8M1-pM-"
 
-                ClientId = "592360034248-5ttnhfdv42t33ii2lvt0m2nn1gcvk9rn.apps.googleusercontent.com",
-                ClientSecret = "E-ZRe5iMVYgg8oFWAfiwA-jC"
+                ClientId = "27601873693-vmc47t1lem7tm9q6nkt00qrel5crsseq.apps.googleusercontent.com",
+                ClientSecret = "xclG46o3C3ajx2cMgjdgwRHR"
             });
         }
     }

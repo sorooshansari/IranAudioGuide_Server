@@ -236,6 +236,22 @@
     <Compile Include="Migrations\201701141132429_afterNewPush.Designer.cs">
       <DependentUpon>201701141132429_afterNewPush.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701281126105_add-tabel-LogUserFailure.cs" />
+    <Compile Include="Migrations\201701281126105_add-tabel-LogUserFailure.Designer.cs">
+      <DependentUpon>201701281126105_add-tabel-LogUserFailure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701291242162_add-TimeSetUuid-for-user.cs" />
+    <Compile Include="Migrations\201701291242162_add-TimeSetUuid-for-user.Designer.cs">
+      <DependentUpon>201701291242162_add-TimeSetUuid-for-user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701291340547_add-TimeSetUuid-for-user2.cs" />
+    <Compile Include="Migrations\201701291340547_add-TimeSetUuid-for-user2.Designer.cs">
+      <DependentUpon>201701291340547_add-TimeSetUuid-for-user2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701311338252_deactiveLogFildAdded.cs" />
+    <Compile Include="Migrations\201701311338252_deactiveLogFildAdded.Designer.cs">
+      <DependentUpon>201701311338252_deactiveLogFildAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -249,6 +265,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Models\Variables.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Zarinpal\Reference.cs">
@@ -273,19 +290,9 @@
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
     <Content Include="Content\bootstrap-social.css" />
-    <Content Include="Content\bs_leftnavi.css" />
-    <Content Include="Content\components-md.css" />
     <Content Include="Content\Custom4.css" />
-    <Content Include="Content\images\avatar.png" />
-    <Content Include="Content\images\themes.gif" />
     <Content Include="Content\loading.css" />
     <Content Include="Content\bootstrap-social.min.css" />
-    <Content Include="Content\notify-metro.css" />
-    <Content Include="Content\PakageTemplate.css" />
-    <Content Include="Content\profile.css" />
-    <Content Include="Content\select.css" />
-    <Content Include="Content\select.min.css" />
-    <Content Include="Content\sliderArrow.css" />
     <Content Include="Content\styles.min.css" />
     <Content Include="Content\toggle.min.css" />
     <Content Include="Content\toggle.css" />
@@ -366,13 +373,10 @@
     <Content Include="images\prevnext-48-48-1.png" />
     <Content Include="images\tracklistarrow-48-16-0.png" />
     <Content Include="images\volume-24-24-0.png" />
-    <Content Include="images\webmoney2.png" />
     <Content Include="images\WindowsStore.png" />
     <Content Include="Scripts\angular-countUp.js" />
     <Content Include="Scripts\angular-scroll-spy.js" />
-    <Content Include="Scripts\bs_leftnavi.js" />
     <Content Include="Scripts\countUp.js" />
-    <Content Include="Content\responsiveslides.css" />
     <Content Include="Scripts\HomeControllers.js" />
     <Content Include="Scripts\HomeCustom.js" />
     <Content Include="Scripts\angular-scroll-spy.min.js" />
@@ -380,15 +384,6 @@
     <Content Include="Scripts\angular-countUp.min.js" />
     <Content Include="Scripts\HomeWIthoutScrolly.min.js" />
     <Content Include="Scripts\main.min.js" />
-    <Content Include="Scripts\notify-metro.js" />
-    <Content Include="Scripts\notify.js" />
-    <Content Include="Scripts\responsiveslides.js" />
-    <Content Include="Scripts\responsiveslides.min.js" />
-    <Content Include="Scripts\select.js" />
-    <Content Include="Scripts\select.min.js" />
-    <Content Include="Scripts\toastr.min.js" />
-    <Content Include="Scripts\ui-bootstrap-tpls-2.5.0.min.js" />
-    <Content Include="Scripts\Underscore.js" />
     <Content Include="Scripts\util.min.js" />
     <Content Include="Scripts\UserControllers.js" />
     <Content Include="Scripts\AdminControllers.js" />
@@ -1329,9 +1324,8 @@
     <Content Include="Views\User\Packages.cshtml" />
     <Content Include="Views\User\PackagesPurchased.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
-    <Content Include="Views\Payment\PaymentWeb.cshtml" />
-    <Content Include="Views\Payment\ReturnToWebPage.cshtml" />
-    <Content Include="Views\User\PackagesPurchased - Copy.cshtml" />
+    <Content Include="Views\Shared\customError.cshtml" />
+    <Content Include="Views\Account\vmessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1373,6 +1367,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701141132429_afterNewPush.resx">
       <DependentUpon>201701141132429_afterNewPush.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701281126105_add-tabel-LogUserFailure.resx">
+      <DependentUpon>201701281126105_add-tabel-LogUserFailure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701291242162_add-TimeSetUuid-for-user.resx">
+      <DependentUpon>201701291242162_add-TimeSetUuid-for-user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701291340547_add-TimeSetUuid-for-user2.resx">
+      <DependentUpon>201701291340547_add-TimeSetUuid-for-user2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701311338252_deactiveLogFildAdded.resx">
+      <DependentUpon>201701311338252_deactiveLogFildAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

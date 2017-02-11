@@ -48,8 +48,16 @@ namespace IranAudioGuide_MainServer.Controllers
             try
             {
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
-                if (user.uuid != info.uuid || !user.EmailConfirmed)
-                    return View("Error");
+                if (user.uuid != info.uuid)
+                {
+                    ViewBag.Error = "uuid missmatch";
+                    return View("customError");
+                }
+                if (!user.EmailConfirmed)
+                {
+                    ViewBag.Error = "Email Confirmation Failed";
+                    return View("customError");
+                }
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 PackageVM package = (from p in db.Packages
                                      where p.Pac_Id == info.packageId
