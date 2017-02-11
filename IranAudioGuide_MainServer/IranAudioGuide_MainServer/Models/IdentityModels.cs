@@ -201,7 +201,29 @@ namespace IranAudioGuide_MainServer.Models
         public virtual ICollection<city> Pac_Cities { get; set; }
         public object pac_Cities { get; internal set; }
     }
+    public class RequestForApp {
+        public RequestForApp()
+        {
+            CreateRequest = DateTime.Now;
+            IsSend = false;
+        }
+        [Key]
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public DateTime CreateRequest { get; set; }
+        public bool IsSend { get; set; }
+    }
+    public class Comment
+    {
+        [Key]
+        public int Comment_Id { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        public DateTime CreateTime { get; set; }
+        public bool IsRead { get; set; }
+        public string uuid { get; set; }
 
+    }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -228,6 +250,8 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<UserLog> UserLogs { get; set; }
         public DbSet<LogUserFailure> LogUserFailures { get; set; }
         //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<RequestForApp> RequestForApps { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_MainServer.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

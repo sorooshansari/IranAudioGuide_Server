@@ -8,13 +8,14 @@ Portfolio
 ***/
 /*Portfolio Filter*/
 .load {
-    position: absolute;
+       position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(14, 113, 57);
+    background-color: #144482;
     text-align: center;
+    padding: 14% 0 0 0;
 }
 
 .unload {
@@ -23,12 +24,15 @@ Portfolio
 
 
 .page-content {
-     background: rgba(167, 215, 239, 0.68);
-    padding: 6% 12%;
+     /*background: rgba(167, 215, 239, 0.68);*/
+         background: rgba(20, 68, 130, 0.38);
+    padding: 6% 1%;
     min-height: 100vh;
     height: 100%;
 }
-
+.input-group-addon {
+    color: #144482 !important;
+}
 .profile-usertitle {
     text-shadow: none;
     color: #000;
@@ -306,11 +310,13 @@ Blog Page
 
     .profile-sidebar {
         max-width: 40% !important;
-            margin: 0 2%;
+        margin: 0 2%;
+        float: left;
     }
 
     .menu-pakages {
-        width: 60% !important;
+        width: 56% !important;
+        float: right;
     }
 
     .left-side-panel {

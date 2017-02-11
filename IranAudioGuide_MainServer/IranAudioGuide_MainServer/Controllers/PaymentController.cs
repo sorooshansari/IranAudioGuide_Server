@@ -39,6 +39,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 _userManager = value;
             }
         }
+
+
         // GET: Payment
         [AllowAnonymous]
         public async Task<ActionResult> Index(AppPaymentReqVM info)
@@ -117,11 +119,11 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
         [Authorize(Roles = "AppUser")]
-        public ActionResult Purchase(Guid packageId, string bankName)
+        public ActionResult Purchase(Guid packageId, string bankName, bool isFromWeb =false)
         {
             try
             {
-                var user = db.Users.Where(x=>x.UserName == User.Identity.Name).First();
+                var user = db.Users.Where(x => x.UserName == User.Identity.Name).First();
                 var package = db.Packages.Find(packageId);
                 if (package == null)
                     return RedirectToAction("Index", new WebPaymentReqVM()
@@ -130,7 +132,9 @@ namespace IranAudioGuide_MainServer.Controllers
                         ErrorMessage = "Error in finding package"
                     });
                 string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
-                string redirectPage = baseUrl+"/Payment/Return";
+                string redirectPage = baseUrl + "/Payment/Return";
+                if(isFromWeb)
+                   redirectPage = baseUrl + "/Payment/ReturnToWebPage";
                 var payment = new Payment()
                 {
                     Amount = package.Pac_Price,
@@ -156,7 +160,11 @@ namespace IranAudioGuide_MainServer.Controllers
                 else
                 {
                     ViewBag.Packname = packname;
-                    return RedirectToAction("Index", new WebPaymentReqVM() { packageId = packageId });
+                    if (isFromWeb)
+                        return RedirectToAction("PaymentWeb", packageId);
+                    else
+                        return RedirectToAction("Index", new WebPaymentReqVM() { packageId = packageId });
+                    
                 }
             }
             catch (Exception ex)
@@ -186,6 +194,81 @@ namespace IranAudioGuide_MainServer.Controllers
             return View();
         }
         /********************************************/
+        public ActionResult ReturnToWebPage(string paymentId)
+        {
+            ViewBag.Packname = packname;
+            try
+            {
+                ViewBag.BankName = "ZarinPal Payment Gateway";
+                ZarinpalReturn();
+            }
+            catch
+            {
+                ViewBag.BankName = "Your payment gateway is not specified";
+                ViewBag.Message = "No response from payment gateway";
+                ViewBag.ErrDesc = "There is no response from your payment gateway!";
+                ViewBag.SaleReferenceId = "**************";
+                ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
+            }
+            return View();
+        }
+        public string UserIPAddress
+        {
+            get { return HttpContext.Request.UserHostAddress; }
+        }
+        //Payment/PaymentWeb
+        [AllowAnonymous]
+        public async Task<ActionResult> PaymentWeb(Guid packageId)
+        {
+            try
+            {
+                System.Net.WebClient client = new System.Net.WebClient();
+
+                // Make an api call and get response.
+                string response = client.DownloadString("http://ip-api.com/json/"+ UserIPAddress);
+
+                //Deserialize response JSON
+                IPData ipdata = Newtonsoft.Json.JsonConvert.DeserializeObject<IPData>(response);
+                ViewBag.isIran = (ipdata.countryCode == "IR") ? true : false;
+                var info = new AppPaymentReqVM() {
+                    packageId = packageId,
+                    email = User.Identity.Name,
+                    
+                };
+                ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
+                if (!user.EmailConfirmed)
+                    return View("Error");
+                Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                PackageVM package = (from p in db.Packages
+                                     where p.Pac_Id == info.packageId
+                                     select new PackageVM()
+                                     {
+                                         PackageId = p.Pac_Id,
+                                         PackageName = p.Pac_Name,
+                                         PackagePrice = p.Pac_Price,
+                                         PackageCities = (from c in db.Cities
+                                                          where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
+                                                          select new CityVM()
+                                                          {
+                                                              CityDesc = c.Cit_Description,
+                                                              CityID = c.Cit_Id,
+                                                              CityName = c.Cit_Name
+                                                          }).ToList()
+                                     }).First();
+                packname = package.PackageName;
+                await t;
+                ViewBag.Error = info.ErrorMessage;
+                return View(package);
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+        }
+
+
+
+        /***********************************************************/
         #region zarinpal tools
 
 
@@ -301,7 +384,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
                         ViewBag.Message = "Sorry, Your payment was unsuccessful!";
                         ViewBag.SaleReferenceId = "**************";
-                        ViewBag.Image ="<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
+                        ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
                         ViewBag.ErrDesc = "Your payment process does not completed.";
                     }
                 }

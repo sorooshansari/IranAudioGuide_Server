@@ -1,0 +1,163 @@
+﻿@model IranAudioGuide_MainServer.Models.vmessageVM
+
+@{ 
+    ViewBag.Title = Model.Subject + IranAudioGuide_MainServer.Models.Variables.titlepostfix;
+}
+
+<style type="text/css">
+    /*#page-wrapper {
+        height: 100vh;
+        background: none !important;
+    }
+
+    .spotlightv {
+        margin-top: 25vh;
+    }
+
+    #header.alt h1 {
+        opacity: 1 !important;
+    }
+
+    #header.alt {
+        background: #144482 !important;
+        border-bottom: thin solid white;
+    }
+
+
+    body {
+        background: #144482;
+    }
+
+    #MainSection {
+        margin-top: 100px;
+        height: 400px;
+        width: 100%;
+    }
+
+    .Main-content {
+        float: right;
+    }
+
+    .Main-text {
+        padding: 3em;
+        padding-top: 175px;
+    }
+
+    #infocontainer {
+    background-color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 10px 20px black;
+    min-height: 85vh;
+    margin-top: 45px;
+    margin-bottom: 30px;
+    }*/
+
+    #page-wrapper {
+    min-height: 100vh;
+}
+    .chkout-img {
+        text-align: center;
+    }
+
+        .chkout-img img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+    .chkout-text {
+        padding: 1em 0em 2em 0em;
+        margin: 0 auto;
+        background-color: rgba(144,144,144,.25);
+        border-radius: 5px;
+            min-height: 45vh;
+    }
+
+        .chkout-text h1, .chkout-text p {
+    color: white !important;
+    text-shadow: 1px 1px 2px #000000 !important;
+    line-height: 25px;
+    padding-left: 70px;
+        }
+            .chkout-text p a {
+            color: #00a293 !important;
+            text-shadow:none;
+            text-decoration:none;
+            font-weight:800;
+            text-shadow: 1px 1px 2px #000000;
+       }
+            .chkout-text h1 i, .chkout-text p i {
+    color: #00a293;
+    position: absolute;
+    left: 20px;
+    margin-top: 5px;
+    text-shadow: none !important;
+    font-size: large;
+            }
+   
+    ._1sttd {
+    font-size: 14px;
+    width: 50%;
+    border-right: 1px solid #144482 !important;
+    vertical-align: middle;
+    font-weight: 600;
+    }
+
+    ._1sttd i
+    {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    font-size: large;
+    }
+    ._1sttd .col-xs-12
+    {
+            padding-left:25px;
+    }
+    ._2ndtd {
+        width: 50%;
+    }
+
+    .table-mybordered > thead > tr > th, .table-mybordered > tbody > tr > th, .table-mybordered > tfoot > tr > th, .table-mybordered > thead > tr > td, .table-mybordered > tbody > tr > td, .table-mybordered > tfoot > tr > td {
+        border: 1px solid #b6b6b6;
+        /*border-left: none !important;
+        border-right: none !important;*/
+    }
+
+    table tbody tr {
+        background: none !important;
+    }
+
+    .desc
+    {
+        font-weight: 600;
+        font-size:x-small; 
+        padding:0 10px !important;
+    }
+
+    .purchasebtn
+    {
+        width:120px; background-color:#144482; color:white;
+        font-size:small;
+    }
+</style>
+
+<section id="CheckOutSection">
+    <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
+        <div class="col-xs-12 checkout-content chkout-img">
+            <img src="~/images/IAGSITELOGO.png" />
+        </div>
+
+        <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
+            <h1>
+                <i class="fa fa-bullseye"></i>
+                @Model.Subject
+            </h1>
+            <p style="border-top: 5px solid #00a293; font-size:small;">
+                <br />
+                <i class="fa fa-commenting"></i>
+                @Html.Raw(Model.Message)
+            </p>
+        </div>
+    </div>
+</section>

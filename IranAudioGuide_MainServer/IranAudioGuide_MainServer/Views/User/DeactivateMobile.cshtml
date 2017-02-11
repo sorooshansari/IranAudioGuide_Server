@@ -1,6 +1,29 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
+<style>
+    .portlet.light .portlet-body {
+        color: #000;
+        
+        padding-top:100px;
+    }
 
-DeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobileDeactivateMobile
+    .portlet.light {
+        min-height: 546px;
+    }
+</style>
+<div class="portlet light menu-pakages" ng-if="packages.length != 0">
+    <div class="portlet-title">
+        <div class="caption caption-md">
+            <i class="icon-bar-chart theme-font hide"></i>
+            <span class="caption-subject font-blue-madison bold uppercase">Deactivate Mobile </span>
+
+        </div>
+    </div>
+    <div class="portlet-body">
+        Below is a sample of “Lorem ipsum dolor sit” dummy copy text often used to show font face samples, for page layout and design as sample layout text by printers, graphic designers, Web designers, people creating Microsoft Word templates, and many other uses. It mimics the look of real text quite well as you design and set up your page layouts.
+        <button type="button" class="btn btn-circle green-haze btn-sm" ng-click="deactivateMobile()">Deactivate Mobile </button>
+
+
+    </div>
+</div>

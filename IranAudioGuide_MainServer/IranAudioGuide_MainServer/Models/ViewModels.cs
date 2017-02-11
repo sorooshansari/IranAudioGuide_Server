@@ -24,7 +24,11 @@ namespace IranAudioGuide_MainServer.Models
         notConfirmed = 4,
         unknownError = 5
     }
-
+    public class vmessageVM
+    {
+        public string Subject { get; set; }
+        public string Message { get; set; }
+    }
 
 public class PaymentResult
     {
@@ -151,7 +155,23 @@ public class PaymentResult
         [Display(Name = "Package Cities")]
         public List<int> Cities { get; set; }
     }
-
+    public class IPData
+    {
+        public string status { get; set; }
+        public string country { get; set; }
+        public string countryCode { get; set; }
+        public string region { get; set; }
+        public string regionName { get; set; }
+        public string city { get; set; }
+        public string zip { get; set; }
+        public string lat { get; set; }
+        public string lon { get; set; }
+        public string timezone { get; set; }
+        public string isp { get; set; }
+        public string org { get; set; }
+        public string @as { get; set; }
+        public string query { get; set; }
+    }
     public class PackageVM
     {
         public int Index { get; internal set; }
@@ -295,7 +315,8 @@ public class PaymentResult
         Register,
         Login,
         AdminIndex,
-        UserIndex
+        UserIndex,
+        vmessage
     }
     public class AdminIndexVM
     {
@@ -317,6 +338,7 @@ public class PaymentResult
         public string FullName { get; set; }
         public string Email { get; set; }
         public string imgUrl { get; set; }
+        public bool IsEmailConfirmed { get; set; }
     }
     public class UserProfile
     {
@@ -526,6 +548,17 @@ public class PaymentResult
         ExtraImage,
         City,
         Place
+    }
+    public class CommentVm {
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        public string uuid { get; set; }
+    }
+
+    public class RequestForAppVM
+    {
+        public string Email { get; set; }
+
     }
     public enum status
     {

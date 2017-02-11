@@ -98,7 +98,8 @@
         <script src="~/Scripts/HomeCustom.js"></script>
         <script src="~/Scripts/HomeControllers.js"></script>*@
 
-    @Scripts.Render("~/bundles/minJs")
+        @Scripts.Render("~/bundles/minJs")
+        <script src="~/Scripts/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         angular.module('HomePage', [])
             .config(function ($sceProvider) {
@@ -128,7 +129,21 @@
                         $scope.user.isAutintication = false;
                     });
 
+                    $scope.showPopup = function () {
+                        $('#myModal').modal('show');
+                    }
+                    $scope.sendEmail = function () {
+                        $('#myModal').modal('hide');
+                        var user = {
+                            Email: $scope.emailForApp
+                        };
+                        $http.post('/api/UserApi/SaveRequest',user).success(function (result) {
+                          
 
+                        }).error(function (error, status, headers, config) {
+                         
+                        });
+                    }
                     $scope.ContactUs = function (model, form) {
                         $scope.overlay = true;
                         if (form.$valid && !model.invalidFile) {

@@ -52,27 +52,22 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
-        public JsonResult test(int Id)
+
+        public ActionResult Error()
         {
-            dbTools dbTools = new dbTools();
-            var res = dbTools.GetPackagesByCity(Id);
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return View("Error");
         }
-        //public ActionResult Error()
-        //{
-        //    return View("Error");
-        //}
-        //public ActionResult CheckOut()
-        //{
-        //    return View("CheckOut");
-        //}
-        //public ActionResult PaymentRef()
-        //{
-        //    return View("PaymentRef");
-        //}
-        //public ActionResult PurchaseDetails()
-        //{
-        //    return View("PurchaseDetails");
-        //}
+        public ActionResult CheckOut()
+        {
+            return View("CheckOut");
+        }
+        public ActionResult PaymentRef()
+        {
+            return View("PaymentRef");
+        }
+        public ActionResult PurchaseDetails()
+        {
+            return View("PurchaseDetails");
+        }
     }
 }
