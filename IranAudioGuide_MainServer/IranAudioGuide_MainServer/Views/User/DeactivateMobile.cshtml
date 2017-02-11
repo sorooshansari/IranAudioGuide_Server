@@ -7,32 +7,50 @@
         padding-top: 100px;
     }
 
+    .btn[disabled] {
+        background-color: #777 !important;
+    }
+
+    .deactivationHeader {
+        font-size: larger !important;
+    }
+
     /*.deactivatedDevice {
         min-height: 546px;
     }*/
 </style>
-<div class="portlet light deactivatedDevice" ng-if="packages.length != 0">
+<div class="portlet light deactivatedDevice">
     <div class="portlet-title">
         <div class="caption caption-md">
-            <i class="icon-bar-chart theme-font hide"></i>
-            <span class="caption-subject font-blue-madison bold uppercase">Deactivate Mobile </span>
+            <span class="caption-subject font-blue-madison bold uppercase deactivationHeader">Want to change your device?</span>
 
         </div>
     </div>
     <div class="portlet-body">
-     
-        <div ng-show="user.IsShowBtnDeactivatedDevice == false">
-        
-            If you want to change your device, you can deactivate your packages on your old device by pressing the “deactivate” button.
-            Sign in with your new device and you will have access again.
-            But this in only possible every 6 months once.
-            <br />
-            <button type="button" ng-disabled="user.IsDisableBtn == true"  class="btn btn-circle green-haze btn-sm" ng-click="deactivateMobile()">Deactivate Mobile </button>
 
-        </div>  
-        <div ng-show="user.IsShowBtnDeactivatedDevice == true">
-            You have not set any devices to your account yet. Sign in with the device you intend to use to set the device and gain access to your packages
+        <div>
+            <ul>
+                <li>
+                    By pressing the <strong>DEACTIVATE OLD DEVICE</strong> button you can deactivate your old device (your smart phone or tablet).
+                </li>
+                <li>
+                    Then sign in with the device you intend to use to set the device and gain access to your packages.
+                </li>
+                <li>
+                    <strong>Remmember!</strong> This is only possible every 6 months once.
+                </li>
+            </ul>
 
-        </div> 
+            <button type="button" ng-disabled="user.IsDisableBtn == true"
+                    ng-show="!user.IsShowBtnDeactivatedDevice"
+                    class="btn btn-circle green-haze btn-sm"
+                    ng-click="deactivateMobile()">
+                Deactivate Old Device
+            </button>
+
+            <div ng-show="user.IsShowBtnDeactivatedDevice">
+                You have not set any devices to your account yet.
+            </div>
+        </div>
     </div>
 </div>

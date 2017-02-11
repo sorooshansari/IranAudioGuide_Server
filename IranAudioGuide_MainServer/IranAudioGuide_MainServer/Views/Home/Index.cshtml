@@ -300,19 +300,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 style="color:#000 !important" class="modal-title">Submit Request</h4>
+                <h4 style="color:#000 !important" class="modal-title">Subscription</h4>
             </div>
             <div class="modal-body">
-                <p>If you want to get project Please enter your email</p>
+                <p>We are so close to release. Please leave your email, so we can notify you when we release.</p>
                 <form data-toggle="validator" role="form">
-
                     <div class="form-group">
-                        <label for="inputEmail" class="control-label">Email</label>
                         <input type="email" ng-model="emailForApp" class="form-control" id="inputEmail" placeholder="Email" data-error="Bruh, that email address is invalid" required>
                         <div class="help-block with-errors"></div>
                     </div>
-
-
                     <div class="form-group">
                         <button ng-click="sendEmail()" class="btn btn-primary">Submit</button>
                     </div>
