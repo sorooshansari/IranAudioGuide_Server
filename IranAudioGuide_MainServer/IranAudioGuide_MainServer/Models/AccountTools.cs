@@ -45,9 +45,9 @@ namespace IranAudioGuide_MainServer.Models
                 _userManager = value;
             }
         }
-        public Task<ApplicationUser> getUser(string username, string uuid)
+        public ApplicationUser getUser(string username)
         {
-            return UserManager.FindByNameAsync(username);
+            return UserManager.FindByName(username);
         }
         public async Task<AuthorizedUser> AutorizeAppUser(string username, string password, string uuid)
         {
@@ -56,7 +56,13 @@ namespace IranAudioGuide_MainServer.Models
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (user.uuid != uuid)
+                    if (user.uuid == null)
+                    {
+                        var updated = await updateUserUUID(user, uuid);
+                        if (!updated)
+                            return new AuthorizedUser() { Result = SignInResults.Failure };
+                    }
+                    else if (user.uuid != uuid)
                         return new AuthorizedUser() { Result = SignInResults.uuidMissMatch };
                     return new AuthorizedUser()
                     {
@@ -69,7 +75,14 @@ namespace IranAudioGuide_MainServer.Models
                 case SignInStatus.LockedOut:
                     return new AuthorizedUser() { Result = SignInResults.LockedOut };
                 case SignInStatus.RequiresVerification:
-                    return new AuthorizedUser() { Result = SignInResults.RequiresVerification };
+                    return new AuthorizedUser()
+                    {
+                        GoogleId = user.GoogleId,
+                        Email = user.Email,
+                        FullName = user.FullName,
+                        Picture = user.Picture,
+                        Result = SignInResults.RequiresVerification
+                    };
                 case SignInStatus.Failure:
                     return new AuthorizedUser() { Result = SignInResults.Failure };
                 default:
@@ -165,6 +178,17 @@ namespace IranAudioGuide_MainServer.Models
             var res = await UserManager.UpdateAsync(user);
             return res.Succeeded;
         }
+        private async Task<bool> updateUserUUID(ApplicationUser user, string uuid)
+        {
+            if (user.uuid == null)
+            {
+                user.uuid = uuid;
+                var res = await UserManager.UpdateAsync(user);
+                return res.Succeeded;
+            }
+            return false;
+        }
+
 
 
         public ApplicationUser GetUserByName(string userName)
