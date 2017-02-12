@@ -209,6 +209,53 @@ public class PaymentResult
         public string Picture { get; set; }
         public SignInResults Result { get; set; }
     }
+    public class GetAudioUrlVM
+    {
+        public string email { get; set; }
+        public string uuid { get; set; }
+        public Guid trackId { get; set; }
+        public bool isAudio { get; set; }
+    }
+
+    public enum GetAudioUrlStatus
+    {
+        //
+        // Summary:
+        //     Geting url successful
+        success = 0,
+        //
+        // Summary:
+        //     this is not one of our users
+        notUser = 1,
+        //
+        // Summary:
+        //     This audio is not available for this user
+        unauthorizedUser = 2,
+        //
+        // Summary:
+        //     geting url with incorrect uuid
+        uuidMissMatch = 3,
+        //
+        // Summary:
+        //     unknow error happen
+        unknownError = 4
+    }
+    public class GetAudioUrlRes
+    {
+        public GetAudioUrlRes(string url)
+        {
+            this.url = url;
+            status = GetAudioUrlStatus.success;
+        }
+        public GetAudioUrlRes(GetAudioUrlStatus status, string error = "")
+        {
+            this.status = status;
+            this.errorMessage = error;
+        }
+        public GetAudioUrlStatus status { get; set; }
+        public string url { get; set; }
+        public string errorMessage { get; set; }
+    }
     public class GetAutorizedCitiesVM
     {
         public string username { get; set; }

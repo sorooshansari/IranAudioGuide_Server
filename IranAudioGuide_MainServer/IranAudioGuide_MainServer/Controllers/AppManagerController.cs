@@ -29,6 +29,23 @@ namespace IranAudioGuide_MainServer.Controllers
         //{
         //    return dbTools.skipUser(uuid);
         //}
+        //[HttpPost]
+        //public GetAudioUrlRes GetAudioUrl(GetAudioUrlVM model)
+        //{
+        //    try
+        //    {
+        //        var user = acTools.getUser(model.email);
+        //        if (user == null)
+        //            return new GetAudioUrlRes(GetAudioUrlStatus.notUser);
+        //        if (user.uuid != model.uuid)
+        //            return new GetAudioUrlRes(GetAudioUrlStatus.uuidMissMatch);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
+        //    }
+        //}
         [HttpPost]
         public AutorizedCitiesVM GetAutorizedCities(GetAutorizedCitiesVM model)
         {
