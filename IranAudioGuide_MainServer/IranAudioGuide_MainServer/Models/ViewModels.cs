@@ -335,13 +335,15 @@ public class PaymentResult
     }
     public class UserInfo
     {
+        
+
         public string FullName { get; set; }
         public string Email { get; set; }
         public string imgUrl { get; set; }
         public bool IsEmailConfirmed { get; set; }
-        public bool IsShowBtnDeactivatedDevice { get; set; }
-        public bool IsDisableBtn { get;  set; }
-        public DateTime TimeSetUuid { get;  set; }
+        public bool IsSetuuid { get; set; }
+        public bool IsAccessChangeUuid { get;  set; }
+        public DateTime? TimeSetUuid { get;  set; }
     }
     public class UserProfile
     {
@@ -561,6 +563,7 @@ public class PaymentResult
     public class RequestForAppVM
     {
         public string Email { get; set; }
+        public string NameDevice { get; set; }
 
     }
     public enum status

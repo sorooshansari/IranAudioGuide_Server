@@ -212,6 +212,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Email { get; set; }
         public DateTime CreateRequest { get; set; }
         public bool IsSend { get; set; }
+        public string NameDevice { get; set; }
     }
     public class Comment
     {

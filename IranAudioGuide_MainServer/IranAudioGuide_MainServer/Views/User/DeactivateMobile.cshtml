@@ -15,24 +15,25 @@
     <div class="portlet-title">
         <div class="caption caption-md">
             <i class="icon-bar-chart theme-font hide"></i>
-            <span class="caption-subject font-blue-madison bold uppercase">Deactivate Mobile </span>
+            <span class="caption-subject font-blue-madison bold uppercase">Deactivate Device </span>
 
         </div>
     </div>
     <div class="portlet-body">
-     
-        <div ng-show="user.IsShowBtnDeactivatedDevice == false">
-        
+        <div class="alert  alert-success" ng-show="m.isShowMessage">
+            <strong> Success!</strong> {{m.msg}}
+        </div>
+        <div ng-show="user.IsSetuuid == true">
             If you want to change your device, you can deactivate your packages on your old device by pressing the “deactivate” button.
             Sign in with your new device and you will have access again.
             But this in only possible every 6 months once.
             <br />
-            <button type="button" ng-disabled="user.IsDisableBtn == true"  class="btn btn-circle green-haze btn-sm" ng-click="deactivateMobile()">Deactivate Mobile </button>
+            <button type="button" ng-disabled="!user.IsAccessChangeUuid" ng-class="{'disabled': !user.IsAccessChangeUuid}" class="btn btn-circle green-haze btn-sm" ng-click="deactivateMobile()">Deactivate </button>
 
-        </div>  
-        <div ng-show="user.IsShowBtnDeactivatedDevice == true">
+        </div>
+        <div ng-show="user.IsSetuuid == false">
             You have not set any devices to your account yet. Sign in with the device you intend to use to set the device and gain access to your packages
 
-        </div> 
+        </div>
     </div>
 </div>

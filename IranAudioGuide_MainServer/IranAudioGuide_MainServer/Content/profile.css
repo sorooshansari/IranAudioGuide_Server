@@ -174,15 +174,20 @@ Portfolio
             border: solid 1px #eee;
         }
 
-.alert b, strong {
+.alert-warning b,.alert-warning  strong {
     color: #c29d0b;
     font-weight: 600;
 
 }
-.alert a {
+.alert-warning a {
     color: #423917;
     font-weight: 900;
     text-shadow: 1px 1px 1px #f7c500;
+    cursor: pointer;
+}
+.alert-success b, .alert-success strong {
+    color: #2a7b08;
+    font-weight: 600;
 }
 /***
 Blog Page

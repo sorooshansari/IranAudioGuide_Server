@@ -216,45 +216,13 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201611170848081_CreateDB.cs" />
-    <Compile Include="Migrations\201611170848081_CreateDB.Designer.cs">
-      <DependentUpon>201611170848081_CreateDB.cs</DependentUpon>
+    <Compile Include="Migrations\201702120520067_add tabel.cs" />
+    <Compile Include="Migrations\201702120520067_add tabel.Designer.cs">
+      <DependentUpon>201702120520067_add tabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701030945504_paymentAdded.cs" />
-    <Compile Include="Migrations\201701030945504_paymentAdded.Designer.cs">
-      <DependentUpon>201701030945504_paymentAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701061119499_tempUserTableAdded.cs" />
-    <Compile Include="Migrations\201701061119499_tempUserTableAdded.Designer.cs">
-      <DependentUpon>201701061119499_tempUserTableAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701141132429_afterNewPush.cs" />
-    <Compile Include="Migrations\201701141132429_afterNewPush.Designer.cs">
-      <DependentUpon>201701141132429_afterNewPush.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701281126105_add-tabel-LogUserFailure.cs" />
-    <Compile Include="Migrations\201701281126105_add-tabel-LogUserFailure.Designer.cs">
-      <DependentUpon>201701281126105_add-tabel-LogUserFailure.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701291242162_add-TimeSetUuid-for-user.cs" />
-    <Compile Include="Migrations\201701291242162_add-TimeSetUuid-for-user.Designer.cs">
-      <DependentUpon>201701291242162_add-TimeSetUuid-for-user.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701291340547_add-TimeSetUuid-for-user2.cs" />
-    <Compile Include="Migrations\201701291340547_add-TimeSetUuid-for-user2.Designer.cs">
-      <DependentUpon>201701291340547_add-TimeSetUuid-for-user2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701311338252_deactiveLogFildAdded.cs" />
-    <Compile Include="Migrations\201701311338252_deactiveLogFildAdded.Designer.cs">
-      <DependentUpon>201701311338252_deactiveLogFildAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702110846152_addTabel---RequestForApp-Comments.cs" />
-    <Compile Include="Migrations\201702110846152_addTabel---RequestForApp-Comments.Designer.cs">
-      <DependentUpon>201702110846152_addTabel---RequestForApp-Comments.cs</DependentUpon>
+    <Compile Include="Migrations\201702121014453_d.cs" />
+    <Compile Include="Migrations\201702121014453_d.Designer.cs">
+      <DependentUpon>201702121014453_d.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
@@ -1377,35 +1345,11 @@
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611170848081_CreateDB.resx">
-      <DependentUpon>201611170848081_CreateDB.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702120520067_add tabel.resx">
+      <DependentUpon>201702120520067_add tabel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701030945504_paymentAdded.resx">
-      <DependentUpon>201701030945504_paymentAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701061119499_tempUserTableAdded.resx">
-      <DependentUpon>201701061119499_tempUserTableAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701141132429_afterNewPush.resx">
-      <DependentUpon>201701141132429_afterNewPush.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701281126105_add-tabel-LogUserFailure.resx">
-      <DependentUpon>201701281126105_add-tabel-LogUserFailure.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701291242162_add-TimeSetUuid-for-user.resx">
-      <DependentUpon>201701291242162_add-TimeSetUuid-for-user.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701291340547_add-TimeSetUuid-for-user2.resx">
-      <DependentUpon>201701291340547_add-TimeSetUuid-for-user2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701311338252_deactiveLogFildAdded.resx">
-      <DependentUpon>201701311338252_deactiveLogFildAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702110846152_addTabel---RequestForApp-Comments.resx">
-      <DependentUpon>201702110846152_addTabel---RequestForApp-Comments.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702121014453_d.resx">
+      <DependentUpon>201702121014453_d.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -2,25 +2,62 @@
     ViewBag.Title = "Iran Audio Guide";
 }
 <style>
-    .modal {
-        /*background-color: rgb(20, 68, 130);*/
+    .form-request {
+        width: 416px;
+        margin: auto;
+        max-height: 0px;
+        overflow: hidden;
+        -moz-transition: all 1s ease-in-out;
+        -webkit-transition: all 1s ease-in-out;
+        -o-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
     }
 
-    .modal-content {
-        /*background-color: rgba(196, 214, 236, 0.47);*/
+    .form-request-show {
+        max-height: 400px;
     }
 
-    .modal-header .close {
-        box-shadow: none;
-    }
-    .modal * {
-       color: #000000
+    .form-request a {
+        font-size: 18px;
+        padding: 0;
+        width: 75px;
+        background-color: #00a293;
+        color: #fff !important;
     }
 
-    .modal input[type=text], input[type=password], input[type=email], select, textarea {
-        background: rgb(255, 255, 255);
-        border:1px solid #ccc;
+        .form-request a:hover {
+            background-color: #707292;
+            color: #00a293 !important;
+        }
+
+    .form-request .message {
+        color: #fff;
+        text-align: left;
+        font-size: 81%;
+        margin: 0 0 0 4%;
+        width: 95%;
+        /*border: 1px solid red;*/
+        display: inline-block;
     }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-request .error input {
+        border: 1px solid #de0000;
+        color:#de0000;
+    }
+
+    .form-request .error a {
+        box-shadow: inset 0 0 0 2px #de0000;
+        /*color: #f7f7f7;*/
+        background-color: #de0000;
+    }
+    .error-msg {
+    color: #de0000;
+    text-shadow: 0px 0px 9px #060713;
+}
 </style>
 <section id="banner">
     <div class="inner">
@@ -29,12 +66,9 @@
         </div>
         <h2>Iran Audio Guide</h2>
         <p>
-
             The only guide you will need in Iran<br />
             <br />
             Convenient, thorough, liberating <br />
-
-
         </p>
         <ul class="actions">
             <li><a href="#Download_Application" class="button special scrolly">Download</a></li>
@@ -56,31 +90,44 @@
             </p>
         </header>
         <ul class="icons major">
-            <li class="tooltips">
-                <a ng-click="showPopup()">
-                    <span class="icon fa-apple major style1"><span>Coming Soon</span></span>
+            <li>
+                <a ng-click="showPopup('Apple')">
+                    <span class="icon fa-apple major style1"></span>
                 </a>
             </li>
-            <li class="tooltips">
-                <a ng-click="showPopup()">
-                    @*href="~/Download/IranAudioGuide.apk">*@
-                    <span class="icon fa-cloud-download major style3"><span>Download Now</span></span>
-                </a>
-            </li>
-            <li class="tooltips">
-                <a ng-click="showPopup()">
-                    <span class="icon fa-android major style2"><span>Coming Soon</span></span>
+            @*<li class="tooltips">
+                    <a href="~/Download/IranAudioGuide.apk" ng-click="showPopup('')">
+                        <span class="icon fa-cloud-download major style3"><span>Download Now</span></span>
+                    </a>
+                </li>*@
+            <li>
+                <a ng-click="showPopup('Android')">
+                    <span class="icon fa-android major style2"></span>
                 </a>
             </li>
 
         </ul>
-        <section id="usercounter" style="font-size:x-large; display:inline-flex; padding-bottom:70px;">
-            @* We are honored to have
-                <h2 style="margin: 0px; padding: 0px 10px 0px 10px; font-size: larger; color: cyan; line-height:inherit;" count-up id="numberAnimation" end-val="873.4" scroll-spy-event="elementFirstScrolledIntoView" scroll-spy></h2>
-                Users*@
 
-        </section>
     </div>
+
+    <form class="form-request" name="formRequest">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div class="input-group" ng-class="{'error':formRequest.isError && formRequest.$invalid }">
+                    <input name="email" ng-model="newsletters.emailForApp" class="form-control" placeholder="Email" type="email" required>
+                    <a ng-click="sendEmail()" class="btn btn-inverse input-group-addon btn-danger">
+                        <i class="fa fa-send">
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div ng-show="formRequest.isError && formRequest.$invalid" class="error-msg">please enter correct email address</div>
+
+        <div  class="message"> If you want to get App Please enter your email </div>
+     
+    </form>
+
 </section>
 
 <!-- Two -->
@@ -293,35 +340,3 @@
 </footer>
 
 
-<div id="myModal" class="modal fade" role="dialog" style="color:#000 !important">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 style="color:#000 !important" class="modal-title">Submit Request</h4>
-            </div>
-            <div class="modal-body">
-                <p>If you want to get project Please enter your email</p>
-                <form data-toggle="validator" role="form">
-
-                    <div class="form-group">
-                        <label for="inputEmail" class="control-label">Email</label>
-                        <input type="email" ng-model="emailForApp" class="form-control" id="inputEmail" placeholder="Email" data-error="Bruh, that email address is invalid" required>
-                        <div class="help-block with-errors"></div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <button ng-click="sendEmail()" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
-            @*<div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>*@
-        </div>
-
-    </div>
-</div>
