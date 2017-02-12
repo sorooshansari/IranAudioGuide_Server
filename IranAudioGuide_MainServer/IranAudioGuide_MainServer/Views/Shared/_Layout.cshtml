@@ -128,14 +128,25 @@
                     }).error(function (error, status, headers, config) {
                         $scope.user.isAutintication = false;
                     });
+                    $scope.newsletters = {};
+                    $scope.showPopup = function (nameDevice) {
+                        $scope.newsletters.nameDevice = nameDevice;                        
+                        $('.form-request').addClass('form-request-show');
 
-                    $scope.showPopup = function () {
-                        $('#myModal').modal('show');
                     }
                     $scope.sendEmail = function () {
-                        $('#myModal').modal('hide');
+                        $scope.formRequest.isError = false;
+                        if ($scope.formRequest.$invalid)
+                        {
+                            $scope.formRequest.isError = true;
+                            return;
+
+                        }
+                        $('.form-request').removeClass('form-request-show');
+                        //$('#myModal').modal('hide');
                         var user = {
-                            Email: $scope.emailForApp
+                            NameDevice: $scope.newsletters.nameDevice,
+                            Email: $scope.newsletters.emailForApp
                         };
                         $http.post('/api/UserApi/SaveRequest',user).success(function (result) {
                           

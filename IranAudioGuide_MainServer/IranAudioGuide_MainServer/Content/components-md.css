@@ -2904,7 +2904,10 @@ Green Haze
   background-image: none;
 }
 .green-haze.btn.disabled, .green-haze.btn.disabled:hover, .green-haze.btn.disabled:focus, .green-haze.btn.disabled:active, .green-haze.btn.disabled.active, .green-haze.btn[disabled], .green-haze.btn[disabled]:hover, .green-haze.btn[disabled]:focus, .green-haze.btn[disabled]:active, .green-haze.btn[disabled].active, fieldset[disabled] .green-haze.btn, fieldset[disabled] .green-haze.btn:hover, fieldset[disabled] .green-haze.btn:focus, fieldset[disabled] .green-haze.btn:active, fieldset[disabled] .green-haze.btn.active {
-  background-color: #44b6ae;
+  /*background-color: #44b6ae;*/
+      background-color: #97a38a;
+    box-shadow: 0px 5px 3px #60688d;
+    cursor:not-allowed;
 }
 .green-haze.btn .badge {
   color: #44b6ae;

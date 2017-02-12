@@ -78,16 +78,16 @@ namespace IranAudioGuide_MainServer.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             var serviceIpAdress = new ServiceIpAdress();
-            ViewBag.IsTheFirstLogin = serviceIpAdress.IsIpadressFailuers();
-            if (!ViewBag.IsTheFirstLogin)
-            {
-                var response = Request["g-recaptcha-response"];
-                if ((response == null || response == "" || !ServiceRecaptcha.IsValid(response)))
-                {
-                    ModelState.AddModelError("", ServiceRecaptcha.ErrorMessage);
-                    return View(model);
-                }
-            }
+           // ViewBag.IsTheFirstLogin = serviceIpAdress.IsIpadressFailuers();
+            //if (!ViewBag.IsTheFirstLogin)
+            //{
+            //    var response = Request["g-recaptcha-response"];
+            //    if ((response == null || response == "" || !ServiceRecaptcha.IsValid(response)))
+            //    {
+            //        ModelState.AddModelError("", ServiceRecaptcha.ErrorMessage);
+            //        return View(model);
+            //    }
+            //}
 
             if (!ModelState.IsValid)
             {

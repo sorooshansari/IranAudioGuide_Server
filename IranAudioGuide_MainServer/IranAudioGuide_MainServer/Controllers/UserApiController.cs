@@ -17,37 +17,38 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-
-
-
-
                 string userName = User.Identity.Name;
                 using (var db = new ApplicationDbContext())
                 {
-                    UserInfo Info = (from user in db.Users
-                                     where user.UserName == userName
-                                     select new UserInfo()
-                                     {
-                                         Email = user.Email,
-                                         FullName = user.FullName,
-                                         imgUrl = user.ImgUrl,
-                                         IsEmailConfirmed = user.EmailConfirmed,
-                                         IsShowBtnDeactivatedDevice = (user.uuid == null) ? false : true,
-                                         IsDisableBtn = (user.uuid == null) ? false : true,
-                                         TimeSetUuid = user.TimeSetUuid.Value
-                                     }).FirstOrDefault();
-                    
+                    var  user = db.Users.FirstOrDefault(x => x.UserName == userName);
+                    var Info = new UserInfo()
+                    {
+                        Email = user.Email,
+                        FullName = user.FullName,
+                        imgUrl = user.ImgUrl,
+                        IsEmailConfirmed = user.EmailConfirmed,
+                        IsSetuuid = (user.uuid == null) ? false : true,                     
+                    };
 
-                    var startDay = Info.TimeSetUuid;
-                    var endDay = DateTime.Now;
+                    if (!Info.IsSetuuid)
+                        Info.IsAccessChangeUuid = false;
+                    else if (user.TimeSetUuid == null)
+                    {
+                        //the first time for change dective device
+                        Info.IsAccessChangeUuid = true;
 
-                    var day = endDay.Day - startDay.Day;
-                    var month = endDay.Month - startDay.Month;
-                    var year = endDay.Year - startDay.Year;
-                    var daywating = ((year * 365) + (month * 31) + day) / 30;
-                    if (daywating < 6)
-                        Info.IsDisableBtn = true;
-
+                    }
+                    else
+                    {
+                        var startDay = user.TimeSetUuid.Value;
+                        var endDay = DateTime.Now;
+                        var day = endDay.Day - startDay.Day;
+                        var month = endDay.Month - startDay.Month;
+                        var year = endDay.Year - startDay.Year;
+                        var monthwating = ((year * 365) + (month * 31) + day) / 30;
+                        if (monthwating >= 6)
+                            Info.IsAccessChangeUuid = true;
+                    }
                     return Ok(Info);
                 }
             }
@@ -159,6 +160,7 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 var d = new RequestForApp()
                 {
+                    NameDevice = requestForApp.NameDevice,
                     Email = requestForApp.Email
                 };
                 db.RequestForApps.Add(d);

@@ -55,8 +55,11 @@ userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificSe
     $scope.deactivateMobile = function () {
         userServices.deactivateMobile()
             .then(function (data) {
-                var successMsg = "you have successfully deactivated your device. the next device you sign in with, will become your active device.";
-                notific.success(successMsg);
+                $scope.m = {
+                    msg: "you have successfully deactivated your device. the next device you sign in with, will become your active device.",
+                }
+                $scope.m.isShowMessage = true;
+               // notific.success(successMsg);
             }, function (error) {
                 notific.error("ERROR", error.Message);
             });
@@ -69,11 +72,11 @@ userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificSe
             //var s = element.removeAttr('class').addClass("fa fa-spinner fa-spin");
             userServices.getPackages().then(function (data) {
                 $scope.profile.packages = data;
-               // element.removeAttr('class').addClass(calssName);
+                // element.removeAttr('class').addClass(calssName);
                 $scope.profile.isCompletedLoading = true;
-               // $(event.target).find("i").removeAttr('class').addClass(calssName);
+                // $(event.target).find("i").removeAttr('class').addClass(calssName);
             }, function () {
-               // $(event.target).find("i").removeAttr('class').addClass(calssName);
+                // $(event.target).find("i").removeAttr('class').addClass(calssName);
 
             });
         }
@@ -211,10 +214,13 @@ userApp.controller('PackagesCtrl', ['$scope', 'userServices', '$timeout', functi
                 break;
             }
         }
-        if (arrayCity.length == 0 || !isFindCity) {
+        if (arrayCity.length == 0) {
+            arrayCity.push({ CityID: searchItem.CityID, packages: searchItem.packages });
+            $scope.listPakages = searchItem.packages;
+        }
+        else if (!isFindCity) {
             arrayCity.push({ CityID: searchItem.CityID, packages: searchItem.packages });
             intersection(searchItem);
-
         }
     }
     var arrayCity = [];
@@ -379,7 +385,7 @@ userApp.controller('PackagesCtrl', ['$scope', 'userServices', '$timeout', functi
 }]);
 
 userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
-    
+
     $scope.$watch("profile.packagesPurchased", function (newval, oldval) {
         if (typeof newval != undefined) {
             $scope.packagesPurchased = angular.copy($scope.profile.packagesPurchased);
