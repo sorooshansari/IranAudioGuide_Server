@@ -44,59 +44,83 @@
     .box-place {
         margin: 0 0 0 21px;
     }
-
 </style>
 @*<link href="~/Content/responsiveslides.css" rel="stylesheet" />*@
 <link href="~/Content/sliderArrow.css" rel="stylesheet" />
 <link href="~/Content/PakageTemplate.css" rel="stylesheet" />
-<div class="portlet light menu-pakages" ng-if="packages.length != 0">
-    <div class="portlet-title">
-        <div class="caption caption-md">
-            <i class="icon-bar-chart theme-font hide"></i>
-            <span class="caption-subject font-blue-madison bold uppercase">Packages </span>
+@*<div class="portlet light menu-pakages" ng-if="packages.length != 0">
+        <div class="portlet-title">
+            <div class="caption caption-md">
+                <i class="icon-bar-chart theme-font hide"></i>
+                <span class="caption-subject font-blue-madison bold uppercase">Packages </span>
 
+            </div>
         </div>
-    </div>
-    <div class="portlet-body">
+        <div class="portlet-body">
 
-        <div class="form-horizontal">
-            <fieldset>
-                <legend>Please select your city or location</legend>
-                <div class="form-group">
-                    <div class="col-md-12 ">
-                        <div class="input-group">
-                            @*-$select.selected.title--*@
-                            <ui-select multiple ng-model="searhPakage.item" theme="bootstrap">
-                                <ui-select-match placeholder="Please select your city or location">
-                                    <i ng-class="typeEachItemFoSelection[$item.type].icon"></i>
-                                    <span> {{$item.title}} </span>
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in pakageForSelected | filter: {title: $select.search}">
+            <div class="form-horizontal">
+                <fieldset>
+                    <legend>Please select your city or location</legend>
+                    <div class="form-group">
+                        <div class="col-md-12 ">
+                            <div class="input-group">
+                                <ui-select multiple ng-model="searhPakage.item" theme="bootstrap">
+                                    <ui-select-match placeholder="Please select your city or location">
+                                        <i ng-class="typeEachItemFoSelection[$item.type].icon"></i>
+                                        <span> {{$item.title}} </span>
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in pakageForSelected | filter: {title: $select.search}">
 
-                                    <div ng-class="typeEachItemFoSelection[item.type].className">
-                                        <h6>
-                                            <i ng-class="typeEachItemFoSelection[item.type].icon"></i>
-                                            <span> {{item.title}} </span>
-                                        </h6>
-                                        <p> {{item.description}}</p>
-                                    </div>
-                                </ui-select-choices>
-                            </ui-select>
-                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        <div ng-class="typeEachItemFoSelection[item.type].className">
+                                            <h6>
+                                                <i ng-class="typeEachItemFoSelection[item.type].icon"></i>
+                                                <span> {{item.title}} </span>
+                                            </h6>
+                                            <p> {{item.description}}</p>
+                                        </div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
 
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </fieldset>
+                </fieldset>
+            </div>
+
+
+
         </div>
 
-        
+    </div>*@
+<style>
+    .SearchSelect {
+        border-color: rgba(255, 255, 255, 0);
+        background-color: rgba(255, 255, 255, 0.19) !important;
+    }
+</style>
 
-    </div>
+<div class="input-group">
+    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+    <ui-select class="SearchSelect" multiple ng-model="searhPakage.item" theme="bootstrap">
+        <ui-select-match placeholder="Please select your city or location">
+            <i ng-class="typeEachItemFoSelection[$item.type].icon"></i>
+            <span> {{$item.title}} </span>
+        </ui-select-match>
+        <ui-select-choices repeat="item in pakageForSelected | filter: {title: $select.search}">
+
+            <div ng-class="typeEachItemFoSelection[item.type].className">
+                <h6>
+                    <i ng-class="typeEachItemFoSelection[item.type].icon"></i>
+                    <span> {{item.title}} </span>
+                </h6>
+                <p> {{item.description}}</p>
+            </div>
+        </ui-select-choices>
+    </ui-select>
 
 </div>
-
 <form id="PurchaseForm" name="PurchaseForm" action="/Payment/PaymentWeb">
     <div class="initSlider row">
 
