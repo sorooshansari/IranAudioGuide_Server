@@ -92,7 +92,10 @@ namespace IranAudioGuide_MainServer.Models
         //    return new GetPackagesVM { packages = res, errorMessage = error };
         //}
 
+        //public GetAudioUrlStatus GetAudioUrl(Guid trackId, bool isAudio, ApplicationUser user)
+        //{
 
+        //}
         public GetPackagesVM GetPackagesByCity(int cityId)
         {
             GetPackagesVM res;
@@ -318,7 +321,7 @@ namespace IranAudioGuide_MainServer.Models
 
         public void CreateComment(Comment newComment)
         {
-            
+
             var Message = new SqlParameter("@Message", newComment.Message);
             Message.SqlDbType = SqlDbType.NVarChar;
 
@@ -327,8 +330,8 @@ namespace IranAudioGuide_MainServer.Models
 
             var Subject = new SqlParameter("@Subject", newComment.Subject);
             Subject.SqlDbType = SqlDbType.NVarChar;
-            
-            var dt = dbManager.MultiTableResultSP("CreateComment", Message, uuid ,Subject);
+
+            var dt = dbManager.MultiTableResultSP("CreateComment", Message, uuid, Subject);
         }
         #endregion
     }
