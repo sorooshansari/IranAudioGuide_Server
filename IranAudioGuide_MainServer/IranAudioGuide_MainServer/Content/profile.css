@@ -8,7 +8,7 @@ Portfolio
 ***/
 /*Portfolio Filter*/
 .load {
-       position: absolute;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -24,30 +24,34 @@ Portfolio
 
 
 .page-content {
-     /*background: rgba(167, 215, 239, 0.68);*/
-         /*background: rgba(20, 68, 130, 0.38);*/
-            
+    /*background: rgba(167, 215, 239, 0.68);*/
+    /*background: rgba(20, 68, 130, 0.38);*/
     background: rgba(102, 102, 102, 0.35);
     padding: 6% 1%;
     min-height: 100vh;
     height: 100%;
 }
+
 .input-group-addon {
     color: #144482 !important;
 }
+
 .profile-usertitle {
     text-shadow: none;
     color: #000;
     font-size: 91%;
     padding: 0 0 0px 2%;
 }
+
 .profile-usermenu ul li {
     border: 2px solid #90adb9;
-    margin: 15px 0 -8px 0; color: #000;
+    margin: 15px 0 -8px 0;
+    color: #000;
 }
+
 .profile-usermenu ul.nav {
-   
 }
+
 .blog-article h3 {
     color: #000;
     font-family: fantasy;
@@ -176,17 +180,18 @@ Portfolio
             border: solid 1px #eee;
         }
 
-.alert-warning b,.alert-warning  strong {
+.alert-warning b, .alert-warning strong {
     color: #c29d0b;
     font-weight: 600;
-
 }
+
 .alert-warning a {
     color: #423917;
     font-weight: 900;
     text-shadow: 1px 1px 1px #f7c500;
     cursor: pointer;
 }
+
 .alert-success b, .alert-success strong {
     color: #2a7b08;
     font-weight: 600;
@@ -287,15 +292,15 @@ Blog Page
     .mix-grid .mix.col-md-6.col-sm-6 .mix-details {
         height: 50%;
     }
-
 }
+
 @media (max-width: 992px) {
-  .page-content {
-        padding-left:3%;
-        padding-right:3%;
+    .page-content {
+        padding-left: 3%;
+        padding-right: 3%;
     }
-
 }
+
 @media (min-width: 768px) and (max-width: 991px) {
     .mix-grid .mix a.mix-link,
     .mix-grid .mix a.mix-preview {
@@ -307,21 +312,26 @@ Blog Page
     .margin-top-9-percentage {
         margin-top: 9% !important;
     }
-  
 }
+@media screen and (max-width: 766px) and (min-width: 500px) {
+    .left-side-panel {
+        width: 45% !important;
+        float: left;
+    }
 
-@media screen and (max-width: 766px) and (min-width: 427px) {
-    .right-side-panel .portlet-body {
+    .right-side-panel {
+        width: 50% !important;
+        display: inline-block;
+        float: right;
+    }
+
+    /*
+.right-side-panel .portlet-body {
         width: 85%;
     }
 
     .right-side-panel .portlet-title {
         display: none;
-    }
-
-    .right-side-panel {
-        width: 100% !important;
-        display: flex;
     }
 
     .profile-sidebar {
@@ -333,9 +343,6 @@ Blog Page
     .menu-pakages {
         width: 56% !important;
         float: right;
-    }
+    }*/
 
-    .left-side-panel {
-        max-width: 100% !important;
-    }
 }

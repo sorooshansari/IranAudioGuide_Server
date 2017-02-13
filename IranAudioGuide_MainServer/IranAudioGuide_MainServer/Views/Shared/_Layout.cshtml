@@ -128,6 +128,20 @@
                     }).error(function (error, status, headers, config) {
                         $scope.user.isAutintication = false;
                     });
+
+
+
+                    $scope.sendEmailConfirmedAgain = function () {
+                        $http.get('/Account/SendEmailConfirmedAgain').then(function () {                           
+                            $scope.isMsg = true;
+                            $timeout(function () {
+                                $scope.isMsg = false;
+                            }, 50000);
+                        }, function (error) {
+                            $scope.isMsg = false;
+                        });
+                    }
+
                     $scope.newsletters = {};
                     $scope.showPopup = function (nameDevice) {
                         $scope.newsletters.nameDevice = nameDevice;                        

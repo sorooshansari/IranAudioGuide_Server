@@ -78,16 +78,16 @@ namespace IranAudioGuide_MainServer.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             var serviceIpAdress = new ServiceIpAdress();
-           // ViewBag.IsTheFirstLogin = serviceIpAdress.IsIpadressFailuers();
-            //if (!ViewBag.IsTheFirstLogin)
-            //{
-            //    var response = Request["g-recaptcha-response"];
-            //    if ((response == null || response == "" || !ServiceRecaptcha.IsValid(response)))
-            //    {
-            //        ModelState.AddModelError("", ServiceRecaptcha.ErrorMessage);
-            //        return View(model);
-            //    }
-            //}
+            ViewBag.IsTheFirstLogin = serviceIpAdress.IsIpadressFailuers();
+            if (!ViewBag.IsTheFirstLogin)
+            {
+                var response = Request["g-recaptcha-response"];
+                if ((response == null || response == "" || !ServiceRecaptcha.IsValid(response)))
+                {
+                    ModelState.AddModelError("", ServiceRecaptcha.ErrorMessage);
+                    return View(model);
+                }
+            }
 
             if (!ModelState.IsValid)
             {
@@ -218,7 +218,6 @@ namespace IranAudioGuide_MainServer.Controllers
      //   [ValidateAntiForgeryToken]
         public async Task<HttpResponseMessage> SendEmailConfirmedAgain()
         {
-
             if (!User.Identity.IsAuthenticated)
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
 
@@ -239,29 +238,43 @@ namespace IranAudioGuide_MainServer.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
-            if (userId == null || code == null)
+            try
+            {
+                if (userId == null || code == null)
+                {
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = "Confirmation Failed!",
+                        Message = "Unknown Error",
+                        //IsShowUrl = true
+                    });
+                }
+                var result = await UserManager.ConfirmEmailAsync(userId, code);
+                if (result.Succeeded)
+                {
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = "Email Confirmation",
+                        Message = @"Thank you for confirming your email. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                    });
+                }
+                else
+                {
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = "Confirmation Failed!",
+                        Message = result.Errors.ToString(),
+                        //IsShowUrl = true
+                    });
+                }
+            }
+            catch
             {
                 return View("vmessage", new vmessageVM()
                 {
                     Subject = "Confirmation Failed!",
-                    Message = "Unknown Error"
-                });
-            }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            if (result.Succeeded)
-            {
-                return View("vmessage", new vmessageVM()
-                {
-                    Subject = "Email Confirmation",
-                    Message = @"Thank you for confirming your email. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
-                });
-            }
-            else
-            {
-                return View("vmessage", new vmessageVM()
-                {
-                    Subject = "Confirmation Failed!",
-                    Message = result.Errors.ToString()
+                    Message = "Unknown Error",
+                    //IsShowUrl = true
                 });
             }
         }
