@@ -137,7 +137,7 @@
             <div class="planFeatures">
                 <!-- Slideshow 4 -->
                 <div class="callbacks_container">
-                    <ul class="slider6 rslides">
+                    <ul class="slider6 rslides"  ng-class="{'packageMultiple-ul':pak.PackageCities.length != 1}">
                         <li ng-repeat="city in pak.PackageCities">
 
                             <img ng-src="~/images/Cities/{{city.CityImageUrl}}" />

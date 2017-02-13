@@ -216,14 +216,6 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201702120520067_add tabel.cs" />
-    <Compile Include="Migrations\201702120520067_add tabel.Designer.cs">
-      <DependentUpon>201702120520067_add tabel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702121014453_d.cs" />
-    <Compile Include="Migrations\201702121014453_d.Designer.cs">
-      <DependentUpon>201702121014453_d.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -1343,14 +1335,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702120520067_add tabel.resx">
-      <DependentUpon>201702120520067_add tabel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702121014453_d.resx">
-      <DependentUpon>201702121014453_d.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

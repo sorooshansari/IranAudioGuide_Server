@@ -20,23 +20,23 @@ namespace IranAudioGuide_MainServer.Controllers
                 string userName = User.Identity.Name;
                 using (var db = new ApplicationDbContext())
                 {
-                    var  user = db.Users.FirstOrDefault(x => x.UserName == userName);
+                    var user = db.Users.FirstOrDefault(x => x.UserName == userName);
                     var Info = new UserInfo()
                     {
                         Email = user.Email,
                         FullName = user.FullName,
                         imgUrl = user.ImgUrl,
                         IsEmailConfirmed = user.EmailConfirmed,
-                        IsSetuuid = (user.uuid == null) ? false : true,                     
+                        IsSetuuid = (user.uuid == null) ? false : true,
+                        IsAccessChangeUuid = false
                     };
-
-                    if (!Info.IsSetuuid)
-                        Info.IsAccessChangeUuid = false;
-                    else if (user.TimeSetUuid == null)
+                    //Info.IsAccessChangeUuid = false;
+                    if (user.TimeSetUuid == null)
+                        return Ok(Info);
+                    else if (Info.IsSetuuid)
                     {
                         //the first time for change dective device
                         Info.IsAccessChangeUuid = true;
-
                     }
                     else
                     {
@@ -48,6 +48,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         var monthwating = ((year * 365) + (month * 31) + day) / 30;
                         if (monthwating >= 6)
                             Info.IsAccessChangeUuid = true;
+
                     }
                     return Ok(Info);
                 }

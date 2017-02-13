@@ -28,6 +28,7 @@ namespace IranAudioGuide_MainServer.Models
     {
         public string Subject { get; set; }
         public string Message { get; set; }
+        //public bool  IsShowUrl  { get; set; }
     }
 
 public class PaymentResult

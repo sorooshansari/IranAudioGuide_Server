@@ -15,9 +15,6 @@
         font-size: larger !important;
     }
 
-    /*.deactivatedDevice {
-        min-height: 546px;
-    }*/
 </style>
 <div class="portlet light deactivatedDevice">
     <div class="portlet-title">
@@ -27,7 +24,9 @@
         </div>
     </div>
     <div class="portlet-body">
-
+        <div class="alert  alert-success" ng-show="m.isShowMessage">
+            <strong> Success!</strong> {{m.msg}}
+        </div>
         <div>
             <ul>
                 <li>
@@ -41,14 +40,13 @@
                 </li>
             </ul>
 
-            <button type="button" ng-disabled="user.IsDisableBtn == true"
-                    ng-show="!user.IsShowBtnDeactivatedDevice"
-                    class="btn btn-circle green-haze btn-sm"
+            <button type="button" ng-disabled="!user.IsAccessChangeUuid"
+                    ng-show="user.IsSetuuid"
+                    class="btn btn-circle orange-haze btn-sm"
                     ng-click="deactivateMobile()">
                 Deactivate Old Device
             </button>
-
-            <div ng-show="user.IsShowBtnDeactivatedDevice">
+            <div class="alert alert-info" ng-show="!user.IsSetuuid">
                 You have not set any devices to your account yet.
             </div>
         </div>
