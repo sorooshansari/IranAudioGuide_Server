@@ -9,13 +9,6 @@ namespace IranAudioGuide_MainServer.Models
     public class ViewModels
     {
     }
-    public enum skippedUserStatus
-    {
-        uuidExist = 1,
-        uuidAdded = 2,
-        unknownError = 3,
-        uuidExistInPraimaryUsers = 4
-    }
     public enum getUserStatus
     {
         confirmed = 1,
@@ -239,27 +232,6 @@ public class PaymentResult
         // Summary:
         //     unknow error happen
         unknownError = 4
-    }
-    public class GetAudioUrlRes
-    {
-        public GetAudioUrlRes(string url)
-        {
-            this.url = url;
-            status = GetAudioUrlStatus.success;
-        }
-        public GetAudioUrlRes(GetAudioUrlStatus status, string error = "")
-        {
-            this.status = status;
-            this.errorMessage = error;
-        }
-        public GetAudioUrlStatus status { get; set; }
-        public string url { get; set; }
-        public string errorMessage { get; set; }
-    }
-    public class GetAutorizedCitiesVM
-    {
-        public string username { get; set; }
-        public string uuid { get; set; }
     }
     public class ForgotPassUser
     {

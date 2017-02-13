@@ -8,10 +8,26 @@ namespace IranAudioGuide_MainServer.Models
     public class ApiViewModels
     {
     }
-    public class SkippedUserVM
+    public class GetAudioUrlRes
     {
-        public skippedUserStatus status { get; set; }
+        public GetAudioUrlRes(string url)
+        {
+            this.url = url;
+            status = GetAudioUrlStatus.success;
+        }
+        public GetAudioUrlRes(GetAudioUrlStatus status, string error = "")
+        {
+            this.status = status;
+            this.errorMessage = error;
+        }
+        public GetAudioUrlStatus status { get; set; }
+        public string url { get; set; }
         public string errorMessage { get; set; }
+    }
+    public class GetAutorizedCitiesVM
+    {
+        public string username { get; set; }
+        public string uuid { get; set; }
     }
     public class AutorizedCitiesVM
     {

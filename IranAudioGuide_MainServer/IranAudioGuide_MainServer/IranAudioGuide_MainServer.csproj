@@ -220,9 +220,9 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702120812342_sorooshMigrate.cs" />
-    <Compile Include="Migrations\201702120812342_sorooshMigrate.Designer.cs">
-      <DependentUpon>201702120812342_sorooshMigrate.cs</DependentUpon>
+    <Compile Include="Migrations\201702121252120_sorooshMigrate2.cs" />
+    <Compile Include="Migrations\201702121252120_sorooshMigrate2.Designer.cs">
+      <DependentUpon>201702121252120_sorooshMigrate2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
@@ -1349,8 +1349,8 @@
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702120812342_sorooshMigrate.resx">
-      <DependentUpon>201702120812342_sorooshMigrate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702121252120_sorooshMigrate2.resx">
+      <DependentUpon>201702121252120_sorooshMigrate2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -92,10 +92,29 @@ namespace IranAudioGuide_MainServer.Models
         //    return new GetPackagesVM { packages = res, errorMessage = error };
         //}
 
-        //public GetAudioUrlStatus GetAudioUrl(Guid trackId, bool isAudio, ApplicationUser user)
-        //{
+        public string GetAudioUrl(Guid trackId, bool isAudio)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                string url, trakName;
+                if (isAudio)
+                {
+                    trakName = (from a in db.Audios
+                                  where a.Aud_Id == trackId
+                                  select a.Aud_Url).FirstOrDefault();
+                    url = string.Format("{0}{1}", Variables.audioUrlPrefix, trakName);
 
-        //}
+                }
+                else
+                {
+                    trakName = (from s in db.Storys
+                                where s.Sto_Id == trackId
+                                select s.Sto_Url).FirstOrDefault();
+                    url = string.Format("{0}{1}", Variables.storyUrlPrefix, trakName);
+                }
+                return url;
+            }
+        }
         public GetPackagesVM GetPackagesByCity(int cityId)
         {
             GetPackagesVM res;
