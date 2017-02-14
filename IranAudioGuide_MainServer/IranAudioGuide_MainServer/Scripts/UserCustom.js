@@ -1,6 +1,6 @@
 ﻿
 //, 'ui.select'
-var userApp = angular.module('userApp', ["ui.router", 'ui.bootstrap', 'ui.select'])
+var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
     .config(['$urlRouterProvider', '$stateProvider', '$sceProvider', function ($urlRouterProvider, $stateProvider, $sceProvider) {
         $sceProvider.enabled(false);
 
@@ -17,21 +17,21 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.bootstrap', 'ui.select
               controller: "userCtrl"
           })
 
-          .state('user.PackagesPurchased', {
+          .state('PackagesPurchased', {
               url: "/pakagePurchased",
               templateUrl: "/user/PackagesPurchased",
               controller: "pakagePurchasedCtrl"
 
 
           })
-            .state('user.Packages', {
+            .state('Packages', {
                 url: "/pakages",
                 templateUrl: "/user/Packages",
                 controller: "PackagesCtrl"
 
 
             })
-         .state('user.deactivateMobile', {
+         .state('deactivateMobile', {
              url: "/deactivateMobile",
              templateUrl: "/user/deactivateMobile",
              controller: "PackagesCtrl"

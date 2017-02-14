@@ -1,4 +1,5 @@
 ﻿using IranAudioGuide_MainServer.Models;
+using IranAudioGuide_MainServer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,13 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     public class UserApiController : ApiController
     {
-
+        
         [HttpPost]
         public IHttpActionResult GetCurrentUserInfo()
         {
             try
             {
+             
                 string userName = User.Identity.Name;
                 using (var db = new ApplicationDbContext())
                 {
@@ -28,8 +30,9 @@ namespace IranAudioGuide_MainServer.Controllers
                         imgUrl = user.ImgUrl,
                         IsEmailConfirmed = user.EmailConfirmed,
                         IsSetuuid = (user.uuid == null) ? false : true,
-                        IsAccessChangeUuid = false
-                    };
+                        IsAccessChangeUuid = false,
+                        IsForeign = ExtensionMethods.IsIran,
+                };
                     //Info.IsAccessChangeUuid = false;
                     if (user.TimeSetUuid == null)
                         return Ok(Info);
@@ -74,6 +77,7 @@ namespace IranAudioGuide_MainServer.Controllers
                            .Select(p => p.Package).Select(p => new PackageVM()
                            {
                                PackagePrice = p.Pac_Price,
+                               PackagePriceDollar = p.Pac_Price_Dollar,
                                PackageId = p.Pac_Id,
                                PackageName = p.Pac_Name,
                                PackageCities = p.Pac_Cities.Select(c => new CityVM()
@@ -121,6 +125,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         .Select(p => new PackageVM()
                         {
                             PackagePrice = p.Pac_Price,
+                            PackagePriceDollar = p.Pac_Price_Dollar,
                             PackageId = p.Pac_Id,
                             PackageName = p.Pac_Name,
                             PackageCities = p.Pac_Cities.Select(c => new CityVM()

@@ -64,7 +64,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             var model = new LoginViewModel();
             var serviceIpAdress = new ServiceIpAdress();
-            ViewBag.IsTheFirstLogin = serviceIpAdress.IsIpadressFailuers();
+            ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
             ViewBag.View = Views.Login;
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
@@ -78,7 +78,7 @@ namespace IranAudioGuide_MainServer.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             var serviceIpAdress = new ServiceIpAdress();
-            ViewBag.IsTheFirstLogin = serviceIpAdress.IsIpadressFailuers();
+            ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
             if (!ViewBag.IsTheFirstLogin)
             {
                 var response = Request["g-recaptcha-response"];
@@ -120,6 +120,13 @@ namespace IranAudioGuide_MainServer.Controllers
                         RememberMe = model.RememberMe
                     });
                 case SignInStatus.Failure:
+                    //var Finduser = UserManager.FindByEmail(model.Email);
+                    //if(Finduser != null)
+                    //{
+                    //    ModelState.AddModelError("", "Please Sing in With Googel.");
+                    //    return View(model);
+
+                    //}
                     serviceIpAdress.SaveIpadressFailuers();
                     ViewBag.IsTheFirstLogin = false;
                     ModelState.AddModelError("", "Invalid username or password.");
@@ -263,7 +270,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     return View("vmessage", new vmessageVM()
                     {
                         Subject = "Confirmation Failed!",
-                        Message = result.Errors.ToString(),
+                        Message = @"Try to send another confirmation email through your profile page. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login",
                         //IsShowUrl = true
                     });
                 }

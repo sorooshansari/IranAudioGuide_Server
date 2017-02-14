@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
-    [Authorize]
+   [Authorize]
     public class UserController : Controller
     {
         private IAuthenticationManager AuthenticationManager
@@ -20,7 +20,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
         // GET: User
-        [Authorize(Roles = "AppUser")]
+     [Authorize(Roles = "AppUser")]
         public ActionResult Index()
         {
             return View();

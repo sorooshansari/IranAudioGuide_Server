@@ -7,6 +7,7 @@ using IranAudioGuide_MainServer.Models;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using IranAudioGuide_MainServer.Services;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -50,13 +51,16 @@ namespace IranAudioGuide_MainServer.Controllers
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user.uuid != info.uuid)
                 {
-                    ViewBag.Error = "uuid missmatch";
+                    ViewBag.Error = "Unauthorized device!";
                     return View("customError");
                 }
                 if (!user.EmailConfirmed)
                 {
-                    ViewBag.Error = "Email Confirmation Failed";
-                    return View("customError");
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = "Email not confirmed yet!",
+                        Message = @"For purchasing, first need to confirm your email. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login",
+                    });
                 }
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 PackageVM package = (from p in db.Packages
@@ -85,41 +89,41 @@ namespace IranAudioGuide_MainServer.Controllers
                 return View("Error");
             }
         }
-        [HttpPost]
+        //[HttpPost]
+        //[Authorize(Roles = "AppUser")]
+        //public async Task<ActionResult> Index(WebPaymentReqVM info)
+        //{
+        //    try
+        //    {
+        //        ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
+        //        if (!user.EmailConfirmed)
+        //            return View("Error");
+        //        PackageVM package = (from p in db.Packages
+        //                             where p.Pac_Id == info.packageId
+        //                             select new PackageVM()
+        //                             {
+        //                                 PackageId = p.Pac_Id,
+        //                                 PackageName = p.Pac_Name,
+        //                                 PackagePrice = p.Pac_Price,
+        //                                 PackageCities = (from c in db.Cities
+        //                                                  where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
+        //                                                  select new CityVM()
+        //                                                  {
+        //                                                      CityDesc = c.Cit_Description,
+        //                                                      CityID = c.Cit_Id,
+        //                                                      CityName = c.Cit_Name
+        //                                                  }).ToList()
+        //                             }).First();
+        //        ViewBag.Error = info.ErrorMessage;
+        //        return View(package);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return View("Error");
+        //    }
+        //}
         [Authorize(Roles = "AppUser")]
-        public async Task<ActionResult> Index(WebPaymentReqVM info)
-        {
-            try
-            {
-                ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
-                if (!user.EmailConfirmed)
-                    return View("Error");
-                PackageVM package = (from p in db.Packages
-                                     where p.Pac_Id == info.packageId
-                                     select new PackageVM()
-                                     {
-                                         PackageId = p.Pac_Id,
-                                         PackageName = p.Pac_Name,
-                                         PackagePrice = p.Pac_Price,
-                                         PackageCities = (from c in db.Cities
-                                                          where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-                                                          select new CityVM()
-                                                          {
-                                                              CityDesc = c.Cit_Description,
-                                                              CityID = c.Cit_Id,
-                                                              CityName = c.Cit_Name
-                                                          }).ToList()
-                                     }).First();
-                ViewBag.Error = info.ErrorMessage;
-                return View(package);
-            }
-            catch (Exception ex)
-            {
-                return View("Error");
-            }
-        }
-        [Authorize(Roles = "AppUser")]
-        public ActionResult Purchase(Guid packageId, string bankName, bool isFromWeb =false)
+        public ActionResult Purchase(Guid packageId, string bankName, bool isFromWeb = false)
         {
             try
             {
@@ -133,8 +137,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     });
                 string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
                 string redirectPage = baseUrl + "/Payment/Return";
-                if(isFromWeb)
-                   redirectPage = baseUrl + "/Payment/ReturnToWebPage";
+                if (isFromWeb)
+                    redirectPage = baseUrl + "/Payment/ReturnToWebPage";
                 var payment = new Payment()
                 {
                     Amount = package.Pac_Price,
@@ -164,7 +168,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         return RedirectToAction("PaymentWeb", packageId);
                     else
                         return RedirectToAction("Index", new WebPaymentReqVM() { packageId = packageId });
-                    
+
                 }
             }
             catch (Exception ex)
@@ -212,32 +216,33 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return View();
         }
-        public string UserIPAddress
-        {
-            get { return HttpContext.Request.UserHostAddress; }
-        }
+       
         //Payment/PaymentWeb
         [AllowAnonymous]
-        public async Task<ActionResult> PaymentWeb(Guid packageId)
+        public async Task<ActionResult> PaymentWeb(WebPaymentReqVM pak)
         {
             try
             {
-                System.Net.WebClient client = new System.Net.WebClient();
+                if (pak.IsChooesZarinpal && !ExtensionMethods.IsIran)
+                {
+                    ViewBag.IsChooesZarinpal =false;
+                }
 
-                // Make an api call and get response.
-                string response = client.DownloadString("http://ip-api.com/json/"+ UserIPAddress);
-
-                //Deserialize response JSON
-                IPData ipdata = Newtonsoft.Json.JsonConvert.DeserializeObject<IPData>(response);
-                ViewBag.isIran = (ipdata.countryCode == "IR") ? true : false;
-                var info = new AppPaymentReqVM() {
-                    packageId = packageId,
+                ViewBag.IsChooesZarinpal = pak.IsChooesZarinpal;
+               
+                var info = new AppPaymentReqVM()
+                {
+                    packageId = pak.packageId,
                     email = User.Identity.Name,
-                    
+
                 };
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (!user.EmailConfirmed)
-                    return View("Error");
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = "Email not confirmed yet!",
+                        Message = @"For purchasing, first need to confirm your email. Please click <a id='loginlink' href='/user'>here</a> to Login",
+                    });
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 PackageVM package = (from p in db.Packages
                                      where p.Pac_Id == info.packageId
@@ -246,6 +251,7 @@ namespace IranAudioGuide_MainServer.Controllers
                                          PackageId = p.Pac_Id,
                                          PackageName = p.Pac_Name,
                                          PackagePrice = p.Pac_Price,
+                                         PackagePriceDollar=p.Pac_Price_Dollar,
                                          PackageCities = (from c in db.Cities
                                                           where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
                                                           select new CityVM()
@@ -262,7 +268,11 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error");
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = "Error!",
+                    Message = "Please try again",
+                });
             }
         }
 

@@ -1,31 +1,13 @@
 ﻿@{
     Layout = null;
 }
-<style>
-    .deactivatedDevice {
-        color: #000;
-        padding-top: 100px;
-    }
-
-    .btn[disabled] {
-        background-color: #777 !important;
-    }
-
-    .deactivationHeader {
-        font-size: larger !important;
-    }
-
-</style>
-<div class="portlet light deactivatedDevice">
-    <div class="portlet-title">
+<div class="alert  alert-success" ng-show="m.isShowMessage">
+    <strong> Success!</strong> {{m.msg}}
+</div>
+<div class="deactivatedDevice">      
         <div class="caption caption-md">
             <span class="caption-subject font-blue-madison bold uppercase deactivationHeader">Want to change your device?</span>
 
-        </div>
-    </div>
-    <div class="portlet-body">
-        <div class="alert  alert-success" ng-show="m.isShowMessage">
-            <strong> Success!</strong> {{m.msg}}
         </div>
         <div>
             <ul>
@@ -51,4 +33,3 @@
             </div>
         </div>
     </div>
-</div>

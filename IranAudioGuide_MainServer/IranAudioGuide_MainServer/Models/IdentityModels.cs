@@ -198,6 +198,7 @@ namespace IranAudioGuide_MainServer.Models
         public System.Guid Pac_Id { get; set; }
         public string Pac_Name { get; set; }
         public long Pac_Price { get; set; }
+        public long Pac_Price_Dollar { get; set; }
         public virtual ICollection<city> Pac_Cities { get; set; }
         public object pac_Cities { get; internal set; }
     }

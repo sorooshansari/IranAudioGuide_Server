@@ -28,7 +28,6 @@
 
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.3.3.7.min.css" rel="stylesheet" />
-    <link href="~/Content/select.min.css" rel="stylesheet" />
     <link href="~/Content/simple-sidebar.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -37,53 +36,79 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link href="~/Content/profile.css" rel="stylesheet" />
-    <link href="~/Content/PakageTemplate.css" rel="stylesheet" />
 
+
+    <style>
+        .menu-mobail {
+            position: absolute;
+            background-color: #000;
+            top: 0;
+            left: 0;
+            padding: 1px 9px;
+            right: 0px;
+            z-index: 99999;
+        }
+
+            .menu-mobail a {
+                border-right: 2px solid #ccc;
+                color: #fff;
+                font-size: 30px;
+                padding: 4px 9px 5px 2px;
+            }
+    </style>
 </head>
-<body onresize="onResizeBody()" ng-app="userApp" ng-controller="userCtrl">
+<body onresize="onResizeBody()">
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-            <div class="logo">
-                @*// class="sidebar-brand">*@
-                <a href="http://iranaudioguide.com/">
-                    <img src="/images/IAGSITELOGO.png">
-                </a>
-            </div>
-            <div class="userEmail">
-                <span>{{user.Email}}</span>
-            </div>
             <ul class="sidebar-nav">
-                <li>
-                    <a href="http://iranaudioguide.com/">
-                        <i  class="fa fa-home"></i>
-                        Home
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Start Bootstrap
                     </a>
                 </li>
-                <li class="active">
-                    <a ui-sref="Packages" id="btnGetPakage" ng-click="getPackages($event)">
-                        <i class="fa fa-list"></i>
-                        Pakage
-                    </a>
-                </li>
+                @*<li >
+                        <a href="#menu-toggle" class="btn btn-link" id="menu-toggle">Toggle Menu</a>
+                    </li>*@
                 <li>
-                    <a ui-sref="PackagesPurchased" id="btnGetPakagePurchased" ng-click="getPackagesPurchased($event)">
-                        <i class="fa fa-list"></i>
-                        PackagesPurchased
+                    <a href="#">Dashboard 
+                    <i class="fa fa-umbrella"></i>
                     </a>
                 </li>
                 <li>
-                    <a ui-sref="deactivateMobile" ng-click="getPackagesPurchased($event)">
-                        <i class="fa fa-mobile"></i>
-                        Deactivate Device
+                    <a href="#">
+                        Shortcuts
+                        <i class="fa fa-umbrella"></i>
                     </a>
                 </li>
-
                 <li>
-                    <a ng-click="LogOff()" >
-                        <i class="fa fa-mobile"></i>
-                        Log Off
+                    <a href="#">
+                        Overview
+                        <i class="fa fa-umbrella"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Events
+                        <i class="fa fa-umbrella"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        About
+                        <i class="fa fa-umbrella"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Services
+                        <i class="fa fa-umbrella"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Contact
+                        <i class="fa fa-umbrella"></i>
                     </a>
                 </li>
             </ul>
@@ -91,31 +116,15 @@
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
         <div id="page-content-wrapper">
-          
-            <div class="container-fluid">
+            <div class="container">
                 <div class="menu-mobail visible-xs">
                     <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
                     <span class="menu-username"> </span>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        @RenderBody()
-                    </div>
-                </div>
+
             </div>
         </div>
         <!-- /#page-content-wrapper -->
-    </div>
-
-    <div id="FullPageLoading" ng-class="{ 'unload': profile.isCompletedLoading == true, 'load': profile.isCompletedLoading == false}">
-        <div id="fpcontainer">
-            <img id="IAGLogo" src="~/images/IAGSmallWhiteLogo.png" />
-            <div style="text-align:center;">
-                <img id="spinbars" src="~/images/bars.svg" />
-
-                @*<p id="LoadingText">Loading... <br /> Change the "FullPageLoading" element class from "load" to "unload" using angularJS when whole page is loaded.<br />Set "#LoadingText" style to "display:none"<br /> Done...<br /> Thank you!</p>*@
-            </div>
-        </div>
     </div>
     <!-- /#wrapper -->
     <!-- jQuery -->
@@ -145,8 +154,8 @@
     </script>
 
     <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/angular-ui-router.min.js"></script>
     <script src="~/Scripts/toastr.min.js"></script>
+    <script src="~/Scripts/angular-ui-router.min.js"></script>
     <script src="~/Scripts/select.min.js"></script>
     <script src="~/Scripts/Underscore.js"></script>
     <script src="~/Scripts/UserCustom.js"></script>

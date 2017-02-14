@@ -1,15 +1,11 @@
 ﻿//Developed by pourmand
 
-userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService',
-    function ($window, $scope, userServices, $timeout, notific) {
+userApp.controller('userCtrl', ['$scope', 'userServices', '$timeout', 'notificService', function ($scope, userServices, $timeout, notific) {
     $scope.user = {
         isAutintication: false,
         username: "test"
     }
-    $scope.LogOff = function () {
-        userServices.LogOff();
-        $window.location.href = 'http://iranaudioguide.com';
-    }
+
     $scope.profile = {
         istest: true,
         packages: [],
@@ -28,33 +24,32 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
 
     $scope.profile.isCompletedLoading = false;
     $scope.getPackagesPurchased = function (event) {
-        
-            if ($scope.profile.packagesPurchased.length == 0) {
+        if ($scope.profile.packagesPurchased.length == 0) {
 
-                var calssName = $(event.target).find("i").attr('class');
-                var s = $(event.target).find("i").removeAttr('class').addClass("fa fa-spinner fa-spin");
+            var calssName = $(event.target).find("i").attr('class');
+            var s = $(event.target).find("i").removeAttr('class').addClass("fa fa-spinner fa-spin");
 
-                userServices.getPackagesPurchased().then(function (data) {
-                    if (data.length == 0) {
-                        $scope.profile.packagesPurchased = [];
-                        $scope.profile.city = "";
-                        $scope.IsShowMessage = true;
-                    }
-                    else {
-                        $scope.profile.packagesPurchased = data;
-                        $scope.profile.city = data[0].PackageCities[0];
-                    }
-                    $(event.target).find("i").removeAttr('class').addClass(calssName);
+            userServices.getPackagesPurchased().then(function (data) {
+                if (data.length == 0) {
+                    $scope.profile.packagesPurchased = [];
+                    $scope.profile.city = "";
+                    $scope.IsShowMessage = true;
+                }
+                else {
+                    $scope.profile.packagesPurchased = data;
+                    $scope.profile.city = data[0].PackageCities[0];
+                }
+                $(event.target).find("i").removeAttr('class').addClass(calssName);
 
-                    //$timeout(function () {
-                    //    nav();
-                    //    $(event.target).find("i").removeAttr('class').addClass(calssName);
-                    //}, 2000);
-                }, function () {
-                    $(event.target).find("i").removeAttr('class').addClass(calssName);
+                //$timeout(function () {
+                //    nav();
+                //    $(event.target).find("i").removeAttr('class').addClass(calssName);
+                //}, 2000);
+            }, function () {
+                $(event.target).find("i").removeAttr('class').addClass(calssName);
 
-                });
-            }
+            });
+        }
 
     }
     $scope.deactivateMobile = function () {
@@ -159,27 +154,16 @@ userApp.controller('PackagesCtrl', ['$scope', 'userServices', '$timeout', functi
     //    }
     //    form.submit();
     //});
-    $scope.pak = {};
-    $scope.showModal = function (pak) {
-        $scope.pak = pak;
-        $('#myModal').modal('show');
-    } 
-    $scope.buyPakages = function (IsChooesZarinpal) {
+
+
+    $scope.buyPakages = function (pak) {
         var form = document.getElementById("PurchaseForm");
         var element = document.createElement("INPUT");
         element.setAttribute("type", "hidden");
         element.setAttribute("name", "PackageId");
-        element.setAttribute("value", $scope.pak.PackageId);
+        element.setAttribute("value", pak.PackageId);
         form.appendChild(element);
-
-        var element2 = document.createElement("INPUT");
-        element2.setAttribute("type", "hidden");
-        element2.setAttribute("name", "IsChooesZarinpal");
-        element2.setAttribute("value", IsChooesZarinpal);
-        form.appendChild(element2);
-
         form.submit();
-        $('#myModal').modal('hide');
     }
 
 

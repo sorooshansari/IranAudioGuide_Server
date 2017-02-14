@@ -13,13 +13,10 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class WebPaymentReqVM
     {
-        public WebPaymentReqVM()
-        {
-            a = 0;
-        }
+      
         public Guid packageId { get; set; }
         public string ErrorMessage { get; set; }
-        public int a { get; set; }
+        public bool IsChooesZarinpal { get; set; }
     }
     public class AppPaymentReqVM
     {

@@ -2,123 +2,38 @@
 @{
     Layout = null;
 }
-<link href="~/Content/sliderArrow.css" rel="stylesheet" />
-<script src="~/Scripts/responsiveslides.min.js"></script>
-<style>
-    .itemSelcted i {
-        float: left;
-        /*text-shadow: 1px 1px 1px #092f40, -1px -2px 1px #092f40;*/
-    }
-
-    .itemSelcted h6 span {
-        color: rgb(25, 22, 1);
-        text-shadow: 1px 1px 1px #ccc;
-    }
-
-    .itemSelcted p {
-        color: rgba(54, 56, 74, 0.72);
-    }
-
-    .ui-select-bootstrap .ui-select-choices-row:hover {
-        color: #fff !important;
-        text-decoration: none;
-        outline: 0;
-        background-color: green;
-    }
-
-    .ui-select-bootstrap .ui-select-choices-row.active .itemSelcted p {
-        color: #fff !important;
-    }
-
-    .ui-select-bootstrap .ui-select-choices-row > span:hover, .ui-select-bootstrap .ui-select-choices-row > span:focus {
-        background-color: rgb(175, 208, 236) !important;
-    }
-
-    .ui-select-bootstrap .ui-select-toggle > .caret {
-        display: none;
-    }
-
-    .box-city {
-    }
-
-    .box-place {
-        margin: 0 0 0 21px;
-    }
-</style>
-@*<link href="~/Content/responsiveslides.css" rel="stylesheet" />*@
-<link href="~/Content/sliderArrow.css" rel="stylesheet" />
-<link href="~/Content/PakageTemplate.css" rel="stylesheet" />
 
 
-<form id="PurchaseForm" name="PurchaseForm" action="/Payment/PaymentWeb">
-    <div class="initSlider row">
+<div class="col-flex PlanPricing template4" ng-repeat="pak in packagesPurchased">
+    <!-- Price template4 Starts -->
+    <div class="planName">
+        @*<span class="price">{{pak.PackagePrice}}IRR </span>*@
+        <h3>{{pak.PackageName}}</h3>
+        @*<p>{{pak.PackageName}}</p>*@
+    </div>
+    <div class="planFeatures">
+        <!-- Slideshow 4 -->
+        <div class="callbacks_container">
+            <ul class="slider6 rslides" ng-class="{'packageMultiple-ul':pak.PackageCities.length != 1}">
+                <li ng-repeat="city in pak.PackageCities">
 
-
-        <!-- Price template4 Ends -->
-
-        <div class="col-flex PlanPricing template4" ng-repeat="pak in packagesPurchased">
-            <!-- Price template4 Starts -->
-            <div class="planName">
-                <span class="price">{{pak.PackagePrice}}IRR </span>
-                <h3>{{pak.PackageName}}</h3>
-                @*<p>{{pak.PackageName}}</p>*@
-            </div>
-            <div class="planFeatures">
-                <!-- Slideshow 4 -->
-                <div class="callbacks_container">
-                    <ul class="slider6 rslides">
-                        <li ng-repeat="city in pak.PackageCities">
-
-                            <img ng-src="~/images/Cities/{{city.CityImageUrl}}" />
-                            <p class="cityName">{{city.CityName}}</p>
-                            <p class="caption">{{city.CityDesc}}</p>
-                            <ul>
-                                <li ng-repeat="plc in city.Places">{{plc.PlaceName}}</li>
-                            </ul>
-                        </li>
+                    <img ng-src="~/images/Cities/{{city.CityImageUrl}}" />
+                    <p class="cityName">{{city.CityName}}</p>
+                    <p class="caption">{{city.CityDesc}}</p>
+                    <ul>
+                        <li ng-repeat="plc in city.Places">{{plc.PlaceName}}</li>
                     </ul>
-                </div>
-
-            </div>
-
-            <p> <a ng-click="buyPakages(pak)" class="btn btn-success btn-large">buy </a> </p>
+                </li>
+            </ul>
         </div>
-
-
 
     </div>
 
-</form>
-
-<div class="portlet light bordered" ng-show="isShowMessage == true" style="min-height:450px">
-    @*<div class="portlet-title">
-        <div class="caption">
-            <i class="icon-edit font-dark"></i>
-            <span class="caption-subject font-dark bold uppercase">Notes</span>
-        </div>
-        <div class="actions">
-            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                <i class="icon-cloud-upload"></i>
-            </a>
-            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                <i class="icon-wrench"></i>
-            </a>
-            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
-            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                <i class="icon-trash"></i>
-            </a>
-        </div>
-    </div>*@
-    <div class="portlet-body">
-        
-        <div class="note note-info">
-            @*<h4 class="block"> Packages Purchased</h4>*@
-            <p>No Purchesed Pakages</p>
-        </div>
-        
-        
-    </div>
+    <p> <a ng-click="buyPakages(pak)" class="btn btn-success btn-large">buy </a> </p>
 </div>
 
-<script src="~/Scripts/responsiveslides.min.js"></script>
 
+    <div  ng-show="isShowMessage == true" style="padding:10%">
+        @*<h4 class="block"> Packages Purchased</h4>*@
+        <p>No Purchesed Pakages</p>
+    </div>

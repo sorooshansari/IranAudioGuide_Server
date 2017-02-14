@@ -22,8 +22,12 @@
         background-color: #337ab7;
         width: 100%;
         display: inline-block;
-        box-shadow: 4px 0px 22px #0e0d0d;
+        box-shadow: -5px -1px 10px #000000;
         padding: 5px 0 0 0;
+        border-top-right-radius: 7px;
+        border-top-left-radius: 7px;
+        margin-top: -5px;
+        font-size: 14px;
     }
 
 
@@ -154,13 +158,14 @@
 
 
 .PlanPricing.template4 .planName h3 {
-    /* color: #144482; */
     margin: 0;
     padding: 0;
     text-align: center;
-    text-transform: uppercase;
-    /* text-shadow: 1px 1px 1px rgba(20, 68, 130, 0.26), -3px 0px 5px #000; */
-    /* border: 1px solid rgba(96, 155, 183, 0.3); */
+    text-shadow: 1px 1px 1px rgba(20, 68, 130, 0.26), -3px 0px 5px #000;
+    color: #7abaf1;
+    font-family: 'DomaineText';
+    padding-bottom: 10px;
+    font-weight: 900;
 }
 
 
@@ -223,7 +228,18 @@
 }
 
 
+.packageMultiple-ul li {
+    float: left;
+    width: 45%;
+    margin: 0 2%;
+}
 
+.packageMultiple-ul > li:last-child {
+    border-left: 3px solid #337ab7;
+    box-shadow: -2px 1px 1px rgba(18, 19, 21, 0.12);
+    padding-left: 8px !important;
+    min-height: 55px;
+}
 .rslides .caption {
     overflow: hidden;
     min-height: 44px;
@@ -243,7 +259,7 @@
     display: block;
     /* height: auto; */
     float: none;
-    /* width: auto; */
+    width: 100%;
     border: 0;
     max-height: 238px;
     margin: auto;
@@ -263,13 +279,15 @@
     margin: 0 auto;
     width: 86%;
     line-height: 11px;
-    padding: 9px 20px;
+    padding: 7px 0 5px 8px;
 }
 
 .col-flex {
-    width: 32%;
+    width: 30%;
     margin: 19px -1% 2px 2%;
     box-shadow: 1px 1px 1px #95afd4;
+    float: left;
+    /* border-radius: 20px; */
 }
 
 @media screen and (max-width: 980px) {
@@ -300,19 +318,3 @@ a.btn.btn-success.btn-large:hover {
     background-color: #237572;
 }
 
-
-.packageMultiple-ul li {
-    float: left;
-    width: 45%;
-    margin: 0 2%;
-}
-
-.packageMultiple-ul > li:last-child {
-    border-left: 3px solid #337ab7;
-    box-shadow: -2px 1px 1px rgba(18, 19, 21, 0.12);
-    padding-left: 8px;
-        min-height: 55px;
-
-
-    padding-left: 8px;
-}

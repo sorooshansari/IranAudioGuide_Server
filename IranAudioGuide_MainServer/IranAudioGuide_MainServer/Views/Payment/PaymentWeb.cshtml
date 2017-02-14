@@ -140,6 +140,11 @@
         width: 38PX;
         background-size: cover;
     }
+    .btn-info {
+    color: #fff;
+    background-color: #144482;
+    border-color: #041a35;
+}
 </style>
 <section id="CheckOutSection">
     <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
@@ -154,7 +159,7 @@
             <table id="ChkTable" class="table-mybordered table-condensed" style="width: auto;  border-radius:10px; margin:0 auto; margin-bottom: 0px !important; border-top:none !important;  color: #144482; text-shadow:none; text-align:center;">
 
                 <tr style="background-color: whitesmoke !important; color: #144482;  font-weight: bold; border-radius:10px; border:none !important; margin-bottom:10px;">
-                    <td class="_2ndtd" style="border-radius:10px 10px 0 0; border:none !important; text-transform:capitalize; font-size:medium; box-shadow: inset 0px 1px 3px #444;"><i class="fa fa-briefcase"></i><br>&   nbsp;@Model.PackageName</td>
+                    <td class="_2ndtd" style="border-radius:10px 10px 0 0; border:none !important; text-transform:capitalize; font-size:medium; box-shadow: inset 0px 1px 3px #444;"><i class="fa fa-briefcase"></i><br>&nbsp;@Model.PackageName</td>
                 </tr>
 
             </table>
@@ -172,31 +177,66 @@
                     </tr>
                 }
                 <tr style="border-top:15px solid #144482;">
+                    @if (ViewBag.IsChooesZarinpal)
+                    {
                     <td class="_1sttd" style="background-color:white;"><div class="col-xs-12"><i class="fa fa-money"></i> Price</div></td>
                     <td class="_2ndtd" style="background-color:white;">@string.Format("{0:#,##0.##}", Model.PackagePrice * 10) IRR</td>
-                </tr>
+
+                    }
+                    else
+                    {
+                        <td class="_1sttd" style="background-color:white;"><div class="col-xs-12"><i class="fa fa-money"></i> Price</div></td>
+                            <td class="_2ndtd" style="background-color:white;">@string.Format("{0:#,##0.##}", Model.PackagePriceDollar) $</td>
+                    }
+                 </tr>
                 <tr style="background-color:white;">
                     <td class="_1sttd" style="background-color:white;"><div class="col-xs-12"><i class="fa fa-credit-card-alt"></i>Payment Gateway</div></td>
-                    <td class="_2ndtd" style="background-color:white;     font-size: small; font-weight: 600;">
-                        @if (ViewBag.isIran)
+                    <td class="_2ndtd" style="background-color:white;     font-size: small; font-weight: 600;text-align:center">
+                        @if (ViewBag.IsChooesZarinpal)
                         {
-                            @Html.ActionLink("      ", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true }, new { @class = "btn btn-default purchasebtn zarinpalIcon" })
+                            <img src="~/images/icon-128x128.png" />
 
                         }
-                        @Html.ActionLink("      ", "Purchase", new { packageId = Model.PackageId, bankName = "webmoney", isFromWeb = true }, new { @class = "btn btn-default purchasebtn webmoneyIcon" })
+                        else
+                        {
+                            <img style="width:50%" src="~/images/webmoney.png" />
+                        }
 
 
                     </td>
                 </tr>
             </table>
             <div class="col-xs-12" style="text-align:right;">
+                @if (ViewBag.IsChooesZarinpal)
+                {     
+                     @Html.ActionLink("Purchase", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true }, new { @class = "btn btn-info" })
 
+
+                }
+                else
+                {
+                    @Html.ActionLink("Purchase", "", "", new { @class = "btn btn-info" })
+
+                }
                 <a class="btn btn-sm btn-default" style="width:100px; font-size:small;">Cancel</a>
+
+
+
             </div>
         </div>
         <div class="col-xs-12" style="text-align:center;">
-            <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
-            <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarinPal Logo above</p>
+            @if (ViewBag.IsChooesZarinpal)
+            {
+                <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
+                <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarinPal Logo above</p>
+
+            }
+            else
+            {
+
+                <img style="width:137px;" src="~/images/webmoney2.png" />
+            }
+
         </div>
     </div>
 </section>

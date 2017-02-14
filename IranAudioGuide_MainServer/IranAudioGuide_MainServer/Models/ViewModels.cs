@@ -179,6 +179,7 @@ public class PaymentResult
         public Guid PackageId { get; set; }
         public string PackageName { get; set; }
         public long PackagePrice { get; set; }
+        public long PackagePriceDollar { get; set; }
         public List<CityVM> PackageCities { get; set; }
     }
 
@@ -383,7 +384,6 @@ public class PaymentResult
     }
     public class UserInfo
     {
-        
 
         public string FullName { get; set; }
         public string Email { get; set; }
@@ -392,6 +392,7 @@ public class PaymentResult
         public bool IsSetuuid { get; set; }
         public bool IsAccessChangeUuid { get;  set; }
         public DateTime? TimeSetUuid { get;  set; }
+        public bool IsForeign { get; set; }
     }
     public class UserProfile
     {
