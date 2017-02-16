@@ -356,6 +356,8 @@
     <Content Include="images\prevnext-48-48-1.png" />
     <Content Include="images\tracklistarrow-48-16-0.png" />
     <Content Include="images\volume-24-24-0.png" />
+    <Content Include="images\webmoney.png" />
+    <Content Include="images\webmoney2.png" />
     <Content Include="images\WindowsStore.png" />
     <Content Include="Scripts\angular-countUp.js" />
     <Content Include="Scripts\angular-scroll-spy.js" />
