@@ -220,9 +220,9 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702121252120_sorooshMigrate2.cs" />
-    <Compile Include="Migrations\201702121252120_sorooshMigrate2.Designer.cs">
-      <DependentUpon>201702121252120_sorooshMigrate2.cs</DependentUpon>
+    <Compile Include="Migrations\201702161205101_changesAfterCommite.cs" />
+    <Compile Include="Migrations\201702161205101_changesAfterCommite.Designer.cs">
+      <DependentUpon>201702161205101_changesAfterCommite.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
@@ -357,6 +357,7 @@
     <Content Include="images\tracklistarrow-48-16-0.png" />
     <Content Include="images\volume-24-24-0.png" />
     <Content Include="images\WindowsStore.png" />
+    <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="Scripts\angular-countUp.js" />
     <Content Include="Scripts\angular-scroll-spy.js" />
     <Content Include="Scripts\bs_leftnavi.js" />
@@ -1349,8 +1350,8 @@
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702121252120_sorooshMigrate2.resx">
-      <DependentUpon>201702121252120_sorooshMigrate2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702161205101_changesAfterCommite.resx">
+      <DependentUpon>201702161205101_changesAfterCommite.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

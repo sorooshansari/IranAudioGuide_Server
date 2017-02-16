@@ -3,7 +3,14 @@
     Layout = null;
 }
 
-
+<style>
+    .input-group input[type=search] {
+        color: #fff;
+    }
+    .hoverable{
+        cursor: pointer;
+    }
+</style>
 
 <div class="input-group">
     <span class="input-group-addon"><i class="fa fa-search"></i></span>
@@ -64,18 +71,21 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-         
+
             <div class="modal-body">
                 <div class="row chooesPanel">
                     <div class="col-xs-12">
-                       <p>{{pak.PackagePrice}}</p>
+                        <p>{{pak.PackagePrice}}</p>
                         <a class="zarinpalIcon" ng-click="buyPakages(true)">
-                            <img src="~/images/icon-128x128.png" />
+                            <img class="hoverable" src="~/images/icon-128x128.png" />
                         </a>
                     </div>
-                    <div class="col-xs-12"> @*ng-hide="user.IsForeign"*@ 
-                      <p>{{pak.PackagePriceDollar}}</p>
-                        <a class="webmoneyIcon" ng-click="buyPakages(false)">                            <img src="~/images/webmoney.png" /> </a>
+                    <div class="col-xs-12">
+                        @*ng-hide="user.IsForeign"*@
+                        <p>{{pak.PackagePriceDollar}}</p>
+                        <a class="webmoneyIcon" ng-click="buyPakages(false)">
+                            <img class="hoverable" src="~/images/wmlogo_vector_blue.png" />
+                        </a>
                     </div>
 
                 </div>
