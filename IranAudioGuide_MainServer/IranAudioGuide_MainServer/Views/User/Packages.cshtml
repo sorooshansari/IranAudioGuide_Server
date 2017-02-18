@@ -74,17 +74,19 @@
 
             <div class="modal-body">
                 <div class="row chooesPanel">
-                    <div class="col-xs-12">
-                        <p>{{pak.PackagePrice}}</p>
-                        <a class="zarinpalIcon" ng-click="buyPakages(true)">
-                            <img class="hoverable" src="~/images/icon-128x128.png" />
+                    <div ng-hide="user.IsForeign" class="col-xs-12">
+                        <p>{{pak.PackagePrice}}T</p>
+                        <a class="zarinpalIcon hoverable" ng-click="buyPakages(true)">
+                            Pay with Iranian bank cards
+                            @*<img class="hoverable" src="~/images/icon-128x128.png" />*@
                         </a>
                     </div>
                     <div class="col-xs-12">
                         @*ng-hide="user.IsForeign"*@
-                        <p>{{pak.PackagePriceDollar}}</p>
-                        <a class="webmoneyIcon" ng-click="buyPakages(false)">
-                            <img class="hoverable" src="~/images/wmlogo_vector_blue.png" />
+                        <p>{{pak.PackagePriceDollar}}$</p>
+                        <a class="webmoneyIcon hoverable" ng-click="buyPakages(false)">
+                            Pay with international cards
+                            @*<img class="hoverable" src="~/images/wmlogo_vector_blue.png" />*@
                         </a>
                     </div>
 

@@ -7,7 +7,7 @@
 
 <style type="text/css">
     #page-wrapper {
-        height: 100vh;
+        /*height: 100vh;*/
         background: none !important;
     }
 
@@ -140,11 +140,12 @@
         width: 38PX;
         background-size: cover;
     }
+
     .btn-info {
-    color: #fff;
-    background-color: #144482;
-    border-color: #041a35;
-}
+        color: #fff;
+        background-color: #144482;
+        border-color: #041a35;
+    }
 </style>
 <section id="CheckOutSection">
     <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
@@ -179,16 +180,16 @@
                 <tr style="border-top:15px solid #144482;">
                     @if (ViewBag.IsChooesZarinpal)
                     {
-                    <td class="_1sttd" style="background-color:white;"><div class="col-xs-12"><i class="fa fa-money"></i> Price</div></td>
-                    <td class="_2ndtd" style="background-color:white;">@string.Format("{0:#,##0.##}", Model.PackagePrice * 10) IRR</td>
+                        <td class="_1sttd" style="background-color:white;"><div class="col-xs-12"><i class="fa fa-money"></i> Price</div></td>
+                        <td class="_2ndtd" style="background-color:white;">@string.Format("{0:#,##0.##}", Model.PackagePrice * 10) IRR</td>
 
                     }
                     else
                     {
                         <td class="_1sttd" style="background-color:white;"><div class="col-xs-12"><i class="fa fa-money"></i> Price</div></td>
-                            <td class="_2ndtd" style="background-color:white;">@string.Format("{0:#,##0.##}", Model.PackagePriceDollar) $</td>
+                        <td class="_2ndtd" style="background-color:white;">@string.Format("{0:#,##0.##}", Model.PackagePriceDollar) $</td>
                     }
-                 </tr>
+                </tr>
                 <tr style="background-color:white;">
                     <td class="_1sttd" style="background-color:white;"><div class="col-xs-12"><i class="fa fa-credit-card-alt"></i>Payment Gateway</div></td>
                     <td class="_2ndtd" style="background-color:white;     font-size: small; font-weight: 600;text-align:center">
@@ -199,7 +200,7 @@
                         }
                         else
                         {
-                            <img style="width:50%" src="~/images/webmoney.png" />
+                            <img style="width:50%" src="~/images/wmlogo_vector_blue.png" />
                         }
 
 
@@ -208,8 +209,8 @@
             </table>
             <div class="col-xs-12" style="text-align:right;">
                 @if (ViewBag.IsChooesZarinpal)
-                {     
-                     @Html.ActionLink("Purchase", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true }, new { @class = "btn btn-info" })
+                {
+                    @Html.ActionLink("Purchase", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true }, new { @class = "btn btn-info" })
 
 
                 }
@@ -224,6 +225,7 @@
 
             </div>
         </div>
+
         <div class="col-xs-12" style="text-align:center;">
             @if (ViewBag.IsChooesZarinpal)
             {
@@ -233,10 +235,125 @@
             }
             else
             {
+                <ul class="icons">
+                    <li>
+                        <!-- begin WebMoney Transfer : attestation label -->
+                        <a href="https://passport.webmoney.ru/asp/certview.asp?wmid=059551878952" target=_blank>
+                            <IMG SRC="~/images/v_blue_on_transp_en.png" title="Here is your WM passport 059551878952" border="0"><br>
+                            <font size=1>Check passport</font>
+                        </a>
+                        <!-- end WebMoney Transfer : attestation label -->
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#howto">How to pay with webmoney</button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#procedure">Payment procedure</button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#Terms">Terms & Conditions</button>
+                    </li>
+                </ul>
 
-                <img style="width:137px;" src="~/images/webmoney2.png" />
+
             }
 
         </div>
     </div>
 </section>
+<!-- Modal -->
+<div id="howto" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">How to pay with webmoney</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Click the bottom "Purchase", the page will go to the Webmoney transfer.<br />
+                    You will see several methods of payment with web money. If you are a Webmoney user you can use the Webmoney keeper.<br />
+                    If you’re not familiar with Webmoney services, choose the Quick payment. For the payment to proceed you will you need to receive a sms. So be sure your sim card is active and you can receive the text messages.
+                </p>
+                <a href="https://www.wmtransfer.com/eng/information/short/index.shtml">About Webmoney</a>
+                <br />
+                <h5>Account details</h5>
+                <dl>
+                    <dt>WebMoney ID</dt>
+                    <dd> 059551878952</dd>
+                    <dt>Merchant</dt>
+                    <dd>Iran Audio Guide</dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="procedure" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Payment procedure</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    In order to purchase a package, you either need an Iranian cash card or you have to use the webmoney transfer system which provides various payment methods.
+                </p>
+                <p>
+                    The procedure will only take a few minutes. The system will guide you through the steps. As soon the process has finished, the packages will be activated for you automatically. In case the procedures fail contact us.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="Terms" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Terms & Conditions</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Once you have purchased a packaged the price is not refundable.
+                    <br />
+                    Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions. 
+                    <br />
+                    Users agree to the price of each package and by purchasing a package, users terminate their right of any future complaint toward the price and content of the packages.
+                    <br />
+                    Iranaudioguide preserve the right to restrict any user’s access, in case of doubt of identity, and users agree to reply to iranaudioguide contacts to clear the issue. In case the users do not comply, Iranaudioguide has the right to deny the users access.
+                    <br />
+                    If it is proven to Iranaudioguide that a user is misusing the software in anyway, Iranaudioguide preserves to right to disable any access the user had and restrain any future access.
+                    <br />
+                    Iranaudioguide is not a purely scientific source. The content is based on scientific facts but entertainment aspects are also considered. 
+                    <br />
+                    All rights of this application are strictly reserved to the brand owner. Any illegal use, will follow with legal prosecution.
+                    <br />
+                    Users agree to allow iranaudioguide use the personal data they have provided to Iranaduioguide, for the improvement of the application.
+                    <br />
+                    Each user can only change their active device once they change their personal device. In case it is proven to Iranaudioguide that users have changed the active device, to allow other individual access their packages, Iranaudioguide can restrict their access.
+                    <br />
+                    Offered services provided here are not at the order of an individual or enterprise operating any of the Transaction banks, active on Iranaudioguide. This means the banks is not connected in any way with the sales conducted in Iranaudioguide.
+                    
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

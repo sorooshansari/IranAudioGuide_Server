@@ -262,6 +262,7 @@
     <Content Include="assets\js\skel.min.js" />
     <Content Include="assets\js\util.js" />
     <Content Include="Content\bootstrap-social.css" />
+    <Content Include="Content\bootstrap.3.3.7.min.css" />
     <Content Include="Content\bs_leftnavi.css" />
     <Content Include="Content\components-md.css" />
     <Content Include="Content\Custom4.css" />
@@ -273,6 +274,7 @@
     <Content Include="Content\responsiveslides.css" />
     <Content Include="Content\select.css" />
     <Content Include="Content\select.min.css" />
+    <Content Include="Content\simple-sidebar.css" />
     <Content Include="Content\sliderArrow.css" />
     <Content Include="Content\styles.min.css" />
     <Content Include="Content\toastr.min.css" />
@@ -356,8 +358,8 @@
     <Content Include="images\prevnext-48-48-1.png" />
     <Content Include="images\tracklistarrow-48-16-0.png" />
     <Content Include="images\volume-24-24-0.png" />
-    <Content Include="images\webmoney.png" />
-    <Content Include="images\webmoney2.png" />
+    <Content Include="images\v_blue_on_transp_en.png" />
+    <Content Include="images\v_blue_on_white_en.png" />
     <Content Include="images\WindowsStore.png" />
     <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="Scripts\angular-countUp.js" />
@@ -1322,6 +1324,8 @@
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\Shared\customError.cshtml" />
     <Content Include="Views\Account\vmessage.cshtml" />
+    <Content Include="Views\Payment\PaymentWeb.cshtml" />
+    <Content Include="Views\Payment\ReturnToWebPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

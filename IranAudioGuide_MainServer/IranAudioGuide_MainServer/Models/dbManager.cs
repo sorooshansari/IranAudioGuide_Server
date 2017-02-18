@@ -93,6 +93,8 @@ namespace IranAudioGuide_MainServer.Models
                     FullName = FullName,
                     ImgUrl = ImgUrl
                 };
+                if (Role == "AppUser")
+                    user.EmailConfirmed = true;
                 UserManager.Create(user, Pass);
                 UserManager.AddToRole(user.Id, Role);
             }

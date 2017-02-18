@@ -12,13 +12,13 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     public class UserApiController : ApiController
     {
-        
+
         [HttpPost]
         public IHttpActionResult GetCurrentUserInfo()
         {
             try
             {
-             
+
                 string userName = User.Identity.Name;
                 using (var db = new ApplicationDbContext())
                 {
@@ -31,8 +31,8 @@ namespace IranAudioGuide_MainServer.Controllers
                         IsEmailConfirmed = user.EmailConfirmed,
                         IsSetuuid = (user.uuid == null) ? false : true,
                         IsAccessChangeUuid = false,
-                        IsForeign = ExtensionMethods.IsIran,
-                };
+                        IsForeign = !ExtensionMethods.IsIran,
+                    };
                     //Info.IsAccessChangeUuid = false;
                     if (user.TimeSetUuid == null)
                         return Ok(Info);
