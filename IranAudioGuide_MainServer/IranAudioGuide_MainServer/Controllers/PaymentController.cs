@@ -323,7 +323,8 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                if (pak.IsChooesZarinpal && !ExtensionMethods.IsIran)
+
+                if (pak.IsChooesZarinpal && ExtensionMethods.IsForeign)
                     ViewBag.IsChooesZarinpal = false;
                 else
                     ViewBag.IsChooesZarinpal = pak.IsChooesZarinpal;

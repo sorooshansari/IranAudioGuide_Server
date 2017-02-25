@@ -198,7 +198,7 @@ namespace IranAudioGuide_MainServer.Models
         public System.Guid Pac_Id { get; set; }
         public string Pac_Name { get; set; }
         public long Pac_Price { get; set; }
-        public long Pac_Price_Dollar { get; set; }
+        public float Pac_Price_Dollar { get; set; }
         public  IList<city> Pac_Cities { get; set; }
         //public object pac_Cities { get; internal set; }
         public IList<ApplicationUser> Pac_User { get; set; }
@@ -225,7 +225,7 @@ namespace IranAudioGuide_MainServer.Models
         public DateTime CreateTime { get; set; }
         public bool IsRead { get; set; }
         public string uuid { get; set; }
-
+        public string Email { get; internal set; }
     }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -255,6 +255,58 @@ namespace IranAudioGuide_MainServer.Models
         //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<RequestForApp> RequestForApps { get; set; }
+        public DbSet<WMPayment> WMPayment { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_MainServer.Models.ApplicationUser> ApplicationUsers { get; set; }
+    }
+
+    public class WMPayment
+    {
+        public WMPayment()
+        {
+            var date = DateTime.Now;
+            InsertDatetime = date;
+            WMP_SYS_TRANS_DATE = date;
+            WMP_SYS_TRANS_DATE_Result = date;
+        }
+        [Key]
+        [Display(Name = "Payment Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int PaymentId { get; set; }
+        [Display(Name = "Insert Datetime")]
+        public DateTime InsertDatetime { get; set; }
+        [Display(Name = "User")]
+        public ApplicationUser User { get; set; }
+        [Display(Name = "Package")]
+        public Package Package { get; set; }
+        // This is true only if the payment was successful
+        [Display(Name = "Payment Finished")]
+        public bool PaymentFinished { get; set; }
+        [Display(Name = "Data Integrity")]
+        public bool DataIntegrity { get; set; }
+
+        public string WMP_PAYEE_PURSE { get; set; }
+        public string WMP_PAYMENT_AMOUNT { get; set; }
+        public string WMP_HOLD { get; set; }
+        public string WMP_PAYMENT_NO { get; set; }
+        public string WMP_MODE { get; set; }
+        public string WMP_SYS_INVS_NO { get; set; }
+        public string WMP_SYS_INVS_NO_Result { get; set; }
+        public string WMP_SYS_TRANS_NO { get; set; }
+        public string WMP_SYS_TRANS_NO_Result { get; set; }
+        public DateTime WMP_SYS_TRANS_DATE { get; set; }
+        public DateTime WMP_SYS_TRANS_DATE_Result { get; set; }
+        public string WMP_PAYER_PURSE { get; set; }
+        public string WMP_PAYER_WM { get; set; }
+
+
+        public string WMP_CAPITALLER_WMID { get; set; }
+        public string WMP_PAYMER_NUMBER { get; set; }
+        public string WMP_PAYMER_EMAIL { get; set; }
+        public string WMP_PAYMENT_CREDITDAYS { get; set; }
+
+        public string WMP_SDP_TYPE { get; set; }
+        public string WMP_PAYER_COUNTRYID { get; set; }
+        public string WMP_PAYER_PCOUNTRYID { get; set; }
+        public string WMP_PAYER_IP { get; set; }
     }
 }
