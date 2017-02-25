@@ -172,7 +172,7 @@ public class PaymentResult
         public Guid PackageId { get; set; }
         public string PackageName { get; set; }
         public long PackagePrice { get; set; }
-        public long PackagePriceDollar { get; set; }
+        public float PackagePriceDollar { get; set; }
         public List<CityVM> PackageCities { get; set; }
     }
 
@@ -579,6 +579,7 @@ public class PaymentResult
         public string Subject { get; set; }
         public string Message { get; set; }
         public string uuid { get; set; }
+        public string email { get; set; }
     }
 
     public class RequestForAppVM

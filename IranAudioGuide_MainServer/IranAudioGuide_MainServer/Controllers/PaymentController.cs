@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using IranAudioGuide_MainServer.Services;
+using System.Net.Http;
+using WebMoney.Cryptography;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -122,6 +124,104 @@ namespace IranAudioGuide_MainServer.Controllers
         //        return View("Error");
         //    }
         //}
+
+        [Authorize(Roles = "AppUser")]
+        public ActionResult WMPurchase(Guid packageId)
+        {
+            var wmService = new WebmoneyServices();
+            var res = wmService.CreatePayment(User.Identity.Name, packageId);
+            var url = "https://merchant.wmtransfer.com/lmi/payment.asp?at=authtype_2";
+
+            Response.Clear();
+            var sb = new System.Text.StringBuilder();
+            sb.Append("<html>");
+            sb.AppendFormat("<body onload='document.forms[0].submit()'>");
+            sb.AppendFormat("<form action='{0}' method='post'>", url);
+            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_NO' value='{0}'>", res.PaymentId);
+            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_AMOUNT' value='{0}'>", res.PackageAmount);
+            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", res.PackageName);
+            sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", WebmoneyPurse.Id);
+            sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
+            sb.Append("</form>");
+            sb.Append("</body>");
+            sb.Append("</html>");
+            Response.Write(sb.ToString());
+            Response.End();
+
+            return RedirectToAction("PaymentWeb", packageId);
+            //string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+            //string success = baseUrl + "/Payment/VMSuccess";
+            //string failed = baseUrl + "/Payment/VMFailed";
+            //using (var client = new HttpClient())
+            //{
+            //    var values = new Dictionary<string, string>
+            //        {
+            //           { "LMI_PAYEE_PURSE", "Z945718891756" },
+            //           { "LMI_PAYMENT_AMOUNT", "5" },
+            //           { "LMI_PAYMENT_NO", "1" },
+            //           { "LMI_PAYMENT_DESC", "helo world" },
+            //           { "LMI_SIM_MODE", "0" },
+            //           { "LMI_SUCCESS_URL", success },
+            //           { "LMI_SUCCESS_METHOD", "1" },
+            //           { "LMI_FAIL_URL", failed },
+            //           { "LMI_FAIL_METHOD", "1" },
+            //           { "myId", "52005" }
+            //        };
+
+            //    var content = new FormUrlEncodedContent(values);
+
+            //    var response = await client.PostAsync("https://merchant.wmtransfer.com/lmi/payment.asp", content);
+
+            //    var responseString = await response.Content.ReadAsStringAsync();
+            //    ViewBag.Error = responseString;
+            //}
+            //RedirectToAction("PaymentWeb", packageId);
+        }
+
+        [HttpPost]
+        public ActionResult VMResult(WMReturnModel model)
+        {
+            var wmService = new WebmoneyServices();
+            wmService.ReturnModel = model;
+            var res = wmService.ProccessResult();
+            ViewBag.Message = res.Message;
+            ViewBag.ErrDesc = res.ErrDesc;
+            ViewBag.SaleReferenceId = res.refId;
+            ViewBag.Image = res.Image;
+            ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
+            return View("ReturnToWebPage");
+        }
+        [HttpPost]
+        public ActionResult VMSuccess(WMReturnModel model)
+        {
+            ViewBag.BankName = "Webmoney Gateway";
+            var wmService = new WebmoneyServices();
+            wmService.ReturnModel = model;
+            var res = wmService.Succeeded();
+            ViewBag.Message = res.Message;
+            ViewBag.ErrDesc = res.ErrDesc;
+            ViewBag.SaleReferenceId = res.refId;
+            ViewBag.Image = res.Image;
+            ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
+            return View("ReturnToWebPage");
+        }
+
+        [HttpPost]
+        public ActionResult VMFailed(WMReturnModel model)
+        {
+            ViewBag.BankName = "Webmoney Gateway";
+            var wmService = new WebmoneyServices();
+            wmService.ReturnModel = model;
+            var res = wmService.Failed();
+            ViewBag.Message = res.Message;
+            ViewBag.ErrDesc = res.ErrDesc;
+            ViewBag.SaleReferenceId = res.refId;
+            ViewBag.Image = res.Image;
+            ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
+            return View("ReturnToWebPage");
+        }
+
+
         [Authorize(Roles = "AppUser")]
         public ActionResult Purchase(Guid packageId, string bankName, bool isFromWeb = false)
         {
@@ -216,7 +316,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return View();
         }
-       
+
         //Payment/PaymentWeb
         [AllowAnonymous]
         public async Task<ActionResult> PaymentWeb(WebPaymentReqVM pak)
@@ -227,7 +327,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     ViewBag.IsChooesZarinpal = false;
                 else
                     ViewBag.IsChooesZarinpal = pak.IsChooesZarinpal;
-               
+
                 var info = new AppPaymentReqVM()
                 {
                     packageId = pak.packageId,
@@ -249,7 +349,7 @@ namespace IranAudioGuide_MainServer.Controllers
                                          PackageId = p.Pac_Id,
                                          PackageName = p.Pac_Name,
                                          PackagePrice = p.Pac_Price,
-                                         PackagePriceDollar=p.Pac_Price_Dollar,
+                                         PackagePriceDollar = p.Pac_Price_Dollar,
                                          PackageCities = (from c in db.Cities
                                                           where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
                                                           select new CityVM()
@@ -344,7 +444,6 @@ namespace IranAudioGuide_MainServer.Controllers
                 return "At the moment there is no possibility of connecting to this port.<br/>Error Message:" + ex.Message;
             }
         }
-
         private void ZarinpalReturn()
         {
             try

@@ -177,7 +177,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     Message = comment.Message,
                     uuid = comment.uuid,
-                    Subject = comment.Subject
+                    Subject = comment.Subject,
+                    Email = comment.email
                 };
 
             dbTools.CreateComment(newComment);

@@ -216,7 +216,17 @@
                 }
                 else
                 {
-                    @Html.ActionLink("Purchase", "", "", new { @class = "btn btn-info" })
+                    @*<form action="https://merchant.wmtransfer.com/lmi/payment.asp?at=authtype_2" method="POST">
+                        <input type="hidden" name="LMI_PAYMENT_NO" value="3">
+                        <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="0.05">
+                        <input type="hidden" name="LMI_PAYMENT_DESC" value="@Model.PackageName">
+                        <input type="hidden" name="LMI_PAYEE_PURSE" value="Z945718891756">
+                        <input type="hidden" name="LMI_SIM_MODE" value="0">
+                        <input type="hidden" name="UserName" value="@User.Identity.Name">
+                        <input type="submit" class="btn btn-info" 
+                               value="Purchase">
+                    </form>*@
+                    @Html.ActionLink("Purchase", "WMPurchase", new { packageId = Model.PackageId }, new { @class = "btn btn-info" })
 
                 }
                 <a class="btn btn-sm btn-default" style="width:100px; font-size:small;">Cancel</a>
@@ -331,7 +341,7 @@
                 <p>
                     Once you have purchased a packaged the price is not refundable.
                     <br />
-                    Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions. 
+                    Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions.
                     <br />
                     Users agree to the price of each package and by purchasing a package, users terminate their right of any future complaint toward the price and content of the packages.
                     <br />
@@ -339,7 +349,7 @@
                     <br />
                     If it is proven to Iranaudioguide that a user is misusing the software in anyway, Iranaudioguide preserves to right to disable any access the user had and restrain any future access.
                     <br />
-                    Iranaudioguide is not a purely scientific source. The content is based on scientific facts but entertainment aspects are also considered. 
+                    Iranaudioguide is not a purely scientific source. The content is based on scientific facts but entertainment aspects are also considered.
                     <br />
                     All rights of this application are strictly reserved to the brand owner. Any illegal use, will follow with legal prosecution.
                     <br />
@@ -348,7 +358,7 @@
                     Each user can only change their active device once they change their personal device. In case it is proven to Iranaudioguide that users have changed the active device, to allow other individual access their packages, Iranaudioguide can restrict their access.
                     <br />
                     Offered services provided here are not at the order of an individual or enterprise operating any of the Transaction banks, active on Iranaudioguide. This means the banks is not connected in any way with the sales conducted in Iranaudioguide.
-                    
+
                 </p>
             </div>
             <div class="modal-footer">

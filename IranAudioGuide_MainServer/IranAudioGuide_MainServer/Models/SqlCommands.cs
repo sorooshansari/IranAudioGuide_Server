@@ -81,11 +81,12 @@ END",
 CREATE PROCEDURE [dbo].[CreateComment] 
 	@Message NVARCHAR(MAX),
 	@uuid NVARCHAR(MAX),
-	@Subject NVARCHAR(MAX)
+	@Subject NVARCHAR(MAX),
+	@email NVARCHAR(MAX)
 AS
 BEGIN
-	INSERT INTO [dbo].[Comments] (Subject, Message, CreateTime, IsRead, uuid)
-VALUES        (@Subject ,@Message, getdate() , 'False' ,@uuid)
+	INSERT INTO [dbo].[Comments] (Subject, Message, CreateTime, Email, IsRead, uuid)
+VALUES        (@Subject ,@Message, getdate(), @email, 'False' ,@uuid)
 	
 END
 ", @"

@@ -22,7 +22,7 @@ namespace IranAudioGuide_MainServer
             config.Routes.MapHttpRoute(
                 name: "API Default",
                 routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new { action = "Index", id = RouteParameter.Optional }
             );
         }
     }
