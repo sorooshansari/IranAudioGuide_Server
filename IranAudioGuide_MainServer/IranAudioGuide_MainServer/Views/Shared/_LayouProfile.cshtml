@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="userEmail">
-                <span>{{user.Email}}</span>
+                <span>{{user.FullName}}</span>
             </div>
             <ul class="sidebar-nav">
                 <li>
@@ -69,7 +69,7 @@
                 </li>
                 <li>
                     <a ui-sref="PackagesPurchased" id="btnGetPakagePurchased" ng-click="getPackagesPurchased($event)">
-                        <i class="fa fa-list"></i>
+                        <i class="fa fa-shopping-bag"></i>
                         Purchased
                     </a>
                 </li>
@@ -82,7 +82,7 @@
 
                 <li>
                     <a ng-click="LogOff()" >
-                        <i class="fa fa-mobile"></i>
+                        <i class="fa fa-sign-out"></i>
                         Log Off
                     </a>
                 </li>
@@ -95,7 +95,7 @@
             <div class="container-fluid">
                 <div class="menu-mobail visible-xs">
                     <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
-                    <span class="menu-username"> </span>
+                    <span class="menu-username">{{user.Email}}</span>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
@@ -111,7 +111,7 @@
         <div id="fpcontainer">
             <img id="IAGLogo" src="~/images/IAGSmallWhiteLogo.png" />
             <div style="text-align:center;">
-                <img id="spinbars" src="~/images/bars.svg" />
+                <img id="spinbars" src="~/Content/images/bars.svg" />
 
                 @*<p id="LoadingText">Loading... <br /> Change the "FullPageLoading" element class from "load" to "unload" using angularJS when whole page is loaded.<br />Set "#LoadingText" style to "display:none"<br /> Done...<br /> Thank you!</p>*@
             </div>

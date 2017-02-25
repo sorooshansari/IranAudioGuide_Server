@@ -110,7 +110,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Aud_Name { get; set; }
         public string Aud_Url { get; set; }
         public string Aud_Discription { get; set; }
-        public virtual Place Pla_Id { get; set; }
+        public Place Place { get; set; }
     }
     public class Story
     {
@@ -120,7 +120,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Sto_Name { get; set; }
         public string Sto_Url { get; set; }
         public string Sto_Discription { get; set; }
-        public virtual Place Pla_Id { get; set; }
+        public  Place Place { get; set; }
     }
     public class Place
     {
@@ -150,7 +150,7 @@ namespace IranAudioGuide_MainServer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public System.Guid Img_Id { get; set; }
         public string Img_Name { get; set; }
-        public virtual Place Pla_Id { get; set; }
+        public Place Place { get; set; }
         public string Img_Description { get; set; }
     }
     public class Tip
@@ -160,7 +160,7 @@ namespace IranAudioGuide_MainServer.Models
         public System.Guid Tip_Id { get; set; }
         public TipCategory Tip_Category { get; set; }
         public string Tip_Content { get; set; }
-        public virtual Place Pla_Id { get; set; }
+        public  Place Place { get; set; }
 
     }
     public class TipCategory
@@ -177,7 +177,7 @@ namespace IranAudioGuide_MainServer.Models
     {
         public city()
         {
-            Cit_Packages = new HashSet<Package>();
+            //Cit_Packages = new HashSet<Package>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -185,13 +185,13 @@ namespace IranAudioGuide_MainServer.Models
         public string Cit_Name { get; set; }
         public string Cit_Description { get; set; }
         public string Cit_ImageUrl { get; set; }
-        public virtual ICollection<Package> Cit_Packages { get; set; }
+        public  IList<Package> Cit_Packages { get; set; }
     }
     public class Package
     {
         public Package()
         {
-            Pac_Cities = new HashSet<city>();
+            //Pac_Cities = new HashSet<city>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -199,8 +199,9 @@ namespace IranAudioGuide_MainServer.Models
         public string Pac_Name { get; set; }
         public long Pac_Price { get; set; }
         public long Pac_Price_Dollar { get; set; }
-        public virtual ICollection<city> Pac_Cities { get; set; }
-        public object pac_Cities { get; internal set; }
+        public  IList<city> Pac_Cities { get; set; }
+        //public object pac_Cities { get; internal set; }
+        public IList<ApplicationUser> Pac_User { get; set; }
     }
     public class RequestForApp {
         public RequestForApp()

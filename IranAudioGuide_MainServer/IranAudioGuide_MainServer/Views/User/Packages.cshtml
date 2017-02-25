@@ -12,6 +12,7 @@
     }
 </style>
 
+
 <div class="input-group">
     <span class="input-group-addon"><i class="fa fa-search"></i></span>
     <ui-select class="SearchSelect" multiple ng-model="searhPakage.item" theme="bootstrap">
@@ -32,11 +33,15 @@
     </ui-select>
 
 </div>
-
+@*<div class="col-xs-12">
+    <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" />
+    
+ 
+</div>*@
 <form id="PurchaseForm" name="PurchaseForm" action="/Payment/PaymentWeb">
 
 
-    <div class="col-flex PlanPricing template4" ng-repeat="pak in listPakages">
+    <div class="PlanPricing template4" ng-repeat="pak in listPakages"  ng-class="{'col-flex-1':pak.PackageCities.length == 1, 'col-flex-2':pak.PackageCities.length > 1}">
         <!-- Price template4 Starts -->
         <div class="planName">
             @*<span class="price">{{pak.PackagePrice}}IRR </span>*@
@@ -46,10 +51,10 @@
         <div class="planFeatures">
             <!-- Slideshow 4 -->
             <div class="callbacks_container">
-                <ul class="slider6 rslides" ng-class="{'packageMultiple-ul':pak.PackageCities.length != 1}">
+                <ul class="slider6 rslides">
                     <li ng-repeat="city in pak.PackageCities">
 
-                        <img ng-src="~/images/Cities/{{city.CityImageUrl}}" />
+                        <img ng-src="{{city.CityImageUrl}}" />
                         <p class="cityName">{{city.CityName}}</p>
                         <p class="caption">{{city.CityDesc}}</p>
                         <ul>

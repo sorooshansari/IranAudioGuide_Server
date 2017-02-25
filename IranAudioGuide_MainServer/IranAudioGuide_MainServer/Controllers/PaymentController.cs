@@ -48,6 +48,13 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
+                ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
+
+                if (info.IsChooesZarinpal && ExtensionMethods.IsForeign)
+                    ViewBag.IsChooesZarinpal = false;
+
+
+
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user.uuid != info.uuid)
                 {
@@ -216,18 +223,19 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return View();
         }
-       
+
         //Payment/PaymentWeb
         [AllowAnonymous]
         public async Task<ActionResult> PaymentWeb(WebPaymentReqVM pak)
         {
             try
             {
-                if (pak.IsChooesZarinpal && !ExtensionMethods.IsIran)
+                ViewBag.IsChooesZarinpal = pak.IsChooesZarinpal;
+
+                if (pak.IsChooesZarinpal && ExtensionMethods.IsForeign)
                     ViewBag.IsChooesZarinpal = false;
-                else
-                    ViewBag.IsChooesZarinpal = pak.IsChooesZarinpal;
-               
+
+
                 var info = new AppPaymentReqVM()
                 {
                     packageId = pak.packageId,
@@ -249,7 +257,7 @@ namespace IranAudioGuide_MainServer.Controllers
                                          PackageId = p.Pac_Id,
                                          PackageName = p.Pac_Name,
                                          PackagePrice = p.Pac_Price,
-                                         PackagePriceDollar=p.Pac_Price_Dollar,
+                                         PackagePriceDollar = p.Pac_Price_Dollar,
                                          PackageCities = (from c in db.Cities
                                                           where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
                                                           select new CityVM()

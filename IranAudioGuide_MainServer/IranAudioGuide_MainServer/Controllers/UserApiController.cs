@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace IranAudioGuide_MainServer.Controllers
@@ -31,7 +32,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         IsEmailConfirmed = user.EmailConfirmed,
                         IsSetuuid = (user.uuid == null) ? false : true,
                         IsAccessChangeUuid = false,
-                        IsForeign = !ExtensionMethods.IsIran,
+                        IsForeign = ExtensionMethods.IsForeign,
                     };
                     //Info.IsAccessChangeUuid = false;
                     if (user.TimeSetUuid == null)
@@ -211,13 +212,55 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Ok();
             }
         }
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+
+        [HttpPost]
+        public IHttpActionResult UploadFile()
+        {
+
+            //  System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
+
+
+            //HttpResponseMessage result = null;          
+            //    result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
+            //}
+
+            try
+            {
+                //var ftpurl = @"ftp://iranaudioguide.net/";
+
+                //var ftpusername = "test@iranaudioguide.net";
+                //var ftppassword = "{S+Iao&)H&SH";
+
+                //var ftpurl = "ftp://iranaudioguide.com/test.iranaudioguide.com/images/Files";
+
+                //var ftpusername = "pourmand";
+                //var ftppassword = "QQwwee11@@";
+
+                var httpRequest = HttpContext.Current.Request;
+                if (httpRequest.Files.Count <= 0)
+                    return BadRequest();// Request.CreateResponse(HttpStatusCode.BadRequest)
+
+
+                var docfiles = new List<string>();
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    //var filePath = HttpContext.Current.Server.MapPath(@"~/images/Files/" + postedFile.FileName);
+                    //postedFile.SaveAs(filePath);
+                    //var ftpClinet = new ftp(ftpurl, ftpusername, ftppassword);
+                    var ftpClinet = new ServiceFtp();
+                    //ftpClinet.Upload(postedFile);
+
+                }//end ForEach
+                return Ok();
+            }
+            catch (WebException ex)
+            {
+                String status = ((FtpWebResponse)ex.Response).StatusDescription;
+                return BadRequest(ex.Message);
+            }
+
+        }
+
     }
 }

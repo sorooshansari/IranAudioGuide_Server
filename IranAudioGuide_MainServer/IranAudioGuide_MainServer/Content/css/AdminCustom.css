@@ -1,0 +1,655 @@
+﻿body {
+}
+
+#pkgcities {
+    text-align: left;
+    border: 1px solid #a1a1a1;
+    background: padding-box);
+    position: relative;
+    -webkit-appearance: none;
+    display: block;
+    border: 0;
+    outline: 0;
+    background: #fff;
+    background: rgba(255, 255, 255, 0.75);
+    width: 100%;
+    border-radius: 0.35em;
+    padding: 0.75em 1em 0.75em 1em;
+    box-shadow: inset 0 0.1em 0.1em 0 rgba(0, 0, 0, 0.05);
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    -moz-transition: all 0.35s ease-in-out;
+    -webkit-transition: all 0.35s ease-in-out;
+    -ms-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+}
+
+.text-Dark {
+    /*color: black;*/
+    text-shadow: 1px 1px 1px black;
+}
+
+    .text-Dark h2 {
+        font-size: 50px;
+        font-weight: 700;
+    }
+
+    .text-Dark p {
+        font-weight: 900;
+    }
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+    .inputfile + label {
+        /*font-size: 1.25em;
+        font-weight: 700;
+        color: white;
+        background-color: black;
+        display: inline-block;*/
+        position: relative;
+        display: inline-block;
+        border-radius: 0.35em;
+        color: #fff !important;
+        text-decoration: none;
+        padding: 0.75em 2.5em 0.75em 2.5em;
+        /*background-color: #ffea00;*/
+        border: 0;
+        cursor: pointer;
+        background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
+        background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
+        background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
+        background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
+        -moz-transition: background-color 0.35s ease-in-out;
+        -webkit-transition: background-color 0.35s ease-in-out;
+        -ms-transition: background-color 0.35s ease-in-out;
+        transition: background-color 0.35s ease-in-out;
+        line-height: 1.25em;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    /*.inputfile:focus + label,
+        .inputfile + label:hover {
+            background-color: #ffff00;
+        }
+
+        .inputfile + label :active {
+            background-color: #ffd500;
+        }*/
+
+    .inputfile + label {
+        cursor: pointer; /* "hand" cursor */
+    }
+
+@media screen and (min-width: 736px) {
+    .lessPading {
+        padding-left: 5px;
+    }
+}
+
+button.btn-default {
+    background-color: #778899 !important;
+}
+
+.NewPlaceForm input[type=submit]:hover {
+    background-color: #8d9caa;
+}
+
+.textDanger {
+    color: #8b0000;
+}
+
+.amazingaudioplayer {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0px auto 0px !important;
+    margin-bottom: 0 !important;
+}
+
+.amazingaudioplayer-image {
+    width: 20% !important;
+}
+
+.amazingaudioplayer-bar {
+    width: 78% !important;
+}
+
+.amazingaudioplayer-title {
+    text-align: left !important;
+}
+
+table.default td {
+}
+
+.tdName {
+    width: 20%;
+}
+
+.tdDesc p {
+    overflow-y: scroll;
+    max-height: 50px;
+}
+
+.LoadAudio {
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 0;
+}
+
+#myModal .modal-content {
+    box-sizing: border-box;
+    background-color: #333;
+    border: 1px solid #222;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    -moz-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    background-image: -ms-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -moz-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -o-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444444), color-stop(1, #111111));
+    background-image: -webkit-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: linear-gradient(to bottom, #444444 0%, #111111 100%);
+}
+
+.Player {
+}
+
+form textarea {
+    min-height: initial;
+}
+
+.hoverable:hover {
+    background-color: lightblue;
+}
+
+.myDivider {
+}
+
+    .myDivider hr {
+        border: 1px solid;
+    }
+
+    .myDivider span {
+        font-size: 40px;
+        padding: 0 10px;
+    }
+
+@media screen and (max-width: 736px) {
+    .myDivider span {
+        font-size: 30px;
+        padding: 0 5px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .myDivider span {
+        font-size: 20px;
+        padding: 0 2px;
+    }
+}
+
+.formError {
+    margin-bottom: 0px;
+    text-align: left;
+}
+
+#progressOut {
+    width: 300px;
+    height: 20px;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+#progressIn {
+    position: relative; /*This is important*/
+    height: 100%;
+    bottom: 0px;
+    width: 0px;
+    background: #FC6428; /*This can be anything*/
+}
+
+#time {
+    position: absolute;
+    padding: 5px 8px;
+    font-size: 10px;
+    background: #12BFD3;
+    right: -0px;
+    bottom: 0px;
+}
+
+.Player {
+    text-align: left;
+    box-sizing: border-box;
+    background-color: #333;
+    border: 1px solid #222;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    padding: 8px 4px;
+    margin-bottom: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    -moz-box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    box-shadow: inset 0 1px 0 rgba( 255, 255, 255, 0.15 ), 0 0 3px rgba( 0, 0, 0, 0.5 );
+    background-image: -ms-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -moz-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -o-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444444), color-stop(1, #111111));
+    background-image: -webkit-linear-gradient(top, #444444 0%, #111111 100%);
+    background-image: linear-gradient(to bottom, #444444 0%, #111111 100%);
+}
+
+    .Player .player-image,
+    .modal .place-image {
+        display: block;
+        position: relative;
+        /*width: 20%;*/
+        height: auto;
+        margin: 0px auto 0px;
+        margin-bottom: 0;
+        float: left;
+        overflow: hidden;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+
+        .Player .player-image img,
+        .modal .place-image img {
+            width: 100%;
+            max-width: 100%;
+            vertical-align: middle;
+            display: inline-block;
+            border: none;
+            margin: 0;
+            padding: 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+    .Player .play {
+        display: block;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        background-image: url("/Content/images/playpause-48-48-1.png");
+        background-position: left top;
+        background-repeat: no-repeat;
+    }
+
+    .Player .pause {
+        display: block;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        background-image: url("/Content/images/playpause-48-48-1.png");
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+
+    .Player .next {
+        display: block;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        background-image: url("../images/prevnext-48-48-1.png");
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+
+    .Player .prev {
+        display: block;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        background-image: url("../images/prevnext-48-48-1.png");
+        background-position: left top;
+        background-repeat: no-repeat;
+    }
+
+    .Player .AudioTitle {
+        color: white;
+        overflow: hidden;
+        height: 1.5em;
+    }
+
+    .Player .buttons {
+        margin-left: -10px;
+    }
+
+    .Player .pb {
+        margin-top: 8%;
+    }
+
+    .Player .audiosList {
+        margin: 0px 20px;
+    }
+
+        .Player .audiosList .listItem {
+            cursor: pointer;
+        }
+
+            .Player .audiosList .listItem div {
+                padding: 0px;
+                margin: 0px;
+            }
+
+.align-right {
+    text-align: right !important;
+    float: right !important;
+}
+
+.ModalDismissIco {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+}
+
+.ModalDismissBtn {
+    background-color: #31b0d5 !important;
+    border-color: #269abc !important;
+}
+
+.addBtn {
+    background-color: #449d44 !important;
+    border-color: #398439 !important;
+}
+
+/*loading layout*/
+#floatingCirclesG {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 51px;
+    height: 51px;
+    margin: auto;
+    transform: scale(0.6);
+    -o-transform: scale(0.6);
+    -ms-transform: scale(0.6);
+    -webkit-transform: scale(0.6);
+    -moz-transform: scale(0.6);
+}
+
+.f_circleG {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    height: 9px;
+    width: 9px;
+    border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    animation-name: f_fadeG;
+    -o-animation-name: f_fadeG;
+    -ms-animation-name: f_fadeG;
+    -webkit-animation-name: f_fadeG;
+    -moz-animation-name: f_fadeG;
+    animation-duration: 0.622s;
+    -o-animation-duration: 0.622s;
+    -ms-animation-duration: 0.622s;
+    -webkit-animation-duration: 0.622s;
+    -moz-animation-duration: 0.622s;
+    animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    animation-direction: normal;
+    -o-animation-direction: normal;
+    -ms-animation-direction: normal;
+    -webkit-animation-direction: normal;
+    -moz-animation-direction: normal;
+}
+
+#frotateG_01 {
+    left: 0;
+    top: 21px;
+    animation-delay: 0.2295s;
+    -o-animation-delay: 0.2295s;
+    -ms-animation-delay: 0.2295s;
+    -webkit-animation-delay: 0.2295s;
+    -moz-animation-delay: 0.2295s;
+}
+
+#frotateG_02 {
+    left: 6px;
+    top: 6px;
+    animation-delay: 0.316s;
+    -o-animation-delay: 0.316s;
+    -ms-animation-delay: 0.316s;
+    -webkit-animation-delay: 0.316s;
+    -moz-animation-delay: 0.316s;
+}
+
+#frotateG_03 {
+    left: 21px;
+    top: 0;
+    animation-delay: 0.3925s;
+    -o-animation-delay: 0.3925s;
+    -ms-animation-delay: 0.3925s;
+    -webkit-animation-delay: 0.3925s;
+    -moz-animation-delay: 0.3925s;
+}
+
+#frotateG_04 {
+    right: 6px;
+    top: 6px;
+    animation-delay: 0.469s;
+    -o-animation-delay: 0.469s;
+    -ms-animation-delay: 0.469s;
+    -webkit-animation-delay: 0.469s;
+    -moz-animation-delay: 0.469s;
+}
+
+#frotateG_05 {
+    right: 0;
+    top: 21px;
+    animation-delay: 0.5455s;
+    -o-animation-delay: 0.5455s;
+    -ms-animation-delay: 0.5455s;
+    -webkit-animation-delay: 0.5455s;
+    -moz-animation-delay: 0.5455s;
+}
+
+#frotateG_06 {
+    right: 6px;
+    bottom: 6px;
+    animation-delay: 0.622s;
+    -o-animation-delay: 0.622s;
+    -ms-animation-delay: 0.622s;
+    -webkit-animation-delay: 0.622s;
+    -moz-animation-delay: 0.622s;
+}
+
+#frotateG_07 {
+    left: 21px;
+    bottom: 0;
+    animation-delay: 0.6985s;
+    -o-animation-delay: 0.6985s;
+    -ms-animation-delay: 0.6985s;
+    -webkit-animation-delay: 0.6985s;
+    -moz-animation-delay: 0.6985s;
+}
+
+#frotateG_08 {
+    left: 6px;
+    bottom: 6px;
+    animation-delay: 0.775s;
+    -o-animation-delay: 0.775s;
+    -ms-animation-delay: 0.775s;
+    -webkit-animation-delay: 0.775s;
+    -moz-animation-delay: 0.775s;
+}
+
+@-o-keyframes f_fadeG {
+    0% {
+        background-color: rgb(0, 0, 0);
+    }
+
+    100% {
+        background-color: rgb(255, 255, 255);
+    }
+}
+
+@-ms-keyframes f_fadeG {
+    0% {
+        background-color: rgb(0, 0, 0);
+    }
+
+    100% {
+        background-color: rgb(255, 255, 255);
+    }
+}
+
+@-webkit-keyframes f_fadeG {
+    0% {
+        background-color: rgb(0, 0, 0);
+    }
+
+    100% {
+        background-color: rgb(255, 255, 255);
+    }
+}
+
+@-moz-keyframes f_fadeG {
+    0% {
+        background-color: rgb(0, 0, 0);
+    }
+
+    100% {
+        background-color: rgb(255, 255, 255);
+    }
+}
+
+#EditPlaceModal .modal-body,
+#OnlineEditPlaceModal .modal-body {
+    overflow-y: scroll;
+    max-height: 450px;
+}
+
+/*.ImgHoverable img {
+    cursor: pointer;
+}
+
+    .ImgHoverable img:hover {
+        opacity: 0.8;
+    }*/
+.text-red {
+    color: #d9534f;
+}
+
+    .text-red:hover {
+        color: #d9534f;
+    }
+
+.text-blue {
+    color: #067de4;
+}
+
+    .text-blue:hover {
+        color: #067de4;
+    }
+
+.text-green {
+    color: #449d44;
+}
+
+    .text-green:hover {
+        color: #449d44;
+    }
+
+.rmvBtn {
+    position: absolute;
+    top: 50%;
+    left: 65%;
+}
+
+.EditDescBtn {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+}
+
+.addImgBtn {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    font-weight: 400 !important;
+}
+
+    .addImgBtn:hover > .PImg {
+        opacity: 0.8;
+    }
+
+.lessPaddingRow {
+    margin: -5px 0 -1px -5px;
+}
+
+    .lessPaddingRow div {
+        padding: 5px 0px 0px 5px;
+    }
+
+    .lessPaddingRow textarea {
+        max-height: 64px;
+        padding: 0.5em 1em;
+    }
+
+    .lessPaddingRow input[type=button] {
+        max-height: 64px;
+        padding: 0.5em 2.25em;
+    }
+
+.header {
+    margin: 0;
+    padding-bottom: 0px;
+}
+
+    .header hr, .header span {
+        padding: 0px;
+    }
+
+    .header span {
+        text-align: center;
+    }
+
+.fourPointFiveU {
+    width: 37.5% !important;
+}
+
+@media screen and (max-width: 960px) {
+    .modal-dialog {
+        width: 95%;
+    }
+
+    .addBtn {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 961px) {
+    .modal-dialog {
+        width: 900px;
+    }
+}
+
+.selectedRow {
+    background-color: lightblue !important;
+}

@@ -24,6 +24,7 @@ namespace IranAudioGuide_MainServer.Models
         public string uuid { get; set; }
         public Guid packageId { get; set; }
         public string ErrorMessage { get; set; }
+        public bool IsChooesZarinpal { get; set; }
     }
     public class paymentInfoVM
     {

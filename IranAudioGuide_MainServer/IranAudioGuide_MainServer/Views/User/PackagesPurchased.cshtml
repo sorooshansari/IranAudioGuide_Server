@@ -17,7 +17,7 @@
             <ul class="slider6 rslides" ng-class="{'packageMultiple-ul':pak.PackageCities.length != 1}">
                 <li ng-repeat="city in pak.PackageCities">
 
-                    <img ng-src="~/images/Cities/{{city.CityImageUrl}}" />
+                    <img ng-src="{{city.CityImageUrl}}" />
                     <p class="cityName">{{city.CityName}}</p>
                     <p class="caption">{{city.CityDesc}}</p>
                     <ul>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IranAudioGuide_MainServer.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace IranAudioGuide_MainServer.Models
         //public bool  IsShowUrl  { get; set; }
     }
 
-public class PaymentResult
+    public class PaymentResult
     {
         #region نمایش پیغام های نتیجه پرداخت زرین پال
         /// <summary>
@@ -34,90 +35,90 @@ public class PaymentResult
         /// <returns></returns>
         public static string ZarinPal(string resultId)
         {
-        string result = "";
-        string resultfa = "";
-        switch (resultId)
-        {
-            case "NOK":
-                result = "Payment was unsuccessfull.";
-                resultfa = "پرداخت ناموفق بود";
-                break;
-            case "-100":
-                result = "Payment was canceld";
-                resultfa = "پرداخت کنسل شده";
-                break;
-            case "-1":
-                result = "Submitted information is incomplete";
-                resultfa = "اطلاعات ارسال شده ناقص است";
-                break;
-            case "-2":
-                result = "IP or Merchant Code is not correct";
-                resultfa = "و يا مرچنت كد پذيرنده صحيح نيست IP";
-                break;
-            case "-3":
-                result = "Due to the limitations of Shaparak system, opportunity to pay the amount requested is not possible";
-                resultfa = "با توجه به محدوديت هاي شاپرك امكان پرداخت با رقم درخواست شده ميسر نمي باشد";
-                break;
-            case "-4":
-                result = "سطح تاييد پذيرنده پايين تر از سطح نقره اي است.";
-                resultfa = "سطح تاييد پذيرنده پايين تر از سطح نقره اي است.";
-                break;
-            case "-11":
-                result = "The desired request was not found.";
-                resultfa = "درخواست مورد نظر يافت نشد.";
-                break;
-            case "-12":
-                result = "Editing request is not possible.";
-                resultfa = "امكان ويرايش درخواست ميسر نمي باشد.";
-                break;
-            case "-21":
-                result = "Any type of financial operations for this transaction was not found.";
-                resultfa = "هيچ نوع عمليات مالي براي اين تراكنش يافت نشد";
-                break;
-            case "-22":
-                result = "Transaction is not successful.";
-                resultfa = "تراكنش نا موفق ميباشد.";
-                break;
-            case "-33":
-                result = "The transaction does not match the amount paid.";
-                resultfa = "رقم تراكنش با رقم پرداخت شده مطابقت ندارد.";
-                break;
-            case "34":
-                result = "Transaction divison limit is passed by number or amount";
-                resultfa = "سقف تقسيم تراكنش از لحاظ تعداد يا رقم عبور نموده است";
-                break;
-            case "40":
-                result = "The related method is not accessible.";
-                resultfa = "اجازه دسترسي به متد مربوطه وجود ندارد.";
-                break;
-            case "41":
-                result = "Sent data related to AdditionalData is invalid";
-                resultfa = "غيرمعتبر ميباشد. AdditionalData اطلاعات ارسال شده مربوط به";
-                break;
-            case "42":
-                result = "Valid payment index lifetime period is between 30 minutes to 45 days.";
-                resultfa = "مدت زمان معتبر طول عمر شناسه پرداخت بايد بين 30 دقيقه تا 45 روز مي باشد.";
-                break;
-            case "54":
-                result = "The desired request is archived";
-                resultfa = "درخواست مورد نظر آرشيو شده است.";
-                break;
-            case "100":
-                result = "Operation is successfully done.";
-                resultfa = "عمليات با موفقيت انجام گرديده است.";
-                break;
-            case "101":
-                result = "Payment process has been successful and PaymentVerification has been done.";
-                resultfa = "تراكنش انجام شده است. PaymentVerification عمليات پرداخت موفق بوده و قبلا";
-                break;
+            string result = "";
+            string resultfa = "";
+            switch (resultId)
+            {
+                case "NOK":
+                    result = "Payment was unsuccessfull.";
+                    resultfa = "پرداخت ناموفق بود";
+                    break;
+                case "-100":
+                    result = "Payment was canceld";
+                    resultfa = "پرداخت کنسل شده";
+                    break;
+                case "-1":
+                    result = "Submitted information is incomplete";
+                    resultfa = "اطلاعات ارسال شده ناقص است";
+                    break;
+                case "-2":
+                    result = "IP or Merchant Code is not correct";
+                    resultfa = "و يا مرچنت كد پذيرنده صحيح نيست IP";
+                    break;
+                case "-3":
+                    result = "Due to the limitations of Shaparak system, opportunity to pay the amount requested is not possible";
+                    resultfa = "با توجه به محدوديت هاي شاپرك امكان پرداخت با رقم درخواست شده ميسر نمي باشد";
+                    break;
+                case "-4":
+                    result = "سطح تاييد پذيرنده پايين تر از سطح نقره اي است.";
+                    resultfa = "سطح تاييد پذيرنده پايين تر از سطح نقره اي است.";
+                    break;
+                case "-11":
+                    result = "The desired request was not found.";
+                    resultfa = "درخواست مورد نظر يافت نشد.";
+                    break;
+                case "-12":
+                    result = "Editing request is not possible.";
+                    resultfa = "امكان ويرايش درخواست ميسر نمي باشد.";
+                    break;
+                case "-21":
+                    result = "Any type of financial operations for this transaction was not found.";
+                    resultfa = "هيچ نوع عمليات مالي براي اين تراكنش يافت نشد";
+                    break;
+                case "-22":
+                    result = "Transaction is not successful.";
+                    resultfa = "تراكنش نا موفق ميباشد.";
+                    break;
+                case "-33":
+                    result = "The transaction does not match the amount paid.";
+                    resultfa = "رقم تراكنش با رقم پرداخت شده مطابقت ندارد.";
+                    break;
+                case "34":
+                    result = "Transaction divison limit is passed by number or amount";
+                    resultfa = "سقف تقسيم تراكنش از لحاظ تعداد يا رقم عبور نموده است";
+                    break;
+                case "40":
+                    result = "The related method is not accessible.";
+                    resultfa = "اجازه دسترسي به متد مربوطه وجود ندارد.";
+                    break;
+                case "41":
+                    result = "Sent data related to AdditionalData is invalid";
+                    resultfa = "غيرمعتبر ميباشد. AdditionalData اطلاعات ارسال شده مربوط به";
+                    break;
+                case "42":
+                    result = "Valid payment index lifetime period is between 30 minutes to 45 days.";
+                    resultfa = "مدت زمان معتبر طول عمر شناسه پرداخت بايد بين 30 دقيقه تا 45 روز مي باشد.";
+                    break;
+                case "54":
+                    result = "The desired request is archived";
+                    resultfa = "درخواست مورد نظر آرشيو شده است.";
+                    break;
+                case "100":
+                    result = "Operation is successfully done.";
+                    resultfa = "عمليات با موفقيت انجام گرديده است.";
+                    break;
+                case "101":
+                    result = "Payment process has been successful and PaymentVerification has been done.";
+                    resultfa = "تراكنش انجام شده است. PaymentVerification عمليات پرداخت موفق بوده و قبلا";
+                    break;
 
-            default:
-                result = "Unknown Error";
-                resultfa = "خطای نا مشخص";
-                break;
+                default:
+                    result = "Unknown Error";
+                    resultfa = "خطای نا مشخص";
+                    break;
 
-        }
-        return result;
+            }
+            return result;
         }
 
         #endregion
@@ -147,7 +148,7 @@ public class PaymentResult
 
         [Required]
         [Display(Name = "Package Cities")]
-        public List<int> Cities { get; set; }
+        public IList<int> Cities { get; set; }
     }
     public class IPData
     {
@@ -362,8 +363,8 @@ public class PaymentResult
         public string imgUrl { get; set; }
         public bool IsEmailConfirmed { get; set; }
         public bool IsSetuuid { get; set; }
-        public bool IsAccessChangeUuid { get;  set; }
-        public DateTime? TimeSetUuid { get;  set; }
+        public bool IsAccessChangeUuid { get; set; }
+        public DateTime? TimeSetUuid { get; set; }
         public bool IsForeign { get; set; }
     }
     public class UserProfile
@@ -373,7 +374,7 @@ public class PaymentResult
         public string Email { get; set; }
         public string imgUrl { get; set; }
         public IList<string> RolesName;
-       
+
     }
     public class NewCity
     {
@@ -396,7 +397,12 @@ public class PaymentResult
         [Display(Name = "Description")]
         public string CityDesc { get; set; }
         [Display(Name = "City Image")]
-        public string CityImageUrl { get; set; }
+        public string _imageUrl { get; set; }
+        public string CityImageUrl
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathImageCity + value; }
+        }
         public IList<PlaceVM> Places { get; set; }
     }
     public class EditCityVM
@@ -469,8 +475,18 @@ public class PaymentResult
         public string PlaceDesc { get; set; }
         public string CityName { get; set; }
         public int PlaceCityId { get; set; }
-        public string ImgUrl { get; set; }
-        public string TumbImgUrl { get; set; }
+        public string _imageUrl { get; set; }
+        public string ImgUrl
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathImagePlace + value; }
+        }
+        public string _tumbImgUrl { get; set; }
+        public string TumbImgUrl
+        {
+            get { return _tumbImgUrl; }
+            set { _tumbImgUrl = GlobalPath.FullPathImageTumbnail + value; }
+        }
         public string PlaceAddress { get; set; }
         public string PlaceCordinates { get; set; }
         public bool isOnline { get; set; }
@@ -478,8 +494,13 @@ public class PaymentResult
     }
     public class ImageVM
     {
+        public string _imageUrl { get; set; }
+        public string ImageName
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathImageExtras + value; }
+        }
         public Guid ImageId { get; set; }
-        public string ImageName { get; set; }
         public int Index { get; set; }
         public string ImageDesc { get; set; }
     }
@@ -510,15 +531,25 @@ public class PaymentResult
             respond = new Respond();
         }
         public List<StoryVM> Storys { get; set; }
-        public string PlaceImage { get; set; }
+        public string _imageUrl { get; set; }
+        public string PlaceImage
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathStory + value; }
+        }
         public Respond respond { get; set; }
     }
     public class StoryVM
     {
+        public string _imageUrl { get; set; }
+        public string Url
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathStory + value; }
+        }
         public int Index { get; set; }
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Url { get; set; }
         public string Discription { get; set; }
     }
     public class NewStoryVM
@@ -538,7 +569,12 @@ public class PaymentResult
             respond = new Respond();
         }
         public List<AudioVM> audios { get; set; }
-        public string PlaceImage { get; set; }
+        public string _imageUrl { get; set; }
+        public string PlaceImage
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathAudios + value; }
+        }
         public Respond respond { get; set; }
     }
     public class AudioVM
@@ -546,7 +582,12 @@ public class PaymentResult
         public int Index { get; set; }
         public Guid Aud_Id { get; set; }
         public string Aud_Name { get; set; }
-        public string Aud_Url { get; set; }
+        public string _imageUrl { get; set; }
+        public string Aud_Url
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathAudios + value; }
+        }
         public string Aud_Discription { get; set; }
     }
     public class NewAudioVM
@@ -575,7 +616,8 @@ public class PaymentResult
         City,
         Place
     }
-    public class CommentVm {
+    public class CommentVm
+    {
         public string Subject { get; set; }
         public string Message { get; set; }
         public string uuid { get; set; }

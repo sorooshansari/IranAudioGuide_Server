@@ -52,7 +52,7 @@ BEGIN
 		    ,[Aud_Name]
 		    ,[Aud_Url]
 		    ,[Aud_Discription]
-		    ,[Pla_Id_Pla_Id]
+		    ,[Place_Pla_Id]
 	    FROM [dbo].[Audios]
 	RETURN 
 END",
@@ -104,7 +104,7 @@ BEGIN
 	INSERT @Place
 	SELECT [Img_Id]
 		  ,[Img_Name]
-		  ,[Pla_Id_Pla_Id]
+		  ,[Place_Pla_Id]
 		  ,[Img_Description]
 	  FROM [dbo].[Images]
 	RETURN 
@@ -171,7 +171,7 @@ BEGIN
 		    ,[Sto_Name]
 		    ,[Sto_Url]
 		    ,[Sto_Discription]
-		    ,[Pla_Id_Pla_Id]
+		    ,[Place_Pla_Id]
 	    FROM [dbo].[Stories]
 	RETURN 
 END", @"
@@ -213,7 +213,7 @@ BEGIN
 	SELECT [Tip_Id]
 		  ,[Tip_Content]
 		  ,[Tip_Category_TiC_Id]
-		  ,[Pla_Id_Pla_Id]
+		  ,[Place_Pla_Id]
 	  FROM [dbo].[Tips]
 	RETURN 
 END",@"

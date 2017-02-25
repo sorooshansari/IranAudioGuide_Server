@@ -1,0 +1,211 @@
+@font-face {
+    font-family: 'DomaineText';
+    font-weight: normal;
+    font-style: normal;
+    src: url("/fonts/DomaineTextWeb-Regular.woff2") format("woff2"),url("/fonts/DomaineTextWeb-Regular.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'DomaineText';
+    font-weight: normal;
+    font-style: italic;
+    src: url("/fonts/DomaineTextWeb-RegularItalic.woff2") format("woff2"),url("/fonts/DomaineTextWeb-RegularItalic.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'DomaineText';
+    font-weight: bold;
+    font-style: normal;
+    src: url("/fonts/DomaineTextWeb-Bold.woff2") format("woff2"),url("/fonts/DomaineTextWeb-Bold.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'DomaineText';
+    font-weight: bold;
+    font-style: italic;
+    src: url("/fonts/DomaineTextWeb-BoldItalic.woff2") format("woff2"),url("/fonts/DomaineTextWeb-BoldItalic.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'DomaineDisplayNarrow';
+    font-weight: bold;
+    font-style: normal;
+    src: url("/fonts/DomaineDisplayNarrowWeb-Semibold.woff2") format("woff2"),url("/fonts/DomaineDisplayNarrowWeb-Semibold.woff") format("woff");
+}
+
+.load {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #144482;
+    text-align: center;
+    padding: 14% 0 0 0;
+    z-index: 900000;
+}
+
+.unload {
+    display: none;
+}
+
+.menu-mobail {
+    position: absolute;
+    background-color: #144482;
+    top: 0;
+    left: 0;
+    padding: 1px 9px;
+    right: 0px;
+    z-index: 99999;
+}
+
+    .menu-mobail a {
+        border-right: 1px solid #e4e8ec;
+        color: #fff;
+        font-size: 17px;
+        padding: 7px 9px 9px 2px;
+    }
+
+input {
+    width: 200px;
+    background-color: rgba(204, 204, 204, 0);
+    border: 0;
+}
+
+
+.itemSelcted i {
+    float: left;
+}
+
+.itemSelcted h6 span {
+    color: rgb(25, 22, 1);
+    text-shadow: 1px 1px 1px #ccc;
+}
+
+.itemSelcted p {
+    color: rgba(54, 56, 74, 0.72);
+}
+
+.ui-select-bootstrap .ui-select-choices-row:hover {
+    color: #fff !important;
+    text-decoration: none;
+    outline: 0;
+    background-color: green;
+}
+
+.ui-select-bootstrap .ui-select-choices-row.active .itemSelcted p {
+    color: #fff !important;
+}
+
+.ui-select-bootstrap .ui-select-choices-row > span:hover, .ui-select-bootstrap .ui-select-choices-row > span:focus {
+    background-color: rgb(175, 208, 236) !important;
+}
+
+.ui-select-bootstrap .ui-select-toggle > .caret {
+    display: none;
+}
+
+.box-city {
+}
+
+.box-place {
+    margin: 0 0 0 21px;
+}
+
+.SearchSelect {
+    border-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0.19) !important;
+}
+
+.alert-success {
+    color: #ceefed;
+    background-color: #237572;
+    border-color: rgba(53, 179, 174, 0.63);
+    font-size: 11pt;
+}
+
+.alert-info {
+    color: #ffffff;
+    background-color: rgba(217, 237, 247, 0.46);
+    border-color: rgba(188, 232, 241, 0.57);
+}
+
+.alert-warning {
+    color: #ffffff;
+    background-color: rgba(255, 215, 0, 0.54);
+    border-color: gold;
+    font-size: 10pt;
+    line-height: 19px;
+    margin-top: 42px;
+}
+
+.alert.alert-warning a {
+    color: #000;
+    font-size: 18px;
+    text-shadow: 1px 1px 2px #79755b;
+}
+
+.btn[disabled] {
+    background-color: #777 !important;
+}
+
+.deactivationHeader {
+    font-size: larger !important;
+}
+
+.deactivatedDevice {
+    color: #fff;
+    padding: 39px;
+    background-color: rgba(20, 68, 130, 0.66);
+    border-radius: 17px;
+    font-size: 14px;
+    margin-top: 200px;
+}
+
+.font-blue-madison {
+    color: #91b2dc !important;
+}
+
+.deactivatedDevice b, .deactivatedDevice strong {
+    color: #ffa62f;
+    font-weight: 600;
+}
+
+.deactivatedDevice .btn {
+    color: #FFFFFF;
+    background-color: #da9816;
+}
+
+    .deactivatedDevice .btn:hover, .deactivatedDevice .btn:focus, .deactivatedDevice .btn:active, .deactivatedDevice .btn.active {
+        color: #FFFFFF;
+        background-color: #237572;
+    }
+
+
+.userEmail {
+    color: #fff;
+    background-color: #337ab7;
+    text-align: center;
+    font-family: "DomaineDisplayNarrow",Georgia,serif;
+    font-size: 80%;
+}
+
+.chooesPanel div {
+    width: 50%;
+    color: #150303;
+    text-align: center;
+}
+
+    .chooesPanel div:first-of-type {
+        border-right: 5px solid #ccc;
+    }
+
+    .chooesPanel div img {
+        max-width: 100%;
+    }
+
+.webmoneyIcon {
+    display: block;
+}
+
+

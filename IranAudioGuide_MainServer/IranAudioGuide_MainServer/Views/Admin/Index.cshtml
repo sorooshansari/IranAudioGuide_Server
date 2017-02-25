@@ -35,7 +35,7 @@
             <div id="Player" class="Player">
                 <div class="row head">
                     <div class="player-image 3u 6u$(mobile)">
-                        <img src="../images/Places/{{placeimage}}" />
+                        <img src="{{placeimage}}" />
                     </div>
                     <div class="3u 6u(mobile)">
                         <ul>
@@ -89,8 +89,8 @@
                             <div class="1u white">{{audio.Index}}.</div>
                             <div class="9u white">{{audio.Aud_Name}}</div>
                             <div class="2u$">
-                                <a href="" ng-click="removeAudio(audio.Aud_Id)" class="btn btn-danger btn-block">
-                                    <i class="fa fa-trash-o"></i>
+                                <a href="" ng-click="audio.isLoading =true ;removeAudio(audio.Aud_Id)" class="btn btn-danger btn-block">
+                                    <i class="fa" ng-class="audio.isLoading ? 'fa-spinner fa-spin': 'fa-trash-o'"></i>
                                     remove
                                 </a>
                             </div>
@@ -104,8 +104,8 @@
                             <div class="1u white">{{Story.Index}}.</div>
                             <div class="9u white">{{Story.Name}}</div>
                             <div class="2u$">
-                                <a href="" ng-click="removeStory(Story.Id)" class="btn btn-danger btn-block">
-                                    <i class="fa fa-trash-o"></i>
+                                <a href="" ng-click="Story.isLoading =true ;removeStory(Story.Id)" class="btn btn-danger btn-block">
+                                    <i class="fa" ng-class="Story.isLoading ? 'fa-spinner fa-spin': 'fa-trash-o'"></i>
                                     remove
                                 </a>
                             </div>
@@ -154,8 +154,8 @@
                         <td>
                             <a class="btn btn-danger btn-block rmvPlc"
                                ng-disabled="place.isOnline"
-                               ng-click="RemovePlace(place.PlaceId, place.PlaceName)">
-                                <span class="fa fa-trash-o"></span> Remove
+                               ng-click="place.isLoading =false ;RemovePlace(place.PlaceId, place.PlaceName)">
+                                <span class="fa " ng-class="place.isLoading ? 'fa-spinner fa-spin': 'fa-trash-o'"></span> Remove
                             </a>
                         </td>
                     </tr>
@@ -233,7 +233,7 @@
                         <textarea ng-model="NewPlace.PlaceAddress" name="PlaceAddress" rows="1" placeholder="Place Address"></textarea>
                     </div>
                     <div class="12u$">
-                        <input type="submit" value="Add place" />
+                        <button type="submit" class="btn btn-lg" ng-class="{'btn-success':NewPlaceForm.$valid, 'btn-default':NewPlaceForm.$invalid}" ladda="AddplaceLoading">Add place</button>
                     </div>
                 </div>
             </form>
@@ -268,10 +268,10 @@
                         </td>
                         @*<td>
 
-                            <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" ng-click="RemovePackage(package.PackageID, package.PackageName)">
-                                <span class="fa fa-trash-o"></span> Remove
-                            </div>
-                        </td>*@
+                                <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" ng-click="RemovePackage(package.PackageID, package.PackageName)">
+                                    <span class="fa fa-trash-o"></span> Remove
+                                </div>
+                            </td>*@
                     </tr>
                 </tbody>
                 <tfoot>
@@ -307,13 +307,16 @@
             </div><!-- /.col -->
             <style>
                 .sorooshInvalid {
-                    background-color: #de0000 !important;
+                    color: #de0000 !important;
+                    display: inline-block !important;
+                    width: 100%;
+                    text-align:left;
                 }
             </style>
             <form name="PackageForm" role="form" ng-submit="AddPackage(NewPackage, PackageForm, cities)" novalidate>
                 <div class="row">
                     <div class="6u 12u$(mobile)">
-                        <input ng-class="choosInputClass(PackageForm.PackageName.$invalid, PackageForm.PackageName.$touched, PackageForm.$submitted)" 
+                        <input ng-class="choosInputClass(PackageForm.PackageName.$invalid, PackageForm.PackageName.$touched, PackageForm.$submitted)"
                                ng-model="NewPackage.Name" type="text" name="PackageName" placeholder="Package name*" required />
                     </div>
                     <div class="6u$ 12u$(mobile)">
@@ -321,8 +324,11 @@
                                ng-model="NewPackage.Price" type="text" name="PackagePrice" placeholder="Package Price*" required />
                     </div>
                     <div class="6u$">
+                        <span style="display:none" ng-class="choosInputClass(selectCityInvalid, pkgcitiesTouched, PackageForm.$submitted)">
+                            Choose at least one city
+                        </span>
                         <ul ng-class="choosInputClass(selectCityInvalid, pkgcitiesTouched, PackageForm.$submitted)"
-                            name="pkgcities" style="text-align: left; border:1px solid #a1a1a1 ; background: padding-box) " ;>
+                            name="pkgcities" style="text-align: left; border:1px solid #a1a1a1 ;padding-left:3%; " ;>
                             <li>
                                 <input type="checkbox" id="city0" value="All" ng-model="allSelected" ng-change="selectAllCities(allSelected)">All
                             </li>
@@ -333,8 +339,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="6u$ ">
-                        <input type="submit" value="Add package" />
+                    <div class="12u$ " style="text-align:center">
+                        <button type="submit" class="btn btn-lg" ng-class="{'btn-success':PackageForm.$valid && !selectCityInvalid, 'btn-default':PackageForm.$invalid || selectCityInvalid}" ladda="AddPakageLoading">Add package</button>
                     </div>
                 </div>
 
@@ -371,8 +377,8 @@
                             </a>
                         </td>
                         <td>
-                            <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" ng-click="RemoveCity(city.CityID, city.CityName)">
-                                <span class="fa fa-trash-o"></span> Remove
+                            <div role="button" tabindex="0" class="btn btn-danger btn-block rmvCty" ng-click="city.isLoading =true ;RemoveCity(city.CityID, city.CityName)">
+                                <span class="fa " ng-class="city.isLoading ? 'fa-spinner fa-spin': 'fa-trash-o'"></span> Remove
                             </div>
                         </td>
                     </tr>
@@ -433,7 +439,9 @@
                         <textarea ng-model="NewCity.CityDesc" name="CityDesc" placeholder="City description" rows="2"></textarea>
                     </div>
                     <div class="12u$">
-                        <input type="submit" value="Add City" />
+                        <div class="12u$ " style="text-align:center">
+                            <button type="submit" class="btn btn-lg" ng-class="{'btn-success':NewCityForm.$valid && selectCityImg, 'btn-default':NewCityForm.$invalid || !selectCityImg}" ladda="AddCityLoading">Add City</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -464,18 +472,18 @@
     <!-- NewStory Modal -->
     <div class="modal fade" id="NewStoryModal" tabindex="-1" role="dialog" aria-labelledby="NewStoryModalLabel">
         <!--overlay-->
-        <div ng-show="NewStoryShowOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
-            <div id="floatingCirclesG">
-                <div class="f_circleG" id="frotateG_01"></div>
-                <div class="f_circleG" id="frotateG_02"></div>
-                <div class="f_circleG" id="frotateG_03"></div>
-                <div class="f_circleG" id="frotateG_04"></div>
-                <div class="f_circleG" id="frotateG_05"></div>
-                <div class="f_circleG" id="frotateG_06"></div>
-                <div class="f_circleG" id="frotateG_07"></div>
-                <div class="f_circleG" id="frotateG_08"></div>
-            </div>
-        </div>
+        @*<div ng-show="NewStoryShowOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
+                <div id="floatingCirclesG">
+                    <div class="f_circleG" id="frotateG_01"></div>
+                    <div class="f_circleG" id="frotateG_02"></div>
+                    <div class="f_circleG" id="frotateG_03"></div>
+                    <div class="f_circleG" id="frotateG_04"></div>
+                    <div class="f_circleG" id="frotateG_05"></div>
+                    <div class="f_circleG" id="frotateG_06"></div>
+                    <div class="f_circleG" id="frotateG_07"></div>
+                    <div class="f_circleG" id="frotateG_08"></div>
+                </div>
+            </div>*@
         <div class="modal-dialog" role="document">
 
             <form role="form" name="NewStoryForm" ng-submit="AddStory(NewStoryVM, NewStoryForm)" ng-init="NewStoryVM.invalidFile = true;NewStoryVM.FileChanged = false;">
@@ -513,7 +521,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" id="NewStoryModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
-                        <input type="submit" ng-click="NewStoryFormSubmitted=true" class="addBtn" value="Add Story" />
+                        <button type="submit" ng-click="NewStoryFormSubmitted=true" ladda="NewStoryShowOverlay" class="addBtn">Add Story</button>
                     </div>
                 </div>
             </form>
@@ -524,18 +532,18 @@
     <!-- NewAudio Modal -->
     <div class="modal fade" id="NewAudioModal" tabindex="-1" role="dialog" aria-labelledby="NewAudioModalLabel">
         <!--overlay-->
-        <div ng-show="ShowOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
-            <div id="floatingCirclesG">
-                <div class="f_circleG" id="frotateG_01"></div>
-                <div class="f_circleG" id="frotateG_02"></div>
-                <div class="f_circleG" id="frotateG_03"></div>
-                <div class="f_circleG" id="frotateG_04"></div>
-                <div class="f_circleG" id="frotateG_05"></div>
-                <div class="f_circleG" id="frotateG_06"></div>
-                <div class="f_circleG" id="frotateG_07"></div>
-                <div class="f_circleG" id="frotateG_08"></div>
-            </div>
-        </div>
+        @*<div ng-show="ShowOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
+                <div id="floatingCirclesG">
+                    <div class="f_circleG" id="frotateG_01"></div>
+                    <div class="f_circleG" id="frotateG_02"></div>
+                    <div class="f_circleG" id="frotateG_03"></div>
+                    <div class="f_circleG" id="frotateG_04"></div>
+                    <div class="f_circleG" id="frotateG_05"></div>
+                    <div class="f_circleG" id="frotateG_06"></div>
+                    <div class="f_circleG" id="frotateG_07"></div>
+                    <div class="f_circleG" id="frotateG_08"></div>
+                </div>
+            </div>*@
         <div class="modal-dialog" role="document">
 
             <form role="form" name="NewAudioForm" ng-submit="AddAudio(NewAudioVM, NewAudioForm)" ng-init="NewAudioVM.invalidFile = true;NewAudioVM.FileChanged = false;">
@@ -572,8 +580,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="button" id="NewAudioModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
-                        <input type="submit" ng-click="NewAudioFormSubmitted=true" class="addBtn" value="Add Audio" />
+                        <button type="button" id="NewAudioModal_close" class="ModalDismissBtn" data-dismiss="modal">Close </button>
+                        <button type="submit" ladda="ShowOverlay" ng-click="NewAudioFormSubmitted=true" class="addBtn">Add Audio</button>
                     </div>
                 </div>
             </form>
@@ -594,12 +602,12 @@
                     <div class="modal-body" style="padding: 15px;">
                         <div class="row">
                             <div class="place-image 3u 6u(mobile) ImgHoverable">
-                                <img class="PImg" src="../images/Places/{{OnlineSelectedPlace.Img}}" />
+                                <img class="PImg" src="{{OnlineSelectedPlace.Img}}" />
                             </div>
                             <div ng-show="OnlineSelectedPlace.ExtraImages.length" class="12u$ PlaceExtraImage">
                                 <div class="row">
                                     <div name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in OnlineSelectedPlace.ExtraImages">
-                                        <img src="../images/Places/Extras/{{img.ImageName}}" />
+                                        <img src="{{img.ImageName}}" />
                                     </div>
                                 </div>
                             </div>
@@ -630,18 +638,18 @@
 
     <!-- Edit City Modal -->
     <div class="modal fade" id="EditCityModal" tabindex="-2" role="dialog" aria-labelledby="EditCityModalLabel">
-        <div ng-show="EditOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
-            <div id="floatingCirclesG">
-                <div class="f_circleG" id="frotateG_01"></div>
-                <div class="f_circleG" id="frotateG_02"></div>
-                <div class="f_circleG" id="frotateG_03"></div>
-                <div class="f_circleG" id="frotateG_04"></div>
-                <div class="f_circleG" id="frotateG_05"></div>
-                <div class="f_circleG" id="frotateG_06"></div>
-                <div class="f_circleG" id="frotateG_07"></div>
-                <div class="f_circleG" id="frotateG_08"></div>
-            </div>
-        </div>
+        @*<div ng-show="EditOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
+                <div id="floatingCirclesG">
+                    <div class="f_circleG" id="frotateG_01"></div>
+                    <div class="f_circleG" id="frotateG_02"></div>
+                    <div class="f_circleG" id="frotateG_03"></div>
+                    <div class="f_circleG" id="frotateG_04"></div>
+                    <div class="f_circleG" id="frotateG_05"></div>
+                    <div class="f_circleG" id="frotateG_06"></div>
+                    <div class="f_circleG" id="frotateG_07"></div>
+                    <div class="f_circleG" id="frotateG_08"></div>
+                </div>
+            </div>*@
         <div class="modal-dialog" role="document">
             <form role="form" name="EditCityForm" ng-submit="EditCity(EditCityVM, EditCityForm)">
                 <div class="modal-content">
@@ -656,10 +664,10 @@
                             <div ng-mouseleave="selectedCityRmvShow = false" ng-mousemove="selectedCityRmvShow = true" class="City-image 3u 6u(mobile) ImgHoverable">
                                 <input id="CityImage" name="CityImage" type="file" file-model="CityImage" class="hidden"
                                        onchange="angular.element(this).scope().ChangeCityImg(this, angular.element(this).scope().EditCityVM.CityID)" />
-                                <img style="width:100%;height:auto;" class="PImg" ng-click="ClickPlaceImg('#CityImage')" src="../images/Cities/{{selectedCityImg}}" />
+                                <img style="width:100%;height:auto;" class="PImg" ng-click="ClickPlaceImg('#CityImage')" src="{{selectedCityImg}}" />
                                 <i ng-click="ClickPlaceImg('#CityImage')" ng-show="selectedCityRmvShow" class="btn fa fa-2x fa-pencil-square-o text-blue addImgBtn"></i>
                             </div>
-                    
+
                             <!--Edit Basic Infoes-->
                             <div class="12u$ row header">
                                 <hr class="4u" />
@@ -675,7 +683,7 @@
                                 <textarea ng-model="EditCityVM.CityDesc" name="CityDesc" rows="3" Cityholder="City description"></textarea>
                             </div>
                             <div class="12u$" style="float:right;">
-                                <input type="submit" class="addBtn" value="Save Changes" />
+                                <input type="submit" class="addBtn" ladda="floatingCirclesG" value="Save Changes1" />
                             </div>
                             <!--/Edit Basic Infoes-->
                         </div>
@@ -688,21 +696,7 @@
 
     <!-- Edit Place Modal -->
     <div class="modal fade" id="EditPlaceModal" tabindex="-2" role="dialog" aria-labelledby="EditPlaceModalLabel">
-        <!--overlay-->
-        <div ng-show="EditOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
-            <div id="floatingCirclesG">
-                <div class="f_circleG" id="frotateG_01"></div>
-                <div class="f_circleG" id="frotateG_02"></div>
-                <div class="f_circleG" id="frotateG_03"></div>
-                <div class="f_circleG" id="frotateG_04"></div>
-                <div class="f_circleG" id="frotateG_05"></div>
-                <div class="f_circleG" id="frotateG_06"></div>
-                <div class="f_circleG" id="frotateG_07"></div>
-                <div class="f_circleG" id="frotateG_08"></div>
-            </div>
-        </div>
         <div class="modal-dialog" role="document">
-
             <form role="form" name="EditPlaceForm" ng-submit="EditPlace(EditPlaceVM)">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -716,19 +710,19 @@
                             <div ng-mouseleave="selectedPlace.rmvShow = false" ng-mousemove="selectedPlace.rmvShow = true" class="place-image 3u 6u(mobile) ImgHoverable">
                                 <input id="PlaceImage" name="PlaceImage" type="file" file-model="PlaceImage" class="hidden"
                                        onchange="angular.element(this).scope().ChangeImg(this)" />
-                                <img class="PImg" ng-click="ClickPlaceImg('#PlaceImage')" src="../images/Places/{{selectedPlace.Img}}" />
+                                <img class="PImg" ng-click="ClickPlaceImg('#PlaceImage')" src="{{selectedPlace.Img}}" />
                                 <i ng-click="ClickPlaceImg('#PlaceImage')" ng-show="selectedPlace.rmvShow" class="btn fa fa-2x fa-pencil-square-o text-blue addImgBtn"></i>
                             </div>
                             <div ng-mouseleave="selectedPlace.rmvTumbShow = false" ng-mousemove="selectedPlace.rmvTumbShow = true" class="place-image 2u 3u(mobile) ImgHoverable">
                                 <input id="PlaceTumbImage" name="PlaceTumbImage" type="file" file-model="PlaceImage" class="hidden"
                                        onchange="angular.element(this).scope().ChangeTumbImg(this)" />
-                                <img class="PImg" ng-click="ClickPlaceImg('#PlaceTumbImage')" src="../images/Places/TumbnailImages/{{selectedPlace.TumbImgUrl}}" />
+                                <img class="PImg" ng-click="ClickPlaceImg('#PlaceTumbImage')" src="{{selectedPlace.TumbImgUrl}}" />
                                 <i ng-click="ClickPlaceImg('#PlaceTumbImage')" ng-show="selectedPlace.rmvTumbShow" class="btn fa fa-2x fa-pencil-square-o text-blue addImgBtn"></i>
                             </div>
                             <div class="place-image 1u$" style="float: right;">
                                 <input id="PlaceExtraImage" name="PlaceExtraImage" type="file" file-model="PlaceExtraImage" class="hidden"
                                        onchange="angular.element(this).scope().AddExtraImage(this)" />
-                                <img ng-click="ClickPlaceImg('#PlaceExtraImage')" src="../images/file_add.png" />
+                                <img ng-click="ClickPlaceImg('#PlaceExtraImage')" src="~/Content/images/file_add.png" />
                             </div>
                             <div ng-show="selectedPlace.ExtraImages.length" class="12u$ PlaceExtraImage">
                                 <div class="12u$ row header">
@@ -740,7 +734,7 @@
                                 </div>
                                 <div class="row">
                                     <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true" name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImages">
-                                        <img src="../images/Places/Extras/{{img.ImageName}}" />
+                                        <img src="{{img.ImageName}}" />
                                         <i ng-click="EditEIDescModal(img)" ng-show="img.rmvShow" class="btn fa fa-pencil text-blue EditDescBtn"></i>
                                         <i ng-click="RemoveExtraImg(img.ImageId)" ng-show="img.rmvShow" class="btn fa fa-trash-o text-red rmvBtn"></i>
                                     </div>
@@ -811,7 +805,7 @@
                             </div>
                             <div class="12u$" style="float:right;">
                                 @*<input type="button" id="EditPlaceModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />*@
-                                <input type="submit" class="addBtn" value="Save Changes" />
+                                <button type="submit" class="addBtn" ladda="EditOverlay">Save Changes</button>
                             </div>
                             <!--/Edit Basic Infoes-->
                         </div>

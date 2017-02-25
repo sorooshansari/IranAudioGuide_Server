@@ -9,38 +9,39 @@ namespace IranAudioGuide_MainServer
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Content/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Content/Scripts/jquery.validate*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                        "~/Content/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Content/Scripts/bootstrap.js",
+                      "~/Content/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
-            bundles.Add(new StyleBundle("~/Content/minCss").Include(
-                      "~/Content/bootstrap.min.css",
-                      "~/Content/bootstrap-social.min.css",
-                      "~/Content/font-awesome.min.css",
-                      "~/Content/toggle.min.css",
-                      "~/Content/styles.min.css"));
+                      "~/Content/css/bootstrap.css",
+                      "~/Content/css/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css/minCss").Include(
+                      "~/Content/css/bootstrap.min.css",
+                      "~/Content/css/bootstrap-social.min.css",
+                      "~/Content/global/plugins/font-awesome/font-awesome.min.css",
+                      "~/Content/css/toggle.min.css",
+                      "~/Content/css/styles.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/minJs").Include(
-                        "~/Scripts/jquery.min.js",
-                        "~/Scripts/jquery.scrollex.min.js",
-                        "~/Scripts/jquery.scrolly.min.js",
-                        "~/Scripts/skel.min.js",
-                        "~/Scripts/util.min.js",
-                        "~/Scripts/main.min.js",
-                        "~/Scripts/angular.min.js"));
+                        "~/Content/Scripts/jquery.min.js",
+                        "~/Content/Scripts/jquery.scrollex.min.js",
+                        "~/Content/Scripts/jquery.scrolly.min.js",
+                        "~/Content/Scripts/skel.min.js",
+                        "~/Content/Scripts/util.min.js",
+                        "~/Content/Scripts/main.min.js",
+                        "~/Content/Scripts/bootstrap.min.js",
+                        "~/Content/global/plugins/angularjs/angular.min.js"));
         }
     }
 }

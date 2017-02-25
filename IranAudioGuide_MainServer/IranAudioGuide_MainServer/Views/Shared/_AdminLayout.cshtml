@@ -11,14 +11,17 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title @Model.FullName</title>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/ionicons.css" rel="stylesheet" />
-    @*<link href="~/Content/ionic.css" rel="stylesheet" />*@
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/ionicons.css" rel="stylesheet" />
+    @*<link href="~/Content/css/ionic.css" rel="stylesheet" />*@
     <!--[if lte IE 8]><script src="~/Scripts/ie/html5shiv.js"></script><![endif]-->
-    <link href="~/Content/AdiminMain.css" rel="stylesheet" />
-    <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/ie8.css" /><![endif]-->
-    <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/ie9.css" /><![endif]-->
-    <link href="~/Content/AdminCustom.css" rel="stylesheet" />
+    <link href="~/Content/css/AdiminMain.css" rel="stylesheet" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/css/ie8.css" /><![endif]-->
+    <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/css/ie9.css" /><![endif]-->
+    <link href="~/Content/css/AdminCustom.css" rel="stylesheet" />
+
+    <link href="~/Content/global/plugins/ladda/ladda-themeless.min.css" rel="stylesheet" />
+
 </head>
 <body ng-app="AdminPage" ng-controller="AdminController">
     <!-- Header -->
@@ -45,10 +48,10 @@
                             </a>
                         </li>
                         @*<li>
-                            <a href="@(hrefPrefix)#OnlinePlaces" id="OnlinePlaces-link" class="skel-layers-ignoreHref">
-                                <span class="icon fa-globe">Online Places</span>
-                            </a>
-                        </li>*@
+                                <a href="@(hrefPrefix)#OnlinePlaces" id="OnlinePlaces-link" class="skel-layers-ignoreHref">
+                                    <span class="icon fa-globe">Online Places</span>
+                                </a>
+                            </li>*@
                         <li>
                             <a href="@(hrefPrefix)#PlaceList" id="PlaceList-link" class="skel-layers-ignoreHref">
                                 <span class="icon fa-map-pin">Places</span>
@@ -112,18 +115,25 @@
 
     <!-- Scripts -->
     @*<script src="~/Scripts/jquery-2.2.3.min.js"></script>*@
-    <script src="~/Scripts/jquery.js"></script>
-    <script src="~/Scripts/jquery.scrolly.min.js"></script>
-    <script src="~/Scripts/jquery.scrollzer.min.js"></script>
-    <script src="~/Scripts/skel.min.js"></script>
-    <script src="~/Scripts/util.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Content/Scripts/jquery.js"></script>
+    <script src="~/Content/Scripts/jquery.scrolly.min.js"></script>
+    <script src="~/Content/Scripts/jquery.scrollzer.min.js"></script>
+    <script src="~/Content/Scripts/skel.min.js"></script>
+    <script src="~/Content/Scripts/util.js"></script>
+    <script src="~/Content/Scripts/bootstrap.js"></script>
+    <script src="~/Content/Scripts/angular.min.js"></script>
+
+    @* loading *@
+    <script src="~/Content/global/plugins/ladda/spin.min.js"></script>
+    <script src="~/Content/global/plugins/ladda/ladda.min.js"></script>
+    <script src="~/Content/global/plugins/ladda/angular-ladda.min.js"></script>
+    @* end loading *@
+
     <!--[if lte IE 8]><script src="~/Scripts/ie/respond.min.js"></script><![endif]-->
-    <script src="~/Scripts/AdminMain.js"></script>
-    <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/AdminCustom.js"></script>
-    <script src="~/Scripts/AdminControllers.js"></script>
-    <script src="~/Scripts/AdminDirectives.js"></script>
-    <script src="~/Scripts/AdminServices.js"></script>
+    <script src="~/Content/Scripts/AdminMain.js"></script>
+    <script src="~/Content/Scripts/AdminCustom.js"></script>
+    <script src="~/Content/Scripts/AdminControllers.js"></script>
+    <script src="~/Content/Scripts/AdminDirectives.js"></script>
+    <script src="~/Content/Scripts/AdminServices.js"></script>
 </body>
 </html>
