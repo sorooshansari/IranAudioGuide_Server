@@ -140,6 +140,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WebMoney.Cryptography, Version=3.3.1.0, Culture=neutral, PublicKeyToken=7532635057d899e6, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebMoney.Cryptography.3.3.1\lib\net20\WebMoney.Cryptography.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -217,6 +221,7 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WebmoneyResultController.cs" />
     <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
@@ -224,6 +229,18 @@
     <Compile Include="Migrations\201702251302455_init.cs" />
     <Compile Include="Migrations\201702251302455_init.Designer.cs">
       <DependentUpon>201702251302455_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702221535298_addWebmoneyPayment.cs" />
+    <Compile Include="Migrations\201702221535298_addWebmoneyPayment.Designer.cs">
+      <DependentUpon>201702221535298_addWebmoneyPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702221937041_PackageDolarPriceUpdated.cs" />
+    <Compile Include="Migrations\201702221937041_PackageDolarPriceUpdated.Designer.cs">
+      <DependentUpon>201702221937041_PackageDolarPriceUpdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702221938580_PackageDolarPriceUpdated2.cs" />
+    <Compile Include="Migrations\201702221938580_PackageDolarPriceUpdated2.Designer.cs">
+      <DependentUpon>201702221938580_PackageDolarPriceUpdated2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
@@ -240,6 +257,8 @@
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Variables.cs" />
     <Compile Include="Models\ViewModels.cs" />
+    <Compile Include="Models\WBViewModel.cs" />
+    <Compile Include="Models\WebMoneyTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Zarinpal\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -1397,6 +1416,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702251302455_init.resx">
       <DependentUpon>201702251302455_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702221535298_addWebmoneyPayment.resx">
+      <DependentUpon>201702221535298_addWebmoneyPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702221937041_PackageDolarPriceUpdated.resx">
+      <DependentUpon>201702221937041_PackageDolarPriceUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702221938580_PackageDolarPriceUpdated2.resx">
+      <DependentUpon>201702221938580_PackageDolarPriceUpdated2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
