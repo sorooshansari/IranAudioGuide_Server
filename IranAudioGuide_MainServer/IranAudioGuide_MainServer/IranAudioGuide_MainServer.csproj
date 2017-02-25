@@ -226,6 +226,10 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702251359521_init.cs" />
+    <Compile Include="Migrations\201702251359521_init.Designer.cs">
+      <DependentUpon>201702251359521_init.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -257,16 +261,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\css\font-awesome.min.css" />
-    <Content Include="assets\js\ie\backgroundsize.min.htc" />
-    <Content Include="assets\js\ie\html5shiv.js" />
-    <Content Include="assets\js\ie\respond.min.js" />
-    <Content Include="assets\js\jquery.min.js" />
-    <Content Include="assets\js\jquery.scrollex.min.js" />
-    <Content Include="assets\js\jquery.scrolly.min.js" />
-    <Content Include="assets\js\main.js" />
-    <Content Include="assets\js\skel.min.js" />
-    <Content Include="assets\js\util.js" />
     <Content Include="Content\css\bootstrap-social.css" />
     <Content Include="Content\css\bootstrap.3.3.7.min.css" />
     <Content Include="Content\css\bs_leftnavi.css" />
@@ -297,21 +291,6 @@
     <Content Include="Content\Scripts\jquery.blockui.min.js" />
     <Content Include="Content\Scripts\jquery.cokie.min.js" />
     <Content Include="IAGSITELOGO.png" />
-    <Content Include="images\accept.png" />
-    <Content Include="images\as.png" />
-    <Content Include="images\bars.svg" />
-    <Content Include="images\blockpics\accurate_information.jpg" />
-    <Content Include="images\blockpics\DSC_1419e.jpg" />
-    <Content Include="images\blockpics\whattolisten.jpg" />
-    <Content Include="images\blockpics\DSC_1449 %282%29.JPG" />
-    <Content Include="images\blockpics\DSC_1557 %282%29 %282%29.JPG" />
-    <Content Include="images\blockpics\DSC_3562 %282%29.jpg" />
-    <Content Include="images\blockpics\yourownpace.jpg" />
-    <Content Include="images\gp.png" />
-    <Content Include="images\IAGSITELOGO.png" />
-    <Content Include="images\IAGSmallWhiteLogo.png" />
-    <Content Include="images\icon-128x128.png" />
-    <Content Include="images\lc.png" />
     <Content Include="Content\css\UserMain.css" />
     <Content Include="Content\css\AdiminMain.css" />
     <Content Include="Content\css\UserCustom.css" />
@@ -341,39 +320,8 @@
     <Content Include="fonts\ionicons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\Site.css" />
-    <Content Include="images\accurate.png" />
-    <Content Include="images\accurate2.png" />
-    <Content Include="images\accurate3.png" />
-    <Content Include="images\accurate3.svg" />
-    <Content Include="images\AppleStore.png" />
-    <Content Include="images\appstore.png" />
-    <Content Include="images\banner.jpg" />
-    <Content Include="images\banner_t.jpg" />
-    <Content Include="images\feather.png" />
-    <Content Include="images\feather2.png" />
-    <Content Include="images\feather2.svg" />
     <Content Include="Content\images\file_add.png" />
-    <Content Include="images\free.png" />
-    <Content Include="images\googlePlay.png" />
-    <Content Include="images\hand-01.svg" />
-    <Content Include="images\hand.png" />
-    <Content Include="images\loop-24-24-0.png" />
-    <Content Include="images\Members\Hamed.jpg" />
-    <Content Include="images\Members\Mona.jpg" />
-    <Content Include="images\Members\Soroosh.JPG" />
-    <Content Include="images\notaccept.png" />
-    <Content Include="images\pic01.jpg" />
-    <Content Include="images\pic02.jpg" />
-    <Content Include="images\pic03.jpg" />
-    <Content Include="images\pic04.jpg" />
-    <Content Include="images\pic05.jpg" />
-    <Content Include="Files\Places\TumbnailImages\thumbnail.jpg" />
     <Content Include="Content\images\playpause-48-48-1.png" />
-    <Content Include="images\playstore.png" />
-    <Content Include="images\prevnext-48-48-1.png" />
-    <Content Include="images\tracklistarrow-48-16-0.png" />
-    <Content Include="images\volume-24-24-0.png" />
-    <Content Include="images\WindowsStore.png" />
     <Content Include="Content\global\plugins\angularjs\angular-countUp.js" />
     <Content Include="Content\global\plugins\angularjs\angular-scroll-spy.js" />
     <Content Include="Content\Scripts\angular.min.js" />
@@ -443,13 +391,6 @@
     <Content Include="Content\global\plugins\angularjs\angular.min.js" />
     <Content Include="Content\Scripts\bootstrap.js" />
     <Content Include="Content\Scripts\bootstrap.min.js" />
-    <Content Include="assets\sass\ie8.scss" />
-    <Content Include="assets\sass\ie9.scss" />
-    <Content Include="assets\sass\libs\_functions.scss" />
-    <Content Include="assets\sass\libs\_mixins.scss" />
-    <Content Include="assets\sass\libs\_skel.scss" />
-    <Content Include="assets\sass\libs\_vars.scss" />
-    <Content Include="assets\sass\main.scss" />
     <Content Include="Content\global\plugins\angularjs\angular-animate.min.js.map" />
     <Content Include="Content\global\plugins\angularjs\angular-message-format.min.js.map" />
     <Content Include="Content\global\plugins\angularjs\angular-parse-ext.min.js.map" />
@@ -1277,6 +1218,56 @@
     <Content Include="Content\Scripts\_references.js" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />
+    <Content Include="images\accept.png" />
+    <Content Include="images\accurate.png" />
+    <Content Include="images\accurate2.png" />
+    <Content Include="images\accurate3.png" />
+    <Content Include="images\accurate3.svg" />
+    <Content Include="images\AppleStore.png" />
+    <Content Include="images\appstore.png" />
+    <Content Include="images\as.png" />
+    <Content Include="images\banner.jpg" />
+    <Content Include="images\banner2.jpg" />
+    <Content Include="images\banner_t.jpg" />
+    <Content Include="images\bars.svg" />
+    <Content Include="images\blockpics\accurate_information.jpg" />
+    <Content Include="images\blockpics\DSC_1419e.jpg" />
+    <Content Include="images\blockpics\DSC_1449 %282%29.JPG" />
+    <Content Include="images\blockpics\DSC_1557 %282%29 %282%29.JPG" />
+    <Content Include="images\blockpics\DSC_3562 %282%29.jpg" />
+    <Content Include="images\blockpics\whattolisten.jpg" />
+    <Content Include="images\blockpics\yourownpace.jpg" />
+    <Content Include="images\feather.png" />
+    <Content Include="images\feather2.png" />
+    <Content Include="images\feather2.svg" />
+    <Content Include="images\Files\1.jpg" />
+    <Content Include="images\Files\Delkash &amp; Faramarz Payvar &amp; Bahram Bajalan - Eraqh.mp3" />
+    <Content Include="images\Files\download.jpg" />
+    <Content Include="images\Files\Who was Sa%27di-F.mp3" />
+    <Content Include="images\free.png" />
+    <Content Include="images\googlePlay.png" />
+    <Content Include="images\gp.png" />
+    <Content Include="images\hand-01.svg" />
+    <Content Include="images\hand.png" />
+    <Content Include="images\IAGSITELOGO.png" />
+    <Content Include="images\IAGSmallWhiteLogo.png" />
+    <Content Include="images\icon-128x128.png" />
+    <Content Include="images\lc.png" />
+    <Content Include="images\loop-24-24-0.png" />
+    <Content Include="images\Members\Hamed.jpg" />
+    <Content Include="images\Members\Mona.jpg" />
+    <Content Include="images\Members\Soroosh.JPG" />
+    <Content Include="images\notaccept.png" />
+    <Content Include="images\pic01.jpg" />
+    <Content Include="images\pic02.jpg" />
+    <Content Include="images\pic03.jpg" />
+    <Content Include="images\pic04.jpg" />
+    <Content Include="images\pic05.jpg" />
+    <Content Include="images\playstore.png" />
+    <Content Include="images\prevnext-48-48-1.png" />
+    <Content Include="images\tracklistarrow-48-16-0.png" />
+    <Content Include="images\volume-24-24-0.png" />
+    <Content Include="images\WindowsStore.png" />
     <Content Include="Service References\Zarinpal\IranAudioGuide_MainServer.Zarinpal.GetUnverifiedTransactionsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -1363,7 +1354,6 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
-    <Folder Include="assets\profile\" />
     <Folder Include="Content\global\plugins\bootstrap-hover-dropdown\" />
     <Folder Include="Content\global\plugins\bootstrap\" />
     <Folder Include="Content\global\plugins\font-awesome\" />
@@ -1373,11 +1363,6 @@
     <Folder Include="Content\global\plugins\ng-Table\" />
     <Folder Include="Content\global\plugins\toastr\" />
     <Folder Include="Download\" />
-    <Folder Include="Files\Audios\" />
-    <Folder Include="Files\Cities\" />
-    <Folder Include="Files\Places\Extras\" />
-    <Folder Include="Files\Stories\" />
-    <Folder Include="images\Files\" />
     <Folder Include="images\slidepics\" />
   </ItemGroup>
   <ItemGroup>
@@ -1397,6 +1382,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702251359521_init.resx">
+      <DependentUpon>201702251359521_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

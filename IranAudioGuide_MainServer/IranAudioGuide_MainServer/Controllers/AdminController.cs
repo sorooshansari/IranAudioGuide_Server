@@ -790,15 +790,16 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     lock (DelExtraImg)
                     {
-                        var img = db.Images.Where(x => x.Img_Id == imgId).FirstOrDefault();
+                        var img = db.Images.Include("Place").Where(x => x.Img_Id == imgId).FirstOrDefault();
                         if (img == default(Image))
                         {
                             return Json(new Respond("Invalid Image Id", status.invalidId));
                         }
-                        //string path = Server.MapPath(string.Format("~/images/Places/Extras/{0}", img.Img_Name));
                         UpdateLog(updatedTable.ExtraImage, img.Img_Id, true);
-
+                    
+                        
                         db.Images.Remove(img);
+
                         db.SaveChanges();
                         var request = new ServiceFtp();
                         var fileName = img.Img_Name;
@@ -806,7 +807,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         {
                             request.delete(fileName, GlobalPath.PathImageExtras); ;
                         }
-
+                        dbTran.Commit();
                     }
                     return Json(new Respond());
                 }
