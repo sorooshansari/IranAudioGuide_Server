@@ -1756,6 +1756,7 @@
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Download\" />
+    <Folder Include="Files\" />
     <Folder Include="images\slidepics\" />
   </ItemGroup>
   <ItemGroup>

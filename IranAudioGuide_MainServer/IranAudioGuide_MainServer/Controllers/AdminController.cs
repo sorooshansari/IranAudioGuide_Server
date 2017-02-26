@@ -418,9 +418,6 @@ namespace IranAudioGuide_MainServer.Controllers
                         //uplaod file
                         var request = new ServiceFtp();
                         var fileName = Convert.ToString(place.Pla_Id) + Path.GetExtension(model.Image.FileName);
-                        request.Upload(model.Image, fileName, GlobalPath.PathImagePlace);
-                        request.Upload(model.Image, fileName, GlobalPath.PathImageTumbnail);
-
                         //end upload file
 
                         place.Pla_ImgUrl = fileName;
@@ -429,6 +426,11 @@ namespace IranAudioGuide_MainServer.Controllers
                         UpdateLog(updatedTable.Place, place.Pla_Id);
                         db.SaveChanges();
                         dbTran.Commit();
+                        request.Upload(model.Image, fileName, GlobalPath.PathImagePlace);
+                        request.download(GlobalPath.PathImagePlace, GlobalPath.PathImageTumbnail, fileName);
+                      //  string path = Server.MapPath("~/Files");
+                      //  request.download(GlobalPath.PathImagePlace, path, fileName);
+
                         return Json(new Respond());
                     }
                     catch (Exception ex)
@@ -796,8 +798,8 @@ namespace IranAudioGuide_MainServer.Controllers
                             return Json(new Respond("Invalid Image Id", status.invalidId));
                         }
                         UpdateLog(updatedTable.ExtraImage, img.Img_Id, true);
-                    
-                        
+
+
                         db.Images.Remove(img);
 
                         db.SaveChanges();
