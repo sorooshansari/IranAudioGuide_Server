@@ -52,6 +52,7 @@ namespace IranAudioGuide_MainServer.Models
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public long Price { get; set; }
+        public float PriceD { get; set; }
     }
     public class ApiCitInfoVM
     {

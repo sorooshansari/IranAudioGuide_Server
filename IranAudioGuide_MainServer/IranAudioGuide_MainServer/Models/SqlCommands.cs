@@ -385,7 +385,7 @@ BEGIN
 		WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 1
 	)
 END",@"
-CREATE PROCEDURE GetAutorizedCities
+CREATE PROCEDURE [dbo].[GetAutorizedCities]
 	@UserID AS nvarchar(128)
 AS
 BEGIN
@@ -399,6 +399,52 @@ BEGIN
 	WHERE (dbo.AspNetUsers.Id = @UserID) AND (dbo.Payments.PaymentFinished = 1)
 	GROUP BY dbo.Packagecities.city_Cit_Id
 END",
+@"CREATE FUNCTION [dbo].[AudiosCount]
+(
+	@PlaceId AS uniqueidentifier
+)
+RETURNS INT
+AS
+BEGIN
+	DECLARE @AudiosCount AS INT
+	SELECT @AudiosCount = COUNT(*)
+	  FROM dbo.Audios
+	 WHERE Place_Pla_Id = @PlaceId
+	RETURN @AudiosCount
+END",
+@"CREATE FUNCTION [dbo].[StoriesCount]
+(
+	@PlaceId AS uniqueidentifier
+)
+RETURNS INT
+AS
+BEGIN
+	DECLARE @StoriesCount AS INT
+	SELECT @StoriesCount = COUNT(*)
+	  FROM dbo.Stories
+	 WHERE Place_Pla_Id = @PlaceId
+	RETURN @StoriesCount
+END",
+@"CREATE FUNCTION [dbo].[AllPlacesId]
+(
+	@CityId AS INT
+) 
+RETURNS 
+@Place TABLE 
+(
+	Id UNIQUEIDENTIFIER
+)
+AS
+BEGIN
+	INSERT @Place
+	SELECT [Pla_Id]
+	  FROM [dbo].[Places]
+	 WHERE Pla_city_Cit_Id = @CityId AND
+		   Pla_Deactive = 0 AND
+		   Pla_isOnline = 1
+	RETURN 
+END
+GO",
 @"CREATE PROCEDURE [dbo].[GetPackages]
 	@CityId int
 AS
@@ -407,7 +453,8 @@ BEGIN
 	(
 		Id uniqueidentifier,
 		Name nvarchar(MAX),
-		Price bigint
+		Price bigint,
+		PriceD float
 	)
 	DECLARE @Cities TABLE 
 	(
@@ -429,7 +476,7 @@ BEGIN
 	)
 
 	INSERT @Packages
-	SELECT dbo.Packages.Pac_Id, dbo.Packages.Pac_Name, dbo.Packages.Pac_Price
+	SELECT dbo.Packages.Pac_Id, dbo.Packages.Pac_Name, dbo.Packages.Pac_Price, dbo.Packages.Pac_Price_Dollar
 	  FROM dbo.Packagecities INNER JOIN
 				dbo.Packages ON dbo.Packagecities.Package_Pac_Id = dbo.Packages.Pac_Id
 	 WHERE dbo.Packagecities.city_Cit_Id = @CityId

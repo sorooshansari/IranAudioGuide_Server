@@ -29,7 +29,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public string getBaseUrl()
         {
-            return Variables.downlaodBaseUrl;
+            return Services.GlobalPath.host2;
         }
 
         [HttpPost]

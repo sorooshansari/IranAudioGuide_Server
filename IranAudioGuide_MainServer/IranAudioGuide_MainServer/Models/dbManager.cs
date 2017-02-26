@@ -9,12 +9,15 @@ namespace IranAudioGuide_MainServer.Models
 {
     public static class ConnectionString
     {
-        readonly public static string connString = @"Data Source=.;Initial Catalog=iranaudi_test5;Integrated Security=True";
+        //readonly public static string connString = @"Data Source=DESKTOP-PA8TBNK\SOROOSH;Initial Catalog=iranaudi_test;Integrated Security=True";
 
         //#if DEBUG
         //#else
        // readonly public static string connString = "Password = @aQ35cw%0@; Persist Security Info=True;User ID = iranaudi_SorooshDeveloperTeam; Initial Catalog = iranaudi_PrimaryDB; Data Source = 185.55.224.3";
         //#endif
+
+
+        readonly public static string connString = "Password = 1Kr?g4e7; Persist Security Info=True;User ID = iranaud1_admin; Initial Catalog = iranaud1_db; Data Source = 164.138.23.164";
     }
         public class dbManager
     {

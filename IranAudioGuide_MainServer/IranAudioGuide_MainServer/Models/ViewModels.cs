@@ -535,7 +535,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PlaceImage
         {
             get { return _imageUrl; }
-            set { _imageUrl = GlobalPath.FullPathStory + value; }
+            set { _imageUrl = GlobalPath.FullPathImagePlace + value; }
         }
         public Respond respond { get; set; }
     }
@@ -573,7 +573,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PlaceImage
         {
             get { return _imageUrl; }
-            set { _imageUrl = GlobalPath.FullPathAudios + value; }
+            set { _imageUrl = GlobalPath.FullPathImagePlace + value; }
         }
         public Respond respond { get; set; }
     }

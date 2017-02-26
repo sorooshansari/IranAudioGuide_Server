@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IranAudioGuide_MainServer.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -102,7 +103,7 @@ namespace IranAudioGuide_MainServer.Models
                     trakName = (from a in db.Audios
                                   where a.Aud_Id == trackId
                                   select a.Aud_Url).FirstOrDefault();
-                    url = string.Format("{0}{1}", Variables.audioUrlPrefix, trakName);
+                    url = string.Format("{0}{1}", GlobalPath.FullPathAudios, trakName);
 
                 }
                 else
@@ -110,7 +111,7 @@ namespace IranAudioGuide_MainServer.Models
                     trakName = (from s in db.Storys
                                 where s.Sto_Id == trackId
                                 select s.Sto_Url).FirstOrDefault();
-                    url = string.Format("{0}{1}", Variables.storyUrlPrefix, trakName);
+                    url = string.Format("{0}{1}", GlobalPath.FullPathStory, trakName);
                 }
                 return url;
             }
@@ -314,7 +315,8 @@ namespace IranAudioGuide_MainServer.Models
                 {
                     Id = (Guid)dr["Id"],
                     Name = (dr["Name"] == DBNull.Value) ? string.Empty : dr["Name"].ToString(),
-                    Price = (long)dr["Price"]
+                    Price = (long)dr["Price"],
+                    PriceD = (float)dr["PriceD"]
                 });
             return res;
         }
@@ -346,11 +348,14 @@ namespace IranAudioGuide_MainServer.Models
 
             var uuid = new SqlParameter("@uuid", newComment.uuid);
             uuid.SqlDbType = SqlDbType.NVarChar;
-
+            
             var Subject = new SqlParameter("@Subject", newComment.Subject);
             Subject.SqlDbType = SqlDbType.NVarChar;
 
-            var dt = dbManager.MultiTableResultSP("CreateComment", Message, uuid, Subject);
+            var email = new SqlParameter("@email", newComment.Email);
+            uuid.SqlDbType = SqlDbType.NVarChar;
+
+            var dt = dbManager.MultiTableResultSP("CreateComment", Message, uuid, Subject, email);
         }
         #endregion
     }
