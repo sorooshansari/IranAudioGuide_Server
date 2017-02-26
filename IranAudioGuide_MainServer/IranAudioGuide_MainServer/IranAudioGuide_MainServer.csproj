@@ -1586,7 +1586,10 @@
     <Content Include="images\prevnext-48-48-1.png" />
     <Content Include="images\tracklistarrow-48-16-0.png" />
     <Content Include="images\volume-24-24-0.png" />
+    <Content Include="images\v_blue_on_transp_en.png" />
+    <Content Include="images\v_blue_on_white_en.png" />
     <Content Include="images\WindowsStore.png" />
+    <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="Service References\Zarinpal\IranAudioGuide_MainServer.Zarinpal.GetUnverifiedTransactionsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
