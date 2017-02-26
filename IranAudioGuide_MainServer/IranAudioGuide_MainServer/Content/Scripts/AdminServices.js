@@ -1,4 +1,54 @@
 ﻿angular.module('AdminPage.services', [])
+    .service('notificService', [function () {
+        //jquery-notific8
+        var optionsDefault = {
+            positionClass: 'toast-top-center', //'toast-bottom-full-width ',// 'toast-top-center',
+            life: 5000,
+        };
+        toastr.options = optionsDefault;
+        this.success = function (header, content) {
+            toastr.remove();
+            toastr.clear();
+            toastr.success(content, header);
+            //$.notific8(content, {
+            //    //life: 5000,
+            //    heading: header,
+            //    theme: 'lime'
+            //});
+            return;
+        }
+        this.error = function (header, content) {
+            toastr.error(content, header);
+            //$.notific8(content, {
+            //    // life: 5000,
+            //    heading: header,
+            //    theme: 'ruby'
+            //});
+            return;
+        }
+        this.info = function (header, content) {
+            toastr.remove();
+            toastr.clear();
+            toastr.info(content, header);
+            return;
+        }
+        this.infoMessage = function (header, content) {
+            // toastr.options = optionsCenter;
+            toastr.remove();
+            toastr.clear();
+            toastr.info(content, header);
+            return;
+        }
+        this.warning = function (header, content) {
+            toastr.remove();
+            toastr.clear();
+            toastr.warning(content, header);
+            return;
+        }
+        this.clear = function () {
+            toastr.clear();
+        }
+    }])
 .service('TipServices', ['$rootScope', '$http', function ($rootScope, $http) {
     var Tips = []
     return {
@@ -499,7 +549,7 @@
         }
     }
 }])
-.service('CityServices', ['$rootScope', '$http', function ($rootScope, $http) {
+.service('CityServices', ['$rootScope', '$http', 'notificService', function ($rootScope, $http, notific) {
     var AllCities = [];
     var Cities = [];
     var Success = false;
@@ -579,22 +629,23 @@
                           $rootScope.$broadcast('UpdateCities', {});
                           break;
                       case 1:
+                          notific.error("error", response.data.content);
                           $rootScope.$broadcast('EditCityValidationSummery', {
                               data: response.data.content
                           });
                           break;
                       case 2:
                           $rootScope.$broadcast('EditCityUnknownError', {});
-                          console.log("Server failed to remove City.");
+                          notific.error("error", "Server failed to remove City.");
                           break;
                       case 3:
-                          console.log(response.data.content);
+                          notific.error("error", response.data.content);
                           break;
                       default:
                   }
               }, function (response) {
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
+                  notific.error("error", "Request failed");
+                  cnotific.error("status:" + response.status);
               });
             return;
         },

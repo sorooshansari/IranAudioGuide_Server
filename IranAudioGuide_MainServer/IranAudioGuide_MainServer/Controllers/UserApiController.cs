@@ -32,7 +32,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         IsEmailConfirmed = user.EmailConfirmed,
                         IsSetuuid = (user.uuid == null) ? false : true,
                         IsAccessChangeUuid = false,
-                        IsForeign = ExtensionMethods.IsForeign,
+                        IsForeign = ExtensionMethods.IsForeign                       
                     };
                     //Info.IsAccessChangeUuid = false;
                     if (user.TimeSetUuid == null)

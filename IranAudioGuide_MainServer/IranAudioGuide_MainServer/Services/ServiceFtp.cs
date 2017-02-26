@@ -16,9 +16,9 @@ namespace IranAudioGuide_MainServer.Services
         private int bufferSize = 2048;
         public ServiceFtp()
         {
-            host = GlobalPath.host;// "ftp://iranaudioguide.com/test.iranaudioguide.com";
-            user = GlobalPath.UsernameFtp;//  "pourmand";
-            pass = GlobalPath.PasswordFtp;// "QQwwee11@@";
+            host = GlobalPath.host;
+            user = GlobalPath.UsernameFtp;
+            pass = GlobalPath.PasswordFtp;
         }
 
         public bool Upload(System.Web.HttpPostedFileBase postedFile, string nameFile = null, string path = null)
@@ -73,122 +73,83 @@ namespace IranAudioGuide_MainServer.Services
             }
 
         }
-        ///* Upload File */
-        //public void Upload(string filePath, string filename)
-        //{
-        //    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(new Uri(host + "/" + filename));
-        //    request.Method = WebRequestMethods.Ftp.UploadFile;
-
-        //    // This example assumes the FTP site uses anonymous logon.
-        //    request.Credentials = new NetworkCredential(user, pass);
-        //    request.UseBinary = true;
-        //    request.KeepAlive = true;
-
-        //    // Copy the contents of the file to the request stream.
-        //    StreamReader sourceStream = new StreamReader(filePath);
-        //    byte[] fileContents = System.Text.Encoding.UTF8.GetBytes(sourceStream.ReadToEnd());
-        //    sourceStream.Close();
-        //    request.ContentLength = fileContents.Length;
-
-        //    Stream requestStream = request.GetRequestStream();
-        //    requestStream.Write(fileContents, 0, fileContents.Length);
-        //    requestStream.Close();
-
-        //    FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-
-        //    Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
-
-        //    response.Close();
-
-
-        //}
-        ///* Upload File */
-
-        ///* Upload File */
-        //public void upload(string remoteFile, string localFile)
-        //{
-        //    try
-        //    {
-        //        /* Create an FTP Request */
-        //        ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
-        //        /* Log in to the FTP Server with the User Name and Password Provided */
-        //        ftpRequest.Credentials = new NetworkCredential(user, pass);
-        //        /* When in doubt, use these options */
-        //        ftpRequest.UseBinary = true;
-        //        ftpRequest.UsePassive = true;
-        //        ftpRequest.KeepAlive = true;
-        //        /* Specify the Type of FTP Request */
-        //        ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
-        //        /* Establish Return Communication with the FTP Server */
-        //        ftpStream = ftpRequest.GetRequestStream();
-        //        /* Open a File Stream to Read the File for Upload */
-        //        FileStream localFileStream = new FileStream(localFile, FileMode.Create);
-        //        /* Buffer for the Downloaded Data */
-        //        byte[] byteBuffer = new byte[bufferSize];
-        //        int bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-        //        /* Upload the File by Sending the Buffered Data Until the Transfer is Complete */
-        //        try
-        //        {
-        //            while (bytesSent != 0)
-        //            {
-        //                ftpStream.Write(byteBuffer, 0, bytesSent);
-        //                bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-        //            }
-        //        }
-        //        catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-        //        /* Resource Cleanup */
-        //        localFileStream.Close();
-        //        ftpStream.Close();
-        //        ftpRequest = null;
-        //    }
-        //    catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-        //    return;
-        //}
-
-        /* Download File */
-        public void download(string remoteFile, string localFile)
+        public bool Upload(Stream sourceStream, string fullPathSource)
         {
             try
             {
-                /* Create an FTP Request */
-                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
-                /* Log in to the FTP Server with the User Name and Password Provided */
-                ftpRequest.Credentials = new NetworkCredential(user, pass);
-                /* When in doubt, use these options */
-                ftpRequest.UseBinary = true;
-                ftpRequest.UsePassive = true;
-                ftpRequest.KeepAlive = true;
-                /* Specify the Type of FTP Request */
-                ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-                /* Establish Return Communication with the FTP Server */
-                ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-                /* Get the FTP Server's Response Stream */
-                ftpStream = ftpResponse.GetResponseStream();
-                /* Open a File Stream to Write the Downloaded File */
-                FileStream localFileStream = new FileStream(localFile, FileMode.Create);
-                /* Buffer for the Downloaded Data */
-                byte[] byteBuffer = new byte[bufferSize];
-                int bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
-                /* Download the File by Writing the Buffered Data Until the Transfer is Complete */
-                try
+
+                //    FtpWebRequest uploadRequest = (FtpWebRequest)WebRequest.Create(new Uri(fullPathSource));
+                //    uploadRequest.Method = WebRequestMethods.Ftp.UploadFile;
+                //    uploadRequest.Credentials = new NetworkCredential(user, pass);
+                //    uploadRequest.UseBinary = true;
+                //    uploadRequest.KeepAlive = true;
+
+                //    var s = getFileSize(fullPathSource);
+                //    uploadRequest.ContentLength = int.Parse(s);
+
+                //    Stream requestStream = uploadRequest.GetRequestStream();
+                //    requestStream.Write(fileContents, 0, fileContents.Length);
+                //    requestStream.Close();
+                //    FtpWebResponse response = (FtpWebResponse)uploadRequest.GetResponse();
+                //    //Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+                //    response.Close();
+                //    sourceStream.Close();
+                return true;
+            }
+            catch (WebException ex)
+            {
+                //Console.WriteLine(ex.ToString());
+                return false;
+            }
+
+        }
+     
+        public void download(string pathSource, string pathDestination, string fileName)
+        {
+            try
+            {
+                var fullPathSource = host + "/" + pathSource + "/" + fileName;
+                var fullPathDestination = host + "/" + pathDestination + "/" + fileName;
+                var downloadRequest = (FtpWebRequest)FtpWebRequest.Create(fullPathSource);
+                downloadRequest.Credentials = new NetworkCredential(user, pass);
+                downloadRequest.UseBinary = true;
+                downloadRequest.UsePassive = true;
+                downloadRequest.KeepAlive = true;
+                downloadRequest.Method = WebRequestMethods.Ftp.DownloadFile;
+                ftpResponse = (FtpWebResponse)downloadRequest.GetResponse();
+                Stream sourceStream = ftpResponse.GetResponseStream();
+                
+                byte[] fileContents;
+                int FileLen ;
+                using (var streamReader = new MemoryStream())
                 {
-                    while (bytesRead > 0)
-                    {
-                        localFileStream.Write(byteBuffer, 0, bytesRead);
-                        bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
-                    }
+                    sourceStream.CopyTo(streamReader);
+                    fileContents = streamReader.ToArray();
+                    FileLen = fileContents.Length ;
                 }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-                /* Resource Cleanup */
-                localFileStream.Close();
-                ftpStream.Close();
-                ftpResponse.Close();
-                ftpRequest = null;
+
+
+                //upload
+                FtpWebRequest uploadRequest = (FtpWebRequest)WebRequest.Create(new Uri(fullPathDestination));
+                uploadRequest.Method = WebRequestMethods.Ftp.UploadFile;
+                uploadRequest.Credentials = new NetworkCredential(user, pass);
+                uploadRequest.UseBinary = true;
+                uploadRequest.KeepAlive = true;
+             
+           
+                Stream requestStream = uploadRequest.GetRequestStream();
+                requestStream.Write(fileContents, 0, fileContents.Length);
+                requestStream.Close();
+                FtpWebResponse response = (FtpWebResponse)uploadRequest.GetResponse();
+                sourceStream.Close();
+                response.Close();
+                sourceStream.Close();
+
+
             }
             catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             return;
         }
-
         /* Delete File */
         public bool delete(string deleteFile, string path = null)
         {
@@ -319,12 +280,12 @@ namespace IranAudioGuide_MainServer.Services
         }
 
         /* Get the Size of a File */
-        public string getFileSize(string fileName)
+        public string getFileSize(string fullpath)
         {
             try
             {
                 /* Create an FTP Request */
-                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + fileName);
+                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(fullpath);
                 /* Log in to the FTP Server with the User Name and Password Provided */
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
                 /* When in doubt, use these options */
@@ -489,5 +450,125 @@ namespace IranAudioGuide_MainServer.Services
                 Console.WriteLine(ex.ToString());
             }
         }
+
+
+        ///* Upload File */
+        //public void Upload(string filePath, string filename)
+        //{
+        //    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(new Uri(host + "/" + filename));
+        //    request.Method = WebRequestMethods.Ftp.UploadFile;
+
+        //    // This example assumes the FTP site uses anonymous logon.
+        //    request.Credentials = new NetworkCredential(user, pass);
+        //    request.UseBinary = true;
+        //    request.KeepAlive = true;
+
+        //    // Copy the contents of the file to the request stream.
+        //    StreamReader sourceStream = new StreamReader(filePath);
+        //    byte[] fileContents = System.Text.Encoding.UTF8.GetBytes(sourceStream.ReadToEnd());
+        //    sourceStream.Close();
+        //    request.ContentLength = fileContents.Length;
+
+        //    Stream requestStream = request.GetRequestStream();
+        //    requestStream.Write(fileContents, 0, fileContents.Length);
+        //    requestStream.Close();
+
+        //    FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+        //    Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+
+        //    response.Close();
+
+
+        //}
+        ///* Upload File */
+
+        ///* Upload File */
+        //public void upload(string remoteFile, string localFile)
+        //{
+        //    try
+        //    {
+        //        /* Create an FTP Request */
+        //        ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
+        //        /* Log in to the FTP Server with the User Name and Password Provided */
+        //        ftpRequest.Credentials = new NetworkCredential(user, pass);
+        //        /* When in doubt, use these options */
+        //        ftpRequest.UseBinary = true;
+        //        ftpRequest.UsePassive = true;
+        //        ftpRequest.KeepAlive = true;
+        //        /* Specify the Type of FTP Request */
+        //        ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
+        //        /* Establish Return Communication with the FTP Server */
+        //        ftpStream = ftpRequest.GetRequestStream();
+        //        /* Open a File Stream to Read the File for Upload */
+        //        FileStream localFileStream = new FileStream(localFile, FileMode.Create);
+        //        /* Buffer for the Downloaded Data */
+        //        byte[] byteBuffer = new byte[bufferSize];
+        //        int bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
+        //        /* Upload the File by Sending the Buffered Data Until the Transfer is Complete */
+        //        try
+        //        {
+        //            while (bytesSent != 0)
+        //            {
+        //                ftpStream.Write(byteBuffer, 0, bytesSent);
+        //                bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
+        //            }
+        //        }
+        //        catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+        //        /* Resource Cleanup */
+        //        localFileStream.Close();
+        //        ftpStream.Close();
+        //        ftpRequest = null;
+        //    }
+        //    catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+        //    return;
+        //}
+
+        ///* Download File */
+        //public void download(string remoteFile, string localFile)
+        //{
+        //    try
+        //    {
+        //        /* Create an FTP Request */
+        //        ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
+        //        /* Log in to the FTP Server with the User Name and Password Provided */
+        //        ftpRequest.Credentials = new NetworkCredential(user, pass);
+        //        /* When in doubt, use these options */
+        //        ftpRequest.UseBinary = true;
+        //        ftpRequest.UsePassive = true;
+        //        ftpRequest.KeepAlive = true;
+        //        /* Specify the Type of FTP Request */
+        //        ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
+        //        /* Establish Return Communication with the FTP Server */
+        //        ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
+        //        /* Get the FTP Server's Response Stream */
+        //        ftpStream = ftpResponse.GetResponseStream();
+        //        /* Open a File Stream to Write the Downloaded File */
+        //        FileStream localFileStream = new FileStream(localFile, FileMode.Create);
+        //        /* Buffer for the Downloaded Data */
+        //        byte[] byteBuffer = new byte[bufferSize];
+        //        int bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
+        //        /* Download the File by Writing the Buffered Data Until the Transfer is Complete */
+        //        try
+        //        {
+        //            while (bytesRead > 0)
+        //            {
+        //                localFileStream.Write(byteBuffer, 0, bytesRead);
+        //                bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
+        //            }
+        //        }
+        //        catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+        //        /* Resource Cleanup */
+        //        localFileStream.Close();
+        //        ftpStream.Close();
+        //        ftpResponse.Close();
+        //        ftpRequest = null;
+        //    }
+        //    catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+        //    return;
+        //}
+
+
+
     }
 }
