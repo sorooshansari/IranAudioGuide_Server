@@ -220,8 +220,12 @@ BEGIN
 END",@"
 
 CREATE PROCEDURE [dbo].[GetAll]
+	@uuid NVARCHAR(MAX)
 AS
 BEGIN
+	INSERT INTO [dbo].[UserLogs] (UsL_UUId, UsL_DateTime)
+	VALUES (@uuid, getdate())
+
 	SELECT [dbo].[GetLastUpdate]() AS LastUpdate
 
 	SELECT * FROM [dbo].AllPlaces() AS Places
@@ -248,9 +252,13 @@ BEGIN
 END",@"
 
 CREATE PROCEDURE [dbo].[GetUpdates]
-	@UpdateNumber AS INT
+	@UpdateNumber AS INT,
+	@uuid NVARCHAR(MAX)
 AS
 BEGIN
+	INSERT INTO [dbo].[UserLogs] (UsL_UUId, UsL_DateTime)
+	VALUES (@uuid, getdate())
+
 	SELECT [dbo].[GetLastUpdate]() AS LastUpdate
 	--GETING NEW ENTITIES
 	SELECT * FROM [dbo].AllPlaces() p

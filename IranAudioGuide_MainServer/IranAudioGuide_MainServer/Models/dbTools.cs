@@ -124,10 +124,12 @@ namespace IranAudioGuide_MainServer.Models
                 var SP = new SqlParameter("@CityId", cityId);
                 SP.SqlDbType = SqlDbType.Int;
                 var dt = dbManager.MultiTableResultSP("GetPackages", SP);
+                var IsForeign = ExtensionMethods.IsForeign;
                 res = new GetPackagesVM()
                 {
                     packages = FillApiPackageVM(dt[0]),
-                    cities = FillApiCitInfoVM(dt[1])
+                    cities = FillApiCitInfoVM(dt[1]),
+                    IsForeign = IsForeign
                 };
             }
             catch (Exception ex)
@@ -316,7 +318,7 @@ namespace IranAudioGuide_MainServer.Models
                     Id = (Guid)dr["Id"],
                     Name = (dr["Name"] == DBNull.Value) ? string.Empty : dr["Name"].ToString(),
                     Price = (long)dr["Price"],
-                    PriceD = (float)dr["PriceD"]
+                    PriceD = float.Parse(dr["PriceD"].ToString())
                 });
             return res;
         }
