@@ -50,6 +50,11 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
+                if (info.IsChooesZarinpal && ExtensionMethods.IsForeign)
+                    ViewBag.IsChooesZarinpal = false;
+                else
+                    ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
+
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user.uuid != info.uuid)
                 {
@@ -88,7 +93,11 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error");
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = "Error!",
+                    Message = "Please try again",
+                });
             }
         }
         //[HttpPost]
@@ -126,7 +135,7 @@ namespace IranAudioGuide_MainServer.Controllers
         //}
 
         [Authorize(Roles = "AppUser")]
-        public ActionResult WMPurchase(Guid packageId)
+        public ActionResult WMPurchase(Guid packageId, bool isFromApp = false)
         {
             var wmService = new WebmoneyServices();
             var res = wmService.CreatePayment(User.Identity.Name, packageId);
@@ -142,6 +151,7 @@ namespace IranAudioGuide_MainServer.Controllers
             sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", res.PackageName);
             sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", WebmoneyPurse.Id);
             sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
+            sb.AppendFormat("<input type='hidden' name='isFromeApp' value='{0}'>", isFromApp);
             sb.Append("</form>");
             sb.Append("</body>");
             sb.Append("</html>");
@@ -203,7 +213,11 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.SaleReferenceId = res.refId;
             ViewBag.Image = res.Image;
             ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
-            return View("ReturnToWebPage");
+            ViewBag.Succeeded = res.Succeeded;
+            if (model.isFromeApp)
+                return View("Return");
+            else
+                return View("ReturnToWebPage");
         }
 
         [HttpPost]
@@ -218,7 +232,11 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.SaleReferenceId = res.refId;
             ViewBag.Image = res.Image;
             ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
-            return View("ReturnToWebPage");
+            ViewBag.Succeeded = false;
+            if (model.isFromeApp)
+                return View("Return");
+            else
+                return View("ReturnToWebPage");
         }
 
 
@@ -313,6 +331,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.ErrDesc = "There is no response from your payment gateway!";
                 ViewBag.SaleReferenceId = "**************";
                 ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
+                ViewBag.Succeeded = false;
             }
             return View();
         }
@@ -474,6 +493,7 @@ namespace IranAudioGuide_MainServer.Controllers
                             ViewBag.SaleReferenceId = refId;
                             ViewBag.Image = "<i class=\"fa fa-check\" style=\"color: lightgreen; font-size:35px; vertical-align:sub; \"></i>";
                             ViewBag.ErrDesc = "You have access to the package below. Thank you for your purchase! <br />";
+                            ViewBag.Succeeded = true;
                         }
                         else
                         {
@@ -483,6 +503,7 @@ namespace IranAudioGuide_MainServer.Controllers
                             ViewBag.SaleReferenceId = "**************";
                             ViewBag.Image = "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
                             ViewBag.ErrDesc = "Your payment process does not completed.";
+                            ViewBag.Succeeded = false;
                         }
 
                     }
@@ -494,6 +515,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         ViewBag.SaleReferenceId = "**************";
                         ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
                         ViewBag.ErrDesc = "Your payment process does not completed.";
+                        ViewBag.Succeeded = false;
                     }
                 }
                 else
@@ -502,6 +524,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     ViewBag.SaleReferenceId = "**************";
                     ViewBag.Image = "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
                     ViewBag.ErrDesc = "Sorry, please try again in a few minutes.";
+                    ViewBag.Succeeded = false;
                 }
             }
             catch (Exception ex)
@@ -510,6 +533,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
                 ViewBag.Message = "Problem occurred in payment process. ";
                 ViewBag.ErrDesc = "If the payment is deducted from your bank account, The amount will be automatically returned.";
+                ViewBag.Succeeded = false;
             }
         }
         private long FindAmountPayment(Guid paymentId)

@@ -329,6 +329,7 @@ namespace IranAudioGuide_MainServer.Models
         public string LMI_PAYER_COUNTRYID { get; set; }
         public string LMI_PAYER_PCOUNTRYID { get; set; }
         public string LMI_PAYER_IP { get; set; }
+        public bool isFromeApp { get; set; }
     }
     public class WMUpdateRes
     {
@@ -340,12 +341,13 @@ namespace IranAudioGuide_MainServer.Models
             Image = succeeded ? "<i class=\"fa fa-check\" style=\"color: lightgreen; font-size:35px; vertical-align:sub; \"></i>" :
                 "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
             PackName = packName;
+            Succeeded = succeeded;
         }
         public string Message { get; set; }
         public string Image { get; set; }
         public string refId { get; set; }
         public string ErrDesc { get; set; }
         public string PackName { get; set; }
-
+        public bool Succeeded { get; set; }
     }
 }
