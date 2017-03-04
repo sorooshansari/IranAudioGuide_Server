@@ -32,18 +32,21 @@ namespace IranAudioGuide_MainServer.Controllers
                         IsEmailConfirmed = user.EmailConfirmed,
                         IsSetuuid = (user.uuid == null) ? false : true,
                         IsAccessChangeUuid = false,
-                        IsForeign = ExtensionMethods.IsForeign                       
+                        IsForeign = ExtensionMethods.IsForeign
                     };
                     //Info.IsAccessChangeUuid = false;
-                    if (user.TimeSetUuid == null)
+                    if (!Info.IsSetuuid)
                         return Ok(Info);
-                    else if (Info.IsSetuuid)
+                    else if (user.TimeSetUuid == null && Info.IsSetuuid == true)
                     {
                         //the first time for change dective device
                         Info.IsAccessChangeUuid = true;
+                        return Ok(Info);
+
                     }
-                    else
+                    else if (Info.IsSetuuid && user.TimeSetUuid != null)
                     {
+                      
                         var startDay = user.TimeSetUuid.Value;
                         var endDay = DateTime.Now;
                         var day = endDay.Day - startDay.Day;
@@ -136,7 +139,7 @@ namespace IranAudioGuide_MainServer.Controllers
                                 CityID = c.Cit_Id,
                                 CityImageUrl = c.Cit_ImageUrl,
                                 Places = (from pl in db.Places
-                                          where pl.Pla_city.Cit_Id == c.Cit_Id
+                                          where (pl.Pla_city.Cit_Id == c.Cit_Id & !pl.Pla_Deactive)
                                           select new PlaceVM()
                                           {
                                               PlaceName = pl.Pla_Name,
@@ -261,6 +264,43 @@ namespace IranAudioGuide_MainServer.Controllers
             }
 
         }
+
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IHttpActionResult SaveOrderExtraImg(List<ImageVM> listImg)
+        {
+
+
+            try
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    foreach (var img in listImg)
+                    {
+                        var getimg = db.Images.FirstOrDefault(x => x.Img_Id == img.ImageId);
+                        if (getimg == null)
+                            continue;
+                        getimg.Order = img.Index;
+                        db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Ima_Id == getimg.Img_Id));
+                        db.UpdateLogs.Add(new UpdateLog() { Ima_Id = getimg.Img_Id, isRemoved = false });
+                    }
+                    //var Imgs = db.Images.Where(x => listImg.Any(i => i.ImageId == x.Img_Id)).ToList();
+                    db.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+
+        }
+
+
+
 
     }
 }

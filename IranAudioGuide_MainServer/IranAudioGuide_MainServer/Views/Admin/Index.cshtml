@@ -117,8 +117,8 @@
                 <thead>
                     <tr>
                         <td>#</td>
-                        <td>Name</td>
-                        <td>City</td>
+                        <td>Name <br /> <input type="text" ng-model="search.place" style="width:150px" /></td>
+                        <td>City  <br /><input type="text" ng-model="search.city" style="width:150px" /></td>
                         <td><span class="fa">P</span></td>
                         <td>Status</td>
                         <td>Edit</td>
@@ -126,7 +126,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-init="places[0].selected = true;" ng-class="place.selected ? 'selectedRow' : ''" ng-repeat="place in places">
+                    <tr ng-init="places[0].selected = true;" ng-class="place.selected ? 'selectedRow' : ''" ng-repeat="place in places  | filter:{CityName: search.city, PlaceName: search.place}">
                         <td>{{place.Index}}</td>
                         <td><a href="" ng-click="LoadPlaceAudiosAndStories(place.PlaceId)">{{place.PlaceName}}</a></td>
                         <td>{{place.CityName}}</td>
@@ -733,10 +733,16 @@
                                     <hr class="4u$ fourPointFiveU" />
                                 </div>
                                 <div class="row">
-                                    <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true" name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImages">
-                                        <img src="{{img.ImageName}}" />
+                                    <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true" name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImages | orderBy : 'Index'">
+                                        <input  type="text" ng-model="img.Index" size="4"/>
+                                        <img src="{{img.ImageName}}" />                                      
                                         <i ng-click="EditEIDescModal(img)" ng-show="img.rmvShow" class="btn fa fa-pencil text-blue EditDescBtn"></i>
                                         <i ng-click="RemoveExtraImg(img.ImageId)" ng-show="img.rmvShow" class="btn fa fa-trash-o text-red rmvBtn"></i>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="addBtn" ladda="saveOrderBtn" ng-click="saveOrderExtraImg(selectedPlace.ExtraImages)" >Save Order</button>
                                     </div>
                                 </div>
                             </div>

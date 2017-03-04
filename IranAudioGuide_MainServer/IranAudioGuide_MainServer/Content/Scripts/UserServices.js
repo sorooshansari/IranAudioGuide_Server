@@ -78,7 +78,7 @@ userApp.service('userServices', ['dataServices', function (dataServices) {
 userApp.service('notificService', [function () {
     //jquery-notific8
     var optionsDefault = {
-        positionClass: 'toast-top-center', //'toast-bottom-full-width ',// 'toast-top-center',
+        positionClass: 'toast-bottom-full-width', //'toast-bottom-full-width ',// 'toast-top-center',
         life: 5000,
     };
     toastr.options = optionsDefault;

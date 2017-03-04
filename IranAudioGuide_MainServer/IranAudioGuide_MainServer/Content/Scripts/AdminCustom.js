@@ -6,6 +6,7 @@
         spinnerSize: 35,
         spinnerColor: '#ffffff'
     });
+ //   $httpProvider.interceptors.push('authInterceptorService');, $httpProvider
 })
 .run(function () {
 

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using IranAudioGuide_MainServer.Models;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
