@@ -130,8 +130,6 @@ namespace IranAudioGuide_MainServer.Models
                     return RecoverPassResults.NotUser;
                 if (appUser.uuid != uuid)
                     return RecoverPassResults.uuidMissMatch;
-                if (!appUser.EmailConfirmed)
-                    return RecoverPassResults.RequiresVerification;
                 string code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
                 code = HttpUtility.UrlEncode(code);
                 var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, appUser.Id, code);

@@ -85,7 +85,7 @@ namespace IranAudioGuide_MainServer.Controllers
                                                               CityID = c.Cit_Id,
                                                               CityName = c.Cit_Name
                                                           }).ToList()
-                                     }).First();
+                                     }).First(); 
                 packname = package.PackageName;
                 await t;
                 ViewBag.Error = info.ErrorMessage;

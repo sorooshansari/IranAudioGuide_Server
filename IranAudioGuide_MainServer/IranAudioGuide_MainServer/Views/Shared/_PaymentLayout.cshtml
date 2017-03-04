@@ -84,69 +84,10 @@
     </footer>
 
 
-    <link rel="stylesheet" href="~/Content/loading.css" />
-
     <!-- Scripts -->
     <!--[if lte IE 8]><script src="~/assets/js/ie/respond.min.js"></script><![endif]-->
-    @*<script src="~/assets/js/jquery.min.js"></script>
-        <script src="~/assets/js/jquery.scrollex.min.js"></script>
-        <script src="~/assets/js/jquery.scrolly.min.js"></script>
-        <script src="~/assets/js/skel.min.js"></script>
-        <script src="~/assets/js/util.js"></script>
-        <script src="~/assets/js/main.js"></script>
-        <script src="~/Scripts/angular.min.js"></script>
-        <script src="~/Scripts/angular-scroll-spy.js"></script>
-        <script src="~/Scripts/countUp.js"></script>
-        <script src="~/Scripts/angular-countUp.js"></script>
-        <script src="~/Scripts/HomeCustom.js"></script>
-        <script src="~/Scripts/HomeControllers.js"></script>*@
 
-    @*@Scripts.Render("~/bundles/minJs")*@
-    <script src="~/assets/js/jquery.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        angular.module('HomePage', [])
-            .config(function ($sceProvider) {
-                $sceProvider.enabled(false);
-            })
-            .run(function () {
-
-            })
-
-
-        var respondstatus =
-        {
-            success: 0,
-            invalidInput: 1,
-            ivalidCordinates: 2,
-            invalidFileFormat: 3,
-            unknownError: 4,
-            dbError: 5,
-            invalidId: 6,
-            forignKeyError: 7
-        }
-    </script>
-
-    <!-- Quantcast Tag -->
-    <script type="text/javascript">
-        var _qevents = _qevents || [];
-
-        (function () {
-            var elem = document.createElement('script');
-            elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
-            elem.async = true;
-            elem.type = "text/javascript";
-            var scpt = document.getElementsByTagName('script')[0];
-            scpt.parentNode.insertBefore(elem, scpt);
-        })();
-
-        _qevents.push({
-            qacct: "p-W5MYZqNRc9gad"
-        });
-    </script>
-    <!-- End Quantcast tag -->
-    @*@Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)*@
+    <script src="~/Content/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Content/Scripts/bootstrap.min.js"></script>
 </body>
 </html>
