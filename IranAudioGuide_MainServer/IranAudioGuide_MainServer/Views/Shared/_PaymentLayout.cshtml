@@ -28,11 +28,12 @@
 
     <title>@ViewBag.Title</title>
 
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-social.css" rel="stylesheet" />
-    <link href="~/Content/toggle.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/Content/main2.css" />
-    <link rel="stylesheet" href="~/Content/Custom4.css" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-social.css" rel="stylesheet" />
+    <link href="~/Content/css/toggle.css" rel="stylesheet" />
+    <link href="~/Content/css/main2.css" rel="stylesheet" />
+
+    <link href="~/Content/css/Custom4.css" rel="stylesheet" />
 
     @Styles.Render("~/Content/minCss")
 
@@ -86,24 +87,9 @@
 
     <link rel="stylesheet" href="~/Content/loading.css" />
 
-    <!-- Scripts -->
-    <!--[if lte IE 8]><script src="~/assets/js/ie/respond.min.js"></script><![endif]-->
-    @*<script src="~/assets/js/jquery.min.js"></script>
-        <script src="~/assets/js/jquery.scrollex.min.js"></script>
-        <script src="~/assets/js/jquery.scrolly.min.js"></script>
-        <script src="~/assets/js/skel.min.js"></script>
-        <script src="~/assets/js/util.js"></script>
-        <script src="~/assets/js/main.js"></script>
-        <script src="~/Scripts/angular.min.js"></script>
-        <script src="~/Scripts/angular-scroll-spy.js"></script>
-        <script src="~/Scripts/countUp.js"></script>
-        <script src="~/Scripts/angular-countUp.js"></script>
-        <script src="~/Scripts/HomeCustom.js"></script>
-        <script src="~/Scripts/HomeControllers.js"></script>*@
-
-    @*@Scripts.Render("~/bundles/minJs")*@
-    <script src="~/assets/js/jquery.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    
+    <script src="~/Content/Scripts/jquery.min.js"></script>
+    <script src="~/Content/global/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         angular.module('HomePage', [])
             .config(function ($sceProvider) {
@@ -144,9 +130,6 @@
             qacct: "p-W5MYZqNRc9gad"
         });
     </script>
-    <!-- End Quantcast tag -->
-    @*@Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)*@
+    
 </body>
 </html>

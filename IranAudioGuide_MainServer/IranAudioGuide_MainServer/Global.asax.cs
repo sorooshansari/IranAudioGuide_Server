@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IranAudioGuide_MainServer.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,9 @@ namespace IranAudioGuide_MainServer
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var job =  new ScheduleDownloadLink();
+            job.Run();
         }
     }
 }

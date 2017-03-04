@@ -1,12 +1,8 @@
-﻿using IranAudioGuide_MainServer.Models;
+﻿using Elmah;
+using IranAudioGuide_MainServer.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -29,11 +25,24 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public string getBaseUrl()
         {
-            return Services.GlobalPath.host2;
+            return Services.GlobalPath.host;
         }
 
+        //[HttpPost]
+        //public GetAudioUrlRes GetAudioById(GetAudioUrlVM model)
+        //{
+        //    try
+        //    {
+
+        //        return new GetAudioUrlRes(dbTools.GetAudioUrl(model.trackId , true));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
+        //    }
+        //}
         [HttpPost]
-        public GetAudioUrlRes GetAudioUrl(GetAudioUrlVM model)
+        public string GetAudioUrl(GetAudioUrlVM model)
         {
             try
             {
@@ -42,11 +51,15 @@ namespace IranAudioGuide_MainServer.Controllers
                 //    return new GetAudioUrlRes(GetAudioUrlStatus.notUser);
                 //if (user.uuid != model.uuid)
                 //    return new GetAudioUrlRes(GetAudioUrlStatus.uuidMissMatch);
-                return new GetAudioUrlRes(dbTools.GetAudioUrl(model.trackId, model.isAudio));
+                var url = dbTools.GetAudioUrl(model.trackId, model.isAudio);
+                //return new GetAudioUrlRes(url);
+                return url;
             }
             catch (Exception ex)
             {
-                return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
+                //return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
+                return "error" + ex.Message;
+                ErrorSignal.FromCurrentContext().Raise(ex);
             }
         }
         [HttpPost]
@@ -70,6 +83,7 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 res.status = getUserStatus.unknownError;
                 res.errorMessage = ex.Message;
+                ErrorSignal.FromCurrentContext().Raise(ex);
             }
             return res;
         }
@@ -91,6 +105,7 @@ namespace IranAudioGuide_MainServer.Controllers
             catch (Exception ex)
             {
                 res = new GetUpdateVM(ex.Message);
+                ErrorSignal.FromCurrentContext().Raise(ex);
             }
             return res;
         }
@@ -106,6 +121,7 @@ namespace IranAudioGuide_MainServer.Controllers
             catch (Exception ex)
             {
                 res = new GetAllVM(ex.Message);
+                ErrorSignal.FromCurrentContext().Raise(ex);
             }
             return res;
         }
@@ -136,6 +152,7 @@ namespace IranAudioGuide_MainServer.Controllers
             catch (Exception ex)
             {
                 return CreatingUserResult.fail;
+                ErrorSignal.FromCurrentContext().Raise(ex);
             }
         }
         [HttpPost]

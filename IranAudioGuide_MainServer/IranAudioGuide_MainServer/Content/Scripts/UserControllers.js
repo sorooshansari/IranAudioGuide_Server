@@ -31,8 +31,8 @@ userApp.service('fileUpload', ['$http', function ($http) {
     }
 }]);
 
-userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http',
-    function ($window, $scope, userServices, $timeout, notific, $http) {
+userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
+    function ($window, $scope, userServices, $timeout, notific, $http, $state) {
 
         //$scope.uploadFile = function () {
         //    var file = $scope.myFile;
@@ -112,11 +112,11 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
     $scope.deactivateMobile = function () {
         userServices.deactivateMobile()
             .then(function (data) {
-                $scope.m = {
-                    msg: "you have successfully deactivated your device. the next device you sign in with, will become your active device.",
-                }
-                $scope.m.isShowMessage = true;
-               // notific.success(successMsg);
+                notific.success("", "you have successfully deactivated your device. the next device you sign in with, will become your active device.")
+                $scope.user.IsAccessChangeUuid = false;
+                $scope.m.isShowMessage = false;
+                // notific.success(successMsg);
+                $state.go("Packages");
             }, function (error) {
                 notific.error("ERROR", error.Message);
             });

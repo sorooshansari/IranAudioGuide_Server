@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System;
+using IranAudioGuide_MainServer.Services;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -152,6 +153,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Img_Name { get; set; }
         public Place Place { get; set; }
         public string Img_Description { get; set; }
+        public int Order { get; set; }
     }
     public class Tip
     {
@@ -220,9 +222,20 @@ namespace IranAudioGuide_MainServer.Models
 
     public class DownloadLink
     {
-        public int Id { get; set; }
+        public DownloadLink()
+        {
+            IsDisable = false;
+            //Path = "test";
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Dow_Id { get; set; }
         public string FileName { get; set; }
+
+        public string Path { get; set; }
         public DateTime TimeToVisit { get; set; }
+        public bool IsDisable { get; internal set; }
+        public bool IsAudio { get; set; }
     }
     public class Comment
     {
@@ -238,7 +251,7 @@ namespace IranAudioGuide_MainServer.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base(ConnectionString.connString
+            : base(GlobalPath.ConnectionString
                   , throwIfV1Schema: false)
         {
         }
