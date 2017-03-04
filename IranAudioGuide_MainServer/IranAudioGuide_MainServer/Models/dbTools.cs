@@ -92,28 +92,98 @@ namespace IranAudioGuide_MainServer.Models
         //    }
         //    return new GetPackagesVM { packages = res, errorMessage = error };
         //}
+        public string GetUrl(string fileName, bool isAudio)
+        {
 
+            string pathSource, pathDestination;
+            string url = "";
+            if (isAudio)
+            {
+
+                pathSource = GlobalPath.PathAudios;
+                pathDestination = GlobalPath.DownloadPathAudios;
+            }
+            else
+            {
+                pathSource = GlobalPath.PathStory;
+                pathDestination = GlobalPath.DownloadPathStory;
+            }
+
+            DownloadLink link = new DownloadLink();
+            using (var db = new ApplicationDbContext())
+            {
+                using (var dbTran = db.Database.BeginTransaction())
+                {
+                    var Path = db.DownloadLinks.FirstOrDefault(x => x.FileName == fileName & x.IsDisable == false & x.IsAudio == isAudio);
+                    if (Path == null)
+                    {
+
+                        link.FileName = fileName;
+                        link.TimeToVisit = DateTime.Now;
+                        link.IsAudio = isAudio;
+                        db.DownloadLinks.Add(link);
+
+                    }
+                    else
+                    {
+                        Path.TimeToVisit = DateTime.Now;
+                        url = Path.Path;
+                    }
+                    try
+                    {
+                        db.SaveChanges();
+                        if (Path == null)
+                        {
+                            link.Path = string.Format("{0}/{1}", pathDestination, link.Dow_Id + System.IO.Path.GetExtension(fileName));
+                            url = link.Path;
+                            db.SaveChanges();
+                        }
+
+                        dbTran.Commit();
+                        if (Path == null)
+                        {
+                            var ftp = new ServiceFtp();
+                            pathSource = pathSource + "/" + fileName;
+                            pathDestination = pathDestination + "/" + link.Dow_Id + System.IO.Path.GetExtension(fileName);
+                            ftp.Copy(pathSource, pathDestination);
+                        }
+                        return GlobalPath.host + "/" + url;
+                    }
+                    catch (Exception ex)
+                    {
+                        dbTran.Rollback();
+                        throw new ArgumentException("Dont Save Download link in DataBase Or Dont Copy File in Server", "original");
+                    }
+                }
+            }
+        }
         public string GetAudioUrl(Guid trackId, bool isAudio)
         {
             using (var db = new ApplicationDbContext())
             {
-                string url, trakName;
                 if (isAudio)
                 {
-                    trakName = (from a in db.Audios
-                                  where a.Aud_Id == trackId
-                                  select a.Aud_Url).FirstOrDefault();
-                    url = string.Format("{0}{1}", GlobalPath.FullPathAudios, trakName);
+                    var trakName = (from a in db.Audios
+                                    where a.Aud_Id == trackId
+                                    select a.Aud_Url).FirstOrDefault();
+
+                    if (string.IsNullOrEmpty(trakName))
+                        throw new ArgumentException("Not Found File Audio", "original");
+
+                    return GetUrl(trakName, isAudio);
 
                 }
                 else
                 {
-                    trakName = (from s in db.Storys
-                                where s.Sto_Id == trackId
-                                select s.Sto_Url).FirstOrDefault();
-                    url = string.Format("{0}{1}", GlobalPath.FullPathStory, trakName);
+                    var trakName = (from s in db.Storys
+                                    where s.Sto_Id == trackId
+                                    select s.Sto_Url).FirstOrDefault();
+
+                    if (string.IsNullOrEmpty(trakName))
+                        throw new ArgumentException("Not Found File Story", "original");
+
+                    return GetUrl(trakName, isAudio);
                 }
-                return url;
             }
         }
         public GetPackagesVM GetPackagesByCity(int cityId)
@@ -350,7 +420,7 @@ namespace IranAudioGuide_MainServer.Models
 
             var uuid = new SqlParameter("@uuid", newComment.uuid);
             uuid.SqlDbType = SqlDbType.NVarChar;
-            
+
             var Subject = new SqlParameter("@Subject", newComment.Subject);
             Subject.SqlDbType = SqlDbType.NVarChar;
 

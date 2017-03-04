@@ -1,54 +1,54 @@
 ﻿angular.module('AdminPage.services', [])
-    .service('notificService', [function () {
-        //jquery-notific8
-        var optionsDefault = {
-            positionClass: 'toast-top-center', //'toast-bottom-full-width ',// 'toast-top-center',
-            life: 5000,
-        };
-        toastr.options = optionsDefault;
-        this.success = function (header, content) {
-            toastr.remove();
-            toastr.clear();
-            toastr.success(content, header);
-            //$.notific8(content, {
-            //    //life: 5000,
-            //    heading: header,
-            //    theme: 'lime'
-            //});
-            return;
-        }
-        this.error = function (header, content) {
-            toastr.error(content, header);
-            //$.notific8(content, {
-            //    // life: 5000,
-            //    heading: header,
-            //    theme: 'ruby'
-            //});
-            return;
-        }
-        this.info = function (header, content) {
-            toastr.remove();
-            toastr.clear();
-            toastr.info(content, header);
-            return;
-        }
-        this.infoMessage = function (header, content) {
-            // toastr.options = optionsCenter;
-            toastr.remove();
-            toastr.clear();
-            toastr.info(content, header);
-            return;
-        }
-        this.warning = function (header, content) {
-            toastr.remove();
-            toastr.clear();
-            toastr.warning(content, header);
-            return;
-        }
-        this.clear = function () {
-            toastr.clear();
-        }
-    }])
+.service('notificService', [function () {
+    //jquery-notific8
+    var optionsDefault = {
+        positionClass: 'toast-top-center', //'toast-bottom-full-width ',// 'toast-top-center',
+        life: 5000,
+    };
+    toastr.options = optionsDefault;
+    this.success = function (header, content) {
+        toastr.remove();
+        toastr.clear();
+        toastr.success(content, header);
+        //$.notific8(content, {
+        //    //life: 5000,
+        //    heading: header,
+        //    theme: 'lime'
+        //});
+        return;
+    }
+    this.error = function (header, content) {
+        toastr.error(content, header);
+        //$.notific8(content, {
+        //    // life: 5000,
+        //    heading: header,
+        //    theme: 'ruby'
+        //});
+        return;
+    }
+    this.info = function (header, content) {
+        toastr.remove();
+        toastr.clear();
+        toastr.info(content, header);
+        return;
+    }
+    this.infoMessage = function (header, content) {
+        // toastr.options = optionsCenter;
+        toastr.remove();
+        toastr.clear();
+        toastr.info(content, header);
+        return;
+    }
+    this.warning = function (header, content) {
+        toastr.remove();
+        toastr.clear();
+        toastr.warning(content, header);
+        return;
+    }
+    this.clear = function () {
+        toastr.clear();
+    }
+}])
 .service('TipServices', ['$rootScope', '$http', function ($rootScope, $http) {
     var Tips = []
     return {
@@ -151,8 +151,9 @@
               then(function (response) {
                   $rootScope.PlacePagesLen = response.data.PagesLen;
                   $rootScope.PlaceCurrentPage = PageNum;
-                  angular.copy(response.data.Places, Places);
                   $rootScope.$broadcast('LoadFirstPlaceAudios', {});
+                  return response.data.Places;
+
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);
@@ -281,24 +282,31 @@
               then(function (response) {
                   $rootScope.EditOverlay = false;
                   $rootScope.hide('#EditPlaceModal');
-                  switch (response.data.status) {
-                      case 0:
-                          $rootScope.$broadcast('UpdatePlaces', {});
-                          break;
-                      case 1:
-                          $rootScope.$broadcast('EditPlaceValidationSummery', {
-                              data: response.data.content
-                          });
-                          break;
-                      case 2:
-                          $rootScope.$broadcast('EditPlaceUnknownError', {});
-                          console.log("Server failed to remove Place.");
-                          break;
-                      case 3:
-                          console.log(response.data.content);
-                          break;
-                      default:
+                  console.log(response);
+                  if (response.status == 200)
+                  {
+                      return response.data
+
                   }
+                  else
+                      switch (response.data.status) {
+                          case 0:
+                              $rootScope.$broadcast('UpdatePlaces', {});
+                              break;
+                          case 1:
+                              $rootScope.$broadcast('EditPlaceValidationSummery', {
+                                  data: response.data.content
+                              });
+                              break;
+                          case 2:
+                              $rootScope.$broadcast('EditPlaceUnknownError', {});
+                              console.log("Server failed to remove Place.");
+                              break;
+                          case 3:
+                              console.log(response.data.content);
+                              break;
+                          default:
+                      }
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);
@@ -338,6 +346,13 @@
                   console.log("Request failed");
                   console.log("status:" + response.status);
               });
+        },
+        getUrl: function (model) {
+            $http.post("/api/AppManager/GetAudioUrl", model).then(function (dataUrl) {
+                console.log("Request success", dataUrl.data);
+            }, function () {
+                console.log("Request failed");
+            });
         },
         ChangeTumbImg: function (NewImage, id) {
             method = 'POST';
@@ -379,11 +394,15 @@
             data = { placeId: PlaceId };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
+                  console.log(response);
                   angular.copy(response.data, ExtraImages);
               }, function (response) {
                   console.log("Request failed");
               });
             return ExtraImages;
+        },
+        editeOrder: function (models) {
+            return $http.post("/api/UserApi/SaveOrderExtraImg", models);
         },
         AddExtraImage: function (image, placeId) {
             method = 'POST';

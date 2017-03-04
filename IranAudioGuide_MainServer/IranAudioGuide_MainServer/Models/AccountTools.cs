@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using IranAudioGuide_MainServer.Models;
 using System.Threading.Tasks;
+using Elmah;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -113,8 +114,9 @@ namespace IranAudioGuide_MainServer.Models
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     return CreatingUserResult.success;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     UserManager.Delete(user);
                 }
             }
@@ -138,6 +140,7 @@ namespace IranAudioGuide_MainServer.Models
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return RecoverPassResults.Failure;
             }
         }
@@ -196,8 +199,9 @@ namespace IranAudioGuide_MainServer.Models
                 return UserManager.FindByName(userName);
 
             }
-            catch
+            catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return null;
             }
 
@@ -209,8 +213,9 @@ namespace IranAudioGuide_MainServer.Models
             {
                 return UserManager.GetRoles(user.Id);
             }
-            catch
+            catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return null;
             }
 

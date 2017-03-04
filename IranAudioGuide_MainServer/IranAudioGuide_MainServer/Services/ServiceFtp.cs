@@ -16,7 +16,7 @@ namespace IranAudioGuide_MainServer.Services
         private int bufferSize = 2048;
         public ServiceFtp()
         {
-            host = GlobalPath.host;
+            host = GlobalPath.hostFtp;
             user = GlobalPath.UsernameFtp;
             pass = GlobalPath.PasswordFtp;
         }
@@ -60,8 +60,15 @@ namespace IranAudioGuide_MainServer.Services
                     requestStream.Write(fileContents, 0, fileContents.Length);
                     requestStream.Close();
                     FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                    if (FtpStatusCode.ClosingData == response.StatusCode)
+                    {
+                        response.Close();
+                        return true;
+                    }
+                    else
+                        return false;
                     //Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
-                    response.Close();
+
                 }
 
                 return true;
@@ -103,13 +110,14 @@ namespace IranAudioGuide_MainServer.Services
             }
 
         }
-     
-        public void download(string pathSource, string pathDestination, string fileName)
+
+        public bool Copy(string pathSource, string pathDestination)
         {
             try
             {
-                var fullPathSource = host + "/" + pathSource + "/" + fileName;
-                var fullPathDestination = host + "/" + pathDestination + "/" + fileName;
+                var fullPathSource = GlobalPath.hostFtp + "/" + pathSource;
+                var fullPathDestination = GlobalPath.hostFtp + "/" + pathDestination;
+
                 var downloadRequest = (FtpWebRequest)FtpWebRequest.Create(fullPathSource);
                 downloadRequest.Credentials = new NetworkCredential(user, pass);
                 downloadRequest.UseBinary = true;
@@ -118,14 +126,14 @@ namespace IranAudioGuide_MainServer.Services
                 downloadRequest.Method = WebRequestMethods.Ftp.DownloadFile;
                 ftpResponse = (FtpWebResponse)downloadRequest.GetResponse();
                 Stream sourceStream = ftpResponse.GetResponseStream();
-                
+
                 byte[] fileContents;
-                int FileLen ;
+                int FileLen;
                 using (var streamReader = new MemoryStream())
                 {
                     sourceStream.CopyTo(streamReader);
                     fileContents = streamReader.ToArray();
-                    FileLen = fileContents.Length ;
+                    FileLen = fileContents.Length;
                 }
 
 
@@ -135,20 +143,29 @@ namespace IranAudioGuide_MainServer.Services
                 uploadRequest.Credentials = new NetworkCredential(user, pass);
                 uploadRequest.UseBinary = true;
                 uploadRequest.KeepAlive = true;
-             
-           
+
+
                 Stream requestStream = uploadRequest.GetRequestStream();
                 requestStream.Write(fileContents, 0, fileContents.Length);
                 requestStream.Close();
                 FtpWebResponse response = (FtpWebResponse)uploadRequest.GetResponse();
+                var f = response.StatusCode;
                 sourceStream.Close();
-                response.Close();
                 sourceStream.Close();
 
-
+                if (FtpStatusCode.ClosingData == response.StatusCode)
+                {
+                    response.Close();
+                    return true;
+                }
+                else
+                    return false;
             }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-            return;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
         }
         /* Delete File */
         public bool delete(string deleteFile, string path = null)
@@ -187,7 +204,37 @@ namespace IranAudioGuide_MainServer.Services
             }
 
         }
+        public bool delete(string path)
+        {
+            try
+            {
+                var fullPath = host + "/" + path;
 
+                /* Create an FTP Request */
+                ftpRequest = (FtpWebRequest)WebRequest.Create(fullPath);
+                /* Log in to the FTP Server with the User Name and Password Provided */
+                ftpRequest.Credentials = new NetworkCredential(user, pass);
+                /* When in doubt, use these options */
+                ftpRequest.UseBinary = true;
+                ftpRequest.UsePassive = true;
+                ftpRequest.KeepAlive = true;
+                /* Specify the Type of FTP Request */
+                ftpRequest.Method = WebRequestMethods.Ftp.DeleteFile;
+                /* Establish Return Communication with the FTP Server */
+                ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
+                /* Resource Cleanup */
+                ftpResponse.Close();
+                ftpRequest = null;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+
+            }
+
+        }
         /* Rename File */
         public void rename(string currentFileNameAndPath, string newFileName)
         {

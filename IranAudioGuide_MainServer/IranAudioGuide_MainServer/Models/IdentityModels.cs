@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System;
+using IranAudioGuide_MainServer.Services;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -120,7 +121,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Sto_Name { get; set; }
         public string Sto_Url { get; set; }
         public string Sto_Discription { get; set; }
-        public  Place Place { get; set; }
+        public Place Place { get; set; }
     }
     public class Place
     {
@@ -152,6 +153,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Img_Name { get; set; }
         public Place Place { get; set; }
         public string Img_Description { get; set; }
+        public int Order { get; set; }
     }
     public class Tip
     {
@@ -160,7 +162,7 @@ namespace IranAudioGuide_MainServer.Models
         public System.Guid Tip_Id { get; set; }
         public TipCategory Tip_Category { get; set; }
         public string Tip_Content { get; set; }
-        public  Place Place { get; set; }
+        public Place Place { get; set; }
 
     }
     public class TipCategory
@@ -185,7 +187,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Cit_Name { get; set; }
         public string Cit_Description { get; set; }
         public string Cit_ImageUrl { get; set; }
-        public  IList<Package> Cit_Packages { get; set; }
+        public IList<Package> Cit_Packages { get; set; }
     }
     public class Package
     {
@@ -199,11 +201,12 @@ namespace IranAudioGuide_MainServer.Models
         public string Pac_Name { get; set; }
         public long Pac_Price { get; set; }
         public float Pac_Price_Dollar { get; set; }
-        public  IList<city> Pac_Cities { get; set; }
+        public IList<city> Pac_Cities { get; set; }
         //public object pac_Cities { get; internal set; }
         public IList<ApplicationUser> Pac_User { get; set; }
     }
-    public class RequestForApp {
+    public class RequestForApp
+    {
         public RequestForApp()
         {
             CreateRequest = DateTime.Now;
@@ -215,6 +218,24 @@ namespace IranAudioGuide_MainServer.Models
         public DateTime CreateRequest { get; set; }
         public bool IsSend { get; set; }
         public string NameDevice { get; set; }
+    }
+
+    public class DownloadLink
+    {
+        public DownloadLink()
+        {
+            IsDisable = false;
+            //Path = "test";
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Dow_Id { get; set; }
+        public string FileName { get; set; }
+
+        public string Path { get; set; }
+        public DateTime TimeToVisit { get; set; }
+        public bool IsDisable { get; internal set; }
+        public bool IsAudio { get; set; }
     }
     public class Comment
     {
@@ -230,7 +251,7 @@ namespace IranAudioGuide_MainServer.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base(ConnectionString.connString
+            : base(GlobalPath.ConnectionString
                   , throwIfV1Schema: false)
         {
         }
@@ -256,6 +277,7 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<RequestForApp> RequestForApps { get; set; }
         public DbSet<WMPayment> WMPayment { get; set; }
+        public DbSet<DownloadLink> DownloadLinks { get; set; }
         //public System.Data.Entity.DbSet<IranAudioGuide_MainServer.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 
