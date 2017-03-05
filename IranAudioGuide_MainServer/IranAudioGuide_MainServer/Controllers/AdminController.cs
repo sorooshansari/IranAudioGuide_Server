@@ -518,7 +518,7 @@ namespace IranAudioGuide_MainServer.Controllers
         public JsonResult EditPlace(EditPlaceVM model)
         {
 
-            Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+            //Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
             if (!ModelState.IsValid)
             {
                 return Json(new Respond("Check input fields", status.invalidInput));
@@ -559,9 +559,9 @@ namespace IranAudioGuide_MainServer.Controllers
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new Respond(ex.Message, status.unknownError));
             }
-           // return Json(new Respond());
-            Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-            return Json(place);
+            return Json(new Respond());
+            //Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+            //return Json(place);
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -1447,5 +1447,6 @@ namespace IranAudioGuide_MainServer.Controllers
                     return Json(new Respond("Something went wrong. Contact devloper team.", status.unknownError));
             }
         }
+
     }
 }

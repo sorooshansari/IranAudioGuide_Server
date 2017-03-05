@@ -254,6 +254,7 @@ namespace IranAudioGuide_MainServer.Models
             : base(GlobalPath.ConnectionString
                   , throwIfV1Schema: false)
         {
+           // Database.Log = WriteFile.WriteSQL; 
         }
 
 

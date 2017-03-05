@@ -16,7 +16,7 @@ namespace IranAudioGuide_MainServer.Services
 
         public override string ConnectionString
         {
-            get { return GlobalPath.ConnectionString; }
+            get { return GlobalPath.ConnectionStringElmah; }
         }
 
     }

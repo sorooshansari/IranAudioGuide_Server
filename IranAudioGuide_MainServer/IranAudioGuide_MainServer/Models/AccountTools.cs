@@ -222,7 +222,12 @@ namespace IranAudioGuide_MainServer.Models
             }
 
         }
-
+        internal void loginUser(string username)
+        {
+            var user = UserManager.FindByName(username);
+            if (user != null)
+                SignInManager.SignIn(user, true, true);
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

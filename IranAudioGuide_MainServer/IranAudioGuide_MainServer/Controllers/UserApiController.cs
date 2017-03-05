@@ -46,7 +46,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     else if (Info.IsSetuuid && user.TimeSetUuid != null)
                     {
-                      
+
                         var startDay = user.TimeSetUuid.Value;
                         var endDay = DateTime.Now;
                         var day = endDay.Day - startDay.Day;
@@ -65,54 +65,54 @@ namespace IranAudioGuide_MainServer.Controllers
                 throw ex;
             }
         }
-        [HttpPost]
-        // GET: User
-        [Authorize(Roles = "AppUser")]
-        public IHttpActionResult GetPackagesPurchased()
-        {
-            try
-            {
-                using (var db = new ApplicationDbContext())
-                {
-                    string userName = User.Identity.Name;
-                    var list = db.Payments.Include("User").Include("Package").Include("Package.Pac_Cities")
-                           .Where(x => x.User.UserName == userName)
-                           .Where(x => x.PaymentFinished == true)
-                           .Select(p => p.Package).Select(p => new PackageVM()
-                           {
-                               PackagePrice = p.Pac_Price,
-                               PackagePriceDollar = p.Pac_Price_Dollar,
-                               PackageId = p.Pac_Id,
-                               PackageName = p.Pac_Name,
-                               PackageCities = p.Pac_Cities.Select(c => new CityVM()
-                               {
-                                   CityName = c.Cit_Name,
-                                   CityDesc = c.Cit_Description,
-                                   CityID = c.Cit_Id,
-                                   CityImageUrl = c.Cit_ImageUrl,
-                                   Places = (from pl in db.Places
-                                             where pl.Pla_city.Cit_Id == c.Cit_Id
-                                             select new PlaceVM()
-                                             {
-                                                 PlaceName = pl.Pla_Name,
-                                                 PlaceId = pl.Pla_Id,
-                                                 CityName = pl.Pla_Name,
-                                                 PlaceAddress = pl.Pla_Address,
-                                                 PlaceDesc = pl.Pla_Discription,
-                                                 ImgUrl = pl.Pla_ImgUrl,
+        //[HttpPost]
+        //// GET: User
+        //[Authorize(Roles = "AppUser")]
+        //public IHttpActionResult GetPackagesPurchased()
+        //{
+        //    try
+        //    {
+        //        using (var db = new ApplicationDbContext())
+        //        {
+        //            string userName = User.Identity.Name;
+        //            var list = db.Payments.Include("User").Include("Package").Include("Package.Pac_Cities")
+        //                   .Where(x => x.User.UserName == userName)
+        //                   .Where(x => x.PaymentFinished == true)
+        //                   .Select(p => p.Package).Select(p => new PackageVM()
+        //                   {
+        //                       PackagePrice = p.Pac_Price,
+        //                       PackagePriceDollar = p.Pac_Price_Dollar,
+        //                       PackageId = p.Pac_Id,
+        //                       PackageName = p.Pac_Name,
+        //                       PackageCities = p.Pac_Cities.Select(c => new CityVM()
+        //                       {
+        //                           CityName = c.Cit_Name,
+        //                           CityDesc = c.Cit_Description,
+        //                           CityID = c.Cit_Id,
+        //                           CityImageUrl = c.Cit_ImageUrl,
+        //                           Places = (from pl in db.Places
+        //                                     where pl.Pla_city.Cit_Id == c.Cit_Id
+        //                                     select new PlaceVM()
+        //                                     {
+        //                                         PlaceName = pl.Pla_Name,
+        //                                         PlaceId = pl.Pla_Id,
+        //                                         CityName = pl.Pla_Name,
+        //                                         PlaceAddress = pl.Pla_Address,
+        //                                         PlaceDesc = pl.Pla_Discription,
+        //                                         ImgUrl = pl.Pla_ImgUrl,
 
-                                             }).ToList()
-                               }).ToList()
-                           }).ToList();
+        //                                     }).ToList()
+        //                       }).ToList()
+        //                   }).ToList();
 
-                    return Ok(list);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //            return Ok(list);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
 
 
@@ -122,6 +122,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
+                var packagesPurchased = GetPackagesPurchased();
                 using (var db = new ApplicationDbContext())
                 {
                     string userName = User.Identity.Name;
@@ -131,34 +132,72 @@ namespace IranAudioGuide_MainServer.Controllers
                             PackagePrice = p.Pac_Price,
                             PackagePriceDollar = p.Pac_Price_Dollar,
                             PackageId = p.Pac_Id,
-                            PackageName = p.Pac_Name,
+                            PackageName = p.Pac_Name,                            
                             PackageCities = p.Pac_Cities.Select(c => new CityVM()
                             {
                                 CityName = c.Cit_Name,
                                 CityDesc = c.Cit_Description,
                                 CityID = c.Cit_Id,
                                 CityImageUrl = c.Cit_ImageUrl,
-                                Places = (from pl in db.Places
-                                          where (pl.Pla_city.Cit_Id == c.Cit_Id & !pl.Pla_Deactive)
-                                          select new PlaceVM()
-                                          {
-                                              PlaceName = pl.Pla_Name,
-                                              PlaceId = pl.Pla_Id,
-                                              CityName = pl.Pla_Name,
-                                              PlaceAddress = pl.Pla_Address,
-                                              PlaceDesc = pl.Pla_Discription,
-                                              ImgUrl = pl.Pla_ImgUrl,
-
-                                          }).ToList()
+                                Places = db.Places
+                                .Where(pl => pl.Pla_city.Cit_Id == c.Cit_Id && pl.Pla_isOnline == true)
+                                .Select(pl => new PlaceVM()
+                                {
+                                    PlaceName = pl.Pla_Name,
+                                    PlaceId = pl.Pla_Id,
+                                    CityName = pl.Pla_Name,
+                                    PlaceAddress = pl.Pla_Address,
+                                    PlaceDesc = pl.Pla_Discription,
+                                    ImgUrl = pl.Pla_ImgUrl,
+                                    isOnline = pl.Pla_isOnline,
+                                }).ToList()
                             }).ToList()
                         }).ToList();
-
+                    foreach (var item in list)
+                    {
+                        item.isPackagesPurchased = packagesPurchased.Any(x => x.PackageId == item.PackageId);
+                    }
                     return Ok(list);
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        private IList<PackageVM> GetPackagesPurchased()
+        {
+            try
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    string userName = User.Identity.Name;
+                    var list = db.Payments.Include("User").Include("Package")
+                           .Where(x => x.User.UserName == userName)
+                           .Where(x => x.PaymentFinished == true)
+                           .Select(p => p.Package).Select(p => new PackageVM()
+                           {
+                               PackageId = p.Pac_Id,
+
+                           }).ToList();
+                    var list2 = db.WMPayment.Include("User").Include("Package")
+                      .Where(x => x.User.UserName == userName)
+                      .Where(x => x.PaymentFinished == true)
+                       .Select(p => p.Package).Select(p => new PackageVM()
+                       {
+                           PackageId = p.Pac_Id,
+
+                       }).ToList();
+
+                    if (list2.Count > 0)
+                        list.AddRange(list2);
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+
             }
         }
 
@@ -217,62 +256,9 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult UploadFile()
-        {
-
-            //  System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
-
-
-            //HttpResponseMessage result = null;          
-            //    result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
-            //}
-
-            try
-            {
-                //var ftpurl = @"ftp://iranaudioguide.net/";
-
-                //var ftpusername = "test@iranaudioguide.net";
-                //var ftppassword = "{S+Iao&)H&SH";
-
-                //var ftpurl = "ftp://iranaudioguide.com/test.iranaudioguide.com/images/Files";
-
-                //var ftpusername = "pourmand";
-                //var ftppassword = "QQwwee11@@";
-
-                var httpRequest = HttpContext.Current.Request;
-                if (httpRequest.Files.Count <= 0)
-                    return BadRequest();// Request.CreateResponse(HttpStatusCode.BadRequest)
-
-
-                var docfiles = new List<string>();
-                foreach (string file in httpRequest.Files)
-                {
-                    var postedFile = httpRequest.Files[file];
-                    //var filePath = HttpContext.Current.Server.MapPath(@"~/images/Files/" + postedFile.FileName);
-                    //postedFile.SaveAs(filePath);
-                    //var ftpClinet = new ftp(ftpurl, ftpusername, ftppassword);
-                    var ftpClinet = new ServiceFtp();
-                    //ftpClinet.Upload(postedFile);
-
-                }//end ForEach
-                return Ok();
-            }
-            catch (WebException ex)
-            {
-                String status = ((FtpWebResponse)ex.Response).StatusDescription;
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-
-
-        [HttpPost]
         [Authorize(Roles = "Admin")]
         public IHttpActionResult SaveOrderExtraImg(List<ImageVM> listImg)
         {
-
-
             try
             {
                 using (var db = new ApplicationDbContext())
@@ -295,12 +281,6 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return BadRequest();
             }
-
-
         }
-
-
-
-
     }
 }

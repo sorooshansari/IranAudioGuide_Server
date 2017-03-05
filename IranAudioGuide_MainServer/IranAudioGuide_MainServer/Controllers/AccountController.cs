@@ -520,7 +520,6 @@ namespace IranAudioGuide_MainServer.Controllers
             return View();
         }
 
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -620,3 +619,21 @@ namespace IranAudioGuide_MainServer.Controllers
     }
 
 }
+
+
+//[AllowAnonymous]
+//[HttpPost]
+////[ValidateAntiForgeryToken] - Whats the point? F**k security 
+//public async Task<ActionResult> LoginUser(string name)
+//{
+
+//    var user = await UserManager.FindByNameAsync(name);
+
+//    if (user != null)
+//    {
+
+//        await SignInManager.SignInAsync(user, true, true);
+//    }
+
+//    return View();
+//}

@@ -175,6 +175,7 @@ namespace IranAudioGuide_MainServer.Models
         public long PackagePrice { get; set; }
         public float PackagePriceDollar { get; set; }
         public List<CityVM> PackageCities { get; set; }
+        public bool isPackagesPurchased { get; set; }
     }
 
     public class AddTipVM
@@ -469,6 +470,8 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class PlaceVM
     {
+        internal bool isShow;
+
         public System.Guid PlaceId { get; set; }
         public int Index { get; set; }
         public string PlaceName { get; set; }
