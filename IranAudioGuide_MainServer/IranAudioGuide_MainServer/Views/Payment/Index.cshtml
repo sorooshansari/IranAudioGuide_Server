@@ -185,22 +185,49 @@
                 </tr>
             </table>
             <div class="col-xs-12" style="text-align:right;">
+                <a class="btn btn-sm btn-default" href="mobile/close" style="width:100px; font-size:small;">Cancel</a>
                 @if (ViewBag.IsChooesZarinpal)
                 {
-                    @Html.ActionLink("Purchase", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = false }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Press To Buy", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = false }, new { @class = "btn btn-default purchasebtn" })
                 }
                 else
                 {
-                    @Html.ActionLink("Purchase", "WMPurchase", new { packageId = Model.PackageId, isFromApp = true }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Press To Buy", "WMPurchase", new { packageId = Model.PackageId, isFromApp = true }, new { @class = "btn btn-default purchasebtn" })
                 }
-
-                <a class="btn btn-sm btn-default" href="mobile/close" style="width:100px; font-size:small;">Cancel</a>
-                @Html.ActionLink("Press To Buy", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal" }, new { @class = "btn btn-default purchasebtn" })
             </div>
         </div>
         <div class="col-xs-12" style="text-align:center;">
-            <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
-            <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarinPal Logo above</p>
+            @if (ViewBag.IsChooesZarinpal)
+            {
+                <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
+                <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarinPal Logo above</p>
+
+            }
+            else
+            {
+                <ul class="icons">
+                    <li>
+                        <!-- begin WebMoney Transfer : attestation label -->
+                        <a href="https://passport.webmoney.ru/asp/certview.asp?wmid=059551878952" target=_blank>
+                            <IMG SRC="~/images/v_blue_on_transp_en.png" title="Here is your WM passport 059551878952" border="0"><br>
+                            <font size=1>Check Passport</font>
+                        </a>
+                        <!-- end WebMoney Transfer : attestation label -->
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#howto">How to pay with webmoney</button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#procedure">Payment procedure</button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#Terms">Terms & Conditions</button>
+                    </li>
+                </ul>
+
+
+            }
+
         </div>
     </div>
 </section>
