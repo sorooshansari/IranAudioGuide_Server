@@ -188,17 +188,24 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
         [HttpPost]
-        public void CreateComment(CommentVm comment)
+        public string CreateComment(CommentVm comment)
         {
-            var newComment = new Comment()
+            try
+            {
+                var newComment = new Comment()
                 {
                     Message = comment.Message,
                     uuid = comment.uuid,
-                    Subject = comment.Subject,
+                    Subject = "",
                     Email = comment.email
                 };
-
-            dbTools.CreateComment(newComment);
+                dbTools.CreateComment(newComment);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         protected override void Dispose(bool disposing)

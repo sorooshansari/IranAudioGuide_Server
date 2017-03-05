@@ -361,8 +361,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 // Don't reveal that the user does not exist
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = "Email Confirmation",
-                    Message = @"Your password has been reset. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                    Subject = "Password changed",
+                    Message = @"Your password has been changed. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
                 });
             }
             //var code = model.Code.Replace(" ", "+");
@@ -371,8 +371,8 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = "Email Confirmation",
-                    Message = @"Your password has been reset. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                    Subject = "Password changed",
+                    Message = @"Your password has been changed. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
                 });
             }
             AddErrors(result);
