@@ -34,7 +34,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 body = body.Replace("#Time#", Time);
 
                 EmailService EmailService = new EmailService();
-                EmailService.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
+                EmailService.SendWithoutTemplateAsync(new Microsoft.AspNet.Identity.IdentityMessage()
                 {
                     Body = body,
                     Destination = "iranaudioguide@gmail.com",

@@ -424,7 +424,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
-
+        
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
@@ -435,33 +435,73 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return RedirectToAction("Login");
             }
-
-            // Sign in the user with this external login provider if the user already has a login
-            var result1 = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-            switch (result1)
+            var newUser = new ApplicationUser() { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
+            var accessToken = loginInfo.ExternalIdentity.Claims.Where(c => c.Type.Equals("urn:google:accesstoken")).Select(c => c.Value).FirstOrDefault();
+            Uri apiRequestUri = new Uri("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + accessToken);
+            using (var webClient = new System.Net.WebClient())
             {
-                case SignInStatus.Success:
-
-                    return Redirect("/user/index");
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-                case SignInStatus.Failure:
-                    var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
-                    var r = await UserManager.CreateAsync(user);
-                    if (!r.Succeeded)
-                        return RedirectToAction("Login");
-                    var d = await UserManager.AddToRoleAsync(user.Id, "AppUser");
+                var json = webClient.DownloadString(apiRequestUri);
+                dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+                newUser.Picture = result.picture;
+                newUser.FullName = result.name;
+                newUser.GoogleId = result.id;
+                newUser.gender = result.gender;
+            }
+            var appUser = await UserManager.FindByNameAsync(newUser.Email);
+            if (appUser == null)
+            {
+                var res = await UserManager.CreateAsync(newUser);
+                if (res.Succeeded)
+                {
+                    var d = await UserManager.AddToRoleAsync(newUser.Id, "AppUser");
                     if (!d.Succeeded)
                         return RedirectToAction("Login");
-                    await SignInManager.SignInAsync(user, true, true);
-                    //if (!r.Succeeded)
-                    //    return RedirectToAction("Login");
+                    await SignInManager.SignInAsync(newUser, true, true);
                     return RedirectToAction("Index", "User");
-
+                }
+            }
+            else
+            {
+                appUser.GoogleId = newUser.GoogleId;
+                appUser.FullName = newUser.FullName;
+                appUser.Picture = newUser.Picture;
+                appUser.gender = newUser.gender;
+                var d = await UserManager.UpdateAsync(appUser);
+                if (!d.Succeeded)
+                    return RedirectToAction("Login");
+                await SignInManager.SignInAsync(appUser, true, true);
+                return RedirectToAction("Index", "User");
             }
             return RedirectToAction("Login");
+
+
+
+            //// Sign in the user with this external login provider if the user already has a login
+            //var result1 = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            //switch (result1)
+            //{
+            //    case SignInStatus.Success:
+
+            //        return Redirect("/user/index");
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.RequiresVerification:
+            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+            //    case SignInStatus.Failure:
+            //        var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
+            //        var r = await UserManager.CreateAsync(user);
+            //        if (!r.Succeeded)
+            //            return RedirectToAction("Login");
+            //        var d = await UserManager.AddToRoleAsync(user.Id, "AppUser");
+            //        if (!d.Succeeded)
+            //            return RedirectToAction("Login");
+            //        await SignInManager.SignInAsync(user, true, true);
+            //        //if (!r.Succeeded)
+            //        //    return RedirectToAction("Login");
+            //        return RedirectToAction("Index", "User");
+
+            //}
+            //return RedirectToAction("Login");
         }
 
         //

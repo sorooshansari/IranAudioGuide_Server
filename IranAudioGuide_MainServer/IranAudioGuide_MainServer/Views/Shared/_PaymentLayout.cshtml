@@ -28,14 +28,14 @@
 
     <title>@ViewBag.Title</title>
 
-    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    @*<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/css/bootstrap-social.css" rel="stylesheet" />
     <link href="~/Content/css/toggle.css" rel="stylesheet" />
     <link href="~/Content/css/main2.css" rel="stylesheet" />
 
-    <link href="~/Content/css/Custom4.css" rel="stylesheet" />
+    <link href="~/Content/css/Custom4.css" rel="stylesheet" />*@
 
-
+    @Styles.Render("~/Content/css/paymentCss");
 
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/ie8.css" /><![endif]-->
@@ -84,11 +84,9 @@
         </ul>
     </footer>
 
+    @Scripts.Render("~/bundles/paymentJs");
 
-    <!-- Scripts -->
-    <!--[if lte IE 8]><script src="~/assets/js/ie/respond.min.js"></script><![endif]-->
-
-    <script src="~/Content/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Content/Scripts/bootstrap.min.js"></script>
+    @*<script src="~/Content/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Content/Scripts/bootstrap.min.js"></script>*@
 </body>
 </html>
