@@ -127,15 +127,14 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             userServices.getPackages().then(function (data) {
                 $scope.profile.packages = data;
                 angular.forEach(data, function (item, index) {
-                    //console.log(index, ': ', item);
                     if(item.isPackagesPurchased == true)
                     {
                         $scope.profile.packagesPurchased.push(item);
                     }
                 });
-                //$scope.profile.packagesPurchased = data.
                 $scope.profile.isCompletedLoading = true;
             }, function () {
+                $scope.profile.isCompletedLoading = true;
 
             });
         }
@@ -149,10 +148,10 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             //var s = element.removeAttr('class').addClass("fa fa-spinner fa-spin");
     //$scope.profile.isCompletedLoading = true;
 
-    //$timeout(function () {
-    //    angular.element('#btnGetPakage').triggerHandler('click');
-    //}, 0);
-    $scope.getPackages();
+    $timeout(function () {
+        angular.element('#btnGetPakage').triggerHandler('click');
+    }, 0);
+ 
 
     $scope.sendEmailConfirmedAgain = function () {
         userServices.sendEmailConfirmedAgain().then(function (data) {

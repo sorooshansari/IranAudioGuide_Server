@@ -57,9 +57,9 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 //return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
                 return "error" + ex.Message;
-                ErrorSignal.FromCurrentContext().Raise(ex);
             }
         }
         [HttpPost]
@@ -151,8 +151,8 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-                return CreatingUserResult.fail;
                 ErrorSignal.FromCurrentContext().Raise(ex);
+                return CreatingUserResult.fail;
             }
         }
         [HttpPost]
@@ -173,6 +173,8 @@ namespace IranAudioGuide_MainServer.Controllers
         public IHttpActionResult GetCurrentUserInfo()
         {
             string userName = User.Identity.Name;
+            if (string.IsNullOrEmpty(userName))
+                return BadRequest();
             var user = acTools.GetUserByName(userName);
             if (user == null)
                 return null;
@@ -204,6 +206,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return ex.Message;
             }
         }

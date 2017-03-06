@@ -62,12 +62,12 @@ namespace IranAudioGuide_MainServer.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            var model = new LoginViewModel();
-            var serviceIpAdress = new ServiceIpAdress();
-            ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
+          //  var model = new LoginViewModel();
+          //  var serviceIpAdress = new ServiceIpAdress();
+           // ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
             ViewBag.View = Views.Login;
             ViewBag.ReturnUrl = returnUrl;
-            return View(model);
+            return View(/*model*/);
         }
 
         //

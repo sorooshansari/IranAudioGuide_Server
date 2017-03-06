@@ -1,11 +1,9 @@
-﻿using IranAudioGuide_MainServer.Models;
+﻿using Elmah;
+using IranAudioGuide_MainServer.Models;
 using IranAudioGuide_MainServer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 
 namespace IranAudioGuide_MainServer.Controllers
@@ -13,7 +11,27 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     public class UserApiController : ApiController
     {
+        [HttpPost]
+        [AllowAnonymous]
+        public IHttpActionResult CheckLoginUser()
+        {
+            var service = new AccountTools();
+            string userName = User.Identity.Name;
+            if (string.IsNullOrEmpty(userName) || !User.Identity.IsAuthenticated)
+                return BadRequest();
+            var user = service.GetUserByName(userName);
+            if (user == null)
+                return BadRequest();
+            var userProfile = new UserProfile()
+            {
+                Email = user.UserName,
+                FullName = user.FullName,
+                imgUrl = user.ImgUrl,
 
+            };
+            userProfile.RolesName = service.GetUserRoles(user);
+            return Ok(userProfile);
+        }
         [HttpPost]
         public IHttpActionResult GetCurrentUserInfo()
         {
@@ -62,8 +80,17 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 throw ex;
             }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public bool IsTheFirstLogin()
+        {
+            var serviceIpAdress = new ServiceIpAdress();
+            return serviceIpAdress.IsTheFirstLogin();
         }
         //[HttpPost]
         //// GET: User
@@ -132,7 +159,7 @@ namespace IranAudioGuide_MainServer.Controllers
                             PackagePrice = p.Pac_Price,
                             PackagePriceDollar = p.Pac_Price_Dollar,
                             PackageId = p.Pac_Id,
-                            PackageName = p.Pac_Name,                            
+                            PackageName = p.Pac_Name,
                             PackageCities = p.Pac_Cities.Select(c => new CityVM()
                             {
                                 CityName = c.Cit_Name,
@@ -162,6 +189,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 throw ex;
             }
         }
@@ -196,6 +224,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return null;
 
             }
@@ -279,6 +308,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest();
             }
         }

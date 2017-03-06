@@ -57,12 +57,12 @@
                                 @*<li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>*@
                                 <li><a class="scrolly" rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>Contact Us</a></li>
                                 <li ng-hide="user.isAutintication"><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
-                               
+
                                 <li ng-show="user.isAutintication && user.isAdmin == false"><a rel="nofollow" href="@Url.Action("index","user")"><i class="fa fa-sign-in"></i>Profile</a></li>
                                 <li ng-show="user.isAutintication && user.isAdmin == true"><a rel="nofollow" href="@Url.Action("index","Admin")"><i class="fa fa-sign-in"></i>Profile</a></li>
 
-                                
-                                 <li ng-show="user.isAutintication"><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>Log out</a></li>
+
+                                <li ng-show="user.isAutintication"><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>Log out</a></li>
                             </ul>
                         </section>
                     </li>
@@ -80,19 +80,19 @@
     <!-- Scripts -->
     <!--[if lte IE 8]><script src="~/assets/js/ie/respond.min.js"></script><![endif]-->
     @*<script src="~/assets/js/jquery.min.js"></script>
-    <script src="~/assets/js/jquery.scrollex.min.js"></script>
-    <script src="~/assets/js/jquery.scrolly.min.js"></script>
-    <script src="~/assets/js/skel.min.js"></script>
-    <script src="~/assets/js/util.js"></script>
-    <script src="~/assets/js/main.js"></script>
-    <script src="~/Content/Scripts/angular.min.js"></script>
-    <script src="~/Content/Scripts/angular-scroll-spy.js"></script>
-    <script src="~/Content/Scripts/countUp.js"></script>
-    <script src="~/Content/Scripts/angular-countUp.js"></script>
-    <script src="~/Content/Scripts/HomeCustom.js"></script>
-    <script src="~/Content/Scripts/HomeControllers.js"></script>*@
+        <script src="~/assets/js/jquery.scrollex.min.js"></script>
+        <script src="~/assets/js/jquery.scrolly.min.js"></script>
+        <script src="~/assets/js/skel.min.js"></script>
+        <script src="~/assets/js/util.js"></script>
+        <script src="~/assets/js/main.js"></script>
+        <script src="~/Content/Scripts/angular.min.js"></script>
+        <script src="~/Content/Scripts/angular-scroll-spy.js"></script>
+        <script src="~/Content/Scripts/countUp.js"></script>
+        <script src="~/Content/Scripts/angular-countUp.js"></script>
+        <script src="~/Content/Scripts/HomeCustom.js"></script>
+        <script src="~/Content/Scripts/HomeControllers.js"></script>*@
 
-            @Scripts.Render("~/bundles/minJs")
+    @Scripts.Render("~/bundles/minJs")
     <script type="text/javascript">
         angular.module('HomePage', [])
             .config(function ($sceProvider) {
@@ -103,29 +103,38 @@
             })
             .controller('HomeController', ['$scope', '$http', '$timeout',
                 function ($scope, $http, $timeout) {
-                    
+
                     $scope.user = {
                         isAutintication: false,
                         username: "test",
-                        isAdmin: false
+                        isAdmin: false,
+
                     }
+                    var init = function () {
+                        if (angular.element('#chechLogin').length == 0) {
+                            $http.post('/api/UserApi/CheckLoginUser').then(function (result) {
+                                $scope.user.username = result.Email;
+                                if (result.RolesName[0] == "Admin")
+                                    $scope.user.isAdmin = true;
 
+                                $scope.user.isAutintication = true;
 
-                    $http.get('/api/AppManager/GetCurrentUserInfo').success(function (result) {
-                        $scope.user.username = result.Email;
-                        if (result.RolesName[0] == "Admin")
-                            $scope.user.isAdmin = true;
-                      
-                        $scope.user.isAutintication = true;
+                            }, function (error, status, headers, config) {
+                                $scope.user.isAutintication = false;
+                            });
+                        }
+                        else {
+                            $http.get('/api/UserApi/IsTheFirstLogin').then(function (result) {
+                                $scope.isTheFirstLogin = result.data;
 
-                    }).error(function (error, status, headers, config) {
-                        $scope.user.isAutintication = false;
-                    });
-
-
-
+                            }, function (error, status, headers, config) {
+                                $scope.isTheFirstLogin = false;
+                            });
+                        }
+                    }
+                    init();
                     $scope.sendEmailConfirmedAgain = function () {
-                        $http.get('/Account/SendEmailConfirmedAgain').then(function () {                           
+                        $http.get('/Account/SendEmailConfirmedAgain').then(function () {
                             $scope.isMsg = true;
                             $timeout(function () {
                                 $scope.isMsg = false;
@@ -137,14 +146,13 @@
 
                     $scope.newsletters = {};
                     $scope.showPopup = function (nameDevice) {
-                        $scope.newsletters.nameDevice = nameDevice;                        
+                        $scope.newsletters.nameDevice = nameDevice;
                         $('.form-request').addClass('form-request-show');
 
                     }
                     $scope.sendEmail = function () {
                         $scope.formRequest.isError = false;
-                        if ($scope.formRequest.$invalid)
-                        {
+                        if ($scope.formRequest.$invalid) {
                             $scope.formRequest.isError = true;
                             return;
 
@@ -155,11 +163,11 @@
                             NameDevice: $scope.newsletters.nameDevice,
                             Email: $scope.newsletters.emailForApp
                         };
-                        $http.post('/api/UserApi/SaveRequest',user).success(function (result) {
-                          
+                        $http.post('/api/UserApi/SaveRequest', user).success(function (result) {
+
 
                         }).error(function (error, status, headers, config) {
-                         
+
                         });
                     }
                     $scope.ContactUs = function (model, form) {

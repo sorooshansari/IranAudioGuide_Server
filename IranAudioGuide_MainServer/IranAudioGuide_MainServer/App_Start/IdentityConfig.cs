@@ -40,7 +40,13 @@ namespace IranAudioGuide_MainServer
             mail.Subject = message.Subject;
             mail.Body = message.Body;
             mail.IsBodyHtml = true;
-             
+
+            mail.Headers.Add("X-Company", "IranAudioGuide.com");
+            // mail.Headers.Add("X-Location", "Iran");
+            mail.Headers.Add("From", "info@ianaudioguide.com");
+            //ا فعال شدن این گزینه ایمیل شما مورد بررسی‌های بیشتری قرار می‌گیرد و شانس اسپم شناخته شدن آنرا افزایش می‌دهد.
+            mail.Priority = System.Net.Mail.MailPriority.High;
+            //mail.BodyEncoding = System.Text.Encoding.GetEncoding("");
             try
             {
                 client.Send(mail);
@@ -70,7 +76,7 @@ namespace IranAudioGuide_MainServer
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
@@ -111,7 +117,7 @@ namespace IranAudioGuide_MainServer
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
