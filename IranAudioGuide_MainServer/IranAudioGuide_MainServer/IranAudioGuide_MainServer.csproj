@@ -244,12 +244,23 @@
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WebmoneyResultController.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    <Compile Include="Migrations\201703061218094_1-remove-package.cs" />
+    <Compile Include="Migrations\201703061218094_1-remove-package.designer.cs">
+      <DependentUpon>201703061218094_1-remove-package.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703061221395_2-remove-ApplicationUser.cs" />
+    <Compile Include="Migrations\201703061221395_2-remove-ApplicationUser.designer.cs">
+      <DependentUpon>201703061221395_2-remove-ApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703061258170_3-add-Procurement.cs" />
+    <Compile Include="Migrations\201703061258170_3-add-Procurement.designer.cs">
+      <DependentUpon>201703061258170_3-add-Procurement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703061317305_ss.cs" />
+    <Compile Include="Migrations\201703061317305_ss.Designer.cs">
+      <DependentUpon>201703061317305_ss.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -260,6 +271,8 @@
     <Compile Include="Models\dbTools.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Mappings.cs" />
+    <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Variables.cs" />
     <Compile Include="Models\ViewModels.cs" />
@@ -273,9 +286,9 @@
     </Compile>
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
+    <Compile Include="Services\GlobalPath.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
-    <Compile Include="Services\GlobalPath.cs" />
     <Compile Include="Services\ServiceJob.cs" />
     <Compile Include="Services\ServiceRecaptcha.cs" />
     <Compile Include="Startup.cs" />
@@ -1713,12 +1726,21 @@
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <EmbeddedResource Include="Migrations\201703061218094_1-remove-package.resx">
+      <DependentUpon>201703061218094_1-remove-package.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703061221395_2-remove-ApplicationUser.resx">
+      <DependentUpon>201703061221395_2-remove-ApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703061258170_3-add-Procurement.resx">
+      <DependentUpon>201703061258170_3-add-Procurement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703061317305_ss.resx">
+      <DependentUpon>201703061317305_ss.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

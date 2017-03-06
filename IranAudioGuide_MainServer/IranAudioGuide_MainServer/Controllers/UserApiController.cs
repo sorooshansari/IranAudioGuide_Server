@@ -197,37 +197,37 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                using (var db = new ApplicationDbContext())
-                {
-                    string userName = User.Identity.Name;
-                    var list = db.Payments.Include("User").Include("Package")
-                           .Where(x => x.User.UserName == userName)
-                           .Where(x => x.PaymentFinished == true)
-                           .Select(p => p.Package).Select(p => new PackageVM()
-                           {
-                               PackageId = p.Pac_Id,
+                //using (var db = new ApplicationDbContext())
+                //{
+                //    string userName = User.Identity.Name;
+                //    var list = db.Payments.Include("User").Include("Package")
+                //           .Where(x => x.User.UserName == userName)
+                //          // .Where(x => x.PaymentFinished == true)
+                //           .Select(p => p.Package).Select(p => new PackageVM()
+                //           {
+                //               PackageId = p.Pac_Id,
 
-                           }).ToList();
-                    var list2 = db.WMPayment.Include("User").Include("Package")
-                      .Where(x => x.User.UserName == userName)
-                      .Where(x => x.PaymentFinished == true)
-                       .Select(p => p.Package).Select(p => new PackageVM()
-                       {
-                           PackageId = p.Pac_Id,
+                //           }).ToList();
+                //    var list2 = db.WMPayment.Include("User").Include("Package")
+                //      .Where(x => x.User.UserName == userName)
+                //     // .Where(x => x.PaymentFinished == true)
+                //       .Select(p => p.Package).Select(p => new PackageVM()
+                //       {
+                //           PackageId = p.Pac_Id,
 
-                       }).ToList();
+                //       }).ToList();
 
-                    if (list2.Count > 0)
-                        list.AddRange(list2);
-                    return list;
-                }
+                //    if (list2.Count > 0)
+                //        list.AddRange(list2);
+                //    return list;
+                //}
             }
             catch (Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
-                return null;
+               
 
-            }
+            } return null;
         }
 
         [AllowAnonymous]
