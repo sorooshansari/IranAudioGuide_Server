@@ -226,10 +226,6 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702251754061_init.cs" />
-    <Compile Include="Migrations\201702251754061_init.Designer.cs">
-      <DependentUpon>201702251754061_init.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
@@ -1694,9 +1690,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702251754061_init.resx">
-      <DependentUpon>201702251754061_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
