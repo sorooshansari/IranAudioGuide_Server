@@ -13,7 +13,7 @@ namespace dbUpdater.Services
         private FtpWebRequest ftpRequest = null;
         private FtpWebResponse ftpResponse = null;
         private Stream ftpStream = null;
-        //private int bufferSize = 2048;
+        private int bufferSize = 2048;
         public ServiceFtp()
         {
             host = GlobalPath.hostFtp;

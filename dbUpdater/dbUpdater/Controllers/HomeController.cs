@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System;
+
 using System.Web.Mvc;
 
 namespace dbUpdater.Controllers
@@ -10,19 +8,7 @@ namespace dbUpdater.Controllers
     {
         public ActionResult Index()
         {
-            try
-            {
-                throw new ArgumentNullException("value");
-                return View();
-
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-
-                return View();
-            }
+            return View();
         }
-
     }
 }

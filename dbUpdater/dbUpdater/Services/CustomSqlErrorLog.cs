@@ -1,8 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 
 namespace dbUpdater.Services
 {
-
     public class CustomSqlErrorLog : Elmah.SqlErrorLog
 
     {
