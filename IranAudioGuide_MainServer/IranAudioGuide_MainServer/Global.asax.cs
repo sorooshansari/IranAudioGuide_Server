@@ -20,8 +20,8 @@ namespace IranAudioGuide_MainServer
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            var job =  new ScheduleDownloadLink();
-            job.Run();
+            //var job =  new ScheduleDownloadLink();
+            //job.Run();
         }
     }
 }

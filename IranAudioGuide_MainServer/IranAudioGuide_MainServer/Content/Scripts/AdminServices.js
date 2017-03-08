@@ -257,7 +257,7 @@
               then(function (response) {
                   switch (response.data.status) {
                       case 0:
-                          $rootScope.$broadcast('OnlineUpdatePlaces', {});
+                          $rootScope.$broadcast('UpdatePlaces', {});
                           break;
                       case 2:
                           console.log("Server failed to remove Place. Invalid Place Id.");
@@ -282,31 +282,31 @@
               then(function (response) {
                   $rootScope.EditOverlay = false;
                   $rootScope.hide('#EditPlaceModal');
-                  console.log(response);
-                  if (response.status == 200)
-                  {
-                      return response.data
+                  //console.log(response);
+                  //if (response.status == 200)
+                  //{
+                  //    return response.data
 
+                  //}
+                  //else
+                  switch (response.data.status) {
+                      case 0:
+                          $rootScope.$broadcast('UpdatePlaces', {});
+                          break;
+                      case 1:
+                          $rootScope.$broadcast('EditPlaceValidationSummery', {
+                              data: response.data.content
+                          });
+                          break;
+                      case 2:
+                          $rootScope.$broadcast('EditPlaceUnknownError', {});
+                          console.log("Server failed to remove Place.");
+                          break;
+                      case 3:
+                          console.log(response.data.content);
+                          break;
+                      default:
                   }
-                  else
-                      switch (response.data.status) {
-                          case 0:
-                              $rootScope.$broadcast('UpdatePlaces', {});
-                              break;
-                          case 1:
-                              $rootScope.$broadcast('EditPlaceValidationSummery', {
-                                  data: response.data.content
-                              });
-                              break;
-                          case 2:
-                              $rootScope.$broadcast('EditPlaceUnknownError', {});
-                              console.log("Server failed to remove Place.");
-                              break;
-                          case 3:
-                              console.log(response.data.content);
-                              break;
-                          default:
-                      }
               }, function (response) {
                   console.log("Request failed");
                   console.log("status:" + response.status);

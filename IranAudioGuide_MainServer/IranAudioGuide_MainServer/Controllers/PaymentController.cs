@@ -8,8 +8,6 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using IranAudioGuide_MainServer.Services;
-using System.Net.Http;
-using WebMoney.Cryptography;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -93,6 +91,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return View("vmessage", new vmessageVM()
                 {
                     Subject = "Error!",
@@ -223,20 +222,25 @@ namespace IranAudioGuide_MainServer.Controllers
                 string redirectPage = baseUrl + "/Payment/Return";
                 if (isFromWeb)
                     redirectPage = baseUrl + "/Payment/ReturnToWebPage";
-                var payment = new Payment()
+                //Todo I've changed command
+
+                var buy = new Procurement()
                 {
-                    Amount = package.Pac_Price,
-                    SaleReferenceId = 0,
-                    BankName = bankName,
-                    PaymentFinished = false,
+                    
+                    Payment = new Payment()
+                    {
+                        Amount = package.Pac_Price,
+                        SaleReferenceId = 0,
+                        BankName = bankName
+                    },                    
                     User = user,
                     Package = package
                 };
 
-                db.Payments.Add(payment);
+                db.Procurements.Add(buy);
                 db.SaveChanges();
 
-                Guid paymentId = payment.PaymentId;
+                Guid paymentId = buy.Payment.PaymentId;
                 string error = ZarinpalPayment(package.Pac_Price, redirectPage, paymentId, package.Pac_Name);
                 if (error.Length > 0)
                 {
@@ -257,6 +261,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ViewBag.Message = ex.Message;
                 ViewBag.SaleReferenceId = "**************";
                 ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
@@ -271,8 +276,9 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.BankName = "ZarinPal Payment Gateway";
                 ZarinpalReturn();
             }
-            catch
+            catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ViewBag.BankName = "Your payment gateway is not specified";
                 ViewBag.Message = "No response from payment gateway";
                 ViewBag.ErrDesc = "There is no response from your payment gateway!";
@@ -290,8 +296,9 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.BankName = "ZarinPal Payment Gateway";
                 ZarinpalReturn();
             }
-            catch
+            catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ViewBag.BankName = "Your payment gateway is not specified";
                 ViewBag.Message = "No response from payment gateway";
                 ViewBag.ErrDesc = "There is no response from your payment gateway!";
@@ -352,6 +359,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return View("vmessage", new vmessageVM()
                 {
                     Subject = "Error!",
@@ -369,25 +377,29 @@ namespace IranAudioGuide_MainServer.Controllers
 
         private void UpdatePayment(Guid paymentId, string vresult, long saleReferenceId, string refId, bool paymentFinished = false)
         {
+            //Todo I've changed command
+            var procurement = db.Procurements.Include("Payment").FirstOrDefault(x=> x.Payment.PaymentId == paymentId);
 
-            var payment = db.Payments.Find(paymentId);
-
-            if (payment != null)
+            if (procurement != null)
             {
-                payment.StatusPayment = vresult;
-                payment.SaleReferenceId = saleReferenceId;
-                payment.PaymentFinished = paymentFinished;
+                procurement.Payment.StatusPayment = vresult;
+                procurement.Payment.SaleReferenceId = saleReferenceId;
+                procurement.PaymentFinished = paymentFinished;
 
                 if (refId != null)
                 {
-                    payment.ReferenceNumber = refId;
+                    procurement.Payment.ReferenceNumber = refId;
                 }
 
-                db.Entry(payment).State = EntityState.Modified;
+                db.Entry(procurement).State = EntityState.Modified;
                 db.SaveChanges();
             }
             else
             {
+                //Todo I've changed command
+                Exception ex = new Exception("UpdatePayment:  dont find procurement for IdPayment ");
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+
                 // اطلاعاتی از دیتابیس پیدا نشد
             }
         }
@@ -495,6 +507,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ViewBag.SaleReferenceId = "**************";
                 ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
                 ViewBag.Message = "Problem occurred in payment process. ";
@@ -504,6 +517,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         private long FindAmountPayment(Guid paymentId)
         {
+            //Todo Is it correct 
             long amount = db.Payments.Where(c => c.PaymentId == paymentId).Select(c => c.Amount).FirstOrDefault();
 
             return amount;

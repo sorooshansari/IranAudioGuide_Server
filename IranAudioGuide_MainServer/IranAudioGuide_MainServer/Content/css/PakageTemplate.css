@@ -172,7 +172,7 @@
     color: #fff;
     font-size: 15px;
     padding: 10px 30px;
-    background: #da9816; /* Old browsers */
+    /*  Old browsers */
     -webkit-transition: all 0.51s ease-in-out;
     -moz-transition: all 0.51s ease-in-out;
     -o-transition: all 0.51s ease-in-out;
@@ -285,6 +285,7 @@ margin-bottom: 77px;
     width: 30%;
     box-shadow: 1px 1px 1px #95afd4;
     float: left;
+        margin-right: 3%;
 }
 
 .col-flex-2 {
@@ -322,7 +323,14 @@ margin-bottom: 77px;
         margin: 19px 0 0 0;
     }
 }
+a.btn.btn-success.btn-large {
+    background: #da9816;
 
+}
 a.btn.btn-success.btn-large:hover {
     background-color: #237572;
+}
+a.btn.btn-green.btn-large {
+    background-color: #237572;
+        cursor: not-allowed;
 }

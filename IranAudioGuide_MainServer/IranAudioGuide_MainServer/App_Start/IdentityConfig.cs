@@ -19,7 +19,6 @@ namespace IranAudioGuide_MainServer
     {
         public Task SendAsync(IdentityMessage message)
         {
-
             try
             {
                 // Plug in your email service here to send an email.

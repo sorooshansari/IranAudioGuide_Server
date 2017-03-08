@@ -483,7 +483,8 @@ angular.module('AdminPage.controllers', [])
             PlaceServices.RemovePlace(PlaceID, PlaceName);
         };
         $scope.$on('UpdatePlaces', function (event) {
-            $scope.places = PlaceServices.Get(0);
+            //console.log($scope.PlaceCurrentPage);
+            $scope.places = PlaceServices.Get($scope.PlaceCurrentPage);
             scroll("#PlaceList");
         });
         $scope.$on('UpdatePlaceValidationSummery', function (event, args) {
