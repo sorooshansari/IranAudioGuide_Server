@@ -13,7 +13,7 @@ namespace IranAudioGuide_MainServer.Models
             // one-to-one
             this.HasOptional(x => x.Payment)
                 .WithRequired(x => x.procurement)
-                .Map(m => m.MapKey("PayId"))
+                //.Map(m => m.MapKey("PayId"))
                 .WillCascadeOnDelete();
 
             // one-to-one

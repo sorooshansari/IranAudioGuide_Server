@@ -614,12 +614,12 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT dbo.Packagecities.city_Cit_Id AS cityID
-	FROM  dbo.Packagecities INNER JOIN
-			 dbo.Packages ON dbo.Packagecities.Package_Pac_Id = dbo.Packages.Pac_Id INNER JOIN
-			 dbo.Payments ON dbo.Packages.Pac_Id = dbo.Payments.Package_Pac_Id INNER JOIN
-			 dbo.AspNetUsers ON dbo.Payments.User_Id = dbo.AspNetUsers.Id
-	WHERE (dbo.AspNetUsers.Id = @UserID) AND (dbo.Payments.PaymentFinished = 1)
+     SELECT dbo.Packagecities.city_Cit_Id AS cityID
+FROM            AspNetUsers INNER JOIN
+                         Procurements ON AspNetUsers.Id = Procurements.User_Id INNER JOIN
+                         Packages ON Procurements.ProcurementId = Packages.Pac_Id INNER JOIN
+                         Packagecities ON Packages.Pac_Id = Packagecities.Package_Pac_Id
+WHERE        (AspNetUsers.Id = @UserID) AND (dbo.Procurements.PaymentFinished = 1)
 	GROUP BY dbo.Packagecities.city_Cit_Id
 END",
 @"CREATE FUNCTION [dbo].[AudiosCount]

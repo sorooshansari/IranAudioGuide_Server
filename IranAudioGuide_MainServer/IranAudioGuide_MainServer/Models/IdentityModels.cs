@@ -224,8 +224,8 @@ namespace IranAudioGuide_MainServer.Models
         public Guid Pac_Id { get; set; }
         public Package Package { get; set; }
 
-
-        public Guid? PayId { get; set; }
+       
+       // public Guid? PaymentId { get; set; }
         public Payment Payment { get; set; }
 
         public int? WMPaymentId { get; set; }
@@ -364,7 +364,7 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<RequestForApp> RequestForApps { get; set; }
         public DbSet<WMPayment> WMPayment { get; set; }
         public DbSet<DownloadLink> DownloadLinks { get; set; }
-        public DbSet<Procurement> Procurements { get; set; }
+       public DbSet<Procurement> Procurements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
