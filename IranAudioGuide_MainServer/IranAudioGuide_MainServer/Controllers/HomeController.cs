@@ -34,7 +34,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 body = body.Replace("#Time#", Time);
 
                 EmailService EmailService = new EmailService();
-                EmailService.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
+                EmailService.SendWithoutTemplateAsync(new Microsoft.AspNet.Identity.IdentityMessage()
                 {
                     Body = body,
                     Destination = "iranaudioguide@gmail.com",
@@ -49,44 +49,44 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
-        public ActionResult Error()
-        {
-            return View("Error");
-        }
-        public ActionResult CheckOut()
-        {
-            return View("CheckOut");
-        }
-        public ActionResult PaymentRef()
-        {
-            return View("PaymentRef");
-        }
-        public ActionResult PurchaseDetails()
-        {
-            return View("PurchaseDetails");
-        }
-        public ActionResult test()
-        {
-            var url = "https://merchant.wmtransfer.com/lmi/payment.asp?at=authtype_2";
+        //public ActionResult Error()
+        //{
+        //    return View("Error");
+        //}
+        //public ActionResult CheckOut()
+        //{
+        //    return View("CheckOut");
+        //}
+        //public ActionResult PaymentRef()
+        //{
+        //    return View("PaymentRef");
+        //}
+        //public ActionResult PurchaseDetails()
+        //{
+        //    return View("PurchaseDetails");
+        //}
+        //public ActionResult test()
+        //{
+        //    var url = "https://merchant.wmtransfer.com/lmi/payment.asp?at=authtype_2";
 
-            Response.Clear();
-            var sb = new System.Text.StringBuilder();
-            sb.Append("<html>");
-            sb.AppendFormat("<body onload='document.forms[0].submit()'>");
-            sb.AppendFormat("<form action='{0}' method='post'>", url);
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_NO' value='{0}'>", 3);
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_AMOUNT' value='{0}'>", "0.05");
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", "salam");
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", "Z945718891756");
-            sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
-            sb.Append("</form>");
-            sb.Append("</body>");
-            sb.Append("</html>");
-            Response.Write(sb.ToString());
-            Response.End();
+        //    Response.Clear();
+        //    var sb = new System.Text.StringBuilder();
+        //    sb.Append("<html>");
+        //    sb.AppendFormat("<body onload='document.forms[0].submit()'>");
+        //    sb.AppendFormat("<form action='{0}' method='post'>", url);
+        //    sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_NO' value='{0}'>", 3);
+        //    sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_AMOUNT' value='{0}'>", "0.05");
+        //    sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", "salam");
+        //    sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", "Z945718891756");
+        //    sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
+        //    sb.Append("</form>");
+        //    sb.Append("</body>");
+        //    sb.Append("</html>");
+        //    Response.Write(sb.ToString());
+        //    Response.End();
 
-            return RedirectToAction("index");
-        }
+        //    return RedirectToAction("index");
+        //}
         //public ActionResult test()
         //{
             //var WMTools = new WebMoneyTools();
@@ -131,15 +131,15 @@ namespace IranAudioGuide_MainServer.Controllers
             //Res.Add("res2", res2.ToString());
             //return Json(res, JsonRequestBehavior.AllowGet);
         //}
-        public static string HexStringFromBytes(byte[] bytes)
-        {
-            var sb = new System.Text.StringBuilder();
-            foreach (byte b in bytes)
-            {
-                var hex = b.ToString("x2");
-                sb.Append(hex);
-            }
-            return sb.ToString();
-        }
+        //public static string HexStringFromBytes(byte[] bytes)
+        //{
+        //    var sb = new System.Text.StringBuilder();
+        //    foreach (byte b in bytes)
+        //    {
+        //        var hex = b.ToString("x2");
+        //        sb.Append(hex);
+        //    }
+        //    return sb.ToString();
+        //}
     }
 }

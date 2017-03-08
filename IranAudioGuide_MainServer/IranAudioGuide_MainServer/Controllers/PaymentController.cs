@@ -83,7 +83,7 @@ namespace IranAudioGuide_MainServer.Controllers
                                                               CityID = c.Cit_Id,
                                                               CityName = c.Cit_Name
                                                           }).ToList()
-                                     }).First();
+                                     }).First(); 
                 packname = package.PackageName;
                 await t;
                 ViewBag.Error = info.ErrorMessage;
@@ -99,40 +99,6 @@ namespace IranAudioGuide_MainServer.Controllers
                 });
             }
         }
-        //[HttpPost]
-        //[Authorize(Roles = "AppUser")]
-        //public async Task<ActionResult> Index(WebPaymentReqVM info)
-        //{
-        //    try
-        //    {
-        //        ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
-        //        if (!user.EmailConfirmed)
-        //            return View("Error");
-        //        PackageVM package = (from p in db.Packages
-        //                             where p.Pac_Id == info.packageId
-        //                             select new PackageVM()
-        //                             {
-        //                                 PackageId = p.Pac_Id,
-        //                                 PackageName = p.Pac_Name,
-        //                                 PackagePrice = p.Pac_Price,
-        //                                 PackageCities = (from c in db.Cities
-        //                                                  where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-        //                                                  select new CityVM()
-        //                                                  {
-        //                                                      CityDesc = c.Cit_Description,
-        //                                                      CityID = c.Cit_Id,
-        //                                                      CityName = c.Cit_Name
-        //                                                  }).ToList()
-        //                             }).First();
-        //        ViewBag.Error = info.ErrorMessage;
-        //        return View(package);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return View("Error");
-        //    }
-        //}
-
         [Authorize(Roles = "AppUser")]
         public ActionResult WMPurchase(Guid packageId, bool isFromApp = false)
         {
@@ -149,7 +115,7 @@ namespace IranAudioGuide_MainServer.Controllers
             sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_AMOUNT' value='{0}'>", res.PackageAmount);
             sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", res.PackageName);
             sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", WebmoneyPurse.Id);
-            sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
+            //sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
             sb.AppendFormat("<input type='hidden' name='isFromeApp' value='{0}'>", isFromApp);
             sb.Append("</form>");
             sb.Append("</body>");

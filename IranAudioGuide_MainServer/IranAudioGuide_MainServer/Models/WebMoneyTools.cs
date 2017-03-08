@@ -9,7 +9,8 @@ namespace IranAudioGuide_MainServer.Models
 {
     public static class WebmoneyPurse
     {
-        public static readonly string Id = "Z945718891756";
+        //public static readonly string Id = "Z945718891756";
+        public static readonly string Id = "R426181957157";
     }
     public class WebmoneyServices
     {

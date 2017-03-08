@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using IranAudioGuide_MainServer.Models;
+using System.Net.Mail;
 
 namespace IranAudioGuide_MainServer
 {
@@ -18,37 +19,78 @@ namespace IranAudioGuide_MainServer
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            var credentialUserName = "info@iranaudioguide.com";
-            var sentFrom = "info@iranaudioguide.com";
-            var pwd = "QQwwee11@@";
-
-            // Configure the client:
-            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("mail.iranaudioguide.com");
-
-            client.Port = 25;
-            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-
-            // Creatte the credentials:
-            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
-            client.EnableSsl = false;
-            client.Credentials = credentials;
-
-            // Create the message:
-            var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
-            mail.Subject = message.Subject;
-            mail.Body = message.Body;
-            mail.IsBodyHtml = true;
-
-            mail.Headers.Add("X-Company", "IranAudioGuide.com");
-            // mail.Headers.Add("X-Location", "Iran");
-            mail.Headers.Add("From", "info@ianaudioguide.com");
-            //ا فعال شدن این گزینه ایمیل شما مورد بررسی‌های بیشتری قرار می‌گیرد و شانس اسپم شناخته شدن آنرا افزایش می‌دهد.
-            mail.Priority = System.Net.Mail.MailPriority.High;
-            //mail.BodyEncoding = System.Text.Encoding.GetEncoding("");
             try
             {
+                // Plug in your email service here to send an email.
+                var credentialUserName = "info@iranaudioguide.com";
+                var sentFrom = "info@iranaudioguide.com";
+                var pwd = "QQwwee11@@";
+
+                // Configure the client:
+                System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("mail.iranaudioguide.com");
+
+                client.Port = 25;
+                client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+
+                // Creatte the credentials:
+                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
+                client.EnableSsl = false;
+                client.Credentials = credentials;
+
+                System.IO.StreamReader sr = new System.IO.StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/UserEmailTemplate.html"));
+
+                string body = sr.ReadToEnd();
+                sr.Close();
+                body = body.Replace("#message#", message.Body);
+                body = body.Replace("#Subject#", message.Subject);
+                body = body.Replace("#Date#", DateTime.Now.ToString());
+
+                // Create the message:
+                var mail = new MailMessage();
+                mail.From = new MailAddress(sentFrom, "Iran Audio Guide");
+                //mail.Sender = new MailAddress(sentFrom, "Iran Audio Guide");
+                mail.To.Add(new MailAddress(message.Destination));
+                mail.Subject = "[IranAudioGuide] " + message.Subject;
+                mail.Body = body;
+                mail.IsBodyHtml = true;
+
+                client.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(1);
+            }
+            return Task.FromResult(0);
+        }
+        public Task SendWithoutTemplateAsync(IdentityMessage message)
+        {
+
+            try
+            {
+                // Plug in your email service here to send an email.
+                var credentialUserName = "info@iranaudioguide.com";
+                var sentFrom = "info@iranaudioguide.com";
+                var pwd = "QQwwee11@@";
+
+                // Configure the client:
+                System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("mail.iranaudioguide.com");
+
+                client.Port = 25;
+                client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+
+                // Creatte the credentials:
+                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
+                client.EnableSsl = false;
+                client.Credentials = credentials;
+
+                // Create the message:
+                var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+                mail.Subject = message.Subject;
+                mail.Body = message.Body;
+                mail.IsBodyHtml = true;
+
                 client.Send(mail);
             }
             catch (Exception ex)

@@ -133,6 +133,13 @@ namespace IranAudioGuide_MainServer.Models
         public string name { get; set; }
         public string subject { get; set; }
     }
+    public class FormatedEmailVM
+    {
+        public string destination { get; set; }
+        public string message { get; set; }
+        public string name { get; set; }
+        public string subject { get; set; }
+    }
     public class NewPackage
     {
         [Required]

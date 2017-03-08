@@ -35,11 +35,18 @@ namespace IranAudioGuide_MainServer.Services
         //}
         public bool IsTheFirstLogin()
         {
-            using (var db = new ApplicationDbContext())
+            try
             {
-                var failer = db.LogUserFailures.Where(x => x.IpAddress == ExtensionMethods.UserIPAddress).FirstOrDefault();
-                if (failer == null)
-                    return true;
+                using (var db = new ApplicationDbContext())
+                {
+                    var failer = db.LogUserFailures.Where(x => x.IpAddress == ExtensionMethods.UserIPAddress).FirstOrDefault();
+                    if (failer == null)
+                        return true;
+                }
+            }
+            catch (System.Exception)
+            {
+                return false;
             }
             return false;
         }
