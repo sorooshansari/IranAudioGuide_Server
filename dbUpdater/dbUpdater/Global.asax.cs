@@ -16,7 +16,6 @@ namespace dbUpdater
             ServiceSqlServer.StoredProcedureExists();
             var job = new ScheduleDownloadLink();
             job.Run();
-
         }
     }
 }

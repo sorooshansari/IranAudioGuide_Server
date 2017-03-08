@@ -7,10 +7,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System;
+using IranAudioGuide_MainServer.Services;
 
 namespace IranAudioGuide_MainServer.Models
-{
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+{// You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -28,6 +28,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Picture { get; set; }
         public string uuid { get; set; }
         public DateTime? TimeSetUuid { get; set; }
+        public IList<Procurement> procurements { get; set; }
 
     }
     public class UserLog
@@ -79,14 +80,15 @@ namespace IranAudioGuide_MainServer.Models
         [MaxLength(50)]
         public string BankName { get; set; }
 
-        [Display(Name = "User")]
-        public ApplicationUser User { get; set; }
+        //[Display(Name = "User")]
+        //public ApplicationUser User { get; set; }
 
-        [Display(Name = "Package")]
-        public Package Package { get; set; }
+        //[Display(Name = "Package")]
+        //public Package Package { get; set; }
 
         [Display(Name = "Insert Datetime")]
         public DateTime InsertDatetime { get; set; }
+        public Procurement procurement { get; set; }
     }
     public class UpdateLog
     {
@@ -120,7 +122,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Sto_Name { get; set; }
         public string Sto_Url { get; set; }
         public string Sto_Discription { get; set; }
-        public  Place Place { get; set; }
+        public Place Place { get; set; }
     }
     public class Place
     {
@@ -152,6 +154,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Img_Name { get; set; }
         public Place Place { get; set; }
         public string Img_Description { get; set; }
+        public int Order { get; set; }
     }
     public class Tip
     {
@@ -160,7 +163,7 @@ namespace IranAudioGuide_MainServer.Models
         public System.Guid Tip_Id { get; set; }
         public TipCategory Tip_Category { get; set; }
         public string Tip_Content { get; set; }
-        public  Place Place { get; set; }
+        public Place Place { get; set; }
 
     }
     public class TipCategory
@@ -185,7 +188,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Cit_Name { get; set; }
         public string Cit_Description { get; set; }
         public string Cit_ImageUrl { get; set; }
-        public  IList<Package> Cit_Packages { get; set; }
+        public IList<Package> Cit_Packages { get; set; }
     }
     public class Package
     {
@@ -199,11 +202,41 @@ namespace IranAudioGuide_MainServer.Models
         public string Pac_Name { get; set; }
         public long Pac_Price { get; set; }
         public float Pac_Price_Dollar { get; set; }
-        public  IList<city> Pac_Cities { get; set; }
+        public IList<city> Pac_Cities { get; set; }
+        public Procurement procurement { get; set; }
         //public object pac_Cities { get; internal set; }
-        public IList<ApplicationUser> Pac_User { get; set; }
+        //public IList<ApplicationUser> Pac_User { get; set; }
     }
-    public class RequestForApp {
+    public class Procurement
+    {
+        public Procurement()
+        {
+            PaymentFinished = false;
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid ProcurementId { get; set; }
+
+        public int UserId { get; set; }
+        public ApplicationUser User { get; set; }
+
+
+        public Guid Pac_Id { get; set; }
+        public Package Package { get; set; }
+
+
+        public Guid? PayId { get; set; }
+        public Payment Payment { get; set; }
+
+        public int? WMPaymentId { get; set; }
+        public WMPayment WMPayment { get; set; }
+
+        // This is true only if the payment was successful
+        [Display(Name = "Payment Finished")]
+        public bool PaymentFinished { get; set; }
+    }
+    public class RequestForApp
+    {
         public RequestForApp()
         {
             CreateRequest = DateTime.Now;
@@ -216,6 +249,24 @@ namespace IranAudioGuide_MainServer.Models
         public bool IsSend { get; set; }
         public string NameDevice { get; set; }
     }
+
+    public class DownloadLink
+    {
+        public DownloadLink()
+        {
+            IsDisable = false;
+            //Path = "test";
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Dow_Id { get; set; }
+        public string FileName { get; set; }
+
+        public string Path { get; set; }
+        public DateTime TimeToVisit { get; set; }
+        public bool IsDisable { get; internal set; }
+        public bool IsAudio { get; set; }
+    }
     public class Comment
     {
         [Key]
@@ -227,37 +278,8 @@ namespace IranAudioGuide_MainServer.Models
         public string uuid { get; set; }
         public string Email { get; internal set; }
     }
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base(ConnectionString.connString
-                  , throwIfV1Schema: false)
-        {
-        }
 
 
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-        public DbSet<Audio> Audios { get; set; }
-        public DbSet<Story> Storys { get; set; }
-        public DbSet<Place> Places { get; set; }
-        public DbSet<city> Cities { get; set; }
-        public DbSet<Package> Packages { get; set; }
-        public DbSet<Image> Images { get; set; }
-        public DbSet<UpdateLog> UpdateLogs { get; set; }
-        public DbSet<Tip> Tips { get; set; }
-        public DbSet<TipCategory> TipCategories { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<UserLog> UserLogs { get; set; }
-        public DbSet<LogUserFailure> LogUserFailures { get; set; }
-        //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<RequestForApp> RequestForApps { get; set; }
-        public DbSet<WMPayment> WMPayment { get; set; }
-        //public System.Data.Entity.DbSet<IranAudioGuide_MainServer.Models.ApplicationUser> ApplicationUsers { get; set; }
-    }
 
     public class WMPayment
     {
@@ -269,15 +291,15 @@ namespace IranAudioGuide_MainServer.Models
             WMP_SYS_TRANS_DATE_Result = date;
         }
         [Key]
-        [Display(Name = "Payment Id")]
+        //[Display(Name = "Payment Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentId { get; set; }
         [Display(Name = "Insert Datetime")]
         public DateTime InsertDatetime { get; set; }
-        [Display(Name = "User")]
-        public ApplicationUser User { get; set; }
-        [Display(Name = "Package")]
-        public Package Package { get; set; }
+        //[Display(Name = "User")]
+        //public ApplicationUser User { get; set; }
+        //[Display(Name = "Package")]
+        //public Package Package { get; set; }
         // This is true only if the payment was successful
         [Display(Name = "Payment Finished")]
         public bool PaymentFinished { get; set; }
@@ -308,5 +330,48 @@ namespace IranAudioGuide_MainServer.Models
         public string WMP_PAYER_COUNTRYID { get; set; }
         public string WMP_PAYER_PCOUNTRYID { get; set; }
         public string WMP_PAYER_IP { get; set; }
+        public Procurement procurement { get; set; }
+
+    }
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public ApplicationDbContext()
+            : base(GlobalPath.ConnectionString
+                  , throwIfV1Schema: false)
+        {
+            // Database.Log = WriteFile.WriteSQL; 
+        }
+
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
+        public DbSet<Audio> Audios { get; set; }
+        public DbSet<Story> Storys { get; set; }
+        public DbSet<Place> Places { get; set; }
+        public DbSet<city> Cities { get; set; }
+        public DbSet<Package> Packages { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<UpdateLog> UpdateLogs { get; set; }
+        public DbSet<Tip> Tips { get; set; }
+        public DbSet<TipCategory> TipCategories { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<LogUserFailure> LogUserFailures { get; set; }
+        //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<RequestForApp> RequestForApps { get; set; }
+        public DbSet<WMPayment> WMPayment { get; set; }
+        public DbSet<DownloadLink> DownloadLinks { get; set; }
+        public DbSet<Procurement> Procurements { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new ProcurementConfig());
+            modelBuilder.Configurations.Add(new PackageConfig());
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }

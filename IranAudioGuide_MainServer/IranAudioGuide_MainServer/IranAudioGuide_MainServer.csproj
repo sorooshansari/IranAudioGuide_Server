@@ -1,5 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +46,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -222,12 +240,12 @@
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WebmoneyResultController.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+
+<Compile Include="Migrations\201703041641372_init.cs" />
+    <Compile Include="Migrations\201703041641372_init.Designer.cs">
+      <DependentUpon>201703041641372_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -238,6 +256,8 @@
     <Compile Include="Models\dbTools.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Mappings.cs" />
+    <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Variables.cs" />
     <Compile Include="Models\ViewModels.cs" />
@@ -250,9 +270,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Services\ChallengeResult.cs" />
+    <Compile Include="Services\CustomSqlErrorLog.cs" />
+    <Compile Include="Services\GlobalPath.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
-    <Compile Include="Services\GlobalPath.cs" />
+    <Compile Include="Services\ServiceJob.cs" />
     <Compile Include="Services\ServiceRecaptcha.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -519,8 +541,7 @@
     <Content Include="Content\css\bs_leftnavi.css" />
     <Content Include="Content\css\components-md.css" />
     <Content Include="Content\css\Custom4.css" />
-    <Content Include="Content\css\font-awesome.css" />
-    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\fontawesome-webfont.svg" />
     <Content Include="Content\css\ie8.css" />
     <Content Include="Content\css\ie9.css" />
     <Content Include="Content\css\ionic.css" />
@@ -663,8 +684,11 @@
     <Content Include="Content\images\arrow.svg" />
     <Content Include="Content\images\bars.svg" />
     <Content Include="Content\images\close.svg" />
+    <Content Include="Content\images\file_add.png" />
     <Content Include="Content\images\ie\grad0-15.svg" />
     <Content Include="Content\images\overlay.png" />
+    <Content Include="Content\images\playpause-48-48-1.png" />
+    <Content Include="Content\images\prevnext-48-48-1.png" />
     <Content Include="Content\images\themes.gif" />
     <Content Include="Content\Scripts\AdminControllers.js" />
     <Content Include="Content\Scripts\AdminCustom.js" />
@@ -1478,18 +1502,24 @@
     <Content Include="Content\Scripts\util.js" />
     <Content Include="Content\Scripts\util.min.js" />
     <Content Include="Content\Scripts\version.json" />
+    <Content Include="Content\css\fontawesome-webfont.eot" />
+    <Content Include="Content\css\fontawesome-webfont.ttf" />
+    <Content Include="Content\css\fontawesome-webfont.woff" />
+    <Content Include="Content\css\fontawesome-webfont.woff2" />
+    <Content Include="Content\css\FontAwesome.otf" />
+    <Content Include="google60352dff0d3dbd69.html" />
+    <Content Include="images\v_blue_on_transp_en.png" />
+    <Content Include="images\v_blue_on_white_en.png" />
+    <Content Include="images\wmlogo_vector_blue.png" />
+    <Content Include="robots.txt" />
+    <Content Include="sitemap.xml" />
+    <Content Include="WMT405DB3C3.HTML" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\ionicons.svg" />
     <Content Include="Global.asax" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\ionicons.woff" />
     <Content Include="fonts\ionicons.ttf" />
@@ -1582,10 +1612,7 @@
     <Content Include="images\prevnext-48-48-1.png" />
     <Content Include="images\tracklistarrow-48-16-0.png" />
     <Content Include="images\volume-24-24-0.png" />
-    <Content Include="images\v_blue_on_transp_en.png" />
-    <Content Include="images\v_blue_on_white_en.png" />
     <Content Include="images\WindowsStore.png" />
-    <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="Service References\Zarinpal\IranAudioGuide_MainServer.Zarinpal.GetUnverifiedTransactionsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -1612,6 +1639,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\loading-overlay-template.html" />
     <Content Include="Views\Shared\AutoRespondEmailTemplate.html" />
+    <Content Include="Views\Shared\UserEmailTemplate.html" />
     <Content Include="Views\Shared\ContactEmailTemplate.html" />
     <Content Include="Views\Shared\_PaymentLayout.cshtml" />
     <Content Include="Web.config">
@@ -1688,7 +1716,7 @@
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
+ <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -1697,6 +1725,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

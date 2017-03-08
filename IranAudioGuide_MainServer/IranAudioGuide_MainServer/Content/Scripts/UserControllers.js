@@ -31,9 +31,15 @@ userApp.service('fileUpload', ['$http', function ($http) {
     }
 }]);
 
-userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http',
-    function ($window, $scope, userServices, $timeout, notific, $http) {
+userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
+    function ($window, $scope, userServices, $timeout, notific, $http, $state) {
 
+        $scope.profile = {
+            istest: true,
+            packages: [],
+            packagesPurchased: [],
+            isCompletedLoading: false
+        };
         //$scope.uploadFile = function () {
         //    var file = $scope.myFile;
         //    console.log('file is ');
@@ -62,11 +68,6 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
         userServices.LogOff();
         $window.location.href = 'http://iranaudioguide.com';
     }
-    $scope.profile = {
-        istest: true,
-        packages: [],
-        packagesPurchased: []
-    };
     userServices.getUser().then(function (data) {
         $scope.user = data;
         $scope.user.isAutintication = true;
@@ -74,49 +75,48 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
     //$scope.deactivateMobile = function () {
     //    userServices.deactivateMobile();
     //};
-    $scope.getPalaceForCity = function (city) {
-        $scope.profile.city = city;
-    };
+    //$scope.getPalaceForCity = function (city) {
+    //    $scope.profile.city = city;
+    //};
 
-    $scope.profile.isCompletedLoading = false;
     $scope.getPackagesPurchased = function (event) {
         
-            if ($scope.profile.packagesPurchased.length == 0) {
+            //if ($scope.profile.packagesPurchased.length == 0) {
 
-                var calssName = $(event.target).find("i").attr('class');
-                var s = $(event.target).find("i").removeAttr('class').addClass("fa fa-spinner fa-spin");
+            //    var calssName = $(event.target).find("i").attr('class');
+            //    var s = $(event.target).find("i").removeAttr('class').addClass("fa fa-spinner fa-spin");
 
-                userServices.getPackagesPurchased().then(function (data) {
-                    if (data.length == 0) {
-                        $scope.profile.packagesPurchased = [];
-                        $scope.profile.city = "";
-                        $scope.IsShowMessage = true;
-                    }
-                    else {
-                        $scope.profile.packagesPurchased = data;
-                        $scope.profile.city = data[0].PackageCities[0];
-                    }
-                    $(event.target).find("i").removeAttr('class').addClass(calssName);
+            //    userServices.getPackagesPurchased().then(function (data) {
+            //        if (data.length == 0) {
+            //            $scope.profile.packagesPurchased = [];
+            //            $scope.profile.city = "";
+            //            $scope.IsShowMessage = true;
+            //        }
+            //        else {
+            //            $scope.profile.packagesPurchased = data;
+            //            $scope.profile.city = data[0].PackageCities[0];
+            //        }
+            //        $(event.target).find("i").removeAttr('class').addClass(calssName);
 
-                    //$timeout(function () {
-                    //    nav();
-                    //    $(event.target).find("i").removeAttr('class').addClass(calssName);
-                    //}, 2000);
-                }, function () {
-                    $(event.target).find("i").removeAttr('class').addClass(calssName);
+            //        //$timeout(function () {
+            //        //    nav();
+            //        //    $(event.target).find("i").removeAttr('class').addClass(calssName);
+            //        //}, 2000);
+            //    }, function () {
+            //        $(event.target).find("i").removeAttr('class').addClass(calssName);
 
-                });
-            }
+            //    });
+            //}
 
     }
     $scope.deactivateMobile = function () {
         userServices.deactivateMobile()
             .then(function (data) {
-                $scope.m = {
-                    msg: "you have successfully deactivated your device. the next device you sign in with, will become your active device.",
-                }
-                $scope.m.isShowMessage = true;
-               // notific.success(successMsg);
+                notific.success("", "you have successfully deactivated your device. the next device you sign in with, will become your active device.")
+                $scope.user.IsAccessChangeUuid = false;
+                $scope.m.isShowMessage = false;
+                // notific.success(successMsg);
+                $state.go("Packages");
             }, function (error) {
                 notific.error("ERROR", error.Message);
             });
@@ -124,27 +124,34 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
     $scope.getPackages = function (event) {
 
         if ($scope.profile.packages.length == 0) {
-            //var element = $(event.target).find("i");
-            //var calssName = element.attr('class');
-            //var s = element.removeAttr('class').addClass("fa fa-spinner fa-spin");
             userServices.getPackages().then(function (data) {
                 $scope.profile.packages = data;
-                // element.removeAttr('class').addClass(calssName);
+                angular.forEach(data, function (item, index) {
+                    if(item.isPackagesPurchased == true)
+                    {
+                        $scope.profile.packagesPurchased.push(item);
+                    }
+                });
                 $scope.profile.isCompletedLoading = true;
-                // $(event.target).find("i").removeAttr('class').addClass(calssName);
             }, function () {
-                // $(event.target).find("i").removeAttr('class').addClass(calssName);
+                $scope.profile.isCompletedLoading = true;
 
             });
         }
 
     }
+                // $(event.target).find("i").removeAttr('class').addClass(calssName);
+                // $(event.target).find("i").removeAttr('class').addClass(calssName);
+                // element.removeAttr('class').addClass(calssName);
+            //var element = $(event.target).find("i");
+            //var calssName = element.attr('class');
+            //var s = element.removeAttr('class').addClass("fa fa-spinner fa-spin");
     //$scope.profile.isCompletedLoading = true;
 
     $timeout(function () {
         angular.element('#btnGetPakage').triggerHandler('click');
     }, 0);
-
+ 
 
     $scope.sendEmailConfirmedAgain = function () {
         userServices.sendEmailConfirmedAgain().then(function (data) {
@@ -155,44 +162,7 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
         }, function (error) {
         });
     }
-    var nav = function () {
-        $('.gw-nav > li > a').click(function () {
-            var gw_nav = $('.gw-nav');
-            gw_nav.find('li').removeClass('active');
-            $('.gw-nav > li > ul > li').removeClass('active');
-
-            var checkElement = $(this).parent();
-            var ulDom = checkElement.find('.gw-submenu')[0];
-
-            if (ulDom == undefined) {
-                checkElement.addClass('active');
-                $('.gw-nav').find('li').find('ul:visible').slideUp();
-                return;
-            }
-            if (ulDom.style.display != 'block') {
-                gw_nav.find('li').find('ul:visible').slideUp();
-                gw_nav.find('li.init-arrow-up').removeClass('init-arrow-up').addClass('arrow-down');
-                gw_nav.find('li.arrow-up').removeClass('arrow-up').addClass('arrow-down');
-                checkElement.removeClass('init-arrow-down');
-                checkElement.removeClass('arrow-down');
-                checkElement.addClass('arrow-up');
-                checkElement.addClass('active');
-                checkElement.find('ul').slideDown(300);
-            } else {
-                checkElement.removeClass('init-arrow-up');
-                checkElement.removeClass('arrow-up');
-                checkElement.removeClass('active');
-                checkElement.addClass('arrow-down');
-                checkElement.find('ul').slideUp(300);
-
-            }
-        });
-        $('.gw-nav > li > ul > li > a').click(function () {
-            $(this).parent().parent().parent().removeClass('active');
-            $('.gw-nav > li > ul > li').removeClass('active');
-            $(this).parent().addClass('active')
-        });
-    };
+   
 }]);
 userApp.controller('PackagesCtrl', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
     //if (typeof $scope.profile.packages == undefined)

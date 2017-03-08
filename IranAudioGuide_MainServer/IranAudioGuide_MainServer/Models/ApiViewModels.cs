@@ -46,6 +46,7 @@ namespace IranAudioGuide_MainServer.Models
         public List<ApiPackageVM> packages { get; set; }
         public List<ApiCitInfoVM> cities { get; set; }
         public string errorMessage { get; set; }
+        public bool IsForeign { get; set; }
     }
     public class ApiPackageVM
     {

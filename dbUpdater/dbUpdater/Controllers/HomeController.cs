@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+
 using System.Web.Mvc;
 
 namespace dbUpdater.Controllers
@@ -7,21 +8,6 @@ namespace dbUpdater.Controllers
     {
         public ActionResult Index()
         {
-
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

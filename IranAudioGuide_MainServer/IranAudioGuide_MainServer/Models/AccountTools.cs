@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using IranAudioGuide_MainServer.Models;
 using System.Threading.Tasks;
+using Elmah;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -113,8 +114,9 @@ namespace IranAudioGuide_MainServer.Models
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     return CreatingUserResult.success;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     UserManager.Delete(user);
                 }
             }
@@ -130,8 +132,6 @@ namespace IranAudioGuide_MainServer.Models
                     return RecoverPassResults.NotUser;
                 if (appUser.uuid != uuid)
                     return RecoverPassResults.uuidMissMatch;
-                if (!appUser.EmailConfirmed)
-                    return RecoverPassResults.RequiresVerification;
                 string code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
                 code = HttpUtility.UrlEncode(code);
                 var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, appUser.Id, code);
@@ -140,6 +140,7 @@ namespace IranAudioGuide_MainServer.Models
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return RecoverPassResults.Failure;
             }
         }
@@ -198,8 +199,9 @@ namespace IranAudioGuide_MainServer.Models
                 return UserManager.FindByName(userName);
 
             }
-            catch
+            catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return null;
             }
 
@@ -211,13 +213,19 @@ namespace IranAudioGuide_MainServer.Models
             {
                 return UserManager.GetRoles(user.Id);
             }
-            catch
+            catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return null;
             }
 
         }
-
+        internal void loginUser(string username)
+        {
+            var user = UserManager.FindByName(username);
+            if (user != null)
+                SignInManager.SignIn(user, true, true);
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

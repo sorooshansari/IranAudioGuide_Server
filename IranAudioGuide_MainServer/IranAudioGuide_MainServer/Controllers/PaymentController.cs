@@ -8,8 +8,6 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using IranAudioGuide_MainServer.Services;
-using System.Net.Http;
-using WebMoney.Cryptography;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -50,6 +48,11 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
+                if (info.IsChooesZarinpal && ExtensionMethods.IsForeign)
+                    ViewBag.IsChooesZarinpal = false;
+                else
+                    ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
+
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user.uuid != info.uuid)
                 {
@@ -80,7 +83,7 @@ namespace IranAudioGuide_MainServer.Controllers
                                                               CityID = c.Cit_Id,
                                                               CityName = c.Cit_Name
                                                           }).ToList()
-                                     }).First();
+                                     }).First(); 
                 packname = package.PackageName;
                 await t;
                 ViewBag.Error = info.ErrorMessage;
@@ -88,45 +91,16 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error");
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = "Error!",
+                    Message = "Please try again",
+                });
             }
         }
-        //[HttpPost]
-        //[Authorize(Roles = "AppUser")]
-        //public async Task<ActionResult> Index(WebPaymentReqVM info)
-        //{
-        //    try
-        //    {
-        //        ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
-        //        if (!user.EmailConfirmed)
-        //            return View("Error");
-        //        PackageVM package = (from p in db.Packages
-        //                             where p.Pac_Id == info.packageId
-        //                             select new PackageVM()
-        //                             {
-        //                                 PackageId = p.Pac_Id,
-        //                                 PackageName = p.Pac_Name,
-        //                                 PackagePrice = p.Pac_Price,
-        //                                 PackageCities = (from c in db.Cities
-        //                                                  where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-        //                                                  select new CityVM()
-        //                                                  {
-        //                                                      CityDesc = c.Cit_Description,
-        //                                                      CityID = c.Cit_Id,
-        //                                                      CityName = c.Cit_Name
-        //                                                  }).ToList()
-        //                             }).First();
-        //        ViewBag.Error = info.ErrorMessage;
-        //        return View(package);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return View("Error");
-        //    }
-        //}
-
         [Authorize(Roles = "AppUser")]
-        public ActionResult WMPurchase(Guid packageId)
+        public ActionResult WMPurchase(Guid packageId, bool isFromApp = false)
         {
             var wmService = new WebmoneyServices();
             var res = wmService.CreatePayment(User.Identity.Name, packageId);
@@ -141,7 +115,8 @@ namespace IranAudioGuide_MainServer.Controllers
             sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_AMOUNT' value='{0}'>", res.PackageAmount);
             sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", res.PackageName);
             sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", WebmoneyPurse.Id);
-            sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
+            //sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
+            sb.AppendFormat("<input type='hidden' name='isFromeApp' value='{0}'>", isFromApp);
             sb.Append("</form>");
             sb.Append("</body>");
             sb.Append("</html>");
@@ -203,7 +178,11 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.SaleReferenceId = res.refId;
             ViewBag.Image = res.Image;
             ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
-            return View("ReturnToWebPage");
+            ViewBag.Succeeded = res.Succeeded;
+            if (model.isFromeApp)
+                return View("Return");
+            else
+                return View("ReturnToWebPage");
         }
 
         [HttpPost]
@@ -218,7 +197,11 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.SaleReferenceId = res.refId;
             ViewBag.Image = res.Image;
             ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
-            return View("ReturnToWebPage");
+            ViewBag.Succeeded = false;
+            if (model.isFromeApp)
+                return View("Return");
+            else
+                return View("ReturnToWebPage");
         }
 
 
@@ -239,20 +222,25 @@ namespace IranAudioGuide_MainServer.Controllers
                 string redirectPage = baseUrl + "/Payment/Return";
                 if (isFromWeb)
                     redirectPage = baseUrl + "/Payment/ReturnToWebPage";
-                var payment = new Payment()
+                //Todo I've changed command
+
+                var buy = new Procurement()
                 {
-                    Amount = package.Pac_Price,
-                    SaleReferenceId = 0,
-                    BankName = bankName,
-                    PaymentFinished = false,
+                    
+                    Payment = new Payment()
+                    {
+                        Amount = package.Pac_Price,
+                        SaleReferenceId = 0,
+                        BankName = bankName
+                    },                    
                     User = user,
                     Package = package
                 };
 
-                db.Payments.Add(payment);
+                db.Procurements.Add(buy);
                 db.SaveChanges();
 
-                Guid paymentId = payment.PaymentId;
+                Guid paymentId = buy.Payment.PaymentId;
                 string error = ZarinpalPayment(package.Pac_Price, redirectPage, paymentId, package.Pac_Name);
                 if (error.Length > 0)
                 {
@@ -273,6 +261,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ViewBag.Message = ex.Message;
                 ViewBag.SaleReferenceId = "**************";
                 ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
@@ -287,8 +276,9 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.BankName = "ZarinPal Payment Gateway";
                 ZarinpalReturn();
             }
-            catch
+            catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ViewBag.BankName = "Your payment gateway is not specified";
                 ViewBag.Message = "No response from payment gateway";
                 ViewBag.ErrDesc = "There is no response from your payment gateway!";
@@ -306,13 +296,15 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.BankName = "ZarinPal Payment Gateway";
                 ZarinpalReturn();
             }
-            catch
+            catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ViewBag.BankName = "Your payment gateway is not specified";
                 ViewBag.Message = "No response from payment gateway";
                 ViewBag.ErrDesc = "There is no response from your payment gateway!";
                 ViewBag.SaleReferenceId = "**************";
                 ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
+                ViewBag.Succeeded = false;
             }
             return View();
         }
@@ -367,6 +359,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return View("vmessage", new vmessageVM()
                 {
                     Subject = "Error!",
@@ -384,25 +377,29 @@ namespace IranAudioGuide_MainServer.Controllers
 
         private void UpdatePayment(Guid paymentId, string vresult, long saleReferenceId, string refId, bool paymentFinished = false)
         {
+            //Todo I've changed command
+            var procurement = db.Procurements.Include("Payment").FirstOrDefault(x=> x.Payment.PaymentId == paymentId);
 
-            var payment = db.Payments.Find(paymentId);
-
-            if (payment != null)
+            if (procurement != null)
             {
-                payment.StatusPayment = vresult;
-                payment.SaleReferenceId = saleReferenceId;
-                payment.PaymentFinished = paymentFinished;
+                procurement.Payment.StatusPayment = vresult;
+                procurement.Payment.SaleReferenceId = saleReferenceId;
+                procurement.PaymentFinished = paymentFinished;
 
                 if (refId != null)
                 {
-                    payment.ReferenceNumber = refId;
+                    procurement.Payment.ReferenceNumber = refId;
                 }
 
-                db.Entry(payment).State = EntityState.Modified;
+                db.Entry(procurement).State = EntityState.Modified;
                 db.SaveChanges();
             }
             else
             {
+                //Todo I've changed command
+                Exception ex = new Exception("UpdatePayment:  dont find procurement for IdPayment ");
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+
                 // اطلاعاتی از دیتابیس پیدا نشد
             }
         }
@@ -474,6 +471,7 @@ namespace IranAudioGuide_MainServer.Controllers
                             ViewBag.SaleReferenceId = refId;
                             ViewBag.Image = "<i class=\"fa fa-check\" style=\"color: lightgreen; font-size:35px; vertical-align:sub; \"></i>";
                             ViewBag.ErrDesc = "You have access to the package below. Thank you for your purchase! <br />";
+                            ViewBag.Succeeded = true;
                         }
                         else
                         {
@@ -483,6 +481,7 @@ namespace IranAudioGuide_MainServer.Controllers
                             ViewBag.SaleReferenceId = "**************";
                             ViewBag.Image = "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
                             ViewBag.ErrDesc = "Your payment process does not completed.";
+                            ViewBag.Succeeded = false;
                         }
 
                     }
@@ -494,6 +493,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         ViewBag.SaleReferenceId = "**************";
                         ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
                         ViewBag.ErrDesc = "Your payment process does not completed.";
+                        ViewBag.Succeeded = false;
                     }
                 }
                 else
@@ -502,18 +502,22 @@ namespace IranAudioGuide_MainServer.Controllers
                     ViewBag.SaleReferenceId = "**************";
                     ViewBag.Image = "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
                     ViewBag.ErrDesc = "Sorry, please try again in a few minutes.";
+                    ViewBag.Succeeded = false;
                 }
             }
             catch (Exception ex)
             {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 ViewBag.SaleReferenceId = "**************";
                 ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
                 ViewBag.Message = "Problem occurred in payment process. ";
                 ViewBag.ErrDesc = "If the payment is deducted from your bank account, The amount will be automatically returned.";
+                ViewBag.Succeeded = false;
             }
         }
         private long FindAmountPayment(Guid paymentId)
         {
+            //Todo Is it correct 
             long amount = db.Payments.Where(c => c.PaymentId == paymentId).Select(c => c.Amount).FirstOrDefault();
 
             return amount;

@@ -2,15 +2,16 @@ namespace IranAudioGuide_MainServer.Migrations
 {
     using Models;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<IranAudioGuide_MainServer.Models.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ApplicationDbContext context)
+        protected override void Seed(IranAudioGuide_MainServer.Models.ApplicationDbContext context)
         {
             var dbManager = new dbManager();
             // Create Roles
@@ -31,6 +32,5 @@ namespace IranAudioGuide_MainServer.Migrations
             dbManager.AddTipCategory("Stuff", "ion-android-checkbox-outline", "&#xf373;", 4);
             dbManager.AddTipCategory("Other", "ion-ios-nutrition-outline", "&#xf46f;", 5);
         }
-
     }
 }

@@ -9,6 +9,12 @@
     <meta name="title" content="Best audio guide application for Iran travel" />
     <meta name="Description"
           content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+    <meta name="keywords" content="Iran Audio Guide,Iran Traveling,Travel,Turism,audio guide,tour,guide,application,android,ios,iphone,ipad,
+          mp3 download,download mp3,audible,audio,download music mp3,audio books,mp3 free download,short stories,free download mp3,download apps,stories for kids,free audio books,youtube music downloader,audiobook,short stories for kids,audio speakers,kids story,children stories,audio books free,english story,story book,storiesonline,audio songs download,audio downloader,audible app,mp3 converter free download,stories for children,best audiobooks,books for free,download converter,mp3 downloader online,english short stories,youtube downloader music,youtube music mp3,mp3 converter free,youtube music downloader free,english story for kids,english story book,kids story books,short story english,email domain,free books for kids,free audio books online,stories to read,story books in english,short stories for children,nline stories,download audio books,audiobooks for free,audio books free download,audio books online,audio stories,small stories for kids,mp3 audio,kids short stories,apps download free,free audiobook,download free apps,download audio,download video mp3,audiobook free,talking books,children short stories,story for kids in english,free audio books apphildren story books,free audible books,audio books for kids,audio books download,story english,free audio,music audio,audio app,translate farsi to english,free youtube music downloader,kindle audio books,audio software,audiobook download,free stories,audiobook app,audio books app,reading stories,audible free books,online books for kids,video to mp3 downloader,free audio books download,mp3 sound,good audio books,mp3 player downloader free,dictionary farsi to english,download free audio books,short stories for kids in english,,audio guide,audio book reader,audible books free,mp3 software,farsi to english translation,free mp3 download online,listening books,audio books free online listen,,kids audio books,audioguide,book story,audio hifi,mp3 player software,story kids,best free audio books,short stories in english for students,video mp3 download,kids story in english,audio books online free,audiobook english,mp3 converter download free,free story books,free audio books mp3,star wars audio books,farsi to english dictionary,audio recorders,english audio books,children's stories online,cheap audio books,online stories for kids,children's audio books,free audio books for kids,converter mp3 free download,free online audiobooks,online audio books,free mp3 converter download,books on tape free,story reading,free download audio songs,stories for toddlers,stories for childrens in english,read stories online,kids story online,free audiobook download,free audiobook app,sound book,mp3 download free online,mp3 free download online,mp3 audio download,audio textbooks,english short stories for kids,online short stories,audio stories for kids,stories for kids online,short stories for kindergarten,book audio,free audio download,shop audible,free books on tape,download audio books free,audio books free online listen without downloading,free audio books streaming,free download converter,audio books free online,music converter download,audio books free download mp3,stories to read online,free stories for kids,short stories to read,buy audio books,short story for kid,free download audio books,listen to books,translate farsi,audio books for children,streaming audiobooks,convert to mp3 free download,talking books free,free audio files,audiobook free download,download audiobook,reading story books,good stories for kids,free english books,bedtime stories audio,english audiobooks,free kids stories,free children's stories,free audible,apps download apps download,download music to mp3,child story in english,audiobooks in english,download music free online mp3,english books free download,motivational audio books,story of kids,simple stories for kids,stories read online,mp3 books,audible free,music converter free download,books on audio,download audio converter,popular audiobooks,reading stories for kids,listen to books online,free books on audible,free talking books,free stories online,the best audio books,books on tape app,download audible books,listening english stories,free bedtime stories for kids,story book english,free kids audio books,english short stories for beginners,audio bedtime stories,classic audio books,free books for children,audiobook download free,english audio stories,audio books mp3,short stories for childrens in english,library audio books,free children's audio books,a short story for kids,english story audio,audiobook library,audiobook streaming,mp3 audiobooks,audio novels,listen to books for free,free online stories,listen to audiobooks,english short stories for students,listen to books online free,books on audio free,where to buy audio books,converter to mp3 free download,audio books library,download audiobooks for free,listen to stories,audio player software,download story books,free audio tracks,listen to audiobooks free,audio books kids,audiobook mp3,audio books with text,story audio,free audio books android,free short stories for kids,audio short stories,english talking book,listening stories,listen to free audio books,
+          significant,soon,love,millenniums,poets,email,story,log,images,download,team,achievements,attraction,soroosh,step,tails,address,thorough,allows,accurate,open,content,send,see,history,scientist,great,attractions,details,late,art,liberating,scandals,persian,victories,enter,feel,need,people,advising,interested,narrate,explain,techniques,ansari,please,close,walk,learn,release,kings,tracks,visiting,visit,tell,myth,iran,facebook,stories,convenient,methods,developer,choose,just,menu,crafts,gossips,instagram,pace,discovery,hear,culture,listen,mehr,twitter,wars,application,profile,worries,coming,persia,accept,look,correct,guide,providing,iranian,webmoney,audio,telegram,historic,famous,notify,contact,figures,available,tips,architecture,unique" />
+    <meta name="author" content="Soroosh Ansari,Mona Akhlaghi">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <meta property="og:title" content="Best audio guide application for Iran travel" />
     <meta property="og:site_name" content="Iran Audio Guide" />
@@ -26,8 +32,6 @@
 
 
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>@ViewBag.Title</title>
 
@@ -57,12 +61,12 @@
                                 @*<li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>*@
                                 <li><a class="scrolly" rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>Contact Us</a></li>
                                 <li ng-hide="user.isAutintication"><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
-                               
+
                                 <li ng-show="user.isAutintication && user.isAdmin == false"><a rel="nofollow" href="@Url.Action("index","user")"><i class="fa fa-sign-in"></i>Profile</a></li>
                                 <li ng-show="user.isAutintication && user.isAdmin == true"><a rel="nofollow" href="@Url.Action("index","Admin")"><i class="fa fa-sign-in"></i>Profile</a></li>
 
-                                
-                                 <li ng-show="user.isAutintication"><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>Log out</a></li>
+
+                                <li ng-show="user.isAutintication"><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>Log out</a></li>
                             </ul>
                         </section>
                     </li>
@@ -74,26 +78,25 @@
 
 
     </div>
+    <link href="~/Content/css/loading.css" rel="stylesheet" />
 
-
-    <link rel="stylesheet" href="~/Content/css/loading.css" />
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <!-- Scripts -->
     <!--[if lte IE 8]><script src="~/assets/js/ie/respond.min.js"></script><![endif]-->
     @*<script src="~/assets/js/jquery.min.js"></script>
-    <script src="~/assets/js/jquery.scrollex.min.js"></script>
-    <script src="~/assets/js/jquery.scrolly.min.js"></script>
-    <script src="~/assets/js/skel.min.js"></script>
-    <script src="~/assets/js/util.js"></script>
-    <script src="~/assets/js/main.js"></script>
-    <script src="~/Content/Scripts/angular.min.js"></script>
-    <script src="~/Content/Scripts/angular-scroll-spy.js"></script>
-    <script src="~/Content/Scripts/countUp.js"></script>
-    <script src="~/Content/Scripts/angular-countUp.js"></script>
-    <script src="~/Content/Scripts/HomeCustom.js"></script>
-    <script src="~/Content/Scripts/HomeControllers.js"></script>*@
+        <script src="~/assets/js/jquery.scrollex.min.js"></script>
+        <script src="~/assets/js/jquery.scrolly.min.js"></script>
+        <script src="~/assets/js/skel.min.js"></script>
+        <script src="~/assets/js/util.js"></script>
+        <script src="~/assets/js/main.js"></script>
+        <script src="~/Content/Scripts/angular.min.js"></script>
+        <script src="~/Content/Scripts/angular-scroll-spy.js"></script>
+        <script src="~/Content/Scripts/countUp.js"></script>
+        <script src="~/Content/Scripts/angular-countUp.js"></script>
+        <script src="~/Content/Scripts/HomeCustom.js"></script>
+        <script src="~/Content/Scripts/HomeControllers.js"></script>*@
 
-            @Scripts.Render("~/bundles/minJs")
+    @Scripts.Render("~/bundles/minJs")
     <script type="text/javascript">
         angular.module('HomePage', [])
             .config(function ($sceProvider) {
@@ -104,29 +107,38 @@
             })
             .controller('HomeController', ['$scope', '$http', '$timeout',
                 function ($scope, $http, $timeout) {
-                    
+
                     $scope.user = {
                         isAutintication: false,
                         username: "test",
-                        isAdmin: false
+                        isAdmin: false,
+
                     }
+                    var init = function () {
+                        if (angular.element('#chechLogin').length == 0) {
+                            $http.post('/api/UserApi/CheckLoginUser').then(function (result) {
+                                $scope.user.username = result.Email;
+                                if (result.RolesName[0] == "Admin")
+                                    $scope.user.isAdmin = true;
 
+                                $scope.user.isAutintication = true;
 
-                    $http.get('/api/AppManager/GetCurrentUserInfo').success(function (result) {
-                        $scope.user.username = result.Email;
-                        if (result.RolesName[0] == "Admin")
-                            $scope.user.isAdmin = true;
-                      
-                        $scope.user.isAutintication = true;
+                            }, function (error, status, headers, config) {
+                                $scope.user.isAutintication = false;
+                            });
+                        }
+                        else {
+                            $http.get('/api/UserApi/IsTheFirstLogin').then(function (result) {
+                                $scope.isTheFirstLogin = result.data;
 
-                    }).error(function (error, status, headers, config) {
-                        $scope.user.isAutintication = false;
-                    });
-
-
-
+                            }, function (error, status, headers, config) {
+                                $scope.isTheFirstLogin = false;
+                            });
+                        }
+                    }
+                    init();
                     $scope.sendEmailConfirmedAgain = function () {
-                        $http.get('/Account/SendEmailConfirmedAgain').then(function () {                           
+                        $http.get('/Account/SendEmailConfirmedAgain').then(function () {
                             $scope.isMsg = true;
                             $timeout(function () {
                                 $scope.isMsg = false;
@@ -138,14 +150,13 @@
 
                     $scope.newsletters = {};
                     $scope.showPopup = function (nameDevice) {
-                        $scope.newsletters.nameDevice = nameDevice;                        
+                        $scope.newsletters.nameDevice = nameDevice;
                         $('.form-request').addClass('form-request-show');
 
                     }
                     $scope.sendEmail = function () {
                         $scope.formRequest.isError = false;
-                        if ($scope.formRequest.$invalid)
-                        {
+                        if ($scope.formRequest.$invalid) {
                             $scope.formRequest.isError = true;
                             return;
 
@@ -156,11 +167,11 @@
                             NameDevice: $scope.newsletters.nameDevice,
                             Email: $scope.newsletters.emailForApp
                         };
-                        $http.post('/api/UserApi/SaveRequest',user).success(function (result) {
-                          
+                        $http.post('/api/UserApi/SaveRequest', user).success(function (result) {
+
 
                         }).error(function (error, status, headers, config) {
-                         
+
                         });
                     }
                     $scope.ContactUs = function (model, form) {

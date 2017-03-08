@@ -211,21 +211,9 @@
                 @if (ViewBag.IsChooesZarinpal)
                 {
                     @Html.ActionLink("Purchase", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true }, new { @class = "btn btn-info" })
-
-
                 }
                 else
                 {
-                    @*<form action="https://merchant.wmtransfer.com/lmi/payment.asp?at=authtype_2" method="POST">
-                        <input type="hidden" name="LMI_PAYMENT_NO" value="3">
-                        <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="0.05">
-                        <input type="hidden" name="LMI_PAYMENT_DESC" value="@Model.PackageName">
-                        <input type="hidden" name="LMI_PAYEE_PURSE" value="Z945718891756">
-                        <input type="hidden" name="LMI_SIM_MODE" value="0">
-                        <input type="hidden" name="UserName" value="@User.Identity.Name">
-                        <input type="submit" class="btn btn-info" 
-                               value="Purchase">
-                    </form>*@
                     @Html.ActionLink("Purchase", "WMPurchase", new { packageId = Model.PackageId }, new { @class = "btn btn-info" })
 
                 }

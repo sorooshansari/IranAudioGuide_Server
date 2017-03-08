@@ -1,4 +1,5 @@
-﻿namespace dbUpdater.Services
+
+namespace dbUpdater.Services
 {
     public class PathVM
     {

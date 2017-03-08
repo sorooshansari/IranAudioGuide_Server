@@ -60,7 +60,7 @@ namespace IranAudioGuide_MainServer.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
-        public bool IsTheFirstLogin { get; set; }
+        //public bool IsTheFirstLogin { get; set; }
     }
 
     public class RegisterViewModel

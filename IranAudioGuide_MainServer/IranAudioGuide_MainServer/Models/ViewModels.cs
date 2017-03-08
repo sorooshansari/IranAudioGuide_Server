@@ -133,6 +133,13 @@ namespace IranAudioGuide_MainServer.Models
         public string name { get; set; }
         public string subject { get; set; }
     }
+    public class FormatedEmailVM
+    {
+        public string destination { get; set; }
+        public string message { get; set; }
+        public string name { get; set; }
+        public string subject { get; set; }
+    }
     public class NewPackage
     {
         [Required]
@@ -175,6 +182,7 @@ namespace IranAudioGuide_MainServer.Models
         public long PackagePrice { get; set; }
         public float PackagePriceDollar { get; set; }
         public List<CityVM> PackageCities { get; set; }
+        public bool isPackagesPurchased { get; set; }
     }
 
     public class AddTipVM
@@ -469,6 +477,8 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class PlaceVM
     {
+        internal bool isShow;
+
         public System.Guid PlaceId { get; set; }
         public int Index { get; set; }
         public string PlaceName { get; set; }
@@ -503,6 +513,7 @@ namespace IranAudioGuide_MainServer.Models
         public Guid ImageId { get; set; }
         public int Index { get; set; }
         public string ImageDesc { get; set; }
+       
     }
     public class EditEIDescVM
     {

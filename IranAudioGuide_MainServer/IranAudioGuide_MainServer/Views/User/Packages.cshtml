@@ -4,16 +4,11 @@
 }
 
 <style>
-    .input-group input[type=search] {
-        color: #fff;
-    }
-    .hoverable{
-        cursor: pointer;
-    }
+
 </style>
 
 
-<div class="input-group">
+<div class="input-group  searchPackage">
     <span class="input-group-addon"><i class="fa fa-search"></i></span>
     <ui-select class="SearchSelect" multiple ng-model="searhPakage.item" theme="bootstrap">
         <ui-select-match placeholder="Please select your city or location">
@@ -34,14 +29,14 @@
 
 </div>
 @*<div class="col-xs-12">
-    <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" />
-    
- 
-</div>*@
+        <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" />
+
+
+    </div>*@
 <form id="PurchaseForm" name="PurchaseForm" action="/Payment/PaymentWeb">
 
 
-    <div class="PlanPricing template4" ng-repeat="pak in listPakages"  ng-class="{'col-flex-1':pak.PackageCities.length == 1, 'col-flex-2':pak.PackageCities.length > 1}">
+    <div class="PlanPricing template4" ng-repeat="pak in listPakages" ng-class="{'col-flex-1':pak.PackageCities.length == 1, 'col-flex-2':pak.PackageCities.length > 1}">
         <!-- Price template4 Starts -->
         <div class="planName">
             @*<span class="price">{{pak.PackagePrice}}IRR </span>*@
@@ -65,7 +60,10 @@
             </div>
 
         </div>
-        <p> <a ng-click="showModal(pak)" class="btn btn-success btn-large">buy </a> </p>
+        <p>
+            <a ng-show="pak.isPackagesPurchased == false" ng-click="showModal(pak)" class="btn btn-success btn-large">buy </a>
+            <a ng-show="pak.isPackagesPurchased == true"   class="btn btn-green btn-large">Purchased </a>
+        </p>
         @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
     </div>
 </form>

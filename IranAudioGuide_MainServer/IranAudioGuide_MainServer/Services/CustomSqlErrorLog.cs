@@ -1,6 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 
-namespace dbUpdater.Services
+namespace IranAudioGuide_MainServer.Services
 {
     public class CustomSqlErrorLog : Elmah.SqlErrorLog
 

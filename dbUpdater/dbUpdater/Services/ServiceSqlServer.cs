@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+
 using System.Data;
 using System.Data.SqlClient;
 
@@ -6,7 +7,7 @@ namespace dbUpdater.Services
 {
     public static class ServiceSqlServer
     {
-        private static readonly string connString = GlobalPath.ConnectionString;
+private static readonly string connString = GlobalPath.ConnectionString;
         private static void ExecuteCommand(string command, SqlConnection conn)
         {
             var cmd = new SqlCommand(command, conn);
@@ -50,8 +51,7 @@ namespace dbUpdater.Services
             {
                 return null;
             }
-        }
-        public static void StoredProcedureExists()
+        }public static void StoredProcedureExists()
         {
             //    var query = string.Format("SELECT COUNT(0) FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = '{0}'", sp);
 

@@ -1,5 +1,6 @@
 ﻿//Developed by Soroosh Ansari
 angular.module('AdminPage.controllers', [])
+
 .controller('AdminController', ['$scope', '$rootScope', '$sce', 'PlaceServices', 'CityServices', 'AudioServices', 'TipServices', 'StoryServices', 'PackageServices',
     function ($scope, $rootScope, $sce, PlaceServices, CityServices, AudioServices, TipServices, StoryServices, PackageServices) {
         //global
@@ -32,6 +33,17 @@ angular.module('AdminPage.controllers', [])
         $scope.SetCityImageName = function (o) {
             NewCityForm.cityImgUrl.value = o.files[0].name;
             $scope.selectCityImg = true;
+        }
+        $scope.saveOrderExtraImg = function (model) {
+            $rootScope.saveOrderBtn = true;
+            PlaceServices.editeOrder(model).then(function () {
+                $('#EditPlaceModal').modal('hide');
+                $rootScope.saveOrderBtn = false;
+            }, function () {
+                $('#EditPlaceModal').modal('hide');
+                $rootScope.saveOrderBtn = false;
+
+            });
         }
 
         //Online Player stuff
@@ -181,6 +193,12 @@ angular.module('AdminPage.controllers', [])
             playingIndex = StoryIndex;
             angular.forEach($rootScope.Storys, function (value, key) {
                 if (value.Index == StoryIndex) {
+                    //todo test getUrl
+                    //var m = {
+                    //    trackId: value.Id,
+                    //    isAudio: false
+                    //}
+                    //PlaceServices.getUrl(m);
                     if (StoryStatus != "empty") {
                         Story.pause();
                         $scope.StoryPlayStatus = "play";
@@ -190,6 +208,7 @@ angular.module('AdminPage.controllers', [])
                     var src = value.Url;
                     Story = new Audio(src);
                     StoryStatus = "pause";
+                    console.log(src);
                     return;
                 }
             });
@@ -252,7 +271,7 @@ angular.module('AdminPage.controllers', [])
             }
         }
         $scope.AddStory = function (model, form) {
-          
+
             if (form.$valid && !model.invalidFile) {
                 $rootScope.NewStoryShowOverlay = true;
                 StoryServices.Add(model, $scope.selectedPlaceId);
@@ -303,9 +322,17 @@ angular.module('AdminPage.controllers', [])
             $scope.loadAudio(1);
         });
         $scope.loadAudio = function (audioIndex) {
+            console.log(audioIndex);
             playingIndex = audioIndex;
             angular.forEach($rootScope.audios, function (value, key) {
                 if (value.Index == audioIndex) {
+                
+                //todo test getUrl
+                    //var m = {
+                    //    trackId: value.Aud_Id,
+                    //    isAudio: true
+                    //}
+                    //PlaceServices.getUrl(m);
                     if (audioStatus != "empty") {
                         audio.pause();
                         $scope.PlayStatus = "play";
@@ -456,7 +483,8 @@ angular.module('AdminPage.controllers', [])
             PlaceServices.RemovePlace(PlaceID, PlaceName);
         };
         $scope.$on('UpdatePlaces', function (event) {
-            $scope.places = PlaceServices.Get(0);
+            //console.log($scope.PlaceCurrentPage);
+            $scope.places = PlaceServices.Get($scope.PlaceCurrentPage);
             scroll("#PlaceList");
         });
         $scope.$on('UpdatePlaceValidationSummery', function (event, args) {
@@ -517,7 +545,7 @@ angular.module('AdminPage.controllers', [])
             $('#EditPlaceModal').modal('show');
         };
         $scope.EditPlace = function (EditPlaceVM) {
-            console.log(EditPlaceVM);
+            //console.log(EditPlaceVM);
             $rootScope.EditOverlay = true;
             PlaceServices.Edit(EditPlaceVM);
         };
@@ -540,7 +568,7 @@ angular.module('AdminPage.controllers', [])
         };
         $scope.EditEIDescVM = {};
         $scope.EditEIDescModal = function (image) {
-            console.log(image);
+            //console.log(image);
             $scope.EditEIDescVM.ImageId = image.ImageId;
             $scope.EditEIDescVM.Desc = image.ImageDesc;
             $('#EditEIDescModal').modal('show');
@@ -622,10 +650,10 @@ angular.module('AdminPage.controllers', [])
         };
         $scope.selectCityImg = false;
         $scope.AddCity = function (NewCity, form) {
-            if (form.$valid && $scope.selectCityImg ) {
+            if (form.$valid && $scope.selectCityImg) {
                 $rootScope.AddCityLoading = true;
                 CityServices.AddCity(NewCity);
-               
+
             }
         };
         $scope.EditCity = function (cityVM, form) {
