@@ -12,6 +12,8 @@ namespace IranAudioGuide_MainServer.Migrations
             Sql(SqlCommands.CreateDeleteProcedure("DeletePlace", "Places", "Pla", "uniqueidentifier"));
             foreach (var command in SqlCommands.FirstCommands)
                 Sql(command);
+            foreach (var command in SqlCommands.ElamSqlCommands)
+                Sql(command);
         }
 
         public override void Down()

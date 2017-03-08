@@ -7,7 +7,9 @@
 <section id="promo" class="content-block min-height-600px">
     <div class="container">
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-5">  
+                @*  Please don't remove item  *@
+                <span id="chechLogin"></span>        
                 <h2>Use your Login Credentials to access your profile.</h2>
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
@@ -25,11 +27,9 @@
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
                         </div>
                     </div>
-                        if (!ViewBag.IsTheFirstLogin)
-                        {
+                 
 
-
-                        <div class="form-group">
+                        <div class="form-group" ng-show="isTheFirstLogin == false">
                             <div class="col-md-8">
                                 @* for localhost *@
                                 <div class="g-recaptcha" data-sitekey="6LffxRMUAAAAAK7Fv690WPwcjVKcX1niaz_N6dHn"></div>
@@ -38,7 +38,7 @@
                                 *@
                             </div>
                         </div>
-                    }
+          
 
 
                     <div class="form-group">
