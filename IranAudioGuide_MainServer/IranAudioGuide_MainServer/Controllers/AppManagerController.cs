@@ -28,38 +28,18 @@ namespace IranAudioGuide_MainServer.Controllers
             return Services.GlobalPath.host;
         }
 
-        //[HttpPost]
-        //public GetAudioUrlRes GetAudioById(GetAudioUrlVM model)
-        //{
-        //    try
-        //    {
-
-        //        return new GetAudioUrlRes(dbTools.GetAudioUrl(model.trackId , true));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
-        //    }
-        //}
         [HttpPost]
-        public string GetAudioUrl(GetAudioUrlVM model)
+        public GetAudioUrlRes GetAudioUrl(GetAudioUrlVM model)
         {
             try
             {
-                //var user = acTools.getUser(model.email);
-                //if (user == null)
-                //    return new GetAudioUrlRes(GetAudioUrlStatus.notUser);
-                //if (user.uuid != model.uuid)
-                //    return new GetAudioUrlRes(GetAudioUrlStatus.uuidMissMatch);
                 var url = dbTools.GetAudioUrl(model.trackId, model.isAudio);
-                //return new GetAudioUrlRes(url);
-                return url;
+                return new GetAudioUrlRes(url);
             }
             catch (Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
-                //return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
-                return "error" + ex.Message;
+                return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
             }
         }
         [HttpPost]
