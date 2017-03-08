@@ -197,6 +197,17 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
+                using (var db=new ApplicationDbContext())
+                {
+                    string userName = User.Identity.Name;
+                    var list = db.Procurements.Include("User").Include("Package")
+                        .Where(x => x.User.UserName == userName)
+                        .Select(p => p.Package).Select(p => new PackageVM()
+                        {
+                            PackageId = p.Pac_Id
+                        }).ToList();
+                    return list;
+                }
                 //using (var db = new ApplicationDbContext())
                 //{
                 //    string userName = User.Identity.Name;

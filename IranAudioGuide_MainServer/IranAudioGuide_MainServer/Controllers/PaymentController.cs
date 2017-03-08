@@ -104,24 +104,27 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             var wmService = new WebmoneyServices();
             var res = wmService.CreatePayment(User.Identity.Name, packageId);
-            var url = "https://merchant.wmtransfer.com/lmi/payment.asp?at=authtype_2";
+            if (res.PaymentId!=0)
+            {
+                var url = "https://merchant.wmtransfer.com/lmi/payment.asp?at=authtype_2";
 
-            Response.Clear();
-            var sb = new System.Text.StringBuilder();
-            sb.Append("<html>");
-            sb.AppendFormat("<body onload='document.forms[0].submit()'>");
-            sb.AppendFormat("<form action='{0}' method='post'>", url);
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_NO' value='{0}'>", res.PaymentId);
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_AMOUNT' value='{0}'>", res.PackageAmount);
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", res.PackageName);
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", WebmoneyPurse.Id);
-            //sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
-            sb.AppendFormat("<input type='hidden' name='isFromeApp' value='{0}'>", isFromApp);
-            sb.Append("</form>");
-            sb.Append("</body>");
-            sb.Append("</html>");
-            Response.Write(sb.ToString());
-            Response.End();
+                Response.Clear();
+                var sb = new System.Text.StringBuilder();
+                sb.Append("<html>");
+                sb.AppendFormat("<body onload='document.forms[0].submit()'>");
+                sb.AppendFormat("<form action='{0}' method='post'>", url);
+                sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_NO' value='{0}'>", res.PaymentId);
+                sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_AMOUNT' value='{0}'>", res.PackageAmount);
+                sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", res.PackageName);
+                sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", WebmoneyPurse.Id);
+                //sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
+                sb.AppendFormat("<input type='hidden' name='isFromeApp' value='{0}'>", isFromApp);
+                sb.Append("</form>");
+                sb.Append("</body>");
+                sb.Append("</html>");
+                Response.Write(sb.ToString());
+                Response.End();
+            }
 
             return RedirectToAction("PaymentWeb", packageId);
             //string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
