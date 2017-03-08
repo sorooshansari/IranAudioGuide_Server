@@ -95,10 +95,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Quartz, Version=2.5.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -244,21 +240,9 @@
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WebmoneyResultController.cs" />
-    <Compile Include="Migrations\201703061218094_1-remove-package.cs" />
-    <Compile Include="Migrations\201703061218094_1-remove-package.designer.cs">
-      <DependentUpon>201703061218094_1-remove-package.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703061221395_2-remove-ApplicationUser.cs" />
-    <Compile Include="Migrations\201703061221395_2-remove-ApplicationUser.designer.cs">
-      <DependentUpon>201703061221395_2-remove-ApplicationUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703061258170_3-add-Procurement.cs" />
-    <Compile Include="Migrations\201703061258170_3-add-Procurement.designer.cs">
-      <DependentUpon>201703061258170_3-add-Procurement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703061317305_ss.cs" />
-    <Compile Include="Migrations\201703061317305_ss.Designer.cs">
-      <DependentUpon>201703061317305_ss.cs</DependentUpon>
+    <Compile Include="Migrations\201703071416255_s.cs" />
+    <Compile Include="Migrations\201703071416255_s.Designer.cs">
+      <DependentUpon>201703071416255_s.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -1572,9 +1556,6 @@
     <None Include="Content\Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Content\Scripts\jquery-2.2.3.intellisense.js" />
     <None Include="Content\Scripts\jquery.validate-vsdoc.js" />
-    <None Include="job_scheduling_data_2_0.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />
@@ -1729,17 +1710,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703061218094_1-remove-package.resx">
-      <DependentUpon>201703061218094_1-remove-package.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703061221395_2-remove-ApplicationUser.resx">
-      <DependentUpon>201703061221395_2-remove-ApplicationUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703061258170_3-add-Procurement.resx">
-      <DependentUpon>201703061258170_3-add-Procurement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703061317305_ss.resx">
-      <DependentUpon>201703061317305_ss.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703071416255_s.resx">
+      <DependentUpon>201703071416255_s.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
