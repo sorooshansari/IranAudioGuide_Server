@@ -28,19 +28,24 @@ namespace IranAudioGuide_MainServer.Models
                 //.HasForeignKey(x=> x.UserId)
                 .WillCascadeOnDelete(false);
 
+            this.HasRequired(x => x.Package)
+                .WithMany(x => x.procurements)
+                //.HasForeignKey(x=> x.UserId)
+                .WillCascadeOnDelete(false);
+
         }
     }
-    public class PackageConfig : EntityTypeConfiguration<Package>
-    {
-        public PackageConfig()
-        {
-            // one-to-one
-            this.HasOptional(x => x.procurement)
-                .WithRequired(x => x.Package)
-                // .Map(m => m.MapKey("Pac_Id"))
-                .WillCascadeOnDelete();
-        }
-    }
+    //public class PackageConfig : EntityTypeConfiguration<Package>
+    //{
+    //    public PackageConfig()
+    //    {
+    //        // one-to-one
+    //        this.HasOptional(x => x.procurement)
+    //            .WithRequired(x => x.Package)
+    //            // .Map(m => m.MapKey("Pac_Id"))
+    //            .WillCascadeOnDelete();
+    //    }
+    //}
 
 
 }

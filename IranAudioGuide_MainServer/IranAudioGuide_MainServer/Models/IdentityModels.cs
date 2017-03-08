@@ -203,7 +203,7 @@ namespace IranAudioGuide_MainServer.Models
         public long Pac_Price { get; set; }
         public float Pac_Price_Dollar { get; set; }
         public IList<city> Pac_Cities { get; set; }
-        public Procurement procurement { get; set; }
+        public IList<Procurement> procurements { get; set; }
         //public object pac_Cities { get; internal set; }
         //public IList<ApplicationUser> Pac_User { get; set; }
     }
@@ -224,8 +224,8 @@ namespace IranAudioGuide_MainServer.Models
         public Guid Pac_Id { get; set; }
         public Package Package { get; set; }
 
-       
-       // public Guid? PaymentId { get; set; }
+
+        public Guid? PaymentId { get; set; }
         public Payment Payment { get; set; }
 
         public int? WMPaymentId { get; set; }
@@ -364,12 +364,12 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<RequestForApp> RequestForApps { get; set; }
         public DbSet<WMPayment> WMPayment { get; set; }
         public DbSet<DownloadLink> DownloadLinks { get; set; }
-       public DbSet<Procurement> Procurements { get; set; }
+        public DbSet<Procurement> Procurements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new ProcurementConfig());
-            modelBuilder.Configurations.Add(new PackageConfig());
+            //modelBuilder.Configurations.Add(new PackageConfig());
             base.OnModelCreating(modelBuilder);
         }
 

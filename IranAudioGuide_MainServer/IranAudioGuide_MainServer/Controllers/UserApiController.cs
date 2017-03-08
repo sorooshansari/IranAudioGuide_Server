@@ -201,7 +201,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     string userName = User.Identity.Name;
                     var list = db.Procurements.Include("User").Include("Package")
-                        .Where(x => x.User.UserName == userName)
+                        .Where(x => x.User.UserName == userName && x.PaymentFinished)
                         .Select(p => p.Package).Select(p => new PackageVM()
                         {
                             PackageId = p.Pac_Id

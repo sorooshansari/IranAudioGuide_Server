@@ -9,8 +9,8 @@ namespace IranAudioGuide_MainServer.Models
 {
     public static class WebmoneyPurse
     {
-        //public static readonly string Id = "Z945718891756";
-        public static readonly string Id = "R426181957157";
+        public static readonly string WMZ = "Z945718891756";
+        public static readonly string WMR = "R426181957157";
     }
     public class WebmoneyServices
     {
@@ -28,7 +28,7 @@ namespace IranAudioGuide_MainServer.Models
             {
                 paymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
                 db = new ApplicationDbContext();
-                 buy = db.Procurements.Include("WMPayment").Include("User").Include("Package").FirstOrDefault(x => x.WMPayment.PaymentId == paymentId);
+                buy = db.Procurements.Include("WMPayment").Include("User").Include("Package").FirstOrDefault(x => x.WMPayment.PaymentId == paymentId);
                 if (buy == default(Procurement))
                     return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
                         "Your payment process does not completed. <br />",
@@ -60,7 +60,7 @@ namespace IranAudioGuide_MainServer.Models
                         Destination = userEmail
                     });
                 }
-               buy.WMPayment.DataIntegrity = isIntegrate;
+                buy.WMPayment.DataIntegrity = isIntegrate;
 
                 if (ReturnModel.LMI_CAPITALLER_WMID != null)
                     buy.WMPayment.WMP_CAPITALLER_WMID = ReturnModel.LMI_CAPITALLER_WMID;
@@ -245,21 +245,30 @@ namespace IranAudioGuide_MainServer.Models
                 //Todo I've changed command
                 using (var db = new ApplicationDbContext())
                 {
+                    var count = db.Procurements.Include("User").Include("Package")
+                        .Count(x => x.User.UserName == UserName && x.Package.Pac_Id == packageId && x.PaymentFinished);
+                    if (count > 0)
+                    {
+                        return new WMPaymentResult() { isDuplicate = true };
+                    }
                     var user = db.Users.FirstOrDefault(x => x.UserName == UserName);
                     var package = db.Packages.FirstOrDefault(x => x.Pac_Id == packageId);
-                    var buy = new Procurement()
+                    
+                    var wmPayment = new WMPayment()
                     {
-                        User = user,
-                        Package = package,
-                        WMPayment = new WMPayment(),
+                        procurement = new Procurement()
+                        {
+                            User = user,
+                            Package = package
+                        }
                     };
-                    db.Procurements.Add(buy);
+                    db.WMPayment.Add(wmPayment);
                     db.SaveChanges();
                     return new WMPaymentResult()
                     {
                         PackageAmount = package.Pac_Price_Dollar,
                         PackageName = package.Pac_Name,
-                        PaymentId = buy.WMPayment.PaymentId,
+                        PaymentId = wmPayment.PaymentId
                     };
 
                 }
@@ -312,6 +321,7 @@ namespace IranAudioGuide_MainServer.Models
         public int PaymentId { get; set; }
         public string PackageName { get; set; }
         public float PackageAmount { get; set; }
+        public bool isDuplicate { get; set; }
     }
     public class WMReturnModel
     {

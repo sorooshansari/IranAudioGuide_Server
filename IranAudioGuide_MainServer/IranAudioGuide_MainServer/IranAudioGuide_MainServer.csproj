@@ -239,7 +239,18 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\WebmoneyResultController.cs" />
+    <Compile Include="Migrations\201703081500367_add2.cs" />
+    <Compile Include="Migrations\201703081500367_add2.Designer.cs">
+      <DependentUpon>201703081500367_add2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703081518500_edit3.cs" />
+    <Compile Include="Migrations\201703081518500_edit3.Designer.cs">
+      <DependentUpon>201703081518500_edit3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703081525340_edit4.cs" />
+    <Compile Include="Migrations\201703081525340_edit4.Designer.cs">
+      <DependentUpon>201703081525340_edit4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1709,6 +1720,17 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703081500367_add2.resx">
+      <DependentUpon>201703081500367_add2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703081518500_edit3.resx">
+      <DependentUpon>201703081518500_edit3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703081525340_edit4.resx">
+      <DependentUpon>201703081525340_edit4.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
