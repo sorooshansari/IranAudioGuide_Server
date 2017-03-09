@@ -4,27 +4,7 @@
     ViewBag.Title = "PaymentRef";
     Layout = "~/Views/Shared/_PaymentLayout.cshtml";
 }
-@*
-    <script type="text/javascript">
-        var time_left = 10;
-        var cinterval;
 
-        function time_dec() {
-            time_left--;
-            document.getElementById('countdown').innerHTML = time_left;
-            if (time_left == 0) {
-                var originalstring = document.getElementById('countdown2').innerHTML;
-                var newstring = originalstring.replace('seconds', 'second');
-                document.getElementById('countdown2').innerHTML = newstring;
-                var url = document.getElementById("url").getAttribute("value");
-
-                window.location.replace(url);
-                clearInterval(cinterval);
-            }
-        }
-
-        cinterval = setInterval('time_dec()', 1000);
-    </script>*@
 
 <style type="text/css">
     #page-wrapper {
@@ -37,8 +17,6 @@
     }
 
     #header.alt h1 {
-        /*-ms-pointer-events: none;*/
-        /* pointer-events: none; */
         opacity: 1 !important;
     }
 
@@ -52,7 +30,6 @@
     }
 
     #MainSection {
-        /* position: absolute; */
         margin-top: 100px;
         height: 400px;
         width: 100%;
@@ -122,8 +99,6 @@
 
     .table-mybordered > thead > tr > th, .table-mybordered > tbody > tr > th, .table-mybordered > tfoot > tr > th, .table-mybordered > thead > tr > td, .table-mybordered > tbody > tr > td, .table-mybordered > tfoot > tr > td {
         border: 1px solid #b6b6b6;
-        /*border-left: none !important;
-        border-right: none !important;*/
     }
 
     table tbody tr {
