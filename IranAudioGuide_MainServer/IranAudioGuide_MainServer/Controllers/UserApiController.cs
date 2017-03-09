@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -182,7 +183,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         }).ToList();
                     foreach (var item in list)
                     {
-                        item.isPackagesPurchased = packagesPurchased.Any(x => x.PackageId == item.PackageId);
+                        item.isPackagesPurchased = packagesPurchased.Any(x => x == item.PackageId);
                     }
                     return Ok(list);
                 }
@@ -193,19 +194,17 @@ namespace IranAudioGuide_MainServer.Controllers
                 throw ex;
             }
         }
-        private IList<PackageVM> GetPackagesPurchased()
+        private IList<Guid> GetPackagesPurchased()
         {
             try
             {
                 using (var db=new ApplicationDbContext())
                 {
                     string userName = User.Identity.Name;
-                    var list = db.Procurements.Include("User").Include("Package")
-                        .Where(x => x.User.UserName == userName && x.PaymentFinished)
-                        .Select(p => p.Package).Select(p => new PackageVM()
-                        {
-                            PackageId = p.Pac_Id
-                        }).ToList();
+                    var list = db.Procurements
+                        .Include(x => x.Pro_User)
+                        .Where(x => x.Pro_User.UserName == userName && x.Pro_PaymentFinished)
+                        .Select(p => p.Pac_Id).ToList();
                     return list;
                 }
                 //using (var db = new ApplicationDbContext())

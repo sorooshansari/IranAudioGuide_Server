@@ -10,29 +10,52 @@ namespace IranAudioGuide_MainServer.Models
         public ProcurementConfig()
         {
 
-            // one-to-one
-            this.HasOptional(x => x.Payment)
-                .WithRequired(x => x.procurement)
-                //.Map(m => m.MapKey("PayId"))
-                .WillCascadeOnDelete();
+            //// one-to-one
+            //this.HasOptional(x => x.Payment)
+            //    .WithRequired(x => x.procurement)
+            //    //.Map(m => m.MapKey("PayId"))
+            //    .WillCascadeOnDelete();
 
-            // one-to-one
-            this.HasOptional(x => x.WMPayment)
-                .WithRequired(x => x.procurement)
-                //.Map(m => m.MapKey("WMPaymentId"))
-                .WillCascadeOnDelete();
+            //// one-to-one
+            //this.HasOptional(x => x.WMPayment)
+            //    .WithRequired(x => x.procurement)
+            //    //.Map(m => m.MapKey("WMPaymentId"))
+            //    .WillCascadeOnDelete();
 
 
-            this.HasRequired(x => x.User)
+            this.HasRequired(x => x.Pro_User)
                 .WithMany(x => x.procurements)
                 //.HasForeignKey(x=> x.UserId)
                 .WillCascadeOnDelete(false);
 
-            this.HasRequired(x => x.Package)
+            this.HasRequired(x => x.Pro_Package)
                 .WithMany(x => x.procurements)
                 //.HasForeignKey(x=> x.UserId)
                 .WillCascadeOnDelete(false);
 
+        }
+    }
+
+    public class PaymentConfig : EntityTypeConfiguration<Payment>
+    {
+        public PaymentConfig()
+        {
+            // one-to-one
+            this.HasRequired(x => x.Pay_Procurement)
+                .WithOptional(x => x.Pro_Payment)
+                // .Map(m => m.MapKey("Pac_Id"))
+                .WillCascadeOnDelete();
+        }
+    }
+    public class WMPaymentConfig : EntityTypeConfiguration<WMPayment>
+    {
+        public WMPaymentConfig()
+        {
+            // one-to-one
+            this.HasRequired(x => x.WMP_Procurement)
+                .WithOptional(x => x.Pro_WMPayment)
+                // .Map(m => m.MapKey("Pac_Id"))
+                .WillCascadeOnDelete();
         }
     }
     //public class PackageConfig : EntityTypeConfiguration<Package>

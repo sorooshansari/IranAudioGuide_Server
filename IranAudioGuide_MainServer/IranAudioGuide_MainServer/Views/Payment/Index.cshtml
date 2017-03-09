@@ -185,6 +185,8 @@
                 </tr>
             </table>
             <div class="col-xs-12" style="text-align:right;">
+
+                <a class="btn btn-sm btn-default" href="mobile/close" style="width:100px; font-size:small;">Cancel</a>
                 @if (ViewBag.IsChooesZarinpal)
                 {
                     @Html.ActionLink("Purchase", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = false }, new { @class = "btn btn-default purchasebtn" })
@@ -193,8 +195,6 @@
                 {
                     @Html.ActionLink("Purchase", "WMPurchase", new { packageId = Model.PackageId, isFromApp = true }, new { @class = "btn btn-default purchasebtn" })
                 }
-
-                <a class="btn btn-sm btn-default" href="mobile/close" style="width:100px; font-size:small;">Cancel</a>
             </div>
         </div>
         <div class="col-xs-12" style="text-align:center;">

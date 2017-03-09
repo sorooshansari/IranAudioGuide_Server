@@ -163,12 +163,16 @@
 
 
             <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
+
                 <table class="table-mybordered tbldotted table-condensed" style="width: 100%; border-radius: 10px 10px 0px 0px; margin: 0px 0px 10px; color: rgb(20, 68, 130); text-shadow: none; text-align: center; background-color: transparent;">
                     <tbody>
-                        <tr>
-                            <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-briefcase"></i>Package Name</div></td>
-                            <td class="_2ndtd" style="background-color: transparent; text-transform:capitalize; font-size: medium;">@ViewBag.Packname</td>
-                        </tr>
+                        @if (ViewBag.Succeeded)
+                        {
+                            <tr>
+                                <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-briefcase"></i>Package Name</div></td>
+                                <td class="_2ndtd" style="background-color: transparent; text-transform:capitalize; font-size: medium;">@ViewBag.Packname</td>
+                            </tr>
+                        }
                         <tr>
                             <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-key"></i>Reference ID</div></td>
                             <td class="_2ndtd" style="background-color:transparent;">@ViewBag.SaleReferenceId</td>
@@ -184,8 +188,8 @@
                     {
                         <a class="btn btn-sm btn-default purchasebtn" href="mobile/close" style="width:100px; font-size:small;">Continue</a>
                     }
-                    </div>
                 </div>
+            </div>
         </div>
     </div>
 </section>

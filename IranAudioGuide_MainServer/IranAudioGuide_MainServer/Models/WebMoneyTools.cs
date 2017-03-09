@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Data.Entity;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -28,16 +29,20 @@ namespace IranAudioGuide_MainServer.Models
             {
                 paymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
                 db = new ApplicationDbContext();
-                buy = db.Procurements.Include("WMPayment").Include("User").Include("Package").FirstOrDefault(x => x.WMPayment.PaymentId == paymentId);
+                buy = db.Procurements
+                    .Include(x=>x.Pro_WMPayment)
+                    .Include(x=>x.Pro_User)
+                    .Include(x => x.Pro_Package)
+                    .FirstOrDefault(x => x.Pro_WMPayment.WMP_Id == paymentId);
                 if (buy == default(Procurement))
                     return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
                         "Your payment process does not completed. <br />",
                         paymentId,
                         "",
                         false);
-                userEmail = buy.User.Email;
-                primtivePrice = buy.Package.Pac_Price_Dollar;
-                packName = buy.Package.Pac_Name;
+                userEmail = buy.Pro_User.Email;
+                primtivePrice = buy.Pro_Package.Pac_Price_Dollar;
+                packName = buy.Pro_Package.Pac_Name;
             }
             catch (Exception)
             {
@@ -60,64 +65,64 @@ namespace IranAudioGuide_MainServer.Models
                         Destination = userEmail
                     });
                 }
-                buy.WMPayment.DataIntegrity = isIntegrate;
+                buy.Pro_WMPayment.WMP_DataIntegrity = isIntegrate;
 
                 if (ReturnModel.LMI_CAPITALLER_WMID != null)
-                    buy.WMPayment.WMP_CAPITALLER_WMID = ReturnModel.LMI_CAPITALLER_WMID;
+                    buy.Pro_WMPayment.WMP_CAPITALLER_WMID = ReturnModel.LMI_CAPITALLER_WMID;
 
                 if (ReturnModel.LMI_HOLD != null)
-                    buy.WMPayment.WMP_HOLD = ReturnModel.LMI_HOLD;
+                    buy.Pro_WMPayment.WMP_HOLD = ReturnModel.LMI_HOLD;
 
                 if (ReturnModel.LMI_CAPITALLER_WMID != null)
-                    buy.WMPayment.WMP_CAPITALLER_WMID = ReturnModel.LMI_CAPITALLER_WMID;
+                    buy.Pro_WMPayment.WMP_CAPITALLER_WMID = ReturnModel.LMI_CAPITALLER_WMID;
 
                 if (ReturnModel.LMI_MODE != null)
-                    buy.WMPayment.WMP_MODE = ReturnModel.LMI_MODE;
+                    buy.Pro_WMPayment.WMP_MODE = ReturnModel.LMI_MODE;
 
                 if (ReturnModel.LMI_PAYEE_PURSE != null)
-                    buy.WMPayment.WMP_PAYEE_PURSE = ReturnModel.LMI_PAYEE_PURSE;
+                    buy.Pro_WMPayment.WMP_PAYEE_PURSE = ReturnModel.LMI_PAYEE_PURSE;
 
                 if (ReturnModel.LMI_PAYER_COUNTRYID != null)
-                    buy.WMPayment.WMP_PAYER_COUNTRYID = ReturnModel.LMI_PAYER_COUNTRYID;
+                    buy.Pro_WMPayment.WMP_PAYER_COUNTRYID = ReturnModel.LMI_PAYER_COUNTRYID;
 
                 if (ReturnModel.LMI_PAYER_IP != null)
-                    buy.WMPayment.WMP_PAYER_IP = ReturnModel.LMI_PAYER_IP;
+                    buy.Pro_WMPayment.WMP_PAYER_IP = ReturnModel.LMI_PAYER_IP;
 
                 if (ReturnModel.LMI_PAYER_PCOUNTRYID != null)
-                    buy.WMPayment.WMP_PAYER_PCOUNTRYID = ReturnModel.LMI_PAYER_PCOUNTRYID;
+                    buy.Pro_WMPayment.WMP_PAYER_PCOUNTRYID = ReturnModel.LMI_PAYER_PCOUNTRYID;
 
                 if (ReturnModel.LMI_PAYER_PURSE != null)
-                    buy.WMPayment.WMP_PAYER_PURSE = ReturnModel.LMI_PAYER_PURSE;
+                    buy.Pro_WMPayment.WMP_PAYER_PURSE = ReturnModel.LMI_PAYER_PURSE;
 
                 if (ReturnModel.LMI_PAYER_WM != null)
-                    buy.WMPayment.WMP_PAYER_WM = ReturnModel.LMI_PAYER_WM;
+                    buy.Pro_WMPayment.WMP_PAYER_WM = ReturnModel.LMI_PAYER_WM;
 
                 if (ReturnModel.LMI_PAYMENT_AMOUNT != null)
-                    buy.WMPayment.WMP_PAYMENT_AMOUNT = ReturnModel.LMI_PAYMENT_AMOUNT;
+                    buy.Pro_WMPayment.WMP_PAYMENT_AMOUNT = ReturnModel.LMI_PAYMENT_AMOUNT;
 
                 if (ReturnModel.LMI_PAYMENT_CREDITDAYS != null)
-                    buy.WMPayment.WMP_PAYMENT_CREDITDAYS = ReturnModel.LMI_PAYMENT_CREDITDAYS;
+                    buy.Pro_WMPayment.WMP_PAYMENT_CREDITDAYS = ReturnModel.LMI_PAYMENT_CREDITDAYS;
 
                 if (ReturnModel.LMI_PAYMENT_NO != null)
-                    buy.WMPayment.WMP_PAYMENT_NO = ReturnModel.LMI_PAYMENT_NO;
+                    buy.Pro_WMPayment.WMP_PAYMENT_NO = ReturnModel.LMI_PAYMENT_NO;
 
                 if (ReturnModel.LMI_PAYMER_EMAIL != null)
-                    buy.WMPayment.WMP_PAYMER_EMAIL = ReturnModel.LMI_PAYMER_EMAIL;
+                    buy.Pro_WMPayment.WMP_PAYMER_EMAIL = ReturnModel.LMI_PAYMER_EMAIL;
 
                 if (ReturnModel.LMI_PAYMER_NUMBER != null)
-                    buy.WMPayment.WMP_PAYMER_NUMBER = ReturnModel.LMI_PAYMER_NUMBER;
+                    buy.Pro_WMPayment.WMP_PAYMER_NUMBER = ReturnModel.LMI_PAYMER_NUMBER;
 
                 if (ReturnModel.LMI_SDP_TYPE != null)
-                    buy.WMPayment.WMP_SDP_TYPE = ReturnModel.LMI_SDP_TYPE;
+                    buy.Pro_WMPayment.WMP_SDP_TYPE = ReturnModel.LMI_SDP_TYPE;
 
                 if (ReturnModel.LMI_SYS_INVS_NO != null)
-                    buy.WMPayment.WMP_SYS_INVS_NO_Result = ReturnModel.LMI_SYS_INVS_NO;
+                    buy.Pro_WMPayment.WMP_SYS_INVS_NO_Result = ReturnModel.LMI_SYS_INVS_NO;
 
                 if (ReturnModel.LMI_SYS_TRANS_DATE != null)
-                    buy.WMPayment.WMP_SYS_TRANS_DATE_Result = DateTime.ParseExact(ReturnModel.LMI_SYS_TRANS_DATE, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    buy.Pro_WMPayment.WMP_SYS_TRANS_DATE_Result = DateTime.ParseExact(ReturnModel.LMI_SYS_TRANS_DATE, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
                 if (ReturnModel.LMI_SYS_TRANS_NO != null)
-                    buy.WMPayment.WMP_SYS_TRANS_NO_Result = ReturnModel.LMI_SYS_TRANS_NO;
+                    buy.Pro_WMPayment.WMP_SYS_TRANS_NO_Result = ReturnModel.LMI_SYS_TRANS_NO;
 
                 db.SaveChanges();
                 db.Dispose();
@@ -139,7 +144,7 @@ namespace IranAudioGuide_MainServer.Models
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                buy.WMPayment.DataIntegrity = false;
+                buy.Pro_WMPayment.WMP_DataIntegrity = false;
                 db.SaveChanges();
                 db.Dispose();
                 es.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
@@ -163,7 +168,10 @@ namespace IranAudioGuide_MainServer.Models
                 int paymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
                 using (var db = new ApplicationDbContext())
                 {
-                    var packName = db.Procurements.Include("WMPayment").Include("Package").FirstOrDefault(x => x.WMPayment.PaymentId == paymentId).Package.Pac_Name;
+                    var packName = db.Procurements
+                        .Include(x=>x.Pro_WMPayment)
+                        .Include(x => x.Pro_Package)
+                        .FirstOrDefault(x => x.Pro_WMPayment.WMP_Id == paymentId).Pro_Package.Pac_Name;
                     return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
                         "Your payment process does not completed. <br />",
                         paymentId,
@@ -193,29 +201,33 @@ namespace IranAudioGuide_MainServer.Models
                     using (var db = new ApplicationDbContext())
                     {
                         //Todo I've changed command
-                        var procurement = db.Procurements.Include("WMPayment").Include("User").Include("Package").Where(x => x.WMPayment.PaymentId == WMPaymentId).FirstOrDefault();
+                        var procurement = db.Procurements
+                            .Include(x => x.Pro_WMPayment)
+                            .Include(x => x.Pro_User)
+                            .Include(x => x.Pro_Package)
+                            .Where(x => x.Pro_WMPayment.WMP_Id == WMPaymentId).FirstOrDefault();
                         if (procurement == default(Procurement))
                             return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
                                 "You have access to the package below. Thank you for your purchase! <br />",
                                 WMPaymentId,
-                                procurement.Package.Pac_Name,
+                                procurement.Pro_Package.Pac_Name,
                                 false);
-                        procurement.WMPayment.WMP_SYS_INVS_NO = ReturnModel.LMI_SYS_INVS_NO;
-                        procurement.WMPayment.WMP_SYS_TRANS_NO = ReturnModel.LMI_SYS_TRANS_NO;
-                        procurement.WMPayment.WMP_SYS_TRANS_DATE = DateTime.ParseExact(ReturnModel.LMI_SYS_TRANS_DATE, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                        procurement.PaymentFinished = true;
+                        procurement.Pro_WMPayment.WMP_SYS_INVS_NO = ReturnModel.LMI_SYS_INVS_NO;
+                        procurement.Pro_WMPayment.WMP_SYS_TRANS_NO = ReturnModel.LMI_SYS_TRANS_NO;
+                        procurement.Pro_WMPayment.WMP_SYS_TRANS_DATE = DateTime.ParseExact(ReturnModel.LMI_SYS_TRANS_DATE, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                        procurement.Pro_PaymentFinished = true;
                         db.SaveChanges();
                         var es = new EmailService();
                         es.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
                         {
                             Subject = "success",
                             Body = "salam",
-                            Destination = procurement.User.Email
+                            Destination = procurement.Pro_User.Email
                         });
                         return new WMUpdateRes("Payment completed successfully.",
                             "You have access to the package below. Thank you for your purchase! <br />",
                             WMPaymentId,
-                            procurement.Package.Pac_Name,
+                            procurement.Pro_Package.Pac_Name,
                             true);
                     }
 
@@ -245,8 +257,8 @@ namespace IranAudioGuide_MainServer.Models
                 //Todo I've changed command
                 using (var db = new ApplicationDbContext())
                 {
-                    var count = db.Procurements.Include("User").Include("Package")
-                        .Count(x => x.User.UserName == UserName && x.Package.Pac_Id == packageId && x.PaymentFinished);
+                    var count = db.Procurements.Include(x => x.Pro_User)
+                        .Count(x => x.Pro_User.UserName == UserName && x.Pac_Id == packageId && x.Pro_PaymentFinished);
                     if (count > 0)
                     {
                         return new WMPaymentResult() { isDuplicate = true };
@@ -256,10 +268,10 @@ namespace IranAudioGuide_MainServer.Models
                     
                     var wmPayment = new WMPayment()
                     {
-                        procurement = new Procurement()
+                        WMP_Procurement = new Procurement()
                         {
-                            User = user,
-                            Package = package
+                            Pro_User = user,
+                            Pro_Package = package
                         }
                     };
                     db.WMPayment.Add(wmPayment);
@@ -268,7 +280,7 @@ namespace IranAudioGuide_MainServer.Models
                     {
                         PackageAmount = package.Pac_Price_Dollar,
                         PackageName = package.Pac_Name,
-                        PaymentId = wmPayment.PaymentId
+                        PaymentId = wmPayment.WMP_Id
                     };
 
                 }

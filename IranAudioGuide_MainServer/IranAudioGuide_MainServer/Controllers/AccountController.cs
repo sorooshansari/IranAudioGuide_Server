@@ -67,7 +67,8 @@ namespace IranAudioGuide_MainServer.Controllers
            // ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
             ViewBag.View = Views.Login;
             ViewBag.ReturnUrl = returnUrl;
-            return View(/*model*/);
+            //return View(/*model*/);
+            return View();
         }
 
         //
@@ -108,7 +109,11 @@ namespace IranAudioGuide_MainServer.Controllers
                     if (UserRole == "Admin")
                         return RedirectToAction("Index", "Admin");
                     else if (UserRole == "AppUser")
+                    {
+                        if (returnUrl!= null && returnUrl.Length > 0)
+                            return RedirectToLocal(returnUrl);
                         return RedirectToAction("Index", "User");
+                    }
                     else
                         return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:

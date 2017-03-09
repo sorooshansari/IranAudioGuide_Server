@@ -51,34 +51,39 @@ namespace IranAudioGuide_MainServer.Models
     {
         public Payment()
         {
-            InsertDatetime = DateTime.Now;
+            //InsertDatetime = DateTime.Now;
         }
         [Key]
-        [Display(Name = "Payment Id")]
+        //[Display(Name = "Payment Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid PaymentId { get; set; }
+        public int Pay_Id { get; set; }
+
+
+        public Procurement Pay_Procurement { get; set; }
+
+
 
         [Display(Name = "Reference Number")]
         [MaxLength(100)]
-        public string ReferenceNumber { get; set; }
+        public string Pay_ReferenceNumber { get; set; }
 
         [Display(Name = "Sale Reference Id")]
-        public long SaleReferenceId { get; set; }
+        public long Pay_SaleReferenceId { get; set; }
 
         [Display(Name = "Status Payment")]
         [MaxLength(100)]
-        public string StatusPayment { get; set; }
+        public string Pay_StatusPayment { get; set; }
 
-        // فقط در صورتی که این فید ترو باشد پرداخت موفق بوده است
-        [Display(Name = "Payment Finished")]
-        public bool PaymentFinished { get; set; }
+        //// فقط در صورتی که این فید ترو باشد پرداخت موفق بوده است
+        //[Display(Name = "Payment Finished")]
+        //public bool Pay_PaymentFinished { get; set; }
 
         [Display(Name = "Amount")]
-        public long Amount { get; set; }
+        public long Pay_Amount { get; set; }
 
         [Display(Name = "Bank Name")]
         [MaxLength(50)]
-        public string BankName { get; set; }
+        public string Pay_BankName { get; set; }
 
         //[Display(Name = "User")]
         //public ApplicationUser User { get; set; }
@@ -86,9 +91,8 @@ namespace IranAudioGuide_MainServer.Models
         //[Display(Name = "Package")]
         //public Package Package { get; set; }
 
-        [Display(Name = "Insert Datetime")]
-        public DateTime InsertDatetime { get; set; }
-        public Procurement procurement { get; set; }
+        //[Display(Name = "Insert Datetime")]
+        //public DateTime InsertDatetime { get; set; }
     }
     public class UpdateLog
     {
@@ -211,29 +215,33 @@ namespace IranAudioGuide_MainServer.Models
     {
         public Procurement()
         {
-            PaymentFinished = false;
+            Pro_PaymentFinished = false;
+            Pro_InsertDatetime = DateTime.Now;
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ProcurementId { get; set; }
+        public Guid Pro_Id { get; set; }
 
-        public int UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        [MaxLength(128)]
+        public string Id { get; set; }
+        public ApplicationUser Pro_User { get; set; }
 
 
         public Guid Pac_Id { get; set; }
-        public Package Package { get; set; }
+        public Package Pro_Package { get; set; }
 
 
-        public Guid? PaymentId { get; set; }
-        public Payment Payment { get; set; }
+        //public Guid? PaymentId { get; set; }
+        public Payment Pro_Payment { get; set; }
 
-        public int? WMPaymentId { get; set; }
-        public WMPayment WMPayment { get; set; }
+        //public int? WMPaymentId { get; set; }
+        public WMPayment Pro_WMPayment { get; set; }
 
         // This is true only if the payment was successful
         [Display(Name = "Payment Finished")]
-        public bool PaymentFinished { get; set; }
+        public bool Pro_PaymentFinished { get; set; }
+        [Display(Name = "Insert Datetime")]
+        public DateTime Pro_InsertDatetime { get; set; }
     }
     public class RequestForApp
     {
@@ -286,25 +294,35 @@ namespace IranAudioGuide_MainServer.Models
         public WMPayment()
         {
             var date = DateTime.Now;
-            InsertDatetime = date;
             WMP_SYS_TRANS_DATE = date;
             WMP_SYS_TRANS_DATE_Result = date;
         }
+
+
+
         [Key]
         //[Display(Name = "Payment Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PaymentId { get; set; }
-        [Display(Name = "Insert Datetime")]
-        public DateTime InsertDatetime { get; set; }
+        public int WMP_Id { get; set; }
+
+
+        public Procurement WMP_Procurement { get; set; }
+
+
         //[Display(Name = "User")]
         //public ApplicationUser User { get; set; }
         //[Display(Name = "Package")]
         //public Package Package { get; set; }
-        // This is true only if the payment was successful
-        [Display(Name = "Payment Finished")]
-        public bool PaymentFinished { get; set; }
+
+
+
+        //// This is true only if the payment was successful
+        //[Display(Name = "Payment Finished")]
+        //public bool WMP_PaymentFinished { get; set; }
+
+
         [Display(Name = "Data Integrity")]
-        public bool DataIntegrity { get; set; }
+        public bool WMP_DataIntegrity { get; set; }
 
         public string WMP_PAYEE_PURSE { get; set; }
         public string WMP_PAYMENT_AMOUNT { get; set; }
@@ -330,7 +348,6 @@ namespace IranAudioGuide_MainServer.Models
         public string WMP_PAYER_COUNTRYID { get; set; }
         public string WMP_PAYER_PCOUNTRYID { get; set; }
         public string WMP_PAYER_IP { get; set; }
-        public Procurement procurement { get; set; }
 
     }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -369,6 +386,8 @@ namespace IranAudioGuide_MainServer.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new ProcurementConfig());
+            modelBuilder.Configurations.Add(new PaymentConfig());
+            modelBuilder.Configurations.Add(new WMPaymentConfig());
             //modelBuilder.Configurations.Add(new PackageConfig());
             base.OnModelCreating(modelBuilder);
         }

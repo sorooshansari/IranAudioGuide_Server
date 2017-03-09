@@ -251,6 +251,18 @@
     <Compile Include="Migrations\201703081525340_edit4.Designer.cs">
       <DependentUpon>201703081525340_edit4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703091757293_add-payments.cs" />
+    <Compile Include="Migrations\201703091757293_add-payments.Designer.cs">
+      <DependentUpon>201703091757293_add-payments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703092112467_add-3-10.cs" />
+    <Compile Include="Migrations\201703092112467_add-3-10.Designer.cs">
+      <DependentUpon>201703092112467_add-3-10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703092138132_add-3-10-2.cs" />
+    <Compile Include="Migrations\201703092138132_add-3-10-2.Designer.cs">
+      <DependentUpon>201703092138132_add-3-10-2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1519,6 +1531,7 @@
     <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="robots.txt" />
     <Content Include="sitemap.xml" />
+    <Content Include="Views\Shared\HtmlPage1.html" />
     <Content Include="WMT405DB3C3.HTML" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
@@ -1730,6 +1743,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703081525340_edit4.resx">
       <DependentUpon>201703081525340_edit4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703091757293_add-payments.resx">
+      <DependentUpon>201703091757293_add-payments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703092112467_add-3-10.resx">
+      <DependentUpon>201703092112467_add-3-10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703092138132_add-3-10-2.resx">
+      <DependentUpon>201703092138132_add-3-10-2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
