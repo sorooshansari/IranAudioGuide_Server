@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using IranAudioGuide_MainServer.Models;
+using System.Security.Claims;
 
 namespace IranAudioGuide_MainServer
 {
@@ -58,14 +59,41 @@ namespace IranAudioGuide_MainServer
             //   appId: "",
             //   appSecret: "");
 
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            {
-                //ClientId = "751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
-                //ClientSecret = "1kvO5-vGb9kkaaQRV8M1-pM-"
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+            //    //ClientId = "751762984773-tpuqc0d67liqab0809ssvjmgl311r1is.apps.googleusercontent.com",
+            //    //ClientSecret = "1kvO5-vGb9kkaaQRV8M1-pM-"
 
+            //    ClientId = "27601873693-vmc47t1lem7tm9q6nkt00qrel5crsseq.apps.googleusercontent.com",
+            //    ClientSecret = "xclG46o3C3ajx2cMgjdgwRHR",
+            //    CallbackPath = new PathString("/Account/ExternalGoogleLoginCallback"),
+            //    Provider = new GoogleOAuth2AuthenticationProvider()
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            context.Identity.AddClaim(new Claim("picture", context.User.GetValue("picture").ToString()));
+            //            context.Identity.AddClaim(new Claim("profile", context.User.GetValue("profile").ToString()));
+            //        }
+            //    }
+            //});
+            var googleOAuth2AuthenticationOptions = new GoogleOAuth2AuthenticationOptions
+            {
                 ClientId = "27601873693-vmc47t1lem7tm9q6nkt00qrel5crsseq.apps.googleusercontent.com",
-                ClientSecret = "xclG46o3C3ajx2cMgjdgwRHR"
-            });
+                ClientSecret = "xclG46o3C3ajx2cMgjdgwRHR",
+                Provider = new GoogleOAuth2AuthenticationProvider()
+                {
+                    OnAuthenticated = (context) =>
+                    {
+                        context.Identity.AddClaim(new Claim("urn:google:name", context.Identity.FindFirstValue(ClaimTypes.Name)));
+                        context.Identity.AddClaim(new Claim("urn:google:email", context.Identity.FindFirstValue(ClaimTypes.Email)));
+                        //This following line is need to retrieve the profile image
+                        context.Identity.AddClaim(new System.Security.Claims.Claim("urn:google:accesstoken", context.AccessToken, ClaimValueTypes.String, "Google"));
+
+                        return System.Threading.Tasks.Task.FromResult(0);
+                    }
+                }
+            };
+            app.UseGoogleAuthentication(googleOAuth2AuthenticationOptions);
         }
     }
 }

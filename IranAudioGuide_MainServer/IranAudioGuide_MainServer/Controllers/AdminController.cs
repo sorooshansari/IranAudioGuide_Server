@@ -8,6 +8,7 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Data.Entity.Infrastructure;
 using IranAudioGuide_MainServer.Services;
+using Elmah;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -15,13 +16,13 @@ namespace IranAudioGuide_MainServer.Controllers
     public class AdminController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private const int pagingLen = 5;
+        private const int pagingLen = 10;
         private Object ChangeImgLock = new Object();
         private Object DelExtraImg = new Object();
         private Object DelAdo = new Object();
         private Object DelPlc = new Object();
         private Object DelCit = new Object();
-        private const string storagePrefix = "http://iranaudioguide.com/";
+        //private const string storagePrefix = "http://iranaudioguide.com/";
         // GET: Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
@@ -58,6 +59,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 catch (Exception ex)
                 {
                     dbTran.Rollback();
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     return Json(false);
                 }
             }
@@ -82,6 +84,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 catch (Exception ex)
                 {
                     dbTran.Rollback();
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     return Json(false);
                 }
             }
@@ -105,6 +108,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return null;
             }
 
@@ -129,6 +133,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return null;
             }
 
@@ -204,6 +209,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     catch (Exception ex)
                     {
+                        ErrorSignal.FromCurrentContext().Raise(ex);
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
@@ -215,36 +221,36 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public JsonResult DelStory(Guid Id)
         {
-            try
+            using (var dbTran = db.Database.BeginTransaction())
             {
-                var Story = db.Storys.Where(x => x.Sto_Id == Id).FirstOrDefault();
-                if (Story == default(Story))
-                    return Json(new Respond("Invalid Story Id", status.invalidInput));
-
-
-                UpdateLog(updatedTable.Story, Story.Sto_Id, true);
-                db.Storys.Remove(Story);
-                db.SaveChanges();
-
-
-                //TODO MS soroosh
-                var request = new ServiceFtp();
-                var fileName = Story.Sto_Url;
-
-
-
-                lock (DelAdo)
+                try
                 {
-                    if (request.IsDirectoryExist(fileName, GlobalPath.PathStory))
+                    var Story = db.Storys.Where(x => x.Sto_Id == Id).FirstOrDefault();
+                    var fileName = Story.Sto_Url;
+                    if (Story == default(Story))
+                        return Json(new Respond("Invalid Story Id", status.invalidInput));
+
+
+                    UpdateLog(updatedTable.Story, Story.Sto_Id, true);
+                    db.Storys.Remove(Story);
+                    db.SaveChanges();
+                    dbTran.Commit();
+                    var request = new ServiceFtp();
+                    lock (DelAdo)
                     {
-                        request.delete(fileName, GlobalPath.PathStory);
+                        if (request.IsDirectoryExist(fileName, GlobalPath.PathStory))
+                        {
+                            request.delete(fileName, GlobalPath.PathStory);
+                        }
                     }
+                    return Json(new Respond());
                 }
-                return Json(new Respond());
-            }
-            catch (Exception ex)
-            {
-                return Json(new Respond(ex.Message, status.unknownError));
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                    return Json(new Respond(ex.Message, status.unknownError));
+                }
             }
 
 
@@ -327,6 +333,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     catch (Exception ex)
                     {
+                        ErrorSignal.FromCurrentContext().Raise(ex);
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
@@ -368,6 +375,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     dbTran.Rollback();
                     return Json(new Respond(ex.Message, status.unknownError));
                 }
@@ -403,6 +411,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     catch (Exception)
                     {
+
                         return Json(new Respond("Enter percise cordinates.", status.ivalidCordinates));
                     }
                 }
@@ -426,15 +435,22 @@ namespace IranAudioGuide_MainServer.Controllers
                         UpdateLog(updatedTable.Place, place.Pla_Id);
                         db.SaveChanges();
                         dbTran.Commit();
-                        request.Upload(model.Image, fileName, GlobalPath.PathImagePlace);
-                        request.download(GlobalPath.PathImagePlace, GlobalPath.PathImageTumbnail, fileName);
-                      //  string path = Server.MapPath("~/Files");
-                      //  request.download(GlobalPath.PathImagePlace, path, fileName);
+                        var isSuccess = request.Upload(model.Image, fileName, GlobalPath.PathImagePlace);
+                        if (!isSuccess)
+                            throw new ArgumentException("Dont save image in Server", "original");
+
+
+                        var PathSource = GlobalPath.PathImagePlace + "/" + fileName;
+                        var Destination = GlobalPath.PathImageTumbnail + "/" + fileName;
+                        isSuccess = request.Copy(PathSource, Destination);
+                        if (!isSuccess)
+                            throw new ArgumentException("Dont save Tumbnail image in Server", "original");
 
                         return Json(new Respond());
                     }
                     catch (Exception ex)
                     {
+                        ErrorSignal.FromCurrentContext().Raise(ex);
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
@@ -489,6 +505,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     catch (Exception ex)
                     {
+                        ErrorSignal.FromCurrentContext().Raise(ex);
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
@@ -500,6 +517,8 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public JsonResult EditPlace(EditPlaceVM model)
         {
+
+            //Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
             if (!ModelState.IsValid)
             {
                 return Json(new Respond("Check input fields", status.invalidInput));
@@ -524,8 +543,9 @@ namespace IranAudioGuide_MainServer.Controllers
                     place.Pla_cordinate_X = cordinates[0];
                     place.Pla_cordinate_Y = cordinates[1];
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     return Json(new Respond("Enter percise cordinates.", status.ivalidCordinates));
                 }
             }
@@ -536,9 +556,12 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new Respond(ex.Message, status.unknownError));
             }
             return Json(new Respond());
+            //Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+            //return Json(place);
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -593,6 +616,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
@@ -614,6 +638,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
@@ -635,6 +660,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
@@ -642,7 +668,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public JsonResult ChangePlaceTumbImage(ChangeImageVM model)
         {
-            //todo o
+          
             if (!ModelState.IsValid)
             {
                 return Json(new Respond("Check input fields", status.invalidInput));
@@ -674,10 +700,14 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     catch (Exception ex)
                     {
+                        ErrorSignal.FromCurrentContext().Raise(ex);
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-                    request.Upload(model.NewImage, fileName, GlobalPath.PathImageTumbnail);
+                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.PathImageTumbnail);
+                    if (!isSuccess)
+                        throw new ArgumentException("Dont save image in Server", "original");
+
                 }
 
 
@@ -686,6 +716,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
@@ -728,16 +759,21 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     catch (Exception ex)
                     {
+                        ErrorSignal.FromCurrentContext().Raise(ex);
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-                    request.Upload(model.NewImage, fileName, GlobalPath.PathImagePlace);
+                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.PathImagePlace);
+                    if (isSuccess)
+                        throw new ArgumentException("Dont save image in Server", "original");
+
                 }
 
                 return Json(new Respond());
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
@@ -757,7 +793,10 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 try
                 {
-                    var img = new Image() { Place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault() };
+                    var getPlace = db.Places.Include("Pla_ExtraImages").Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
+
+                    int o = getPlace.Pla_ExtraImages.Max(x => x.Order) + 1;
+                    var img = new Image() { Place = getPlace , Order = o };
                     var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     db.Images.Add(img);
                     db.SaveChanges();
@@ -777,6 +816,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     dbTran.Rollback();
                     return Json(new Respond(ex.Message, status.unknownError));
                 }
@@ -815,6 +855,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     dbTran.Rollback();
                     return Json(new Respond(ex.Message, status.unknownError));
                 }
@@ -842,9 +883,12 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
+
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult GetExtraImages(Guid placeId)
@@ -855,11 +899,13 @@ namespace IranAudioGuide_MainServer.Controllers
                        {
                            ImageId = i.Img_Id,
                            ImageName = i.Img_Name,
-                           ImageDesc = i.Img_Description
+                           ImageDesc = i.Img_Description,
+                           Index = i.Order
                        }).ToList();
-            int counter = 0;
-            foreach (var i in img)
-                i.Index = counter++;
+         //   int counter = 0;
+            //foreach (var i in img)
+
+            //    i.Index = counter++;
 
             return Json(img);
         }
@@ -895,6 +941,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     dbTran.Rollback();
                     return Json(new Respond(ex.Message, status.unknownError));
                 }
@@ -928,6 +975,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     dbTran.Rollback();
                     return Json(new Respond(ex.Message, status.unknownError));
                 }
@@ -973,11 +1021,14 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     catch (Exception ex)
                     {
+                        ErrorSignal.FromCurrentContext().Raise(ex);
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
 
-                    request.Upload(model.NewImage, fileName, GlobalPath.PathImageCity);
+                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.PathImageCity);
+                    if (isSuccess)
+                        throw new ArgumentException("Dont save image in Server", "original");
                 }
 
                 //end upload file
@@ -986,6 +1037,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
@@ -1026,6 +1078,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     dbTran.Rollback();
                     return Json(new Respond("Something went wrong. Contact devloper team.", status.unknownError));
                 }
@@ -1116,7 +1169,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 throw ex;
             }
         }
@@ -1133,7 +1186,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
-
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 throw ex;
             }
         }
@@ -1154,6 +1207,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return null;
             }
 
@@ -1367,6 +1421,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 catch (Exception ex)
                 {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
                     dbTran.Rollback();
                     return Json(new Respond(ex.Message, status.unknownError));
                 }
@@ -1392,5 +1447,6 @@ namespace IranAudioGuide_MainServer.Controllers
                     return Json(new Respond("Something went wrong. Contact devloper team.", status.unknownError));
             }
         }
+
     }
 }

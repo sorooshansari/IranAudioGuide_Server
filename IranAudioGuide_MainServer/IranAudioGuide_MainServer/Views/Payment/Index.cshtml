@@ -188,19 +188,21 @@
                 <a class="btn btn-sm btn-default" href="mobile/close" style="width:100px; font-size:small;">Cancel</a>
                 @if (ViewBag.IsChooesZarinpal)
                 {
-                    @Html.ActionLink("Press To Buy", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = false }, new { @class = "btn btn-default purchasebtn" })
+                    @Html.ActionLink("Purchase", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = false }, new { @class = "btn btn-default purchasebtn" })
                 }
                 else
                 {
-                    @Html.ActionLink("Press To Buy", "WMPurchase", new { packageId = Model.PackageId, isFromApp = true }, new { @class = "btn btn-default purchasebtn" })
+                    @Html.ActionLink("Purchase", "WMPurchase", new { packageId = Model.PackageId, isFromApp = true }, new { @class = "btn btn-default purchasebtn" })
                 }
+
+                <a class="btn btn-sm btn-default" href="mobile/close" style="width:100px; font-size:small;">Cancel</a>
             </div>
         </div>
         <div class="col-xs-12" style="text-align:center;">
             @if (ViewBag.IsChooesZarinpal)
             {
-                <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
-                <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarinPal Logo above</p>
+            <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
+            <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarinPal Logo above</p>
 
             }
             else

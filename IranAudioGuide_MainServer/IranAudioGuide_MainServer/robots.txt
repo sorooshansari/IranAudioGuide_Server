@@ -1,5 +1,6 @@
-﻿User-Agent: *
+User-Agent: *
 Disallow: /admin/
 Disallow: /account/
+Disallow: http://edge.quantserve.com/quant.js
 
 Sitemap: http://iranaudioguide.com/sitemap.xml
