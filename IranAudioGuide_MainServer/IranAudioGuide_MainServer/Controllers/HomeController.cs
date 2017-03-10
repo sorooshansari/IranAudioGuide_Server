@@ -11,6 +11,10 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.View = Views.Index;
             return View();
         }
+        public ActionResult Error(string aspxerrorpath)
+        {
+            return View();
+        }
 
         [HttpPost]
         public JsonResult ContactEmailSender(ContactEmailVM model)
