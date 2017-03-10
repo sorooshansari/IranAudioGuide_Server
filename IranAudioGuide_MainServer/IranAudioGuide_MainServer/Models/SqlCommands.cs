@@ -616,10 +616,10 @@ BEGIN
 
      SELECT dbo.Packagecities.city_Cit_Id AS cityID
 FROM            AspNetUsers INNER JOIN
-                         Procurements ON AspNetUsers.Id = Procurements.User_Id INNER JOIN
-                         Packages ON Procurements.ProcurementId = Packages.Pac_Id INNER JOIN
+                         Procurements ON AspNetUsers.Id = Procurements.Id INNER JOIN
+                         Packages ON Procurements.Pro_Id = Packages.Pac_Id INNER JOIN
                          Packagecities ON Packages.Pac_Id = Packagecities.Package_Pac_Id
-WHERE        (AspNetUsers.Id = @UserID) AND (dbo.Procurements.PaymentFinished = 1)
+WHERE        (AspNetUsers.Id = @UserID) AND (Pro_PaymentFinished = 1)
 	GROUP BY dbo.Packagecities.city_Cit_Id
 END",
 @"CREATE FUNCTION [dbo].[AudiosCount]

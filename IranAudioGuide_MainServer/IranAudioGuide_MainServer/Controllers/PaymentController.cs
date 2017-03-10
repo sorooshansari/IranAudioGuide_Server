@@ -48,11 +48,10 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                //if (info.IsChooesZarinpal && ExtensionMethods.IsForeign)
-                //    ViewBag.IsChooesZarinpal = false;
-                //else
-                //    ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
-                ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
+                if (info.IsChooesZarinpal && ExtensionMethods.IsForeign)
+                    ViewBag.IsChooesZarinpal = false;
+                else
+                    ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
 
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user.uuid != info.uuid)
@@ -108,12 +107,10 @@ namespace IranAudioGuide_MainServer.Controllers
             try
             {
 
-                //if (pak.IsChooesZarinpal && ExtensionMethods.IsForeign)
-                //    ViewBag.IsChooesZarinpal = false;
-                //else
-                //    ViewBag.IsChooesZarinpal = pak.IsChooesZarinpal;
-
-                ViewBag.IsChooesZarinpal = pak.IsChooesZarinpal;
+                if (pak.IsChooesZarinpal && ExtensionMethods.IsForeign)
+                    ViewBag.IsChooesZarinpal = false;
+                else
+                    ViewBag.IsChooesZarinpal = pak.IsChooesZarinpal;
 
                 var info = new AppPaymentReqVM()
                 {
