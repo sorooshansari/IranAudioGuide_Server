@@ -46,6 +46,27 @@ namespace IranAudioGuide_MainServer.Models
                 _userManager = value;
             }
         }
+        public async Task<int> SendEmailConfirmedAgain(string email, string BaseUrl)
+        {
+            try
+            {
+                var applicationUser = await UserManager.FindByNameAsync(email);
+                if (applicationUser != default(ApplicationUser))
+                {
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(applicationUser.Id);
+                    code = HttpUtility.UrlEncode(code);
+                    var callbackUrl = string.Format("{0}/Account/ConfirmEmail?userId={1}&code={2}", BaseUrl, applicationUser.Id, code);
+                    await UserManager.SendEmailAsync(applicationUser.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    return 0;
+                }
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return 2;
+            }
+        }
         public ApplicationUser getUser(string username)
         {
             return UserManager.FindByName(username);
@@ -58,13 +79,18 @@ namespace IranAudioGuide_MainServer.Models
             {
                 case SignInStatus.Success:
                     if (user.uuid == null)
-                    {
-                        var updated = await updateUserUUID(user, uuid);
-                        if (!updated)
-                            return new AuthorizedUser() { Result = SignInResults.Failure };
-                    }
+                        updateUserUUID(user, uuid);
                     else if (user.uuid != uuid)
                         return new AuthorizedUser() { Result = SignInResults.uuidMissMatch };
+                    if (!user.EmailConfirmed)
+                        return new AuthorizedUser()
+                        {
+                            GoogleId = user.GoogleId,
+                            Email = user.Email,
+                            FullName = user.FullName,
+                            Picture = user.Picture,
+                            Result = SignInResults.RequiresVerification
+                        };
                     return new AuthorizedUser()
                     {
                         GoogleId = user.GoogleId,
@@ -95,7 +121,7 @@ namespace IranAudioGuide_MainServer.Models
             var appUser = await UserManager.FindByNameAsync(Email);
             if (appUser != null)
             {
-                if (appUser.uuid != null & appUser.uuid != uuid)
+                if (appUser.uuid != null && appUser.uuid != uuid)
                     return CreatingUserResult.uuidMissMatch;
                 if (appUser.GoogleId != null && appUser.GoogleId.Length > 0)
                     return CreatingUserResult.googleUser;
@@ -130,7 +156,9 @@ namespace IranAudioGuide_MainServer.Models
                 var appUser = await UserManager.FindByNameAsync(email);
                 if (appUser == null)
                     return RecoverPassResults.NotUser;
-                if (appUser.uuid != uuid)
+                if (!appUser.EmailConfirmed)
+                    return RecoverPassResults.RequiresVerification;
+                if (appUser.uuid != null && appUser.uuid != uuid)
                     return RecoverPassResults.uuidMissMatch;
                 string code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
                 code = HttpUtility.UrlEncode(code);

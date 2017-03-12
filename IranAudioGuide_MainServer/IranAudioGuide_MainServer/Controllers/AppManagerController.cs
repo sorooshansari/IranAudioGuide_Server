@@ -21,6 +21,13 @@ namespace IranAudioGuide_MainServer.Controllers
                 _acTools = value;
             }
         }
+        [HttpPost]
+        public async Task<int> SendEmailConfirmedAgain(ConfirmEmailVM model)
+        {
+            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            var res = acTools.SendEmailConfirmedAgain(model.email, baseUrl);
+            return await res;
+        }
 
         [HttpPost]
         public string getBaseUrl()

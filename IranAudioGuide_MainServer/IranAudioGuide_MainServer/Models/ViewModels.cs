@@ -308,7 +308,8 @@ namespace IranAudioGuide_MainServer.Models
         //
         // Summary:
         //     Sign in with different uuid
-        uuidMissMatch = 4
+        uuidMissMatch = 4,
+        error=5
     }
     public enum RecoverPassResults
     {

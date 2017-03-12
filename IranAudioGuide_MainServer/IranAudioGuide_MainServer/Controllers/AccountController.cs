@@ -62,9 +62,9 @@ namespace IranAudioGuide_MainServer.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-          //  var model = new LoginViewModel();
-          //  var serviceIpAdress = new ServiceIpAdress();
-           // ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
+            //  var model = new LoginViewModel();
+            //  var serviceIpAdress = new ServiceIpAdress();
+            // ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
             ViewBag.View = Views.Login;
             ViewBag.ReturnUrl = returnUrl;
             //return View(/*model*/);
@@ -110,7 +110,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         return RedirectToAction("Index", "Admin");
                     else if (UserRole == "AppUser")
                     {
-                        if (returnUrl!= null && returnUrl.Length > 0)
+                        if (returnUrl != null && returnUrl.Length > 0)
                             return RedirectToLocal(returnUrl);
                         return RedirectToAction("Index", "User");
                     }
@@ -213,6 +213,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    code = HttpUtility.UrlEncode(code);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
@@ -225,23 +226,24 @@ namespace IranAudioGuide_MainServer.Controllers
             //ViewBag.View = Views.Register;
             return View(model);
         }
-      
+
         [AllowAnonymous]
-     //   [ValidateAntiForgeryToken]
+        //   [ValidateAntiForgeryToken]
         public async Task<HttpResponseMessage> SendEmailConfirmedAgain()
         {
             if (!User.Identity.IsAuthenticated)
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
 
-            var UserId = User.Identity.GetUserId(); 
-            if(string.IsNullOrEmpty(UserId))
+            var UserId = User.Identity.GetUserId();
+            if (string.IsNullOrEmpty(UserId))
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
 
             // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
             // Send an email with this link
             string code = await UserManager.GenerateEmailConfirmationTokenAsync(UserId);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = UserId, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(UserId, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            code = HttpUtility.UrlEncode(code);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = UserId, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(UserId, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
             return new HttpResponseMessage(HttpStatusCode.OK);
 
         }
@@ -339,7 +341,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
         //
-      
+
 
         //
         // GET: /Account/ResetPassword
@@ -429,7 +431,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
-        
+
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
@@ -588,16 +590,16 @@ namespace IranAudioGuide_MainServer.Controllers
 
 
         #region Danial
-        public ActionResult vmessage(string subject,string Message)
+        public ActionResult vmessage(string subject, string Message)
         {
-            
+
             return View("vmessage", new vmessageVM()
             {
                 Subject = subject,
                 Message = Message
             });
         }
-        
+
         #endregion
 
 
