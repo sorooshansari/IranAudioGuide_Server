@@ -195,8 +195,6 @@ namespace IranAudioGuide_MainServer.Models
         //}
         public string GetAudioUrl(GetAudioUrlVM model)
         {
-            //model.email = "testuser@iranaudioguide.com";
-            //model.uuid = "1212";
             string pathSource, pathDestination;
             if (model.isAudio)
             {

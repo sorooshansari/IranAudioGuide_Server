@@ -794,7 +794,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     var getPlace = db.Places.Include(p => p.Pla_ExtraImages).Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     int o = 1;
-                    if (getPlace.Pla_ExtraImages != null || getPlace.Pla_ExtraImages.Count != 0)
+                    if (getPlace.Pla_ExtraImages.Count != 0)
                         o = getPlace.Pla_ExtraImages.Max(x => x.Order)+1;
                     var img = new Image() { Place = getPlace, Order = o };
                     var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
