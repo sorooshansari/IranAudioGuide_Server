@@ -157,34 +157,116 @@ namespace IranAudioGuide_MainServer.Models
                 }
             }
         }
-        public string GetAudioUrl(Guid trackId, bool isAudio)
+        //public string GetAudioUrl(GetAudioUrlVM model)
+        //{
+        //    using (var db = new ApplicationDbContext())
+        //    {
+        //        //string userName = User.Identity.Name;
+        //        //var list = db.Procurements.Include("Pro_Package").Include("Pro_User")
+        //        //    .Where(x => x.Pro_User.Email == model.email &&  x.Pro_User.uuid == model.uuid && x.Pro_PaymentFinished)
+        //        //    .Select(p => p.Pac_Id).ToList();
+
+
+
+        //        if (model.isAudio)
+        //        {
+        //            var trakName = (from a in db.Audios
+        //                            where a.Aud_Id == model.trackId
+        //                            select a.Aud_Url).FirstOrDefault();
+
+        //            if (string.IsNullOrEmpty(trakName))
+        //                throw new ArgumentException("Not Found File Audio", "original");
+
+        //            return GetUrl(trakName, model.isAudio);
+
+        //        }
+        //        else
+        //        {
+        //            var trakName = (from s in db.Storys
+        //                            where s.Sto_Id ==model.trackId
+        //                            select s.Sto_Url).FirstOrDefault();
+
+        //            if (string.IsNullOrEmpty(trakName))
+        //                throw new ArgumentException("Not Found File Story", "original");
+
+        //            return GetUrl(trakName, model.isAudio);
+        //        }
+        //    }
+        //}
+        public string GetAudioUrl(GetAudioUrlVM model)
         {
-            using (var db = new ApplicationDbContext())
+            string pathSource, pathDestination;
+            if (model.isAudio)
             {
-                if (isAudio)
-                {
-                    var trakName = (from a in db.Audios
-                                    where a.Aud_Id == trackId
-                                    select a.Aud_Url).FirstOrDefault();
 
-                    if (string.IsNullOrEmpty(trakName))
-                        throw new ArgumentException("Not Found File Audio", "original");
-
-                    return GetUrl(trakName, isAudio);
-
-                }
-                else
-                {
-                    var trakName = (from s in db.Storys
-                                    where s.Sto_Id == trackId
-                                    select s.Sto_Url).FirstOrDefault();
-
-                    if (string.IsNullOrEmpty(trakName))
-                        throw new ArgumentException("Not Found File Story", "original");
-
-                    return GetUrl(trakName, isAudio);
-                }
+                pathSource = GlobalPath.PathAudios;
+                pathDestination = GlobalPath.DownloadPathAudios;
             }
+            else
+            {
+                pathSource = GlobalPath.PathStory;
+                pathDestination = GlobalPath.DownloadPathStory;
+            }
+            using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetURL", sqlConnection); cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@IsAudio", model.isAudio));
+                cmd.Parameters.Add(new SqlParameter("@FileId", model.trackId));
+                cmd.Parameters.Add(new SqlParameter("@UserName", model.email));
+                cmd.Parameters.Add(new SqlParameter("@UserUUID", model.uuid));
+                cmd.Parameters.Add(new SqlParameter("@Path", pathDestination));
+
+                sqlConnection.Open();
+                var reader = cmd.ExecuteReader();
+                var dt1 = new DataTable();
+                dt1.Load(reader);
+                var links = dt1.AsEnumerable().Select(x => new
+                {
+                    PathFile = x["PathFile"].ToString(),
+                    FileName = x["FileName"].ToString(),
+                    IsUpdate = x["IsUpdate"].ToString(),
+                    IsAccess = x["isAccess"].ToString()
+                }).FirstOrDefault();
+
+                if (links.IsAccess == "0")
+                    return null;
+                if (links.IsUpdate == "True")
+                {
+                    var ftp = new ServiceFtp();
+                    pathSource = pathSource + "/" + links.FileName;
+                    pathDestination = links.PathFile;
+                    ftp.Copy(pathSource, pathDestination);
+                }
+                return GlobalPath.host + "/" + links.PathFile;
+            }
+
+
+            //return res;
+            //if (model.isAudio)
+            //{
+            //    var trakName = (from a in db.Audios
+            //                    where a.Aud_Id == model.trackId
+            //                    select a.Aud_Url).FirstOrDefault();
+
+            //    if (string.IsNullOrEmpty(trakName))
+            //        throw new ArgumentException("Not Found File Audio", "original");
+
+            //    return GetUrl(trakName, model.isAudio);
+
+            //}
+            //else
+            //{
+            //    var trakName = (from s in db.Storys
+            //                    where s.Sto_Id ==model.trackId
+            //                    select s.Sto_Url).FirstOrDefault();
+
+            //    if (string.IsNullOrEmpty(trakName))
+            //        throw new ArgumentException("Not Found File Story", "original");
+
+            //    return GetUrl(trakName, model.isAudio);
+            //}
+            // }
         }
         public GetPackagesVM GetPackagesByCity(int cityId)
         {

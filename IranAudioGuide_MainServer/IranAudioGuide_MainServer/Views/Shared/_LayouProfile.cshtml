@@ -25,23 +25,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>@ViewBag.Title</title>
-    <link href="~/Content/global/plugins/toastr/toastr.min.css" rel="stylesheet" />
-    <link href="~/Content/css/bootstrap.3.3.7.min.css" rel="stylesheet" />
-    <link href="~/Content/css/select.min.css" rel="stylesheet" />
-    <link href="~/Content/css/simple-sidebar.css" rel="stylesheet" />
-    <link href="~/Content/global/plugins/font-awesome/font-awesome.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link href="~/Content/css/profile.css" rel="stylesheet" />
-    <link href="~/Content/css/PakageTemplate.css" rel="stylesheet" />
+    @Styles.Render("~/ProfileCss")
 
 </head>
 <body onresize="onResizeBody()" ng-app="userApp" ng-controller="userCtrl">
-    <div id="wrapper">
+    <div id="wrapper" ng-class="{ 'wrapper-show': profile.isCompletedLoading == false}">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <div class="logo">
@@ -56,7 +50,7 @@
             <ul class="sidebar-nav">
                 <li>
                     <a href="http://iranaudioguide.com/">
-                        <i  class="fa fa-home"></i>
+                        <i class="fa fa-home"></i>
                         Home
                     </a>
                 </li>
@@ -66,12 +60,12 @@
                         Packages
                     </a>
                 </li>
-                @*<li>
-        <a ui-sref="PackagesPurchased" id="btnGetPakagePurchased" ng-click="getPackagesPurchased($event)">
-             <i class="fa fa-list"></i>
-            Purchased
-        </a>
-    </li>*@
+                <li>
+                    <a ui-sref="PackagesPurchased" id="btnGetPakagePurchased" ng-click="getPackagesPurchased($event)">
+                        <i class="fa fa-list"></i>
+                        Purchased
+                    </a>
+                </li>
                 <li>
                     <a ui-sref="deactivateMobile" ng-click="getPackagesPurchased($event)">
                         <i class="fa fa-mobile"></i>
@@ -80,7 +74,7 @@
                 </li>
 
                 <li>
-                    <a ng-click="LogOff()" >
+                    <a ng-click="LogOff()">
                         <i class="fa fa-sign-out"></i>
                         Log Off
                     </a>
@@ -90,11 +84,11 @@
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
         <div id="page-content-wrapper">
-          
+
             <div class="container-fluid">
                 <div class="menu-mobail visible-xs">
                     <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
-                    <span class="menu-username">{{user.Email}}</span>
+                    <span class="menu-username">{{user.FullName }}</span>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
@@ -106,7 +100,7 @@
         <!-- /#page-content-wrapper -->
     </div>
 
-    <div id="FullPageLoading" ng-class="{ 'unload': profile.isCompletedLoading == true, 'load': profile.isCompletedLoading == false}">
+    <div id="FullPageLoading" ng-class="{ 'unload': profile.isCompletedLoading == false, 'load': profile.isCompletedLoading == true}">
         <div id="fpcontainer">
             <img id="IAGLogo" src="~/images/IAGSmallWhiteLogo.png" />
             <div style="text-align:center;">
@@ -118,38 +112,7 @@
     </div>
     <!-- /#wrapper -->
     <!-- jQuery -->
-    <script src="~/Content/Scripts/jquery-2.2.3.js"></script>
-    <script src="~/Content/Scripts/bootstrap.min.js"></script>
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-        function onResizeBody() {
-            var width = $(window).width();
-            var h = $(window).height();
-            console.log('resized:', width, h);
-            /* Custom, iPhone Retina  if (width < 320)*/
-            /* Extra Small Devices, Phones  else if (width < 480) */
-            /* Medium Devices, Desktops   else if (width < 992)*/
-            /* Small Devices, Tablets if (width < 768)*/
-            /* Large Devices, Wide Screens (width< 1200) */
-            if (width > 768)
-                if ($("#wrapper").hasClass("toggled"))
-                    $("#wrapper").removeClass("toggled")
 
-
-
-        };
-    </script>
-
-    <script src="~/Content/global/plugins/angularjs/angular.min.js"></script>
-    <script src="~/Content/global/plugins/angularjs/angular-ui-router.min.js"></script>
-    <script src="~/Content/Scripts/toastr.min.js"></script>
-    <script src="~/Content/Scripts/select.min.js"></script>
-    <script src="~/Content/Scripts/Underscore.js"></script>
-    <script src="~/Content/Scripts/UserCustom.js"></script>
-    <script src="~/Content/Scripts/UserServices.js"></script>
-    <script src="~/Content/Scripts/UserControllers.js"></script>
+    @Scripts.Render("~/Profile/minJs")
 </body>
 </html>

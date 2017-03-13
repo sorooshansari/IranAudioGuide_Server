@@ -41,7 +41,10 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
-
+        public ActionResult test(int id)
+        {
+            return View();
+        }
         // GET: Payment
         [AllowAnonymous]
         public async Task<ActionResult> Index(AppPaymentReqVM info)
@@ -102,19 +105,19 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         //Payment/PaymentWeb
         [Authorize(Roles = "AppUser")]
-        public async Task<ActionResult> PaymentWeb(WebPaymentReqVM pak)
+        public async Task<ActionResult> PaymentWeb(Guid pacId, bool IsZarinpal)
         {
             try
             {
 
-                if (pak.IsChooesZarinpal && ExtensionMethods.IsForeign)
+                if (IsZarinpal && ExtensionMethods.IsForeign)
                     ViewBag.IsChooesZarinpal = false;
                 else
-                    ViewBag.IsChooesZarinpal = pak.IsChooesZarinpal;
+                    ViewBag.IsChooesZarinpal = IsZarinpal;
 
                 var info = new AppPaymentReqVM()
                 {
-                    packageId = pak.packageId,
+                    packageId = pacId,
                     email = User.Identity.Name
                 };
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
@@ -124,7 +127,6 @@ namespace IranAudioGuide_MainServer.Controllers
                         Subject = "Email not confirmed yet!",
                         Message = @"For purchasing, first need to confirm your email. Please click <a id='loginlink' href='/user'>here</a> to Login",
                     });
-                Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 PackageVM package = (from p in db.Packages
                                      where p.Pac_Id == info.packageId
                                      select new PackageVM()
@@ -133,17 +135,8 @@ namespace IranAudioGuide_MainServer.Controllers
                                          PackageName = p.Pac_Name,
                                          PackagePrice = p.Pac_Price,
                                          PackagePriceDollar = p.Pac_Price_Dollar,
-                                         PackageCities = (from c in db.Cities
-                                                          where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-                                                          select new CityVM()
-                                                          {
-                                                              CityDesc = c.Cit_Description,
-                                                              CityID = c.Cit_Id,
-                                                              CityName = c.Cit_Name
-                                                          }).ToList()
-                                     }).First();
+                                     }).FirstOrDefault();
                 packname = package.PackageName;
-                await t;
                 ViewBag.Error = info.ErrorMessage;
                 return View(package);
             }
@@ -168,6 +161,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.SaleReferenceId = "**************";
                 ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
                 ViewBag.ErrDesc = "You are already purchased this package.";
+                ViewBag.Succeeded = false;
                 if (isFromApp)
                     return View("Return");
                 else
@@ -339,7 +333,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 string redirectPage = baseUrl + "/Payment/Return";
                 if (isFromWeb)
                     redirectPage = baseUrl + "/Payment/ReturnToWebPage";
-                //Todo I've changed command
+
 
 
                 var user = db.Users.FirstOrDefault(x => x.UserName == UserName);
@@ -454,7 +448,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
         private void UpdatePayment(int paymentId, string vresult, long saleReferenceId, string refId, bool paymentFinished = false)
         {
-            //Todo I've changed command
+
             var procurement = db.Procurements
                 .Include(x => x.Pro_Payment)
                 .FirstOrDefault(x => x.Pro_Payment.Pay_Id == paymentId);
@@ -475,7 +469,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             else
             {
-                //Todo I've changed command
+
                 Exception ex = new Exception("UpdatePayment:  dont find procurement for IdPayment ");
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
 
@@ -608,7 +602,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         private long FindAmountPayment(int paymentId)
         {
-            //Todo Is it correct 
+
             long amount = db.Payments.Where(c => c.Pay_Id == paymentId).Select(c => c.Pay_Amount).FirstOrDefault();
 
             return amount;

@@ -8,6 +8,7 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Data.Entity.Infrastructure;
 using IranAudioGuide_MainServer.Services;
+using System.Data.Entity;
 using Elmah;
 
 namespace IranAudioGuide_MainServer.Controllers
@@ -297,22 +298,20 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     try
                     {
-                        var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
+                        var place = db.Places.Include(x => x.Pla_Audios).FirstOrDefault(x => x.Pla_Id == model.PlaceId);
+                        if (place == null)
+                            return Json(new Respond());
+
+                        if (place.Pla_Audios == null)
+                            place.Pla_Audios = new List<Audio>();
                         var audio = new Audio()
                         {
-                            Aud_Name = model.AudioName,
-                            Place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault()
+                            Aud_Name = model.AudioName
+                            //Place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault()
                         };
-                        db.Audios.Add(audio);
+                        place.Pla_Audios.Add(audio);
+
                         db.SaveChanges();
-
-                        //Save audio and generate Aud_Id
-                        //string id = Convert.ToString(audio.Aud_Id);
-                        //string extention = Path.GetExtension(model.AudioFile.FileName);
-                        //string path = string.Format("~/Audios/{0}{1}", id, extention);
-                        //model.AudioFile.SaveAs(Server.MapPath(path));
-                        //audio.Aud_Url = string.Format("{0}{1}", id, extention);
-
 
                         //uplaod file
                         var request = new ServiceFtp();
@@ -668,7 +667,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public JsonResult ChangePlaceTumbImage(ChangeImageVM model)
         {
-          
+
             if (!ModelState.IsValid)
             {
                 return Json(new Respond("Check input fields", status.invalidInput));
@@ -793,10 +792,11 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 try
                 {
-                    var getPlace = db.Places.Include("Pla_ExtraImages").Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
-
-                    int o = getPlace.Pla_ExtraImages.Max(x => x.Order) + 1;
-                    var img = new Image() { Place = getPlace , Order = o };
+                    var getPlace = db.Places.Include(p => p.Pla_ExtraImages).Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
+                    int o = 1;
+                    if (getPlace.Pla_ExtraImages.Count != 0)
+                        o = getPlace.Pla_ExtraImages.Max(x => x.Order)+1;
+                    var img = new Image() { Place = getPlace, Order = o };
                     var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     db.Images.Add(img);
                     db.SaveChanges();
@@ -832,16 +832,13 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     lock (DelExtraImg)
                     {
-                        var img = db.Images.Include("Place").Where(x => x.Img_Id == imgId).FirstOrDefault();
+                        var img = db.Images.Include(x => x.Place).Where(x => x.Img_Id == imgId).FirstOrDefault();
                         if (img == default(Image))
                         {
                             return Json(new Respond("Invalid Image Id", status.invalidId));
                         }
                         UpdateLog(updatedTable.ExtraImage, img.Img_Id, true);
-
-
                         db.Images.Remove(img);
-
                         db.SaveChanges();
                         var request = new ServiceFtp();
                         var fileName = img.Img_Name;
@@ -902,11 +899,6 @@ namespace IranAudioGuide_MainServer.Controllers
                            ImageDesc = i.Img_Description,
                            Index = i.Order
                        }).ToList();
-         //   int counter = 0;
-            //foreach (var i in img)
-
-            //    i.Index = counter++;
-
             return Json(img);
         }
         [HttpPost]

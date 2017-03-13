@@ -13,7 +13,6 @@ namespace IranAudioGuide_MainServer.Controllers
     public class UserApiController : ApiController
     {
         [HttpPost]
-        [AllowAnonymous]
         public IHttpActionResult CheckLoginUser()
         {
             var service = new AccountTools();
@@ -93,74 +92,26 @@ namespace IranAudioGuide_MainServer.Controllers
             var serviceIpAdress = new ServiceIpAdress();
             return serviceIpAdress.IsTheFirstLogin();
         }
-        //[HttpPost]
-        //// GET: User
-        //[Authorize(Roles = "AppUser")]
-        //public IHttpActionResult GetPackagesPurchased()
-        //{
-        //    try
-        //    {
-        //        using (var db = new ApplicationDbContext())
-        //        {
-        //            string userName = User.Identity.Name;
-        //            var list = db.Payments.Include("User").Include("Package").Include("Package.Pac_Cities")
-        //                   .Where(x => x.User.UserName == userName)
-        //                   .Where(x => x.PaymentFinished == true)
-        //                   .Select(p => p.Package).Select(p => new PackageVM()
-        //                   {
-        //                       PackagePrice = p.Pac_Price,
-        //                       PackagePriceDollar = p.Pac_Price_Dollar,
-        //                       PackageId = p.Pac_Id,
-        //                       PackageName = p.Pac_Name,
-        //                       PackageCities = p.Pac_Cities.Select(c => new CityVM()
-        //                       {
-        //                           CityName = c.Cit_Name,
-        //                           CityDesc = c.Cit_Description,
-        //                           CityID = c.Cit_Id,
-        //                           CityImageUrl = c.Cit_ImageUrl,
-        //                           Places = (from pl in db.Places
-        //                                     where pl.Pla_city.Cit_Id == c.Cit_Id
-        //                                     select new PlaceVM()
-        //                                     {
-        //                                         PlaceName = pl.Pla_Name,
-        //                                         PlaceId = pl.Pla_Id,
-        //                                         CityName = pl.Pla_Name,
-        //                                         PlaceAddress = pl.Pla_Address,
-        //                                         PlaceDesc = pl.Pla_Discription,
-        //                                         ImgUrl = pl.Pla_ImgUrl,
-
-        //                                     }).ToList()
-        //                       }).ToList()
-        //                   }).ToList();
-
-        //            return Ok(list);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
-
 
         [HttpPost]
         [Authorize(Roles = "AppUser")]
+
         public IHttpActionResult GetPackages()
         {
             try
             {
-                var packagesPurchased = GetPackagesPurchased();
                 using (var db = new ApplicationDbContext())
                 {
                     string userName = User.Identity.Name;
-                    var list = db.Packages.Include("Package.Pac_Cities")
+                    var list = db.Packages.Include("procurements.Pro_User").Include("Package.Pac_Cities")
                         .Select(p => new PackageVM()
                         {
                             PackagePrice = p.Pac_Price,
                             PackagePriceDollar = p.Pac_Price_Dollar,
                             PackageId = p.Pac_Id,
                             PackageName = p.Pac_Name,
+                            isPackagesPurchased = p.procurements.Any(t => t.Pro_User.UserName == User.Identity.Name && t.Pro_PaymentFinished),
+
                             PackageCities = p.Pac_Cities.Select(c => new CityVM()
                             {
                                 CityName = c.Cit_Name,
@@ -181,10 +132,17 @@ namespace IranAudioGuide_MainServer.Controllers
                                 }).ToList()
                             }).ToList()
                         }).ToList();
-                    foreach (var item in list)
-                    {
-                        item.isPackagesPurchased = packagesPurchased.Any(x => x == item.PackageId);
-                    }
+
+                    //  var packagesPurchased = GetPackagesPurchased();
+                    //foreach (var item in list)
+                    //{
+                    //    item.isPackagesPurchased = packagesPurchased.Any(x => x == item.PackageId);
+                    //}
+                    //foreach (var item in list)
+                    //{
+                    //    item.isPackagesPurchased = item.procurements.Any(p => p.Pro_User.UserName == User.Identity.Name);
+                    //}
+
                     return Ok(list);
                 }
             }
@@ -194,12 +152,18 @@ namespace IranAudioGuide_MainServer.Controllers
                 throw ex;
             }
         }
-        private IList<Guid> GetPackagesPurchased()
+
+        [HttpGet]
+        [Authorize(Roles = "AppUser")]
+
+        public IList<Guid> GetPackagesPurchased()
         {
             try
             {
-                using (var db=new ApplicationDbContext())
+                using (var db = new ApplicationDbContext())
                 {
+                    //var s = db.Procurements.Include(x => x.Pro_Package).Include(x => x.Pro_Payment).Include(x => x.Pro_WMPayment).Include(x => x.Pro_User).ToList();
+                    //return s;
                     string userName = User.Identity.Name;
                     var list = db.Procurements
                         .Include(x => x.Pro_User)
@@ -207,37 +171,13 @@ namespace IranAudioGuide_MainServer.Controllers
                         .Select(p => p.Pac_Id).ToList();
                     return list;
                 }
-                //using (var db = new ApplicationDbContext())
-                //{
-                //    string userName = User.Identity.Name;
-                //    var list = db.Payments.Include("User").Include("Package")
-                //           .Where(x => x.User.UserName == userName)
-                //          // .Where(x => x.PaymentFinished == true)
-                //           .Select(p => p.Package).Select(p => new PackageVM()
-                //           {
-                //               PackageId = p.Pac_Id,
 
-                //           }).ToList();
-                //    var list2 = db.WMPayment.Include("User").Include("Package")
-                //      .Where(x => x.User.UserName == userName)
-                //     // .Where(x => x.PaymentFinished == true)
-                //       .Select(p => p.Package).Select(p => new PackageVM()
-                //       {
-                //           PackageId = p.Pac_Id,
-
-                //       }).ToList();
-
-                //    if (list2.Count > 0)
-                //        list.AddRange(list2);
-                //    return list;
-                //}
             }
             catch (Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
-               
-
-            } return null;
+            }
+            return null;
         }
 
         [AllowAnonymous]
@@ -259,6 +199,8 @@ namespace IranAudioGuide_MainServer.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "AppUser")]
+
         public IHttpActionResult DeactivateMobile()
         {
             using (var db = new ApplicationDbContext())

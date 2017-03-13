@@ -51,13 +51,16 @@ body {
 
 
 /* Toggle Styles */
-
+.wrapper-show {
+    display: block !important;
+}
 #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    display:none;
 }
 
     #wrapper.toggled {
@@ -208,6 +211,13 @@ body {
         background-image: -webkit-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
         background-image: -o-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
         background-size: cover;
+        padding-top:30px;
+    }
+}
+
+@media screen and (max-width: 760px) {  
+    #page-content-wrapper { 
+        padding-top:44px;
     }
 }
 /********* end menu right ***************************

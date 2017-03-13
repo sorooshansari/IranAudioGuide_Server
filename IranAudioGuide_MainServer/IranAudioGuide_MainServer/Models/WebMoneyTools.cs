@@ -17,7 +17,6 @@ namespace IranAudioGuide_MainServer.Models
     {
         public WMUpdateRes ProccessResult()
         {
-            //Todo I've changed command
 
             int paymentId;
             ApplicationDbContext db;
@@ -30,8 +29,8 @@ namespace IranAudioGuide_MainServer.Models
                 paymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
                 db = new ApplicationDbContext();
                 buy = db.Procurements
-                    .Include(x=>x.Pro_WMPayment)
-                    .Include(x=>x.Pro_User)
+                    .Include(x => x.Pro_WMPayment)
+                    .Include(x => x.Pro_User)
                     .Include(x => x.Pro_Package)
                     .FirstOrDefault(x => x.Pro_WMPayment.WMP_Id == paymentId);
                 if (buy == default(Procurement))
@@ -164,12 +163,12 @@ namespace IranAudioGuide_MainServer.Models
         {
             try
             {
-                //Todo I've changed command
+
                 int paymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
                 using (var db = new ApplicationDbContext())
                 {
                     var packName = db.Procurements
-                        .Include(x=>x.Pro_WMPayment)
+                        .Include(x => x.Pro_WMPayment)
                         .Include(x => x.Pro_Package)
                         .FirstOrDefault(x => x.Pro_WMPayment.WMP_Id == paymentId).Pro_Package.Pac_Name;
                     return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
@@ -195,12 +194,12 @@ namespace IranAudioGuide_MainServer.Models
             {
                 try
                 {
-                    //Todo I've changed command
+
 
                     int WMPaymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
                     using (var db = new ApplicationDbContext())
                     {
-                        //Todo I've changed command
+
                         var procurement = db.Procurements
                             .Include(x => x.Pro_WMPayment)
                             .Include(x => x.Pro_User)
@@ -254,7 +253,7 @@ namespace IranAudioGuide_MainServer.Models
         {
             try
             {
-                //Todo I've changed command
+
                 using (var db = new ApplicationDbContext())
                 {
                     var count = db.Procurements.Include(x => x.Pro_User)
@@ -264,23 +263,31 @@ namespace IranAudioGuide_MainServer.Models
                         return new WMPaymentResult() { isDuplicate = true };
                     }
                     var user = db.Users.FirstOrDefault(x => x.UserName == UserName);
-                    var package = db.Packages.FirstOrDefault(x => x.Pac_Id == packageId);
-                    
-                    var wmPayment = new WMPayment()
+                    if (user == null)
                     {
-                        WMP_Procurement = new Procurement()
-                        {
-                            Pro_User = user,
-                            Pro_Package = package
-                        }
+                        Elmah.ErrorSignal.FromCurrentContext().Raise( new Exception("this is Unknown user so he couldn't buy this packages"));
+                        return new WMPaymentResult() { isDuplicate = true };
+
+                    }
+                    var package = db.Packages.FirstOrDefault(x => x.Pac_Id == packageId);
+                    if (package == null)
+                    {
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("this is Unknown user so he couldn't buy this packages "));
+                        return new WMPaymentResult() { isDuplicate = true };
+                    }
+                    var WMP_Procurement = new Procurement()
+                    {
+                        Pro_User = user,
+                        Pro_Package = package,
+                        Pro_WMPayment = new WMPayment()
                     };
-                    db.WMPayment.Add(wmPayment);
+                    db.Procurements.Add(WMP_Procurement);
                     db.SaveChanges();
                     return new WMPaymentResult()
                     {
                         PackageAmount = package.Pac_Price_Dollar,
                         PackageName = package.Pac_Name,
-                        PaymentId = wmPayment.WMP_Id
+                        PaymentId = WMP_Procurement.Pro_WMPayment.WMP_Id
                     };
 
                 }

@@ -10,10 +10,7 @@ namespace dbUpdater.Services
         private string host = null;
         private string user = null;
         private string pass = null;
-        private FtpWebRequest ftpRequest = null;
-        private FtpWebResponse ftpResponse = null;
-        private Stream ftpStream = null;
-        private int bufferSize = 2048;
+
         public ServiceFtp()
         {
             host = GlobalPath.hostFtp;
@@ -27,7 +24,7 @@ namespace dbUpdater.Services
                 var fullPath = host + "/" + path;
 
                 /* Create an FTP Request */
-                ftpRequest = (FtpWebRequest)WebRequest.Create(fullPath);
+                var ftpRequest = (FtpWebRequest)WebRequest.Create(fullPath);
                 /* Log in to the FTP Server with the User Name and Password Provided */
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
                 /* When in doubt, use these options */
@@ -37,7 +34,7 @@ namespace dbUpdater.Services
                 /* Specify the Type of FTP Request */
                 ftpRequest.Method = WebRequestMethods.Ftp.DeleteFile;
                 /* Establish Return Communication with the FTP Server */
-                ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
+                var ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
                 /* Resource Cleanup */
                 ftpResponse.Close();
                 ftpRequest = null;
@@ -45,7 +42,7 @@ namespace dbUpdater.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
                 return false;
 
             }

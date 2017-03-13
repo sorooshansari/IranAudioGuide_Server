@@ -50,7 +50,9 @@ userApp.service('userServices', ['dataServices', function (dataServices) {
     this.LogOff = function () {
         dataServices.get('/User/LogOff');
     }
+    this.getpayment = function () {
 
+    }
     this.packages = [];
     this.sendEmailConfirmedAgain = function () {
         return dataServices.get('/Account/SendEmailConfirmedAgain');

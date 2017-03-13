@@ -7,7 +7,7 @@ namespace dbUpdater.Services
 {
     public static class ServiceSqlServer
     {
-private static readonly string connString = GlobalPath.ConnectionString;
+        private static readonly string connString = GlobalPath.ConnectionString;
         private static void ExecuteCommand(string command, SqlConnection conn)
         {
             var cmd = new SqlCommand(command, conn);
@@ -27,9 +27,9 @@ private static readonly string connString = GlobalPath.ConnectionString;
 
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
             }
         }
         public static DataTable RunStoredProc(string nameSP, bool returnvalue = true)
@@ -47,45 +47,53 @@ private static readonly string connString = GlobalPath.ConnectionString;
                     return dt;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
                 return null;
+
             }
-        }public static void StoredProcedureExists()
+        }
+        public static void StoredProcedureExists()
         {
-            //    var query = string.Format("SELECT COUNT(0) FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = '{0}'", sp);
-
-            using (var conn = new SqlConnection(connString))
+            try
             {
-                var query = @"SELECT COUNT(0) FROM sys.procedures WHERE (name = N'Download_LinkRemove')";
-                conn.Open();
-                var cmd = new SqlCommand(query, conn);
-                if (Convert.ToInt32(cmd.ExecuteScalar()) <= 0)
+                using (var conn = new SqlConnection(connString))
                 {
-                    var sbSP = new System.Text.StringBuilder();
-                    sbSP.AppendLine("CREATE PROCEDURE [dbo].[Download_LinkRemove] AS	BEGIN		DELETE FROM DownloadLinks		WHERE        (IsDisable = 1) AND (TimeToVisit <=  DATEADD (mi , 20 , TimeToVisit))	END");
-                    ExecuteCommand(sbSP.ToString(), conn);
-                }
-                query = @"SELECT COUNT(0) FROM sys.procedures WHERE (name = N'Download_GetPathForDelete')";
-                cmd = new SqlCommand(query, conn);
-                if (Convert.ToInt32(cmd.ExecuteScalar()) <= 0)
-                {
-                    var q = @"CREATE PROCEDURE [dbo].[Download_GetPathForDelete]		AS		BEGIN		 SELECT DownloadLinks.Path		FROM DownloadLinks		WHERE (IsDisable = 1) AND (TimeToVisit <= DATEADD (mi , 20 , TimeToVisit)) END";
-                    ExecuteCommand(q, conn);
+                    var query = @"SELECT COUNT(0) FROM sys.procedures WHERE (name = N'Download_LinkRemove')";
+                    conn.Open();
+                    var cmd = new SqlCommand(query, conn);
+                    if (Convert.ToInt32(cmd.ExecuteScalar()) <= 0)
+                    {
+                        var sbSP = new System.Text.StringBuilder();
+                        sbSP.AppendLine("CREATE PROCEDURE [dbo].[Download_LinkRemove] AS	BEGIN		DELETE FROM DownloadLinks		WHERE        (IsDisable = 1) AND (GETDATE() >=  DATEADD (mi , 20 , TimeToVisit))	END");
+                        ExecuteCommand(sbSP.ToString(), conn);
+                    }
+                    query = @"SELECT COUNT(0) FROM sys.procedures WHERE (name = N'Download_GetPathForDelete')";
+                    cmd = new SqlCommand(query, conn);
+                    if (Convert.ToInt32(cmd.ExecuteScalar()) <= 0)
+                    {
+                        var q = @"CREATE PROCEDURE [dbo].[Download_GetPathForDelete]		AS		BEGIN		 SELECT DownloadLinks.Path		FROM DownloadLinks		WHERE (IsDisable = 1) AND (GETDATE() >= DATEADD (mi , 20 , TimeToVisit)) END";
+                        ExecuteCommand(q, conn);
+
+                    }
+                    query = @"SELECT COUNT(0) FROM sys.procedures WHERE (name = N'Download_LinkDisable')";
+                    cmd = new SqlCommand(query, conn);
+                    if (Convert.ToInt32(cmd.ExecuteScalar()) <= 0)
+                    {
+                        var sbSP = new System.Text.StringBuilder();
+                        sbSP.AppendLine("CREATE PROCEDURE [dbo].[Download_LinkDisable] AS	BEGIN	UPDATE       DownloadLinks		SET    IsDisable = 'True'	where GETDATE() >=  DATEADD (mi , 10 , TimeToVisit)	END");
+                        ExecuteCommand(sbSP.ToString(), conn);
+
+                    }
+                    cmd.Dispose();
+                    conn.Close();
 
                 }
-                query = @"SELECT COUNT(0) FROM sys.procedures WHERE (name = N'Download_LinkDisable')";
-                cmd = new SqlCommand(query, conn);
-                if (Convert.ToInt32(cmd.ExecuteScalar()) <= 0)
-                {
-                    var sbSP = new System.Text.StringBuilder();
-                    sbSP.AppendLine("CREATE PROCEDURE [dbo].[Download_LinkDisable] AS	BEGIN	UPDATE       DownloadLinks		SET    IsDisable = 'True'	where TimeToVisit <=  DATEADD (mi , 10 , TimeToVisit)	END");
-                    ExecuteCommand(sbSP.ToString(), conn);
-
-                }
-                cmd.Dispose();
-                conn.Close();
-
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
             }
         }
     }

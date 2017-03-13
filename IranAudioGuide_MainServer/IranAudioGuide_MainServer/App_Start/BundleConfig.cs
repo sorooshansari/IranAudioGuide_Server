@@ -8,6 +8,18 @@ namespace IranAudioGuide_MainServer
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new StyleBundle("~/ProfileCss").Include(
+                            "~/Content/global/plugins/toastr/toastr.min.css",
+                            "~/Content/css/bootstrap.3.3.7.min.css",
+                            "~/Content/css/select.min.css",
+                            "~/Content/css/simple-sidebar.css",
+                            "~/Content/global/plugins/font-awesome/font-awesome.min.css",
+                            "~/Content/css/profile.css",
+                            "~/Content/css/PakageTemplate.css",
+                            "~/Content/css/PakageTemplate.css"));
+
+
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Content/Scripts/jquery-{version}.js"));
 
@@ -41,7 +53,9 @@ namespace IranAudioGuide_MainServer
                         "~/Content/Scripts/util.min.js",
                         "~/Content/Scripts/main.min.js",
                         "~/Content/Scripts/bootstrap.min.js",
-                        "~/Content/global/plugins/angularjs/angular.min.js"));
+                        "~/Content/global/plugins/angularjs/angular.min.js",
+                        "~/Content/Scripts/root-app.js",
+                        "~/Content/Scripts/root-function.js"));
 
             bundles.Add(new StyleBundle("~/Content/css/paymentCss").Include(
                       "~/Content/css/bootstrap.min.css",
@@ -53,6 +67,20 @@ namespace IranAudioGuide_MainServer
             bundles.Add(new ScriptBundle("~/bundles/paymentJs").Include(
                         "~/Content/Scripts/jquery.min.js",
                         "~/Content/Scripts/bootstrap.min.js"));
+
+            bundles.Add(new ScriptBundle("~/Profile/minJs")
+                .Include(
+                    "~/Content/Scripts/jquery-2.2.3.js",
+                    "~/Content/Scripts/bootstrap.min.js",
+                    "~/Content/global/plugins/angularjs/angular.min.js",
+                    "~/Content/global/plugins/angularjs/angular-ui-router.min.js",
+                    "~/Content/Scripts/toastr.min.js",
+                    "~/Content/Scripts/select.min.js",
+                    "~/Content/Scripts/Underscore.js",
+                    "~/Content/Scripts/UserCustom.js",
+                    "~/Content/Scripts/UserServices.js",
+                    "~/Content/Scripts/menu.js",
+                    "~/Content/Scripts/UserControllers.js"));
         }
     }
 }
