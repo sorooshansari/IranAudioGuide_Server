@@ -239,29 +239,9 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201703081500367_add2.cs" />
-    <Compile Include="Migrations\201703081500367_add2.Designer.cs">
-      <DependentUpon>201703081500367_add2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703081518500_edit3.cs" />
-    <Compile Include="Migrations\201703081518500_edit3.Designer.cs">
-      <DependentUpon>201703081518500_edit3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703081525340_edit4.cs" />
-    <Compile Include="Migrations\201703081525340_edit4.Designer.cs">
-      <DependentUpon>201703081525340_edit4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703091757293_add-payments.cs" />
-    <Compile Include="Migrations\201703091757293_add-payments.Designer.cs">
-      <DependentUpon>201703091757293_add-payments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703092112467_add-3-10.cs" />
-    <Compile Include="Migrations\201703092112467_add-3-10.Designer.cs">
-      <DependentUpon>201703092112467_add-3-10.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703092138132_add-3-10-2.cs" />
-    <Compile Include="Migrations\201703092138132_add-3-10-2.Designer.cs">
-      <DependentUpon>201703092138132_add-3-10-2.cs</DependentUpon>
+    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
+    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -570,7 +550,6 @@
     <Content Include="Content\css\main2.css" />
     <Content Include="Content\css\notify-metro.css" />
     <Content Include="Content\css\PakageTemplate.css" />
-    <Content Include="Content\css\profile - Copy.css" />
     <Content Include="Content\css\profile.css" />
     <Content Include="Content\css\responsiveslides.css" />
     <Content Include="Content\css\select.css" />
@@ -716,6 +695,8 @@
     <Content Include="Content\Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Content\Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Content\Scripts\angular.min.js" />
+    <Content Include="Content\Scripts\appMain.js" />
+    <Content Include="Content\Scripts\root-app.js" />
     <Content Include="Content\Scripts\bootstrap.js" />
     <Content Include="Content\Scripts\bootstrap.min.js" />
     <Content Include="Content\Scripts\bs_leftnavi.js" />
@@ -1499,6 +1480,7 @@
     <Content Include="Content\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\Scripts\main.js" />
     <Content Include="Content\Scripts\main.min.js" />
+    <Content Include="Content\Scripts\menu.js" />
     <Content Include="Content\Scripts\modernizr-2.6.2.js" />
     <Content Include="Content\Scripts\notify-metro.js" />
     <Content Include="Content\Scripts\notify.js" />
@@ -1506,6 +1488,7 @@
     <Content Include="Content\Scripts\respond.min.js" />
     <Content Include="Content\Scripts\responsiveslides.js" />
     <Content Include="Content\Scripts\responsiveslides.min.js" />
+    <Content Include="Content\Scripts\root-function.js" />
     <Content Include="Content\Scripts\select.js" />
     <Content Include="Content\Scripts\select.min.js" />
     <Content Include="Content\Scripts\skel.min.js" />
@@ -1735,23 +1718,8 @@
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703081500367_add2.resx">
-      <DependentUpon>201703081500367_add2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703081518500_edit3.resx">
-      <DependentUpon>201703081518500_edit3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703081525340_edit4.resx">
-      <DependentUpon>201703081525340_edit4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703091757293_add-payments.resx">
-      <DependentUpon>201703091757293_add-payments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703092112467_add-3-10.resx">
-      <DependentUpon>201703092112467_add-3-10.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703092138132_add-3-10-2.resx">
-      <DependentUpon>201703092138132_add-3-10-2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

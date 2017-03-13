@@ -38,16 +38,10 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             istest: true,
             packages: [],
             packagesPurchased: [],
-            isCompletedLoading: false
+            isCompletedLoading: true
         };
-        //$scope.uploadFile = function () {
-        //    var file = $scope.myFile;
-        //    console.log('file is ');
-        //    console.dir(file);
-        //    var uploadUrl = "/api/UserApi/DeactivateMobile2";
-        //    fileUpload.uploadFileToUrl(file, uploadUrl);
-        //};
-        $scope.uploadFile = function(files) {
+
+        $scope.uploadFile = function (files) {
             var fd = new FormData();
             //Take the first selected file
             fd.append("file", files[0]);
@@ -56,152 +50,100 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
                 withCredentials: true,
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.identity
-            }).then(function () { console.log("test success") }, function (error) { console.log("error", error)});
+            }).then(function () { console.log("test success") }, function (error) { console.log("error", error) });
 
         };
-    $scope.user = {
-        isAutintication: false,
-        username: "test",
-        IsEmailConfirmed: false,
-    }
-    $scope.LogOff = function () {
-        userServices.LogOff();
-        $window.location.href = 'http://iranaudioguide.com';
-    }
-    userServices.getUser().then(function (data) {
-        $scope.user = data;
-        $scope.user.isAutintication = true;
-    });
-    //$scope.deactivateMobile = function () {
-    //    userServices.deactivateMobile();
-    //};
-    //$scope.getPalaceForCity = function (city) {
-    //    $scope.profile.city = city;
-    //};
+        $scope.user = {
+            isAutintication: false,
+            IsEmailConfirmed: true,
+        }
+        $scope.LogOff = function () {
+            userServices.LogOff();
+            $window.location.href = 'http://iranaudioguide.com';
+        }
+        userServices.getUser().then(function (data) {
+            $scope.user = data;
+            if (data.FullName.length == 0)
+                $scope.user.FullName == data.Email
+            $scope.user.isAutintication = true;
+        });
 
-    $scope.getPackagesPurchased = function (event) {
-        
-            //if ($scope.profile.packagesPurchased.length == 0) {
-
-            //    var calssName = $(event.target).find("i").attr('class');
-            //    var s = $(event.target).find("i").removeAttr('class').addClass("fa fa-spinner fa-spin");
-
-            //    userServices.getPackagesPurchased().then(function (data) {
-            //        if (data.length == 0) {
-            //            $scope.profile.packagesPurchased = [];
-            //            $scope.profile.city = "";
-            //            $scope.IsShowMessage = true;
-            //        }
-            //        else {
-            //            $scope.profile.packagesPurchased = data;
-            //            $scope.profile.city = data[0].PackageCities[0];
-            //        }
-            //        $(event.target).find("i").removeAttr('class').addClass(calssName);
-
-            //        //$timeout(function () {
-            //        //    nav();
-            //        //    $(event.target).find("i").removeAttr('class').addClass(calssName);
-            //        //}, 2000);
-            //    }, function () {
-            //        $(event.target).find("i").removeAttr('class').addClass(calssName);
-
-            //    });
-            //}
-
-    }
-    $scope.deactivateMobile = function () {
-        userServices.deactivateMobile()
-            .then(function (data) {
-                notific.success("", "you have successfully deactivated your device. the next device you sign in with, will become your active device.")
-                $scope.user.IsAccessChangeUuid = false;
-                $scope.m.isShowMessage = false;
-                // notific.success(successMsg);
-                $state.go("Packages");
-            }, function (error) {
-                notific.error("ERROR", error.Message);
-            });
-    }
-    $scope.getPackages = function (event) {
-
-        if ($scope.profile.packages.length == 0) {
-            userServices.getPackages().then(function (data) {
-                $scope.profile.packages = data;
-                angular.forEach(data, function (item, index) {
-                    if(item.isPackagesPurchased == true)
-                    {
-                        $scope.profile.packagesPurchased.push(item);
-                    }
+        $scope.deactivateMobile = function () {
+            userServices.deactivateMobile()
+                .then(function (data) {
+                    notific.success("", "you have successfully deactivated your device. the next device you sign in with, will become your active device.")
+                    $scope.user.IsAccessChangeUuid = false;
+                    $scope.m.isShowMessage = false;
+                    // notific.success(successMsg);
+                    $state.go("Packages");
+                }, function (error) {
+                    notific.error("ERROR", error.Message);
                 });
-                $scope.profile.isCompletedLoading = true;
-            }, function () {
-                $scope.profile.isCompletedLoading = true;
+        }
+        $scope.getPackages = function (event) {
 
+            if ($scope.profile.packages.length == 0) {
+                userServices.getPackages().then(function (data) {
+                    $scope.profile.packages = data;
+                    angular.forEach(data, function (item, index) {
+                        if (item.isPackagesPurchased == true) {
+                            $scope.profile.packagesPurchased.push(item);
+                        }
+                    });
+                    $scope.profile.isCompletedLoading = false;
+                }, function () {
+                    $scope.profile.isCompletedLoading = false;
+
+                });
+            }
+
+        }
+
+        $timeout(function () {
+            angular.element('#btnGetPakage').triggerHandler('click');
+        }, 0);
+
+
+        $scope.sendEmailConfirmedAgain = function () {
+            userServices.sendEmailConfirmedAgain().then(function (data) {
+                //"StatusCode: 200, ReasonPhrase: 'OK', Version: 1.1, Content: <null>, Headers:
+                //$scope.user.IsEmailConfirmed = true;
+                notific.success("Success", "Please Check your email");
+
+            }, function (error) {
             });
         }
 
-    }
-                // $(event.target).find("i").removeAttr('class').addClass(calssName);
-                // $(event.target).find("i").removeAttr('class').addClass(calssName);
-                // element.removeAttr('class').addClass(calssName);
-            //var element = $(event.target).find("i");
-            //var calssName = element.attr('class');
-            //var s = element.removeAttr('class').addClass("fa fa-spinner fa-spin");
-    //$scope.profile.isCompletedLoading = true;
-
-    $timeout(function () {
-        angular.element('#btnGetPakage').triggerHandler('click');
-    }, 0);
- 
-
-    $scope.sendEmailConfirmedAgain = function () {
-        userServices.sendEmailConfirmedAgain().then(function (data) {
-            //"StatusCode: 200, ReasonPhrase: 'OK', Version: 1.1, Content: <null>, Headers:
-            //$scope.user.IsEmailConfirmed = true;
-            notific.success("Success", "Please Check your email");
-
-        }, function (error) {
-        });
-    }
-   
-}]);
-userApp.controller('PackagesCtrl', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
-    //if (typeof $scope.profile.packages == undefined)
-    //    return;
-    //var form = document.getElementById("PurchaseForm")
-    //    //,            select = document.getElementById("pt");
-
-    //form.addEventListener("submit", function (event) {
-    //    event.preventDefault();
-    //    if (select.value == 2) {
-    //        var element = document.createElement("INPUT");
-    //        element.setAttribute("type", "hidden");
-    //        element.setAttribute("name", "PackageId");
-    //        element.setAttribute("value", $scope.packagesId);
-    //        form.appendChild(element);
-    //    }
-    //    form.submit();
-    //});
+    }]);
+userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeout', function ($state, $scope, userServices, $timeout) {
     $scope.pak = {};
     $scope.showModal = function (pak) {
         $scope.pak = pak;
         $('#myModal').modal('show');
-    } 
-    $scope.buyPakages = function (IsChooesZarinpal) {
-        var form = document.getElementById("PurchaseForm");
-        var element = document.createElement("INPUT");
-        element.setAttribute("type", "hidden");
-        element.setAttribute("name", "PackageId");
-        element.setAttribute("value", $scope.pak.PackageId);
-        form.appendChild(element);
-
-        var element2 = document.createElement("INPUT");
-        element2.setAttribute("type", "hidden");
-        element2.setAttribute("name", "IsChooesZarinpal");
-        element2.setAttribute("value", IsChooesZarinpal);
-        form.appendChild(element2);
-
-        form.submit();
+    }
+    $scope.buyPakages = function (isChooesZarinpal) {
         $('#myModal').modal('hide');
+        //var model =
+        $state.go('Payment', {
+            PackageId: $scope.pak.PackageId,
+            IsChooesZarinpal: isChooesZarinpal
+        });
+       // $state.go('book.name', { bookName: name });
+        //var form = document.getElementById("PurchaseForm");
+        //var element = document.createElement("INPUT");
+        //element.setAttribute("type", "hidden");
+        //element.setAttribute("name", "PackageId");
+        //element.setAttribute("value", $scope.pak.PackageId);
+        //form.appendChild(element);
+
+        //var element2 = document.createElement("INPUT");
+        //element2.setAttribute("type", "hidden");
+        //element2.setAttribute("name", "IsChooesZarinpal");
+        //element2.setAttribute("value", IsChooesZarinpal);
+        //form.appendChild(element2);
+
+        //form.submit();
+        //$('#myModal').modal('hide');
     }
 
 
@@ -266,10 +208,6 @@ userApp.controller('PackagesCtrl', ['$scope', 'userServices', '$timeout', functi
 
     $scope.$watch("searhPakage.item", function (listSelected, oldval) {
 
-        //var tempList = angular.copy(listSelected);
-        //angular.copy(listSelected, tempList);
-        //var tlist = [];
-        //tlist = tlist.concat(listSelected);
         if (typeof listSelected == undefined || listSelected.length == 0) {
             arrayCity = [];
             $scope.listPakages = angular.copy($scope.profile.packages);
@@ -303,22 +241,6 @@ userApp.controller('PackagesCtrl', ['$scope', 'userServices', '$timeout', functi
             setPakages(searchItem);
         }
     });
-
-    //$scope.$watch("listPakages", function (newval) {
-    //    if (newval.length != 0 )
-    //        $timeout(function () {
-
-    //            $(".slider6").responsiveSlides({
-    //                auto: false,
-    //                pager: false,
-    //                nav: true,
-    //                speed: 500,
-    //                maxwidth: 800,
-    //                namespace: "centered-btns"
-    //            });
-    //        }, 5000)
-    //});
-
     var initPakage = function () {
 
         $scope.pakageForSelected = [];

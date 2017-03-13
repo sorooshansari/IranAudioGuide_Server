@@ -15,17 +15,10 @@ namespace dbUpdater.Services
             //System.Diagnostics.Debug.WriteLine("job Disable:" + DateTime.Now.ToString());
             try
             {
-
-                ServiceSqlServer.RunStoredProc("DownloadLinkDisable");
-
-
-
+                ServiceSqlServer.RunStoredProc("Download_LinkDisable");
             }
-            catch (Exception ex)
+            catch 
             {
-                //System.Diagnostics.Debug.WriteLine("Exception Job Edite Download link.");
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-
             }
         }
 
@@ -42,7 +35,7 @@ namespace dbUpdater.Services
             var isEmpty = true;
             try
             {
-                var dt = ServiceSqlServer.RunStoredProc("DownloadGetPathForDelete", true);
+                var dt = ServiceSqlServer.RunStoredProc("Download_GetPathForDelete", true);
                 var links = dt.AsEnumerable().Select(x => new PathVM
                 {
                     Path = x["path"].ToString()
@@ -54,12 +47,10 @@ namespace dbUpdater.Services
 
                 }
                 if (!isEmpty)
-                    ServiceSqlServer.RunStoredProc("DownloadLinkRemove");
+                    ServiceSqlServer.RunStoredProc("Download_LinkRemove");
             }
-            catch (Exception ex)
+            catch 
             {
-               // System.Diagnostics.Debug.WriteLine(" Job remove Download link.");
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
 
             }
         }
@@ -81,7 +72,7 @@ namespace dbUpdater.Services
             ITrigger trigger = TriggerBuilder.Create()
                                              .WithIdentity("triggerDownloadLinkDisable")
                                              .StartAt(startTime)
-                                             .WithSimpleSchedule(x => x.WithIntervalInMinutes(10).RepeatForever())
+                                             .WithSimpleSchedule(x => x.WithIntervalInMinutes(3).RepeatForever())
                                              .Build();
 
 
@@ -92,7 +83,7 @@ namespace dbUpdater.Services
 
 
 
-            DateTimeOffset startTimeRemove = DateBuilder.FutureDate(21, IntervalUnit.Minute);
+            DateTimeOffset startTimeRemove = DateBuilder.FutureDate(2, IntervalUnit.Minute);
 
             IJobDetail jobRemove = JobBuilder.Create<JobDownloadLinkRemove>()
                                        .WithIdentity("jobDownloadLinkRemove")
@@ -101,7 +92,7 @@ namespace dbUpdater.Services
             ITrigger triggerRemove = TriggerBuilder.Create()
                                              .WithIdentity("triggerDownloadLinkRemove")
                                              .StartAt(startTimeRemove)
-                                             .WithSimpleSchedule(x => x.WithIntervalInMinutes(10).RepeatForever())
+                                             .WithSimpleSchedule(x => x.WithIntervalInMinutes(5).RepeatForever())
                                              .Build();
 
 

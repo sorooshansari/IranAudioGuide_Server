@@ -4,7 +4,7 @@
 }
 
 
-<div class="col-flex PlanPricing template4" ng-repeat="pak in packagesPurchased">
+<div class="PlanPricing template4" ng-repeat="pak in packagesPurchased" ng-class="{'col-flex-1':pak.PackageCities.length == 1, 'col-flex-2':pak.PackageCities.length > 1}">
     <!-- Price template4 Starts -->
     <div class="planName">
         @*<span class="price">{{pak.PackagePrice}}IRR </span>*@
@@ -14,7 +14,7 @@
     <div class="planFeatures">
         <!-- Slideshow 4 -->
         <div class="callbacks_container">
-            <ul class="slider6 rslides" ng-class="{'packageMultiple-ul':pak.PackageCities.length != 1}">
+            <ul class="slider6 rslides">
                 <li ng-repeat="city in pak.PackageCities">
 
                     <img ng-src="{{city.CityImageUrl}}" />
@@ -28,12 +28,12 @@
         </div>
 
     </div>
-
-    @*<p> <a ng-click="buyPakages(pak)" class="btn btn-success btn-large">buy </a> </p>*@
+   
+    @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
 </div>
 
 
-    <div  ng-show="isShowMessage == true" style="padding:10%">
-        @*<h4 class="block"> Packages Purchased</h4>*@
-        <p>No Purchesed Pakages</p>
-    </div>
+<div ng-show="isShowMessage == true" style="padding:10%">
+    @*<h4 class="block"> Packages Purchased</h4>*@
+    <p>No Purchesed Pakages</p>
+</div>

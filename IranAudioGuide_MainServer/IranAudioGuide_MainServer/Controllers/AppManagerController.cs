@@ -33,7 +33,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                var url = dbTools.GetAudioUrl(model.trackId, model.isAudio);
+                var url = dbTools.GetAudioUrl(model);
                 return new GetAudioUrlRes(url);
             }
             catch (Exception ex)
