@@ -79,7 +79,7 @@ namespace IranAudioGuide_MainServer.Models
             {
                 case SignInStatus.Success:
                     if (user.uuid == null)
-                        updateUserUUID(user, uuid);
+                        await updateUserUUID(user, uuid);
                     else if (user.uuid != uuid)
                         return new AuthorizedUser() { Result = SignInResults.uuidMissMatch };
                     if (!user.EmailConfirmed)

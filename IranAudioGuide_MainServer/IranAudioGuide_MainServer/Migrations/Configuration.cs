@@ -24,6 +24,7 @@ namespace IranAudioGuide_MainServer.Migrations
             dbManager.AddUser("testuser@iranaudioguide.com", "1234567890", "/images/Members/Soroosh.JPG", "Soroosh Ansari", "AppUser", context);
             dbManager.AddUser("admin@iranaudioguide.com", "1234567890", "/images/Members/Mona.JPG", "Mona Akhlaghi", "Admin", context);
             dbManager.AddUser("alireza@iranaudioguide.com", "alirez@90", "/images/Members/AliReza.JPG", "Alireza Mottaghi", "Admin", context);
+            dbManager.AddUser("appleuser@iranaudioguide.com", "123456789", "http://iranaudioguide.com/logo.png", "Apple User", "AppUser", context);
 
             //AddTipCategory
             dbManager.AddTipCategory("Transportation", "ion-android-walk", "&#xf3bb;", 1);
