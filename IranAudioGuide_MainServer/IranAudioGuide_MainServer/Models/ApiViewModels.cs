@@ -9,6 +9,10 @@ namespace IranAudioGuide_MainServer.Models
     public class ApiViewModels
     {
     }
+    public class ConfirmEmailVM
+    {
+        public string email { get; set; }
+    }
     public class GetAudioUrlRes
     {
         public GetAudioUrlRes(string url)
