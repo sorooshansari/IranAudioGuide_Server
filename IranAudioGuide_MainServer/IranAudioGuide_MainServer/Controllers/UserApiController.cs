@@ -12,26 +12,26 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     public class UserApiController : ApiController
     {
-        [HttpPost]
-        public IHttpActionResult CheckLoginUser()
-        {
-            var service = new AccountTools();
-            string userName = User.Identity.Name;
-            if (string.IsNullOrEmpty(userName) || !User.Identity.IsAuthenticated)
-                return BadRequest();
-            var user = service.GetUserByName(userName);
-            if (user == null)
-                return BadRequest();
-            var userProfile = new UserProfile()
-            {
-                Email = user.UserName,
-                FullName = user.FullName,
-                imgUrl = user.ImgUrl,
+        //[HttpPost]
+        //public IHttpActionResult CheckLoginUser()
+        //{
+        //    var service = new AccountTools();
+        //    string userName = User.Identity.Name;
+        //    if (string.IsNullOrEmpty(userName) || !User.Identity.IsAuthenticated)
+        //        return BadRequest();
+        //    var user = service.GetUserByName(userName);
+        //    if (user == null)
+        //        return BadRequest();
+        //    var userProfile = new UserProfile()
+        //    {
+        //        Email = user.UserName,
+        //        FullName = user.FullName,
+        //        imgUrl = user.ImgUrl,
 
-            };
-            userProfile.RolesName = service.GetUserRoles(user);
-            return Ok(userProfile);
-        }
+        //    };
+        //    userProfile.RolesName = service.GetUserRoles(user)[0];
+        //    return Ok(userProfile);
+        //}
         [HttpPost]
         public IHttpActionResult GetCurrentUserInfo()
         {

@@ -63,8 +63,9 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
         }
         userServices.getUser().then(function (data) {
             $scope.user = data;
-            if (data.FullName.length == 0)
-                $scope.user.FullName == data.Email
+            $scope.user.FullName = data.Email
+            if (data.FullName !== null)
+                $scope.user.FullName = data.FullName
             $scope.user.isAutintication = true;
         });
 

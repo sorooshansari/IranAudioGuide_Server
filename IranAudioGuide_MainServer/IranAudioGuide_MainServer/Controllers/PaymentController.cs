@@ -135,6 +135,14 @@ namespace IranAudioGuide_MainServer.Controllers
                                          PackageName = p.Pac_Name,
                                          PackagePrice = p.Pac_Price,
                                          PackagePriceDollar = p.Pac_Price_Dollar,
+                                         PackageCities = (from c in db.Cities
+                                                          where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
+                                                          select new CityVM()
+                                                          {
+                                                              CityDesc = c.Cit_Description,
+                                                              CityID = c.Cit_Id,
+                                                              CityName = c.Cit_Name
+                                                          }).ToList()
                                      }).FirstOrDefault();
                 packname = package.PackageName;
                 ViewBag.Error = info.ErrorMessage;

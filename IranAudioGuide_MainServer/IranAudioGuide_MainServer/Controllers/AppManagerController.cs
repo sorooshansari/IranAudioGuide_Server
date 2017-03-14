@@ -172,7 +172,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 imgUrl = user.ImgUrl,
 
             };
-            userProfile.RolesName = acTools.GetUserRoles(user);
+            userProfile.RolesName = acTools.GetUserRoles(user)[0];
             return Ok(userProfile);
         }
 

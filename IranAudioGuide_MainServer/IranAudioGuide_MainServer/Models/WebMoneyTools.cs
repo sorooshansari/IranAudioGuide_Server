@@ -256,13 +256,15 @@ namespace IranAudioGuide_MainServer.Models
 
                 using (var db = new ApplicationDbContext())
                 {
-                    var count = db.Procurements.Include(x => x.Pro_User)
-                        .Count(x => x.Pro_User.UserName == UserName && x.Pac_Id == packageId && x.Pro_PaymentFinished);
-                    if (count > 0)
+
+                    var user = db.Users.Include(x=> x.procurements).FirstOrDefault(x => x.UserName == UserName);
+                    var isDuplicate = user.procurements.Any(x => x.Pac_Id == packageId && x.Pro_PaymentFinished);
+                    //var count = db.Procurements.Include(x => x.Pro_User)
+                    //    .Count(x => x.Pro_User.UserName == UserName && x.Pac_Id );
+                    if (isDuplicate == true)
                     {
                         return new WMPaymentResult() { isDuplicate = true };
                     }
-                    var user = db.Users.FirstOrDefault(x => x.UserName == UserName);
                     if (user == null)
                     {
                         Elmah.ErrorSignal.FromCurrentContext().Raise( new Exception("this is Unknown user so he couldn't buy this packages"));

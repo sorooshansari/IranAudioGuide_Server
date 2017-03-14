@@ -114,7 +114,6 @@
 /// <reference path="adminservices.js" />
 /// <reference path="ai.0.22.9-build00167.js" />
 /// <reference path="angular.min.js" />
-/// <reference path="appmain.js" />
 /// <reference path="bootstrap.js" />
 /// <reference path="bs_leftnavi.js" />
 /// <reference path="countup.js" />

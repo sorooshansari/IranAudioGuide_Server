@@ -699,7 +699,6 @@
     <Content Include="Content\Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Content\Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Content\Scripts\angular.min.js" />
-    <Content Include="Content\Scripts\appMain.js" />
     <Content Include="Content\Scripts\root-app.js" />
     <Content Include="Content\Scripts\bootstrap.js" />
     <Content Include="Content\Scripts\bootstrap.min.js" />

@@ -379,11 +379,16 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class UserProfile
     {
-
+        public UserProfile()
+        {
+            IsAutintication = false;
+            RolesName = "AppUser";
+        }
+        public bool IsAutintication { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public string imgUrl { get; set; }
-        public IList<string> RolesName;
+        public string RolesName { get; set; }
 
     }
     public class NewCity

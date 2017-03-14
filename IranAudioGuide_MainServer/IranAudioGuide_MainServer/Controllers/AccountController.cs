@@ -231,21 +231,27 @@ namespace IranAudioGuide_MainServer.Controllers
         //   [ValidateAntiForgeryToken]
         public async Task<HttpResponseMessage> SendEmailConfirmedAgain()
         {
-            if (!User.Identity.IsAuthenticated)
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
 
-            var UserId = User.Identity.GetUserId();
-            if (string.IsNullOrEmpty(UserId))
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                var UserId = User.Identity.GetUserId();
+                if (string.IsNullOrEmpty(UserId))
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
 
-            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-            // Send an email with this link
-            string code = await UserManager.GenerateEmailConfirmationTokenAsync(UserId);
-            code = HttpUtility.UrlEncode(code);
-            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = UserId, code = code }, protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(UserId, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-            return new HttpResponseMessage(HttpStatusCode.OK);
-
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                // Send an email with this link
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(UserId);
+                code = HttpUtility.UrlEncode(code);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = UserId, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(UserId, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch(Exception ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
         }
         //
         // GET: /Account/ConfirmEmail
