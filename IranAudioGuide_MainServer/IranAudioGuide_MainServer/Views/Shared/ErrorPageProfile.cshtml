@@ -1,0 +1,27 @@
+﻿@model IranAudioGuide_MainServer.Models.vmessageVM
+
+@{
+    ViewBag.Title = Model.Subject + IranAudioGuide_MainServer.Models.Variables.titlepostfix;
+    Layout= null;
+}
+
+<div class="Errorpage">
+    <section id="CheckOutSection">
+        <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
+
+            <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
+                <h1>
+                    <i class="fa fa-bullseye"></i>
+                    @Model.Subject
+                </h1>
+                <p style="border-top: 5px solid #00a293; font-size:small;">
+                    <br />
+                    <i class="fa fa-commenting"></i>
+                    @Html.Raw(Model.Message)
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+

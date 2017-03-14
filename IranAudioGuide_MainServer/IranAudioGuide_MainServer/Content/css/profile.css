@@ -152,7 +152,16 @@ input {
 .deactivationHeader {
     font-size: larger !important;
 }
-
+.Errorpage {
+    color: #fff;
+    padding: 39px;
+    background-color: rgba(20, 68, 130, 0.66);
+    border-radius: 17px;
+    font-size: 14px;
+    /* margin-top: 200px; */
+    display: inline-block;
+    width: 100%;
+}
 .deactivatedDevice {
     color: #fff;
     padding: 39px;

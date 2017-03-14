@@ -1,9 +1,7 @@
 angular.module('HomePage', [])
-    .config(function ($sceProvider) {
+    .config(['$sceProvider',function ($sceProvider) {
     $sceProvider.enabled(false);
-})
-    .run(function () { })
-    .controller('HomeController', ['$scope', '$http', '$timeout',
+}]).controller('HomeController', ['$scope', '$http', '$timeout',
     function ($scope, $http, $timeout) {
         $scope.user = {
             isAutintication: false,

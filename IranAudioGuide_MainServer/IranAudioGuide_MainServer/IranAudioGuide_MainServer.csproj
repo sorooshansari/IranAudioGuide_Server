@@ -243,9 +243,9 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703131411362_s.cs" />
-    <Compile Include="Migrations\201703131411362_s.Designer.cs">
-      <DependentUpon>201703131411362_s.cs</DependentUpon>
+    <Compile Include="Migrations\201703140459121_init.cs" />
+    <Compile Include="Migrations\201703140459121_init.Designer.cs">
+      <DependentUpon>201703140459121_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -1701,6 +1701,7 @@
     <Content Include="Views\Payment\PaymentWeb.cshtml" />
     <Content Include="Views\Payment\ReturnToWebPage.cshtml" />
     <Content Include="Views\Shared\vmessage.cshtml" />
+    <Content Include="Views\Shared\ErrorPageProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1725,8 +1726,8 @@
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703131411362_s.resx">
-      <DependentUpon>201703131411362_s.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703140459121_init.resx">
+      <DependentUpon>201703140459121_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

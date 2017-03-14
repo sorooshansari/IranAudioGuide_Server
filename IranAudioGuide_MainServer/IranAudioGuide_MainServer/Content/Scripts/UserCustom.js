@@ -35,7 +35,6 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
                  url: "/payment?PackageId&IsChooesZarinpal",
                  templateUrl: function ($stateParams) {
                      try {
-
                          var model = "?pacId=" + $stateParams.PackageId + "&IsZarinpal=" + $stateParams.IsChooesZarinpal;
                          console.log(model)
                          return "/Payment/PaymentWeb" + model;
@@ -44,9 +43,7 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
 
                      }
                  },
-                 controller: function ($stateParams) {
-                     console.log("/Payment/PaymentWeb", $stateParams);
-                 }
+                 controller: "paymentCtrl"
              })
          .state('deactivateMobile', {
              url: "/deactivateMobile",

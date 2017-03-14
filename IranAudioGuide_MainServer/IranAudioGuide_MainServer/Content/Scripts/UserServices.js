@@ -127,7 +127,7 @@ userApp.service('notificService', [function () {
         toastr.clear();
     }
 }]);
-userApp.filter('propsFilter', function () {
+userApp.filter('propsFilter',[ function () {
     return function (items, props) {
         var out = [];
 
@@ -157,4 +157,4 @@ userApp.filter('propsFilter', function () {
 
         return out;
     };
-});
+}]);

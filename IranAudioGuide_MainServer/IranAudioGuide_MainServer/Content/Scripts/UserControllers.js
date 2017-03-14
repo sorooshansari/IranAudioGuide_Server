@@ -123,29 +123,15 @@ userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeou
     }
     $scope.buyPakages = function (isChooesZarinpal) {
         $('#myModal').modal('hide');
-        //var model =
-        $state.go('Payment', {
-            PackageId: $scope.pak.PackageId,
-            IsChooesZarinpal: isChooesZarinpal
-        });
-       // $state.go('book.name', { bookName: name });
-        //var form = document.getElementById("PurchaseForm");
-        //var element = document.createElement("INPUT");
-        //element.setAttribute("type", "hidden");
-        //element.setAttribute("name", "PackageId");
-        //element.setAttribute("value", $scope.pak.PackageId);
-        //form.appendChild(element);
-
-        //var element2 = document.createElement("INPUT");
-        //element2.setAttribute("type", "hidden");
-        //element2.setAttribute("name", "IsChooesZarinpal");
-        //element2.setAttribute("value", IsChooesZarinpal);
-        //form.appendChild(element2);
-
-        //form.submit();
-        //$('#myModal').modal('hide');
+        $scope.profile.isCompletedLoading = true;
+        $scope.isChooesZarinpal = isChooesZarinpal;
     }
-
+    $('#myModal').on('hidden.bs.modal', function (e) {
+         $state.go('Payment', {
+            PackageId: $scope.pak.PackageId,
+            IsChooesZarinpal: $scope.isChooesZarinpal
+        });
+    })
 
     $scope.typeEachItemFoSelection = [
         { type: 0, name: 'City', icon: "fa fa-bolt", className: "itemSelcted box-city" },
@@ -356,4 +342,7 @@ userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout',
 
         }
     });
+}]);
+userApp.controller('paymentCtrl', ['$scope', function ($scope) {
+     $scope.profile.isCompletedLoading = false;
 }]);

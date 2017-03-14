@@ -122,10 +122,10 @@ namespace IranAudioGuide_MainServer.Controllers
                 };
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (!user.EmailConfirmed)
-                    return View("vmessage", new vmessageVM()
+                    return View("ErrorPageProfile", new vmessageVM()
                     {
                         Subject = "Email not confirmed yet!",
-                        Message = @"For purchasing, first need to confirm your email. Please click <a id='loginlink' href='/user'>here</a> to Login",
+                        Message = @"For purchasing, first need to confirm your email. Please Login Again",
                     });
                 PackageVM package = (from p in db.Packages
                                      where p.Pac_Id == info.packageId
@@ -143,7 +143,7 @@ namespace IranAudioGuide_MainServer.Controllers
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return View("vmessage", new vmessageVM()
+                return View("ErrorPageProfile", new vmessageVM()
                 {
                     Subject = "Error!",
                     Message = "Please try again",
@@ -437,10 +437,6 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return View();
         }
-
-
-
-
         /***********************************************************/
         #region zarinpal tools
 
