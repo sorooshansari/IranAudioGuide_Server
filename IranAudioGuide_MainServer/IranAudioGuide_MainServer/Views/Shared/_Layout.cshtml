@@ -58,13 +58,13 @@
                         <section id="menu">
                             <ul>
                                 <li><a id="HomeLink" href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i>Iran Audio Guide</a></li>
-                                <li><a class="scrolly" href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>
+                                @*<li><a class="scrolly" href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>*@
                                 @*<li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>*@
                                 <li><a class="scrolly" rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>Contact Us</a></li>
-                            
+
                                 @if (User.Identity.IsAuthenticated == false)
                                 {
-                                    <li ><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
+                                    <li><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
 
                                 }
                                 else
@@ -81,7 +81,7 @@
                                     }
                                     <li><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>Log out</a></li>
                                 }
-                              </ul>
+                            </ul>
                         </section>
                     </li>
                 </ul>
@@ -94,14 +94,16 @@
     </div>
     <link href="~/Content/css/loading.css" rel="stylesheet" />
 
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    @*<script src='https://www.google.com/recaptcha/api.js'></script>*@
 
     @Scripts.Render("~/bundles/minJs")
-    <noscript>
-        <div style="display:none;">
-            <img src="//pixel.quantserve.com/pixel/p-W5MYZqNRc9gad.gif" border="0" height="1" width="1" alt="Quantcast" />
-        </div>
-    </noscript>
+    @RenderSection("scripts", required: false)
+
+    @*<noscript>
+            <div style="display:none;">
+                <img src="//pixel.quantserve.com/pixel/p-W5MYZqNRc9gad.gif" border="0" height="1" width="1" alt="Quantcast" />
+            </div>
+        </noscript>*@
     <!-- End Quantcast tag -->
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
