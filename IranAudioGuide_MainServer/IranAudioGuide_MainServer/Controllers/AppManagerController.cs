@@ -40,9 +40,11 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                if (model.email == null || model.email == "")
-                    model.email = "_";
-                var url = dbTools.GetAudioUrl(model);
+            //    if (model.email == null || model.email == "")
+            //        model.email = "_";
+                //var url = dbTools.GetAudioUrl(model);
+                string path = (model.isAudio) ? Services.GlobalPath.FullPathAudios : Services.GlobalPath.FullPathStory;
+                string url = string.Format("{0}{1}.mp3", path, model.trackId);
                 return new GetAudioUrlRes(url);
             }
             catch (Exception ex)

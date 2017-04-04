@@ -59,8 +59,9 @@
         color: #de0000;
         text-shadow: 0px 0px 9px #060713;
     }
-    .actions a{
-        border-bottom:none;
+
+    .actions a {
+        border-bottom: none;
     }
 </style>
 <section id="banner">
@@ -108,8 +109,8 @@
         <ul class="icons major">
             <li>
                 @*<a ng-click="showPopup('Apple')">
-                    <span class="icon fa-apple major style1"></span>
-                </a>*@
+                        <span class="icon fa-apple major style1"></span>
+                    </a>*@
                 <span class="icon fa-apple major style1"></span>
             </li>
             <li>
@@ -227,36 +228,37 @@
         </ul>
     </div>
 </section>
+<div id="map" style="min-height:500px;"></div>
 
 <!-- Download_Application -->
 @*<section id="Download_Application" class="wrapper style4">
-    <div class="container">
-        <div class="underlined-title">
-            <h1>
-                Iran Audio Guide
-            </h1>
-            <hr />
+        <div class="container">
+            <div class="underlined-title">
+                <h1>
+                    Iran Audio Guide
+                </h1>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
+                    <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8" style="display:inline-block;overflow:hidden;background:url(//linkmaker.itunes.apple.com/assets/shared/badges/en-us/appstore-lrg.svg) no-repeat;width:135px;height:40px;background-size:contain;"></a>
+
+                </div>
+                <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
+                    <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android" class="tooltips">
+                        <img alt="Download" src="~/images/lc.png" />
+                        <span class="csspan">Download Now</span>
+                    </a>
+                </div>
+                <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
+                    <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android" class="tooltips">
+                        <img alt="Get it from Google Play" src="~/images/gp.png" />
+                        <span class="csspan">Get it from Google Play</span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
-                <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8" style="display:inline-block;overflow:hidden;background:url(//linkmaker.itunes.apple.com/assets/shared/badges/en-us/appstore-lrg.svg) no-repeat;width:135px;height:40px;background-size:contain;"></a>
-                
-            </div>
-            <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
-                <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android" class="tooltips">
-                    <img alt="Download" src="~/images/lc.png" />
-                    <span class="csspan">Download Now</span>
-                </a>
-            </div>
-            <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
-                <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android" class="tooltips">
-                    <img alt="Get it from Google Play" src="~/images/gp.png" />
-                    <span class="csspan">Get it from Google Play</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>*@
+    </section>*@
 
 <!-- Footer -->
 <footer id="footer">
@@ -359,5 +361,236 @@
         <li>Developer: <a rel="author" href="https://plus.google.com/112268338441138496929">Soroosh Ansari Mehr</a></li>
     </ul>
 </footer>
+@section scripts{
+    <script>
+        function initMap() {
+            var styles = [
+                        {
+                            "featureType": "administrative",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#144482"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.locality",
+                            "elementType": "labels.text",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.neighborhood",
+                            "elementType": "labels.text",
+                            "stylers": [
+                                {
+                                    "visibility": "on"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "labels.text",
+                            "stylers": [
+                                {
+                                    "visibility": "on"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "color": "#f2f2f2"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#144482"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape.natural",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "hue": "#ff0000"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape.natural.landcover",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#f2f2f2"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape.natural.terrain",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "hue": "#ff0000"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape.natural.terrain",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "hue": "#ff0000"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#144482"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "saturation": -100
+                                },
+                                {
+                                    "lightness": 45
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#144482"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "visibility": "simplified"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road.arterial",
+                            "elementType": "labels.icon",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#144482"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "all",
+                            "stylers": [
+                                {
+                                    "color": "#46bcec"
+                                },
+                                {
+                                    "visibility": "on"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                                {
+                                    "color": "#4ac6e0"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                                {
+                                    "color": "#144482"
+                                }
+                            ]
+                        }
+            ];
+            var center = new google.maps.LatLng(29.724955, 52.461972);
+            var mapOptions = {
+                center: { lat: 29.724955, lng: 52.461972 },
+                scrollwheel: false,
+                navigationControl: true,
+                mapTypeControl: false,
+                scaleControl: false,
+                draggable: false,
+                center: center,
+                zoom: 15,
+                styles: styles
+                //mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            //var map = new google.maps.Map(document.getElementById('map'),
+            //  mapOptions);
+            //var marker = new google.maps.Marker({
+            //    position: center,
+            //    title: 'current posision',
+            //    styles: styles
+            //});
+            //marker.setMap(map);
+            //map.setCenter(center);
+        }
+        //$(document).ready(function () {
+        //    GoogleMap_initialize();
+        //});
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOsmRJl1IP_PRpueNuCT-aPDN_XbxAzks&callback=initMap"
+            async defer></script>
+}
 
 

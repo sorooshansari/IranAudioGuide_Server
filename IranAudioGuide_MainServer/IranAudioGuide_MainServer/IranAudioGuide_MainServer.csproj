@@ -250,6 +250,7 @@
     <Compile Include="Models\AccountTools.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApiViewModels.cs" />
+    <Compile Include="Models\CompressAttribute.cs" />
     <Compile Include="Models\dbManager.cs" />
     <Compile Include="Models\dbTools.cs" />
     <Compile Include="Models\IdentityModels.cs" />

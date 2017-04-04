@@ -6,15 +6,18 @@ namespace IranAudioGuide_MainServer.Controllers
 {
     public class HomeController : Controller
     {
+        [Compress]
         public ActionResult Index()
         {
             ViewBag.View = Views.Index;
             return View();
         }
+        [Compress]
         public ActionResult Error(string aspxerrorpath)
         {
             return View();
         }
+
         //public async System.Threading.Tasks.Task<int> test(string usrname)
         //{
         //    var acTools = new AccountTools();
