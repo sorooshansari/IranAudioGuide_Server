@@ -52,7 +52,7 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
          })
     }])
 
-.run(function () {
-
-})
+.run(['localezationService', function (localezationService) {
+    localezationService.setCurrentLocale();
+}])
 ;

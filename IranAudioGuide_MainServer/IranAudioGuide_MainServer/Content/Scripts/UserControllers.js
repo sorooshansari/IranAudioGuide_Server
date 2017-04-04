@@ -31,9 +31,10 @@ userApp.service('fileUpload', ['$http', function ($http) {
     }
 }]);
 
-userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
-    function ($window, $scope, userServices, $timeout, notific, $http, $state) {
-
+userApp.controller('userCtrl', ['localezationService','$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
+    function (localezationService, $window, $scope, userServices, $timeout, notific, $http, $state) {
+        $scope.locale = "test";
+        $scope.locale = localezationService.currentLocale;
         $scope.profile = {
             istest: true,
             packages: [],

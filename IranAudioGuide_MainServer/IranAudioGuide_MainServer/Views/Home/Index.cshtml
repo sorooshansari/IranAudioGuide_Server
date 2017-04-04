@@ -46,7 +46,7 @@
 
     .form-request .error input {
         border: 1px solid #de0000;
-        color:#de0000;
+        color: #de0000;
     }
 
     .form-request .error a {
@@ -54,10 +54,14 @@
         /*color: #f7f7f7;*/
         background-color: #de0000;
     }
+
     .error-msg {
-    color: #de0000;
-    text-shadow: 0px 0px 9px #060713;
-}
+        color: #de0000;
+        text-shadow: 0px 0px 9px #060713;
+    }
+    .actions a{
+        border-bottom:none;
+    }
 </style>
 <section id="banner">
     <div class="inner">
@@ -71,7 +75,19 @@
             Convenient, thorough, liberating <br />
         </p>
         <ul class="actions">
-            <li><a href="#Download_Application" class="button special scrolly">Download</a></li>
+            <li>
+                <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8">
+                    <img style="width:auto;height:40px;" alt="Download it on App Store" src="~/Content/images/Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
+                    @*<span class="csspan">App Store</span>*@
+                </a>
+            </li>
+            <li>
+                <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android">
+                    <img style="width:auto;height:40px;" alt="Get it on Google Play" src="~/Content/images/Get_it_on_Google_play.svg" />
+                    @*<span class="csspan">Google Play</span>*@
+                </a>
+            </li>
+            @*<li><a href="#Download_Application" class="button special scrolly">Download</a></li>*@
         </ul>
     </div>
     <a href="#one" class="more scrolly">Learn More</a>
@@ -91,14 +107,13 @@
         </header>
         <ul class="icons major">
             <li>
-                <a ng-click="showPopup('Apple')">
+                @*<a ng-click="showPopup('Apple')">
                     <span class="icon fa-apple major style1"></span>
-                </a>
+                </a>*@
+                <span class="icon fa-apple major style1"></span>
             </li>
             <li>
-                <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android">
-                    <span class="icon fa-android major style2"></span>
-                </a>
+                <span class="icon fa-android major style2"></span>
             </li>
 
         </ul>
@@ -123,7 +138,7 @@
             It's so close to release.<br />
             We will notify you when we release.
         </div>
-     
+
     </form>
 
 </section>
@@ -214,7 +229,7 @@
 </section>
 
 <!-- Download_Application -->
-<section id="Download_Application" class="wrapper style4">
+@*<section id="Download_Application" class="wrapper style4">
     <div class="container">
         <div class="underlined-title">
             <h1>
@@ -224,10 +239,8 @@
         </div>
         <div class="row">
             <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
-                <a class="tooltips">
-                    <img alt="Get it from App Store" src="~/images/as.png" />
-                    <span class="csspan">Coming Soon!</span>
-                </a>
+                <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8" style="display:inline-block;overflow:hidden;background:url(//linkmaker.itunes.apple.com/assets/shared/badges/en-us/appstore-lrg.svg) no-repeat;width:135px;height:40px;background-size:contain;"></a>
+                
             </div>
             <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
                 <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android" class="tooltips">
@@ -243,7 +256,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 
 <!-- Footer -->
 <footer id="footer">
@@ -332,15 +345,15 @@
         </li>
     </ul>
     @*<ul class="icons">
-        <li>
-            <!-- begin WebMoney Transfer : attestation label -->
-            <a href="https://passport.webmoney.ru/asp/certview.asp?wmid=059551878952" target=_blank>
-                <IMG SRC="~/images/v_blue_on_transp_en.png" title="Here is your WM passport 059551878952" border="0"><br>
-                <font size=1>We accept WebMoney</font>
-            </a>
-            <!-- end WebMoney Transfer : attestation label -->
-        </li>
-    </ul>*@
+            <li>
+                <!-- begin WebMoney Transfer : attestation label -->
+                <a href="https://passport.webmoney.ru/asp/certview.asp?wmid=059551878952" target=_blank>
+                    <IMG SRC="~/images/v_blue_on_transp_en.png" title="Here is your WM passport 059551878952" border="0"><br>
+                    <font size=1>We accept WebMoney</font>
+                </a>
+                <!-- end WebMoney Transfer : attestation label -->
+            </li>
+        </ul>*@
     <ul id="copyright" class="copyright">
         <li>©@DateTime.Now.Year - Soroosh Developer Team</li>
         <li>Developer: <a rel="author" href="https://plus.google.com/112268338441138496929">Soroosh Ansari Mehr</a></li>

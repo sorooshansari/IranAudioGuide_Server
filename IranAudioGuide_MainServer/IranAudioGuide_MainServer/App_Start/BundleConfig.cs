@@ -13,9 +13,8 @@ namespace IranAudioGuide_MainServer
                             "~/Content/css/bootstrap.3.3.7.min.css",
                             "~/Content/css/select.min.css",
                             "~/Content/css/simple-sidebar.css",
-                            "~/Content/global/plugins/font-awesome/font-awesome.min.css",
+                            "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
                             "~/Content/css/profile.css",
-                            "~/Content/css/PakageTemplate.css",
                             "~/Content/css/PakageTemplate.css"));
 
 
@@ -41,7 +40,7 @@ namespace IranAudioGuide_MainServer
             bundles.Add(new StyleBundle("~/Content/css/minCss").Include(
                       "~/Content/css/bootstrap.min.css",
                       "~/Content/css/bootstrap-social.min.css",
-                      "~/Content/global/plugins/font-awesome/font-awesome.min.css",
+                      "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
                       "~/Content/css/toggle.min.css",
                       "~/Content/css/styles.min.css"));
 
