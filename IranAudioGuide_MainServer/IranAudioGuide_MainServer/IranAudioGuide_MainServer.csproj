@@ -689,7 +689,6 @@
     <Content Include="Content\images\ie\grad0-15.svg" />
     <Content Include="Content\images\overlay.png" />
     <Content Include="Content\images\playpause-48-48-1.png" />
-    <Content Include="Content\images\prevnext-48-48-1.png" />
     <Content Include="Content\images\themes.gif" />
     <Content Include="Content\Scripts\AdminControllers.js" />
     <Content Include="Content\Scripts\AdminCustom.js" />
@@ -1511,14 +1510,8 @@
     <Content Include="Content\css\fontawesome-webfont.woff" />
     <Content Include="Content\css\fontawesome-webfont.woff2" />
     <Content Include="Content\css\FontAwesome.otf" />
-    <Content Include="google60352dff0d3dbd69.html" />
-    <Content Include="images\v_blue_on_transp_en.png" />
-    <Content Include="images\v_blue_on_white_en.png" />
-    <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="robots.txt" />
     <Content Include="sitemap.xml" />
-    <Content Include="Views\Shared\HtmlPage1.html" />
-    <Content Include="WMT405DB3C3.HTML" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
     <Content Include="favicon.ico" />
@@ -1644,7 +1637,6 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\loading-overlay-template.html" />
     <Content Include="Views\Shared\AutoRespondEmailTemplate.html" />
-    <Content Include="Views\Shared\UserEmailTemplate.html" />
     <Content Include="Views\Shared\ContactEmailTemplate.html" />
     <Content Include="Views\Shared\_PaymentLayout.cshtml" />
     <Content Include="Web.config">

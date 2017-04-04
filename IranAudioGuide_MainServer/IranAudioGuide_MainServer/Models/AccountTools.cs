@@ -54,7 +54,7 @@ namespace IranAudioGuide_MainServer.Models
                 if (applicationUser != default(ApplicationUser))
                 {
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(applicationUser.Id);
-                    code = HttpUtility.UrlEncode(code);
+                  //  code = HttpUtility.UrlEncode(code);
                     var callbackUrl = string.Format("{0}/Account/ConfirmEmail?userId={1}&code={2}", BaseUrl, applicationUser.Id, code);
                     await UserManager.SendEmailAsync(applicationUser.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     return 0;
@@ -161,7 +161,7 @@ namespace IranAudioGuide_MainServer.Models
                 if (appUser.uuid != null && appUser.uuid != uuid)
                     return RecoverPassResults.uuidMissMatch;
                 string code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
-                code = HttpUtility.UrlEncode(code);
+               // code = HttpUtility.UrlEncode(code);
                 var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, appUser.Id, code);
                 await UserManager.SendEmailAsync(appUser.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 return RecoverPassResults.Success;
