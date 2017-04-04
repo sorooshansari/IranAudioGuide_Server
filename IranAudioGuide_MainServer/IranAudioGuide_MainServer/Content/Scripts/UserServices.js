@@ -1,4 +1,4 @@
-﻿userApp.service('dataServices', ['$http', '$q', function ($http, $q) {    
+﻿userApp.service('dataServices', ['$http', '$q', function ($http, $q) {
     this.login = function (url, data, config) {
         var deferred = $q.defer();
         $http.post(url, data, config).success(function (response) {
@@ -73,8 +73,8 @@ userApp.service('userServices', ['dataServices', function (dataServices) {
         return dataServices.get('/api/userApi/DeactivateMobile')
     }
     this.buyPakages = function (pak) {
-      
-        return dataServices.get('/Payment/PaymentWeb',pak);
+
+        return dataServices.get('/Payment/PaymentWeb', pak);
     }
 }]);
 userApp.service('notificService', [function () {
@@ -127,7 +127,7 @@ userApp.service('notificService', [function () {
         toastr.clear();
     }
 }]);
-userApp.filter('propsFilter',[ function () {
+userApp.filter('propsFilter', [function () {
     return function (items, props) {
         var out = [];
 
@@ -158,3 +158,53 @@ userApp.filter('propsFilter',[ function () {
         return out;
     };
 }]);
+userApp.service('localezationService', ['$http', '$q', function ($http, $q) {
+    that = this;
+    this.currentLocale = null;
+    this.setCurrentLocale = function (callfunctin, localeId) {
+        try {
+            if (typeof localeId == 'undefined' || localeId == 'fa-ir') {
+                var deferred = $q.defer();
+                $http.get('/Content/Scripts/locales/fa-ir.js').success(function (result) {
+                    currentLocale = result[0]
+                    deferred.resolve(result);
+                }).error(function (error, status, headers, config) {
+                    deferred.reject(error);
+                });
+                return deferred.promise;
+            }
+        }
+        catch (e) {
+            console.log('error: dont add local , has this error:', e)
+        }
+    };
+    this.getLocale = function () {
+        if (that.currentLocale == null)
+            that.setCurrentLocale().then(function (data) {
+                return that.currentLocale;
+            });
+        return that.currentLocale;
+    };
+    //return {
+    //    getLocale: getLocale,
+    //    setCurrentLocale: setCurrentLocale,
+    //}
+}]);
+userApp.filter('localezationFilter', function (locale) {
+    return function (input) {
+        if (input && locale.length != 0) {
+            parts = input.toLowerCase().split('.');
+            localizedString = locale[0];
+            for (_i = 0, _len = parts.length; _i < _len; _i++) {
+                var part = parts[_i];
+                localizedString = localizedString[part];
+                if (!localizedString) {
+                    break;
+                }
+            }
+            if (localizedString) {
+                return localizedString;
+            }
+        }
+    };
+});

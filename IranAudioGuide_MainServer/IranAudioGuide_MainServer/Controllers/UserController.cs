@@ -49,7 +49,9 @@ namespace IranAudioGuide_MainServer.Controllers
 
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+          //  var AutheticationManager = HttpContext.GetOwinContext().Authentication;
+           // AuthenticationManager.SignOut();
+           AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
     }
