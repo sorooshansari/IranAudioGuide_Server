@@ -243,10 +243,6 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704040442259_testdb.cs" />
-    <Compile Include="Migrations\201704040442259_testdb.Designer.cs">
-      <DependentUpon>201704040442259_testdb.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -704,7 +700,6 @@
     <Content Include="Content\Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Content\Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Content\Scripts\angular.min.js" />
-    <Content Include="Content\Scripts\locales\fa-ir.js" />
     <Content Include="Content\Scripts\root-app.js" />
     <Content Include="Content\Scripts\bootstrap.js" />
     <Content Include="Content\Scripts\bootstrap.min.js" />
@@ -1603,6 +1598,7 @@
     <None Include="Content\Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Content\Scripts\jquery-2.2.3.intellisense.js" />
     <None Include="Content\Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />
     <Content Include="images\accept.png" />
@@ -1757,9 +1753,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704040442259_testdb.resx">
-      <DependentUpon>201704040442259_testdb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
