@@ -1,69 +1,10 @@
 ﻿@{
     ViewBag.Title = "Iran Audio Guide";
 }
-<style>
-    .form-request {
-        width: 416px;
-        margin: auto;
-        max-height: 0px;
-        overflow: hidden;
-        -moz-transition: all 1s ease-in-out;
-        -webkit-transition: all 1s ease-in-out;
-        -o-transition: all 1s ease-in-out;
-        transition: all 1s ease-in-out;
-    }
-
-    .form-request-show {
-        max-height: 400px;
-    }
-
-    .form-request a {
-        font-size: 18px;
-        padding: 0;
-        width: 75px;
-        background-color: #00a293;
-        color: #fff !important;
-    }
-
-        .form-request a:hover {
-            background-color: #707292;
-            color: #00a293 !important;
-        }
-
-    .form-request .message {
-        color: #fff;
-        text-align: left;
-        font-size: 81%;
-        margin: 0 0 0 4%;
-        width: 95%;
-        /*border: 1px solid red;*/
-        display: inline-block;
-    }
-
-    /*.form-group {
-        margin-bottom: 0;
-    }*/
-
-    .form-request .error input {
-        border: 1px solid #de0000;
-        color: #de0000;
-    }
-
-    .form-request .error a {
-        box-shadow: inset 0 0 0 2px #de0000;
-        /*color: #f7f7f7;*/
-        background-color: #de0000;
-    }
-
-    .error-msg {
-        color: #de0000;
-        text-shadow: 0px 0px 9px #060713;
-    }
-
-    .actions a {
-        border-bottom: none;
-    }
-</style>
+@section Styles{
+    <style>
+    </style>
+}
 <section id="banner">
     <div class="inner">
         <div id="logo">
@@ -95,7 +36,7 @@
 </section>
 
 <!-- One -->
-<section id="one" class="wrapper style1 special" style="background-color:#505393 !important; padding: 2em 0 0em 0;">
+<section id="one" class="wrapper style1 special" style="background-color:#144482 !important; padding: 2em 0 0em 0;">
     <div class="inner">
         <header class="major">
             <h2>
@@ -147,7 +88,7 @@
 <!-- Two -->
 <section id="two" class="wrapper alt style2" style="background-color:transparent !important">
     <section class="spotlight">
-        <div class="image image1 grayscale">
+        <div class="image image1">
             <img id="accurate_information" src="~/images/blockpics/accurate_information.jpg" alt="accurate information about Iran" scroll-spy />
         </div>
         <div class="content">
@@ -160,7 +101,7 @@
     </section>
 
     <section class="spotlight  spotlightv" style="background-color:transparent !important;">
-        <div class="image image2 grayscale">
+        <div class="image image2">
             <img id="whattolisten" src="/images/blockpics/whattolisten.jpg" alt="Choose what to listen to" scroll-spy-event="elementScrolledIntoView" scroll-spy />
         </div>
         <div class="content">
@@ -174,7 +115,7 @@
 
 
     <section class="spotlight">
-        <div class="image image3 grayscale">
+        <div class="image image3">
             <img id="yourownpace" src="~/images/blockpics/yourownpace.jpg" alt="visit attractions with your own pace" scroll-spy />
         </div><div class="content">
             <h2>
@@ -187,12 +128,7 @@
 </section>
 
 <!-- Three -->
-
-
-
-
-
-<section id="three" class="wrapper style3 special">
+<section id="three" class="wrapper style3 special" style="background-color:#144482 !important;">
     <div class="inner">
         <header class="major">
             <h2>Where ever, when ever, which ever, how ever  </h2>
@@ -228,38 +164,49 @@
         </ul>
     </div>
 </section>
-<div id="map" style="min-height:500px;"></div>
 
-<!-- Download_Application -->
-@*<section id="Download_Application" class="wrapper style4">
-        <div class="container">
-            <div class="underlined-title">
-                <h1>
-                    Iran Audio Guide
-                </h1>
-                <hr />
-            </div>
-            <div class="row">
-                <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
-                    <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8" style="display:inline-block;overflow:hidden;background:url(//linkmaker.itunes.apple.com/assets/shared/badges/en-us/appstore-lrg.svg) no-repeat;width:135px;height:40px;background-size:contain;"></a>
-
+<!-- Map -->
+<section id="Location" class="Location">
+    <div id="map"></div>
+    <div class="LocationInfo">
+        <div class="panel panel-default">
+            <div class="panel-heading">Who we are?</div>
+            <div class="panel-body">
+                <p>
+                    Hi! We are Mona Akhlaghi and Soroosh Ansari Mehr, two individuals with a passion for creativity — creativity makes us happy. We truly believe in the transformative power of illustration and design and their ability to simplify communications
+                </p>
+                <br />
+                <div class="row">
+                    <div class="col-lg-2 col-sm-3 col-xs-4">
+                        <img class="img-thumbnail" src="~/images/Members/Mona.jpg" alt="Mona Akhlaghi" style="width:100%">
+                    </div>
+                    <div class="col-lg-10 col-sm-9 col-xs-8">
+                        <h5 class="mt-0">Mona Akhlaghi</h5>
+                        Cras sit amet nibh libero
+                    </div>
                 </div>
-                <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
-                    <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android" class="tooltips">
-                        <img alt="Download" src="~/images/lc.png" />
-                        <span class="csspan">Download Now</span>
-                    </a>
+                <br />
+                <div class="row">
+                    <div class="col-lg-2 col-sm-3 col-xs-4">
+                        <img class="img-thumbnail" src="~/images/Members/Soroosh.JPG" alt="Soroosh Ansari Mehr" style="width:100%">
+                    </div>
+                    <div class="col-lg-10 col-sm-9 col-xs-8">
+                        <h5 class="mt-0">Soroosh Ansari Mehr</h5>
+                        Cras sit amet nibh libero
+                    </div>
                 </div>
-                <div class="col-sm-3 col-sm-offset-1 col-xs-12 col-xs-offset-1 dlrow">
-                    <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android" class="tooltips">
-                        <img alt="Get it from Google Play" src="~/images/gp.png" />
-                        <span class="csspan">Get it from Google Play</span>
-                    </a>
-                </div>
+                @*<dl class="dl-horizontal">
+                        <dt><i class="fa fa-phone"></i></dt>
+                        <dd><a href="tel:18475555555">1-847-555-5555</a></dd>
+                        <dt><i class="fa fa-envelope"></i></dt>
+                        <dd><a href="mailto:info@iranaudioguide.com"><span>info@iranaudioguide.com</span></a></dd>
+                        <dt><i class="fa fa-map-marker"></i></dt>
+                        <dd>Shiraz</dd>
+                    </dl>*@
             </div>
         </div>
-    </section>*@
-
+    </div>
+</section>
 <!-- Footer -->
 <footer id="footer">
     <div id="contact" class="form-container">
@@ -364,6 +311,20 @@
 @section scripts{
     <script>
         function initMap() {
+            var image = {
+                url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                // This marker is 20 pixels wide by 32 pixels high.
+                //size: new google.maps.Size(20, 32)
+            };
+            var contentString =
+            '<div class="panel panel-default">' +
+                '<div class="panel-heading">Iran Audio Guide Office</div>' +
+                '<div class="panel-body">' +
+                    '<div id="content">' +
+                        '<p><i class="fa fa-map-marker"></i> Shiraz, rock caves and ancient paintings.<br />Uluru is listed as a World Heritage Site.</p>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
             var styles = [
                         {
                             "featureType": "administrative",
@@ -562,28 +523,60 @@
                         }
             ];
             var center = new google.maps.LatLng(29.724955, 52.461972);
+            var PageCenter = new google.maps.LatLng(29.724955, 52.465000);
             var mapOptions = {
-                center: { lat: 29.724955, lng: 52.461972 },
                 scrollwheel: false,
                 navigationControl: true,
                 mapTypeControl: false,
-                scaleControl: false,
+                scaleControl: true,
                 draggable: false,
                 center: center,
-                zoom: 15,
+                zoom: 14,
                 styles: styles
                 //mapTypeId: google.maps.MapTypeId.ROADMAP
             };
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
             var map = new google.maps.Map(document.getElementById('map'), mapOptions);
             //var map = new google.maps.Map(document.getElementById('map'),
             //  mapOptions);
-            //var marker = new google.maps.Marker({
-            //    position: center,
-            //    title: 'current posision',
-            //    styles: styles
-            //});
-            //marker.setMap(map);
-            //map.setCenter(center);
+            var marker = new google.maps.Marker({
+                position: center,
+                title: 'Iran audio guide',
+                icon: image
+            });
+            marker.setMap(map);
+            google.maps.event.addListenerOnce(map, 'idle', function () {
+                infowindow.open(map, marker);
+            });
+            marker.addListener('mouseover', function () {
+                infowindow.open(map, marker);
+            });
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+            marker.addListener('mouseout', function () {
+                infowindow.close();
+            });
+            map.setCenter(PageCenter);
+
+            google.maps.event.addListener(infowindow, 'domready', function () {
+                
+                // Reference to the DIV that wraps the bottom of infowindow
+                var iwOuter = $('.gm-style-iw');
+                iwOuter.next().addClass("iwCloseBtn");
+                iwOuter.parent().parent().addClass('iwParent');
+
+                var iwBackground = iwOuter.prev();
+
+                iwBackground.children(':nth-child(3)').find('div').addClass('iwTail');
+                // removes background shadow div
+                iwBackground.children(':nth-child(2)').css({ 'display': 'none' });
+
+                // removes white background div
+                iwBackground.children(':nth-child(4)').css({ 'display': 'none' });
+            });
         }
         //$(document).ready(function () {
         //    GoogleMap_initialize();

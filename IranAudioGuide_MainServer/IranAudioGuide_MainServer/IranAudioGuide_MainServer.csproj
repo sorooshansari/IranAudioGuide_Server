@@ -543,6 +543,7 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\fontawesome-webfont.svg" />
+    <Content Include="Content\css\HomeStyles.css" />
     <Content Include="Content\css\ie8.css" />
     <Content Include="Content\css\ie9.css" />
     <Content Include="Content\css\ionic.css" />
@@ -1514,6 +1515,7 @@
     <Content Include="Content\css\fontawesome-webfont.woff2" />
     <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="google60352dff0d3dbd69.html" />
+    <Content Include="images\marker.png" />
     <Content Include="images\v_blue_on_transp_en.png" />
     <Content Include="images\v_blue_on_white_en.png" />
     <Content Include="images\wmlogo_vector_blue.png" />
