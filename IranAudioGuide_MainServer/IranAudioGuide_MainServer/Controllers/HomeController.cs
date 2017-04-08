@@ -69,6 +69,17 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
+        public JsonResult SendMailTest(string dest)
+        {
+            System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/HTMLPage3.html"));
+
+            string body = sr.ReadToEnd();
+            var msg = new Microsoft.AspNet.Identity.IdentityMessage() { Body = body, Destination = dest, Subject = "salaam" };
+            EmailService es = new EmailService();
+            es.SendWithoutTemplateAsync(msg);
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
         //public ActionResult Error()
         //{
         //    return View("Error");

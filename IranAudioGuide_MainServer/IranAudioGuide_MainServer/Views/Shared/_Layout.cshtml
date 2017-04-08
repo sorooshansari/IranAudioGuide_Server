@@ -37,7 +37,8 @@
     <title>@ViewBag.Title</title>
 
 
-    @Styles.Render("~/Content/css/minCss")
+        @Styles.Render("~/Content/css/minCss")
+        @RenderSection("Styles", required: false)
 
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/css/ie8.css" /><![endif]-->
