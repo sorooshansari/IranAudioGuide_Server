@@ -62,7 +62,16 @@
 }
 
 
-
+.spotlight .image
+{
+    -webkit-transition: .5s ease-in-out;
+    -moz-transition: .5s ease-in-out;
+    -o-transition: .5s ease-in-out;
+    -webkit-filter: grayscale(0%) !important;
+    -moz-filter: grayscale(0%) !important;
+    -o-filter: grayscale(0%) !important;
+    filter: grayscale(0%) !important;
+}
 .spotlight .image:hover {
     -webkit-filter: grayscale(70%) !important;
     -moz-filter: grayscale(70%) !important;
@@ -118,7 +127,7 @@
 
     .Location .panel-heading {
         color: #f5f5f5;
-        background-color: #144482;
+        background-color: #15437f;
         border-color: #ddd;
     }
 

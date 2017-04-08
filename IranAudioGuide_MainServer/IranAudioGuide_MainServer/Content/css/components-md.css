@@ -8189,11 +8189,11 @@ Transparent Button
 }
 .note.note-info {
       background-color: rgba(20, 68, 130, 0.14);
-    border-color: #144482;
+    border-color: #15437f;
     color: #010407;
     /* min-height: 400px; */
     padding: 9% 4%;
 }
 .note.note-info h4{
-     color:#144482 !important;
+     color:#15437f !important;
  }

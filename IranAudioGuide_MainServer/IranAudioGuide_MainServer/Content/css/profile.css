@@ -39,7 +39,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #144482;
+    background-color: #15437f;
     text-align: center;
     padding: 14% 0 0 0;
     z-index: 900000;
@@ -51,7 +51,7 @@
 
 .menu-mobail {
     position: absolute;
-    background-color: #144482;
+    background-color: #15437f;
     top: 0;
     left: 0;
     padding: 1px 9px;
