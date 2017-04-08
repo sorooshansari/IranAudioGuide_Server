@@ -1522,6 +1522,7 @@
     <Content Include="robots.txt" />
     <Content Include="sitemap.xml" />
     <Content Include="Views\Shared\HtmlPage1.html" />
+    <Content Include="Views\Shared\HTMLPage3.html" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
