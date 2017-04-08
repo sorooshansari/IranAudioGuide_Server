@@ -21,9 +21,6 @@ namespace dbUpdater.Services
             {
             }
         }
-
-
-
     }
     public class JobDownloadLinkRemove : IJob
     {

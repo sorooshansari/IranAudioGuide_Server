@@ -158,37 +158,43 @@ userApp.filter('propsFilter', [function () {
         return out;
     };
 }]);
-userApp.service('localezationService', ['$http', '$q', function ($http, $q) {
+userApp.factory('localezationService', ['dataServices', '$rootScope', '$timeout', function (dataServices, $rootScope, $timeout) {
     that = this;
-    this.currentLocale = null;
-    this.setCurrentLocale = function (callfunctin, localeId) {
+    isSetCurrentLocale = false;
+    isCallSetCurrentLocale = 0;
+    currentLocale = null;
+    setCurrentLocale = function (localeId) {
         try {
-            if (typeof localeId == 'undefined' || localeId == 'fa-ir') {
-                var deferred = $q.defer();
-                $http.get('/Content/Scripts/locales/fa-ir.js').success(function (result) {
-                    currentLocale = result[0]
-                    deferred.resolve(result);
-                }).error(function (error, status, headers, config) {
-                    deferred.reject(error);
+            if (typeof localeId == 'undefined' || localeId == 'fa-ir')
+                dataServices.get('/Content/Scripts/locales/fa-ir.js').then(function (result) {
+                    currentLocale = result[0];
+                    isSetCurrentLocale = true;
+                    $rootScope.$broadcast('setLocale', currentLocale);
                 });
-                return deferred.promise;
-            }
         }
         catch (e) {
             console.log('error: dont add local , has this error:', e)
         }
     };
-    this.getLocale = function () {
-        if (that.currentLocale == null)
-            that.setCurrentLocale().then(function (data) {
-                return that.currentLocale;
-            });
-        return that.currentLocale;
+    getLocale = function () {
+        if (isSetCurrentLocale)
+            return currentLocale;
+        else {
+            if (isCallSetCurrentLocale < 1) {
+                isCallSetCurrentLocale++;
+                setCurrentLocale();
+                $timeout(function () {
+                    getLocale();
+                }, 2000);
+            }
+            else
+                return null;
+        }
+        return null;
     };
-    //return {
-    //    getLocale: getLocale,
-    //    setCurrentLocale: setCurrentLocale,
-    //}
+    return {
+        getLocale: getLocale
+    }
 }]);
 userApp.filter('localezationFilter', function (locale) {
     return function (input) {

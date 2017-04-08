@@ -322,27 +322,66 @@ angular.module('AdminPage.controllers', [])
             $scope.loadAudio(1);
         });
         $scope.loadAudio = function (audioIndex) {
-            console.log(audioIndex);
+            ////todo test getUrl
+            //for (var i = 0; i < 10; i++) {
+            //    var m = {
+            //        trackId: "6d997cee-d407-e711-80bf-20cf30561859", // value.Aud_Id,
+            //        isAudio: true
+            //    }
+            //    PlaceServices.getUrl(m);
+            //    //1 request 
+            //    var m = {
+            //        trackId: "7ebc1448-d907-e711-80bf-20cf30561859", // value.Aud_Id,
+            //        isAudio: true
+            //    }
+            //    PlaceServices.getUrl(m);
+            //    //2 request 
+            //    var m = {
+            //        trackId: "bb36dddf-d007-e711-80bf-20cf30561859", // value.Aud_Id,
+            //        isAudio: true
+            //    }
+            //    PlaceServices.getUrl(m);
+            //    //3 request 
+            //    var m = {
+            //        trackId: "fa04be86-e107-e711-80bf-20cf30561859", // value.Aud_Id,
+            //        isAudio: true
+            //    }
+            //    PlaceServices.getUrl(m);
+            //    //4 request 
+            //    var m = {
+            //        trackId: "b20c0aea-f307-e711-80bf-20cf30561859", // value.Aud_Id,
+            //        isAudio: true
+            //    }
+            //    PlaceServices.getUrl(m);
+            //    //5 request 
+            //    var m = {
+            //        trackId: "c050271d-d2fc-e611-80bf-20cf30561859", // value.Aud_Id,
+            //        isAudio: true
+            //    }
+            //    PlaceServices.getUrl(m);
+
+            //    // 6  request 
+            //    var m = {
+            //        trackId: "ddc58c1e-0b08-e711-80bf-20cf30561859", // value.Aud_Id,
+            //        isAudio: true
+            //    }
+            //    PlaceServices.getUrl(m);
+            //}
             playingIndex = audioIndex;
             angular.forEach($rootScope.audios, function (value, key) {
                 if (value.Index == audioIndex) {
-                
-                //todo test getUrl
-                    //var m = {
-                    //    trackId: value.Aud_Id,
-                    //    isAudio: true
-                    //}
-                    //PlaceServices.getUrl(m);
-                    if (audioStatus != "empty") {
-                        audio.pause();
-                        $scope.PlayStatus = "play";
-                    }
                     $scope.AudioTitle = value.Aud_Name;
                     //var src = "../Audios/" + value.Aud_Url;
                     var src = value.Aud_Url;
                     audio = new Audio(src);
                     audioStatus = "pause";
-                    return;
+                    return;                   
+
+                    if (audioStatus != "empty") {
+                        audio.pause();
+                        $scope.PlayStatus = "play";
+                    }
+                    
                 }
             });
         }

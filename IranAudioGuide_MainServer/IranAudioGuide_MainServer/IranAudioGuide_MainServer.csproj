@@ -271,6 +271,7 @@
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
     <Compile Include="Services\GlobalPath.cs" />
+    <Compile Include="Services\ServiceDownload.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
     <Compile Include="Services\ServiceJob.cs" />

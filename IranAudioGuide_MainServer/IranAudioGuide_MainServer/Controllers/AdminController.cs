@@ -198,7 +198,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         //uplaod file
                         var request = new ServiceFtp();
                         var fileName = Convert.ToString(Story.Sto_Id) + Path.GetExtension(model.StoryFile.FileName);
-                        var isSuccess = request.Upload(model.StoryFile, fileName, GlobalPath.PathStory);
+                        var isSuccess = request.Upload(model.StoryFile, fileName, GlobalPath.FullPathStory);
 
                         //end upload file
                         Story.Sto_Url = fileName;
@@ -239,9 +239,9 @@ namespace IranAudioGuide_MainServer.Controllers
                     var request = new ServiceFtp();
                     lock (DelAdo)
                     {
-                        if (request.IsDirectoryExist(fileName, GlobalPath.PathStory))
+                        if (request.IsDirectoryExist(fileName, GlobalPath.FullPathStory))
                         {
-                            request.delete(fileName, GlobalPath.PathStory);
+                            request.delete(fileName, GlobalPath.FullPathStory);
                         }
                     }
                     return Json(new Respond());
@@ -316,10 +316,10 @@ namespace IranAudioGuide_MainServer.Controllers
                         //uplaod file
                         var request = new ServiceFtp();
                         var fileName = Convert.ToString(audio.Aud_Id) + Path.GetExtension(model.AudioFile.FileName);
-                        var isSuccess = request.Upload(model.AudioFile, fileName, GlobalPath.PathAudios);
+                        var isSuccess = request.Upload(model.AudioFile, fileName, GlobalPath.FullPathAudios);
                         if (!isSuccess)
                         {
-                            request.createDirectory(GlobalPath.PathAudios);
+                            request.createDirectory(GlobalPath.FullPathAudios);
                         }
                         //end upload file
 
@@ -363,9 +363,9 @@ namespace IranAudioGuide_MainServer.Controllers
                     var fileName = audio.Aud_Url;
                     lock (DelAdo)
                     {
-                        if (request.IsDirectoryExist(fileName, GlobalPath.PathAudios))
+                        if (request.IsDirectoryExist(fileName, GlobalPath.FullPathAudios))
                         {
-                            request.delete(fileName, GlobalPath.PathAudios);
+                            request.delete(fileName, GlobalPath.FullPathAudios);
                         }
                     }
 
@@ -434,13 +434,13 @@ namespace IranAudioGuide_MainServer.Controllers
                         UpdateLog(updatedTable.Place, place.Pla_Id);
                         db.SaveChanges();
                         dbTran.Commit();
-                        var isSuccess = request.Upload(model.Image, fileName, GlobalPath.PathImagePlace);
+                        var isSuccess = request.Upload(model.Image, fileName, GlobalPath.FullPathImagePlace);
                         if (!isSuccess)
                             throw new ArgumentException("Dont save image in Server", "original");
 
 
-                        var PathSource = GlobalPath.PathImagePlace + "/" + fileName;
-                        var Destination = GlobalPath.PathImageTumbnail + "/" + fileName;
+                        var PathSource = GlobalPath.FullPathImagePlace + "/" + fileName;
+                        var Destination = GlobalPath.FullPathImageTumbnail + "/" + fileName;
                         isSuccess = request.Copy(PathSource, Destination);
                         if (!isSuccess)
                             throw new ArgumentException("Dont save Tumbnail image in Server", "original");
@@ -482,14 +482,14 @@ namespace IranAudioGuide_MainServer.Controllers
                                 var fileName = place.Pla_ImgUrl;
                                 lock (DelPlc)
                                 {
-                                    if (request.IsDirectoryExist(fileName, GlobalPath.PathImagePlace))
+                                    if (request.IsDirectoryExist(fileName, GlobalPath.FullPathImagePlace))
                                     {
-                                        request.delete(fileName, GlobalPath.PathImagePlace); ;
+                                        request.delete(fileName, GlobalPath.FullPathImagePlace); ;
                                     }
                                     fileName = place.Pla_TumbImgUrl;
-                                    if (request.IsDirectoryExist(fileName, GlobalPath.PathImageTumbnail))
+                                    if (request.IsDirectoryExist(fileName, GlobalPath.FullPathImageTumbnail))
                                     {
-                                        request.delete(fileName, GlobalPath.PathImageTumbnail);
+                                        request.delete(fileName, GlobalPath.FullPathImageTumbnail);
                                     }
                                 }
                                 dbTran.Commit();
@@ -690,7 +690,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         if (Path.GetFileNameWithoutExtension(place.Pla_ImgUrl) != Path.GetFileNameWithoutExtension(model.NewImage.FileName))
                         {
-                            request.delete(place.Pla_ImgUrl, GlobalPath.PathImageTumbnail);
+                            request.delete(place.Pla_ImgUrl, GlobalPath.FullPathImageTumbnail);
                             place.Pla_ImgUrl = fileName;
                         }
                         UpdateLog(updatedTable.Place, place.Pla_Id);
@@ -703,7 +703,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.PathImageTumbnail);
+                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.FullPathImageTumbnail);
                     if (!isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
 
@@ -749,7 +749,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         if (Path.GetFileNameWithoutExtension(place.Pla_TumbImgUrl) != Path.GetFileNameWithoutExtension(model.NewImage.FileName))
                         {
-                            request.delete(place.Pla_TumbImgUrl, GlobalPath.PathImagePlace);
+                            request.delete(place.Pla_TumbImgUrl, GlobalPath.FullPathImagePlace);
                             place.Pla_TumbImgUrl = fileName;
                         }
                         UpdateLog(updatedTable.Place, place.Pla_Id);
@@ -762,7 +762,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.PathImagePlace);
+                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.FullPathImagePlace);
                     if (isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
 
@@ -795,7 +795,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     var getPlace = db.Places.Include(p => p.Pla_ExtraImages).Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     int o = 1;
                     if (getPlace.Pla_ExtraImages.Count != 0)
-                        o = getPlace.Pla_ExtraImages.Max(x => x.Order)+1;
+                        o = getPlace.Pla_ExtraImages.Max(x => x.Order) + 1;
                     var img = new Image() { Place = getPlace, Order = o };
                     var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     db.Images.Add(img);
@@ -804,7 +804,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     //uplaod file
                     var request = new ServiceFtp();
                     var fileName = Convert.ToString(img.Img_Id) + Path.GetExtension(model.NewImage.FileName);
-                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.PathImageExtras);
+                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.FullPathImageExtras);
                     //end upload file
 
                     img.Img_Name = fileName;
@@ -842,9 +842,9 @@ namespace IranAudioGuide_MainServer.Controllers
                         db.SaveChanges();
                         var request = new ServiceFtp();
                         var fileName = img.Img_Name;
-                        if (request.IsDirectoryExist(fileName, GlobalPath.PathImageExtras))
+                        if (request.IsDirectoryExist(fileName, GlobalPath.FullPathImageExtras))
                         {
-                            request.delete(fileName, GlobalPath.PathImageExtras); ;
+                            request.delete(fileName, GlobalPath.FullPathImageExtras); ;
                         }
                         dbTran.Commit();
                     }
@@ -921,7 +921,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     //uplaod file
                     var request = new ServiceFtp();
                     var fileName = Convert.ToString(city.Cit_Id) + Path.GetExtension(model.CityImage.FileName);
-                    var isSuccess = request.Upload(model.CityImage, fileName, GlobalPath.PathImageCity);
+                    var isSuccess = request.Upload(model.CityImage, fileName, GlobalPath.FullPathImageCity);
                     //end upload file
 
                     city.Cit_ImageUrl = fileName;
@@ -1002,7 +1002,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     var fileName = Convert.ToString(model.CityId) + Path.GetExtension(model.NewImage.FileName);
 
                     if (Path.GetFileNameWithoutExtension(city.Cit_ImageUrl) != Path.GetFileNameWithoutExtension(model.NewImage.FileName))
-                        request.delete(city.Cit_ImageUrl, GlobalPath.PathImageCity);
+                        request.delete(city.Cit_ImageUrl, GlobalPath.FullPathImageCity);
 
                     try
                     {
@@ -1018,7 +1018,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
 
-                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.PathImageCity);
+                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.FullPathImageCity);
                     if (isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
                 }
@@ -1054,9 +1054,9 @@ namespace IranAudioGuide_MainServer.Controllers
                             var fileName = city.Cit_ImageUrl;
                             lock (DelCit)
                             {
-                                if (request.IsDirectoryExist(fileName, GlobalPath.PathImageCity))
+                                if (request.IsDirectoryExist(fileName, GlobalPath.FullPathImageCity))
                                 {
-                                    request.delete(fileName, GlobalPath.PathImageCity); ;
+                                    request.delete(fileName, GlobalPath.FullPathImageCity); ;
                                 }
                             }
                             return Json(new Respond());
@@ -1207,39 +1207,61 @@ namespace IranAudioGuide_MainServer.Controllers
 
         private List<StoryVM> GetStorys(string PlaceId)
         {
-            List<StoryVM> Storys = (from a in db.Storys
-                                    where a.Place == db.Places.Where(x => x.Pla_Id.ToString() == PlaceId).FirstOrDefault()
-                                    select new StoryVM()
-                                    {
-                                        Discription = a.Sto_Discription,
-                                        Name = a.Sto_Name,
-                                        Url = a.Sto_Url,
-                                        Id = a.Sto_Id
-                                    }).ToList();
+            //where a.Place == db.Places.Where(x => x.Pla_Id.ToString() == PlaceId).FirstOrDefault()
+
+            List<StoryVM> Storys = db.Storys.Include(s => s.Place)
+                .Where(x => x.Place.Pla_Id.ToString() == PlaceId)
+                .Select(a => new StoryVM()
+                {
+                    Discription = a.Sto_Discription,
+                    Name = a.Sto_Name,
+                    Url = a.Sto_Url,
+                    Id = a.Sto_Id
+                }).ToList();
+            var isAdmin = User.IsInRole("Admin");
             int counter = 0;
-            foreach (var item in Storys)
+            foreach (var s in Storys)
             {
-                item.Index = ++counter;
+                var model = new GetAudioUrlVM()
+                {
+                    email = "",
+                    uuid = "",
+                    trackId = s.Id,
+                    isAudio = false
+                };
+                s.Url = ServiceDownload.GetUrl(model, isAdmin);
+                s.Index = ++counter;
             }
+
             return Storys;
         }
         private List<AudioVM> GetAudios(string PlaceId)
         {
-            List<AudioVM> audios = (from a in db.Audios
-                                    where a.Place == db.Places.Where(x => x.Pla_Id.ToString() == PlaceId).FirstOrDefault()
-                                    select new AudioVM()
-                                    {
-                                        Aud_Discription = a.Aud_Discription,
-                                        Aud_Name = a.Aud_Name,
-                                        Aud_Url = a.Aud_Url,
-                                        Aud_Id = a.Aud_Id
-                                    }).ToList();
+            List<AudioVM> list = db.Audios.Include(s => s.Place)
+               .Where(x => x.Place.Pla_Id.ToString() == PlaceId)
+               .Select(a => new AudioVM()
+               {
+                   Aud_Discription = a.Aud_Discription,
+                   Aud_Name = a.Aud_Name,
+                   Aud_Url = a.Aud_Url,
+                   Aud_Id = a.Aud_Id,
+               }).ToList();
+            var isAdmin = User.IsInRole("Admin");
             int counter = 0;
-            foreach (var item in audios)
+            foreach (var s in list)
             {
-                item.Index = ++counter;
+                var model = new GetAudioUrlVM()
+                {
+                    email = "",
+                    uuid = "",
+                    trackId = s.Aud_Id,
+                    isAudio = true
+                };
+                s.Aud_Url = ServiceDownload.GetUrl(model, isAdmin);
+                s.Index = ++counter;
             }
-            return audios;
+
+            return list;
         }
         private List<JNOCitiesVM> GetAllCitiesName()
         {

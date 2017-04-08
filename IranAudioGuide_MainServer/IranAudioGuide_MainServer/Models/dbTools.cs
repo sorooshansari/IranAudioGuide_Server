@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Data.Entity;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -21,6 +22,8 @@ namespace IranAudioGuide_MainServer.Models
                 _dbManager = value;
             }
         }
+        
+
         //public SkippedUserVM skipUser(string uuid)
         //{
         //    var res = new SkippedUserVM();
@@ -92,71 +95,7 @@ namespace IranAudioGuide_MainServer.Models
         //    }
         //    return new GetPackagesVM { packages = res, errorMessage = error };
         //}
-        public string GetUrl(string fileName, bool isAudio)
-        {
-
-            string pathSource, pathDestination;
-            string url = "";
-            if (isAudio)
-            {
-
-                pathSource = GlobalPath.PathAudios;
-                pathDestination = GlobalPath.DownloadPathAudios;
-            }
-            else
-            {
-                pathSource = GlobalPath.PathStory;
-                pathDestination = GlobalPath.DownloadPathStory;
-            }
-
-            DownloadLink link = new DownloadLink();
-            using (var db = new ApplicationDbContext())
-            {
-                using (var dbTran = db.Database.BeginTransaction())
-                {
-                    var Path = db.DownloadLinks.FirstOrDefault(x => x.FileName == fileName & x.IsDisable == false & x.IsAudio == isAudio);
-                    if (Path == null)
-                    {
-
-                        link.FileName = fileName;
-                        link.TimeToVisit = DateTime.Now;
-                        link.IsAudio = isAudio;
-                        db.DownloadLinks.Add(link);
-
-                    }
-                    else
-                    {
-                        Path.TimeToVisit = DateTime.Now;
-                        url = Path.Path;
-                    }
-                    try
-                    {
-                        db.SaveChanges();
-                        if (Path == null)
-                        {
-                            link.Path = string.Format("{0}/{1}", pathDestination, link.Dow_Id + System.IO.Path.GetExtension(fileName));
-                            url = link.Path;
-                            db.SaveChanges();
-                        }
-
-                        dbTran.Commit();
-                        if (Path == null)
-                        {
-                            var ftp = new ServiceFtp();
-                            pathSource = pathSource + "/" + fileName;
-                            pathDestination = pathDestination + "/" + link.Dow_Id + System.IO.Path.GetExtension(fileName);
-                            ftp.Copy(pathSource, pathDestination);
-                        }
-                        return GlobalPath.host + "/" + url;
-                    }
-                    catch (Exception ex)
-                    {
-                        dbTran.Rollback();
-                        throw new ArgumentException("Dont Save Download link in DataBase Or Dont Copy File in Server", "original");
-                    }
-                }
-            }
-        }
+       
         //public string GetAudioUrl(GetAudioUrlVM model)
         //{
         //    using (var db = new ApplicationDbContext())
@@ -193,81 +132,7 @@ namespace IranAudioGuide_MainServer.Models
         //        }
         //    }
         //}
-        public string GetAudioUrl(GetAudioUrlVM model)
-        {
-            string pathSource, pathDestination;
-            if (model.isAudio)
-            {
-
-                pathSource = GlobalPath.PathAudios;
-                pathDestination = GlobalPath.DownloadPathAudios;
-            }
-            else
-            {
-                pathSource = GlobalPath.PathStory;
-                pathDestination = GlobalPath.DownloadPathStory;
-            }
-            using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
-            {
-                SqlCommand cmd = new SqlCommand("GetURL", sqlConnection); cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@IsAudio", model.isAudio));
-                cmd.Parameters.Add(new SqlParameter("@FileId", model.trackId));
-                cmd.Parameters.Add(new SqlParameter("@UserName", model.email));
-                cmd.Parameters.Add(new SqlParameter("@UserUUID", model.uuid));
-                cmd.Parameters.Add(new SqlParameter("@Path", pathDestination));
-
-                sqlConnection.Open();
-                var reader = cmd.ExecuteReader();
-                var dt1 = new DataTable();
-                dt1.Load(reader);
-                var links = dt1.AsEnumerable().Select(x => new
-                {
-                    PathFile = x["PathFile"].ToString(),
-                    FileName = x["FileName"].ToString(),
-                    IsUpdate = x["IsUpdate"].ToString(),
-                    IsAccess = x["isAccess"].ToString()
-                }).FirstOrDefault();
-
-                if (links.IsAccess == "0")
-                    return null;
-                if (links.IsUpdate == "True")
-                {
-                    var ftp = new ServiceFtp();
-                    pathSource = pathSource + "/" + links.FileName;
-                    pathDestination = links.PathFile;
-                    ftp.Copy(pathSource, pathDestination);
-                }
-                return GlobalPath.host + "/" + links.PathFile;
-            }
-
-
-            //return res;
-            //if (model.isAudio)
-            //{
-            //    var trakName = (from a in db.Audios
-            //                    where a.Aud_Id == model.trackId
-            //                    select a.Aud_Url).FirstOrDefault();
-
-            //    if (string.IsNullOrEmpty(trakName))
-            //        throw new ArgumentException("Not Found File Audio", "original");
-
-            //    return GetUrl(trakName, model.isAudio);
-
-            //}
-            //else
-            //{
-            //    var trakName = (from s in db.Storys
-            //                    where s.Sto_Id ==model.trackId
-            //                    select s.Sto_Url).FirstOrDefault();
-
-            //    if (string.IsNullOrEmpty(trakName))
-            //        throw new ArgumentException("Not Found File Story", "original");
-
-            //    return GetUrl(trakName, model.isAudio);
-            //}
-            // }
-        }
+      
         public GetPackagesVM GetPackagesByCity(int cityId)
         {
             GetPackagesVM res;

@@ -33,8 +33,14 @@ userApp.service('fileUpload', ['$http', function ($http) {
 
 userApp.controller('userCtrl', ['localezationService','$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
     function (localezationService, $window, $scope, userServices, $timeout, notific, $http, $state) {
-        $scope.locale = "test";
-        $scope.locale = localezationService.currentLocale;
+        
+        //$scope.$on('setLocale', function (data) {
+        //    console.log(localezationService.currentLocale);
+        //    console.log(data);
+        //    $scope.test = localezationService.getLocale();
+        //});
+        $scope.test = "test";
+        $scope.test = localezationService.getLocale();
         $scope.profile = {
             istest: true,
             packages: [],

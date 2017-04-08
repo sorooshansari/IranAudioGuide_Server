@@ -13,7 +13,7 @@ namespace IranAudioGuide_MainServer.Services
         private FtpWebRequest ftpRequest = null;
         private FtpWebResponse ftpResponse = null;
         private Stream ftpStream = null;
-        private int bufferSize = 2048;
+       
         public ServiceFtp()
         {
             host = GlobalPath.hostFtp;
@@ -27,7 +27,7 @@ namespace IranAudioGuide_MainServer.Services
             {
                 var fullPath = host;
                 if (!string.IsNullOrEmpty(path))
-                    fullPath = fullPath + "/" + path;
+                    fullPath = fullPath + path;
 
                 if (string.IsNullOrEmpty(nameFile))
                     fullPath = fullPath + "/" + postedFile.FileName;
@@ -80,43 +80,43 @@ namespace IranAudioGuide_MainServer.Services
             }
 
         }
-        public bool Upload(Stream sourceStream, string fullPathSource)
-        {
-            try
-            {
+        //public bool Upload(Stream sourceStream, string fullPathSource)
+        //{
+        //    try
+        //    {
 
-                //    FtpWebRequest uploadRequest = (FtpWebRequest)WebRequest.Create(new Uri(fullPathSource));
-                //    uploadRequest.Method = WebRequestMethods.Ftp.UploadFile;
-                //    uploadRequest.Credentials = new NetworkCredential(user, pass);
-                //    uploadRequest.UseBinary = true;
-                //    uploadRequest.KeepAlive = true;
+        //        //    FtpWebRequest uploadRequest = (FtpWebRequest)WebRequest.Create(new Uri(fullPathSource));
+        //        //    uploadRequest.Method = WebRequestMethods.Ftp.UploadFile;
+        //        //    uploadRequest.Credentials = new NetworkCredential(user, pass);
+        //        //    uploadRequest.UseBinary = true;
+        //        //    uploadRequest.KeepAlive = true;
 
-                //    var s = getFileSize(fullPathSource);
-                //    uploadRequest.ContentLength = int.Parse(s);
+        //        //    var s = getFileSize(fullPathSource);
+        //        //    uploadRequest.ContentLength = int.Parse(s);
 
-                //    Stream requestStream = uploadRequest.GetRequestStream();
-                //    requestStream.Write(fileContents, 0, fileContents.Length);
-                //    requestStream.Close();
-                //    FtpWebResponse response = (FtpWebResponse)uploadRequest.GetResponse();
-                //    //Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
-                //    response.Close();
-                //    sourceStream.Close();
-                return true;
-            }
-            catch (WebException ex)
-            {
-                //Console.WriteLine(ex.ToString());
-                return false;
-            }
+        //        //    Stream requestStream = uploadRequest.GetRequestStream();
+        //        //    requestStream.Write(fileContents, 0, fileContents.Length);
+        //        //    requestStream.Close();
+        //        //    FtpWebResponse response = (FtpWebResponse)uploadRequest.GetResponse();
+        //        //    //Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+        //        //    response.Close();
+        //        //    sourceStream.Close();
+        //        return true;
+        //    }
+        //    catch (WebException ex)
+        //    {
+        //        //Console.WriteLine(ex.ToString());
+        //        return false;
+        //    }
 
-        }
+        //}
 
         public bool Copy(string pathSource, string pathDestination)
         {
             try
             {
-                var fullPathSource = GlobalPath.hostFtp + "/" + pathSource;
-                var fullPathDestination = GlobalPath.hostFtp + "/" + pathDestination;
+                var fullPathSource = GlobalPath.hostFtp + pathSource;
+                var fullPathDestination = GlobalPath.hostFtp + pathDestination;
 
                 var downloadRequest = (FtpWebRequest)FtpWebRequest.Create(fullPathSource);
                 downloadRequest.Credentials = new NetworkCredential(user, pass);
@@ -174,7 +174,7 @@ namespace IranAudioGuide_MainServer.Services
             {
                 var fullPath = host;
                 if (!string.IsNullOrEmpty(path))
-                    fullPath = fullPath + "/" + path;
+                    fullPath = fullPath + path;
 
                 if (string.IsNullOrEmpty(deleteFile))
                     return false;
@@ -268,7 +268,7 @@ namespace IranAudioGuide_MainServer.Services
             try
             {
                 /* Create an FTP Request */
-                ftpRequest = (FtpWebRequest)WebRequest.Create(host + "/" + newDirectory);
+                ftpRequest = (FtpWebRequest)WebRequest.Create(host + newDirectory);
                 /* Log in to the FTP Server with the User Name and Password Provided */
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
                 /* When in doubt, use these options */
@@ -449,7 +449,7 @@ namespace IranAudioGuide_MainServer.Services
             try
             {
                 /* Create an FTP Request */
-                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + path);
+                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + path);
                 /* Log in to the FTP Server with the User Name and Password Provided */
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
                 /* When in doubt, use these options */
@@ -497,7 +497,6 @@ namespace IranAudioGuide_MainServer.Services
                 return false;
             }
         }
-
 
         ///* Upload File */
         //public void Upload(string filePath, string filename)
@@ -614,8 +613,5 @@ namespace IranAudioGuide_MainServer.Services
         //    catch (Exception ex) { Console.WriteLine(ex.ToString()); }
         //    return;
         //}
-
-
-
     }
 }

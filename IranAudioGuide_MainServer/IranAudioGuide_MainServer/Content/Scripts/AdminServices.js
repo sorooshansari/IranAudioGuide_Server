@@ -779,6 +779,8 @@
             data = { PlaceId: PlaceId };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
+                  console.log(response);
+
                   var temp = [];
                   $rootScope.placeimage = response.data.PlaceImage + "?" + new Date().getMilliseconds();
                   $rootScope.audios = angular.copy(response.data.audios);
@@ -869,6 +871,7 @@
             data = { PlaceId: PlaceId };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
+                  console.log(response);
                   var temp = [];
                   $rootScope.placeimage = response.data.PlaceImage + "?" + new Date().getMilliseconds();
                   $rootScope.Storys = angular.copy(response.data.Storys);
