@@ -15,10 +15,13 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class GetAudioUrlRes
     {
-        public GetAudioUrlRes(string url)
+        public GetAudioUrlRes(string url, bool isError = false)
         {
             this.url = url;
-            status = GetAudioUrlStatus.success;
+            if (isError)
+                status = GetAudioUrlStatus.unauthorizedUser;
+            else
+                status = GetAudioUrlStatus.success;
         }
         public GetAudioUrlRes(GetAudioUrlStatus status, string error = "")
         {

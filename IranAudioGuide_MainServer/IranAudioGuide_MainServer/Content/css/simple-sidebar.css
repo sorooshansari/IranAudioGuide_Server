@@ -75,7 +75,7 @@ body {
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #144482; /*//url('images/pattern.png')*/
+    background: #15437f; /*//url('images/pattern.png')*/
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -100,7 +100,7 @@ body {
 /* Sidebar Styles */
 
 .logo:hover {
-    background-color: #144482;
+    background-color: #15437f;
 }
 
 .logo {

@@ -6,15 +6,18 @@ namespace IranAudioGuide_MainServer.Controllers
 {
     public class HomeController : Controller
     {
+        [Compress]
         public ActionResult Index()
         {
             ViewBag.View = Views.Index;
             return View();
         }
+        [Compress]
         public ActionResult Error(string aspxerrorpath)
         {
             return View();
         }
+
         //public async System.Threading.Tasks.Task<int> test(string usrname)
         //{
         //    var acTools = new AccountTools();
@@ -64,6 +67,17 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return Json(new Respond(ex.Message, status.unknownError));
             }
+        }
+
+        public JsonResult SendMailTest(string dest)
+        {
+            System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/HTMLPage3.html"));
+
+            string body = sr.ReadToEnd();
+            var msg = new Microsoft.AspNet.Identity.IdentityMessage() { Body = body, Destination = dest, Subject = "salaam" };
+            EmailService es = new EmailService();
+            es.SendWithoutTemplateAsync(msg);
+            return Json("ok", JsonRequestBehavior.AllowGet);
         }
 
         //public ActionResult Error()

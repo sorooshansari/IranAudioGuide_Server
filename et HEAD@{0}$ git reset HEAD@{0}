@@ -1,0 +1,63 @@
+[33m2571b58[m HEAD@{0}: commit: ConfirmEmail
+[33m194b6c8[m HEAD@{1}: commit: a
+[33md51a644[m HEAD@{2}: commit: change layout root
+[33m520cf70[m HEAD@{3}: commit: change layeout  and add  error page  for profile layout
+[33m0b712b2[m HEAD@{4}: merge 0b712b2665c1738fd051f3d7e379facc21b71f96: Fast-forward
+[33ma6e9d00[m HEAD@{5}: commit: add cahne admin api
+[33m2e6ab6f[m HEAD@{6}: commit (merge): Merge branch 'master' of https://github.com/sorooshansari/IranAudioGuide_Server.git
+[33m12b9a89[m HEAD@{7}: commit: complete  dbUpdater -chane layout pyment -add bundle layout -- chane user api --WebmoneyPurse check konid
+[33mb42e71b[m HEAD@{8}: checkout: moving from dbUpdater to master
+[33me87043c[m HEAD@{9}: checkout: moving from master to dbUpdater
+[33mb42e71b[m HEAD@{10}: merge b42e71b1efee695bd2185dcaed099d75fc524c83: Fast-forward
+[33m56423e5[m HEAD@{11}: merge 56423e518a05164b2c55d374fd9bcfd36fe97505: Fast-forward
+[33ma4194df[m HEAD@{12}: commit (merge): Merge branch 'master' of https://github.com/sorooshansari/IranAudioGuide_Server.git
+[33m568d96c[m HEAD@{13}: commit: minor debugging
+[33m4b7477d[m HEAD@{14}: commit: d
+[33mced39fd[m HEAD@{15}: commit: a
+[33mbcd6afc[m HEAD@{16}: merge bcd6afcb3f9dee70d515e8b725dc14aa60b5772f: Fast-forward
+[33m2e3795a[m HEAD@{17}: checkout: moving from dbUpdater to master
+[33me87043c[m HEAD@{18}: checkout: moving from master to dbUpdater
+[33m2e3795a[m HEAD@{19}: checkout: moving from dbUpdater to master
+[33me87043c[m HEAD@{20}: checkout: moving from DownloadLinks to dbUpdater
+[33m5e2efca[m HEAD@{21}: checkout: moving from dbUpdater to DownloadLinks
+[33me87043c[m HEAD@{22}: commit: create Stored procedure when Project strat
+[33m499ba2a[m HEAD@{23}: checkout: moving from DownloadLinks to dbUpdater
+[33m5e2efca[m HEAD@{24}: commit: remove package
+[33ma0b4e84[m HEAD@{25}: commit: remove package quartz
+[33m6f65e78[m HEAD@{26}: checkout: moving from dbUpdater to DownloadLinks
+[33m499ba2a[m HEAD@{27}: commit: add Project Job
+[33m4baa985[m HEAD@{28}: commit: commit test
+[33m5d8628a[m HEAD@{29}: checkout: moving from DownloadLinks to dbUpdater
+[33m6f65e78[m HEAD@{30}: checkout: moving from dbUpdater to DownloadLinks
+[33m5d8628a[m HEAD@{31}: commit: Add Project dbUpdater
+[33m2e3795a[m HEAD@{32}: checkout: moving from DownloadLinks to dbUpdater
+[33m6f65e78[m HEAD@{33}: checkout: moving from dbUpdater to DownloadLinks
+[33m2e3795a[m HEAD@{34}: checkout: moving from DownloadLinks to dbUpdater
+[33m6f65e78[m HEAD@{35}: checkout: moving from dbUpdater to DownloadLinks
+[33m2e3795a[m HEAD@{36}: checkout: moving from DownloadLinks to dbUpdater
+[33m6f65e78[m HEAD@{37}: checkout: moving from dbUpdater to DownloadLinks
+[33m2e3795a[m HEAD@{38}: checkout: moving from DownloadLinks to dbUpdater
+[33m6f65e78[m HEAD@{39}: checkout: moving from dbUpdater to DownloadLinks
+[33m2e3795a[m HEAD@{40}: checkout: moving from DownloadLinks to dbUpdater
+[33m6f65e78[m HEAD@{41}: checkout: moving from dbUpdater to DownloadLinks
+[33m2e3795a[m HEAD@{42}: checkout: moving from DownloadLinks to dbUpdater
+[33m6f65e78[m HEAD@{43}: commit: remove   job
+[33mb3c620c[m HEAD@{44}: commit: Change DataBase and add Tabel Procurement
+[33m3d81c69[m HEAD@{45}: commit: a
+[33m2838188[m HEAD@{46}: commit: Add EmailHeader -   login page  corrected  firstLogin
+[33mb39d520[m HEAD@{47}: commit (merge): Merge branch 'DownloadLinks' of https://github.com/sorooshansari/IranAudioGuide_Server.git
+[33m4d4c45b[m HEAD@{48}: commit: change elmah to the new db - change profile packages
+[33m24478e9[m HEAD@{49}: commit: add Elamh- add job Service- Order for extra images - edite admin Panel
+[33m4d9cce1[m HEAD@{50}: merge 4d9cce12c93c2f144d1c12c78b6470b643750fb5: Fast-forward
+[33m2e3795a[m HEAD@{51}: checkout: moving from CreateDownloadLinks to DownloadLinks
+[33m4d9cce1[m HEAD@{52}: commit (merge): Merge branch 'master' of https://github.com/sorooshansari/IranAudioGuide_Server.git
+[33m8a3ad7c[m HEAD@{53}: commit: b
+[33m2e3795a[m HEAD@{54}: checkout: moving from master to CreateDownloadLinks
+[33m2e3795a[m HEAD@{55}: merge 2e3795a7262368185b76107ba185d2ea278773e2: Fast-forward
+[33m9acd5bc[m HEAD@{56}: commit: ftp  copy complete
+[33m75006bc[m HEAD@{57}: commit:  remove folder assets
+[33m95ff18f[m HEAD@{58}: commit: b
+[33m777d016[m HEAD@{59}: commit: a
+[33m8fe4b14[m HEAD@{60}: commit (merge): a
+[33mb5c060b[m HEAD@{61}: commit: change admin panel add ftp
+[33m779afa9[m HEAD@{62}: clone: from https://github.com/sorooshansari/IranAudioGuide_Server.git

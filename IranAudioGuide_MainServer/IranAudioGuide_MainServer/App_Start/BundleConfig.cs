@@ -42,7 +42,8 @@ namespace IranAudioGuide_MainServer
                       "~/Content/css/bootstrap-social.min.css",
                       "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
                       "~/Content/css/toggle.min.css",
-                      "~/Content/css/styles.min.css"));
+                      "~/Content/css/styles.min.css",
+                      "~/Content/css/HomeStyles.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/minJs").Include(
                         "~/Content/Scripts/jquery.min.js",

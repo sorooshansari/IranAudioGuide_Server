@@ -217,7 +217,6 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     var startDay = user.TimeSetUuid.Value;
                     var endDay = DateTime.Now;
-
                     var day = endDay.Day - startDay.Day;
                     var month = endDay.Month - startDay.Month;
                     var year = endDay.Year - startDay.Year;
@@ -231,7 +230,6 @@ namespace IranAudioGuide_MainServer.Controllers
                         return BadRequest("You should expect to wait up to " + (30 * 6) + daywating + " months");
                 }
                 db.SaveChanges();
-
                 return Ok();
             }
         }

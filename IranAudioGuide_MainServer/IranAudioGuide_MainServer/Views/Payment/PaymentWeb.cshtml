@@ -17,7 +17,7 @@
     }
 
     #header.alt {
-        background: #144482 !important;
+        background: #15437f !important;
         border-bottom: thin solid white;
     }
     
@@ -28,7 +28,7 @@
     }
     #CheckOutSection h3 {
            text-transform: none;
-    color: #144482;
+    color: #15437f;
     text-shadow: 1px 1px 1px #ccc
     }
     #CheckOutSection .Main-content {
@@ -66,7 +66,7 @@
     }
 
         #CheckOutSection .chkout-text h1, .chkout-text p {
-            color: #144482 !important;
+            color: #15437f !important;
             text-shadow: 1px 1px 2px #808080 !important;
             line-height: 25px;
         }
@@ -75,7 +75,7 @@
     #CheckOutSection ._1sttd {
         font-size: 14px;
         width: 50%;
-        border-right: 1px solid #144482 !important;
+        border-right: 1px solid #15437f !important;
         vertical-align: middle;
         font-weight: 600;
     }
@@ -111,7 +111,7 @@
 
     #CheckOutSection .purchasebtn {
         width: 120px;
-        background-color: #144482;
+        background-color: #15437f;
         color: white;
         font-size: small;
     }
@@ -134,7 +134,7 @@
 
     #CheckOutSection .btn-info {
         color: #fff;
-        background-color: #144482;
+        background-color: #15437f;
         border-color: #041a35;
     }
    #CheckOutSection ul.icons {
@@ -145,23 +145,23 @@
     <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
         <div class="col-xs-12 checkout-content chkout-img">
             @*<img src="~/images/IAGSITELOGO.png" />
-            <h1 style="text-shadow:none; color:#144482;">Purchase Details</h1>
-            <h3 style="text-transform:none; color:#21b2a6; text-shadow:none;"><i class="fa fa-user" style="color:#144482; text-shadow:none;"></i><br>@User.Identity.Name</h3>
+            <h1 style="text-shadow:none; color:#15437f;">Purchase Details</h1>
+            <h3 style="text-transform:none; color:#21b2a6; text-shadow:none;"><i class="fa fa-user" style="color:#15437f; text-shadow:none;"></i><br>@User.Identity.Name</h3>
             *@
         </div>
         <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
 
-            <table id="ChkTable" class="table-mybordered table-condensed" style="width: auto;  border-radius:10px; margin:0 auto; margin-bottom: 0px !important; border-top:none !important;  color: #144482; text-shadow:none; text-align:center;">
+            <table id="ChkTable" class="table-mybordered table-condensed" style="width: auto;  border-radius:10px; margin:0 auto; margin-bottom: 0px !important; border-top:none !important;  color: #15437f; text-shadow:none; text-align:center;">
 
-                <tr style="background-color: whitesmoke !important; color: #144482;  font-weight: bold; border-radius:10px; border:none !important; margin-bottom:10px;">
+                <tr style="background-color: whitesmoke !important; color: #15437f;  font-weight: bold; border-radius:10px; border:none !important; margin-bottom:10px;">
                     <td class="_2ndtd" style="border-radius:10px 10px 0 0; border:none !important; text-transform:capitalize; font-size:medium; box-shadow: inset 0px 1px 3px #444;"><i class="fa fa-briefcase"></i><br>&nbsp;@Model.PackageName</td>
                 </tr>
 
             </table>
-            <table class="table-mybordered tbldotted table-condensed" style="width: 100%; border-radius:10px 10px 0 0; margin:0px 0 10px 0;  color: #144482; text-shadow:none; text-align:center; background-color: transparent;">
+            <table class="table-mybordered tbldotted table-condensed" style="width: 100%; border-radius:10px 10px 0 0; margin:0px 0 10px 0;  color: #15437f; text-shadow:none; text-align:center; background-color: transparent;">
                 <tr>
-                    <td class="_1sttd" style="background-color:#144482 !important;  font-size:medium; color:white !important;"><i class="fa fa-map" style="position:relative; left:0;"></i><br />Places@*<br /><div class="col-xs-6" style="display:inline-flex;">Code: <input style="height:30px;" type="text" /></div>*@</td>
-                    <td class="_2ndtd" style="background-color:#144482 !important;  font-size:medium; font-weight:600; color: white !important;"><i class="fa fa-file-text"></i><br />Description</td>
+                    <td class="_1sttd" style="background-color:#15437f !important;  font-size:medium; color:white !important;"><i class="fa fa-map" style="position:relative; left:0;"></i><br />Places@*<br /><div class="col-xs-6" style="display:inline-flex;">Code: <input style="height:30px;" type="text" /></div>*@</td>
+                    <td class="_2ndtd" style="background-color:#15437f !important;  font-size:medium; font-weight:600; color: white !important;"><i class="fa fa-file-text"></i><br />Description</td>
                 </tr>
                 @foreach (var item in Model.PackageCities)
                 {
@@ -171,7 +171,7 @@
                         <td class="_2ndtd desc" style="background-color:transparent;">@item.CityDesc</td>
                     </tr>
                 }
-                <tr style="border-top:15px solid #144482;">
+                <tr style="border-top:15px solid #15437f;">
                     @if (ViewBag.IsChooesZarinpal)
                     {
                         <td class="_1sttd" style="background-color:white;"><div class="col-xs-12"><i class="fa fa-money"></i> Price</div></td>

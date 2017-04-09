@@ -1,0 +1,172 @@
+﻿
+.form-request {
+    width: 416px;
+    margin: auto;
+    max-height: 0px;
+    overflow: hidden;
+    -moz-transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+
+.form-request-show {
+    max-height: 400px;
+}
+
+.form-request a {
+    font-size: 18px;
+    padding: 0;
+    width: 75px;
+    background-color: #00a293;
+    color: #fff !important;
+}
+
+    .form-request a:hover {
+        background-color: #707292;
+        color: #00a293 !important;
+    }
+
+.form-request .message {
+    color: #fff;
+    text-align: left;
+    font-size: 81%;
+    margin: 0 0 0 4%;
+    width: 95%;
+    /*border: 1px solid red;*/
+    display: inline-block;
+}
+
+/*.form-group {
+            margin-bottom: 0;
+        }*/
+
+.form-request .error input {
+    border: 1px solid #de0000;
+    color: #de0000;
+}
+
+.form-request .error a {
+    box-shadow: inset 0 0 0 2px #de0000;
+    /*color: #f7f7f7;*/
+    background-color: #de0000;
+}
+
+.error-msg {
+    color: #de0000;
+    text-shadow: 0px 0px 9px #060713;
+}
+
+.actions a {
+    border-bottom: none;
+}
+
+
+.spotlight .image
+{
+    -webkit-transition: .5s ease-in-out;
+    -moz-transition: .5s ease-in-out;
+    -o-transition: .5s ease-in-out;
+    -webkit-filter: grayscale(0%) !important;
+    -moz-filter: grayscale(0%) !important;
+    -o-filter: grayscale(0%) !important;
+    filter: grayscale(0%) !important;
+}
+.spotlight .image:hover {
+    -webkit-filter: grayscale(70%) !important;
+    -moz-filter: grayscale(70%) !important;
+    -o-filter: grayscale(70%) !important;
+    filter: grayscale(70%) !important;
+}
+
+/*map*/
+#map {
+    min-height: 500px;
+}
+
+.Location {
+    position: relative;
+}
+
+    .Location .LocationInfo {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        height: 100%;
+        width: 50%;
+        background-color: transparent;
+        padding: 2% 5% 2% 5%;
+    }
+
+    .Location .panel {
+        margin: 0;
+        z-index: 1000;
+        height: 100%;
+        background-color: rgba(20, 68, 130, 0.8);
+    }
+
+    .Location dt {
+        text-shadow: 1px 1px 5px rgb(20, 68, 130);
+        color: rgb(242, 242, 242);
+        width: 20px;
+    }
+
+    .Location dd {
+        margin-left: 40px;
+    }
+
+    .Location a {
+        border-bottom: none;
+    }
+
+        .Location a:hover {
+            color: rgb(242, 242, 242);
+            text-decoration: none;
+            text-shadow: 1px 1px 10px rgb(6, 23, 45);
+        }
+
+    .Location .panel-heading {
+        color: #f5f5f5;
+        background-color: #15437f;
+        border-color: #ddd;
+    }
+
+.iwCloseBtn {
+    display: none;
+}
+
+.gm-style-iw {
+    left: -20% !important;
+    top: initial !important;
+    bottom: 0px;
+}
+
+.iwTail div {
+    background-color: rgba(20, 68, 130, 0.8) !important;
+}
+.panel-default{
+    border: none;
+}
+
+@media screen and (max-width: 768px) {
+    .Location .LocationInfo {
+        position: relative;
+        width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .LocationInfo .panel {
+        border-radius: 0;
+    }
+
+    .gm-style-iw {
+        left: 15px !important;
+    }
+}
+
+@media (min-width: 2200px) {
+    #map {
+        min-height: 700px;
+    }
+}

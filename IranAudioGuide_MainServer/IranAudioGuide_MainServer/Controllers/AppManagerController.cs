@@ -40,9 +40,10 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                if (model.email == null || model.email == "")
-                    model.email = "_";
-                var url = dbTools.GetAudioUrl(model);
+                if (string.IsNullOrEmpty(model.email) ||(string.IsNullOrEmpty(model.uuid)))
+                    return new GetAudioUrlRes("", true);
+                var isAdmin = User.IsInRole("Admin");
+                var url = Services.ServiceDownload.GetUrl(model, isAdmin);
                 return new GetAudioUrlRes(url);
             }
             catch (Exception ex)
@@ -50,6 +51,20 @@ namespace IranAudioGuide_MainServer.Controllers
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
             }
+            //try
+            //{
+            //    if (model.email == null || model.email == "")
+            //        model.email = "_";
+            //    var url = dbtools.getaudiourl(model);
+            //    //string path = (model.isAudio) ? Services.GlobalPath.FullPathAudios : Services.GlobalPath.FullPathStory;
+            //    //string url = string.Format("{0}{1}.mp3", path, model.trackId);
+            //    //return new GetAudioUrlRes(url);
+            //}
+            //catch (Exception ex)
+            //{
+            //    ErrorSignal.FromCurrentContext().Raise(ex);
+            //    return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
+            //}
         }
         [HttpPost]
         public AutorizedCitiesVM GetAutorizedCities(GetAutorizedCitiesVM model)

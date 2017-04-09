@@ -560,11 +560,12 @@ namespace IranAudioGuide_MainServer.Models
     public class StoryVM
     {
         public string _imageUrl { get; set; }
-        public string Url
-        {
-            get { return _imageUrl; }
-            set { _imageUrl = GlobalPath.FullPathStory + value; }
-        }
+        //public string Url
+        //{
+        //    get { return _imageUrl; }
+        //    set { _imageUrl = GlobalPath.FullPathStory + value; }
+        //}
+        public string Url { get; set; }
         public int Index { get; set; }
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -601,11 +602,12 @@ namespace IranAudioGuide_MainServer.Models
         public Guid Aud_Id { get; set; }
         public string Aud_Name { get; set; }
         public string _imageUrl { get; set; }
-        public string Aud_Url
-        {
-            get { return _imageUrl; }
-            set { _imageUrl = GlobalPath.FullPathAudios + value; }
-        }
+        //public string Aud_Url
+        //{
+        //    get { return _imageUrl; }
+        //    set { _imageUrl = GlobalPath.FullPathAudios + value; }
+        //}
+        public string Aud_Url { get; set; }
         public string Aud_Discription { get; set; }
     }
     public class NewAudioVM

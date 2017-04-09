@@ -250,6 +250,7 @@
     <Compile Include="Models\AccountTools.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApiViewModels.cs" />
+    <Compile Include="Models\CompressAttribute.cs" />
     <Compile Include="Models\dbManager.cs" />
     <Compile Include="Models\dbTools.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
     <Compile Include="Services\GlobalPath.cs" />
+    <Compile Include="Services\ServiceDownload.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
     <Compile Include="Services\ServiceJob.cs" />
@@ -542,6 +544,7 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\fontawesome-webfont.svg" />
+    <Content Include="Content\css\HomeStyles.css" />
     <Content Include="Content\css\ie8.css" />
     <Content Include="Content\css\ie9.css" />
     <Content Include="Content\css\ionic.css" />
@@ -1513,12 +1516,14 @@
     <Content Include="Content\css\fontawesome-webfont.woff2" />
     <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="google60352dff0d3dbd69.html" />
+    <Content Include="images\marker.png" />
     <Content Include="images\v_blue_on_transp_en.png" />
     <Content Include="images\v_blue_on_white_en.png" />
     <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="robots.txt" />
     <Content Include="sitemap.xml" />
     <Content Include="Views\Shared\HtmlPage1.html" />
+    <Content Include="Views\Shared\HTMLPage3.html" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />

@@ -14,7 +14,17 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
               url: "/profile",
               //abstract: true,
               templateUrl: "/user/UserProfile",
-              controller: "userCtrl"
+              controller: "userCtrl",
+              //resolve: {
+              //    locale: ['$http', function ($http) {
+              //        return $http.get('/Areas/AdminPanel/Modules/locales/fa-ir.js');
+              //    }]
+              //},
+              //onEnter: 'localezationService', function (localezationService) {
+              //    console.log('onEnter');
+              //    localezationService.getLocale();
+                 
+              //},
           })
 
           .state('PackagesPurchased', {
@@ -52,7 +62,8 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
          })
     }])
 
-.run(function () {
-
-})
+.run(['localezationService', function (localezationService) {
+    localezationService.getLocale();
+    
+}])
 ;

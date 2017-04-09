@@ -1,4 +1,4 @@
-﻿userApp.service('dataServices', ['$http', '$q', function ($http, $q) {    
+﻿userApp.service('dataServices', ['$http', '$q', function ($http, $q) {
     this.login = function (url, data, config) {
         var deferred = $q.defer();
         $http.post(url, data, config).success(function (response) {
@@ -73,8 +73,8 @@ userApp.service('userServices', ['dataServices', function (dataServices) {
         return dataServices.get('/api/userApi/DeactivateMobile')
     }
     this.buyPakages = function (pak) {
-      
-        return dataServices.get('/Payment/PaymentWeb',pak);
+
+        return dataServices.get('/Payment/PaymentWeb', pak);
     }
 }]);
 userApp.service('notificService', [function () {
@@ -127,7 +127,7 @@ userApp.service('notificService', [function () {
         toastr.clear();
     }
 }]);
-userApp.filter('propsFilter',[ function () {
+userApp.filter('propsFilter', [function () {
     return function (items, props) {
         var out = [];
 
@@ -158,3 +158,59 @@ userApp.filter('propsFilter',[ function () {
         return out;
     };
 }]);
+userApp.factory('localezationService', ['dataServices', '$rootScope', '$timeout', function (dataServices, $rootScope, $timeout) {
+    that = this;
+    isSetCurrentLocale = false;
+    isCallSetCurrentLocale = 0;
+    currentLocale = null;
+    setCurrentLocale = function (localeId) {
+        try {
+            if (typeof localeId == 'undefined' || localeId == 'fa-ir')
+                dataServices.get('/Content/Scripts/locales/fa-ir.js').then(function (result) {
+                    currentLocale = result[0];
+                    isSetCurrentLocale = true;
+                    $rootScope.$broadcast('setLocale', currentLocale);
+                });
+        }
+        catch (e) {
+            console.log('error: dont add local , has this error:', e)
+        }
+    };
+    getLocale = function () {
+        if (isSetCurrentLocale)
+            return currentLocale;
+        else {
+            if (isCallSetCurrentLocale < 1) {
+                isCallSetCurrentLocale++;
+                setCurrentLocale();
+                $timeout(function () {
+                    getLocale();
+                }, 2000);
+            }
+            else
+                return null;
+        }
+        return null;
+    };
+    return {
+        getLocale: getLocale
+    }
+}]);
+userApp.filter('localezationFilter', function (locale) {
+    return function (input) {
+        if (input && locale.length != 0) {
+            parts = input.toLowerCase().split('.');
+            localizedString = locale[0];
+            for (_i = 0, _len = parts.length; _i < _len; _i++) {
+                var part = parts[_i];
+                localizedString = localizedString[part];
+                if (!localizedString) {
+                    break;
+                }
+            }
+            if (localizedString) {
+                return localizedString;
+            }
+        }
+    };
+});
