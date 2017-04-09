@@ -198,7 +198,8 @@ namespace IranAudioGuide_MainServer.Controllers
                         //uplaod file
                         var request = new ServiceFtp();
                         var fileName = Convert.ToString(Story.Sto_Id) + Path.GetExtension(model.StoryFile.FileName);
-                        var isSuccess = request.Upload(model.StoryFile, fileName, GlobalPath.FullPathStory);
+                        var fullPath = GlobalPath.FtpPrimaryPathStory + fileName;
+                        var isSuccess = request.Upload(model.StoryFile, fullPath);
 
                         //end upload file
                         Story.Sto_Url = fileName;
@@ -220,6 +221,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        //todo test
         public JsonResult DelStory(Guid Id)
         {
             using (var dbTran = db.Database.BeginTransaction())
@@ -239,9 +241,9 @@ namespace IranAudioGuide_MainServer.Controllers
                     var request = new ServiceFtp();
                     lock (DelAdo)
                     {
-                        if (request.IsDirectoryExist(fileName, GlobalPath.FullPathStory))
+                        if (request.IsDirectoryExist(fileName, GlobalPath.FtpPrimaryPathStory))
                         {
-                            request.delete(fileName, GlobalPath.FullPathStory);
+                            request.delete(fileName, GlobalPath.FtpPrimaryPathStory);
                         }
                     }
                     return Json(new Respond());
@@ -286,6 +288,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        //todo test
         public JsonResult AddAudio(NewAudioVM model)
         {
             if (!ModelState.IsValid)
@@ -316,15 +319,16 @@ namespace IranAudioGuide_MainServer.Controllers
                         //uplaod file
                         var request = new ServiceFtp();
                         var fileName = Convert.ToString(audio.Aud_Id) + Path.GetExtension(model.AudioFile.FileName);
-                        var isSuccess = request.Upload(model.AudioFile, fileName, GlobalPath.FullPathAudios);
+                        var fullpath = GlobalPath.FtpPrimaryPathAudios + fileName;
+                        var isSuccess = request.Upload(model.AudioFile, fullpath);
                         if (!isSuccess)
                         {
-                            request.createDirectory(GlobalPath.FullPathAudios);
+                            throw new Exception("admin cant Upload Audio file");
+                            //request.createDirectory(GlobalPath.FullPathAudios);
                         }
                         //end upload file
 
                         audio.Aud_Url = fileName;
-
                         UpdateLog(updatedTable.Audio, audio.Aud_Id);
                         db.SaveChanges();
                         dbTran.Commit();
@@ -363,9 +367,9 @@ namespace IranAudioGuide_MainServer.Controllers
                     var fileName = audio.Aud_Url;
                     lock (DelAdo)
                     {
-                        if (request.IsDirectoryExist(fileName, GlobalPath.FullPathAudios))
+                        if (request.IsDirectoryExist(fileName, GlobalPath.FtpPrimaryPathAudios))
                         {
-                            request.delete(fileName, GlobalPath.FullPathAudios);
+                            request.delete(fileName, GlobalPath.FtpPrimaryPathAudios);
                         }
                     }
 
@@ -434,7 +438,8 @@ namespace IranAudioGuide_MainServer.Controllers
                         UpdateLog(updatedTable.Place, place.Pla_Id);
                         db.SaveChanges();
                         dbTran.Commit();
-                        var isSuccess = request.Upload(model.Image, fileName, GlobalPath.FullPathImagePlace);
+                        var fullpath =GlobalPath.FullPathImagePlace +fileName;
+                        var isSuccess = request.Upload(model.Image, fullpath );
                         if (!isSuccess)
                             throw new ArgumentException("Dont save image in Server", "original");
 
@@ -703,14 +708,12 @@ namespace IranAudioGuide_MainServer.Controllers
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.FullPathImageTumbnail);
+                    var fullpaht = GlobalPath.FullPathImageTumbnail + fileName;
+                    var isSuccess = request.Upload(model.NewImage, fullpaht);
                     if (!isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
 
                 }
-
-
-
                 return Json(new Respond());
             }
             catch (Exception ex)
@@ -762,7 +765,8 @@ namespace IranAudioGuide_MainServer.Controllers
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.FullPathImagePlace);
+                    var fullpath = GlobalPath.FullPathImagePlace + fileName;
+                    var isSuccess = request.Upload(model.NewImage, fullpath);
                     if (isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
 
@@ -804,7 +808,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     //uplaod file
                     var request = new ServiceFtp();
                     var fileName = Convert.ToString(img.Img_Id) + Path.GetExtension(model.NewImage.FileName);
-                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.FullPathImageExtras);
+                    var fullpaht = GlobalPath.FullPathImageExtras + fileName;
+                    var isSuccess = request.Upload(model.NewImage, fullpaht);
                     //end upload file
 
                     img.Img_Name = fileName;
@@ -921,7 +926,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     //uplaod file
                     var request = new ServiceFtp();
                     var fileName = Convert.ToString(city.Cit_Id) + Path.GetExtension(model.CityImage.FileName);
-                    var isSuccess = request.Upload(model.CityImage, fileName, GlobalPath.FullPathImageCity);
+                    var fullpath = GlobalPath.FullPathImageCity + fileName;
+                    var isSuccess = request.Upload(model.CityImage, fullpath);
                     //end upload file
 
                     city.Cit_ImageUrl = fileName;
@@ -1017,8 +1023,8 @@ namespace IranAudioGuide_MainServer.Controllers
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-
-                    var isSuccess = request.Upload(model.NewImage, fileName, GlobalPath.FullPathImageCity);
+                    var fullpath = GlobalPath.FullPathImageCity + fileName;
+                    var isSuccess = request.Upload(model.NewImage, fullpath);
                     if (isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
                 }
