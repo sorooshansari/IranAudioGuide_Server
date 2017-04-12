@@ -1037,3 +1037,39 @@ ul.actions {
     color: #fff !important;
 }
 
+
+@media (max-width:426px)and (min-width: 319px) {
+    #wmcheck {
+        position: relative !important;
+    }
+
+    #awi {
+        position: relative !important;
+    }
+
+
+    #PurchacebtnBlock {
+        text-align: center !important;
+        padding: 0;
+    }
+
+    #PriceLabel {
+        /*font-size: small !important;
+        padding: 5px !important;
+        border-radius: 5px !important;*/
+            color: white;
+    font-size: large;
+    font-weight: 600;
+    padding: 8px 50px;
+    border-radius: 7px;
+    background: #F44336;
+    box-shadow: 3px 3px 8px black;
+    text-shadow: 1px 1px 2px black;
+    }
+
+    .purchasebtn {
+        width: 130px !important;
+        border-bottom:0.8px solid rgb(204, 204, 204) !important;
+    }
+}
+
