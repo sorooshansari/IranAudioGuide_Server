@@ -20,6 +20,10 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class AppPaymentReqVM
     {
+        public AppPaymentReqVM()
+        {
+            IsChooesZarinpal = true;
+        }
         public string email { get; set; }
         public string uuid { get; set; }
         public Guid packageId { get; set; }
