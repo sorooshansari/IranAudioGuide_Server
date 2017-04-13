@@ -53,7 +53,7 @@
     border-bottom-right-radius: 15px;
     min-height: 65vh;
     margin-top: 20px;
-    /*margin-bottom: 30px;*/
+    margin-bottom: 25px;
     padding: 10px;
     }
 
@@ -209,7 +209,7 @@ text-align: center;
         }
             .icons li
             {
-                padding:0 !important;
+                    padding: 0 1em 0 0 !important;
             }
 </style>
 
@@ -257,17 +257,19 @@ text-align: center;
 
                 </tr>
                 <tr>
-                    <td class="_2ndtd" style="color:white; font-size:small; font-weight:300; vertical-align:middle;">
-                        @if (ViewBag.IsChooesZarinpal)
-                        {
-                            <img style="width:35%;" src="~/images/icon-128x128.png" />
+    @if (ViewBag.IsChooesZarinpal)
+    {
+    <td class="_2ndtd" style="color:white; font-size:small; background-color:#fdcf41; font-weight:300; vertical-align:middle;">
+        <img style="width:35%;" src="~/images/icon-128x128.png" />
+        </td>
+    }
+    else
+    {
+        <td class="_2ndtd" style="color:white; font-size:small;  background-color:#006dae; font-weight:300; vertical-align:middle;">
+            <img style="width:90%;" src="~/images/WebMoney-logo-white_8.png" />
+        </td>
+    }
 
-                        }
-                        else
-                        {
-                            <img style="width:90%;" src="~/images/wmlogo_vector_blue.png" />
-                        }
-                    </td>
                     <td class="_2ndtd" style="color:white; font-size:small; font-weight:300; vertical-align:middle;">
                         <div class="col-xs-12" style="text-align:center; padding:0;">
                             @if (ViewBag.IsChooesZarinpal)
@@ -279,9 +281,6 @@ text-align: center;
                             else
                             {
                                 <ul class="icons" style="margin:0;">
-                                    <li>
-                                        <a href="#" style="margin:5px 0px; border-bottom: 0.8px solid white; background-color:transparent; color:whitesmoke; font-size:10px;" type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#howto">How to pay</a>
-                                    </li>
                                     <li>
                                         <a href="#" style="margin:5px 0px; border-bottom: 0.8px solid white; background-color:transparent; color:whitesmoke; font-size:10px;" type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#procedure">Payment procedure</a>
                                     </li>
