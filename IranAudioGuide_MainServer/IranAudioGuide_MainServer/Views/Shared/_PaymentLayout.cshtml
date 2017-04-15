@@ -52,39 +52,41 @@
 
         @RenderBody()
 
+        <footer id="footer">
 
+            <ul class="icons">
+                <li>
+                    <a target="_blank" href="https://www.twitter.com/iranaudioguide" class="icon fa-twitter tooltips"><span>Twitter</span></a>
+                </li>
+                <li>
+                    <a target="_blank" href="https://www.facebook.com/iranaudioguide" class="icon fa-facebook tooltips"><span>Facebook</span></a>
+                </li>
+                <li>
+                    <a target="_blank" href="https://www.instagram.com/iran.audio.guide/" class="icon fa-instagram tooltips"><span>Instagram</span></a>
+                </li>
+                <li>
+                    <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram tooltips"><span>Telegram</span></a>
+                </li>
+                <li>
+                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"><span>Email</span></a>
+                </li>
+            </ul>
+            <ul id="copyright" class="copyright">
+                <li><a href="#">Terms &amp; Conditions</a></li>
+                <li><a href="#">Privacy &amp; Policy</a></li>
+            </ul>
+
+            <ul id="copyright" class="copyright">
+                <li>©@DateTime.Now.Year - Soroosh Developer Team</li>
+                <li>Developer: <a rel="author" href="https://plus.google.com/112268338441138496929">Soroosh Ansari Mehr</a></li>
+            </ul>
+
+           
+        </footer>
     </div>
-    <footer id="footer">
+   
 
-        <ul class="icons">
-            <li>
-                <a target="_blank" href="https://www.twitter.com/iranaudioguide"
-                   class="icon fa-twitter tooltips"><span>Twitter</span></a>
-            </li>
-            <li>
-                <a target="_blank" href="https://www.facebook.com/iranaudioguide"
-                   class="icon fa-facebook tooltips"><span>Facebook</span></a>
-            </li>
-            <li>
-                <a target="_blank" href="https://www.instagram.com/iran.audio.guide/"
-                   class="icon fa-instagram tooltips"><span>Instagram</span></a>
-            </li>
-            <li>
-                <a target="_blank" href="https://www.telegram.me/iranaudioguide"
-                   class="icon fa-telegram tooltips"><span>Telegram</span></a>
-            </li>
-            <li>
-                <a href="mailto:info@iranaudioguide.com"
-                   class="icon fa-envelope-o tooltips"><span>Email</span></a>
-            </li>
-        </ul>
-        <ul id="copyright" class="copyright">
-            <li>©@DateTime.Now.Year - Soroosh Developer Team</li>
-            <li>Developer: <a rel="author" href="https://plus.google.com/112268338441138496929">Soroosh Ansari Mehr</a></li>
-        </ul>
-    </footer>
-
-    @Scripts.Render("~/bundles/paymentJs");
+    @Scripts.Render("~/bundles/paymentJs")
 
     @*<script src="~/Content/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Content/Scripts/bootstrap.min.js"></script>*@
