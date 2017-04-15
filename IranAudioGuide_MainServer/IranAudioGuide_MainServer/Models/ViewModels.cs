@@ -159,6 +159,11 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class IPData
     {
+        public IPData()
+        {
+            countryCode = "FErr";
+
+        }
         public string status { get; set; }
         public string country { get; set; }
         public string countryCode { get; set; }
@@ -367,7 +372,6 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class UserInfo
     {
-
         public string FullName { get; set; }
         public string Email { get; set; }
         public string imgUrl { get; set; }

@@ -42,13 +42,20 @@
         <div id="sidebar-wrapper">
             <div class="logo">
                 @*// class="sidebar-brand">*@
-                <a href="http://iranaudioguide.com/">
+                <a id="IAGLink" href="http://iranaudioguide.com/">
                     <img src="/images/IAGSITELOGO.png">
+                    <div id="IAGTextLink">Iran Audio Guide</div>
                 </a>
             </div>
+            <div style="background-color: #001644;min-height: 145px;border-top-right-radius: 10px; width:245px; box-shadow: 1px 5px 5px black;">
             <div class="userEmail">
+                    <div>
+                        <img src="{{user.uImageUrl}}">
                 <span>{{user.FullName}}</span>
             </div>
+                </div>
+            </div>
+
             <ul class="sidebar-nav">
                 <li>
                     <a href="http://iranaudioguide.com/">
@@ -94,7 +101,10 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                                            @RenderBody()
+                    <div class="col-xs-12" id="PkgContainer">
+
+
+                        @RenderBody()
                     </div>
                 </div>
             </div>

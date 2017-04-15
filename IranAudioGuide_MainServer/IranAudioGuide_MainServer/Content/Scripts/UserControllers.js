@@ -33,7 +33,7 @@ userApp.service('fileUpload', ['$http', function ($http) {
 
 userApp.controller('userCtrl', ['localezationService', '$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
     function (localezationService, $window, $scope, userServices, $timeout, notific, $http, $state) {
-
+        
         //$scope.$on('setLocale', function (data) {
         //    console.log(localezationService.currentLocale);
         //    console.log(data);
@@ -69,8 +69,14 @@ userApp.controller('userCtrl', ['localezationService', '$window', '$scope', 'use
             $window.location.href = 'http://iranaudioguide.com';
         }
         userServices.getUser().then(function (data) {
+            
             $scope.user = data;
-            $scope.user.FullName = data.Email
+            $scope.user.FullName = data.Email;
+            if(data.ImgUrl == null)
+            {
+                data.ImgUrl = "../images/defProfilewsf.png";
+            }
+            $scope.user.uImageUrl = data.ImgUrl;
             if (data.FullName !== null)
                 $scope.user.FullName = data.FullName
             $scope.user.isAutintication = true;
@@ -135,7 +141,7 @@ userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeou
         $scope.isChooesZarinpal = isChooesZarinpal;
     }
     $('#myModal').on('hidden.bs.modal', function (e) {
-        $state.go('Payment', {
+         $state.go('Payment', {
             PackageId: $scope.pak.PackageId,
             IsChooesZarinpal: $scope.isChooesZarinpal
         });
@@ -352,5 +358,5 @@ userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout',
     });
 }]);
 userApp.controller('paymentCtrl', ['$scope', function ($scope) {
-    $scope.profile.isCompletedLoading = false;
+     $scope.profile.isCompletedLoading = false;
 }]);

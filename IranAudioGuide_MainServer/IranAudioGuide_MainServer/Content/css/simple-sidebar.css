@@ -1,45 +1,11 @@
-@font-face {
-    font-family: 'DomaineText';
-    font-weight: normal;
-    font-style: normal;
-    src: url("/fonts/DomaineTextWeb-Regular.woff2") format("woff2"),url("/fonts/DomaineTextWeb-Regular.woff") format("woff");
-}
-
-@font-face {
-    font-family: 'DomaineText';
-    font-weight: normal;
-    font-style: italic;
-    src: url("/fonts/DomaineTextWeb-RegularItalic.woff2") format("woff2"),url("/fonts/DomaineTextWeb-RegularItalic.woff") format("woff");
-}
-
-@font-face {
-    font-family: 'DomaineText';
-    font-weight: bold;
-    font-style: normal;
-    src: url("/fonts/DomaineTextWeb-Bold.woff2") format("woff2"),url("/fonts/DomaineTextWeb-Bold.woff") format("woff");
-}
-
-@font-face {
-    font-family: 'DomaineText';
-    font-weight: bold;
-    font-style: italic;
-    src: url("/fonts/DomaineTextWeb-BoldItalic.woff2") format("woff2"),url("/fonts/DomaineTextWeb-BoldItalic.woff") format("woff");
-}
-
-@font-face {
-    font-family: 'DomaineDisplayNarrow';
-    font-weight: bold;
-    font-style: normal;
-    src: url("/fonts/DomaineDisplayNarrowWeb-Semibold.woff2") format("woff2"),url("/fonts/DomaineDisplayNarrowWeb-Semibold.woff") format("woff");
-}
-
 body {
     overflow-x: hidden;
     -webkit-text-size-adjust: none;
-    background-image: -ms-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url('/images/banner.jpg');
+    /*background-image: -ms-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url('/images/banner.jpg');
     background-image: -moz-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url('/images/banner.jpg');
     background-image: -webkit-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url('/images/banner.jpg');
-    background-image: -o-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url('/images/banner.jpg');
+    background-image: -o-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url('/images/banner.jpg');*/
+    background-color: rgb(223, 223, 223) !important;
     color: #fff;
     font-family: "Open Sans",Helvetica,sans-serif;
     font-size: 15pt;
@@ -70,16 +36,20 @@ body {
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
+    /* bottom: 0px; */
     left: 250px;
     width: 0;
     height: 100%;
     margin-left: -250px;
-    overflow-y: auto;
-    background: #15437f; /*//url('images/pattern.png')*/
+    overflow-y: hidden;
+    overflow-x: auto;
+    background: #dfdfdf;
+    /* border-top-right-radius: 10px; */
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    /* box-shadow: 1px 0px 10px black; */
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -99,39 +69,75 @@ body {
 
 /* Sidebar Styles */
 
-.logo:hover {
-    background-color: #15437f;
+/*.logo:hover {
+    background-color: #001644;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}*/
+.logo:hover #IAGLink{
+    text-shadow: 0px 0px 10px white;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
-
 .logo {
-    height: 100px;
-    /* border:1px solid red; */
+    position: relative;
+    /* top: -150px; */
+    height: 150px;
+    /* border: 1px solid red; */
     text-align: center;
     padding: 0;
-    background-color: rgb(20, 68, 130);
+    background-color: rgb(223, 223, 223);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    width: 245px;
 }
 
 .sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 250px;
+    position: relative;
+    top: 0px;
+    width: 245px;
     margin: 0;
     padding: 0;
     list-style: none;
-    margin-top: 136px;
+    /* margin-top: 136px; */
+    background-color: #001644;
+    height: 70%;
+    box-shadow: 1px 5px 5px black;
 }
 
 
 .logo img {
-    height: 93px;
+    height: 95px;
+}
+
+#IAGLink {
+    color:#fff;
+    text-decoration:none;
+        -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#IAGTextLink {
+color: #144482;
+    margin-top: 20px;
+    font-weight: 400;
+    text-shadow: 1px 1px 4px #6b6b6b;
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
+    text-indent: 10px;
     line-height: 40px;
-    border-bottom: 1px dotted #091c2d;
     font-size: 15px;
     text-align: left;
+
 }
 
     .sidebar-nav li a {
@@ -139,18 +145,27 @@ body {
         text-decoration: none;
         color: rgb(210, 197, 197);
         /*font-family: 'DomaineText';*/
-        font-family: "DomaineDisplayNarrow",Georgia,serif;
-        font-size: 18px;
+        font-family: Raleway;
+        font-size: 16px;
+        text-shadow: 1px 1px 1px black;
+        font-weight: 400;
         letter-spacing: 0;
         text-transform: none;
         color: #ddd;
+        border-bottom: 1px solid #19304c;
+        width: 90%;
+        margin: 0 auto;
     }
-
-        .sidebar-nav li a:hover {
+    .sidebar-nav li:hover{
+            text-decoration: none;
+    color: rgba(255, 255, 255, 0.82);
+    background: rgba(51, 122, 183, 0.44);
+    }
+        /*.sidebar-nav li a:hover {
             text-decoration: none;
             color: rgba(255, 255, 255, 0.82);
             background: rgba(51, 122, 183, 0.44);
-        }
+        }*/
 
         .sidebar-nav li a:active,
         .sidebar-nav li a:focus {
@@ -206,27 +221,29 @@ body {
 
   
     #page-content-wrapper {
-        background-image: -ms-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
+        /*background-image: -ms-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
         background-image: -moz-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
         background-image: -webkit-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
         background-image: -o-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
-        background-size: cover;
+        background-size: cover;*/
         padding-top:30px;
     }
 }
 
 @media screen and (max-width: 760px) {  
     #page-content-wrapper { 
-        padding-top:44px;
+        padding-top:60px;
     }
 }
 /********* end menu right ***************************
 *****************************************************/
 .menu-username {
-    margin: 0;
+margin: 0;
     padding: 0;
-    font-weight: bold;
-    font-size: 12px;
+    font-weight: 500;
+    font-size: 14px;
     letter-spacing: 0;
-    color: #FFF;
+    color: #001644;
+    left: 5px;
+    position: relative;
 }
