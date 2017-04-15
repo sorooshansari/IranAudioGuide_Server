@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnBuy" xml:space="preserve">
+    <value>خرید</value>
+  </data>
+  <data name="btnPurchased" xml:space="preserve">
+    <value>خریداری شده</value>
+  </data>
+  <data name="btnSubmit" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="IndexBtnLearnMore" xml:space="preserve">
+    <value>بیشتر بدانید</value>
+  </data>
+  <data name="IndexTitle" xml:space="preserve">
+    <value>تنها راهنمای مورد نیاز در ایران</value>
+  </data>
+  <data name="IndexTitle02" xml:space="preserve">
+    <value>بهینه, کامل, liberating</value>
+  </data>
+  <data name="IranAudioGuide" xml:space="preserve">
+    <value>راهنمای صوتی ایران</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>انگلیسی</value>
+  </data>
+  <data name="MenuContactUs" xml:space="preserve">
+    <value>تماس با ما</value>
+  </data>
+  <data name="MenuLogin" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="MenuLogout" xml:space="preserve">
+    <value>خروج</value>
+  </data>
+  <data name="MenuName" xml:space="preserve">
+    <value>منو</value>
+  </data>
+  <data name="MenuProfile" xml:space="preserve">
+    <value>پروفایل</value>
+  </data>
+  <data name="Mona" xml:space="preserve">
+    <value>منا اخلاقی</value>
+  </data>
+  <data name="PageError0" xml:space="preserve">
+    <value>خطا 404</value>
+  </data>
+  <data name="PageError1" xml:space="preserve">
+    <value>با عرض پوزش سایت درخواستی یافت نشد </value>
+  </data>
+  <data name="PageError2" xml:space="preserve">
+    <value>اینجا چه می کنید؟</value>
+  </data>
+  <data name="PageError3" xml:space="preserve">
+    <value>بازگشت به صفحه اصلی سایت</value>
+  </data>
+  <data name="PageProfile" xml:space="preserve">
+    <value>صفحه اصلی </value>
+  </data>
+  <data name="PageProfile1" xml:space="preserve">
+    <value>بسته ها</value>
+  </data>
+  <data name="PageProfile10" xml:space="preserve">
+    <value>خریداری شده</value>
+  </data>
+  <data name="PageProfile11" xml:space="preserve">
+    <value>دستگاه ها</value>
+  </data>
+  <data name="PageProfile12" xml:space="preserve">
+    <value>خروج </value>
+  </data>
+  <data name="PageProfile13" xml:space="preserve">
+    <value>با فشار دادن</value>
+  </data>
+  <data name="PageProfile14" xml:space="preserve">
+    <value>غیر فعال کردن دستگاه های قبلی</value>
+  </data>
+  <data name="PageProfile15" xml:space="preserve">
+    <value>button you can deactivate your old device (your smart phone or tablet).</value>
+  </data>
+  <data name="PageProfile16" xml:space="preserve">
+    <value>Then sign in with the device you intend to use to set the device and gain access to your packages.</value>
+  </data>
+  <data name="PageProfile17" xml:space="preserve">
+    <value>Remmember!</value>
+  </data>
+  <data name="PageProfile18" xml:space="preserve">
+    <value>This is only possible every 6 months once.</value>
+  </data>
+  <data name="PageProfile19" xml:space="preserve">
+    <value>Deactivate Old Device</value>
+  </data>
+  <data name="PageProfile2" xml:space="preserve">
+    <value>You have not set any devices to your account yet.</value>
+  </data>
+  <data name="PageProfile20" xml:space="preserve">
+    <value>Not Confirmed yet!</value>
+  </data>
+  <data name="PageProfile21" xml:space="preserve">
+    <value>Please check your Email.</value>
+  </data>
+  <data name="PageProfile22" xml:space="preserve">
+    <value>if you have not received the confirmation email yet, click</value>
+  </data>
+  <data name="PageProfile23" xml:space="preserve">
+    <value>Pay with international cards</value>
+  </data>
+  <data name="PageProfile24" xml:space="preserve">
+    <value>Pay with Iranian bank cards</value>
+  </data>
+  <data name="PageProfile25" xml:space="preserve">
+    <value>No Purchesed Pakages</value>
+  </data>
+  <data name="PageProfile26" xml:space="preserve">
+    <value>to send you another Email</value>
+  </data>
+  <data name="PageProfile27" xml:space="preserve">
+    <value>here</value>
+  </data>
+  <data name="Parameter01" xml:space="preserve">
+    <value>Liberating you to visit attractions with your own pace</value>
+  </data>
+  <data name="Parameter02" xml:space="preserve">
+    <value>No worries about being late or missing the explanations,take your time and wonder, take photos, ...</value>
+  </data>
+  <data name="Parameter10" xml:space="preserve">
+    <value>Where ever, when ever, which ever, how ever</value>
+  </data>
+  <data name="Parameter11" xml:space="preserve">
+    <value>While walking, sitting, photographing. In the hotel, on the way, in the plane, on the bus. In the morning, at night, in any hour you choose this guide will narrate what ever you feel like listening too.Pause the tracks, listen later. Just be sure to truly discover Iran with Iran audio guide.</value>
+  </data>
+  <data name="Parameter12" xml:space="preserve">
+    <value>Visiting tips</value>
+  </data>
+  <data name="Parameter13" xml:space="preserve">
+    <value>Iran audio guide will provide you with tips for visiting every attraction, maps and all you need to know about modern Iran</value>
+  </data>
+  <data name="Parameter14" xml:space="preserve">
+    <value>Attraction guide</value>
+  </data>
+  <data name="Parameter15" xml:space="preserve">
+    <value>Iran audio guide will guide you step by step in every attraction. Advising you at what to look at and details not to miss</value>
+  </data>
+  <data name="Parameter16" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="Parameter17" xml:space="preserve">
+    <value>Iran audio guide tell you Iran’s millenniums of history, historic stories, wars, victories and envasions</value>
+  </data>
+  <data name="Parameter18" xml:space="preserve">
+    <value>Significant figures</value>
+  </data>
+  <data name="Parameter19" xml:space="preserve">
+    <value>Iran audio guide will open up the story and achievements of Kings, poets, scientist and other significant people for you</value>
+  </data>
+  <data name="Parameter2" xml:space="preserve">
+    <value>Persian stories</value>
+  </data>
+  <data name="Parameter20" xml:space="preserve">
+    <value>Iran audio guide allows you to listen to famous persian myth tails, the great love stories, even the historic gossips, scandals of Persia</value>
+  </data>
+  <data name="Parameter21" xml:space="preserve">
+    <value>Art &amp;amp; Architecture</value>
+  </data>
+  <data name="Parameter22" xml:space="preserve">
+    <value>Iran audio guide will explain the unique techniques and methods of Iranian architecture and crafts with images</value>
+  </data>
+  <data name="Parameter23" xml:space="preserve">
+    <value>Who we are?</value>
+  </data>
+  <data name="Parameter24" xml:space="preserve">
+    <value>Hi! We are Mona Akhlaghi and Soroosh Ansari Mehr, two individuals with a passion for creativity — creativity makes us happy. We truly believe in the transformative power of illustration and design and their ability to simplify communications</value>
+  </data>
+  <data name="Parameter25" xml:space="preserve">
+    <value>Mona Akhlaghi</value>
+  </data>
+  <data name="Parameter26" xml:space="preserve">
+    <value>Cras sit amet nibh libero</value>
+  </data>
+  <data name="Parameter27" xml:space="preserve">
+    <value>Soroosh Ansari Mehr</value>
+  </data>
+  <data name="Parameter28" xml:space="preserve">
+    <value>Cras sit amet nibh libero</value>
+  </data>
+  <data name="Parameter29" xml:space="preserve">
+    <value>Feel free to Contact us...</value>
+  </data>
+  <data name="Parameter3" xml:space="preserve">
+    <value>Association Form</value>
+  </data>
+  <data name="Parameter30" xml:space="preserve">
+    <value>You've successfully authenticated with</value>
+  </data>
+  <data name="Parameter31" xml:space="preserve">
+    <value>Please enter a user name for this site below and click the Register button to finish
+        logging in.</value>
+  </data>
+  <data name="Parameter32" xml:space="preserve">
+    <value>Use social services to log in.</value>
+  </data>
+  <data name="Parameter33" xml:space="preserve">
+    <value>There are no external authentication services configured.</value>
+  </data>
+  <data name="Parameter34" xml:space="preserve">
+    <value>Sign in with</value>
+  </data>
+  <data name="Parameter35" xml:space="preserve">
+    <value>Log in using your</value>
+  </data>
+  <data name="Parameter36" xml:space="preserve">
+    <value>account</value>
+  </data>
+  <data name="Parameter37" xml:space="preserve">
+    <value>Thank you for confirming your email. Please{0}</value>
+  </data>
+  <data name="Parameter38" xml:space="preserve">
+    <value>Click here to Log in</value>
+  </data>
+  <data name="Parameter39" xml:space="preserve">
+    <value>Unsuccessful login with service.</value>
+  </data>
+  <data name="Parameter4" xml:space="preserve">
+    <value>Enter your email.</value>
+  </data>
+  <data name="Parameter40" xml:space="preserve">
+    <value>Email Link</value>
+  </data>
+  <data name="Parameter41" xml:space="preserve">
+    <value>Please check your email to reset your password.</value>
+  </data>
+  <data name="Parameter42" xml:space="preserve">
+    <value>Use your Login Credentials to access your profile.</value>
+  </data>
+  <data name="Parameter43" xml:space="preserve">
+    <value>Join us!</value>
+  </data>
+  <data name="Parameter44" xml:space="preserve">
+    <value>It only takes a minute!</value>
+  </data>
+  <data name="Parameter45" xml:space="preserve">
+    <value>By registering you will access to all Iran Audio Guide has to offer. Hopefully you will soon agree that its quite worth while</value>
+  </data>
+  <data name="Parameter46" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Parameter47" xml:space="preserve">
+    <value>Already have an account?</value>
+  </data>
+  <data name="Parameter48" xml:space="preserve">
+    <value>Your password has been reset. Please</value>
+  </data>
+  <data name="Parameter49" xml:space="preserve">
+    <value>Send verification code</value>
+  </data>
+  <data name="Parameter5" xml:space="preserve">
+    <value>Select Two-Factor Authentication Provider:</value>
+  </data>
+  <data name="Parameter50" xml:space="preserve">
+    <value>Locked out.</value>
+  </data>
+  <data name="Parameter51" xml:space="preserve">
+    <value>This account has been locked out, please try again later.</value>
+  </data>
+  <data name="PlaceholderConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="PlaceholderEmail" xml:space="preserve">
+    <value>Email address</value>
+  </data>
+  <data name="PlaceholderMessage" xml:space="preserve">
+    <value>Your Message...</value>
+  </data>
+  <data name="PlaceholderName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PlaceholderPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PlaceholderSubject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="SectionOneH2" xml:space="preserve">
+    <value>Don’t just walk through  Iran, learn the history, hear the stories, feel the culture, ...</value>
+  </data>
+  <data name="SectionOneMessage" xml:space="preserve">
+    <value>It's so close to release.&lt;br /&gt;
+            We will notify you when we release.</value>
+  </data>
+  <data name="SectionOneP" xml:space="preserve">
+    <value>Download Iran Audio Guide application for free and see for yourself&lt;br /&gt;</value>
+  </data>
+  <data name="SectionTwoContentH2" xml:space="preserve">
+    <value>Providing you with accurate information</value>
+  </data>
+  <data name="SectionTwoContentP" xml:space="preserve">
+    <value>To guide you through the discovery of Iran and all its millenniums of history</value>
+  </data>
+  <data name="Soroosh" xml:space="preserve">
+    <value>Soroosh Ansari Mehr</value>
+  </data>
+  <data name="SpotlightContentH2" xml:space="preserve">
+    <value>Choose what to listen to</value>
+  </data>
+  <data name="SpotlightContentP" xml:space="preserve">
+    <value>Listen to the tracks your interested in, choose among all the content available</value>
+  </data>
+  <data name="IndexTitle01" xml:space="preserve">
+    <value>تنها راهنمای مورد نیاز در ایران</value>
+  </data>
+  <data name="TitlePageConfirmEmail" xml:space="preserve">
+    <value>Confirm Email</value>
+  </data>
+  <data name="TitlePageForgot" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="TitlePageForgotConfirmation" xml:space="preserve">
+    <value>Forgot Password Confirmation</value>
+  </data>
+  <data name="TitlePageLogIn" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="TitlePageLoginFailure" xml:space="preserve">
+    <value>Login Failure</value>
+  </data>
+  <data name="TitlePageRegister" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="TitlePageSendCode" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="alt" xml:space="preserve">
+    <value>در اپ استور دانلود کنید</value>
+  </data>
+  <data name="alt1" xml:space="preserve">
+    <value>در گوگل پلی دانلود کنید</value>
+  </data>
+  <data name="alt2" xml:space="preserve">
+    <value>اطلاعات دقیق در مورد ایران</value>
+  </data>
+  <data name="alt3" xml:space="preserve">
+    <value>مباحث مورد علاقه خود را انتخاب کنید</value>
+  </data>
+  <data name="alt4" xml:space="preserve">
+    <value>زمان بادید از اماکن را خود تعیین کنید</value>
+  </data>
+  <data name="ServerDeactivateMobile" xml:space="preserve">
+    <value>you have successfully deactivated your device. the next device you sign in with, will become your active device.</value>
+  </data>
+  <data name="ServerEmailSending" xml:space="preserve">
+    <value>Thanks! Your message sent successfully!.</value>
+  </data>
+  <data name="ServerEmailErrorSending" xml:space="preserve">
+    <value>Email sending failed</value>
+  </data>
+  <data name="ServerConfirmMessage" xml:space="preserve">
+    <value>Please confirm your account by clicking &lt;a href='{0} '&gt;here&lt;/a&gt;</value>
+  </data>
+  <data name="ServerConfirmTitel" xml:space="preserve">
+    <value>Confirm your account</value>
+  </data>
+  <data name="ServerContactEmail" xml:space="preserve">
+    <value>Check input fields</value>
+  </data>
+  <data name="ServerDeactivateMobileInavlid" xml:space="preserve">
+    <value>You should expect to wait up to {0} days</value>
+  </data>
+  <data name="ServerEmailConfirmation" xml:space="preserve">
+    <value>Email Confirmation</value>
+  </data>
+  <data name="ServerEmailConfirmationMessage2" xml:space="preserve">
+    <value>Try to send another confirmation email through your profile page. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+  </data>
+  <data name="ServerEmailConfirmationSucceeded" xml:space="preserve">
+    <value>Thank you for confirming your email. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+  </data>
+  <data name="ServerErrorConfirmSubject" xml:space="preserve">
+    <value>Confirmation Failed!</value>
+  </data>
+  <data name="ServerErrorInvalidUsernameOrPassword" xml:space="preserve">
+    <value>Invalid username or password</value>
+  </data>
+  <data name="ServerErrorUnknown" xml:space="preserve">
+    <value>Unknown Error</value>
+  </data>
+  <data name="ServerForgotPassword" xml:space="preserve">
+    <value>Forgot Password</value>
+  </data>
+  <data name="ServerForgotPasswordMessage" xml:space="preserve">
+    <value>Please check your email to reset your password. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+  </data>
+  <data name="ServerInvalidCode" xml:space="preserve">
+    <value>Invalid code</value>
+  </data>
+  <data name="ServerInvalidLoginAttempt" xml:space="preserve">
+    <value>Invalid login attempt</value>
+  </data>
+  <data name="ServerLockout" xml:space="preserve">
+    <value>Lockout</value>
+  </data>
+  <data name="ServerPasswordChanged" xml:space="preserve">
+    <value>Password changed</value>
+  </data>
+  <data name="ServerPasswordChangedMessage" xml:space="preserve">
+    <value>Your password has been changed. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+  </data>
+  <data name="ServerResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="ServerResetPasswordMessage" xml:space="preserve">
+    <value>Please reset your password by clicking &lt;a href='{0}'&gt;here&lt;/a&gt;</value>
+  </data>
+  <data name="ServerResetPasswordMessage2" xml:space="preserve">
+    <value>We sent a reset password link to &lt;strong style='color:red;'&gt;{1}&lt;/strong&gt; &lt;br /&gt; didn't receive email? &lt;a href={0}&gt;Resend&lt;/a&gt;</value>
+  </data>
+  <data name="ServerEmailConfirmationMessage" xml:space="preserve">
+    <value>Please Check your email</value>
+  </data>
+  <data name="ServerEmailSendingSuccess" xml:space="preserve">
+    <value>Thanks!  sent successfully!. Please Check your email</value>
+  </data>
+</root>

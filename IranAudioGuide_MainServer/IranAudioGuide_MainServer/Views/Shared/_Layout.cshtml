@@ -12,7 +12,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
+<html lang="@Global.Lang" xmlns:fb="http://ogp.me/ns/fb#">
 <head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
     <meta name="title" content="Best audio guide application for Iran travel" />
     <meta name="Description"
@@ -56,6 +56,19 @@
             }()); _vwo_settings_timer = _vwo_code.init();
         </script>*@
     <!-- End Visual Website Optimizer Asynchronous Code -->
+    <style>
+        header#header .language {
+            position: relative;
+            /* margin: 20px; */
+            left: 2%;
+            top: 20px;
+            width: auto;
+        }
+
+            header#header .language img {
+                width: 20px;
+            }
+    </style>
 </head>
 <body class="landing @Global.Lang" ng-app="HomePage" ng-controller="HomeController">
     <!-- Page Wrapper -->
@@ -63,9 +76,12 @@
         <!-- Header -->
         <header id="header" class="alt">
             <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
-           
+            <div class="language">
+
+                <img src="~/Content/images/flag-uk.png" /> EN
+            </div>
             <nav id="nav">
-               
+
                 <ul>
                     <li class="special">
                         <a href="#menu" class="menuToggle"><span>@Global.MenuName</span></a>
