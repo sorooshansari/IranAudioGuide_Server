@@ -55,7 +55,7 @@ userApp.service('userServices', ['dataServices', function (dataServices) {
     }
     this.packages = [];
     this.sendEmailConfirmedAgain = function () {
-        return dataServices.get('/Account/SendEmailConfirmedAgain');
+        return dataServices.post('/Account/SendEmailConfirmedAgain');
     }
     this.getUser = function () {
         return dataServices.post('/api/userApi/GetCurrentUserInfo');

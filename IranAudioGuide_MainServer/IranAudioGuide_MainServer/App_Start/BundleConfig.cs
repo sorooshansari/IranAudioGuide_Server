@@ -17,7 +17,14 @@ namespace IranAudioGuide_MainServer
                             "~/Content/css/profile.css",
                             "~/Content/css/PakageTemplate.css"));
 
-
+            bundles.Add(new StyleBundle("~/ProfileCss-fa").Include(
+                           "~/Content/global/plugins/toastr/toastr.min.css",
+                           "~/Content/css/bootstrap.3.3.7.min.css",
+                           "~/Content/css/select.min.css",
+                           "~/Content/css/simple-sidebar.css",
+                           "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
+                           "~/Content/css/profile.css",
+                           "~/Content/css/PakageTemplate.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Content/Scripts/jquery-{version}.js"));

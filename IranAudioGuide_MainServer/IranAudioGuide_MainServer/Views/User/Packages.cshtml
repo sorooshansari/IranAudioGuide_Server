@@ -2,8 +2,8 @@
 @{
     Layout = null;
 }
-
-<div class="input-group searchPackage">
+@using Resources
+<div class="input-group  searchPackage">
     <span class="input-group-addon"><i class="fa fa-search"></i></span>
     <ui-select class="SearchSelect" multiple ng-model="searhPakage.item" theme="bootstrap">
         <ui-select-match placeholder="City or Location">
@@ -52,8 +52,8 @@
 
         </div>
         <p>
-            <a ng-show="pak.isPackagesPurchased == false" ng-click="showModal(pak)" class="btn btn-success btn-large">buy </a>
-            <a ng-show="pak.isPackagesPurchased == true" class="btn btn-green btn-large">Purchased </a>
+            <a ng-show="pak.isPackagesPurchased == false" ng-click="showModal(pak)" class="btn btn-success btn-large">@Global.btnBuy </a>
+            <a ng-show="pak.isPackagesPurchased == true"   class="btn btn-green btn-large"> @Global.btnPurchased </a>
         </p>
         @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
     </div>
@@ -71,7 +71,7 @@
                     <div ng-hide="user.IsForeign" class="col-xs-12">
                         <p>{{pak.PackagePrice}}T</p>
                         <a class="zarinpalIcon hoverable" ng-click="buyPakages(true)">
-                            Pay with Iranian bank cards
+                           @Global.PageProfile24
                             @*<img class="hoverable" src="~/images/icon-128x128.png" />*@
                         </a>
                     </div>
@@ -79,7 +79,7 @@
                         @*ng-hide="user.IsForeign"*@
                         <p>{{pak.PackagePriceDollar}}$</p>
                         <a class="webmoneyIcon hoverable" ng-click="buyPakages(false)">
-                            Pay with international cards
+                         @Global.PageProfile23   
                             @*<img class="hoverable" src="~/images/wmlogo_vector_blue.png" />*@
                         </a>
                     </div>

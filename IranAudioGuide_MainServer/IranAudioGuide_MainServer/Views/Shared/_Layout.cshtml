@@ -1,9 +1,16 @@
 ﻿@using IranAudioGuide_MainServer.Models
-@using Microsoft.AspNet.Identity
+@using Resources;
 @{
     string downloadSection = (ViewBag.View == null) ? "/Home/Index/#Download_Application" : ((Views)ViewBag.View == Views.Index) ? "#Download_Application" : "/Home/Index/#Download_Application";
     string contactSection = (ViewBag.View == null) ? "/Home/Index/#contact" : ((Views)ViewBag.View == Views.Index) ? "#contact" : "/Home/Index/#contact";
+
+    var locales = new Dictionary<string, string>() { { "en-US", "english" }, { "fa", "Perisan" } };
+    var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
+    var action = Url.RequestContext.RouteData.Values["action"].ToString();
+    var id = Url.RequestContext.RouteData.Values["id"];
+    var lang = Request["lang"] == null ? "en-US" : Request["lang"].ToString();
 }
+
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
 <head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
@@ -16,7 +23,6 @@
     <meta name="author" content="Soroosh Ansari,Mona Akhlaghi">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <meta property="og:title" content="Best audio guide application for Iran travel" />
     <meta property="og:site_name" content="Iran Audio Guide" />
     <meta property="og:type" content="Audio Guide" />
@@ -30,68 +36,68 @@
     <meta property="twitter:url" content="http://iranaudioguide.com" />
     <meta property="twitter:title" content="Best audio guide application for Iran travel" />
     <meta property="twitter:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
+    <title>@Global.IranAudioGuide</title>
 
-
-
-
-    <title>@ViewBag.Title</title>
-
-
-        @Styles.Render("~/Content/css/minCss")
-        @RenderSection("Styles", required: false)
+    @Styles.Render("~/Content/css/minCss")
+    @RenderSection("Styles", required: false)
 
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/css/ie9.css" /><![endif]-->
     <!-- Start Visual Website Optimizer Asynchronous Code -->
     @*<script type='text/javascript'>
-        var _vwo_code = (function () {
-            var account_id = 291614,
-            settings_tolerance = 2000,
-            library_tolerance = 2500,
-            use_existing_jquery = false,
-            /* DO NOT EDIT BELOW THIS LINE */
-            f = false, d = document; return { use_existing_jquery: function () { return use_existing_jquery; }, library_tolerance: function () { return library_tolerance; }, finish: function () { if (!f) { f = true; var a = d.getElementById('_vis_opt_path_hides'); if (a) a.parentNode.removeChild(a); } }, finished: function () { return f; }, load: function (a) { var b = d.createElement('script'); b.src = a; b.type = 'text/javascript'; b.innerText; b.onerror = function () { _vwo_code.finish(); }; d.getElementsByTagName('head')[0].appendChild(b); }, init: function () { settings_timer = setTimeout('_vwo_code.finish()', settings_tolerance); var a = d.createElement('style'), b = 'body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}', h = d.getElementsByTagName('head')[0]; a.setAttribute('id', '_vis_opt_path_hides'); a.setAttribute('type', 'text/css'); if (a.styleSheet) a.styleSheet.cssText = b; else a.appendChild(d.createTextNode(b)); h.appendChild(a); this.load('//dev.visualwebsiteoptimizer.com/j.php?a=' + account_id + '&u=' + encodeURIComponent(d.URL) + '&r=' + Math.random()); return settings_timer; } };
-        }()); _vwo_settings_timer = _vwo_code.init();
-    </script>*@
+            var _vwo_code = (function () {
+                var account_id = 291614,
+                settings_tolerance = 2000,
+                library_tolerance = 2500,
+                use_existing_jquery = false,
+                /* DO NOT EDIT BELOW THIS LINE */
+                f = false, d = document; return { use_existing_jquery: function () { return use_existing_jquery; }, library_tolerance: function () { return library_tolerance; }, finish: function () { if (!f) { f = true; var a = d.getElementById('_vis_opt_path_hides'); if (a) a.parentNode.removeChild(a); } }, finished: function () { return f; }, load: function (a) { var b = d.createElement('script'); b.src = a; b.type = 'text/javascript'; b.innerText; b.onerror = function () { _vwo_code.finish(); }; d.getElementsByTagName('head')[0].appendChild(b); }, init: function () { settings_timer = setTimeout('_vwo_code.finish()', settings_tolerance); var a = d.createElement('style'), b = 'body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}', h = d.getElementsByTagName('head')[0]; a.setAttribute('id', '_vis_opt_path_hides'); a.setAttribute('type', 'text/css'); if (a.styleSheet) a.styleSheet.cssText = b; else a.appendChild(d.createTextNode(b)); h.appendChild(a); this.load('//dev.visualwebsiteoptimizer.com/j.php?a=' + account_id + '&u=' + encodeURIComponent(d.URL) + '&r=' + Math.random()); return settings_timer; } };
+            }()); _vwo_settings_timer = _vwo_code.init();
+        </script>*@
     <!-- End Visual Website Optimizer Asynchronous Code -->
 </head>
-<body class="landing" ng-app="HomePage" ng-controller="HomeController">
+<body class="landing @Global.Lang" ng-app="HomePage" ng-controller="HomeController">
     <!-- Page Wrapper -->
     <div id="page-wrapper">
         <!-- Header -->
         <header id="header" class="alt">
-
-            <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home")">Iran Audio Guide</a></h1>
+            <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
+           
             <nav id="nav">
+               
                 <ul>
                     <li class="special">
-                        <a href="#menu" class="menuToggle"><span>Menu</span></a>
+                        <a href="#menu" class="menuToggle"><span>@Global.MenuName</span></a>
                         <section id="menu">
                             <ul>
-                                <li><a id="HomeLink" href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i>Iran Audio Guide</a></li>
+                                @foreach (var l in locales)
+                                {
+                                    <li>@Html.ActionLink(l.Value, action, controller, new { lang = l.Key, id = id }, null)</li>
+                                }
+                                <li><a id="HomeLink" href="@Url.Action("Index", "Home", new { lang = lang})"><i class="fa fa-home"></i>@Global.IranAudioGuide</a></li>
                                 @*<li><a class="scrolly" href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>*@
                                 @*<li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>*@
-                                <li><a class="scrolly" rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>Contact Us</a></li>
+                                <li><a class="scrolly" rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>@Global.MenuContactUs</a></li>
 
                                 @if (User.Identity.IsAuthenticated == false)
                                 {
-                                    <li><a rel="nofollow" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in"></i>Log in</a></li>
+                                    <li><a rel="nofollow" href="@Url.Action("Login","Account", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuLogin</a></li>
 
                                 }
                                 else
                                 {
                                     if (User.IsInRole("Admin"))
                                     {
-                                        <li><a rel="nofollow" href="@Url.Action("index", "Admin")"><i class="fa fa-sign-in"></i>Profile</a></li>
+                                        <li><a rel="nofollow" href="@Url.Action("index", "Admin")"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>
 
                                     }
                                     else
                                     {
-                                        <li><a rel="nofollow" href="@Url.Action("index", "user")"><i class="fa fa-sign-in"></i>Profile</a></li>
+                                        <li><a rel="nofollow" href="@Url.Action("index", "user", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>
 
                                     }
-                                    <li><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>Log out</a></li>
+                                    <li><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>@Global.MenuLogout</a></li>
                                 }
                             </ul>
                         </section>

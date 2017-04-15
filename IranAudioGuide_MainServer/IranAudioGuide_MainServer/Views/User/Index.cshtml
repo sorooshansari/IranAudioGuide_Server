@@ -2,11 +2,12 @@
 @{
     Layout = "~/Views/Shared/_LayouProfile.cshtml";
 }
+@using Resources
 <div class="col-xs-12" ng-show="!user.IsEmailConfirmed">
     <div class="alert alert-warning">
-        <strong>Not Confirmed yet!  </strong>Please check your Email.
+        <strong> @Global.PageProfile20  </strong>@Global.PageProfile21 
         <br />
-        if you have not received the confirmation email yet, click <a ng-click="sendEmailConfirmedAgain()">here</a>  to send you another Email
+        @Global.PageProfile22 <a ng-click="sendEmailConfirmedAgain()">here</a>  to send you another Email
     </div>
 </div>
 <div ui-view></div>

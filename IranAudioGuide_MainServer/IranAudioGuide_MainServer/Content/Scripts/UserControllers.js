@@ -31,7 +31,7 @@ userApp.service('fileUpload', ['$http', function ($http) {
     }
 }]);
 
-userApp.controller('userCtrl', ['localezationService','$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
+userApp.controller('userCtrl', ['localezationService', '$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
     function (localezationService, $window, $scope, userServices, $timeout, notific, $http, $state) {
         
         //$scope.$on('setLocale', function (data) {
@@ -80,13 +80,12 @@ userApp.controller('userCtrl', ['localezationService','$window', '$scope', 'user
             if (data.FullName !== null)
                 $scope.user.FullName = data.FullName
             $scope.user.isAutintication = true;
-            console.log(data);
         });
 
         $scope.deactivateMobile = function () {
             userServices.deactivateMobile()
                 .then(function (data) {
-                    notific.success("", "You have successfully deactivated your device. The next device you sign in with, will become your active device.")
+                    notific.success("", data)
                     $scope.user.IsAccessChangeUuid = false;
                     $scope.m.isShowMessage = false;
                     // notific.success(successMsg);
@@ -121,9 +120,9 @@ userApp.controller('userCtrl', ['localezationService','$window', '$scope', 'user
 
         $scope.sendEmailConfirmedAgain = function () {
             userServices.sendEmailConfirmedAgain().then(function (data) {
-                //"StatusCode: 200, ReasonPhrase: 'OK', Version: 1.1, Content: <null>, Headers:
-                //$scope.user.IsEmailConfirmed = true;
-                notific.success("Success", "Please Check your email");
+                console.log(data);
+                if (data.status == 0)
+                    notific.success("", data.content);
 
             }, function (error) {
             });

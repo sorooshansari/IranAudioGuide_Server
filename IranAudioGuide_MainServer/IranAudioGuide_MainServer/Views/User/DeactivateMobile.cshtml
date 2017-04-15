@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+@using Resources
 <div class="alert  alert-success" ng-show="m.isShowMessage">
     <strong> Success!</strong> {{m.msg}}
 </div>
@@ -12,13 +13,13 @@
         <div>
             <ul>
                 <li>
-                    By pressing the <strong>DEACTIVATE OLD DEVICE</strong> button you can deactivate your old device (your smart phone or tablet).
+                    @Global.PageProfile13 <strong> @Global.PageProfile14</strong> @Global.PageProfile15 
                 </li>
                 <li>
-                    Then sign in with the device you intend to use to set the device and gain access to your packages.
+                    @Global.PageProfile16
                 </li>
                 <li>
-                    <strong>Remmember!</strong> This is only possible every 6 months once.
+                    <strong>@Global.PageProfile17</strong>@Global.PageProfile18 
                 </li>
             </ul>
 
@@ -26,10 +27,10 @@
                     ng-show="user.IsSetuuid"
                     class="btn btn-circle orange-haze btn-sm"
                     ng-click="deactivateMobile()">
-                Deactivate Old Device
+               @Global.PageProfile19
             </button>
             <div class="alert alert-info" ng-show="!user.IsSetuuid">
-                You have not set any devices to your account yet.
+                @Global.PageProfile2
             </div>
         </div>
     </div>

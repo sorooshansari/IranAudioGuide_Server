@@ -664,7 +664,8 @@ namespace IranAudioGuide_MainServer.Models
         dbError = 5,
         invalidId = 6,
         forignKeyError = 7,
-        removeOnlinePlace = 8
+        removeOnlinePlace = 8,
+        InvalidUsre = 9
     }
     public class Respond
     {
@@ -673,7 +674,19 @@ namespace IranAudioGuide_MainServer.Models
             this.status = status;
             this.content = content;
         }
+
         public status status { get; set; }
         public string content { get; set; }
     }
+    //public class Respond2
+    //{
+    //    public Respond2(string content = "", string status = "")
+    //    {
+    //        this.status = status;
+    //        this.content = content;
+    //    }
+
+    //    public string status { get; set; }
+    //    public string content { get; set; }
+    //}
 }
