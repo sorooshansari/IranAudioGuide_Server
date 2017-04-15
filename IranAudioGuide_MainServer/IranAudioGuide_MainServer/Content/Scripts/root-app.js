@@ -10,24 +10,7 @@
             isAdmin: false,
         };
         var init = function () {
-            if (angular.element('#chechLogin').length == 0) {
-                    $http.post('/api/UserApi/CheckLoginUser').then(function (result) {
-                        try {
-                            if (typeof result.data !== "object")
-                                return;
-                            var model = result.data;
-                            $scope.user.username = model.Email;
-                            if (model.RolesName == "Admin")
-                                $scope.user.isAdmin = true;
-                            $scope.user.isAutintication = true;
-                        }
-                        catch (error) {
-                        }
-                    }, function (error, status, headers, config) {
-                        $scope.user.isAutintication = false;
-                    });
-                }
-                else {
+            if (angular.element('#chechLogin').length !== 0) {
                 $http.get('/api/UserApi/IsTheFirstLogin').then(function (result) {
                     $scope.isTheFirstLogin = result.data;
                 }, function (error, status, headers, config) {
@@ -37,11 +20,14 @@
         };
         init();
         $scope.sendEmailConfirmedAgain = function () {
-            $http.get('/Account/SendEmailConfirmedAgain').then(function () {
-                $scope.isMsg = true;
-                $timeout(function () {
-                    $scope.isMsg = false;
-                }, 50000);
+            $http.post('/Account/SendEmailConfirmedAgain').then(function (data) {
+                console.log(data);
+                if (data.status == 0) {
+                    $scope.isMsg = true;
+                    $timeout(function () {
+                        $scope.isMsg = false;
+                    }, 50000);
+                }
             }, function (error) {
                 $scope.isMsg = false;
             });
@@ -84,11 +70,11 @@
                     then(function (response) {
                         switch (response.data.status) {
                             case respondstatus.success:
-                                $scope.sentMessage = "Thanks! Your message sent successfully!.";
+                                $scope.sentMessage = response.data.content;
                                 $scope.sent = true;
                                 break;
                             default:
-                                $scope.sentMessage = "Email sending failed: " + response.data.content;
+                                $scope.sentMessage = response.data.content;
                                 $scope.sent = true;
                                 break;
                         }

@@ -223,6 +223,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\Global.designer.cs">
+      <DependentUpon>Global.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -271,6 +276,7 @@
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
     <Compile Include="Services\GlobalPath.cs" />
+    <Compile Include="Services\LocalizationAttribute.cs" />
     <Compile Include="Services\ServiceDownload.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
@@ -1522,8 +1528,6 @@
     <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="robots.txt" />
     <Content Include="sitemap.xml" />
-    <Content Include="Views\Shared\HtmlPage1.html" />
-    <Content Include="Views\Shared\HTMLPage3.html" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -1693,7 +1697,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
@@ -1707,7 +1710,6 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\apiTest\Index.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <None Include="Service References\Zarinpal\PaymentGatewayImplementationService.wsdl" />
     <Content Include="Views\Payment\Return.cshtml" />
@@ -1735,11 +1737,12 @@
     <Content Include="Views\Payment\ReturnToWebPage.cshtml" />
     <Content Include="Views\Shared\vmessage.cshtml" />
     <Content Include="Views\Shared\ErrorPageProfile.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Download\" />
     <Folder Include="images\slidepics\" />
   </ItemGroup>
   <ItemGroup>
@@ -1756,6 +1759,10 @@
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_GlobalResources\Global.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Global.designer.cs</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>

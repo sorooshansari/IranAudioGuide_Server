@@ -1,7 +1,8 @@
 ﻿@using IranAudioGuide_MainServer.Models
+@using Resources
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = Global.TitlePageLogIn;
 }
 
 <section id="promo" class="content-block min-height-600px">
@@ -10,22 +11,22 @@
             <div class="col-md-5">
                 @*  Please don't remove item  *@
                 <span id="chechLogin"></span>
-                <h2>Use your Login Credentials to access your profile.</h2>
+                <h2>@Global.Parameter42</h2>
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Email, "",new { @class = "text-danger", placeholder = Global.PlaceholderEmail })
                     @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
                     <div class="form-group">
                         <div class="col-md-8">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Global.PlaceholderEmail })
                         </div>
                     </div>
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger", placeholder = Global.PlaceholderPassword })
                     <div class="form-group">
                         <div class="col-md-8">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Global.PlaceholderPassword })
                         </div>
                     </div>
 

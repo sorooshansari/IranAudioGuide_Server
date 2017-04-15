@@ -1,15 +1,18 @@
 ﻿@using IranAudioGuide_MainServer.Models
+@using Resources
 @model RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = Global.TitlePageRegister;
 }
 
 <section id="promo" class="content-block min-height-600px">
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <h2>Join us! <br />It only takes a minute!</h2>
-                <p id="regdet">By registering you will access to all Iran Audio Guide has to offer. Hopefully you will soon agree that its quite worth while</p>
+                <h2> @Global.Parameter43 <br /> @Global.Parameter44 </h2>
+                <p id="regdet">
+                    @Global.Parameter45
+                </p>
 
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
@@ -19,38 +22,38 @@
                         <div class="col-md-8">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Global.PlaceholderEmail })
                             </div>
-                            </div>
+                        </div>
                     </div>
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div class="col-md-8">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Global.PlaceholderPassword })
                             </div>
-                            </div>
+                        </div>
                     </div>
                     @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div class="col-md-8">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-check-square-o"></i></span>
-                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
-                                </div>
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = Global.PlaceholderConfirmPassword })
                             </div>
+                        </div>
                     </div>
 
                 <!-- Button -->
                     <div class="form-group">
                         <div class="col-md-8">
-                            <button id="regbtn" type="submit" name="regbtn" class="btn btn-inverse"><i class="fa fa-user-plus"></i>Register</button>
+                            <button id="regbtn" type="submit" name="regbtn" class="btn btn-inverse"><i class="fa fa-user-plus"></i> @Global.Parameter46</button>
                         </div>
                     </div>
                 }
                 <div class="form-group">
-                    <a class="TextLink" href="@Url.Action("Login","Account")">Already have an account?</a>
+                    <a class="TextLink" href="@Url.Action("Login","Account")"> @Global.Parameter47 </a>
                 </div>
             </div>
             <!-- /.col -->

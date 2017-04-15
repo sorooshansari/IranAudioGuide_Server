@@ -1,15 +1,15 @@
 ﻿@{
     Layout = null;
 }
-
+@using Resources
 <div class="row">
     <div class="margin-top-9-percentage col-xs-12">
         <div class="row">
             <div class="col-xs-12" ng-show="!user.IsEmailConfirmed">
                 <div class="alert alert-warning">
-                    <strong>Not Confirmed yet!  </strong>Please check your Email.
+                    <strong>@Global.PageProfile20 </strong>!@Global.PageProfile21
                     <br />
-                    if you have not received the confirmation email yet, click <a ng-click="sendEmailConfirmedAgain()">here</a>  to send you another Email
+                   @Global.PageProfile22 <a ng-click="sendEmailConfirmedAgain()">@Global.PageProfile27</a> @Global.PageProfile26  
                 </div>
             </div>
           

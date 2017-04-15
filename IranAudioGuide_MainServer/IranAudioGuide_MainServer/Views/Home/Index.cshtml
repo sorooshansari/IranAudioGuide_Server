@@ -1,38 +1,38 @@
 ﻿@{
     ViewBag.Title = "Iran Audio Guide";
 }
-@section Styles{
-    <style>
-    </style>
-}
+@using Resources
 <section id="banner">
     <div class="inner">
         <div id="logo">
             <img src="~/images/IAGSITELOGO.png" />
         </div>
-        <h2>Iran Audio Guide</h2>
+        <h2>@Global.IranAudioGuide</h2>
+        <p ></p>
+                
         <p>
-            The only guide you will need in Iran<br />
+            @Global.IndexTitle01<br />
             <br />
-            Convenient, thorough, liberating <br />
+           @Global.IndexTitle02 <br />
         </p>
+   
         <ul class="actions">
             <li>
                 <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8">
-                    <img style="width:auto;height:40px;" alt="Download it on App Store" src="~/Content/images/Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
+                    <img style="width:auto;height:40px;" alt=@Global.alt src="~/Content/images/Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
                     @*<span class="csspan">App Store</span>*@
                 </a>
             </li>
             <li>
                 <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android">
-                    <img style="width:auto;height:40px;" alt="Get it on Google Play" src="~/Content/images/Get_it_on_Google_play.svg" />
+                    <img style="width:auto;height:40px;" alt=@Global.alt1 src="~/Content/images/Get_it_on_Google_play.svg" />
                     @*<span class="csspan">Google Play</span>*@
                 </a>
             </li>
             @*<li><a href="#Download_Application" class="button special scrolly">Download</a></li>*@
         </ul>
     </div>
-    <a href="#one" class="more scrolly">Learn More</a>
+    <a href="#one" class="more scrolly">@Global.IndexBtnLearnMore</a>
 </section>
 
 <!-- One -->
@@ -40,12 +40,10 @@
     <div class="inner">
         <header class="major">
             <h2>
-                Don’t just walk through  Iran, learn the history, hear the stories, feel the culture, ...
+                @Global.SectionOneH2
 
             </h2>
-            <p>
-                Download Iran Audio Guide application for free and see for yourself<br />
-            </p>
+            <p>@Global.SectionOneP</p>
         </header>
         <ul class="icons major">
             <li>
@@ -77,8 +75,7 @@
         <div ng-show="formRequest.isError && formRequest.$invalid" class="error-msg">please enter correct email address</div>
 
         <div class="message">
-            It's so close to release.<br />
-            We will notify you when we release.
+            @Global.SectionOneMessage
         </div>
 
     </form>
@@ -89,40 +86,46 @@
 <section id="two" class="wrapper alt style2" style="background-color:transparent !important">
     <section class="spotlight">
         <div class="image image1">
-            <img id="accurate_information" src="~/images/blockpics/accurate_information.jpg" alt="accurate information about Iran" scroll-spy />
+            <img id="accurate_information" src="~/images/blockpics/accurate_information.jpg" alt=@Global.alt2 scroll-spy />
         </div>
         <div class="content">
             <h2>
-                Providing you with accurate information<br />
+                @Global.SectionTwoContentH2
+                <br />
 
             </h2>
-            <p>To guide you through the discovery of Iran and all its millenniums of history </p>
+            <p>
+                @Global.SectionTwoContentP
+            </p>
         </div>
     </section>
 
     <section class="spotlight  spotlightv" style="background-color:transparent !important;">
         <div class="image image2">
-            <img id="whattolisten" src="/images/blockpics/whattolisten.jpg" alt="Choose what to listen to" scroll-spy-event="elementScrolledIntoView" scroll-spy />
+            <img id="whattolisten" src="/images/blockpics/whattolisten.jpg" alt=@Global.alt3 scroll-spy-event="elementScrolledIntoView" scroll-spy />
         </div>
         <div class="content">
             <h2 class="">
-                Choose what to listen to <br>
+              @Global.SpotlightContentH2
+                 <br>
 
             </h2>
-            <p class="">Listen to the tracks your interested in, choose among all the content available</p>
+            <p class="">
+            @Global.SpotlightContentP
+            </p>
         </div>
     </section>
 
 
     <section class="spotlight">
         <div class="image image3">
-            <img id="yourownpace" src="~/images/blockpics/yourownpace.jpg" alt="visit attractions with your own pace" scroll-spy />
+            <img id="yourownpace" src="~/images/blockpics/yourownpace.jpg" alt="@Global.alt4" scroll-spy />
         </div><div class="content">
             <h2>
-                Liberating you to visit attractions with your own pace <br />
+               @Global.Parameter01 <br />
 
             </h2>
-            <p>No worries about being late or missing the explanations,take your time and wonder, take photos, ...</p>
+            <p> @Global.Parameter02</p>
         </div>
     </section>
 </section>
@@ -131,35 +134,35 @@
 <section id="three" class="wrapper style3 special" style="background-color:#15437f !important;">
     <div class="inner">
         <header class="major">
-            <h2>Where ever, when ever, which ever, how ever  </h2>
+            <h2>@Global.Parameter10   </h2>
             <p>
-                While walking, sitting, photographing. In the hotel, on the way, in the plane, on the bus. In the morning, at night, in any hour you choose this guide will narrate what ever you feel like listening too.Pause the tracks, listen later. Just be sure to truly discover Iran with Iran audio guide.<br />
+                @Global.Parameter11<br />
             </p>
         </header>
         <ul class="features">
             <li class="icon fa-map-signs">
-                <h3>Visiting tips</h3>
-                <p>Iran audio guide will provide you with tips for visiting every attraction, maps and all you need to know about modern Iran</p>
+                <h3>@Global.Parameter12 </h3>
+                <p>@Global.Parameter13</p>
             </li>
             <li class="icon fa-flag">
-                <h3>Attraction guide</h3>
-                <p>Iran audio guide will guide you step by step in every attraction. Advising you at what to look at and details not to miss</p>
+                <h3>@Global.Parameter14 </h3>
+                <p>@Global.Parameter15</p>
             </li>
             <li class="icon fa-history">
-                <h3>History</h3>
-                <p>Iran audio guide tell you Iran’s millenniums of history, historic stories, wars, victories and envasions </p>
+                <h3>@Global.Parameter15</h3>
+                <p>@Global.Parameter17  </p>
             </li>
             <li class="icon fa-users">
-                <h3>Significant figures</h3>
-                <p>Iran audio guide will open up the story and achievements of Kings, poets, scientist and other significant people for you</p>
+                <h3>@Global.Parameter18</h3>
+                <p>@Global.Parameter19</p>
             </li>
             <li class="icon fa-book">
-                <h3>Persian stories</h3>
-                <p>Iran audio guide allows you to listen to famous persian myth tails, the great love stories, even the historic gossips, scandals of Persia</p>
+                <h3>@Global.Parameter2</h3>
+                <p>@Global.Parameter20 </p>
             </li>
             <li class="icon fa-institution">
-                <h3>Art &amp; Architecture</h3>
-                <p>Iran audio guide will explain the unique techniques and methods of Iranian architecture and crafts with images</p>
+                <h3>@Global.Parameter21</h3>
+                <p>@Global.Parameter22 </p>
             </li>
         </ul>
     </div>
@@ -170,29 +173,28 @@
     <div id="map"></div>
     <div class="LocationInfo">
         <div class="panel panel-default">
-            <div class="panel-heading">Who we are?</div>
+            <div class="panel-heading">@Global.Parameter23 </div>
             <div class="panel-body">
                 <p>
-                    Hi! We are Mona Akhlaghi and Soroosh Ansari Mehr, two individuals with a passion for creativity — creativity makes us happy. We truly believe in the transformative power of illustration and design and their ability to simplify communications
-                </p>
+                    @Global.Parameter24  </p>
                 <br />
                 <div class="row">
                     <div class="col-lg-2 col-sm-3 col-xs-4">
-                        <img class="img-thumbnail" src="~/images/Members/Mona.jpg" alt="Mona Akhlaghi" style="width:100%">
+                        <img class="img-thumbnail" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-8">
-                        <h5 class="mt-0">Mona Akhlaghi</h5>
-                        Cras sit amet nibh libero
+                        <h5 class="mt-0">@Global.Parameter25 </h5>
+                        @Global.Parameter26
                     </div>
                 </div>
                 <br />
                 <div class="row">
                     <div class="col-lg-2 col-sm-3 col-xs-4">
-                        <img class="img-thumbnail" src="~/images/Members/Soroosh.JPG" alt="Soroosh Ansari Mehr" style="width:100%">
+                        <img class="img-thumbnail" src="~/images/Members/Soroosh.JPG" alt="@Global.Soroosh" style="width:100%">
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-8">
-                        <h5 class="mt-0">Soroosh Ansari Mehr</h5>
-                        Cras sit amet nibh libero
+                        <h5 class="mt-0">@Global.Parameter27</h5>
+                        @Global.Parameter28
                     </div>
                 </div>
                 @*<dl class="dl-horizontal">
@@ -212,13 +214,13 @@
     <div id="contact" class="form-container">
         <form name="contactForm" class="form-horizontal" ng-submit="ContactUs(ContactFormModel, contactForm)">
             <fieldset>
-                <legend style="color:#ffffff;">Feel free to Contact us...</legend>
+                <legend style="color:#ffffff;">@Global.Parameter29</legend>
                 <br />
                 <div class="form-group">
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span ng-class="ValidationClass(0)" class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input ng-blur="validator($event, 0)" ng-model="ContactFormModel.name" id="name" name="name" class="form-control" placeholder="Name" type="text" required="">
+                            <input ng-blur="validator($event, 0)" ng-model="ContactFormModel.name" id="name" name="name" class="form-control" placeholder="@Global.PlaceholderName" type="text" required="">
                         </div>
 
                     </div>
@@ -228,7 +230,7 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span ng-class="ValidationClass(1)" class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input ng-blur="validator($event, 1)" ng-model="ContactFormModel.email" id="Email4" name="Email" class="form-control" placeholder="Email" type="email" required="">
+                            <input ng-blur="validator($event, 1)" ng-model="ContactFormModel.email" id="Email4" name="Email" class="form-control" placeholder="@Global.PlaceholderEmail" type="email" required="">
                         </div>
 
                     </div>
@@ -238,7 +240,7 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-                            <input ng-model="ContactFormModel.subject" id="Subject" name="Subject" class="form-control" placeholder="Subject" type="text">
+                            <input ng-model="ContactFormModel.subject" id="Subject" name="Subject" class="form-control" placeholder="@Global.PlaceholderSubject" type="text">
                         </div>
 
                     </div>
@@ -248,7 +250,7 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span ng-class="ValidationClass(3)" class="input-group-addon"><i class="fa fa-commenting"></i></span>
-                            <textarea ng-blur="validator($event, 3)" ng-model="ContactFormModel.message" id="Message" name="Message" class="form-control" placeholder="Your Message..." required=""></textarea>
+                            <textarea ng-blur="validator($event, 3)" ng-model="ContactFormModel.message" id="Message" name="Message" class="form-control" placeholder="@Global.PlaceholderMessage" required=""></textarea>
                         </div>
 
                     </div>
@@ -562,7 +564,7 @@
             map.setCenter(PageCenter);
 
             google.maps.event.addListener(infowindow, 'domready', function () {
-                
+
                 // Reference to the DIV that wraps the bottom of infowindow
                 var iwOuter = $('.gm-style-iw');
                 iwOuter.next().addClass("iwCloseBtn");

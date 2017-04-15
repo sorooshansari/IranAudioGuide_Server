@@ -16,10 +16,11 @@ using System.Net;
 namespace IranAudioGuide_MainServer.Controllers
 {
     [Authorize]
+    [LocalizationAttribute]
+
     public class AccountController : Controller
     {
-        string _subject = "";
-        string _message = "";
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -62,12 +63,12 @@ namespace IranAudioGuide_MainServer.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            //  var model = new LoginViewModel();
-            //  var serviceIpAdress = new ServiceIpAdress();
-            // ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
+
+            // IsTheFirstLogin check by Angularjs 
+            //var serviceIpAdress = new ServiceIpAdress();
+            //ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
             ViewBag.View = Views.Login;
             ViewBag.ReturnUrl = returnUrl;
-            //return View(/*model*/);
             return View();
         }
 
@@ -117,7 +118,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     else
                         return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    return View();
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new
                     {
@@ -125,19 +126,12 @@ namespace IranAudioGuide_MainServer.Controllers
                         RememberMe = model.RememberMe
                     });
                 case SignInStatus.Failure:
-                    //var Finduser = UserManager.FindByEmail(model.Email);
-                    //if(Finduser != null)
-                    //{
-                    //    ModelState.AddModelError("", "Please Sing in With Googel.");
-                    //    return View(model);
-
-                    //}
                     serviceIpAdress.SaveIpadressFailuers();
                     ViewBag.IsTheFirstLogin = false;
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", Resources.Global.ServerErrorInvalidUsernameOrPassword);
                     return View(model);
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", Resources.Global.ServerInvalidLoginAttempt);
                     return View(model);
             }
         }
@@ -180,7 +174,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", Resources.Global.ServerInvalidCode);
                     return View(model);
             }
         }
@@ -215,7 +209,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     //code = HttpUtility.UrlEncode(code);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await UserManager.SendEmailAsync(user.Id, Resources.Global.ServerConfirmTitel, string.Format(Resources.Global.ServerConfirmMessage, callbackUrl));
 
                     return RedirectToAction("Index", "User");
                 }
@@ -228,29 +222,35 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost]
         //   [ValidateAntiForgeryToken]
-        public async Task<HttpResponseMessage> SendEmailConfirmedAgain()
+        public async Task<JsonResult> SendEmailConfirmedAgain()
         {
             try
             {
                 if (!User.Identity.IsAuthenticated)
-                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                                  return Json(new Respond("", status.InvalidUsre));
+
 
                 var UserId = User.Identity.GetUserId();
                 if (string.IsNullOrEmpty(UserId))
-                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                    return Json(new Respond("", status.InvalidUsre));
+
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(UserId);
-              //  code = HttpUtility.UrlEncode(code);
+                //  code = HttpUtility.UrlEncode(code);
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = UserId, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(UserId, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                await UserManager.SendEmailAsync(UserId, Resources.Global.ServerConfirmTitel, string.Format(Resources.Global.ServerConfirmMessage, callbackUrl));
+                // return new HttpResponseMessage(HttpStatusCode.OK);
+                return Json(new Respond(Resources.Global.ServerEmailSendingSuccess, status.success));
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return Json(new Respond("", status.unknownError));
+
             }
         }
         //
@@ -264,8 +264,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = "Confirmation Failed!",
-                        Message = "Unknown Error",
+                        Subject = Resources.Global.ServerErrorConfirmSubject,
+                        Message = Resources.Global.ServerErrorUnknown,
                         //IsShowUrl = true
                     });
                 }
@@ -274,16 +274,16 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = "Email Confirmation",
-                        Message = @"Thank you for confirming your email. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                        Subject = Resources.Global.ServerEmailConfirmation,
+                        Message = Resources.Global.ServerEmailConfirmationSucceeded,
                     });
                 }
                 else
                 {
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = "Confirmation Failed!",
-                        Message = @"Try to send another confirmation email through your profile page. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login",
+                        Subject = Resources.Global.ServerErrorConfirmSubject,
+                        Message = Resources.Global.ServerEmailConfirmationMessage2,
                         //IsShowUrl = true
                     });
                 }
@@ -292,8 +292,8 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = "Confirmation Failed!",
-                    Message = "Unknown Error",
+                    Subject = Resources.Global.ServerErrorConfirmSubject,
+                    Message = Resources.Global.ServerErrorUnknown,
                     //IsShowUrl = true
                 });
             }
@@ -321,24 +321,24 @@ namespace IranAudioGuide_MainServer.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = "Forgot Password",
-                        Message = @"Please check your email to reset your password. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                        Subject = Resources.Global.ServerForgotPassword,
+                        Message  = Resources.Global.ServerForgotPasswordMessage,
                     });
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-              //  code = HttpUtility.UrlEncode(code);
+                //  code = HttpUtility.UrlEncode(code);
                 string baseUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
                 var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, user.Id, code);
                 //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href='" + callbackUrl + "'>here</a>");
+                await UserManager.SendEmailAsync(user.Id, Resources.Global.ServerResetPassword, string.Format(Resources.Global.ServerResetPasswordMessage, callbackUrl) );
                 string ResetLink = Url.Action("ForgotPassword", "Account", model);
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = "Reset Password",
-                    Message = string.Format(@"We sent a reset password link to <strong style='color:red;'>{1}</strong> <br /> didn't receive email? <a href={0}>Resend</a> ", ResetLink, model.Email)
+                    Subject = Resources.Global.ServerResetPassword,
+                    Message = string.Format(Resources.Global.ServerResetPasswordMessage2, ResetLink, model.Email)
                 });
             }
 
@@ -374,8 +374,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 // Don't reveal that the user does not exist
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = "Password changed",
-                    Message = @"Your password has been changed. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                    Subject = Resources.Global.ServerPasswordChanged,
+                    Message = Resources.Global.ServerPasswordChangedMessage
                 });
             }
             //var code = model.Code.Replace(" ", "+");
@@ -384,8 +384,8 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = "Password changed",
-                    Message = @"Your password has been changed. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login"
+                    Subject = Resources.Global.ServerPasswordChanged,
+                    Message = Resources.Global.ServerPasswordChangedMessage
                 });
             }
             AddErrors(result);

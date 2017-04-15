@@ -23,31 +23,31 @@ namespace IranAudioGuide_MainServer.Services
             }
         }
 
-        internal List<GetAudioUrlVM> testurl()
-        {
-            using (var db = new ApplicationDbContext())
-            {
-                var list = db.Audios
-                    .Select(x => new GetAudioUrlVM()
-                    {
-                        email = "12",
-                        uuid = "12",
-                        trackId = x.Aud_Id,
-                        isAudio = true
-                    }).ToList();
-                var list2 = db.Storys
-                    .Select(x => new GetAudioUrlVM()
-                    {
-                        email = "12",
-                        uuid = "12",
-                        trackId = x.Sto_Id,
-                        isAudio = false
-                    }).ToList();
-                list.AddRange(list2);
-                return list;
-            }
+        //internal List<GetAudioUrlVM> testurl()
+        //{
+        //    using (var db = new ApplicationDbContext())
+        //    {
+        //        var list = db.Audios
+        //            .Select(x => new GetAudioUrlVM()
+        //            {
+        //                email = "12",
+        //                uuid = "12",
+        //                trackId = x.Aud_Id,
+        //                isAudio = true
+        //            }).ToList();
+        //        var list2 = db.Storys
+        //            .Select(x => new GetAudioUrlVM()
+        //            {
+        //                email = "12",
+        //                uuid = "12",
+        //                trackId = x.Sto_Id,
+        //                isAudio = false
+        //            }).ToList();
+        //        list.AddRange(list2);
+        //        return list;
+        //    }
 
-        }
+        //}
 
 
         //public string GetUrlOldVersion(string fileName, bool isAudio)
@@ -118,24 +118,25 @@ namespace IranAudioGuide_MainServer.Services
 
         public static string GetUrl(GetAudioUrlVM model, bool isAdmin = false)
         {
-            try
+            using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
             {
-
-                string FullSource, pathDestination;
-                if (model.isAudio)
+                try
                 {
 
-                    FullSource = GlobalPath.PrimaryPathAudios;
-                    pathDestination = GlobalPath.DownloadPathAudios;
-                }
-                else
-                {
-                    FullSource = GlobalPath.PrimaryPathStory;
-                    pathDestination = GlobalPath.DownloadPathStory;
+                    string FullSource, pathDestination;
+                    if (model.isAudio)
+                    {
 
-                }
-                using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
-                {
+                        FullSource = GlobalPath.PrimaryPathAudios;
+                        pathDestination = GlobalPath.DownloadPathAudios;
+                    }
+                    else
+                    {
+                        FullSource = GlobalPath.PrimaryPathStory;
+                        pathDestination = GlobalPath.DownloadPathStory;
+
+                    }
+
                     SqlCommand cmd = new SqlCommand("GetURL", sqlConnection);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -176,12 +177,18 @@ namespace IranAudioGuide_MainServer.Services
                     cmdRemove.ExecuteReader();
                     return GlobalPath.host + FullSource + links.FileName;
 
+
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return null;
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    return null;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+
+                }
             }
 
         }

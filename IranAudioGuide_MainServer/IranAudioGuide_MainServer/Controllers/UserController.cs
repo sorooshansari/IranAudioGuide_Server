@@ -1,15 +1,13 @@
-﻿using IranAudioGuide_MainServer.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
     [Authorize]
+    [LocalizationAttribute]
+
     public class UserController : Controller
     {
         private IAuthenticationManager AuthenticationManager

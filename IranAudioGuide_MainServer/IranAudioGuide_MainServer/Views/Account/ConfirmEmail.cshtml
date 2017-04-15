@@ -1,10 +1,12 @@
-﻿@{
-    ViewBag.Title = "Confirm Email";
+﻿
+@using Resources
+@{
+    ViewBag.Title = Global.TitlePageConfirmEmail;
 }
-
 <h2>@ViewBag.Title.</h2>
 <div>
     <p>
-        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        @(string.Format(Global.Parameter37, Html.ActionLink(Global.Parameter38, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })))
+       
     </p>
 </div>

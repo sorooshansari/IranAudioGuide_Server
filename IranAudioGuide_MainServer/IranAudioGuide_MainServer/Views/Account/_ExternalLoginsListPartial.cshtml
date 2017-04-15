@@ -1,14 +1,16 @@
 ﻿@model IranAudioGuide_MainServer.Models.ExternalLoginListViewModel
+    @using Resources
 @using Microsoft.Owin.Security
 
-<h4>Use social services to log in.</h4>
+<h4> @Global.Parameter32</h4>
 <hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
     if (loginProviders.Count() == 0) {
         <div>
             <p>
-                There are no external authentication services configured.
+                @Global.Parameter33
+              
             </p>
         </div>
     }
@@ -18,7 +20,8 @@
             <div id="socialLoginList">
                 <p>
                     @foreach (AuthenticationDescription p in loginProviders) {
-                        <button type="submit" class="btn btn-default btn-google" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i class="fa fa-google"></i>Sign in with @p.AuthenticationType</button>
+                        <button type="submit" class="btn btn-default btn-google" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@(Global.Parameter35 + @p.Caption + Global.Parameter36)">
+                    <i class="fa fa-google"></i>@(Global.Parameter34 + p.AuthenticationType) </button>
                     }
                 </p>
             </div>

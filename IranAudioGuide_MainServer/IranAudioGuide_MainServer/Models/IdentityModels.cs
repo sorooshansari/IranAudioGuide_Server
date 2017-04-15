@@ -99,30 +99,34 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UpL_Id { get; set; }
-        public System.Guid? Aud_Id { get; set; }
-        public System.Guid? Pla_ID { get; set; }
+        public Guid? Aud_Id { get; set; }
+        public Guid? Pla_ID { get; set; }
         public int? Cit_ID { get; set; }
-        public System.Guid? Img_Id { get; set; }
-        public System.Guid? Sto_Id { get; set; }
-        public System.Guid? Tip_Id { get; set; }
-        public System.Guid? Ima_Id { get; set; }
+        public Guid? Img_Id { get; set; }
+        public Guid? Sto_Id { get; set; }
+        public Guid? Tip_Id { get; set; }
+        public Guid? Ima_Id { get; set; }
         public bool isRemoved { get; set; }
     }
+
     public class Audio
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public System.Guid Aud_Id { get; set; }
         public string Aud_Name { get; set; }
+        //public string Aud_Name_fa { get; set; }
         public string Aud_Url { get; set; }
         public string Aud_Discription { get; set; }
         public Place Place { get; set; }
+       // public string Lang { get; set; }
     }
+
     public class Story
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public System.Guid Sto_Id { get; set; }
+        public Guid Sto_Id { get; set; }
         public string Sto_Name { get; set; }
         public string Sto_Url { get; set; }
         public string Sto_Discription { get; set; }
