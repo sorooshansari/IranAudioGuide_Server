@@ -69,17 +69,24 @@ userApp.controller('userCtrl', ['localezationService','$window', '$scope', 'user
             $window.location.href = 'http://iranaudioguide.com';
         }
         userServices.getUser().then(function (data) {
+            
             $scope.user = data;
-            $scope.user.FullName = data.Email
+            $scope.user.FullName = data.Email;
+            if(data.ImgUrl == null)
+            {
+                data.ImgUrl = "../images/defProfilewsf.png";
+            }
+            $scope.user.uImageUrl = data.ImgUrl;
             if (data.FullName !== null)
                 $scope.user.FullName = data.FullName
             $scope.user.isAutintication = true;
+            console.log(data);
         });
 
         $scope.deactivateMobile = function () {
             userServices.deactivateMobile()
                 .then(function (data) {
-                    notific.success("", "you have successfully deactivated your device. the next device you sign in with, will become your active device.")
+                    notific.success("", "You have successfully deactivated your device. The next device you sign in with, will become your active device.")
                     $scope.user.IsAccessChangeUuid = false;
                     $scope.m.isShowMessage = false;
                     // notific.success(successMsg);

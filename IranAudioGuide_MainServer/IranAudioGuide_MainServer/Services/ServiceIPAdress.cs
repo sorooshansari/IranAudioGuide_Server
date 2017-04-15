@@ -24,7 +24,9 @@ namespace IranAudioGuide_MainServer.Services
 
      
       //  public static bool IsIran { get { return (GetInfoIPAddress().countryCode == "IR") ? true : false; } }
-        public static bool IsForeign { get { return (GetInfoIPAddress().countryCode == "IR") ? false : true; } }
+        public static bool IsForeign { get {
+
+                return (GetInfoIPAddress().countryCode == "IR" ) ? false : true; } }
 
     }
     public class ServiceIpAdress

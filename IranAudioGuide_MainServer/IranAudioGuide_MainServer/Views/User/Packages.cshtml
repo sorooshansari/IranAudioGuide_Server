@@ -3,10 +3,10 @@
     Layout = null;
 }
 
-<div class="input-group  searchPackage">
+<div class="input-group searchPackage">
     <span class="input-group-addon"><i class="fa fa-search"></i></span>
     <ui-select class="SearchSelect" multiple ng-model="searhPakage.item" theme="bootstrap">
-        <ui-select-match placeholder="Please select your city or location">
+        <ui-select-match placeholder="City or Location">
             <i ng-class="typeEachItemFoSelection[$item.type].icon"></i>
             <span> {{$item.title}} </span>
         </ui-select-match>
@@ -33,14 +33,10 @@
 
     <div class="PlanPricing template4" ng-repeat="pak in listPakages" ng-class="{'col-flex-1':pak.PackageCities.length == 1, 'col-flex-2':pak.PackageCities.length > 1}">
         <!-- Price template4 Starts -->
-        <div class="planName">
-            @*<span class="price">{{pak.PackagePrice}}IRR </span>*@
-            <h3>{{pak.PackageName}}</h3>
-            @*<p>{{pak.PackageName}}</p>*@
-        </div>
         <div class="planFeatures">
             <!-- Slideshow 4 -->
             <div class="callbacks_container">
+                @*<h4 class="PkgTitle">{{pak.PackageName}}</h4>*@
                 <ul class="slider6 rslides">
                     <li ng-repeat="city in pak.PackageCities">
 
@@ -57,7 +53,7 @@
         </div>
         <p>
             <a ng-show="pak.isPackagesPurchased == false" ng-click="showModal(pak)" class="btn btn-success btn-large">buy </a>
-            <a ng-show="pak.isPackagesPurchased == true"   class="btn btn-green btn-large">Purchased </a>
+            <a ng-show="pak.isPackagesPurchased == true" class="btn btn-green btn-large">Purchased </a>
         </p>
         @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
     </div>

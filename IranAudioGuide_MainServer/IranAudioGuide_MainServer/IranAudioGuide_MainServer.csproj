@@ -588,6 +588,7 @@
     <Content Include="Content\fonts\ionicons.svg" />
     <Content Include="Content\fonts\ionicons.ttf" />
     <Content Include="Content\fonts\ionicons.woff" />
+    <Content Include="Content\fonts\myicons.svg" />
     <Content Include="Content\global\plugins\angularjs\angular-animate.js" />
     <Content Include="Content\global\plugins\angularjs\angular-animate.min.js" />
     <Content Include="Content\global\plugins\angularjs\angular-animate.min.js.map" />
@@ -687,6 +688,7 @@
     <Content Include="Content\images\arrow.svg" />
     <Content Include="Content\images\bars.svg" />
     <Content Include="Content\images\close.svg" />
+    <Content Include="images\defProfilew.png" />
     <Content Include="Content\images\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
     <Content Include="Content\images\file_add.png" />
     <Content Include="Content\images\Get_it_on_Google_play.svg" />
@@ -1516,6 +1518,9 @@
     <Content Include="Content\css\fontawesome-webfont.woff2" />
     <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="google60352dff0d3dbd69.html" />
+    <Content Include="images\defProfile.png" />
+    <Content Include="images\defProfilews.png" />
+    <Content Include="images\defProfilewsf.png" />
     <Content Include="images\marker.png" />
     <Content Include="images\v_blue_on_transp_en.png" />
     <Content Include="images\v_blue_on_white_en.png" />
@@ -1559,6 +1564,22 @@
     <Content Include="Content\global\plugins\font-awesome\scss\_screen-reader.scss" />
     <Content Include="Content\global\plugins\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\global\plugins\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\fonts\Arcon-Regular.otf" />
+    <Content Include="Content\fonts\Arcon-Rounded-Regular.otf" />
+    <Content Include="Content\fonts\JosefinSlab-SemiBold.ttf" />
+    <Content Include="Content\fonts\myicons.eot" />
+    <Content Include="Content\fonts\myicons.ttf" />
+    <Content Include="Content\fonts\myicons.woff" />
+    <Content Include="Content\fonts\NewFonts\alegreyasans-light-webfont.woff" />
+    <Content Include="Content\fonts\NewFonts\exo2-lightcondensed-webfont.woff" />
+    <Content Include="Content\fonts\NewFonts\exo2-regularcondensed-webfont.woff" />
+    <Content Include="Content\fonts\NewFonts\firasans-light-webfont.woff" />
+    <Content Include="Content\fonts\NewFonts\opensans-light-webfont.woff" />
+    <Content Include="Content\fonts\NewFonts\OpenSans-Regular.ttf" />
+    <Content Include="Content\fonts\NewFonts\segoeui.ttf" />
+    <Content Include="Content\fonts\NewFonts\segoeuil.ttf" />
+    <Content Include="Content\fonts\NewFonts\segoeuisl.ttf" />
+    <Content Include="Content\fonts\NewFonts\sourcesanspro-regular-webfont.woff" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
     <Content Include="favicon.ico" />
@@ -1604,6 +1625,8 @@
     <None Include="Content\Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Content\Scripts\jquery-2.2.3.intellisense.js" />
     <None Include="Content\Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="fonts\Arcon-Regular.otf" />
+    <Content Include="fonts\Arcon-Rounded-Regular.otf" />
     <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />
@@ -1741,6 +1764,7 @@
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Download\" />
+    <Folder Include="fonts\NewFonts\" />
     <Folder Include="images\slidepics\" />
   </ItemGroup>
   <ItemGroup>

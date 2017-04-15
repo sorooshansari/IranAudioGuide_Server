@@ -57,7 +57,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         return Ok(Info);
                     else if (user.TimeSetUuid == null && Info.IsSetuuid == true)
                     {
-                        //the first time for change dective device
+                        //the first time for change deactivate device
                         Info.IsAccessChangeUuid = true;
                         return Ok(Info);
 
