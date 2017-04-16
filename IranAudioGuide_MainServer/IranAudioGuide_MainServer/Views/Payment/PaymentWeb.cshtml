@@ -1,5 +1,5 @@
 ﻿@model IranAudioGuide_MainServer.Models.PackageVM
-
+@using Resources
 @{
     Layout = null;
 }
@@ -262,8 +262,8 @@
             </table>
             <table id="PkgDetailsTbl" class="table-mybordered tbldotted table-condensed">
                 <tr>
-                    <td class="_1sttd PkgDetTD"><i class="icon fa fa-map-signs"></i>&nbsp;Places</td>
-                    <td class="_2ndtd PkgDetTD"><i class="icon fa fa-clipboard"></i>&nbsp;Description</td>
+                    <td class="_1sttd PkgDetTD"><i class="icon fa fa-map-signs"></i>&nbsp;@Global.PaymentPage2</td>
+                    <td class="_2ndtd PkgDetTD"><i class="icon fa fa-clipboard"></i>&nbsp;@Global.PaymentPage21</td>
                 </tr>
 
 
@@ -283,7 +283,7 @@
                     <td class="_1sttd" colspan="2" style="background-color:#001644 !important;">
                         <div class="col-xs-12" style="color:white; font-size:small; font-weight:600; font-style:italic; padding:5px;">
                             <i class="icon fa fa-credit-card-alt"></i>
-                            &nbsp;Payment Gateway
+                            &nbsp;@Global.PaymentPage22
                         </div>
                     </td>
 
@@ -307,7 +307,7 @@
                             @if (ViewBag.IsChooesZarinpal)
             {
                                 <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
-                                <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarinPal Logo above</p>
+                                <p style="color:black; text-shadow:none; font-size:10px;">@Global.PaymentPage23</p>
 
                             }
                             else
@@ -317,7 +317,7 @@
                                         <a href="#" style="margin:5px 0px; border-bottom: 0.8px solid white; background-color:transparent; color:whitesmoke; font-size:10px;" type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#procedure">Payment procedure</a>
                                     </li>
                                 </ul>
-                                <div id="awi"><a href="#"><i id="wminfobtn" class="icon fa fa-info-circle"></i>&nbsp;About WebMoney</a></div>
+                                <div id="awi"><a href="#"><i id="wminfobtn" class="icon fa fa-info-circle"></i>&nbsp;@Global.PaymentPage24</a></div>
 
                                                 <!-- begin WebMoney Transfer : attestation label -->
                                 <a id="wmcheck" href="https://passport.webmoney.ru/asp/certview.asp?wmid=059551878952" target=_blank>
@@ -366,14 +366,14 @@
                 }
                 <div id="PurchacebtnBlock" class="col-xs-12">
 
-                    <a class="btn btn-sm btn-default" href="mobile/close" style="width:100px; font-size:small;"><i class="icon fa fa-close"></i>&nbsp; Cancel</a>
+                    <a class="btn btn-sm btn-default" href="mobile/close" style="width:100px; font-size:small;"><i class="icon fa fa-close"></i>&nbsp; @Global.btnCancel</a>
                     @if (ViewBag.IsChooesZarinpal)
                     {
-                        <a class="btn btn-default purchasebtn" href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true })"><span>Text</span></a>
+                        <a class="btn btn-default purchasebtn" href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true })"><span>@Global.PaymentPage26 </span></a>
                     }
                     else
                     {
-                        <a class="btn btn-default purchasebtn" href="@Url.Action("WMPurchase", "Payment",new { packageId = Model.PackageId, isFromApp = false })"><i class="icon fa fa-check-square-o"></i> Purchase</a>
+                        <a class="btn btn-default purchasebtn" href="@Url.Action("WMPurchase", "Payment",new { packageId = Model.PackageId, isFromApp = false })"><i class="icon fa fa-check-square-o"></i>@Global.btnPurchase  </a>
                     }
 
                 </div>

@@ -536,4 +536,52 @@
   <data name="ServerEmailSendingSuccess" xml:space="preserve">
     <value>Thanks!  sent successfully!. Please Check your email</value>
   </data>
+  <data name="btnCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="btnContinue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="btnPurchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="copyright2" xml:space="preserve">
+    <value>Terms &amp;amp; Conditions</value>
+  </data>
+  <data name="copyright21" xml:space="preserve">
+    <value>Privacy &amp;amp; Policy</value>
+  </data>
+  <data name="copyright22" xml:space="preserve">
+    <value>Soroosh Developer Team</value>
+  </data>
+  <data name="copyright23" xml:space="preserve">
+    <value>Developer:</value>
+  </data>
+  <data name="PaymentPage2" xml:space="preserve">
+    <value>Places</value>
+  </data>
+  <data name="PaymentPage21" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PaymentPage22" xml:space="preserve">
+    <value>Payment Gateway</value>
+  </data>
+  <data name="PaymentPage23" xml:space="preserve">
+    <value>You can check your payment trustfulness by click on ZarinPal Logo above</value>
+  </data>
+  <data name="PaymentPage24" xml:space="preserve">
+    <value>About WebMoney</value>
+  </data>
+  <data name="PaymentPage25" xml:space="preserve">
+    <value>Price :</value>
+  </data>
+  <data name="PaymentPage26" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="PaymentPage27" xml:space="preserve">
+    <value>Package Name</value>
+  </data>
+  <data name="PaymentPage28" xml:space="preserve">
+    <value>Reference ID</value>
+  </data>
 </root>

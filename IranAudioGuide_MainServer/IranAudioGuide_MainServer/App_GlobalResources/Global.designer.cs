@@ -115,6 +115,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string btnCancel {
+            get {
+                return ResourceManager.GetString("btnCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        internal static string btnContinue {
+            get {
+                return ResourceManager.GetString("btnContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase.
+        /// </summary>
+        internal static string btnPurchase {
+            get {
+                return ResourceManager.GetString("btnPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Purchased.
         /// </summary>
         internal static string btnPurchased {
@@ -129,6 +156,42 @@ namespace Resources {
         internal static string btnSubmit {
             get {
                 return ResourceManager.GetString("btnSubmit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms &amp;amp; Conditions.
+        /// </summary>
+        internal static string copyright2 {
+            get {
+                return ResourceManager.GetString("copyright2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy &amp;amp; Policy.
+        /// </summary>
+        internal static string copyright21 {
+            get {
+                return ResourceManager.GetString("copyright21", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soroosh Developer Team.
+        /// </summary>
+        internal static string copyright22 {
+            get {
+                return ResourceManager.GetString("copyright22", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Developer:.
+        /// </summary>
+        internal static string copyright23 {
+            get {
+                return ResourceManager.GetString("copyright23", resourceCulture);
             }
         }
         
@@ -895,6 +958,87 @@ namespace Resources {
         internal static string Parameter51 {
             get {
                 return ResourceManager.GetString("Parameter51", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Places.
+        /// </summary>
+        internal static string PaymentPage2 {
+            get {
+                return ResourceManager.GetString("PaymentPage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string PaymentPage21 {
+            get {
+                return ResourceManager.GetString("PaymentPage21", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Gateway.
+        /// </summary>
+        internal static string PaymentPage22 {
+            get {
+                return ResourceManager.GetString("PaymentPage22", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can check your payment trustfulness by click on ZarinPal Logo above.
+        /// </summary>
+        internal static string PaymentPage23 {
+            get {
+                return ResourceManager.GetString("PaymentPage23", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About WebMoney.
+        /// </summary>
+        internal static string PaymentPage24 {
+            get {
+                return ResourceManager.GetString("PaymentPage24", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price :.
+        /// </summary>
+        internal static string PaymentPage25 {
+            get {
+                return ResourceManager.GetString("PaymentPage25", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        internal static string PaymentPage26 {
+            get {
+                return ResourceManager.GetString("PaymentPage26", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package Name.
+        /// </summary>
+        internal static string PaymentPage27 {
+            get {
+                return ResourceManager.GetString("PaymentPage27", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reference ID.
+        /// </summary>
+        internal static string PaymentPage28 {
+            get {
+                return ResourceManager.GetString("PaymentPage28", resourceCulture);
             }
         }
         

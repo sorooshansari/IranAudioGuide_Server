@@ -270,6 +270,7 @@
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Variables.cs" />
     <Compile Include="Models\ViewModels.cs" />
+    <Compile Include="Models\LangVM.cs" />
     <Compile Include="Models\WBViewModel.cs" />
     <Compile Include="Models\WebMoneyTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
