@@ -1,18 +1,18 @@
 ﻿@using IranAudioGuide_MainServer.Models
 @using Resources;
+
 @{
     string downloadSection = (ViewBag.View == null) ? "/Home/Index/#Download_Application" : ((Views)ViewBag.View == Views.Index) ? "#Download_Application" : "/Home/Index/#Download_Application";
     string contactSection = (ViewBag.View == null) ? "/Home/Index/#contact" : ((Views)ViewBag.View == Views.Index) ? "#contact" : "/Home/Index/#contact";
-
-    var locales = new Dictionary<string, string>() { { "en-US", "english" }, { "fa", "Perisan" } };
-    var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
-    var action = Url.RequestContext.RouteData.Values["action"].ToString();
-    var id = Url.RequestContext.RouteData.Values["id"];
-    var lang = Request["lang"] == null ? "en-US" : Request["lang"].ToString();
+    var locales = new langsVM();
+    //var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
+    //var action = Url.RequestContext.RouteData.Values["action"].ToString();
+    //var id = Url.RequestContext.RouteData.Values["id"];
+    var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
 }
 
 <!DOCTYPE html>
-<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
+<html lang="@Global.Lang" xmlns:fb="http://ogp.me/ns/fb#">
 <head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
     <meta name="title" content="Best audio guide application for Iran travel" />
     <meta name="Description"
@@ -56,6 +56,8 @@
             }()); _vwo_settings_timer = _vwo_code.init();
         </script>*@
     <!-- End Visual Website Optimizer Asynchronous Code -->
+
+    <link href="~/Content/test.css" rel="stylesheet" />
 </head>
 <body class="landing @Global.Lang" ng-app="HomePage" ng-controller="HomeController">
     <!-- Page Wrapper -->
@@ -63,18 +65,54 @@
         <!-- Header -->
         <header id="header" class="alt">
             <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
-           
+
+
+            <div class="country">
+                <div class="countrySelected">
+                    @foreach (var item in locales.Get)
+                    {
+                        if (item.Id == lang)
+                        {
+                            <a href="@Url.Action("Index", "Home", new { lang = item.Id})" hreflang="@item.Id" lang="@item.Id">
+                                <img src="@item.Icon" alt="@item.Id" />
+                                <span class="siteFlagText">@item.Title</span>
+                            </a>
+                            break;
+                        }
+
+
+                    }
+
+                </div>
+                <div class="countryDropdown">
+                    @foreach (var item in locales.Get)
+                    {
+                        if (item.Id == lang)
+                        {
+                            continue;
+                        }
+                        <a href="@Url.Action("Index", "Home", new { lang = item.Id})" hreflang="@item.Id" lang="@item.Id">
+                            <img src="@item.Icon" alt="@item.Id" />
+                            <span class="siteFlagText">@item.Title</span>
+                        </a>
+
+                    }
+
+                </div>
+
+
+            </div>
             <nav id="nav">
-               
+
                 <ul>
                     <li class="special">
                         <a href="#menu" class="menuToggle"><span>@Global.MenuName</span></a>
                         <section id="menu">
                             <ul>
-                                @foreach (var l in locales)
-                                {
-                                    <li>@Html.ActionLink(l.Value, action, controller, new { lang = l.Key, id = id }, null)</li>
-                                }
+                                @*@foreach (var l in locales)
+                                    {
+                                        <li>@Html.ActionLink(l.Value, action, controller, new { lang = l.Key, id = id }, null)</li>
+                                    }*@
                                 <li><a id="HomeLink" href="@Url.Action("Index", "Home", new { lang = lang})"><i class="fa fa-home"></i>@Global.IranAudioGuide</a></li>
                                 @*<li><a class="scrolly" href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>*@
                                 @*<li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>*@

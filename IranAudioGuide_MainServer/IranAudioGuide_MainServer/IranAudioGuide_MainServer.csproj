@@ -223,6 +223,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\Global.fa.designer.cs">
+      <DependentUpon>Global.fa.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="App_GlobalResources\Global.designer.cs">
       <DependentUpon>Global.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -248,6 +253,10 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704170457041_d.cs" />
+    <Compile Include="Migrations\201704170457041_d.Designer.cs">
+      <DependentUpon>201704170457041_d.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -265,6 +274,7 @@
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Variables.cs" />
     <Compile Include="Models\ViewModels.cs" />
+    <Compile Include="Models\LangVM.cs" />
     <Compile Include="Models\WBViewModel.cs" />
     <Compile Include="Models\WebMoneyTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -696,9 +706,11 @@
     <Content Include="Content\images\close.svg" />
     <Content Include="images\defProfilew.png" />
     <Content Include="Content\images\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
+    <Content Include="Content\images\flag-uk.png" />
     <Content Include="Content\images\file_add.png" />
     <Content Include="Content\images\Get_it_on_Google_play.svg" />
     <Content Include="Content\images\ie\grad0-15.svg" />
+    <Content Include="Content\images\flag-fa.png" />
     <Content Include="Content\images\overlay.png" />
     <Content Include="Content\images\playpause-48-48-1.png" />
     <Content Include="Content\images\prevnext-48-48-1.png" />
@@ -1788,9 +1800,18 @@
     <Content Include="App_GlobalResources\Global.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Global.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_GlobalResources\Global.fa.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704170457041_d.resx">
+      <DependentUpon>201704170457041_d.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -228,7 +228,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         var getimg = db.Images.FirstOrDefault(x => x.Img_Id == img.ImageId);
                         if (getimg == null)
                             continue;
-                        getimg.Order = img.Index;
+                        getimg.Tmg_Order = img.Index;
                         db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Ima_Id == getimg.Img_Id));
                         db.UpdateLogs.Add(new UpdateLog() { Ima_Id = getimg.Img_Id, isRemoved = false });
                     }

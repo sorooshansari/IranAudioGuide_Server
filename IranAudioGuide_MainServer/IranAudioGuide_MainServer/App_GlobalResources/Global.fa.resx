@@ -118,79 +118,79 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnBuy" xml:space="preserve">
-    <value>buy</value>
+    <value>خرید</value>
   </data>
   <data name="btnPurchased" xml:space="preserve">
-    <value>Purchased</value>
+    <value>خریداری شده</value>
   </data>
   <data name="btnSubmit" xml:space="preserve">
-    <value>Submit</value>
+    <value>ارسال</value>
   </data>
   <data name="IndexBtnLearnMore" xml:space="preserve">
-    <value>Learn More</value>
+    <value>بیشتر بدانید</value>
   </data>
   <data name="IndexTitle" xml:space="preserve">
-    <value>The only guide you will need in Iran</value>
+    <value>تنها راهنمای مورد نیاز در ایران</value>
   </data>
   <data name="IndexTitle02" xml:space="preserve">
-    <value>Convenient, thorough, liberating</value>
+    <value>بهینه, کامل, liberating</value>
   </data>
   <data name="IranAudioGuide" xml:space="preserve">
-    <value>Iran Audio Guide</value>
+    <value>راهنمای صوتی ایران</value>
   </data>
   <data name="Lang" xml:space="preserve">
-    <value>en-US</value>
+    <value>انگلیسی</value>
   </data>
   <data name="MenuContactUs" xml:space="preserve">
-    <value>Contact Us</value>
+    <value>تماس با ما</value>
   </data>
   <data name="MenuLogin" xml:space="preserve">
-    <value>Log in</value>
+    <value>ورود</value>
   </data>
   <data name="MenuLogout" xml:space="preserve">
-    <value>Logout</value>
+    <value>خروج</value>
   </data>
   <data name="MenuName" xml:space="preserve">
-    <value>Menu</value>
+    <value>منو</value>
   </data>
   <data name="MenuProfile" xml:space="preserve">
-    <value>Profile</value>
+    <value>پروفایل</value>
   </data>
   <data name="Mona" xml:space="preserve">
-    <value>Mona Akhlaghi</value>
+    <value>منا اخلاقی</value>
   </data>
   <data name="PageError0" xml:space="preserve">
-    <value>Error - 404</value>
+    <value>خطا 404</value>
   </data>
   <data name="PageError1" xml:space="preserve">
-    <value>Sorry, The Page you entered not found!</value>
+    <value>با عرض پوزش سایت درخواستی یافت نشد </value>
   </data>
   <data name="PageError2" xml:space="preserve">
-    <value>what are you doing here?</value>
+    <value>اینجا چه می کنید؟</value>
   </data>
   <data name="PageError3" xml:space="preserve">
-    <value>Go back to Iran Audio Guide home page</value>
+    <value>بازگشت به صفحه اصلی سایت</value>
   </data>
   <data name="PageProfile" xml:space="preserve">
-    <value>Home</value>
+    <value>صفحه اصلی </value>
   </data>
   <data name="PageProfile1" xml:space="preserve">
-    <value>Packages</value>
+    <value>بسته ها</value>
   </data>
   <data name="PageProfile10" xml:space="preserve">
-    <value>Purchased</value>
+    <value>خریداری شده</value>
   </data>
   <data name="PageProfile11" xml:space="preserve">
-    <value>Device</value>
+    <value>دستگاه ها</value>
   </data>
   <data name="PageProfile12" xml:space="preserve">
-    <value>Log Off</value>
+    <value>خروج </value>
   </data>
   <data name="PageProfile13" xml:space="preserve">
-    <value>By pressing the</value>
+    <value>با فشار دادن</value>
   </data>
   <data name="PageProfile14" xml:space="preserve">
-    <value>DEACTIVATE OLD DEVICE</value>
+    <value>غیر فعال کردن دستگاه های قبلی</value>
   </data>
   <data name="PageProfile15" xml:space="preserve">
     <value>button you can deactivate your old device (your smart phone or tablet).</value>
@@ -423,7 +423,7 @@
     <value>Listen to the tracks your interested in, choose among all the content available</value>
   </data>
   <data name="IndexTitle01" xml:space="preserve">
-    <value>The only guide you will need in Iran</value>
+    <value>تنها راهنمای مورد نیاز در ایران</value>
   </data>
   <data name="TitlePageConfirmEmail" xml:space="preserve">
     <value>Confirm Email</value>
@@ -447,19 +447,19 @@
     <value>Send</value>
   </data>
   <data name="alt" xml:space="preserve">
-    <value>Download it on App Store</value>
+    <value>در اپ استور دانلود کنید</value>
   </data>
   <data name="alt1" xml:space="preserve">
-    <value>Get it on Google Play</value>
+    <value>در گوگل پلی دانلود کنید</value>
   </data>
   <data name="alt2" xml:space="preserve">
-    <value>accurate information about Iran</value>
+    <value>اطلاعات دقیق در مورد ایران</value>
   </data>
   <data name="alt3" xml:space="preserve">
-    <value>Choose what to listen to</value>
+    <value>مباحث مورد علاقه خود را انتخاب کنید</value>
   </data>
   <data name="alt4" xml:space="preserve">
-    <value>visit attractions with your own pace</value>
+    <value>زمان بادید از اماکن را خود تعیین کنید</value>
   </data>
   <data name="ServerDeactivateMobile" xml:space="preserve">
     <value>you have successfully deactivated your device. the next device you sign in with, will become your active device.</value>
