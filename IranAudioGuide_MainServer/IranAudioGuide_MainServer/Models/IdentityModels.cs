@@ -31,6 +31,16 @@ namespace IranAudioGuide_MainServer.Models
         public IList<Procurement> procurements { get; set; }
 
     }
+    public class Lang
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid lan_Id { get; set; }
+        public string Icon { get; set; }
+        public string Title { get; set; }
+
+
+    }
     public class UserLog
     {
         [Key]
@@ -57,11 +67,7 @@ namespace IranAudioGuide_MainServer.Models
         //[Display(Name = "Payment Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Pay_Id { get; set; }
-
-
         public Procurement Pay_Procurement { get; set; }
-
-
 
         [Display(Name = "Reference Number")]
         [MaxLength(100)]
@@ -85,14 +91,6 @@ namespace IranAudioGuide_MainServer.Models
         [MaxLength(50)]
         public string Pay_BankName { get; set; }
 
-        //[Display(Name = "User")]
-        //public ApplicationUser User { get; set; }
-
-        //[Display(Name = "Package")]
-        //public Package Package { get; set; }
-
-        //[Display(Name = "Insert Datetime")]
-        //public DateTime InsertDatetime { get; set; }
     }
     public class UpdateLog
     {
@@ -113,13 +111,18 @@ namespace IranAudioGuide_MainServer.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public System.Guid Aud_Id { get; set; }
+        public Guid Aud_Id { get; set; }
         public string Aud_Name { get; set; }
-        //public string Aud_Name_fa { get; set; }
         public string Aud_Url { get; set; }
         public string Aud_Discription { get; set; }
+        public int Aud_Order { get; set; }
+
+        #region Relation property
+        public Guid PlaceId { get; set; }
         public Place Place { get; set; }
-       // public string Lang { get; set; }
+        public Guid langId { get; set; }
+        public Lang Lang { get; set; }
+        #endregion
     }
 
     public class Story
@@ -130,48 +133,109 @@ namespace IranAudioGuide_MainServer.Models
         public string Sto_Name { get; set; }
         public string Sto_Url { get; set; }
         public string Sto_Discription { get; set; }
+        public int Sto_Order { get; set; }
+
+        #region Relation property
+        public Guid PlaceId { get; set; }
         public Place Place { get; set; }
+        public Guid langId { get; set; }
+        public Lang Lang { get; set; }
+        #endregion
+    }
+
+
+    public class TranslatePlace
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TrP_Id { get; set; }
+
+        public string TrP_Name { get; set; }
+        public string TrP_Discription { get; set; }
+        public string TrP_Address { get; set; }
+
+        public Guid Pla_Id { get; set; }
+        public Place Place { get; set; }
+
+        public Guid langId { get; set; }
+        public Lang Lang { get; set; }
+
     }
     public class Place
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public System.Guid Pla_Id { get; set; }
+        public Guid Pla_Id { get; set; }
         public string Pla_Name { get; set; }
         public string Pla_ImgUrl { get; set; }
         public string Pla_TumbImgUrl { get; set; }
         public string Pla_Discription { get; set; }
-        public List<Audio> Pla_Audios { get; set; }
-        public List<Story> Pla_Stories { get; set; }
-        public List<Image> Pla_ExtraImages { get; set; }
-        public List<Tip> Pla_Tips { get; set; }
         public city Pla_city { get; set; }
         public double Pla_cordinate_X { get; set; }
         public double Pla_cordinate_Y { get; set; }
         public string Pla_Address { get; set; }
         public bool Pla_Deactive { get; set; }
+        public int Pla_Order { get; set; }
+
         public bool Pla_isOnline { get; set; }
         public bool Pla_isPrimary { get; set; }
+        #region Relation property
+        public List<Audio> Pla_Audios { get; set; }
+        public List<Story> Pla_Stories { get; set; }
+        public List<Image> Pla_ExtraImages { get; set; }
+        public List<Tip> Pla_Tips { get; set; }
+        public List<TranslatePlace> TranslatePlaces { get; set; }
+
+        #endregion
     }
 
+    public class TranslateImage
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TrI_Id { get; set; }
+
+        public string TrI_Name { get; set; }
+        public string TrI_Discription { get; set; }
+
+        public Guid Img_Id { get; set; }
+        public Image Image { get; set; }
+
+
+        public Guid langId { get; set; }
+        public Lang Lang { get; set; }
+
+    }
     public class Image
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public System.Guid Img_Id { get; set; }
+        public Guid Img_Id { get; set; }
         public string Img_Name { get; set; }
-        public Place Place { get; set; }
         public string Img_Description { get; set; }
-        public int Order { get; set; }
+        public int Tmg_Order { get; set; }
+        #region Relation property
+        public Place Place { get; set; }
+        public List<TranslateImage> TranslateImages { get; set; }
+        #endregion
     }
+
+
     public class Tip
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public System.Guid Tip_Id { get; set; }
+        public Guid Tip_Id { get; set; }
         public TipCategory Tip_Category { get; set; }
         public string Tip_Content { get; set; }
+        public int Tip_Order { get; set; }
+
+        #region Relation property
         public Place Place { get; set; }
+        public Guid langId { get; set; }
+        public Lang Lang { get; set; }
+
+        #endregion
 
     }
     public class TipCategory
@@ -184,19 +248,62 @@ namespace IranAudioGuide_MainServer.Models
         public string TiC_Name { get; set; }
         public int TiC_Priority { get; set; }
     }
+
+    public class TranslateCity
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TrC_Id { get; set; }
+
+        public string TrC_Name { get; set; }
+        public string TrC_Discription { get; set; }
+
+        #region Relation property
+        public int Cit_Id { get; set; }
+        public city city { get; set; }
+
+
+        public Guid langId { get; set; }
+        public Lang Lang { get; set; }
+
+        #endregion
+
+    }
     public class city
     {
-        public city()
-        {
-            //Cit_Packages = new HashSet<Package>();
-        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Cit_Id { get; set; }
         public string Cit_Name { get; set; }
         public string Cit_Description { get; set; }
         public string Cit_ImageUrl { get; set; }
+        public int Cit_Order { get; set; }
+
+        #region Relation property
+        public List<TranslateCity> TranslateCities { get; set; }
         public IList<Package> Cit_Packages { get; set; }
+        #endregion
+    }
+
+    public class TranslatePackage
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TrP_Id { get; set; }
+
+        public string TrP_Name { get; set; }
+        #region Relation property
+
+        public Guid Pac_Id { get; set; }
+
+        public Package Package { get; set; }
+
+
+        public Guid langId { get; set; }
+        public Lang Lang { get; set; }
+
+        #endregion
+
     }
     public class Package
     {
@@ -206,14 +313,21 @@ namespace IranAudioGuide_MainServer.Models
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public System.Guid Pac_Id { get; set; }
+        public Guid Pac_Id { get; set; }
         public string Pac_Name { get; set; }
         public long Pac_Price { get; set; }
         public float Pac_Price_Dollar { get; set; }
-        public IList<city> Pac_Cities { get; set; }
-        public IList<Procurement> procurements { get; set; }
+        public int Pac_Order { get; set; }
+
         //public object pac_Cities { get; internal set; }
         //public IList<ApplicationUser> Pac_User { get; set; }
+
+        #region Relation property
+        public IList<city> Pac_Cities { get; set; }
+        public IList<Procurement> procurements { get; set; }
+        public List<TranslatePackage> TranslatePackages { get; set; }
+
+        #endregion
     }
     public class Procurement
     {
@@ -225,6 +339,15 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Pro_Id { get; set; }
+
+        // This is true only if the payment was successful
+        [Display(Name = "Payment Finished")]
+        public bool Pro_PaymentFinished { get; set; }
+        [Display(Name = "Insert Datetime")]
+        public DateTime Pro_InsertDatetime { get; set; }
+
+        #region Relation property
+
 
         [MaxLength(128)]
         public string Id { get; set; }
@@ -241,11 +364,8 @@ namespace IranAudioGuide_MainServer.Models
         //public int? WMPaymentId { get; set; }
         public WMPayment Pro_WMPayment { get; set; }
 
-        // This is true only if the payment was successful
-        [Display(Name = "Payment Finished")]
-        public bool Pro_PaymentFinished { get; set; }
-        [Display(Name = "Insert Datetime")]
-        public DateTime Pro_InsertDatetime { get; set; }
+        #endregion
+
     }
     public class RequestForApp
     {
@@ -308,8 +428,6 @@ namespace IranAudioGuide_MainServer.Models
         //[Display(Name = "Payment Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WMP_Id { get; set; }
-
-
         public Procurement WMP_Procurement { get; set; }
 
 
@@ -327,7 +445,6 @@ namespace IranAudioGuide_MainServer.Models
 
         [Display(Name = "Data Integrity")]
         public bool WMP_DataIntegrity { get; set; }
-
         public string WMP_PAYEE_PURSE { get; set; }
         public string WMP_PAYMENT_AMOUNT { get; set; }
         public string WMP_HOLD { get; set; }
@@ -341,7 +458,6 @@ namespace IranAudioGuide_MainServer.Models
         public DateTime WMP_SYS_TRANS_DATE_Result { get; set; }
         public string WMP_PAYER_PURSE { get; set; }
         public string WMP_PAYER_WM { get; set; }
-
 
         public string WMP_CAPITALLER_WMID { get; set; }
         public string WMP_PAYMER_NUMBER { get; set; }
@@ -386,6 +502,14 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<WMPayment> WMPayment { get; set; }
         public DbSet<DownloadLink> DownloadLinks { get; set; }
         public DbSet<Procurement> Procurements { get; set; }
+
+        //Culture
+        public Lang Langs { get; set; }
+        public TranslateCity TranslateCities { get; set; }
+        public TranslateImage TranslateImages { get; set; }
+        public TranslatePackage TranslatePackages { get; set; }
+        public TranslatePlace TranslatePlaces { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

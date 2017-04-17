@@ -1796,10 +1796,12 @@
     <Content Include="App_GlobalResources\Global.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Global.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\Global.fa.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
