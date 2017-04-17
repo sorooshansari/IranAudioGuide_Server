@@ -504,11 +504,11 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<Procurement> Procurements { get; set; }
 
         //Culture
-        public Lang Langs { get; set; }
-        public TranslateCity TranslateCities { get; set; }
-        public TranslateImage TranslateImages { get; set; }
-        public TranslatePackage TranslatePackages { get; set; }
-        public TranslatePlace TranslatePlaces { get; set; }
+        public DbSet<Lang> Langs { get; set; }
+        public DbSet<TranslateCity> TranslateCities { get; set; }
+        public DbSet<TranslateImage> TranslateImages { get; set; }
+        public DbSet<TranslatePackage> TranslatePackages { get; set; }
+        public DbSet<TranslatePlace> TranslatePlaces { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
