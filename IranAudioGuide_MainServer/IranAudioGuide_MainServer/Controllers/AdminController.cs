@@ -399,7 +399,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     Pla_Name = model.PlaceName,
                     Pla_Discription = model.PlaceDesc,
-                    Pla_Address = model.PlaceAddress
+                    Pla_Address = model.PlaceAddress,
+
                 };
                 if (model.PlaceCordinates != null)
                 {
@@ -799,8 +800,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     var getPlace = db.Places.Include(p => p.Pla_ExtraImages).Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     int o = 1;
                     if (getPlace.Pla_ExtraImages.Count != 0)
-                        o = getPlace.Pla_ExtraImages.Max(x => x.Order) + 1;
-                    var img = new Image() { Place = getPlace, Order = o };
+                        o = getPlace.Pla_ExtraImages.Max(x => x.Tmg_Order ) + 1;
+                    var img = new Image() { Place = getPlace, Tmg_Order = o };
                     var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     db.Images.Add(img);
                     db.SaveChanges();
@@ -902,7 +903,7 @@ namespace IranAudioGuide_MainServer.Controllers
                            ImageId = i.Img_Id,
                            ImageName = i.Img_Name,
                            ImageDesc = i.Img_Description,
-                           Index = i.Order
+                           Index = i.Tmg_Order
                        }).ToList();
             return Json(img);
         }
