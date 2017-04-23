@@ -241,9 +241,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AminApiController.cs" />
     <Compile Include="Controllers\apiTestController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
-    <Compile Include="Controllers\FilesStatus.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -252,10 +252,6 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704170457041_d.cs" />
-    <Compile Include="Migrations\201704170457041_d.Designer.cs">
-      <DependentUpon>201704170457041_d.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -1809,9 +1805,6 @@
     </Content>
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704170457041_d.resx">
-      <DependentUpon>201704170457041_d.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
