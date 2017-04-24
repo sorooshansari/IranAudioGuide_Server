@@ -88,6 +88,26 @@ namespace IranAudioGuide_MainServer.Models
         public List<Guid> Tips { get; set; }
         public List<int> Cities { get; set; }
     }
+    public class GetUpdateVM_v2
+    {
+        public GetUpdateVM_v2()
+        {
+            ErrorMessage = string.Empty;
+        }
+        public GetUpdateVM_v2(string error)
+        {
+            ErrorMessage = error;
+        }
+        public int UpdateNumber { get; set; }
+        public List<PlaceFullInfo> Places { get; set; }
+        public List<AudioFullInfo> Audios { get; set; }
+        public List<AudioFullInfo> Stories { get; set; }
+        public List<ImagesFullInfno> Images { get; set; }
+        public List<TipsFullInfo> Tips { get; set; }
+        public List<CitiesFullInfno> Cities { get; set; }
+        public RemovedEntries RemovedEntries { get; set; }
+        public string ErrorMessage { get; set; }
+    }
     public class GetUpdateVM
     {
         public GetUpdateVM()

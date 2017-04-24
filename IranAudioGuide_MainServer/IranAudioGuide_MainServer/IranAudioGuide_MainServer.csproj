@@ -244,6 +244,7 @@
     <Compile Include="Controllers\AminApiController.cs" />
     <Compile Include="Controllers\apiTestController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
+    <Compile Include="Controllers\AppManagerV2Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />

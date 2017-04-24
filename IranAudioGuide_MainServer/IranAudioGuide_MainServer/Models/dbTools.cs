@@ -195,6 +195,34 @@ namespace IranAudioGuide_MainServer.Models
             return res;
         }
 
+        public GetUpdateVM_v2 GetUpdateV2(int LastUpdateNumber, string uuid)
+        {
+            var SP1 = new SqlParameter("@UpdateNumber", LastUpdateNumber);
+            SP1.SqlDbType = SqlDbType.Int;
+            var SP2 = new SqlParameter("@uuid", uuid);
+            SP1.SqlDbType = SqlDbType.NVarChar;
+            var dt = dbManager.MultiTableResultSP("GetUpdatesV2", SP1, SP2);
+            var res = new GetUpdateVM_v2()
+            {
+                UpdateNumber = GetNumFromdataTable(dt[0], "LastUpdate"),
+                Places = FillPlaceVM(dt[1]),
+                Audios = FillAudioVM(dt[2]),
+                Stories = FillAudioVM(dt[3]),
+                Images = FillImageVM(dt[4]),
+                Tips = FillTipVM(dt[5]),
+                Cities = FillCityVM(dt[6]),
+                RemovedEntries = new RemovedEntries()
+                {
+                    Places = GetTableIds(dt[7]),
+                    Audios = GetTableIds(dt[8]),
+                    Stories = GetTableIds(dt[9]),
+                    Images = GetTableIds(dt[10]),
+                    Tips = GetTableIds(dt[11]),
+                    Cities = GetIntTableIds(dt[12])
+                }
+            };
+            return res;
+        }
 
         public GetAllVM GetAllEntries(string uuid)
         {
