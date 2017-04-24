@@ -31,64 +31,7 @@ namespace IranAudioGuide_MainServer.Models
         public IList<Procurement> procurements { get; set; }
 
     }
-    public class Lang
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid lan_Id { get; set; }
-        public string Icon { get; set; }
-        public string Title { get; set; }
-
-
-    }
-
-    public class Package
-    {
-        public Package()
-        {
-            //Pac_Cities = new HashSet<city>();
-        }
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Pac_Id { get; set; }
-        public string Pac_Name { get; set; }
-        public long Pac_Price { get; set; }
-        public float Pac_Price_Dollar { get; set; }
-        public int Pac_Order { get; set; }
-
-        //available for buying
-        public bool IsActive { get; set; }
-
-
-        #region Relation property
-        public IList<city> Pac_Cities { get; set; }
-        public IList<Procurement> procurements { get; set; }
-        public List<TranslatePackage> TranslatePackages { get; set; }
-
-        #endregion
-    }
-
-    public class TranslatePackage
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid TrP_Id { get; set; }
-
-        public string TrP_Name { get; set; }
-        #region Relation property
-
-        public Guid Pac_Id { get; set; }
-
-        public Package Package { get; set; }
-
-
-        public Guid langId { get; set; }
-        public Lang Lang { get; set; }
-
-        #endregion
-
-    }
-
+   
     public class UserLog
     {
         [Key]
@@ -100,191 +43,10 @@ namespace IranAudioGuide_MainServer.Models
         [Display(Name = "date time")]
         public DateTime UsL_DateTime { get; set; }
     }
-    public class Audio
+    public class LogUserFailure
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Aud_Id { get; set; }
-        public string Aud_Name { get; set; }
-        public string Aud_Url { get; set; }
-        public string Aud_Discription { get; set; }
-        public int Aud_Order { get; set; }
-
-        #region Relation property
-        public Guid PlaceId { get; set; }
-        public Place Place { get; set; }
-        public Guid langId { get; set; }
-        public Lang Lang { get; set; }
-        #endregion
-    }
-
-    public class Story
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Sto_Id { get; set; }
-        public string Sto_Name { get; set; }
-        public string Sto_Url { get; set; }
-        public string Sto_Discription { get; set; }
-        public int Sto_Order { get; set; }
-
-        #region Relation property
-        public Guid PlaceId { get; set; }
-        public Place Place { get; set; }
-        public Guid langId { get; set; }
-        public Lang Lang { get; set; }
-        #endregion
-    }
-
-
-    public class TranslatePlace
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid TrP_Id { get; set; }
-
-        public string TrP_Name { get; set; }
-        public string TrP_Discription { get; set; }
-        public string TrP_Address { get; set; }
-
-        public Guid Pla_Id { get; set; }
-        public Place Place { get; set; }
-
-        public Guid langId { get; set; }
-        public Lang Lang { get; set; }
-
-    }
-    public class Place
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Pla_Id { get; set; }
-        public string Pla_Name { get; set; }
-        public string Pla_ImgUrl { get; set; }
-        public string Pla_TumbImgUrl { get; set; }
-        public string Pla_Discription { get; set; }
-
-        public double Pla_cordinate_X { get; set; }
-        public double Pla_cordinate_Y { get; set; }
-        public string Pla_Address { get; set; }
-        public bool Pla_Deactive { get; set; }
-        public int Pla_Order { get; set; }
-
-        public bool Pla_isOnline { get; set; }
-        public bool Pla_isPrimary { get; set; }
-        #region Relation property
-
-        public Guid Cit_Id { get; set; }
-        public city Pla_city { get; set; }
-
-        public List<Audio> Pla_Audios { get; set; }
-
-        public List<Story> Pla_Stories { get; set; }
-
-        public List<Image> Pla_ExtraImages { get; set; }
-
-        public List<Tip> Pla_Tips { get; set; }
-        public List<TranslatePlace> TranslatePlaces { get; set; }
-
-        #endregion
-    }
-
-    public class TranslateImage
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid TrI_Id { get; set; }
-
-        public string TrI_Name { get; set; }
-        public string TrI_Discription { get; set; }
-
-        public Guid Img_Id { get; set; }
-        public Image Image { get; set; }
-
-
-        public Guid langId { get; set; }
-        public Lang Lang { get; set; }
-
-    }
-    public class Image
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Img_Id { get; set; }
-        public string Img_Name { get; set; }
-        public string Img_Description { get; set; }
-        public int Tmg_Order { get; set; }
-        #region Relation property
-        public Place Place { get; set; }
-        public List<TranslateImage> TranslateImages { get; set; }
-        #endregion
-    }
-
-
-    public class Tip
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Tip_Id { get; set; }
-        public TipCategory Tip_Category { get; set; }
-        public string Tip_Content { get; set; }
-        public int Tip_Order { get; set; }
-
-        #region Relation property
-        public Place Place { get; set; }
-        public Guid langId { get; set; }
-        public Lang Lang { get; set; }
-
-        #endregion
-
-    }
-    public class TipCategory
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public System.Guid TiC_Id { get; set; }
-        public string TiC_Class { get; set; }
-        public string TiC_Unicode { get; set; }
-        public string TiC_Name { get; set; }
-        public int TiC_Priority { get; set; }
-    }
-
-    public class TranslateCity
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid TrC_Id { get; set; }
-
-        public string TrC_Name { get; set; }
-        public string TrC_Discription { get; set; }
-
-        #region Relation property
-        public int Cit_Id { get; set; }
-        public city city { get; set; }
-
-
-        public Guid langId { get; set; }
-        public Lang Lang { get; set; }
-
-        #endregion
-
-    }
-    public class city
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Cit_Id { get; set; }
-        public string Cit_Name { get; set; }
-        public string Cit_Description { get; set; }
-        public string Cit_ImageUrl { get; set; }
-
-
-        #region Relation property
-        public List<TranslateCity> TranslateCities { get; set; }
-        public List<Audio> Audios { get; set; }
-        public List<Story> Stories { get; set; }
-        public IList<Package> Cit_Packages { get; set; }
-        #endregion
+        public int Id { get; set; }
+        public string IpAddress { get; set; }
     }
     public class Payment
     {
@@ -321,6 +83,324 @@ namespace IranAudioGuide_MainServer.Models
         public string Pay_BankName { get; set; }
 
     }
+    public class UpdateLog
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UpL_Id { get; set; }
+        public Guid? Aud_Id { get; set; }
+        public Guid? Pla_ID { get; set; }
+        public int? Cit_ID { get; set; }
+        public Guid? Img_Id { get; set; }
+        public Guid? Sto_Id { get; set; }
+        public Guid? Tip_Id { get; set; }
+        public Guid? Ima_Id { get; set; }
+        public bool isRemoved { get; set; }
+    }
+
+    public class Audio
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Aud_Id { get; set; }
+        public string Aud_Name { get; set; }
+        public string Aud_Url { get; set; }
+        public string Aud_Discription { get; set; }
+        public int Aud_Order { get; set; }
+
+        #region Relation property
+        public Guid PlaceId { get; set; }
+        public Place Place { get; set; }
+        public int langId { get; set; }
+      
+        #endregion
+    }
+
+    public class Story
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Sto_Id { get; set; }
+        public string Sto_Name { get; set; }
+        public string Sto_Url { get; set; }
+        public string Sto_Discription { get; set; }
+        public int Sto_Order { get; set; }
+
+        #region Relation property
+        public Guid PlaceId { get; set; }
+        public Place Place { get; set; }
+        public int langId { get; set; }
+      
+        #endregion
+    }
+
+
+    public class TranslatePlace
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TrP_Id { get; set; }
+
+        public string TrP_Name { get; set; }
+        public string TrP_Description { get; set; }
+        public string TrP_Address { get; set; }
+
+        public Guid Pla_Id { get; set; }
+        public Place Place { get; set; }
+
+        public int langId { get; set; }
+      
+
+    }
+    public class Place
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Pla_Id { get; set; }
+        public string Pla_Name { get; set; }
+        public string Pla_ImgUrl { get; set; }
+        public string Pla_TumbImgUrl { get; set; }
+        public string Pla_Discription { get; set; }
+        public city Pla_city { get; set; }
+        public double Pla_cordinate_X { get; set; }
+        public double Pla_cordinate_Y { get; set; }
+        public string Pla_Address { get; set; }
+        public bool Pla_Deactive { get; set; }
+        public int Pla_Order { get; set; }
+
+        public bool Pla_isOnline { get; set; }
+        public bool Pla_isPrimary { get; set; }
+        #region Relation property
+        public List<Audio> Pla_Audios { get; set; }
+        public List<Story> Pla_Stories { get; set; }
+        public List<Image> Pla_ExtraImages { get; set; }
+        public List<Tip> Pla_Tips { get; set; }
+        public List<TranslatePlace> TranslatePlaces { get; set; }
+
+        #endregion
+    }
+
+    public class TranslateImage
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TrI_Id { get; set; }
+
+        public string TrI_Name { get; set; }
+        public string TrI_Description { get; set; }
+
+        public Guid Img_Id { get; set; }
+        public Image Image { get; set; }
+
+
+        public int langId { get; set; }
+      
+
+    }
+    public class Image
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Img_Id { get; set; }
+        public string Img_Name { get; set; }
+        public string Img_Description { get; set; }
+        public int Tmg_Order { get; set; }
+        #region Relation property
+        public Place Place { get; set; }
+        public List<TranslateImage> TranslateImages { get; set; }
+        #endregion
+    }
+
+
+    public class Tip
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Tip_Id { get; set; }
+        public TipCategory Tip_Category { get; set; }
+        public string Tip_Content { get; set; }
+        public int Tip_Order { get; set; }
+
+        #region Relation property
+        public Place Place { get; set; }
+        public int langId { get; set; }
+      
+
+        #endregion
+
+    }
+    public class TipCategory
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid TiC_Id { get; set; }
+        public string TiC_Class { get; set; }
+        public string TiC_Unicode { get; set; }
+        public string TiC_Name { get; set; }
+        public int TiC_Priority { get; set; }
+    }
+
+    public class TranslateCity
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TrC_Id { get; set; }
+
+        public string TrC_Name { get; set; }
+        public string TrC_Description { get; set; }
+
+        #region Relation property
+        public int Cit_Id { get; set; }
+        public city city { get; set; }
+        public int langId { get; set; }
+      
+
+        #endregion
+
+    }
+    public class city
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Cit_Id { get; set; }
+        public string Cit_Name { get; set; }
+        public string Cit_Description { get; set; }
+        public string Cit_ImageUrl { get; set; }
+        public int Cit_Order { get; set; }
+
+        #region Relation property
+        public List<TranslateCity> TranslateCities { get; set; }
+        public IList<Package> Cit_Packages { get; set; }
+        #endregion
+    }
+
+    public class TranslatePackage
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid TrP_Id { get; set; }
+
+        public string TrP_Name { get; set; }
+        #region Relation property
+
+        public Guid Pac_Id { get; set; }
+
+        public Package Package { get; set; }
+
+
+        public int langId { get; set; }
+      
+
+        #endregion
+
+    }
+    public class Package
+    {
+        public Package()
+        {
+            //Pac_Cities = new HashSet<city>();
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Pac_Id { get; set; }
+        public string Pac_Name { get; set; }
+        public long Pac_Price { get; set; }
+        public float Pac_Price_Dollar { get; set; }
+        public int Pac_Order { get; set; }
+
+        //public object pac_Cities { get; internal set; }
+        //public IList<ApplicationUser> Pac_User { get; set; }
+
+        #region Relation property
+        public IList<city> Pac_Cities { get; set; }
+        public IList<Procurement> procurements { get; set; }
+        public List<TranslatePackage> TranslatePackages { get; set; }
+
+        #endregion
+    }
+    public class Procurement
+    {
+        public Procurement()
+        {
+            Pro_PaymentFinished = false;
+            Pro_InsertDatetime = DateTime.Now;
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Pro_Id { get; set; }
+
+        // This is true only if the payment was successful
+        [Display(Name = "Payment Finished")]
+        public bool Pro_PaymentFinished { get; set; }
+        [Display(Name = "Insert Datetime")]
+        public DateTime Pro_InsertDatetime { get; set; }
+
+        #region Relation property
+
+
+        [MaxLength(128)]
+        public string Id { get; set; }
+        public ApplicationUser Pro_User { get; set; }
+
+
+        public Guid Pac_Id { get; set; }
+        public Package Pro_Package { get; set; }
+
+
+        //public Guid? PaymentId { get; set; }
+        public Payment Pro_Payment { get; set; }
+
+        //public int? WMPaymentId { get; set; }
+        public WMPayment Pro_WMPayment { get; set; }
+
+        #endregion
+
+    }
+    public class RequestForApp
+    {
+        public RequestForApp()
+        {
+            CreateRequest = DateTime.Now;
+            IsSend = false;
+        }
+        [Key]
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public DateTime CreateRequest { get; set; }
+        public bool IsSend { get; set; }
+        public string NameDevice { get; set; }
+    }
+
+    public class DownloadLink
+    {
+        public DownloadLink()
+        {
+            IsDisable = false;
+            //Path = "test";
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public System.Guid Dow_Id { get; set; }
+        public string FileName { get; set; }
+
+        public string Path { get; set; }
+        public DateTime TimeToVisit { get; set; }
+        public bool IsDisable { get; internal set; }
+        public bool IsAudio { get; set; }
+    }
+    public class Comment
+    {
+        [Key]
+        public int Comment_Id { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        public DateTime CreateTime { get; set; }
+        public bool IsRead { get; set; }
+        public string uuid { get; set; }
+        public string Email { get; internal set; }
+    }
+
+
 
     public class WMPayment
     {
@@ -379,127 +459,6 @@ namespace IranAudioGuide_MainServer.Models
         public string WMP_PAYER_IP { get; set; }
 
     }
-
-    public class Procurement
-    {
-        public Procurement()
-        {
-            Pro_PaymentFinished = false;
-            Pro_InsertDatetime = DateTime.Now;
-        }
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Pro_Id { get; set; }
-
-        // This is true only if the payment was successful
-        [Display(Name = "Payment Finished")]
-        public bool Pro_PaymentFinished { get; set; }
-        [Display(Name = "Insert Datetime")]
-        public DateTime Pro_InsertDatetime { get; set; }
-
-        #region Relation property
-
-
-        [MaxLength(128)]
-        public string Id { get; set; }
-        public ApplicationUser Pro_User { get; set; }
-
-
-        public Guid Pac_Id { get; set; }
-        public Package Pro_Package { get; set; }
-
-
-        //public Guid? PaymentId { get; set; }
-        public Payment Pro_Payment { get; set; }
-
-        //public int? WMPaymentId { get; set; }
-        public WMPayment Pro_WMPayment { get; set; }
-
-        #endregion
-
-    }
-    public class RequestForApp
-    {
-        public RequestForApp()
-        {
-            CreateRequest = DateTime.Now;
-            IsSend = false;
-        }
-        [Key]
-        public int Id { get; set; }
-        public string Email { get; set; }
-        public DateTime CreateRequest { get; set; }
-        public bool IsSend { get; set; }
-        public string NameDevice { get; set; }
-    }
-
-    public class Comment
-    {
-        [Key]
-        public int Comment_Id { get; set; }
-        public string Subject { get; set; }
-        public string Message { get; set; }
-        public DateTime CreateTime { get; set; }
-        public bool IsRead { get; set; }
-        public string uuid { get; set; }
-        public string Email { get; internal set; }
-    }
-
-
-    public class LogUserFailure
-    {
-        public int Id { get; set; }
-        public string IpAddress { get; set; }
-    }
-    public class UpdateLog
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UpL_Id { get; set; }
-        public Guid? Aud_Id { get; set; }
-        public Guid? Pla_ID { get; set; }
-        public int? Cit_ID { get; set; }
-        public Guid? Img_Id { get; set; }
-        public Guid? Sto_Id { get; set; }
-        public Guid? Tip_Id { get; set; }
-        public Guid? Ima_Id { get; set; }
-        public bool isRemoved { get; set; }
-    }
-    public class LogDownloadTrack
-    {
-        public int Id { get; set; }
-        public DateTime Time { get; set; }
-
-        #region Relation property
-        [MaxLength(128)]
-        public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
-        public Guid? AudioId { get; set; }
-        public Audio Audio { get; set; }
-        public Guid? StoryId { get; set; }
-        public Story Story { get; set; }
-        #endregion
-
-
-    }
-
-    public class DownloadLink
-    {
-        public DownloadLink()
-        {
-            IsDisable = false;
-            //Path = "test";
-        }
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Dow_Id { get; set; }
-        public string FileName { get; set; }
-
-        public string Path { get; set; }
-        public DateTime TimeToVisit { get; set; }
-        public bool IsDisable { get; internal set; }
-        public bool IsAudio { get; set; }
-    }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -520,9 +479,12 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<city> Cities { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<UpdateLog> UpdateLogs { get; set; }
         public DbSet<Tip> Tips { get; set; }
         public DbSet<TipCategory> TipCategories { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<LogUserFailure> LogUserFailures { get; set; }
         //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<RequestForApp> RequestForApps { get; set; }
@@ -531,16 +493,10 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<Procurement> Procurements { get; set; }
 
         //Culture
-        public Lang Langs { get; set; }
-        public TranslateCity TranslateCities { get; set; }
-        public TranslateImage TranslateImages { get; set; }
-        public TranslatePackage TranslatePackages { get; set; }
-        public TranslatePlace TranslatePlaces { get; set; }
-        //log
-        public DbSet<LogDownloadTrack> LogDownloadTracks { get; set; }
-        public DbSet<UserLog> UserLogs { get; set; }
-        public DbSet<LogUserFailure> LogUserFailures { get; set; }
-        public DbSet<UpdateLog> UpdateLogs { get; set; }
+        public DbSet<TranslateCity> TranslateCities { get; set; }
+        public DbSet<TranslateImage> TranslateImages { get; set; }
+        public DbSet<TranslatePackage> TranslatePackages { get; set; }
+        public DbSet<TranslatePlace> TranslatePlaces { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -252,6 +252,7 @@
                         <td>#</td>
                         <td>Name</td>
                         <td>Price</td>
+                        <td>Price Dollar</td>
                         <td>  cities</td>
                         @*<td></td>*@
                     </tr>
@@ -261,6 +262,7 @@
                         <td>{{package.Index}} </td>
                         <td>{{package.PackageName}}</td>
                         <td>{{package.PackagePrice}}</td>
+                        <td>{{package.PackagePrice_Dollar}}</td>
                         <td>
                             <ul ng-repeat="city in package.PackageCities">
                                 <li>{{city.CityName}}</li>
@@ -319,9 +321,15 @@
                         <input ng-class="choosInputClass(PackageForm.PackageName.$invalid, PackageForm.PackageName.$touched, PackageForm.$submitted)"
                                ng-model="NewPackage.Name" type="text" name="PackageName" placeholder="Package name*" required />
                     </div>
+
+                    <div class="6u$ 12u$(mobile)">
+                        <input ng-class="choosInputClass(PackageForm.PackagePrice_Dollar_Dollar.$invalid, PackageForm.PackagePrice_Dollar.$touched, PackageForm.$submitted)"
+                               ng-model="NewPackage.PackagePrice_Dollar" type="text" name="PackagePrice_Dollar" placeholder="Package Price Dollar" required />
+                    </div>
+
                     <div class="6u$ 12u$(mobile)">
                         <input ng-class="choosInputClass(PackageForm.PackagePrice.$invalid, PackageForm.PackagePrice.$touched, PackageForm.$submitted)"
-                               ng-model="NewPackage.Price" type="text" name="PackagePrice" placeholder="Package Price*" required />
+                               ng-model="NewPackage.PackagePrice" type="text" name="PackagePrice" placeholder="Package Price Persian*" required />
                     </div>
                     <div class="6u$">
                         <span style="display:none" ng-class="choosInputClass(selectCityInvalid, pkgcitiesTouched, PackageForm.$submitted)">

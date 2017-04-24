@@ -23,6 +23,13 @@ namespace IranAudioGuide_MainServer.Controllers
         private Object DelAdo = new Object();
         private Object DelPlc = new Object();
         private Object DelCit = new Object();
+        public int lang
+        {
+            get
+            {
+                return (int)LangId.en;
+            }
+        }
         //private const string storagePrefix = "http://iranaudioguide.com/";
         // GET: Admin
         [Authorize(Roles = "Admin")]
@@ -48,7 +55,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         Tip_Category = db.TipCategories.Where(x => x.TiC_Id == model.TipCategoryId).First(),
                         Tip_Content = model.content,
-                        Place = db.Places.Where(x => x.Pla_Id == model.PlaceId).First()
+                        Place = db.Places.FirstOrDefault(x => x.Pla_Id == model.PlaceId),
+                        langId = lang
                     };
                     db.Tips.Add(newTip);
                     //db.SaveChanges();
@@ -72,7 +80,6 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             using (var dbTran = db.Database.BeginTransaction())
             {
-
                 try
                 {
                     var tip = db.Tips.Where(x => x.Tip_Id == Id).FirstOrDefault();
@@ -400,8 +407,14 @@ namespace IranAudioGuide_MainServer.Controllers
                     Pla_Name = model.PlaceName,
                     Pla_Discription = model.PlaceDesc,
                     Pla_Address = model.PlaceAddress,
-
+                    TranslatePlaces = new List<TranslatePlace>()
                 };
+                TranslatePlace tp = new TranslatePlace()
+                {
+                    langId = lang,
+                    TrP_Name = model.PlaceName,
+                };
+                place.TranslatePlaces.Add(tp);
                 if (model.PlaceCordinates != null)
                 {
                     if (!model.PlaceCordinates.Contains(','))
@@ -439,14 +452,14 @@ namespace IranAudioGuide_MainServer.Controllers
                         UpdateLog(updatedTable.Place, place.Pla_Id);
                         db.SaveChanges();
                         dbTran.Commit();
-                        var fullpath =GlobalPath.FullPathImagePlace +fileName;
-                        var isSuccess = request.Upload(model.Image, fullpath );
+                        var fullpath = GlobalPath.FtpPathImagePlace + fileName;
+                        var isSuccess = request.Upload(model.Image, fullpath);
                         if (!isSuccess)
                             throw new ArgumentException("Dont save image in Server", "original");
 
 
-                        var PathSource = GlobalPath.FullPathImagePlace + "/" + fileName;
-                        var Destination = GlobalPath.FullPathImageTumbnail + "/" + fileName;
+                        var PathSource = GlobalPath.FtpPathImagePlace + "/" + fileName;
+                        var Destination = GlobalPath.FtpPathImageTumbnail + "/" + fileName;
                         isSuccess = request.Copy(PathSource, Destination);
                         if (!isSuccess)
                             throw new ArgumentException("Dont save Tumbnail image in Server", "original");
@@ -528,15 +541,27 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return Json(new Respond("Check input fields", status.invalidInput));
             }
-            var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
+            var place = db.Places.Include(c => c.Pla_city).Include(d => d.TranslatePlaces)
+                .Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
             if (place == default(Place))
             {
                 return Json(new Respond("Invalid Place Id", status.invalidId));
             }
+
             place.Pla_Name = model.PlaceName;
             place.Pla_Discription = model.PlaceDesc;
-            place.Pla_city = db.Cities.Where(x => x.Cit_Id == model.PlaceCityId).FirstOrDefault();
             place.Pla_Address = model.PlaceAddress;
+
+
+            var t = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang);
+
+            t.TrP_Name = model.PlaceName;
+            t.TrP_Description = model.PlaceDesc;
+            t.TrP_Address = model.PlaceAddress;
+
+            if (place.Pla_city.Cit_Id != model.PlaceCityId)
+                place.Pla_city = db.Cities.Where(x => x.Cit_Id == model.PlaceCityId).FirstOrDefault();
+
             if (model.PlaceCordinates != null)
             {
                 if (!model.PlaceCordinates.Contains(','))
@@ -753,7 +778,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         if (Path.GetFileNameWithoutExtension(place.Pla_TumbImgUrl) != Path.GetFileNameWithoutExtension(model.NewImage.FileName))
                         {
-                            request.delete(place.Pla_TumbImgUrl, GlobalPath.FullPathImagePlace);
+                            request.delete(place.Pla_TumbImgUrl, GlobalPath.FtpPathImagePlace);
                             place.Pla_TumbImgUrl = fileName;
                         }
                         UpdateLog(updatedTable.Place, place.Pla_Id);
@@ -766,7 +791,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-                    var fullpath = GlobalPath.FullPathImagePlace + fileName;
+                    var fullpath = GlobalPath.FtpPathImagePlace + fileName;
                     var isSuccess = request.Upload(model.NewImage, fullpath);
                     if (isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
@@ -800,7 +825,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     var getPlace = db.Places.Include(p => p.Pla_ExtraImages).Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     int o = 1;
                     if (getPlace.Pla_ExtraImages.Count != 0)
-                        o = getPlace.Pla_ExtraImages.Max(x => x.Tmg_Order ) + 1;
+                        o = getPlace.Pla_ExtraImages.Max(x => x.Tmg_Order) + 1;
                     var img = new Image() { Place = getPlace, Tmg_Order = o };
                     var place = db.Places.Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
                     db.Images.Add(img);
@@ -915,19 +940,25 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return Json(new Respond("Check input fields", status.invalidInput));
             }
-            var city = new city() { Cit_Name = model.CityName, Cit_Description = model.CityDesc };
+            var city = new city() { Cit_Name = model.CityName, Cit_Description = model.CityDesc, TranslateCities = new List<TranslateCity>() };
+            var t = new TranslateCity()
+            {
+                langId = lang,
+                TrC_Name = model.CityName,
+                TrC_Description = model.CityDesc
+            };
+            city.TranslateCities.Add(t);
             using (var dbTran = db.Database.BeginTransaction())
             {
                 try
                 {
-
                     db.Cities.Add(city);
                     db.SaveChanges();
 
                     //uplaod file
                     var request = new ServiceFtp();
                     var fileName = Convert.ToString(city.Cit_Id) + Path.GetExtension(model.CityImage.FileName);
-                    var fullpath = GlobalPath.FullPathImageCity + fileName;
+                    var fullpath = GlobalPath.FtpPathImageCity + fileName;
                     var isSuccess = request.Upload(model.CityImage, fullpath);
                     //end upload file
 
@@ -955,13 +986,20 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return Json(new Respond("Check input fields", status.invalidInput));
             }
-            var city = db.Cities.Where(x => x.Cit_Id == model.CityID).FirstOrDefault();
+            var city = db.Cities.Include(i => i.TranslateCities)
+                .Where(x => x.Cit_Id == model.CityID).FirstOrDefault();
             if (city == default(city))
             {
                 return Json(new Respond("Invalid Place Id", status.invalidId));
             }
             city.Cit_Name = model.CityName;
             city.Cit_Description = model.CityDesc;
+            var t = city.TranslateCities.FirstOrDefault(x => x.langId == lang);
+
+
+            t.TrC_Name = model.CityName;
+            t.TrC_Description = model.CityDesc;
+
 
             using (var dbTran = db.Database.BeginTransaction())
             {
@@ -1009,7 +1047,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     var fileName = Convert.ToString(model.CityId) + Path.GetExtension(model.NewImage.FileName);
 
                     if (Path.GetFileNameWithoutExtension(city.Cit_ImageUrl) != Path.GetFileNameWithoutExtension(model.NewImage.FileName))
-                        request.delete(city.Cit_ImageUrl, GlobalPath.FullPathImageCity);
+                        request.delete(city.Cit_ImageUrl, GlobalPath.FtpPathImageCity);
 
                     try
                     {
@@ -1024,7 +1062,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-                    var fullpath = GlobalPath.FullPathImageCity + fileName;
+                    var fullpath = GlobalPath.FtpPathImageCity + fileName;
                     var isSuccess = request.Upload(model.NewImage, fullpath);
                     if (isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
@@ -1130,8 +1168,8 @@ namespace IranAudioGuide_MainServer.Controllers
         public JsonResult GetCities(int PageNum)
         {
             if (PageNum == -1)
-                return Json(GetAllCitiesName());
-            var Cities = GetCities();
+                return Json(GetAllCitiesName(lang));
+            var Cities = GetCities2(lang);
             int pagesLen = (Cities.Count() % pagingLen == 0) ? Cities.Count() / pagingLen : (Cities.Count() / pagingLen) + 1;
             int remain = Cities.Count - (PageNum * pagingLen);
             return Json(new GetCitiesVM(
@@ -1146,24 +1184,39 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                List<PlaceVM> Places =
-                    (from place in db.Places
-                     where !place.Pla_Deactive
-                     orderby place.Pla_Id descending
-                     select new PlaceVM()
-                     {
-                         PlaceId = place.Pla_Id,
-                         ImgUrl = place.Pla_ImgUrl,
-                         TumbImgUrl = place.Pla_TumbImgUrl,
-                         PlaceDesc = place.Pla_Discription,
-                         PlaceName = place.Pla_Name,
-                         CityName = place.Pla_city.Cit_Name,
-                         PlaceAddress = place.Pla_Address,
-                         PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
-                         PlaceCityId = place.Pla_city.Cit_Id,
-                         isOnline = place.Pla_isOnline,
-                         isPrimary = place.Pla_isPrimary
-                     }).ToList();
+                List<PlaceVM> Places = db.Places.Include(i => i.TranslatePlaces).Include(i => i.Pla_city.TranslateCities).Select(place => new PlaceVM()
+                {
+                    PlaceId = place.Pla_Id,
+                    ImgUrl = place.Pla_ImgUrl,
+                    TumbImgUrl = place.Pla_TumbImgUrl,
+                    PlaceDesc = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Description,
+                    PlaceName = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Name,
+                    CityName = place.Pla_city.TranslateCities.FirstOrDefault(x => x.langId == lang).TrC_Name,
+                    PlaceAddress = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Address,
+                    PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
+                    PlaceCityId = place.Pla_city.Cit_Id,
+                    isOnline = place.Pla_isOnline,
+                    isPrimary = place.Pla_isPrimary
+                }).ToList();
+
+                //List<PlaceVM> Places =
+                //    (from place in db.Places
+                //     where !place.Pla_Deactive
+                //     orderby place.Pla_Id descending
+                //     select new PlaceVM()
+                //     {
+                //         PlaceId = place.Pla_Id,
+                //         ImgUrl = place.Pla_ImgUrl,
+                //         TumbImgUrl = place.Pla_TumbImgUrl,
+                //         PlaceDesc = place.Pla_Discription,
+                //         PlaceName = place.Pla_Name,
+                //         CityName = place.Pla_city.Cit_Name,
+                //         PlaceAddress = place.Pla_Address,
+                //         PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
+                //         PlaceCityId = place.Pla_city.Cit_Id,
+                //         isOnline = place.Pla_isOnline,
+                //         isPrimary = place.Pla_isPrimary
+                //     }).ToList();
                 return Places.AsEnumerable().Reverse().ToList();
             }
             catch (Exception ex)
@@ -1270,28 +1323,35 @@ namespace IranAudioGuide_MainServer.Controllers
 
             return list;
         }
-        private List<JNOCitiesVM> GetAllCitiesName()
+        private List<JNOCitiesVM> GetAllCitiesName(int langId)
         {
-            List<JNOCitiesVM> JNOCities = (from c in db.Cities
-                                           orderby c.Cit_Id descending
-                                           select new JNOCitiesVM()
-                                           {
-                                               CityID = c.Cit_Id,
-                                               CityName = c.Cit_Name
-                                           }).ToList();
+            List<JNOCitiesVM> JNOCities = db.Cities.Include(i => i.TranslateCities).OrderByDescending(c => c.Cit_Id)
+                .Select(c => new JNOCitiesVM()
+                {
+                    CityID = c.Cit_Id,
+                    CityName = c.TranslateCities.FirstOrDefault(x => x.langId == langId).TrC_Name
+                }).ToList();
             return JNOCities;
         }
-        private List<CityVM> GetCities()
+        private List<CityVM> GetCities2(int langId)
         {
-            List<CityVM> cities = (from c in db.Cities
-                                   orderby c.Cit_Id descending
-                                   select new CityVM()
-                                   {
-                                       CityDesc = c.Cit_Description,
-                                       CityID = c.Cit_Id,
-                                       CityName = c.Cit_Name,
-                                       CityImageUrl = c.Cit_ImageUrl
-                                   }).ToList();
+            List<CityVM> cities = db.Cities.Include(i => i.TranslateCities).OrderByDescending(c => c.Cit_Id)
+                .Select(c => new CityVM()
+                {
+                    CityDesc = c.TranslateCities.FirstOrDefault(x => x.langId == langId).TrC_Description,
+                    CityID = c.Cit_Id,
+                    CityName = c.TranslateCities.FirstOrDefault(x => x.langId == langId).TrC_Name,
+                    CityImageUrl = c.Cit_ImageUrl
+                }).ToList();
+            //List<CityVM> cities = (from c in db.Cities
+            //                       orderby c.Cit_Id descending
+            //                       select new CityVM()
+            //                       {
+            //                           CityDesc = c.Cit_Description,
+            //                           CityID = c.Cit_Id,
+            //                           CityName = c.Cit_Name,
+            //                           CityImageUrl = c.Cit_ImageUrl
+            //                       }).ToList();
             int counter = 0;
             foreach (var item in cities)
             {
@@ -1385,25 +1445,40 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public JsonResult GetPackages()
         {
-            List<PackageVM> packages =
-                (from p in db.Packages
-                 orderby p.Pac_Id descending
-                 select new PackageVM()
-                 {
-                     PackageName = p.Pac_Name,
-                     PackageId = p.Pac_Id,
-                     PackagePrice = p.Pac_Price,
-                     PackageCities =
-                     (from c in db.Cities
-                      where
-                      (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-                      select new CityVM()
-                      {
-                          CityDesc = c.Cit_Description,
-                          CityID = c.Cit_Id,
-                          CityName = c.Cit_Name
-                      }).ToList()
-                 }).ToList();
+
+
+            List<PackageVM> packages = db.Packages.Include(x => x.TranslatePackages).Include("Pac_Cities.TranslateCities")
+                .Select(p => new PackageVM()
+                {
+                    PackageName = p.TranslatePackages.FirstOrDefault(x => x.langId == lang).TrP_Name,
+                    PackageId = p.Pac_Id,
+                    PackagePrice = p.Pac_Price,
+                    PackageCities = p.Pac_Cities.Select(c => new CityVM()
+                    {
+                        CityDesc = c.Cit_Description,
+                        CityID = c.Cit_Id,
+                        CityName = c.TranslateCities.FirstOrDefault(f => f.langId == lang).TrC_Name
+                    }).ToList()
+                }).OrderByDescending(o => o.PackageId).ToList();
+
+            //(from p in db.Packages
+            // orderby p.Pac_Id descending
+            // select new PackageVM()
+            // {
+            //     PackageName = p.Pac_Name,
+            //     PackageId = p.Pac_Id,
+            //     PackagePrice = p.Pac_Price,
+            //     PackageCities =
+            //     (from c in db.Cities
+            //      where
+            //      (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
+            //      select new CityVM()
+            //      {
+            //          CityDesc = c.Cit_Description,
+            //          CityID = c.Cit_Id,
+            //          CityName = c.Cit_Name
+            //      }).ToList()
+            // }).ToList();
             int counter = 0;
             foreach (var item in packages)
             {
@@ -1421,17 +1496,26 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return Json(new Respond("Check input fields", status.invalidInput));
             }
-
             using (var dbTran = db.Database.BeginTransaction())
             {
+
+                //int langId = (int)LangId.en;
+                //var lang = db.Langs.FirstOrDefault(x => x.lan_Id == langId);
                 try
                 {
                     var package = new Package()
                     {
                         Pac_Name = model.PackageName,
                         Pac_Price = model.PackagePrice,
+                        Pac_Price_Dollar = model.PackagePrice_Dollar,
+                        TranslatePackages = new List<TranslatePackage>()
                     };
-
+                    TranslatePackage tp = new TranslatePackage()
+                    {
+                        langId = lang,
+                        TrP_Name = model.PackageName,
+                    };
+                    package.TranslatePackages.Add(tp);
                     var cities = db.Cities.Where(x => model.Cities.Any(y => y == x.Cit_Id)).ToList();
                     package.Pac_Cities = cities;
 
