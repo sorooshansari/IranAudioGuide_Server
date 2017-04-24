@@ -240,6 +240,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminApiController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\apiTestController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
@@ -249,9 +250,9 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    <Compile Include="Migrations\201704241259507_f1.cs" />
+    <Compile Include="Migrations\201704241259507_f1.Designer.cs">
+      <DependentUpon>201704241259507_f1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -264,6 +265,7 @@
     <Compile Include="Models\dbManager.cs" />
     <Compile Include="Models\dbTools.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Lang.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mappings.cs" />
     <Compile Include="Models\SqlCommands.cs" />
@@ -279,6 +281,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
     <Compile Include="Services\GlobalPath.cs" />
@@ -1803,8 +1806,10 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704241259507_f1.resx">
+      <DependentUpon>201704241259507_f1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

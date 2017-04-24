@@ -147,18 +147,8 @@
             method = 'POST';
             url = '/Admin/GetPlaces';
             data = { PageNum: PageNum };
-            $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  $rootScope.PlacePagesLen = response.data.PagesLen;
-                  $rootScope.PlaceCurrentPage = PageNum;
-                  $rootScope.$broadcast('LoadFirstPlaceAudios', {});
-                  return response.data.Places;
-
-              }, function (response) {
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
-              });
-            return Places;
+            return  $http({ method: method, url: url, data: data });
+            //return Places;
         },
         OnlineGet: function (PageNum) {
             method = 'POST';
@@ -167,7 +157,7 @@
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   $rootScope.PlacePagesLen = response.data.PagesLen;
-                  $rootScope.PlaceCurrentPage = PageNum;
+                //  $rootScope.PlaceCurrentPage = PageNum;
                   angular.copy(response.data.Places, OnlinePlaces);
                   $rootScope.$broadcast('OnlineLoadFirstPlaceAudios', {});
               }, function (response) {
