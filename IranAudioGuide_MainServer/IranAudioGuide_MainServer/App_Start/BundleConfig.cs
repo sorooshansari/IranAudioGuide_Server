@@ -51,7 +51,8 @@ namespace IranAudioGuide_MainServer
                       "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
                       "~/Content/css/toggle.min.css",
                       "~/Content/css/styles.min.css",
-                      "~/Content/css/HomeStyles.css"));
+                      "~/Content/css/HomeStyles.css",
+                      "~/Content/css/Home_fa.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/minJs").Include(
                         "~/Content/Scripts/jquery.min.js",

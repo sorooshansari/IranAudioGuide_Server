@@ -196,6 +196,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Facebook.
+        /// </summary>
+        internal static string Facebook {
+            get {
+                return ResourceManager.GetString("Facebook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learn More.
         /// </summary>
         internal static string IndexBtnLearnMore {
@@ -232,11 +250,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instagram.
+        /// </summary>
+        internal static string Instagram {
+            get {
+                return ResourceManager.GetString("Instagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Iran Audio Guide.
         /// </summary>
         internal static string IranAudioGuide {
             get {
                 return ResourceManager.GetString("IranAudioGuide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iran Audio Guide Office.
+        /// </summary>
+        internal static string IranAudioGuideOffice {
+            get {
+                return ResourceManager.GetString("IranAudioGuideOffice", resourceCulture);
             }
         }
         
@@ -300,6 +336,15 @@ namespace Resources {
         internal static string Mona {
             get {
                 return ResourceManager.GetString("Mona", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fars Science and Technology Park,&lt;br/&gt;Aryan town, Dr Hesabi Boulevard,&lt;br/&gt;Shiraz, Iran.
+        /// </summary>
+        internal static string OfficeAddress {
+            get {
+                return ResourceManager.GetString("OfficeAddress", resourceCulture);
             }
         }
         
@@ -682,7 +727,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hi! We are Mona Akhlaghi and Soroosh Ansari Mehr, two individuals with a passion for creativity — creativity makes us happy. We truly believe in the transformative power of illustration and design and their ability to simplify communications.
+        ///   Looks up a localized string similar to The Iran Audio Guide appication has been created by a dedicated team with a combination of experties. We always feel obligied to present the highest standard in all aspects of our work.
         /// </summary>
         internal static string Parameter24 {
             get {
@@ -700,7 +745,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cras sit amet nibh libero.
+        ///   Looks up a localized string similar to CEO.
         /// </summary>
         internal static string Parameter26 {
             get {
@@ -718,7 +763,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cras sit amet nibh libero.
+        ///   Looks up a localized string similar to CTO.
         /// </summary>
         internal static string Parameter28 {
             get {
@@ -1143,6 +1188,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        internal static string Send {
+            get {
+                return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please confirm your account by clicking &lt;a href=&apos;{0} &apos;&gt;here&lt;/a&gt;.
         /// </summary>
         internal static string ServerConfirmMessage {
@@ -1395,6 +1449,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Telegram.
+        /// </summary>
+        internal static string Telegram {
+            get {
+                return ResourceManager.GetString("Telegram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Email.
         /// </summary>
         internal static string TitlePageConfirmEmail {
@@ -1454,6 +1517,15 @@ namespace Resources {
         internal static string TitlePageSendCode {
             get {
                 return ResourceManager.GetString("TitlePageSendCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twitter.
+        /// </summary>
+        internal static string Twitter {
+            get {
+                return ResourceManager.GetString("Twitter", resourceCulture);
             }
         }
     }

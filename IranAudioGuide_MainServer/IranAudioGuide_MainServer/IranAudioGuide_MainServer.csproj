@@ -251,10 +251,6 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201704221119511_s.cs" />
-    <Compile Include="Migrations\201704221119511_s.Designer.cs">
-      <DependentUpon>201704221119511_s.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -561,6 +557,7 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\fontawesome-webfont.svg" />
     <Content Include="Content\css\HomeStyles.css" />
+    <Content Include="Content\css\Home_fa.css" />
     <Content Include="Content\css\ie8.css" />
     <Content Include="Content\css\ie9.css" />
     <Content Include="Content\css\ionic.css" />
@@ -1643,6 +1640,7 @@
     <None Include="Content\Scripts\jquery.validate-vsdoc.js" />
     <Content Include="fonts\Arcon-Regular.otf" />
     <Content Include="fonts\Arcon-Rounded-Regular.otf" />
+    <Content Include="fonts\SDDT-Light-web.woff" />
     <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />
@@ -1807,11 +1805,6 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704221119511_s.resx">
-      <DependentUpon>201704221119511_s.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
