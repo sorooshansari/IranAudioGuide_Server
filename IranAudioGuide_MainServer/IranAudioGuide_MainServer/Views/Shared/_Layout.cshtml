@@ -73,10 +73,10 @@
                     {
                         if (item.Id == lang)
                         {
-                            <a href="@Url.Action("Index", "Home", new { lang = item.Id})" hreflang="@item.Id" lang="@item.Id">
+                            <span>
                                 <img src="@item.Icon" alt="@item.Id" />
                                 <span class="siteFlagText">@item.Title</span>
-                            </a>
+                            </span>
                             break;
                         }
 

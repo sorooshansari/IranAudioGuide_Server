@@ -249,13 +249,9 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704170457041_d.cs" />
-    <Compile Include="Migrations\201704170457041_d.Designer.cs">
-      <DependentUpon>201704170457041_d.cs</DependentUpon>
+    <Compile Include="Migrations\201704221119511_s.cs" />
+    <Compile Include="Migrations\201704221119511_s.Designer.cs">
+      <DependentUpon>201704221119511_s.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -1807,11 +1803,10 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704170457041_d.resx">
-      <DependentUpon>201704170457041_d.cs</DependentUpon>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704221119511_s.resx">
+      <DependentUpon>201704221119511_s.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
