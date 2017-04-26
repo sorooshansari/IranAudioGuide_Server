@@ -27,7 +27,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             get
             {
-                return (int)LangId.en;
+                return (int)LangEnum.en;
             }
         }
         //private const string storagePrefix = "http://iranaudioguide.com/";
@@ -458,8 +458,8 @@ namespace IranAudioGuide_MainServer.Controllers
                             throw new ArgumentException("Dont save image in Server", "original");
 
 
-                        var PathSource = GlobalPath.FtpPathImagePlace + "/" + fileName;
-                        var Destination = GlobalPath.FtpPathImageTumbnail + "/" + fileName;
+                        var PathSource = GlobalPath.FtpPathImagePlace + fileName;
+                        var Destination = GlobalPath.FtpPathImageTumbnail  + fileName;
                         isSuccess = request.Copy(PathSource, Destination);
                         if (!isSuccess)
                             throw new ArgumentException("Dont save Tumbnail image in Server", "original");

@@ -250,6 +250,10 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
+    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201704241259507_f1.cs" />
     <Compile Include="Migrations\201704241259507_f1.Designer.cs">
       <DependentUpon>201704241259507_f1.cs</DependentUpon>
@@ -1808,6 +1812,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704241259507_f1.resx">
       <DependentUpon>201704241259507_f1.cs</DependentUpon>
     </EmbeddedResource>

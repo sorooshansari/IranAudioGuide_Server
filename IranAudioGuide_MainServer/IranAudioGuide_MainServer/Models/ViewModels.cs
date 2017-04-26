@@ -219,6 +219,12 @@ namespace IranAudioGuide_MainServer.Models
         public string Picture { get; set; }
         public SignInResults Result { get; set; }
     }
+    public class GetUrlVm
+    {
+        public string Url { get; set; }
+        public string Lang { get; set; }
+        public bool isAccess { get; set; }
+    }
     public class GetAudioUrlVM
     {
         public string email { get; set; }
@@ -574,6 +580,7 @@ namespace IranAudioGuide_MainServer.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Discription { get; set; }
+        public string Lang { get; set; }
     }
     public class NewStoryVM
     {

@@ -7,7 +7,7 @@ namespace IranAudioGuide_MainServer.Models
 {
   
     [Flags]
-    public enum LangId
+    public enum LangEnum
     {
         en = 1,
         fa = 2,

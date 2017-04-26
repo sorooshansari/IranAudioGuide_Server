@@ -193,12 +193,12 @@ angular.module('AdminPage.controllers', [])
             playingIndex = StoryIndex;
             angular.forEach($rootScope.Storys, function (value, key) {
                 if (value.Index == StoryIndex) {
-                    //todo test getUrl
-                    //var m = {
-                    //    trackId: value.Id,
-                    //    isAudio: false
-                    //}
-                    //PlaceServices.getUrl(m);
+                  //  todo test getUrl
+                    var m = {
+                        trackId: value.Id,
+                        isAudio: false
+                    }
+                    PlaceServices.getUrl(m);
                     if (StoryStatus != "empty") {
                         Story.pause();
                         $scope.StoryPlayStatus = "play";
