@@ -245,19 +245,12 @@
     <Compile Include="Controllers\AminApiController.cs" />
     <Compile Include="Controllers\apiTestController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
+    <Compile Include="Controllers\AppManagerV2Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704241259507_f1.cs" />
-    <Compile Include="Migrations\201704241259507_f1.Designer.cs">
-      <DependentUpon>201704241259507_f1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1810,14 +1803,6 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704241259507_f1.resx">
-      <DependentUpon>201704241259507_f1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
