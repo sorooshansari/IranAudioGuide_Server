@@ -30,99 +30,18 @@ BEGIN
 END";
         public static readonly List<string> FirstCommands = new List<string>()
         {
-            @"CREATE PROCEDURE [dbo].[Download_LinkCreate]
-			@FileName nvarchar(max),
-			@Path nvarchar(max) output, 
-			@IsAudio bit output
-			AS
-			BEGIN
-			
-				DECLARE @id uniqueidentifier
-				DECLARE @downloadTable TABLE
-				(
-					[Dow_Id] [uniqueidentifier] NULL  DEFAULT (newsequentialid())
-				)
-				SELECT @id = Dow_Id , @Path = Path  from DownloadLinks where FileName = @FileName and IsDisable = 0 and IsAudio = @IsAudio
-	
-				if @id IS NULL
-					BEGIN			
-						INSERT INTO DownloadLinks (FileName,  TimeToVisit, IsDisable, IsAudio)	OUTPUT inserted.Dow_Id INTO @downloadTable
-						VALUES (@FileName, GETDATE(), 0, @IsAudio)						
-						select  @id= Dow_Id  from @downloadTable			
-						select @Path = @Path + N'/' + CAST( @id AS VARCHAR(max)) + N'.' +  (RIGHT(@FileName, Len(@FileName)- Charindex('.', @FileName)))--  REPLACE(@Path, @FileName, @id)			
-						UPDATE   DownloadLinks SET  Path = @Path WHERE  (Dow_Id = @id)
-						  Set @IsAudio = 1
-    
-					END
-				 else
-					  BEGIN
-					  Set @IsAudio = 0
-						UPDATE   DownloadLinks SET  TimeToVisit = GETDATE() WHERE  (Dow_Id = @id)
-					  END
+          
+            @"CREATE PROCEDURE Download_LinkDelete  
 
-			END",
-            @"CREATE PROCEDURE [dbo].[GetURL] 
-	            @IsAudio bit,
-	            @FileId uniqueidentifier,
-	            @UserName nvarchar(max),
-	            @Path nvarchar(max), 
-	            @UserUUID nvarchar(max)
+    @id uniqueidentifier
+AS
+BEGIN
+    DELETE FROM DownloadLinks where Dow_Id = @id
 
-	            AS
-	            BEGIN
-		
-	            DECLARE @isAccess bit
-	            DECLARE @FileName nvarchar(max)
-	            DECLARE @PackagesId uniqueidentifier
-
-	            IF @IsAudio = 1
-		            BEGIN
-
-							
-			            SELECT  @FileName = Audios.Aud_Url, @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
-			            FROM   Audios 
-				            INNER JOIN Places ON Audios.Place_Pla_Id = Places.Pla_Id 
-				            INNER JOIN	cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
-				            INNER JOIN	Packagecities ON cities.Cit_Id = Packagecities.city_Cit_Id 
-				            INNER JOIN	Packages ON Packagecities.Package_Pac_Id = Packages.Pac_Id
-					            WHERE  (Audios.Aud_Id = @FileId) 
-		            END
-		            ELSE 
-			            BEGIN
-				            SELECT  @FileName = Stories.Sto_Url, @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
-					            FROM   Stories 
-						            INNER JOIN Places ON Stories.Place_Pla_Id = Places.Pla_Id 
-						            INNER JOIN	cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
-						            INNER JOIN	Packagecities ON cities.Cit_Id = Packagecities.city_Cit_Id 
-						            INNER JOIN	Packages ON Packagecities.Package_Pac_Id = Packages.Pac_Id
-							            WHERE  (Stories.Sto_Id = @FileId) 
-			            END
-						
-			
-			            if @isAccess = 0
-				            BEGIN
-					
-					            SELECT @isAccess = COUNT(DISTINCT Procurements.Id)  FROM Procurements INNER JOIN Packages 
-						            ON Procurements.Pac_Id = Packages.Pac_Id
-						            INNER JOIN AspNetUsers ON AspNetUsers.Id = Procurements.Id
-						            where (AspNetUsers.UserName = @UserName and AspNetUsers.uuid = @UserUUID and Packages.Pac_Id = @PackagesId) 
-					
-				            END
-				
-				            if @isAccess != 0
-				            Begin
-				            EXEC	[dbo].[Download_LinkCreate]
-						            @FileName = @FileName,
-						            @Path = @Path OUTPUT,
-						            @IsAudio = @IsAudio	OUTPUT
-
-				            SELECT	@Path as PathFile , @FileName as FileName , @IsAudio as IsUpdate , 1 as isAccess
-				            end
-				            SELECT	null as PathFile , null as FileName , null as IsUpdate , 0 as isAccess
-
-
-		            END",
-                        @"CREATE FUNCTION [dbo].[AllAudios]() 
+END
+GO
+",
+ @"CREATE FUNCTION [dbo].[AllAudios]() 
                         RETURNS 
                         @Audios TABLE 
                         (
@@ -777,5 +696,106 @@ END"
   
                 )"
         };
+        public static readonly List<string> DownloadCommands = new List<string>()
+        {  @"CREATE PROCEDURE [dbo].[Download_LinkCreate]
+			@FileName nvarchar(max),
+			@IsAudio bit,
+			@Path nvarchar(max) output, 
+			@IsUpdate bit output,
+			 @IdDownload uniqueidentifier OUTPUT
+
+			AS
+			BEGIN
+			
+				--DECLARE @id uniqueidentifier
+				DECLARE @downloadTable TABLE
+				(
+					[Dow_Id] [uniqueidentifier] NULL  DEFAULT (newsequentialid())
+				)
+				SELECT @IdDownload = Dow_Id , @Path = Path  from DownloadLinks where FileName = @FileName and IsDisable = 0 and IsAudio = @IsAudio
+	
+				if @IdDownload IS NULL
+					BEGIN			
+						INSERT INTO DownloadLinks (FileName,  TimeToVisit, IsDisable, IsAudio)	OUTPUT inserted.Dow_Id INTO @downloadTable
+						VALUES (@FileName, GETDATE(), 0, @IsAudio)						
+						select  @IdDownload= Dow_Id  from @downloadTable			
+						select @Path = @Path + N'/' + CAST( @IdDownload AS VARCHAR(max)) + N'.' +  (RIGHT(@FileName, Len(@FileName)- Charindex('.', @FileName)))--  REPLACE(@Path, @FileName, @id)			
+						UPDATE   DownloadLinks SET  Path = @Path WHERE  (Dow_Id = @IdDownload)
+						  Set @IsUpdate = 1
+    
+					END
+				 else
+					  BEGIN
+					  Set @IsUpdate = 0
+						UPDATE   DownloadLinks SET  TimeToVisit = GETDATE() WHERE  (Dow_Id = @IdDownload)
+					  END
+
+			END
+",         @"CREATE PROCEDURE [dbo].[GetURL] 
+	           	@IsAudio bit,
+	@IsAdmin bit,
+	@FileId uniqueidentifier,
+	@UserName nvarchar(max),
+	@Path nvarchar(max), 
+	@UserUUID nvarchar(max)
+
+	AS
+	BEGIN
+		
+	DECLARE @isAccess bit
+	DECLARE @FileName nvarchar(max)
+	DECLARE @PackagesId uniqueidentifier 
+	DECLARE @IsUpdate bit
+	DECLARE	@langId int
+
+	IF @IsAudio = 1
+		BEGIN
+					
+			SELECT  @FileName = Audios.Aud_Url, @langId = Audios.langId,  @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
+			FROM   Audios 
+				INNER JOIN Places ON Audios.Place_Pla_Id = Places.Pla_Id 
+				INNER JOIN	cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
+				INNER JOIN	Packagecities ON cities.Cit_Id = Packagecities.city_Cit_Id 
+				INNER JOIN	Packages ON Packagecities.Package_Pac_Id = Packages.Pac_Id
+					WHERE  (Audios.Aud_Id = @FileId) 
+		END
+		ELSE 
+			BEGIN
+				SELECT  @FileName = Stories.Sto_Url,@langId = Stories.langId, @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
+					FROM   Stories 
+						INNER JOIN Places ON Stories.Place_Pla_Id = Places.Pla_Id 
+						INNER JOIN	cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
+						INNER JOIN	Packagecities ON cities.Cit_Id = Packagecities.city_Cit_Id 
+						INNER JOIN	Packages ON Packagecities.Package_Pac_Id = Packages.Pac_Id
+							WHERE  (Stories.Sto_Id = @FileId) 
+			END
+						
+			
+			if (@IsAdmin= 0  and  @isAccess = 0)
+				BEGIN
+					
+					SELECT @isAccess = COUNT(DISTINCT Procurements.Id)  FROM Procurements INNER JOIN Packages 
+						ON Procurements.Pac_Id = Packages.Pac_Id
+						INNER JOIN AspNetUsers ON AspNetUsers.Id = Procurements.Id
+						where (AspNetUsers.UserName = @UserName and AspNetUsers.uuid = @UserUUID and Packages.Pac_Id = @PackagesId) 
+				END
+				
+				if( @IsAdmin= 1  or  @isAccess != 0)
+					Begin
+						EXEC	[dbo].[Download_LinkCreate]
+								@FileName = @FileName,
+								@IsAudio = @IsAudio,
+								@Path = @Path OUTPUT,
+								@IsUpdate = @IsUpdate OUTPUT
+
+						SELECT	@Path as PathFile , @FileName as FileName , @IsUpdate as IsUpdate , 1 as isAccess, @langId as  langId
+					end
+				else
+					begin
+						SELECT	null as PathFile , null as FileName , null as IsUpdate , 0 as isAccess , @langId as  langId
+					end
+
+				return 1
+		END"};
     }
 }

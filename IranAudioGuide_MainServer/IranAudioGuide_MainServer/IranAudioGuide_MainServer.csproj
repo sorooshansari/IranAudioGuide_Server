@@ -240,10 +240,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminApiController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AminApiController.cs" />
     <Compile Include="Controllers\apiTestController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
-    <Compile Include="Controllers\FilesStatus.cs" />
+    <Compile Include="Controllers\AppManagerV2Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -264,6 +266,7 @@
     <Compile Include="Models\dbManager.cs" />
     <Compile Include="Models\dbTools.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Lang.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mappings.cs" />
     <Compile Include="Models\SqlCommands.cs" />
@@ -279,6 +282,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
     <Compile Include="Services\GlobalPath.cs" />

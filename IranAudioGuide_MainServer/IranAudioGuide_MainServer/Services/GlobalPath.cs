@@ -17,6 +17,12 @@ namespace IranAudioGuide_MainServer.Services
         public static readonly string FullPathImageTumbnail = host + "/Files/Places/TumbnailImages/";
 
         
+        public static readonly string FtpPathImageCity = hostFtp + "/Files/Cities/";
+        public static readonly string FtpPathImagePlace = hostFtp + "/Files/Places/";
+        public static readonly string FtpPathImageExtras = hostFtp + "/Files/Places/Extras/";
+        public static readonly string FtpPathImageTumbnail = hostFtp + "/Files/Places/TumbnailImages/";
+
+
 
         public static readonly string FtpPrimaryPathStory = hostFtp + "/Files/Stories/";
         public static readonly string FtpPrimaryPathAudios = hostFtp + "/Files/Audios/";

@@ -142,17 +142,17 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class NewPackage
     {
+        public string Id { get; set; }
         [Required]
         [Display(Name = "Package name")]
         public string PackageName { get; set; }
-
-        [Display(Name = "Package description")]
         public string PackageDesc { get; set; }
-
         [Required]
-        [Display(Name = "Package price")]
-        public int PackagePrice { get; set; }
-
+        [Display(Name = "Package price Toman")]
+        public long PackagePrice { get; set; }
+        [Required]
+        [Display(Name = "Package price $")]
+        public float PackagePrice_Dollar { get; set; }
         [Required]
         [Display(Name = "Package Cities")]
         public IList<int> Cities { get; set; }
@@ -180,7 +180,7 @@ namespace IranAudioGuide_MainServer.Models
         public string query { get; set; }
     }
     public class PackageVM
-    {  
+    {
         public int Index { get; internal set; }
         public Guid PackageId { get; set; }
         public string PackageName { get; set; }
@@ -218,6 +218,12 @@ namespace IranAudioGuide_MainServer.Models
         public string Email { get; set; }
         public string Picture { get; set; }
         public SignInResults Result { get; set; }
+    }
+    public class GetUrlVm
+    {
+        public string Url { get; set; }
+        public string Lang { get; set; }
+        public bool isAccess { get; set; }
     }
     public class GetAudioUrlVM
     {
@@ -315,7 +321,7 @@ namespace IranAudioGuide_MainServer.Models
         // Summary:
         //     Sign in with different uuid
         uuidMissMatch = 4,
-        error=5
+        error = 5
     }
     public enum RecoverPassResults
     {
@@ -524,7 +530,7 @@ namespace IranAudioGuide_MainServer.Models
         public Guid ImageId { get; set; }
         public int Index { get; set; }
         public string ImageDesc { get; set; }
-       
+
     }
     public class EditEIDescVM
     {
@@ -574,6 +580,7 @@ namespace IranAudioGuide_MainServer.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Discription { get; set; }
+        public string Lang { get; set; }
     }
     public class NewStoryVM
     {

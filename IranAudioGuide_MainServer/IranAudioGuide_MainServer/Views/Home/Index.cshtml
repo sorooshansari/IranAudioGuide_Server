@@ -43,7 +43,7 @@
                 @Global.SectionOneH2
 
             </h2>
-            <p>@Global.SectionOneP</p>
+            <p>@Html.Raw(Global.SectionOneP)</p>
         </header>
         <ul class="icons major">
             <li>
@@ -75,7 +75,7 @@
         <div ng-show="formRequest.isError && formRequest.$invalid" class="error-msg">please enter correct email address</div>
 
         <div class="message">
-            @Global.SectionOneMessage
+            @Html.Raw(Global.SectionOneMessage)
         </div>
 
     </form>
@@ -149,7 +149,7 @@
                 <p>@Global.Parameter15</p>
             </li>
             <li class="icon fa-history">
-                <h3>@Global.Parameter15</h3>
+                <h3>@Global.Parameter16</h3>
                 <p>@Global.Parameter17  </p>
             </li>
             <li class="icon fa-users">
@@ -161,7 +161,7 @@
                 <p>@Global.Parameter20 </p>
             </li>
             <li class="icon fa-institution">
-                <h3>@Global.Parameter21</h3>
+                <h3>@Html.Raw(Global.Parameter21)</h3>
                 <p>@Global.Parameter22 </p>
             </li>
         </ul>
@@ -601,7 +601,7 @@
                 scaleControl: true,
                 draggable: false,
                 center: center,
-                zoom: 14,
+                zoom: 5,
                 styles: styles
                 //mapTypeId: google.maps.MapTypeId.ROADMAP
             };

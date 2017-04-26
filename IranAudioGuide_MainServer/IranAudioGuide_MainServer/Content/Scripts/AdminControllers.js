@@ -193,12 +193,12 @@ angular.module('AdminPage.controllers', [])
             playingIndex = StoryIndex;
             angular.forEach($rootScope.Storys, function (value, key) {
                 if (value.Index == StoryIndex) {
-                    //todo test getUrl
-                    //var m = {
-                    //    trackId: value.Id,
-                    //    isAudio: false
-                    //}
-                    //PlaceServices.getUrl(m);
+                  //  todo test getUrl
+                    var m = {
+                        trackId: value.Id,
+                        isAudio: false
+                    }
+                    PlaceServices.getUrl(m);
                     if (StoryStatus != "empty") {
                         Story.pause();
                         $scope.StoryPlayStatus = "play";
@@ -375,13 +375,13 @@ angular.module('AdminPage.controllers', [])
                     var src = value.Aud_Url;
                     audio = new Audio(src);
                     audioStatus = "pause";
-                    return;                   
+                    return;
 
                     if (audioStatus != "empty") {
                         audio.pause();
                         $scope.PlayStatus = "play";
                     }
-                    
+
                 }
             });
         }
@@ -523,8 +523,17 @@ angular.module('AdminPage.controllers', [])
         };
         $scope.$on('UpdatePlaces', function (event) {
             //console.log($scope.PlaceCurrentPage);
-            $scope.places = PlaceServices.Get($scope.PlaceCurrentPage);
-            scroll("#PlaceList");
+            PlaceServices.Get($scope.PlaceCurrentPage).
+               then(function (response) {
+                   $rootScope.PlacePagesLen = response.data.PagesLen;
+                   // $rootScope.PlaceCurrentPage = PageNum;
+                   $rootScope.$broadcast('LoadFirstPlaceAudios', {});
+                   $scope.places = response.data.Places;
+
+               }, function (response) {
+                   console.log("Request failed");
+                   console.log("status:" + response.status);
+               });
         });
         $scope.$on('UpdatePlaceValidationSummery', function (event, args) {
             $scope.additionalError = args.data;
@@ -823,38 +832,41 @@ angular.module('AdminPage.controllers', [])
         //};
 
         $scope.AddPackage = function (NewPackage, form) {
-            if (form.$valid) {
-                var cities = [];
-                for (var i = 0; i < $scope.cities.length; i++) {
-                    if ($scope.cities[i].isSelected) {
-                        cities.push($scope.cities[i].CityID);
-                    }
-                }
-                if (cities.length) {
-                    $scope.selectCityInvalid = false;
-                    NewPackage.Cities = cities;
-                    $scope.AddPakageLoading = true;
-                    PackageServices.AddPackage(NewPackage)
-                      .then(function (response) {
-                          $scope.AddPakageLoading = false;
 
-                          switch (response.data.status) {
-                              case respondstatus.success:
-                                  resetAddPackageForm();
-                                  break;
-                              default:
-                                  console.error("Server failed to add Package.");
-                                  break;
-                          }
-                      }, function (response) {
-                          $scope.AddPakageLoading = false;
-                          console.log("Request failed");
-                          console.log("status:" + response.status);
-                      });
-                }
-                else
-                    $scope.selectCityInvalid = true;
+            if (form.$invalid) {
+                console.log("invalid form");
             }
+            var cities = [];
+            for (var i = 0; i < $scope.cities.length; i++) {
+                if ($scope.cities[i].isSelected) {
+                    cities.push($scope.cities[i].CityID);
+                }
+            }
+            if (cities.length) {
+                $scope.selectCityInvalid = false;
+                NewPackage.Cities = cities;
+                $scope.AddPakageLoading = true;
+                PackageServices.AddPackage(NewPackage)
+                  .then(function (response) {
+                      $scope.AddPakageLoading = false;
+                      switch (response.data.status) {
+                          case respondstatus.success:
+                              resetAddPackageForm();
+                              break;
+                          default:
+                              alert(response.status, "    message::::", response.content);
+                              break;
+                      }
+                  }, function (response) {
+                      $scope.AddPakageLoading = false;
+                      alert(response.status, "    message::::", response.content);
+                      console.log("Request failed");
+                      console.log("status:" + response.status);
+                  });
+            }
+            else
+                $scope.selectCityInvalid = true;
+
         };
         $scope.selectCityInvalid = true;
         $scope.pkgcitiesTouched = false;

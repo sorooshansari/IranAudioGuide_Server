@@ -1,4 +1,5 @@
 ﻿angular.module('AdminPage.services', [])
+
 .service('notificService', [function () {
     //jquery-notific8
     var optionsDefault = {
@@ -49,7 +50,7 @@
         toastr.clear();
     }
 }])
-.service('TipServices', ['$rootScope', '$http', function ($rootScope, $http) {
+.service('TipServices', ['$rootScope', '$http',  'notificService', function ($rootScope, $http, notific) {
     var Tips = []
     return {
         getPlaceTips: function (placeId) {
@@ -59,10 +60,10 @@
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   angular.copy(response.data, Tips);
-                  console.log(response.data);
+                  //console.log(response.data);
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return Tips;
         },
@@ -84,11 +85,13 @@
                       $rootScope.$broadcast('TipAdded', { PlaceId: newTip.placeId });
                   }
                   else {
-                      alert("Server failed to add Tip.");
+                      notific.error("ERROR", "Request failed");
+
+                      //alert("Server failed to add Tip.");
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         RemoveTip: function (TipId, placeId) {
@@ -101,11 +104,13 @@
                       $rootScope.$broadcast('TipRemoved', { PlaceId: placeId });
                   }
                   else {
-                      alert("Server failed to add Tip.");
+                      notific.error("ERROR", "Request failed");
+
+                      //alert("Server failed to add Tip.");
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         GetTipCategories: function () {
@@ -114,16 +119,17 @@
             $http({ method: method, url: url }).
               then(function (response) {
                   $rootScope.allTipCategories = angular.copy(response.data);
-                  console.log(response.data);
+                  //console.log(response.data);
               }, function (response) {
+
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return;
         }
     }
 }])
-.service('PlaceServices', ['$rootScope', '$http', function ($rootScope, $http) {
+.service('PlaceServices', ['$rootScope', '$http',  'notificService', function ($rootScope, $http, notific) {
     var Places = [];
     var OnlinePlaces = [];
     var ExtraImages = [];
@@ -139,7 +145,7 @@
                   $rootScope.$broadcast('LoadFirstPlaceStorys', {});
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return;
         },
@@ -147,18 +153,8 @@
             method = 'POST';
             url = '/Admin/GetPlaces';
             data = { PageNum: PageNum };
-            $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  $rootScope.PlacePagesLen = response.data.PagesLen;
-                  $rootScope.PlaceCurrentPage = PageNum;
-                  $rootScope.$broadcast('LoadFirstPlaceAudios', {});
-                  return response.data.Places;
-
-              }, function (response) {
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
-              });
-            return Places;
+            return  $http({ method: method, url: url, data: data });
+            //return Places;
         },
         OnlineGet: function (PageNum) {
             method = 'POST';
@@ -167,12 +163,12 @@
             $http({ method: method, url: url, data: data }).
               then(function (response) {
                   $rootScope.PlacePagesLen = response.data.PagesLen;
-                  $rootScope.PlaceCurrentPage = PageNum;
+                //  $rootScope.PlaceCurrentPage = PageNum;
                   angular.copy(response.data.Places, OnlinePlaces);
                   $rootScope.$broadcast('OnlineLoadFirstPlaceAudios', {});
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return OnlinePlaces;
         },
@@ -202,12 +198,14 @@
                       $rootScope.$broadcast('UpdatePlaceValidationSummery', {
                           data: response.data.content
                       });
-                      console.log("Server failed to add Place.");
+                      notific.error("ERROR", "Request failed");
+
+                      //console.log("Server failed to add Place.");
                   }
               }, function (response) {
                   $rootScope.AddplaceLoading = false;
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         RemovePlace: function (PlaceID, PlaceName) {
@@ -236,7 +234,9 @@
                           break;
                       case 2:
                           $rootScope.$broadcast('PlaceUnknownError', {});
-                          console.log("Server failed to remove Place.");
+                          notific.error("ERROR", "Request failed");
+
+                          //console.log("Server failed to remove Place.");
                           break;
                       case 3:
                           console.log(response.data.content);
@@ -245,8 +245,9 @@
 
                   }
               }, function (response) {
+
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         OnlineRemovePlace: function (PlaceID) {
@@ -260,7 +261,9 @@
                           $rootScope.$broadcast('UpdatePlaces', {});
                           break;
                       case 2:
-                          console.log("Server failed to remove Place. Invalid Place Id.");
+                          notific.error("ERROR", "Request failed");
+
+                          //console.log("Server failed to remove Place. Invalid Place Id.");
                           console.log(response.data.content);
                           break;
                       case 3:
@@ -272,7 +275,7 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         Edit: function (EditPlaceVM) {
@@ -300,7 +303,9 @@
                           break;
                       case 2:
                           $rootScope.$broadcast('EditPlaceUnknownError', {});
-                          console.log("Server failed to remove Place.");
+                          //console.log("Server failed to remove Place.");
+                          notific.error("ERROR", "Request failed");
+
                           break;
                       case 3:
                           console.log(response.data.content);
@@ -309,7 +314,7 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return;
         },
@@ -344,14 +349,16 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         getUrl: function (model) {
             $http.post("/api/AppManager/GetAudioUrl", model).then(function (dataUrl) {
                 console.log("Request success", dataUrl.data);
             }, function () {
-                console.log("Request failed");
+                notific.error("ERROR", "Request failed");
+
+                //console.log("Request failed");
             });
         },
         ChangeTumbImg: function (NewImage, id) {
@@ -385,7 +392,7 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         GetExtraImages: function (PlaceId) {
@@ -397,7 +404,9 @@
                   console.log(response);
                   angular.copy(response.data, ExtraImages);
               }, function (response) {
-                  console.log("Request failed");
+                  notific.error("ERROR", "Request failed");
+
+                  //console.log("Request failed");
               });
             return ExtraImages;
         },
@@ -425,11 +434,13 @@
                       $rootScope.$broadcast('ExtraImgUnknownError', {
                           data: response.data.content
                       });
-                      console.log("Server failed to add Place.");
+                      notific.error("ERROR", "Request failed");
+
+                      //console.log("Server failed to add Place.");
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return;
         },
@@ -456,7 +467,7 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         EditEIDesc: function (EditEIDescVM) {
@@ -483,7 +494,7 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         GoOnline: function (PlaceId) {
@@ -510,7 +521,7 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         GoOffline: function (PlaceId) {
@@ -537,7 +548,7 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         SwichPrimaryStatus: function (PlaceId) {
@@ -563,12 +574,12 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         }
     }
 }])
-.service('CityServices', ['$rootScope', '$http', 'notificService', function ($rootScope, $http, notific) {
+.service('CityServices', ['$rootScope', '$http',  'notificService', function ($rootScope, $http, notific) {
     var AllCities = [];
     var Cities = [];
     var Success = false;
@@ -582,7 +593,7 @@
                   angular.copy(response.data, AllCities);
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return AllCities;
         },
@@ -597,7 +608,7 @@
                   angular.copy(response.data.Cities, Cities);
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return Cities;
         },
@@ -625,14 +636,16 @@
                         $rootScope.$broadcast('cityAdded', {});
                         break;
                     default:
-                        console.log("Server failed to add City.");
+                        notific.error("ERROR", "Request failed");
+
+                        //alert("Server failed to add City.");
                         break;
                 }
             }, function (response) {
                 $rootScope.AddCityLoading = false;
 
                 console.log("Request failed");
-                console.log("status:" + response.status);
+                   notific.error("ERROR", "status:" +  response.status);
             });
         },
         Edit: function (EditCityVM) {
@@ -648,7 +661,7 @@
                           $rootScope.$broadcast('UpdateCities', {});
                           break;
                       case 1:
-                          notific.error("error", response.data.content);
+                          //notific.success(esponse.data.content);
                           $rootScope.$broadcast('EditCityValidationSummery', {
                               data: response.data.content
                           });
@@ -663,8 +676,8 @@
                       default:
                   }
               }, function (response) {
-                  notific.error("error", "Request failed");
-                  cnotific.error("status:" + response.status);
+                  //notific.error("error", "Request failed");
+                  notific.error("status:" + response.status);
               });
             return;
         },
@@ -701,7 +714,7 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         },
         RemoveCity: function (CityID, CityName) {
@@ -727,7 +740,7 @@
             //      }
             //  }, function (response) {
             //      console.log("Request failed");
-            //      console.log("status:" + response.status);
+            //         notific.error("ERROR", "status:" +  response.status);
             //  });
             $http({ method: method, url: url, data: data }).
               then(function (response) {
@@ -746,7 +759,9 @@
                       case 4:
                           $rootScope.$broadcast('CityUnknownError', {});
                           console.error(response.data.content);
-                          console.error("Server failed to remove City.");
+                          notific.error("ERROR", "Request failed");
+
+                          //console.error("Server failed to remove City.");
                           break;
                       case 5:
                           $rootScope.$broadcast('DBError', {});
@@ -759,12 +774,12 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         }
     };
 }])
-.service('AudioServices', ['$rootScope', '$http', function ($rootScope, $http) {
+.service('AudioServices', ['$rootScope', '$http',  'notificService', function ($rootScope, $http, notific) {
     var getModelAsFormData = function (data) {
         var dataAsFormData = new FormData();
         angular.forEach(data, function (value, key) {
@@ -787,7 +802,7 @@
                   $rootScope.$broadcast('FillFirstAudio', {});
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return;
         },
@@ -819,12 +834,12 @@
                       $rootScope.$broadcast('UpdateAudioValidationSummery', {
                           data: response.data.content
                       });
-                      console.log("Server failed to add Audio.");
+                      notific.error("ERROR", "Request failed");
                   }
               }, function (response) {
                   $rootScope.ShowOverlay = false;
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
+               
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return;
         },
@@ -842,21 +857,19 @@
                           $rootScope.$broadcast('RemoveAudioError', {
                               content: response.data.content
                           });
-                          console.log("Server failed to remove audio.");
-                          console.log(response.data.content);
-                          break;
+                      notific.error("ERROR", "Request failed");
+break;
                       default:
 
                   }
               }, function (response) {
-                  console.log("Request failed");
-                  console.log("status:" + response.status);
+                  notific.error("ERROR", "Request failed");
               });
         }
     }
 }])
 
-.service('StoryServices', ['$rootScope', '$http', function ($rootScope, $http) {
+.service('StoryServices', ['$rootScope', '$http',  'notificService', function ($rootScope, $http, notific) {
     var getModelAsFormData = function (data) {
         var dataAsFormData = new FormData();
         angular.forEach(data, function (value, key) {
@@ -878,7 +891,7 @@
                   $rootScope.$broadcast('FillFirstStory', {});
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return;
         },
@@ -910,12 +923,14 @@
                       $rootScope.$broadcast('UpdateStoryValidationSummery', {
                           data: response.data.content
                       });
-                      console.log("Server failed to add Story.");
+                      notific.error("ERROR", "Request failed");
+
+                      //console.log("Server failed to add Story.");
                   }
               }, function (response) {
                   $rootScope.ShowOverlay = false;
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
             return;
         },
@@ -930,10 +945,12 @@
                           $rootScope.$broadcast('UpdateStorys', {});
                           break;
                       case 1:
+                          notific.error("ERROR","Server failed to remove story.");
+
                           $rootScope.$broadcast('RemoveStoryError', {
                               content: response.data.content
                           });
-                          console.log("Server failed to remove story.");
+                          notific.error("ERROR","Server failed to remove story.");
                           console.log(response.data.content);
                           break;
                       default:
@@ -941,13 +958,13 @@
                   }
               }, function (response) {
                   console.log("Request failed");
-                  console.log("status:" + response.status);
+                     notific.error("ERROR", "status:" +  response.status);
               });
         }
     }
 }])
 
-.service('PackageServices', ['$rootScope', '$http', function ($rootScope, $http) {
+.service('PackageServices', ['$rootScope', '$http',  'notificService', function ($rootScope, $http, notific) {
     var AllPackages = [];
     var Packages = [];
     var Success = false;
