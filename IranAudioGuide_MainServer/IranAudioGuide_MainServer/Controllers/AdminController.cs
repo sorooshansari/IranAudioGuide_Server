@@ -1447,10 +1447,11 @@ namespace IranAudioGuide_MainServer.Controllers
         {
 
 
-            List<PackageVM> packages = db.Packages.Include(x => x.TranslatePackages).Include("Pac_Cities.TranslateCities")
+            List<PackageVM> packages = db.Packages.Include(x => x.Pac_Cities).Include("Pac_Cities.TranslateCities")
+              .Where(x=> x.langId == (int)LangEnum.en)
                 .Select(p => new PackageVM()
                 {
-                    PackageName = p.TranslatePackages.FirstOrDefault(x => x.langId == lang).TrP_Name,
+                    PackageName = p.Pac_Name,
                     PackageId = p.Pac_Id,
                     PackagePrice = p.Pac_Price,
                     PackageCities = p.Pac_Cities.Select(c => new CityVM()
@@ -1508,14 +1509,8 @@ namespace IranAudioGuide_MainServer.Controllers
                         Pac_Name = model.PackageName,
                         Pac_Price = model.PackagePrice,
                         Pac_Price_Dollar = model.PackagePrice_Dollar,
-                        TranslatePackages = new List<TranslatePackage>()
+                        langId = lang
                     };
-                    TranslatePackage tp = new TranslatePackage()
-                    {
-                        langId = lang,
-                        TrP_Name = model.PackageName,
-                    };
-                    package.TranslatePackages.Add(tp);
                     var cities = db.Cities.Where(x => model.Cities.Any(y => y == x.Cit_Id)).ToList();
                     package.Pac_Cities = cities;
 

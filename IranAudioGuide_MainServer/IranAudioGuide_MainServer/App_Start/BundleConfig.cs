@@ -45,10 +45,10 @@ namespace IranAudioGuide_MainServer
                       "~/Content/css/bootstrap.css",
                       "~/Content/css/site.css",
                       "~/Content/global/plugins/font-awesome/css/font-awesome.min.css"));
-            bundles.Add(new StyleBundle("~/Content/css/minCss").Include(
+            bundles.Add(new StyleBundle("~/HomeCss").Include(
                       "~/Content/css/bootstrap.min.css",
                       "~/Content/css/bootstrap-social.min.css",
-                      "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
+                    // "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
                       "~/Content/css/toggle.min.css",
                       "~/Content/css/styles.min.css",
                       "~/Content/css/HomeStyles.css"));

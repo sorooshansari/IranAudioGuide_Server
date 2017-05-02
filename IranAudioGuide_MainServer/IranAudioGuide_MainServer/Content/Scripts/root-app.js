@@ -2,8 +2,35 @@
  .config(['$sceProvider', function ($sceProvider) {
      $sceProvider.enabled(false);
  }])
- .controller('HomeController', ['$scope', '$http', '$timeout',
-    function ($scope, $http, $timeout) {
+ .controller('HomeController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+     var data = {
+         id: '8ef6e2f3-25cc-4202-8ccf-ac4eba939828',
+         username : 'testuser@iranaudioguide.com',
+         uuid: "1212" ,
+         LastUpdateNumber: 2
+     };
+     $http.post('/api/AppManagerV2/GetAutorizedCities', data).then(function (result) {
+         console.log("getAutori");
+         console.log(result)
+     }, function (error, status, headers, config) {
+         consol.log(error, status, headers, config);
+     });
+     $http.post('/api/AppManagerV2/GetUpdates', data)
+         .success(function (result) {
+             console.log("GetUpdates");
+             console.log(result)
+         }, function (error, status, headers, config) {
+             consol.log(error, status, headers, config);
+         });
+     $http.post('/api/AppManagerV2/GetAll',data)
+         .success(function (result) {
+             console.log("GetAll");
+             console.log(result);
+         }, function (error, status, headers, config) {
+             consol.log(error, status, headers, config);
+         });
+ 
+
         $scope.user = {
             isAutintication: false,
             username: "test",

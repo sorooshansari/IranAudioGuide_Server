@@ -251,12 +251,17 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Migrations\201705011244049_s.cs" />
+    <Compile Include="Migrations\201705011244049_s.Designer.cs">
+      <DependentUpon>201705011244049_s.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountTools.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models_v2\ApiViewModels_v2.cs" />
     <Compile Include="Models\ApiViewModels.cs" />
     <Compile Include="Models\CompressAttribute.cs" />
     <Compile Include="Models\dbManager.cs" />
@@ -272,6 +277,8 @@
     <Compile Include="Models\LangVM.cs" />
     <Compile Include="Models\WBViewModel.cs" />
     <Compile Include="Models\WebMoneyTools.cs" />
+    <Compile Include="Models_v2\dbManager_v2.cs" />
+    <Compile Include="Models_v2\dbTools_v2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Zarinpal\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -281,6 +288,7 @@
     <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
+    <Compile Include="Services\ExtensionMethod.cs" />
     <Compile Include="Services\GlobalPath.cs" />
     <Compile Include="Services\LocalizationAttribute.cs" />
     <Compile Include="Services\ServiceDownload.cs" />
@@ -564,7 +572,6 @@
     <Content Include="Content\css\ionicons.css" />
     <Content Include="Content\css\ionicons.min.css" />
     <Content Include="Content\css\loading.css" />
-    <Content Include="Content\css\main2.css" />
     <Content Include="Content\css\notify-metro.css" />
     <Content Include="Content\css\PakageTemplate.css" />
     <Content Include="Content\css\profile.css" />
@@ -580,7 +587,6 @@
     <Content Include="Content\css\toggle.css" />
     <Content Include="Content\css\toggle.min.css" />
     <Content Include="Content\css\UserCustom.css" />
-    <Content Include="Content\css\UserMain.css" />
     <Content Include="Content\fonts\arcon-regular-webfont.woff" />
     <Content Include="Content\fonts\arcon-regular-webfont.woff2" />
     <Content Include="Content\fonts\arcon-rounded-regular-webfont.woff" />
@@ -1803,6 +1809,11 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201705011244049_s.resx">
+      <DependentUpon>201705011244049_s.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

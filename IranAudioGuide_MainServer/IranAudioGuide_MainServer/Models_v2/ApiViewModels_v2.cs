@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 
 
-//use in mobail
 
-namespace IranAudioGuide_MainServer.Models_v1
+namespace IranAudioGuide_MainServer.Models_v2
 {
-    public class ApiViewModels
-    {
-    }
+
+
+
     public class ConfirmEmailVM
     {
         public string email { get; set; }
@@ -38,9 +37,16 @@ namespace IranAudioGuide_MainServer.Models_v1
         public string username { get; set; }
         public string uuid { get; set; }
     }
+    public class citiesLng
+    {
+
+        public int cityID { get; set; }
+        public int LangId { get; set; }
+        public string LangTitle { get; set; }
+    }
     public class AutorizedCitiesVM
     {
-        public List<int> cities { get; set; }
+        public List<citiesLng> cities { get; set; }
         public string errorMessage { get; set; }
         public getUserStatus status { get; set; }
     }
@@ -49,6 +55,11 @@ namespace IranAudioGuide_MainServer.Models_v1
     //    public List<PackageVM> packages { get; set; }
     //    public string errorMessage { get; set; }
     //}
+    public class GetPackagesByLangVM
+    {
+        public int CityId { get; set; }
+        public int LangId { get; set; }
+    }
     public class GetPackagesVM
     {
         public List<ApiPackageVM> packages { get; set; }
@@ -120,36 +131,39 @@ namespace IranAudioGuide_MainServer.Models_v1
             ErrorMessage = error;
         }
         public int UpdateNumber { get; set; }
-        public List<PlaceFullInfo> Places { get; set; }
-        public List<AudioFullInfo> Audios { get; set; }
-        public List<AudioFullInfo> Stories { get; set; }
-        public List<ImagesFullInfno> Images { get; set; }
-        public List<TipsFullInfo> Tips { get; set; }
-        public List<CitiesFullInfno> Cities { get; set; }
+        public List<PlaceVm> Places { get; set; }
+        public List<AudioVm> Audios { get; set; }
+        public List<AudioVm> Stories { get; set; }
+        public List<ImagesVm> Images { get; set; }
+        public List<TipsVm> Tips { get; set; }
+        public List<CitiesVm> Cities { get; set; }
         public RemovedEntries RemovedEntries { get; set; }
         public string ErrorMessage { get; set; }
     }
-    public class GetAllVM
+    public class GetAllVm
     {
-        public GetAllVM()
+        public GetAllVm()
         {
             ErrorMessage = string.Empty;
         }
-        public GetAllVM(string error)
+        public GetAllVm(string error)
         {
             ErrorMessage = error;
         }
         public int UpdateNumber { get; set; }
-        public List<PlaceFullInfo> Places { get; set; }
-        public List<AudioFullInfo> Audios { get; set; }
-        public List<AudioFullInfo> Stories { get; set; }
-        public List<ImagesFullInfno> Images { get; set; }
-        public List<TipsFullInfo> Tips { get; set; }
-        public List<CitiesFullInfno> Cities { get; set; }
-        public List<TipCategoriesFullInfo> TipCategories { get; set; }
+        public List<PlaceVm> Places { get; set; }
+        public List<AudioVm> Audios { get; set; }
+        public List<AudioVm> Stories { get; set; }
+        public List<ImagesVm> Images { get; set; }
+        public List<TipsVm> Tips { get; set; }
+        public List<CitiesVm> Cities { get; set; }
+        public List<TipCategoriesVm> TipCategories { get; set; }
+        public List<TranslateCityVm> TranslateCities { get; set; }
+        public List<TranslateImageVm> TranslateImages { get; set; }
+        public List<TranslatePlacesVm> TranslatePlaces { get; set; }
         public string ErrorMessage { get; set; }
     }
-    public class TipCategoriesFullInfo
+    public class TipCategoriesVm
     {
         public Guid ID { get; set; }
         public string Class { get; set; }
@@ -157,52 +171,94 @@ namespace IranAudioGuide_MainServer.Models_v1
         public string Name { get; set; }
         public int Priority { get; set; }
     }
-    public class TipsFullInfo
+    public class TipsVm
     {
         public Guid ID { get; set; }
         public string Content { get; set; }
         public Guid CategoryId { get; set; }
         public Guid PlaceId { get; set; }
+        public int OrderItem { get; internal set; }
+        public int LangId { get; internal set; }
     }
-    public class ImagesFullInfno
+    public class ImagesVm
     {
+
         public Guid ID { get; set; }
         public string Url { get; set; }
         public string Desc { get; set; }
         public Guid PlaceId { get; set; }
+        public int OrderItem { get; internal set; }
+        public string Name { get; internal set; }
     }
-    public class CitiesFullInfno
+    public class CitiesVm
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
         public string Desc { get; set; }
+        public int OrderItem { get; internal set; }
+      //  public int LangId { get; internal set; }
     }
-    public class AudioFullInfo
+    public class AudioVm
     {
+   
+
         public Guid ID { get; set; }
         public string Name { get; set; }
-        public string Url { get; set; }
+        //public string Url { get; set; }
         public string Desc { get; set; }
         public Guid PlaceId { get; set; }
+        public int OrderItem { get; set; }
+        public int LangId { get; set; }
     }
     public class PlaceBasicInfo
     {
         public Guid PlaceId { get; set; }
         public int UpdateNum { get; set; }
     }
-    public class PlaceFullInfo
+    public class PlaceVm
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string ImgUrl { get; set; }
         public string TNImgUrl { get; set; }
-        public string Desc { get; set; }
+        public string Desc { get; set; } //Descript
         public double CX { get; set; }
         public double CY { get; set; }
-        public string Address { get; set; }
+        public string Address { get; set; } //Addres
         public int CityId { get; set; }
         public int UpdateNumber { get; set; }
         public bool isPrimary { get; set; }
+        public int OrderItem { get; set; }
+        
+    }
+    public class TranslateCityVm
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+        public int CityId { get; set; }
+        public int LangId { get; set; }
+
+    }
+    public class TranslateImageVm
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+        public int ImageId { get; set; }
+        public int LangId { get; set; }
+    }
+    public class TranslatePlacesVm
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Adr { get; set; }
+        public int LangId { get; set; }
+        public int PlaceId { get; set; }
+        
     }
 }

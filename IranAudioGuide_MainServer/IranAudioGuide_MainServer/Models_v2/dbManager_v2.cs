@@ -7,10 +7,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace IranAudioGuide_MainServer.Models_v1
+namespace IranAudioGuide_MainServer.Models_v2
 {
-  
-    public class dbManager
+
+    public class dbManagerV2
     {
         string connstring = GlobalPath.ConnectionString;
         public DataTable TableResultSP(string SP, params SqlParameter[] parameters)
@@ -98,7 +98,7 @@ namespace IranAudioGuide_MainServer.Models_v1
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             IdentityResult roleResult;
 
-            // Check to see if Role Exists, if not create it
+          //  Check to see if Role Exists, if not create it
             if (!RoleManager.RoleExists(roleName))
             {
                 roleResult = RoleManager.Create(new IdentityRole(roleName));

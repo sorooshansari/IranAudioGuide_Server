@@ -1,6 +1,6 @@
 namespace IranAudioGuide_MainServer.Migrations
 {
-    using Models;
+    using Models_v2;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -13,7 +13,7 @@ namespace IranAudioGuide_MainServer.Migrations
 
         protected override void Seed(IranAudioGuide_MainServer.Models.ApplicationDbContext context)
         {
-            var dbManager = new dbManager();
+            var dbManager = new dbManagerV2();
             // Create Roles
             dbManager.RoleCreator(context, "Admin");
             dbManager.RoleCreator(context, "AppUser");

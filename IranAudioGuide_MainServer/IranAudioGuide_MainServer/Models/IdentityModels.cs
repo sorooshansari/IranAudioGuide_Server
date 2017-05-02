@@ -31,7 +31,7 @@ namespace IranAudioGuide_MainServer.Models
         public IList<Procurement> procurements { get; set; }
 
     }
-   
+
     public class UserLog
     {
         [Key]
@@ -89,9 +89,19 @@ namespace IranAudioGuide_MainServer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UpL_Id { get; set; }
         public Guid? Aud_Id { get; set; }
+
+        //id TranslatePlace
+        public Guid TrP_Id { get; set; }
         public Guid? Pla_ID { get; set; }
+
+        //id TranslateCity
+        public Guid TrC_Id { get; set; }
         public int? Cit_ID { get; set; }
+
+        // id for TranslateImage
+        public Guid TrI_Id { get; set; }
         public Guid? Img_Id { get; set; }
+
         public Guid? Sto_Id { get; set; }
         public Guid? Tip_Id { get; set; }
         public Guid? Ima_Id { get; set; }
@@ -112,7 +122,7 @@ namespace IranAudioGuide_MainServer.Models
         public Guid PlaceId { get; set; }
         public Place Place { get; set; }
         public int langId { get; set; }
-      
+
         #endregion
     }
 
@@ -130,7 +140,7 @@ namespace IranAudioGuide_MainServer.Models
         public Guid PlaceId { get; set; }
         public Place Place { get; set; }
         public int langId { get; set; }
-      
+
         #endregion
     }
 
@@ -149,7 +159,7 @@ namespace IranAudioGuide_MainServer.Models
         public Place Place { get; set; }
 
         public int langId { get; set; }
-      
+
 
     }
     public class Place
@@ -194,7 +204,7 @@ namespace IranAudioGuide_MainServer.Models
 
 
         public int langId { get; set; }
-      
+
 
     }
     public class Image
@@ -224,7 +234,7 @@ namespace IranAudioGuide_MainServer.Models
         #region Relation property
         public Place Place { get; set; }
         public int langId { get; set; }
-      
+
 
         #endregion
 
@@ -253,7 +263,7 @@ namespace IranAudioGuide_MainServer.Models
         public int Cit_Id { get; set; }
         public city city { get; set; }
         public int langId { get; set; }
-      
+
 
         #endregion
 
@@ -274,26 +284,26 @@ namespace IranAudioGuide_MainServer.Models
         #endregion
     }
 
-    public class TranslatePackage
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid TrP_Id { get; set; }
+    //public class TranslatePackage
+    //{
+    //    [Key]
+    //    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    //    public Guid TrP_Id { get; set; }
 
-        public string TrP_Name { get; set; }
-        #region Relation property
+    //    public string TrP_Name { get; set; }
+    //    #region Relation property
 
-        public Guid Pac_Id { get; set; }
+    //    public Guid Pac_Id { get; set; }
 
-        public Package Package { get; set; }
+    //    public Package Package { get; set; }
 
 
-        public int langId { get; set; }
-      
+    //    public int langId { get; set; }
 
-        #endregion
 
-    }
+    //    #endregion
+
+    //}
     public class Package
     {
         public Package()
@@ -312,9 +322,10 @@ namespace IranAudioGuide_MainServer.Models
         //public IList<ApplicationUser> Pac_User { get; set; }
 
         #region Relation property
+        public int langId { get; set; }
         public IList<city> Pac_Cities { get; set; }
         public IList<Procurement> procurements { get; set; }
-        public List<TranslatePackage> TranslatePackages { get; set; }
+        //public List<TranslatePackage> TranslatePackages { get; set; }
 
         #endregion
     }
@@ -495,7 +506,7 @@ namespace IranAudioGuide_MainServer.Models
         //Culture
         public DbSet<TranslateCity> TranslateCities { get; set; }
         public DbSet<TranslateImage> TranslateImages { get; set; }
-        public DbSet<TranslatePackage> TranslatePackages { get; set; }
+        //public DbSet<TranslatePackage> TranslatePackages { get; set; }
         public DbSet<TranslatePlace> TranslatePlaces { get; set; }
 
 
