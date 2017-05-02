@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <h2> @Global.Parameter43 <br /> @Global.Parameter44 </h2>
+                <h2> @Global.Parameter43 @*<br /> @Global.Parameter44*@ </h2>
                 <p id="regdet">
                     @Global.Parameter45
                 </p>
@@ -17,6 +17,15 @@
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = Global.PlaceholderName })
+                            </div>
+                        </div>
+                    </div>
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div class="col-md-8">

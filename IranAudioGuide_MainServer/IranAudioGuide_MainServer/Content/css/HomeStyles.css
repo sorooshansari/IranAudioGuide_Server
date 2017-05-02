@@ -177,7 +177,7 @@
     }
 
 .iwTailHolder {
-    top:-20px !important;
+    top: -20px !important;
 }
 
 .iwCloseBtn {
@@ -188,11 +188,12 @@
     /*left: -20% !important;*/
     top: initial !important;
     bottom: 0px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
-.gm-style-iw .panel{
-    box-shadow:none !important;
-}
+
+    .gm-style-iw .panel {
+        box-shadow: none !important;
+    }
 
 .iwTail div {
     background-color: rgba(20, 68, 130, 0.8) !important;
@@ -223,4 +224,77 @@
     #map {
         min-height: 700px;
     }
+}
+
+.fab {
+    border: none;
+    font-size: 1.5em;
+    color: white;
+    background-color: #ff4081;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    -webkit-box-shadow: 2px 3px 3px 0px rgba(41, 41, 41, .3);
+    -moz-box-shadow: 2px 3px 3px 0px rgba(41, 41, 41, .3);
+    box-shadow: 2px 3px 3px 0px rgba(41, 41, 41, .3);
+}
+
+    .fab:hover {
+        background-color: #ff4060;
+    }
+
+#goTopButton {
+    display: none;
+    border: none;
+    position: fixed;
+    right: 30px;
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-color: #2170d7;
+    z-index: 99;
+    text-align: center;
+    padding-top: 10px;
+    box-shadow: 0px 0px 5px #333;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+}
+
+    #goTopButton i {
+        -webkit-transition: all 200ms;
+        -moz-transition: all 200ms;
+        -o-transition: all 200ms;
+        transition: all 200ms;
+    }
+
+    #goTopButton:hover {
+        -webkit-transition: all 200ms;
+        -moz-transition: all 200ms;
+        -o-transition: all 200ms;
+        transition: all 200ms;
+        box-shadow: 0px 0px 1px inset;
+        background-color: #fff;
+    }
+
+        #goTopButton:hover i {
+            -webkit-transition: all 200ms;
+            -moz-transition: all 200ms;
+            -o-transition: all 200ms;
+            transition: all 200ms;
+            color: #15437f;
+        }
+
+@media (min-width: 1024px) {
+    #goTopButton {
+        padding-top: 8px;
+    }
+}
+
+#socialLoginList button {
+    margin-left: auto;
+    margin-right: auto;
 }

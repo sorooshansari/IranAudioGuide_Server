@@ -19,7 +19,7 @@ namespace IranAudioGuide_MainServer
             else
             {
                 // load the culture info from the cookie
-                var cookie = filterContext.HttpContext.Request.Cookies["test.Models.CurrentUICulture"];
+                var cookie = filterContext.HttpContext.Request.Cookies["IranAudioGuide.Models.CurrentUICulture"];
                 var langHeader = string.Empty;
                 if (cookie != null)
                 {
@@ -38,7 +38,7 @@ namespace IranAudioGuide_MainServer
             }
 
             // save the location into cookie
-            HttpCookie _cookie = new HttpCookie("test.Models.CurrentUICulture", Thread.CurrentThread.CurrentUICulture.Name);
+            HttpCookie _cookie = new HttpCookie("IranAudioGuide.Models.CurrentUICulture", Thread.CurrentThread.CurrentUICulture.Name);
             _cookie.Expires = DateTime.Now.AddYears(1);
             filterContext.HttpContext.Response.SetCookie(_cookie);
 

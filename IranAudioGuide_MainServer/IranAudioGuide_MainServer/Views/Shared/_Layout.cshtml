@@ -8,33 +8,80 @@
     //var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
     //var action = Url.RequestContext.RouteData.Values["action"].ToString();
     //var id = Url.RequestContext.RouteData.Values["id"];
-    var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
+    //var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
+    var lang = Global.Lang;
 }
 
 <!DOCTYPE html>
 <html lang="@Global.Lang" xmlns:fb="http://ogp.me/ns/fb#">
 <head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
-    <meta name="title" content="Best audio guide application for Iran travel" />
-    <meta name="Description"
-          content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-    <meta name="keywords" content="Iran Audio Guide,Iran Traveling,Travel,Turism,audio guide,tour,guide,application,android,ios,iphone,ipad,
-          mp3 download,download mp3,audible,audio,download music mp3,audio books,mp3 free download,short stories,free download mp3,download apps,stories for kids,free audio books,youtube music downloader,audiobook,short stories for kids,audio speakers,kids story,children stories,audio books free,english story,story book,storiesonline,audio songs download,audio downloader,audible app,mp3 converter free download,stories for children,best audiobooks,books for free,download converter,mp3 downloader online,english short stories,youtube downloader music,youtube music mp3,mp3 converter free,youtube music downloader free,english story for kids,english story book,kids story books,short story english,email domain,free books for kids,free audio books online,stories to read,story books in english,short stories for children,nline stories,download audio books,audiobooks for free,audio books free download,audio books online,audio stories,small stories for kids,mp3 audio,kids short stories,apps download free,free audiobook,download free apps,download audio,download video mp3,audiobook free,talking books,children short stories,story for kids in english,free audio books apphildren story books,free audible books,audio books for kids,audio books download,story english,free audio,music audio,audio app,translate farsi to english,free youtube music downloader,kindle audio books,audio software,audiobook download,free stories,audiobook app,audio books app,reading stories,audible free books,online books for kids,video to mp3 downloader,free audio books download,mp3 sound,good audio books,mp3 player downloader free,dictionary farsi to english,download free audio books,short stories for kids in english,,audio guide,audio book reader,audible books free,mp3 software,farsi to english translation,free mp3 download online,listening books,audio books free online listen,,kids audio books,audioguide,book story,audio hifi,mp3 player software,story kids,best free audio books,short stories in english for students,video mp3 download,kids story in english,audio books online free,audiobook english,mp3 converter download free,free story books,free audio books mp3,star wars audio books,farsi to english dictionary,audio recorders,english audio books,children's stories online,cheap audio books,online stories for kids,children's audio books,free audio books for kids,converter mp3 free download,free online audiobooks,online audio books,free mp3 converter download,books on tape free,story reading,free download audio songs,stories for toddlers,stories for childrens in english,read stories online,kids story online,free audiobook download,free audiobook app,sound book,mp3 download free online,mp3 free download online,mp3 audio download,audio textbooks,english short stories for kids,online short stories,audio stories for kids,stories for kids online,short stories for kindergarten,book audio,free audio download,shop audible,free books on tape,download audio books free,audio books free online listen without downloading,free audio books streaming,free download converter,audio books free online,music converter download,audio books free download mp3,stories to read online,free stories for kids,short stories to read,buy audio books,short story for kid,free download audio books,listen to books,translate farsi,audio books for children,streaming audiobooks,convert to mp3 free download,talking books free,free audio files,audiobook free download,download audiobook,reading story books,good stories for kids,free english books,bedtime stories audio,english audiobooks,free kids stories,free children's stories,free audible,apps download apps download,download music to mp3,child story in english,audiobooks in english,download music free online mp3,english books free download,motivational audio books,story of kids,simple stories for kids,stories read online,mp3 books,audible free,music converter free download,books on audio,download audio converter,popular audiobooks,reading stories for kids,listen to books online,free books on audible,free talking books,free stories online,the best audio books,books on tape app,download audible books,listening english stories,free bedtime stories for kids,story book english,free kids audio books,english short stories for beginners,audio bedtime stories,classic audio books,free books for children,audiobook download free,english audio stories,audio books mp3,short stories for childrens in english,library audio books,free children's audio books,a short story for kids,english story audio,audiobook library,audiobook streaming,mp3 audiobooks,audio novels,listen to books for free,free online stories,listen to audiobooks,english short stories for students,listen to books online free,books on audio free,where to buy audio books,converter to mp3 free download,audio books library,download audiobooks for free,listen to stories,audio player software,download story books,free audio tracks,listen to audiobooks free,audio books kids,audiobook mp3,audio books with text,story audio,free audio books android,free short stories for kids,audio short stories,english talking book,listening stories,listen to free audio books,
-          significant,soon,love,millenniums,poets,email,story,log,images,download,team,achievements,attraction,soroosh,step,tails,address,thorough,allows,accurate,open,content,send,see,history,scientist,great,attractions,details,late,art,liberating,scandals,persian,victories,enter,feel,need,people,advising,interested,narrate,explain,techniques,ansari,please,close,walk,learn,release,kings,tracks,visiting,visit,tell,myth,iran,facebook,stories,convenient,methods,developer,choose,just,menu,crafts,gossips,instagram,pace,discovery,hear,culture,listen,mehr,twitter,wars,application,profile,worries,coming,persia,accept,look,correct,guide,providing,iranian,webmoney,audio,telegram,historic,famous,notify,contact,figures,available,tips,architecture,unique" />
-    <meta name="author" content="Soroosh Ansari,Mona Akhlaghi">
     <meta charset="utf-8" />
+    <meta name="title" content="@Global.IndexTitle" />
+    <meta name="Description"
+          content="@Global.IranAudioGuide - @Global.SEOdesc" />
+    <meta name="keywords" content="Iran Audio Guide,Iran Traveling,Travel,Turism,audio guide,tour,guide,application,android,ios,iphone,ipad,
+          mp3 download,download mp3,audible,audio,audio books,mp3 free download,short stories,free download mp3,download apps,stories for kids,free audio books,youtube music downloader,audiobook,short stories for kids,audio speakers,kids story,children stories,audio books free,english story,story book,storiesonline,audio songs download,audio downloader,audible app,stories for children,best audiobooks,books for free,download converter,mp3 downloader online,english short stories,english story for kids,english story book,kids story books,short story english,email domain,free books for kids,free audio books online,stories to read,story books in english,short stories for children,nline stories,download audio books,audiobooks for free,audio books free download,audio books online,audio stories,small stories for kids,mp3 audio,kids short stories,apps download free,free audiobook,download free apps,download audio,download video mp3,audiobook free,talking books,children short stories,story for kids in english,free audio books apphildren story books,free audible books,audio books for kids,audio books download,story english,free audio,music audio,audio app,translate farsi to english,free youtube music downloader,kindle audio books,audio software,audiobook download,free stories,audiobook app,audio books app,reading stories,audible free books,online books for kids,video to mp3 downloader,free audio books download,mp3 sound,good audio books,mp3 player downloader free,dictionary farsi to english,download free audio books,short stories for kids in english,,audio guide,audio book reader,audible books free,mp3 software,farsi to english translation,free mp3 download online,listening books,audio books free online listen,,kids audio books,audioguide,book story,audio hifi,mp3 player software,story kids,best free audio books,short stories in english for students,video mp3 download,kids story in english,audio books online free,audiobook english,mp3 converter download free,free story books,free audio books mp3,star wars audio books,farsi to english dictionary,audio recorders,english audio books,children's stories online,cheap audio books,online stories for kids,children's audio books,free audio books for kids,converter mp3 free download,free online audiobooks,online audio books,free mp3 converter download,books on tape free,story reading,free download audio songs,stories for toddlers,stories for childrens in english,read stories online,kids story online,free audiobook download,free audiobook app,sound book,mp3 download free online,mp3 free download online,mp3 audio download,audio textbooks,english short stories for kids,online short stories,audio stories for kids,stories for kids online,short stories for kindergarten,book audio,free audio download,shop audible,free books on tape,download audio books free,audio books free online listen without downloading,free audio books streaming,free download converter,audio books free online,music converter download,audio books free download mp3,stories to read online,free stories for kids,short stories to read,buy audio books,short story for kid,free download audio books,listen to books,translate farsi,audio books for children,streaming audiobooks,convert to mp3 free download,talking books free,free audio files,audiobook free download,download audiobook,reading story books,good stories for kids,free english books,bedtime stories audio,english audiobooks,free kids stories,free children's stories,free audible,apps download apps download,download music to mp3,child story in english,audiobooks in english,download music free online mp3,english books free download,motivational audio books,story of kids,simple stories for kids,stories read online,mp3 books,audible free,music converter free download,books on audio,download audio converter,popular audiobooks,reading stories for kids,listen to books online,free books on audible,free talking books,free stories online,the best audio books,books on tape app,download audible books,listening english stories,free bedtime stories for kids,story book english,free kids audio books,english short stories for beginners,audio bedtime stories,classic audio books,free books for children,audiobook download free,english audio stories,audio books mp3,short stories for childrens in english,library audio books,free children's audio books,a short story for kids,english story audio,audiobook library,audiobook streaming,mp3 audiobooks,audio novels,listen to books for free,free online stories,listen to audiobooks,english short stories for students,listen to books online free,books on audio free,where to buy audio books,converter to mp3 free download,audio books library,download audiobooks for free,listen to stories,audio player software,download story books,free audio tracks,listen to audiobooks free,audio books kids,audiobook mp3,audio books with text,story audio,free audio books android,free short stories for kids,audio short stories,english talking book,listening stories,listen to free audio books,
+          significant,soon,love,millenniums,poets,email,story,log,images,download,team,achievements,attraction,soroosh,step,tails,address,thorough,allows,accurate,open,content,send,see,history,scientist,great,attractions,details,late,art,liberating,scandals,persian,victories,enter,feel,need,people,advising,interested,narrate,explain,techniques,ansari,please,close,walk,learn,release,kings,tracks,visiting,visit,tell,myth,iran,facebook,stories,convenient,methods,developer,choose,just,menu,crafts,gossips,instagram,pace,discovery,hear,culture,listen,mehr,twitter,wars,application,profile,worries,coming,persia,accept,look,correct,guide,providing,iranian,webmoney,audio,telegram,historic,famous,notify,contact,figures,available,tips,architecture,unique" />
+    <meta name="author" content="@Global.Parameter27, @Global.Parameter25">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:title" content="Best audio guide application for Iran travel" />
-    <meta property="og:site_name" content="Iran Audio Guide" />
+
+    <script type="application/ld+json">
+        {
+        "@@context": "http://schema.org",
+        "@@type": "Organization",
+        "name": "Iran Audio Guide",
+        "legalName" : "Shiraz Durandish Programers Co.",
+        "url": "http://iranaudioguide.com",
+        "logo": "http://iranaudioguide.com/IAGSITELOGO.png",
+        "foundingDate": "2016",
+        "founders": [
+        {
+        "@@type": "Person",
+        "name": "Soroosh Ansari Mehr",
+        "image": "http://iranaudioguide.com/images/Members/Soroosh.jpg",
+        "jobTitle": "CTO",
+        "email": "mailto:soroosh@iranaudioguide.com"
+        },
+        {
+        "@@type": "Person",
+        "name": "Mona Akhlaghi",
+        "image": "http://iranaudioguide.com/images/Members/Mona.jpg",
+        "jobTitle": "CEO",
+        "email": "mailto:mona@iranaudioguide.com"
+        } ],
+        "address": {
+        "@@type": "PostalAddress",
+        "streetAddress": "Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard",
+        "addressLocality": "Shiraz",
+        "addressRegion": "Fars",
+        "addressCountry": "Iran"
+        },
+        "contactPoint": [{
+        "@@type": "ContactPoint",
+        "telephone": "+98-71-3636-4709",
+        "email": "info@iranaudioguide.com",
+        "contactType": "customer service",
+        "availableLanguage": ["Farsi","English"]
+        }],
+        "sameAs": [
+        "https://www.twitter.com/iranaudioguide",
+        "https://www.facebook.com/iranaudioguide",
+        "https://www.instagram.com/iran.audio.guide",
+        "https://www.telegram.me/iranaudioguide"
+        ]}
+    </script>
+    <meta property="og:title" content="@Global.IndexTitle" />
+    <meta property="og:site_name" content="@Global.IranAudioGuide" />
     <meta property="og:type" content="Audio Guide" />
     <meta property="og:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
     <meta property="og:url" content="http://iranaudioguide.com" />
     <meta property="og:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
     <meta property="fb:admins" content="iranaudioguide" />
 
-    <meta property="twitter:card" content="Iran Audio Guide" />
-    <meta property="twitter:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+    <meta property="twitter:card" content="@Global.IranAudioGuide" />
+    <meta property="twitter:description" content="@Global.IranAudioGuide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
     <meta property="twitter:url" content="http://iranaudioguide.com" />
-    <meta property="twitter:title" content="Best audio guide application for Iran travel" />
+    <meta property="twitter:title" content="@Global.IndexTitle" />
     <meta property="twitter:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
     <title>@Global.IranAudioGuide</title>
 
@@ -45,16 +92,6 @@
     <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/css/ie9.css" /><![endif]-->
     <!-- Start Visual Website Optimizer Asynchronous Code -->
-    @*<script type='text/javascript'>
-            var _vwo_code = (function () {
-                var account_id = 291614,
-                settings_tolerance = 2000,
-                library_tolerance = 2500,
-                use_existing_jquery = false,
-                /* DO NOT EDIT BELOW THIS LINE */
-                f = false, d = document; return { use_existing_jquery: function () { return use_existing_jquery; }, library_tolerance: function () { return library_tolerance; }, finish: function () { if (!f) { f = true; var a = d.getElementById('_vis_opt_path_hides'); if (a) a.parentNode.removeChild(a); } }, finished: function () { return f; }, load: function (a) { var b = d.createElement('script'); b.src = a; b.type = 'text/javascript'; b.innerText; b.onerror = function () { _vwo_code.finish(); }; d.getElementsByTagName('head')[0].appendChild(b); }, init: function () { settings_timer = setTimeout('_vwo_code.finish()', settings_tolerance); var a = d.createElement('style'), b = 'body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}', h = d.getElementsByTagName('head')[0]; a.setAttribute('id', '_vis_opt_path_hides'); a.setAttribute('type', 'text/css'); if (a.styleSheet) a.styleSheet.cssText = b; else a.appendChild(d.createTextNode(b)); h.appendChild(a); this.load('//dev.visualwebsiteoptimizer.com/j.php?a=' + account_id + '&u=' + encodeURIComponent(d.URL) + '&r=' + Math.random()); return settings_timer; } };
-            }()); _vwo_settings_timer = _vwo_code.init();
-        </script>*@
     <!-- End Visual Website Optimizer Asynchronous Code -->
 
     <link href="~/Content/test.css" rel="stylesheet" />
@@ -87,15 +124,13 @@
                 <div class="countryDropdown">
                     @foreach (var item in locales.Get)
                     {
-                        if (item.Id == lang)
+                        if (item.Id != lang)
                         {
-                            continue;
+                            <a href="@string.Format("{0}?lang={1}", Request.Url.GetLeftPart(UriPartial.Path), item.Id)" hreflang="@item.Id" lang="@item.Id">
+                                <img src="@item.Icon" alt="@item.Id" />
+                                <span class="siteFlagText">@item.Title</span>
+                            </a>
                         }
-                        <a href="@Url.Action("Index", "Home", new { lang = item.Id})" hreflang="@item.Id" lang="@item.Id">
-                            <img src="@item.Icon" alt="@item.Id" />
-                            <span class="siteFlagText">@item.Title</span>
-                        </a>
-
                     }
 
                 </div>
@@ -121,6 +156,7 @@
                                 @if (User.Identity.IsAuthenticated == false)
                                 {
                                     <li><a rel="nofollow" href="@Url.Action("Login","Account", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuLogin</a></li>
+                                    <li><a rel="nofollow" href="@Url.Action("Register","Account", new { lang = lang})"><i class="fa fa-user-plus"></i>@Global.MenuRegister</a></li>
 
                                 }
                                 else
@@ -155,12 +191,19 @@
     @Scripts.Render("~/bundles/minJs")
     @RenderSection("scripts", required: false)
 
-    @*<noscript>
-            <div style="display:none;">
-                <img src="//pixel.quantserve.com/pixel/p-W5MYZqNRc9gad.gif" border="0" height="1" width="1" alt="Quantcast" />
-            </div>
-        </noscript>*@
-    <!-- End Quantcast tag -->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-98202395-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)*@

@@ -139,7 +139,7 @@
     <value>Iran Audio Guide</value>
   </data>
   <data name="Lang" xml:space="preserve">
-    <value>en-US</value>
+    <value>en</value>
   </data>
   <data name="MenuContactUs" xml:space="preserve">
     <value>Contact Us</value>
@@ -314,7 +314,7 @@
         logging in.</value>
   </data>
   <data name="Parameter32" xml:space="preserve">
-    <value>Use social services to log in.</value>
+    <value>Sign in with:</value>
   </data>
   <data name="Parameter33" xml:space="preserve">
     <value>There are no external authentication services configured.</value>
@@ -341,13 +341,13 @@
     <value>Enter your email.</value>
   </data>
   <data name="Parameter40" xml:space="preserve">
-    <value>Email Link</value>
+    <value>Send Link</value>
   </data>
   <data name="Parameter41" xml:space="preserve">
     <value>Please check your email to reset your password.</value>
   </data>
   <data name="Parameter42" xml:space="preserve">
-    <value>Use your Login Credentials to access your profile.</value>
+    <value>Wellcome back!</value>
   </data>
   <data name="Parameter43" xml:space="preserve">
     <value>Join us!</value>
@@ -356,7 +356,7 @@
     <value>It only takes a minute!</value>
   </data>
   <data name="Parameter45" xml:space="preserve">
-    <value>By registering you will access to all Iran Audio Guide has to offer. Hopefully you will soon agree that its quite worth while</value>
+    <value>By registering, you will access to all Iran Audio Guide has to offer</value>
   </data>
   <data name="Parameter46" xml:space="preserve">
     <value>Register</value>
@@ -597,7 +597,7 @@
     <value>Iran Audio Guide Office</value>
   </data>
   <data name="OfficeAddress" xml:space="preserve">
-    <value>Fars Science and Technology Park,&lt;br/&gt;Aryan town, Dr Hesabi Boulevard,&lt;br/&gt;Shiraz, Iran</value>
+    <value>Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard&lt;br/&gt;Shiraz, Iran</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Send</value>
@@ -607,5 +607,26 @@
   </data>
   <data name="Twitter" xml:space="preserve">
     <value>Twitter</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot?</value>
+  </data>
+  <data name="Google" xml:space="preserve">
+    <value>Google</value>
+  </data>
+  <data name="RegisterAsNewUser" xml:space="preserve">
+    <value>Register as a new user?</value>
+  </data>
+  <data name="SEOdesc" xml:space="preserve">
+    <value>Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions.</value>
+  </data>
+  <data name="forgotEnterEmail" xml:space="preserve">
+    <value>Enter your email address to receive a reset password link</value>
+  </data>
+  <data name="MenuRegister" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="signInSubHeader" xml:space="preserve">
+    <value>Manage your Iran Audio Guide account easily through our website</value>
   </data>
 </root>

@@ -5,8 +5,12 @@
 }
 
 ._fa * {
-    font-family: 'SDDT-Light-web' !important;
+    font-family: 'SDDT-Light-web';
     letter-spacing: 0px !important;
+}
+
+._fa .fa {
+    font-family: FontAwesome;
 }
 
 ._fa h1, ._fa h2, ._fa h3, ._fa h4, ._fa h5, ._fa h6, ._fa p, ._fa .panel-heading, ._fa panel-body, ._fa #menu ul {
@@ -42,17 +46,17 @@
 }
 
 ._fa .input-group-addon {
-    border-bottom-right-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
+    border-bottom-right-radius: 4px !important;
+    border-top-right-radius: 4px !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
 }
 
 ._fa .form-control {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 4px !important;
+    border-top-left-radius: 4px !important;
 }
 
 ._fa .panel-body {
@@ -69,4 +73,53 @@
 
 ._fa .gm-style-iw {
     margin-bottom: 17px;
+}
+
+._fa #promo {
+    direction: rtl;
+}
+
+    ._fa #promo .row > * {
+        float: right;
+    }
+
+._fa .radio label, ._fa .checkbox label {
+    padding-left: initial;
+    padding-right: 20px;
+}
+
+@media (min-width: 992px) {
+    ._fa .col-md-1, ._fa .col-md-2, ._fa .col-md-3, ._fa .col-md-4, ._fa .col-md-5, ._fa .col-md-6,
+    ._fa .col-md-7, ._fa .col-md-8, ._fa .col-md-9, ._fa .col-md-10, ._fa .col-md-11, ._fa .col-md-12 {
+        float: right;
+    }
+}
+
+._fa .captchaHolder {
+    padding: 0;    
+    float: right;
+    margin-right: -7px;
+}
+
+._fa #rc-imageselect, ._fa .g-recaptcha {
+    transform-origin: initial;
+    -webkit-transform-origin: initial;
+}
+
+@media screen and (min-width: 992px) {
+    ._fa #rc-imageselect, ._fa .g-recaptcha {
+        transform-origin: initial;
+        -webkit-transform-origin: initial;
+    }
+}
+
+._fa #goTopButton {
+    padding-top: 12px;
+}
+
+
+@media (min-width: 1024px) {
+    ._fa #goTopButton {
+    padding-top: 10px;
+    }
 }

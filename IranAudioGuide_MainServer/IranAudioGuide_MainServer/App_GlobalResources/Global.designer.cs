@@ -214,6 +214,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your email address to receive a reset password link.
+        /// </summary>
+        internal static string forgotEnterEmail {
+            get {
+                return ResourceManager.GetString("forgotEnterEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot?.
+        /// </summary>
+        internal static string ForgotPassword {
+            get {
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Google.
+        /// </summary>
+        internal static string Google {
+            get {
+                return ResourceManager.GetString("Google", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learn More.
         /// </summary>
         internal static string IndexBtnLearnMore {
@@ -277,7 +304,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to en-US.
+        ///   Looks up a localized string similar to en.
         /// </summary>
         internal static string Lang {
             get {
@@ -331,6 +358,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        internal static string MenuRegister {
+            get {
+                return ResourceManager.GetString("MenuRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mona Akhlaghi.
         /// </summary>
         internal static string Mona {
@@ -340,7 +376,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fars Science and Technology Park,&lt;br/&gt;Aryan town, Dr Hesabi Boulevard,&lt;br/&gt;Shiraz, Iran.
+        ///   Looks up a localized string similar to Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard&lt;br/&gt;Shiraz, Iran.
         /// </summary>
         internal static string OfficeAddress {
             get {
@@ -809,7 +845,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use social services to log in..
+        ///   Looks up a localized string similar to Sign in with:.
         /// </summary>
         internal static string Parameter32 {
             get {
@@ -890,7 +926,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email Link.
+        ///   Looks up a localized string similar to Send Link.
         /// </summary>
         internal static string Parameter40 {
             get {
@@ -908,7 +944,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use your Login Credentials to access your profile..
+        ///   Looks up a localized string similar to Wellcome back!.
         /// </summary>
         internal static string Parameter42 {
             get {
@@ -935,7 +971,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By registering you will access to all Iran Audio Guide has to offer. Hopefully you will soon agree that its quite worth while.
+        ///   Looks up a localized string similar to By registering, you will access to all Iran Audio Guide has to offer.
         /// </summary>
         internal static string Parameter45 {
             get {
@@ -1142,6 +1178,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register as a new user?.
+        /// </summary>
+        internal static string RegisterAsNewUser {
+            get {
+                return ResourceManager.GetString("RegisterAsNewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don’t just walk through  Iran, learn the history, hear the stories, feel the culture, ....
         /// </summary>
         internal static string SectionOneH2 {
@@ -1193,6 +1238,15 @@ namespace Resources {
         internal static string Send {
             get {
                 return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions..
+        /// </summary>
+        internal static string SEOdesc {
+            get {
+                return ResourceManager.GetString("SEOdesc", resourceCulture);
             }
         }
         
@@ -1418,6 +1472,15 @@ namespace Resources {
         internal static string ServerResetPasswordMessage2 {
             get {
                 return ResourceManager.GetString("ServerResetPasswordMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage your Iran Audio Guide account easily through our website.
+        /// </summary>
+        internal static string signInSubHeader {
+            get {
+                return ResourceManager.GetString("signInSubHeader", resourceCulture);
             }
         }
         

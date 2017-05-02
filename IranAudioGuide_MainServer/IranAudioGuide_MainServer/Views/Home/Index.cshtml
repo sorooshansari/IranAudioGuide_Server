@@ -2,6 +2,7 @@
     ViewBag.Title = "Iran Audio Guide";
 }
 @using Resources
+<a href="#page-wrapper" id="goTopButton" class="scrolly"><i class="fa fa-chevron-up"></i></a>
 <section id="banner">
     <div class="inner">
         <div id="logo">
@@ -200,10 +201,10 @@
                         <div class="col-xs-6 member-social">
                             <ul class="icons">
                                 @*<li>
-                                    <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
-                                </li>*@
+                                        <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                                    </li>*@
                                 <li>
-                                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
+                                    <a href="mailto:mona@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
                                 </li>
                             </ul>
                         </div>
@@ -220,10 +221,10 @@
                         <div class="col-xs-6 member-social">
                             <ul class="icons">
                                 @*<li>
-                            <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
-                        </li>*@
+                                        <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                                    </li>*@
                                 <li>
-                                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
+                                    <a href="mailto:soroosh@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
                                 </li>
                             </ul>
                         </div>
@@ -240,8 +241,8 @@
                         <div class="col-xs-6 member-social">
                             <ul class="icons">
                                 @*<li>
-                                    <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
-                                </li>*@
+                                        <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                                    </li>*@
                                 <li>
                                     <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
                                 </li>
@@ -260,8 +261,8 @@
                         <div class="col-xs-6 member-social">
                             <ul class="icons">
                                 @*<li>
-                                    <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
-                                </li>*@
+                                        <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                                    </li>*@
                                 <li>
                                     <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
                                 </li>
@@ -386,6 +387,18 @@
 </footer>
 @section scripts{
     <script>
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                document.getElementById("goTopButton").style.display = "block";
+            } else {
+                document.getElementById("goTopButton").style.display = "none";
+            }
+        }
+
+
+
         function initMap() {
             var image = {
                 url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
@@ -397,7 +410,7 @@
                 '<div class="panel-heading">@Global.IranAudioGuideOffice</div>' +
                 '<div class="panel-body">' +
                     '<div id="content">' +
-                        '<p><i class="fa fa-map-marker"></i> @Html.Raw(Global.OfficeAddress)</p>' +
+                        '<p style="width: 200px;"><i class="fa fa-map-marker"></i> @Html.Raw(Global.OfficeAddress)</p>' +
                     '</div>' +
                 '</div>' +
             '</div>';
