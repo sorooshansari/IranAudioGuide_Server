@@ -250,9 +250,9 @@
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201705070811397_a1.cs" />
-    <Compile Include="Migrations\201705070811397_a1.Designer.cs">
-      <DependentUpon>201705070811397_a1.cs</DependentUpon>
+    <Compile Include="Migrations\201705070826316_a1.cs" />
+    <Compile Include="Migrations\201705070826316_a1.Designer.cs">
+      <DependentUpon>201705070826316_a1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -1798,8 +1798,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705070811397_a1.resx">
-      <DependentUpon>201705070811397_a1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705070826316_a1.resx">
+      <DependentUpon>201705070826316_a1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
