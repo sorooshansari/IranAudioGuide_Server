@@ -4,37 +4,66 @@
 @{
     ViewBag.Title = Global.TitlePageLogIn;
 }
+@section Styles{
+    <style>
+        #rc-imageselect, .g-recaptcha {
+            transform: scale(0.86);
+            -webkit-transform: scale(0.86);
+            transform-origin: 0 0;
+            -webkit-transform-origin: 0 0;
+        }
 
+        @@media screen and (min-width: 992px) {
+            #rc-imageselect, .g-recaptcha {
+                transform: scale(0.92);
+                -webkit-transform: scale(0.92);
+                transform-origin: 0 0;
+                -webkit-transform-origin: 0 0;
+            }
+        }
+    </style>
+}
 <section id="promo" class="content-block min-height-600px">
     <div class="container">
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-xs-12 col-md-5">
                 @*  Please don't remove item  *@
                 <span id="chechLogin"></span>
                 <h2>@Global.Parameter42</h2>
+                <p id="regdet">
+                    @Global.signInSubHeader
+                </p>
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.ValidationMessageFor(m => m.Email, "",new { @class = "text-danger", placeholder = Global.PlaceholderEmail })
                     @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
+                    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger", placeholder = Global.PlaceholderEmail })
                     <div class="form-group">
                         <div class="col-md-8">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Global.PlaceholderEmail })
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Global.PlaceholderEmail })
+                            </div>
                         </div>
                     </div>
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger", placeholder = Global.PlaceholderPassword })
                     <div class="form-group">
                         <div class="col-md-8">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Global.PlaceholderPassword })
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Global.PlaceholderPassword })
+                            </div>
                         </div>
                     </div>
 
 
                     <div class="form-group" ng-show="isTheFirstLogin == false">
-                        <div class="col-md-8">
+                        <div class="col-md-8 captchaHolder">
                             @* for localhost *@
-                            <div class="g-recaptcha" data-sitekey="6LffxRMUAAAAAK7Fv690WPwcjVKcX1niaz_N6dHn"></div>
+                            <div class="input-group">
+                                <div class="g-recaptcha" data-sitekey="6LffxRMUAAAAAK7Fv690WPwcjVKcX1niaz_N6dHn"></div>
+                            </div>
                             @*  for server
                                 <div class="g-recaptcha" data-sitekey="6LdmbRMUAAAAAJK7NTs6f4lHluxq-6ZI7efyiXsV"></div>
                             *@
@@ -43,36 +72,36 @@
 
 
 
-                        <div class="form-group">
-                            <div class="col-md-8 checkbox">
-                                @*<input type="checkbox" id="RememberMe" name="RememberMe" value="true">
-                                    <label for="RememberMe">Remember me?</label>*@
-                                @*<input type="checkbox" id="a" name="a" value="true">*@
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe)
-                            </div>
+                    <div class="form-group">
+                        <div class="col-md-8 checkbox">
+                            @*<input type="checkbox" id="RememberMe" name="RememberMe" value="true">
+                                <label for="RememberMe">Remember me?</label>*@
+                            @*<input type="checkbox" id="a" name="a" value="true">*@
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
                         </div>
+                    </div>
                 <!-- Button -->
-                        <div class="form-group">
-                            <div class="col-md-8">
-                                <button id="signbtn" type="submit" name="signbtn" class="btn btn-inverse"><i class="fa fa-sign-in"></i>Login</button>
-                            </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <button id="signbtn" type="submit" name="signbtn" class="btn btn-inverse"><i class="fa fa-sign-in"></i>&nbsp;@Global.MenuLogin</button>
                         </div>
-                        <p class="TextLinkp">
-                            @Html.ActionLink("Register as a new user", "Register")
-                        </p>
-                        <p class="TextLinkp">
-                            @Html.ActionLink("Forgot?", "ForgotPassword")
-                        </p>
+                    </div>
+                    <p class="TextLinkp">
+                        @Html.ActionLink(Global.RegisterAsNewUser, "Register")
+                    </p>
+                    <p class="TextLinkp">
+                        @Html.ActionLink(Global.TitlePageForgot, "ForgotPassword")
+                    </p>
                 }
 
             </div>
             <!-- /.col -->
-            @*<div class="col-md-6 col-md-offset-1">
-                    <div class="video-wrapper">
-                        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                    </div>
-                </div>*@
+            <div class="col-xs-12 col-md-6 col-md-offset-1">
+                <div class="ExternalLogin">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </div>
+            </div>
             <!-- /.col -->
         </div>
         <!-- /.row -->
@@ -80,5 +109,12 @@
 </section>
 
 @section scripts{
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    @if (Global.Lang != "en")
+    {
+        <script src='https://www.google.com/recaptcha/api.js?hl= @Global.Lang'></script>
+    }
+    else
+    {
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    }
 }

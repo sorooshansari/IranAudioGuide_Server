@@ -6,9 +6,11 @@ using System.Web.Mvc;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
-    public class apiTestController : Controller
+    [Authorize]
+    public class SellerController : Controller
     {
-        // GET: apiTest
+        // GET: Seller
+        [Authorize(Roles = "Seller")]
         public ActionResult Index()
         {
             return View();

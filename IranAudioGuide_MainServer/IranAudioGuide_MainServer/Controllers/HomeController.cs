@@ -4,7 +4,7 @@ using IranAudioGuide_MainServer.Models;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
-    [LocalizationAttribute]
+    [Localization]
     public class HomeController : Controller
     {
         [Compress]

@@ -12,7 +12,7 @@ using IranAudioGuide_MainServer.Services;
 namespace IranAudioGuide_MainServer.Controllers
 {
     [Authorize]
-    [LocalizationAttribute]
+    [Localization]
 
     public class AccountController : Controller
     {
@@ -103,16 +103,29 @@ namespace IranAudioGuide_MainServer.Controllers
                     serviceIpAdress.RemoveIpadressFailuers();
                     var user = UserManager.FindByName(model.Email);
                     string UserRole = UserManager.GetRoles(user.Id).FirstOrDefault();
-                    if (UserRole == "Admin")
-                        return RedirectToAction("Index", "Admin");
-                    else if (UserRole == "AppUser")
+                    switch (UserRole)
                     {
-                        if (returnUrl != null && returnUrl.Length > 0)
+                        case "Admin":
+                            return RedirectToAction("Index", "Admin");
+                        case "AppUser":
+                            if (returnUrl != null && returnUrl.Length > 0)
+                                return RedirectToLocal(returnUrl);
+                            return RedirectToAction("Index", "User");
+                        case "Seller":
+                            return RedirectToAction("Index", "Seller");
+                        default:
                             return RedirectToLocal(returnUrl);
-                        return RedirectToAction("Index", "User");
                     }
-                    else
-                        return RedirectToLocal(returnUrl);
+                    //if (UserRole == "Admin")
+                    //    return RedirectToAction("Index", "Admin");
+                    //else if (UserRole == "AppUser")
+                    //{
+                    //    if (returnUrl != null && returnUrl.Length > 0)
+                    //        return RedirectToLocal(returnUrl);
+                    //    return RedirectToAction("Index", "User");
+                    //}
+                    //else
+                    //    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View();
                 case SignInStatus.RequiresVerification:
@@ -193,7 +206,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.Name };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -225,7 +238,7 @@ namespace IranAudioGuide_MainServer.Controllers
             try
             {
                 if (!User.Identity.IsAuthenticated)
-                                  return Json(new Respond("", status.InvalidUsre));
+                    return Json(new Respond("", status.InvalidUsre));
 
 
                 var UserId = User.Identity.GetUserId();
@@ -318,7 +331,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     return View("vmessage", new vmessageVM()
                     {
                         Subject = Resources.Global.ServerForgotPassword,
-                        Message  = Resources.Global.ServerForgotPasswordMessage,
+                        Message = Resources.Global.ServerForgotPasswordMessage,
                     });
                 }
 
@@ -329,7 +342,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 string baseUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
                 var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, user.Id, code);
                 //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, Resources.Global.ServerResetPassword, string.Format(Resources.Global.ServerResetPasswordMessage, callbackUrl) );
+                await UserManager.SendEmailAsync(user.Id, Resources.Global.ServerResetPassword, string.Format(Resources.Global.ServerResetPasswordMessage, callbackUrl));
                 string ResetLink = Url.Action("ForgotPassword", "Account", model);
                 return View("vmessage", new vmessageVM()
                 {

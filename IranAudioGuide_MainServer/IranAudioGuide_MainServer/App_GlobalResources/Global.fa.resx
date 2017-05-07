@@ -178,7 +178,7 @@
     <value>راهنمای صوتی ایران</value>
   </data>
   <data name="Lang" xml:space="preserve">
-    <value>انگلیسی</value>
+    <value>fa</value>
   </data>
   <data name="MenuContactUs" xml:space="preserve">
     <value>تماس با ما</value>
@@ -304,7 +304,7 @@
     <value>راهنمای صوتی ایران، داستان های تاریخی، جنگ ها، پیروزی ها و تهاجم های گوناگون در هزاره های تاریخ ایران را برای شما بازگو میکند</value>
   </data>
   <data name="Parameter18" xml:space="preserve">
-    <value>ارقام قابل توجه</value>
+    <value>اشخاص نامی</value>
   </data>
   <data name="Parameter19" xml:space="preserve">
     <value>راهنمای صوتی ایران برای شما از داستان ها و دست آوردهای پادشاهان، شاعران، دانشمندان و اشخاص مهم دیگر میگوید</value>
@@ -316,7 +316,7 @@
     <value>راهنمای صوتی ایران به شما این امکان را می دهد که از افسانه های مشهور، بی نظیرترین روایت های عاشقانه، شایعات تاریخی و حتی رسوایی های ایران با خبر شوید</value>
   </data>
   <data name="Parameter21" xml:space="preserve">
-    <value>هنر &amp;amp; معماری</value>
+    <value>هنر و معماری</value>
   </data>
   <data name="Parameter22" xml:space="preserve">
     <value>راهنمای صوتی ایران با ارائه ی تصاویر، شما را از اصول خاص و منحصر به فرد معماری ایرانی و چگونگی آن ها آگاه می سازد</value>
@@ -325,7 +325,7 @@
     <value>درباره ی ما</value>
   </data>
   <data name="Parameter24" xml:space="preserve">
-    <value>با درود فراوان! ما دو نفر، منا اخلاقی و سروش انصاری مهر هستیم و از آنجایی که نوآوری برای هر دوی ما معنای خاصی داشت، تصمیم به همکاری گرفته و عمیقاً به قدرت دگرگون کنندگی تصویر و طراحی و قابلیت فارق العاده آنها در سهولت برای برقراری ارتباط باور داریم. در نتیجه مفتخریم که به عنوان اولین راهنمای صوتی گردشگری در ایران، بهترین و کامل ترین مجموعه را در اختیار شما قرار دهیم</value>
+    <value>با درود فراوان! ما دو نفر، منا اخلاقی و سروش انصاری مهر هستیم و از آنجایی که نوآوری برای هر دوی ما معنای خاصی داشت، تصمیم به همکاری گرفته و عمیقاً به قدرت دگرگون کنندگی تصویر و طراحی و قابلیت خارق العاده آنها در سهولت برای برقراری ارتباط باور داریم. در نتیجه مفتخریم که به عنوان اولین راهنمای صوتی گردشگری در ایران، بهترین و کامل ترین مجموعه را در اختیار شما قرار دهیم</value>
   </data>
   <data name="Parameter25" xml:space="preserve">
     <value>منا اخلاقی</value>
@@ -337,7 +337,7 @@
     <value>سروش انصاری مهر</value>
   </data>
   <data name="Parameter28" xml:space="preserve">
-    <value>نایب رئیس هیئت مدیره</value>
+    <value>مدیر ارشد فناوری</value>
   </data>
   <data name="Parameter29" xml:space="preserve">
     <value>با ما در ارتباط باشید</value>
@@ -352,13 +352,13 @@
     <value>لطفا نام کاربری خود را وارد نمایید و سپس کلید "ثبت نام" را برای وارد شدن کلیک کنید</value>
   </data>
   <data name="Parameter32" xml:space="preserve">
-    <value>ورود از طریق شبکه های اجتماعی</value>
+    <value>ورود از طریق:</value>
   </data>
   <data name="Parameter33" xml:space="preserve">
     <value>هیچ تأییدیه ی خارجی شناخته نشد</value>
   </data>
   <data name="Parameter34" xml:space="preserve">
-    <value>ثبت نام</value>
+    <value>ورود از طریق</value>
   </data>
   <data name="Parameter35" xml:space="preserve">
     <value>ورود از طریق</value>
@@ -379,7 +379,7 @@
     <value>ایمیل خود را وارد کنید</value>
   </data>
   <data name="Parameter40" xml:space="preserve">
-    <value>لینک ایمیل</value>
+    <value>ارسال لینک</value>
   </data>
   <data name="Parameter41" xml:space="preserve">
     <value>لطفا ایمیل خود را چک کنید تا بتوانید رمز عبورتان را تغییر دهید</value>
@@ -388,7 +388,7 @@
     <value>از اطلاعات ورود خود برای دسترسی به حساب کاربری استفاده کنید</value>
   </data>
   <data name="Parameter43" xml:space="preserve">
-    <value>به ما بپیوندید!</value>
+    <value>با ما باشید!</value>
   </data>
   <data name="Parameter44" xml:space="preserve">
     <value>کمی صبور باشید!</value>
@@ -445,7 +445,7 @@
     <value>شناسه ی مرجع</value>
   </data>
   <data name="PlaceholderConfirmPassword" xml:space="preserve">
-    <value>مجدداً رمز عبور را تکرار کنید</value>
+    <value>تکرار رمز عبور</value>
   </data>
   <data name="PlaceholderEmail" xml:space="preserve">
     <value>نشانی ایمیل</value>
@@ -463,7 +463,7 @@
     <value>عنوان</value>
   </data>
   <data name="SectionOneH2" xml:space="preserve">
-    <value>فقط به گردش در ایران بسنده نکنید؛ تاریخش را بیاموزید، قصه هایش را بشنوید و فرهنگش را لمس کنید</value>
+    <value>فقط به گردش در ایران بسنده نکنید&lt;br/&gt;تاریخش را بیاموزید، قصه هایش را بشنوید و فرهنگش را لمس کنید</value>
   </data>
   <data name="SectionOneMessage" xml:space="preserve">
     <value>به زودی عرضه خواهد شد. &lt;br /&gt; زمان عرضه را به شما اطلاع خواهیم داد</value>
@@ -581,5 +581,50 @@
   </data>
   <data name="TitlePageSendCode" xml:space="preserve">
     <value>ارسال</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>ایمیل</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>فیسبوک</value>
+  </data>
+  <data name="Instagram" xml:space="preserve">
+    <value>اینستاگرام</value>
+  </data>
+  <data name="IranAudioGuideOffice" xml:space="preserve">
+    <value>دفتر راهنمای صوتی ایران</value>
+  </data>
+  <data name="OfficeAddress" xml:space="preserve">
+    <value>شیراز، بلوار دکتر حسابی،&lt;br/&gt;شهرک آرین، پارک علم و فناوری</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="Telegram" xml:space="preserve">
+    <value>تلگرام</value>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>توییتر</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>رمز عبور خود را فراموش کرده اید؟</value>
+  </data>
+  <data name="Google" xml:space="preserve">
+    <value>گوگل</value>
+  </data>
+  <data name="RegisterAsNewUser" xml:space="preserve">
+    <value>ثبت کاربر جدید؟</value>
+  </data>
+  <data name="SEOdesc" xml:space="preserve">
+    <value>ا  اپلیکشن  راهنمای صوتی ایران نه تنها راهنمای قدم به قدم  اماکن دیدنی را در دسترس خواهید داشت بلکه قصه های تاریخی واساطیر و باستانی و دانستنی های جالب را نیز  می توانید بشنوید. بیاید پربارتر از قبل در  ایران  سفر کنیم و ایران را می بشناسیم.</value>
+  </data>
+  <data name="forgotEnterEmail" xml:space="preserve">
+    <value>ایمیل خود را برای دریافت لینک بازیابی کلمه عبور وارد کنید</value>
+  </data>
+  <data name="MenuRegister" xml:space="preserve">
+    <value>ثبت نام</value>
+  </data>
+  <data name="signInSubHeader" xml:space="preserve">
+    <value>از این طریق می توانید به راحتی حساب کاربری خود را مدیریت کنید</value>
   </data>
 </root>

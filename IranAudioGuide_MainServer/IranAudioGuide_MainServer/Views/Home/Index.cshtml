@@ -2,20 +2,21 @@
     ViewBag.Title = "Iran Audio Guide";
 }
 @using Resources
+<a href="#page-wrapper" id="goTopButton" class="scrolly"><i class="fa fa-chevron-up"></i></a>
 <section id="banner">
     <div class="inner">
         <div id="logo">
             <img src="~/images/IAGSITELOGO.png" />
         </div>
         <h2>@Global.IranAudioGuide</h2>
-        <p ></p>
-                
+        <p></p>
+
         <p>
             @Global.IndexTitle01<br />
             <br />
-           @Global.IndexTitle02 <br />
+            @Global.IndexTitle02 <br />
         </p>
-   
+
         <ul class="actions">
             <li>
                 <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8">
@@ -40,7 +41,7 @@
     <div class="inner">
         <header class="major">
             <h2>
-                @Global.SectionOneH2
+                @Html.Raw(Global.SectionOneH2)
 
             </h2>
             <p>@Html.Raw(Global.SectionOneP)</p>
@@ -50,10 +51,17 @@
                 @*<a ng-click="showPopup('Apple')">
                         <span class="icon fa-apple major style1"></span>
                     </a>*@
-                <span class="icon fa-apple major style1"></span>
+
+                <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8">
+                    <span class="icon fa-apple major style1"></span>
+                </a>
+                @*<span class="icon fa-apple major style1"></span>*@
             </li>
             <li>
-                <span class="icon fa-android major style2"></span>
+                <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android">
+                    <span class="icon fa-android major style2"></span>
+                </a>
+                @*<span class="icon fa-android major style2"></span>*@
             </li>
 
         </ul>
@@ -106,12 +114,12 @@
         </div>
         <div class="content">
             <h2 class="">
-              @Global.SpotlightContentH2
-                 <br>
+                @Global.SpotlightContentH2
+                <br>
 
             </h2>
             <p class="">
-            @Global.SpotlightContentP
+                @Global.SpotlightContentP
             </p>
         </div>
     </section>
@@ -122,7 +130,7 @@
             <img id="yourownpace" src="~/images/blockpics/yourownpace.jpg" alt="@Global.alt4" scroll-spy />
         </div><div class="content">
             <h2>
-               @Global.Parameter01 <br />
+                @Global.Parameter01 <br />
 
             </h2>
             <p> @Global.Parameter02</p>
@@ -168,6 +176,10 @@
     </div>
 </section>
 
+<style>
+
+
+</style>
 <!-- Map -->
 <section id="Location" class="Location">
     <div id="map"></div>
@@ -175,26 +187,89 @@
         <div class="panel panel-default">
             <div class="panel-heading">@Global.Parameter23 </div>
             <div class="panel-body">
+
                 <p>
-                    @Global.Parameter24  </p>
-                <br />
+                    @Global.Parameter24
+                </p>
+
                 <div class="row">
-                    <div class="col-lg-2 col-sm-3 col-xs-4">
-                        <img class="img-thumbnail" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
+                    <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
+                        <img class="img-thumbnail member-th" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
                     </div>
-                    <div class="col-lg-10 col-sm-9 col-xs-8">
+
+                    <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
+                        <div class="col-xs-6 member-social">
+                            <ul class="icons">
+                                @*<li>
+                                        <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                                    </li>*@
+                                <li>
+                                    <a href="mailto:mona@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
+                                </li>
+                            </ul>
+                        </div>
                         <h5 class="mt-0">@Global.Parameter25 </h5>
                         @Global.Parameter26
                     </div>
                 </div>
                 <br />
                 <div class="row">
-                    <div class="col-lg-2 col-sm-3 col-xs-4">
-                        <img class="img-thumbnail" src="~/images/Members/Soroosh.JPG" alt="@Global.Soroosh" style="width:100%">
+                    <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
+                        <img class="img-thumbnail member-th" src="~/images/Members/Soroosh.JPG" alt="@Global.Soroosh" style="width:100%">
                     </div>
-                    <div class="col-lg-10 col-sm-9 col-xs-8">
+                    <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
+                        <div class="col-xs-6 member-social">
+                            <ul class="icons">
+                                @*<li>
+                                        <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                                    </li>*@
+                                <li>
+                                    <a href="mailto:soroosh@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
+                                </li>
+                            </ul>
+                        </div>
                         <h5 class="mt-0">@Global.Parameter27</h5>
                         @Global.Parameter28
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
+                        <img class="img-thumbnail member-th" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
+                    </div>
+
+                    <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
+                        <div class="col-xs-6 member-social">
+                            <ul class="icons">
+                                @*<li>
+                                        <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                                    </li>*@
+                                <li>
+                                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <h5 class="mt-0">@Global.Parameter25 </h5>
+                        @Global.Parameter26
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
+                        <img class="img-thumbnail member-th" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
+                    </div>
+
+                    <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
+                        <div class="col-xs-6 member-social">
+                            <ul class="icons">
+                                @*<li>
+                                        <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                                    </li>*@
+                                <li>
+                                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <h5 class="mt-0">@Global.Parameter25 </h5>
+                        @Global.Parameter26
                     </div>
                 </div>
                 @*<dl class="dl-horizontal">
@@ -259,7 +334,7 @@
                 <!-- Button -->
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <button id="SubmitBtn" name="SubmitBtn" class="btn btn-inverse"><i class="fa fa-send"></i>   Send</button>
+                        <button id="SubmitBtn" name="SubmitBtn" class="btn btn-inverse"><i class="fa fa-send"></i>   @Global.Send</button>
                     </div>
                 </div>
 
@@ -276,23 +351,23 @@
     <ul class="icons">
         <li>
             <a target="_blank" href="https://www.twitter.com/iranaudioguide"
-               class="icon fa-twitter tooltips"><span>Twitter</span></a>
+               class="icon fa-twitter tooltips"><span>@Global.Twitter</span></a>
         </li>
         <li>
             <a target="_blank" href="https://www.facebook.com/iranaudioguide"
-               class="icon fa-facebook tooltips"><span>Facebook</span></a>
+               class="icon fa-facebook tooltips"><span>@Global.Facebook</span></a>
         </li>
         <li>
             <a target="_blank" href="https://www.instagram.com/iran.audio.guide/"
-               class="icon fa-instagram tooltips"><span>Instagram</span></a>
+               class="icon fa-instagram tooltips"><span>@Global.Instagram</span></a>
         </li>
         <li>
             <a target="_blank" href="https://www.telegram.me/iranaudioguide"
-               class="icon fa-telegram tooltips"><span>Telegram</span></a>
+               class="icon fa-telegram tooltips"><span>@Global.Telegram</span></a>
         </li>
         <li>
             <a href="mailto:info@iranaudioguide.com"
-               class="icon fa-envelope-o tooltips"><span>Email</span></a>
+               class="icon fa-envelope-o tooltips"><span>@Global.Email</span></a>
         </li>
     </ul>
     @*<ul class="icons">
@@ -306,12 +381,24 @@
             </li>
         </ul>*@
     <ul id="copyright" class="copyright">
-        <li>©@DateTime.Now.Year - Soroosh Developer Team</li>
+        <li>©@DateTime.Now.Year - Iran Audio Guide Team</li>
         <li>Developer: <a rel="author" href="https://plus.google.com/112268338441138496929">Soroosh Ansari Mehr</a></li>
     </ul>
 </footer>
 @section scripts{
     <script>
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                document.getElementById("goTopButton").style.display = "block";
+            } else {
+                document.getElementById("goTopButton").style.display = "none";
+            }
+        }
+
+
+
         function initMap() {
             var image = {
                 url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
@@ -320,10 +407,10 @@
             };
             var contentString =
             '<div class="panel panel-default">' +
-                '<div class="panel-heading">Iran Audio Guide Office</div>' +
+                '<div class="panel-heading">@Global.IranAudioGuideOffice</div>' +
                 '<div class="panel-body">' +
                     '<div id="content">' +
-                        '<p><i class="fa fa-map-marker"></i> Shiraz, rock caves and ancient paintings.<br />Uluru is listed as a World Heritage Site.</p>' +
+                        '<p style="width: 200px;"><i class="fa fa-map-marker"></i> @Html.Raw(Global.OfficeAddress)</p>' +
                     '</div>' +
                 '</div>' +
             '</div>';
@@ -525,7 +612,7 @@
                         }
             ];
             var center = new google.maps.LatLng(29.724955, 52.461972);
-            var PageCenter = new google.maps.LatLng(29.724955, 52.465000);
+            var PageCenter = new google.maps.LatLng(31.724955, 57.465000);
             var mapOptions = {
                 scrollwheel: false,
                 navigationControl: true,
@@ -552,15 +639,23 @@
             google.maps.event.addListenerOnce(map, 'idle', function () {
                 infowindow.open(map, marker);
             });
-            marker.addListener('mouseover', function () {
-                infowindow.open(map, marker);
-            });
+            //marker.addListener('mouseover', function () {
+            //    infowindow.open(map, marker);
+            //});
+            var isMarerWindowOpen = true;
             marker.addListener('click', function () {
-                infowindow.open(map, marker);
+                if (isMarerWindowOpen) {
+                    infowindow.close();
+                    isMarerWindowOpen = false;
+                }
+                else {
+                    infowindow.open(map, marker);
+                    isMarerWindowOpen = true;
+                }
             });
-            marker.addListener('mouseout', function () {
-                infowindow.close();
-            });
+            //marker.addListener('mouseout', function () {
+            //    infowindow.close();
+            //});
             map.setCenter(PageCenter);
 
             google.maps.event.addListener(infowindow, 'domready', function () {
@@ -569,6 +664,7 @@
                 var iwOuter = $('.gm-style-iw');
                 iwOuter.next().addClass("iwCloseBtn");
                 iwOuter.parent().parent().addClass('iwParent');
+                iwOuter.prev().addClass('iwTailHolder');
 
                 var iwBackground = iwOuter.prev();
 

@@ -196,6 +196,51 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Facebook.
+        /// </summary>
+        internal static string Facebook {
+            get {
+                return ResourceManager.GetString("Facebook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your email address to receive a reset password link.
+        /// </summary>
+        internal static string forgotEnterEmail {
+            get {
+                return ResourceManager.GetString("forgotEnterEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot?.
+        /// </summary>
+        internal static string ForgotPassword {
+            get {
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Google.
+        /// </summary>
+        internal static string Google {
+            get {
+                return ResourceManager.GetString("Google", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learn More.
         /// </summary>
         internal static string IndexBtnLearnMore {
@@ -232,6 +277,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instagram.
+        /// </summary>
+        internal static string Instagram {
+            get {
+                return ResourceManager.GetString("Instagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Iran Audio Guide.
         /// </summary>
         internal static string IranAudioGuide {
@@ -241,7 +295,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to en-US.
+        ///   Looks up a localized string similar to Iran Audio Guide Office.
+        /// </summary>
+        internal static string IranAudioGuideOffice {
+            get {
+                return ResourceManager.GetString("IranAudioGuideOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to en.
         /// </summary>
         internal static string Lang {
             get {
@@ -295,11 +358,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        internal static string MenuRegister {
+            get {
+                return ResourceManager.GetString("MenuRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mona Akhlaghi.
         /// </summary>
         internal static string Mona {
             get {
                 return ResourceManager.GetString("Mona", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard&lt;br/&gt;Shiraz, Iran.
+        /// </summary>
+        internal static string OfficeAddress {
+            get {
+                return ResourceManager.GetString("OfficeAddress", resourceCulture);
             }
         }
         
@@ -682,7 +763,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hi! We are Mona Akhlaghi and Soroosh Ansari Mehr, two individuals with a passion for creativity — creativity makes us happy. We truly believe in the transformative power of illustration and design and their ability to simplify communications.
+        ///   Looks up a localized string similar to The Iran Audio Guide appication has been created by a dedicated team with a combination of experties. We always feel obligied to present the highest standard in all aspects of our work.
         /// </summary>
         internal static string Parameter24 {
             get {
@@ -700,7 +781,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cras sit amet nibh libero.
+        ///   Looks up a localized string similar to CEO.
         /// </summary>
         internal static string Parameter26 {
             get {
@@ -718,7 +799,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cras sit amet nibh libero.
+        ///   Looks up a localized string similar to CTO.
         /// </summary>
         internal static string Parameter28 {
             get {
@@ -764,7 +845,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use social services to log in..
+        ///   Looks up a localized string similar to Sign in with:.
         /// </summary>
         internal static string Parameter32 {
             get {
@@ -845,7 +926,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email Link.
+        ///   Looks up a localized string similar to Send Link.
         /// </summary>
         internal static string Parameter40 {
             get {
@@ -863,7 +944,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use your Login Credentials to access your profile..
+        ///   Looks up a localized string similar to Wellcome back!.
         /// </summary>
         internal static string Parameter42 {
             get {
@@ -890,7 +971,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By registering you will access to all Iran Audio Guide has to offer. Hopefully you will soon agree that its quite worth while.
+        ///   Looks up a localized string similar to By registering, you will access to all Iran Audio Guide has to offer.
         /// </summary>
         internal static string Parameter45 {
             get {
@@ -1097,6 +1178,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register as a new user?.
+        /// </summary>
+        internal static string RegisterAsNewUser {
+            get {
+                return ResourceManager.GetString("RegisterAsNewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don’t just walk through  Iran, learn the history, hear the stories, feel the culture, ....
         /// </summary>
         internal static string SectionOneH2 {
@@ -1139,6 +1229,24 @@ namespace Resources {
         internal static string SectionTwoContentP {
             get {
                 return ResourceManager.GetString("SectionTwoContentP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        internal static string Send {
+            get {
+                return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions..
+        /// </summary>
+        internal static string SEOdesc {
+            get {
+                return ResourceManager.GetString("SEOdesc", resourceCulture);
             }
         }
         
@@ -1368,6 +1476,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage your Iran Audio Guide account easily through our website.
+        /// </summary>
+        internal static string signInSubHeader {
+            get {
+                return ResourceManager.GetString("signInSubHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Soroosh Ansari Mehr.
         /// </summary>
         internal static string Soroosh {
@@ -1395,20 +1512,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ssssssssssssssssssssssssssssssssssssss.
+        ///   Looks up a localized string similar to Telegram.
         /// </summary>
-        internal static string testError1 {
+        internal static string Telegram {
             get {
-                return ResourceManager.GetString("testError1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to aaaaaaaaaaaaaaaaaaaaaa.
-        /// </summary>
-        internal static string testError2 {
-            get {
-                return ResourceManager.GetString("testError2", resourceCulture);
+                return ResourceManager.GetString("Telegram", resourceCulture);
             }
         }
         
@@ -1472,6 +1580,15 @@ namespace Resources {
         internal static string TitlePageSendCode {
             get {
                 return ResourceManager.GetString("TitlePageSendCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twitter.
+        /// </summary>
+        internal static string Twitter {
+            get {
+                return ResourceManager.GetString("Twitter", resourceCulture);
             }
         }
     }
