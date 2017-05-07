@@ -459,6 +459,21 @@ namespace IranAudioGuide_MainServer.Models
         public string WMP_PAYER_IP { get; set; }
 
     }
+    public class Barcode
+    {
+        public Barcode()
+        {
+            Bar_DateTime = DateTime.Now;
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Bar_Id { get; set; }
+        public double Bar_Price { get; set; }
+        public string Bar_SellerName { get; set; }
+        public bool Bar_IsUsed { get; set; }
+        public string Bar_Image_Url { get; set; }
+        public DateTime Bar_DateTime { get; set; }
+    }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -498,6 +513,9 @@ namespace IranAudioGuide_MainServer.Models
         public DbSet<TranslatePackage> TranslatePackages { get; set; }
         public DbSet<TranslatePlace> TranslatePlaces { get; set; }
 
+        //seller
+        public DbSet<Barcode> Barcodes { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -507,6 +525,7 @@ namespace IranAudioGuide_MainServer.Models
             //modelBuilder.Configurations.Add(new PackageConfig());
             base.OnModelCreating(modelBuilder);
         }
+
 
     }
 }
