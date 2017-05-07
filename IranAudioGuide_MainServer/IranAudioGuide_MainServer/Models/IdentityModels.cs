@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System;
 using IranAudioGuide_MainServer.Services;
+using System.ComponentModel;
 
 namespace IranAudioGuide_MainServer.Models
 {// You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
@@ -35,10 +36,12 @@ namespace IranAudioGuide_MainServer.Models
     public class UserLog
     {
         [Key]
-        [Display(Name = "Temporary User Id")]
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UsL_Id { get; set; }
-        [Display(Name = "Unified Unique Identifier")]
+        [Display(Name = "FirstName", ResourceType = typeof(Resources.Global))]
+       
+        //[Display(Name = "Unified Unique Identifier")]
         public string UsL_UUId { get; set; }
         [Display(Name = "date time")]
         public DateTime UsL_DateTime { get; set; }
@@ -91,20 +94,20 @@ namespace IranAudioGuide_MainServer.Models
         public Guid? Aud_Id { get; set; }
 
         //id TranslatePlace
-        public Guid TrP_Id { get; set; }
+        public Guid? TrP_Id { get; set; }
         public Guid? Pla_ID { get; set; }
 
         //id TranslateCity
-        public Guid TrC_Id { get; set; }
+        public Guid? TrC_Id { get; set; }
         public int? Cit_ID { get; set; }
 
         // id for TranslateImage
-        public Guid TrI_Id { get; set; }
-        public Guid? Img_Id { get; set; }
+        public Guid? TrI_Id { get; set; }
+      //  public Guid? Img_Id { get; set; }
 
         public Guid? Sto_Id { get; set; }
         public Guid? Tip_Id { get; set; }
-        public Guid? Ima_Id { get; set; }
+        public Guid? Img_Id { get; set; }
         public bool isRemoved { get; set; }
     }
 
@@ -150,14 +153,11 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid TrP_Id { get; set; }
-
         public string TrP_Name { get; set; }
         public string TrP_Description { get; set; }
         public string TrP_Address { get; set; }
-
         public Guid Pla_Id { get; set; }
         public Place Place { get; set; }
-
         public int langId { get; set; }
 
 
@@ -212,6 +212,7 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Img_Id { get; set; }
+        //Path
         public string Img_Name { get; set; }
         public string Img_Description { get; set; }
         public int Tmg_Order { get; set; }

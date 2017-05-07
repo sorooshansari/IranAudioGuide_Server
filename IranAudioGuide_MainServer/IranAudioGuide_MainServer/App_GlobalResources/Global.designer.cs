@@ -1395,6 +1395,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ssssssssssssssssssssssssssssssssssssss.
+        /// </summary>
+        internal static string testError1 {
+            get {
+                return ResourceManager.GetString("testError1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to aaaaaaaaaaaaaaaaaaaaaa.
+        /// </summary>
+        internal static string testError2 {
+            get {
+                return ResourceManager.GetString("testError2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Email.
         /// </summary>
         internal static string TitlePageConfirmEmail {

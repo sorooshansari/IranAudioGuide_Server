@@ -584,4 +584,10 @@
   <data name="PaymentPage28" xml:space="preserve">
     <value>Reference ID</value>
   </data>
+  <data name="testError1" xml:space="preserve">
+    <value>ssssssssssssssssssssssssssssssssssssss</value>
+  </data>
+  <data name="testError2" xml:space="preserve">
+    <value>aaaaaaaaaaaaaaaaaaaaaa</value>
+  </data>
 </root>

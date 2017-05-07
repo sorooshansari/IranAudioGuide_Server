@@ -103,14 +103,17 @@ namespace IranAudioGuide_MainServer.Models_v2
                 Images = FillImageVM(dt[4]),
                 Tips = FillTipVM(dt[5]),
                 Cities = FillCityVM(dt[6]),
+                TranslateCities = FillTranslateCities(dt[7]),
+                TranslateImages = FillTranslateImage(dt[8]),
+                TranslatePlaces = FillTranslatePlaces(dt[9]),
                 RemovedEntries = new RemovedEntries()
                 {
-                    Places = GetTableIds(dt[7]),
-                    Audios = GetTableIds(dt[8]),
-                    Stories = GetTableIds(dt[9]),
-                    Images = GetTableIds(dt[10]),
-                    Tips = GetTableIds(dt[11]),
-                    Cities = GetIntTableIds(dt[12])
+                    Places = GetTableIds(dt[10]),
+                    Audios = GetTableIds(dt[11]),
+                    Stories = GetTableIds(dt[12]),
+                    Images = GetTableIds(dt[13]),
+                    Tips = GetTableIds(dt[14]),
+                    Cities = GetIntTableIds(dt[15])
                 }
             };
             return res;

@@ -109,6 +109,7 @@ namespace IranAudioGuide_MainServer.Models_v1
     //    public RemovedEntries RemovedEntries { get; set; }
     //    public string ErrorMessage { get; set; }
     //}
+ 
     public class GetUpdateVM
     {
         public GetUpdateVM()

@@ -215,35 +215,44 @@
             data = { Id: PlaceID };
             $http({ method: method, url: url, data: data }).
               then(function (response) {
-
-                  switch (response.data.status) {
-                      case 0:
-                          $rootScope.$broadcast('UpdatePlaces', {});
-                          break;
-                      case 7:
-                          $rootScope.$broadcast('PlaceForignKeyError', {
-                              PlaceID: PlaceID,
-                              PlaceName: PlaceName
-                          });
-                          break;
-                      case 7:
-                          $rootScope.$broadcast('RemoveOnlinePlaceError', {
-                              PlaceID: PlaceID,
-                              PlaceName: PlaceName
-                          });
-                          break;
-                      case 2:
-                          $rootScope.$broadcast('PlaceUnknownError', {});
-                          notific.error("ERROR", "Request failed");
-
-                          //console.log("Server failed to remove Place.");
-                          break;
-                      case 3:
-                          console.log(response.data.content);
-                          break;
-                      default:
+                  if (response.data.status == 0)
+                  {
+                      $rootScope.$broadcast('UpdatePlaces', {});
+                      notific.success("Remove Place");
 
                   }
+                  else
+                      notific.error("Error", response.data.content);
+                  //switch (response.data.status) {
+                  //    case 0:
+                  //        $rootScope.$broadcast('UpdatePlaces', {});
+                  //        notific.success("Remove Place");
+
+                  //        break;
+                  //    case 7:
+                  //        $rootScope.$broadcast('PlaceForignKeyError', {
+                  //            PlaceID: PlaceID,
+                  //            PlaceName: PlaceName
+                  //        });
+                  //        break;
+                  //    case 7:
+                  //        $rootScope.$broadcast('RemoveOnlinePlaceError', {
+                  //            PlaceID: PlaceID,
+                  //            PlaceName: PlaceName
+                  //        });
+                  //        break;
+                  //    case 2:
+                  //        $rootScope.$broadcast('PlaceUnknownError', {});
+                  //        notific.error("ERROR", "Request failed");
+
+                  //        //console.log("Server failed to remove Place.");
+                  //        break;
+                  //    case 3:
+                  //        console.log(response.data.content);
+                  //        break;
+                  //    default:
+
+                  //}
               }, function (response) {
 
                   console.log("Request failed");
@@ -620,6 +629,7 @@
             fd.append('CityName', NewCity.CityName);
             fd.append('CityDesc', NewCity.CityDesc || "");
             fd.append('CityImage', NewCity.cityImage);
+            fd.append('lang', "fa");
             $http({
                 method: method,
                 url: url,
@@ -661,7 +671,7 @@
                           $rootScope.$broadcast('UpdateCities', {});
                           break;
                       case 1:
-                          //notific.success(esponse.data.content);
+                          notific.error("error", "ValidationSummery");
                           $rootScope.$broadcast('EditCityValidationSummery', {
                               data: response.data.content
                           });
@@ -702,6 +712,8 @@
                           $rootScope.$broadcast('UpdateCities', {});
                           break;
                       case 1:
+                          notific.error("error", "ValidationSummery");
+
                           $rootScope.$broadcast('EditCityValidationSummery', {
                               data: response.data.content
                           });
@@ -977,8 +989,8 @@ break;
         AddPackage: function (NewPackage) {
             method = 'POST';
             url = '/Admin/AddPackage';
-            data = { PackageName: NewPackage.Name, PackagePrice: NewPackage.Price, Cities: NewPackage.Cities };
-            return $http({ method: method, url: url, data: data });
+           // data = { PackageName: NewPackage.Name, PackagePrice: NewPackage.Price, Cities: NewPackage.Cities };
+            return $http({ method: method, url: url, data: NewPackage });
         },
         RemovePackage: function (PackageID, PackageName) {
             method = 'POST';

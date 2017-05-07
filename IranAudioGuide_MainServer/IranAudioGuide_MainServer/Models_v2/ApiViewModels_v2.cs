@@ -8,7 +8,11 @@ namespace IranAudioGuide_MainServer.Models_v2
 {
 
 
-
+    public class GetUpdateInfoVm
+    {
+        public int LastUpdateNumber { get; set; }
+        public string uuid { get; set; }
+    }
     public class ConfirmEmailVM
     {
         public string email { get; set; }
@@ -19,9 +23,9 @@ namespace IranAudioGuide_MainServer.Models_v2
         {
             this.url = url;
             if (isError)
-                status = GetAudioUrlStatus.unauthorizedUser;
+                this.status = GetAudioUrlStatus.unauthorizedUser;
             else
-                status = GetAudioUrlStatus.success;
+               this.status = GetAudioUrlStatus.success;
         }
         public GetAudioUrlRes(GetAudioUrlStatus status, string error = "")
         {
@@ -50,11 +54,6 @@ namespace IranAudioGuide_MainServer.Models_v2
         public string errorMessage { get; set; }
         public getUserStatus status { get; set; }
     }
-    //public class GetPackagesVM
-    //{
-    //    public List<PackageVM> packages { get; set; }
-    //    public string errorMessage { get; set; }
-    //}
     public class GetPackagesByLangVM
     {
         public int CityId { get; set; }
@@ -62,6 +61,10 @@ namespace IranAudioGuide_MainServer.Models_v2
     }
     public class GetPackagesVM
     {
+        public GetPackagesVM()
+        {
+            errorMessage = null;
+        }
         public List<ApiPackageVM> packages { get; set; }
         public List<ApiCitInfoVM> cities { get; set; }
         public string errorMessage { get; set; }
@@ -99,6 +102,7 @@ namespace IranAudioGuide_MainServer.Models_v2
         public List<Guid> Images { get; set; }
         public List<Guid> Tips { get; set; }
         public List<int> Cities { get; set; }
+
     }
     //public class GetUpdateVM_v2
     //{
@@ -137,6 +141,9 @@ namespace IranAudioGuide_MainServer.Models_v2
         public List<ImagesVm> Images { get; set; }
         public List<TipsVm> Tips { get; set; }
         public List<CitiesVm> Cities { get; set; }
+        public List<TranslateCityVm> TranslateCities { get; set; }
+        public List<TranslateImageVm> TranslateImages { get; set; }
+        public List<TranslatePlacesVm> TranslatePlaces { get; set; }
         public RemovedEntries RemovedEntries { get; set; }
         public string ErrorMessage { get; set; }
     }

@@ -7,6 +7,7 @@ using System.Web.Http;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
+    [RoutePrefix("api/AppManagerV2")]
     public class AppManagerV2Controller : ApiController
     {
         dbToolsV2 dbTools = new dbToolsV2();
@@ -37,29 +38,36 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
         [HttpPost]
-        public GetAudioUrlRes GetAudioUrl(GetAudioUrlVM model)
+        public IHttpActionResult GetUrl(GetAudioUrlVM model)
         {
             try
             {
+                throw new Exception();
                 if (string.IsNullOrEmpty(model.email) || (string.IsNullOrEmpty(model.uuid)))
-                    return new GetAudioUrlRes("", true);
+                {
+                    //var result = new GetAudioUrlRes("", true);
+                    return BadRequest(((int)GetAudioUrlStatus.unauthorizedUser).ToString());
+                }
                 var isAdmin = User.IsInRole("Admin");
                 var url = Services.ServiceDownload.GetUrl(model, isAdmin);
-                return new GetAudioUrlRes(url);
+                //var result= new GetAudioUrlRes(url);
+                return Ok(url);
             }
             catch (Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
-                return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
+                return BadRequest(((int)GetAudioUrlStatus.unknownError).ToString());
             }
         }
-        
+
         [HttpPost]
-        public AutorizedCitiesVM GetAutorizedCities(GetAutorizedCitiesVM model)
+        public IHttpActionResult GetAutorizedCities(GetAutorizedCitiesVM model)
+
         {
             var res = new AutorizedCitiesVM();
             try
             {
+
                 var user = acTools.getUser(model.username);
                 res.status =
                     (user == null) ? getUserStatus.notUser :
@@ -68,56 +76,75 @@ namespace IranAudioGuide_MainServer.Controllers
                     getUserStatus.confirmed;
 
 
-                if (res.status == getUserStatus.confirmed)
-                    res.cities = dbTools.GetAutorizedCities(user.Id);
+                if (res.status != getUserStatus.confirmed)
+                {
+                    ModelState.AddModelError("error", ((int)res.status).ToString());
+                    return BadRequest(ModelState);
+                }
+                res.cities = dbTools.GetAutorizedCities(user.Id);
+                return Ok(res);
             }
             catch (Exception ex)
             {
-                res.status = getUserStatus.unknownError;
-                res.errorMessage = ex.Message;
+                ModelState.AddModelError("error", ((int)getUserStatus.unknownError).ToString());
+                ModelState.AddModelError("ex", ex);
                 ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest(ModelState);
             }
-            return res;
         }
-       
 
         [HttpPost]
         // POST: api/AppManager/GetPackages/5
-        public GetPackagesVM GetPackages(GetPackagesByLangVM model)
-        {            
-            return dbTools.GetPackagesByCity(model.CityId, model.LangId);
+        public IHttpActionResult GetPackages(GetPackagesByLangVM model)
+        {
+            try
+            {
+                var s = dbTools.GetPackagesByCity(model.CityId, model.LangId);
+                if (!string.IsNullOrEmpty(s.errorMessage))
+                    return BadRequest(s.errorMessage);
+                return Ok(s);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("ex", ex);
+                return BadRequest(ModelState);
+            }
         }
 
-       
+
         [HttpPost]
+        // [Route("GetUpdates")]
         // POST: api/AppManager/GetUpdates/5
-        public GetUpdateVM GetUpdates( string uuid,  int LastUpdateNumber )
-        {   try
+        public IHttpActionResult GetUpdates(GetUpdateInfoVm model)
+        {
+            try
             {
-               return dbTools.GetUpdate(LastUpdateNumber, uuid);
+
+                return Ok( dbTools.GetUpdate(model.LastUpdateNumber,model.uuid));
             }
             catch (Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
-
-                return new GetUpdateVM(ex.Message);
+                ModelState.AddModelError("ex", ex);
+                return BadRequest(ModelState);
             }
         }
         // POST: api/AppManager/GetAll
         [HttpPost]
-        public GetAllVm GetAll(  string uuid)
-        {           
-            GetAllVm res;
+        public IHttpActionResult GetAll(GetUpdateInfoVm model)
+        {
             try
             {
-                res = dbTools.GetAllEntries(uuid);
+                var d = dbTools.GetAllEntries(model.uuid);
+               return Ok(d);
             }
             catch (Exception ex)
             {
-                res = new GetAllVm(ex.Message);
                 ErrorSignal.FromCurrentContext().Raise(ex);
+                ModelState.AddModelError("ex", ex);
+                //return BadRequest(ModelState);
+              return  Content(System.Net.HttpStatusCode.BadRequest, "Any object");
             }
-            return res;
         }
         [HttpPost]
         public async Task<IHttpActionResult> ForgotPassword(ForgotPassUser user)
