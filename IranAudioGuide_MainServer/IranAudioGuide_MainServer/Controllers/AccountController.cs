@@ -103,16 +103,29 @@ namespace IranAudioGuide_MainServer.Controllers
                     serviceIpAdress.RemoveIpadressFailuers();
                     var user = UserManager.FindByName(model.Email);
                     string UserRole = UserManager.GetRoles(user.Id).FirstOrDefault();
-                    if (UserRole == "Admin")
-                        return RedirectToAction("Index", "Admin");
-                    else if (UserRole == "AppUser")
+                    switch (UserRole)
                     {
-                        if (returnUrl != null && returnUrl.Length > 0)
+                        case "Admin":
+                            return RedirectToAction("Index", "Admin");
+                        case "AppUser":
+                            if (returnUrl != null && returnUrl.Length > 0)
+                                return RedirectToLocal(returnUrl);
+                            return RedirectToAction("Index", "User");
+                        case "Seller":
+                            return RedirectToAction("Index", "Seller");
+                        default:
                             return RedirectToLocal(returnUrl);
-                        return RedirectToAction("Index", "User");
                     }
-                    else
-                        return RedirectToLocal(returnUrl);
+                    //if (UserRole == "Admin")
+                    //    return RedirectToAction("Index", "Admin");
+                    //else if (UserRole == "AppUser")
+                    //{
+                    //    if (returnUrl != null && returnUrl.Length > 0)
+                    //        return RedirectToLocal(returnUrl);
+                    //    return RedirectToAction("Index", "User");
+                    //}
+                    //else
+                    //    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View();
                 case SignInStatus.RequiresVerification:

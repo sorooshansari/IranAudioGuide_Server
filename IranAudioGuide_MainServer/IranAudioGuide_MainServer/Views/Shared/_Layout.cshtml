@@ -166,6 +166,10 @@
                                         <li><a rel="nofollow" href="@Url.Action("index", "Admin")"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>
 
                                     }
+                                    else if (User.IsInRole("Seller"))
+                                    {
+                                        <li><a rel="nofollow" href="@Url.Action("index", "Seller")"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>
+                                    }
                                     else
                                     {
                                         <li><a rel="nofollow" href="@Url.Action("index", "user", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>

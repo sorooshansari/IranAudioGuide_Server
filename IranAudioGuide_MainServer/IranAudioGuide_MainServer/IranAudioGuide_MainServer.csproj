@@ -247,8 +247,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Migrations\201705070811397_a1.cs" />
+    <Compile Include="Migrations\201705070811397_a1.Designer.cs">
+      <DependentUpon>201705070811397_a1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1757,6 +1762,7 @@
     <Content Include="Views\Shared\ErrorPageProfile.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Seller\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1764,6 +1770,7 @@
     <Folder Include="Download\" />
     <Folder Include="fonts\NewFonts\" />
     <Folder Include="images\slidepics\" />
+    <Folder Include="Views\Saler\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1789,6 +1796,11 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201705070811397_a1.resx">
+      <DependentUpon>201705070811397_a1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
