@@ -3,24 +3,24 @@
      $sceProvider.enabled(false);
  }])
  .controller('HomeController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
-     var data = {
-         trackId: '5ad3f2e9-2efc-4b20-b6b2-f863ca61c72c',
-         email: 'testuser@iranaudioguide.com',
-         uuid: "1212",
-         isAudio: true
-     };
+     //var data = {
+     //    trackId: '5ad3f2e9-2efc-4b20-b6b2-f863ca61c72c',
+     //    email: 'testuser@iranaudioguide.com',
+     //    uuid: "1212",
+     //    isAudio: true
+     //};
 
 
-     $http.post('/api/AppManagerV2/GetUrl', data).then(function (result) {
-         console.log(result.data)
-     }, function (error) {
-         if (error.status == 400 && typeof (error.data) !== "undefined" && typeof (error.data.Message) !== "undefined", error.data.Message != null) {
+     //$http.post('/api/AppManagerV2/GetUrl', data).then(function (result) {
+     //    console.log(result.data)
+     //}, function (error) {
+     //    if (error.status == 400 && typeof (error.data) !== "undefined" && typeof (error.data.Message) !== "undefined", error.data.Message != null) {
 
-             console.log(error.data.Message);
-         }
-         ////error.status 
-         //error.statusText
-     })
+     //        console.log(error.data.Message);
+     //    }
+     //    ////error.status 
+     //    //error.statusText
+     //})
 
      //var data2 = {
      //    username: 'testuser@iranaudioguide.com',

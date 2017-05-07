@@ -103,8 +103,7 @@
             }()); _vwo_settings_timer = _vwo_code.init();
         </script>*@
     <!-- End Visual Website Optimizer Asynchronous Code -->
-
-    <link href="~/Content/test.css" rel="stylesheet" />
+    @*<link href="~/Content/test.css" rel="stylesheet" />*@
 </head>
 <body class="landing _@Global.Lang" ng-app="HomePage" ng-controller="HomeController">
     <!-- Page Wrapper -->
@@ -120,10 +119,8 @@
                     {
                         if (item.Id == lang)
                         {
-                            <span>
-                                <img src="@item.Icon" alt="@item.Id" />
-                                <span class="siteFlagText">@item.Title</span>
-                            </span>
+                            <img src="@item.Icon" alt="@item.Id" />
+                            <span class="siteFlagText">@item.Title</span>
                             break;
                         }
 
@@ -204,7 +201,26 @@
 
     @Scripts.Render("~/bundles/minJs")
     @RenderSection("scripts", required: false)
+    <script>
+        window.onscroll = function () { scrollFunction() };
 
+        function scrollFunction() {
+            if ($(window).width() < 800) {
+                console.log(document.body.scrollTop, document.documentElement.scrollTop);
+
+                if (document.body.scrollTop >70 || document.documentElement.scrollTop > 70) {
+                    if ($('header#header').hasClass('alt')) {
+                        $('header#header').removeClass('alt');
+                    }
+                } else {
+                    if (!$('header#header').hasClass('alt')) {
+                        $('header#header').addClass('alt');
+                    }
+                }
+            }
+        }
+
+    </script>
 
     <script>
         (function (i, s, o, g, r, a, m) {
