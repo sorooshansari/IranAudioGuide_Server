@@ -13,6 +13,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Seller")]
         public ActionResult Index()
         {
+
             return View();
         }
     }
