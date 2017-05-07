@@ -42,7 +42,6 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                throw new Exception();
                 if (string.IsNullOrEmpty(model.email) || (string.IsNullOrEmpty(model.uuid)))
                 {
                     //var result = new GetAudioUrlRes("", true);

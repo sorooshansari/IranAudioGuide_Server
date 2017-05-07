@@ -250,10 +250,7 @@
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201705070826316_a1.cs" />
-    <Compile Include="Migrations\201705070826316_a1.Designer.cs">
-      <DependentUpon>201705070826316_a1.cs</DependentUpon>
-    </Compile>
+    <None Include="doc\storeproced.text" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -275,6 +272,9 @@
     <Compile Include="Models\LangVM.cs" />
     <Compile Include="Models\WBViewModel.cs" />
     <Compile Include="Models\WebMoneyTools.cs" />
+    <Compile Include="Models_v2\ApiViewModels_v2.cs" />
+    <Compile Include="Models_v2\dbManager_v2.cs" />
+    <Compile Include="Models_v2\dbTools_v2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Zarinpal\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -284,6 +284,7 @@
     <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
+    <Compile Include="Services\ExtensionMethod.cs" />
     <Compile Include="Services\GlobalPath.cs" />
     <Compile Include="Services\LocalizationAttribute.cs" />
     <Compile Include="Services\ServiceDownload.cs" />
@@ -1532,6 +1533,7 @@
     <Content Include="Content\css\fontawesome-webfont.woff" />
     <Content Include="Content\css\fontawesome-webfont.woff2" />
     <Content Include="Content\css\FontAwesome.otf" />
+    <Content Include="doc\store.js" />
     <Content Include="google60352dff0d3dbd69.html" />
     <Content Include="images\marker.png" />
     <Content Include="images\v_blue_on_transp_en.png" />
@@ -1795,11 +1797,6 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705070826316_a1.resx">
-      <DependentUpon>201705070826316_a1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

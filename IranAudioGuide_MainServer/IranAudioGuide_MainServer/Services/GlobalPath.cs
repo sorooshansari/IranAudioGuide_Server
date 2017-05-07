@@ -3,8 +3,10 @@ namespace IranAudioGuide_MainServer.Services
 {
     public static class GlobalPath
     {
+        //pourmand
+        public static readonly string ConnectionString = @"Data Source=.;Initial Catalog=iranaud3;Integrated Security=True";
         //sina Connection
-        public static readonly string ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = IranAudTest; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        //public static readonly string ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = IranAudTest; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         //Danial Connection
         //public static readonly string ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=test;Integrated Security=True";
         //Soroosh Connection
