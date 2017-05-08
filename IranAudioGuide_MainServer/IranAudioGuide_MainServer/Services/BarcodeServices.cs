@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using IranAudioGuide_MainServer.Models;
-using Neodynamic.SDK.Barcode;
 using System.IO;
-
-
 using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using iTextSharp.text;
 
 namespace IranAudioGuide_MainServer.Services
 {
@@ -38,13 +36,16 @@ namespace IranAudioGuide_MainServer.Services
                         //byte[] barcodeArray = GetBarcodeImg(barcodeString);
                         string imgName = string.Format("{0}.jpeg", b.Bar_Id);
                         string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);
+                        string pdfpath = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/pdf"), imgName);
                         CreateCode(barcodeString, path);
+                        ImagesToPdf(path,pdfpath);
                         //var fs = new BinaryWriter(new FileStream(path, FileMode.Create, FileAccess.Write));
                         //fs.Write(barcodeArray);
                         //fs.Close();
                         b.Bar_Image_Url = imgName;
                     }
                     db.SaveChanges();
+                    
                     dbTran.Commit();
                     return true;
                 }
@@ -55,6 +56,7 @@ namespace IranAudioGuide_MainServer.Services
                     return false;
                 }
             }
+            
                     
         }
         #region tools
@@ -76,13 +78,35 @@ namespace IranAudioGuide_MainServer.Services
 
             img.Save(destPath, ImageFormat.Jpeg);
         }
-        private byte[] GetBarcodeImg(string value)
+        //private byte[] GetBarcodeImg(string value)
+        //{
+        //    BarcodeProfessional barcode = new BarcodeProfessional();
+        //    barcode.Symbology = Symbology.QRCode;
+        //    barcode.Code = value;
+        //    return barcode.GetBarcodeImage(System.Drawing.Imaging.ImageFormat.Jpeg);
+        //}
+        public void ImagesToPdf(string imagepaths, string pdfpath)
         {
-            BarcodeProfessional barcode = new BarcodeProfessional();
-            barcode.Symbology = Symbology.QRCode;
-            barcode.Code = value;
-            return barcode.GetBarcodeImage(System.Drawing.Imaging.ImageFormat.Jpeg);
+            iTextSharp.text.Rectangle pageSize =null;
+
+            using (var srcImage = new Bitmap(imagepaths.ToString()))
+            {
+                pageSize = new iTextSharp.text.Rectangle(0, 0, srcImage.Width, srcImage.Height);
+            }
+
+            using (var ms = new MemoryStream())
+            {
+                var document = new iTextSharp.text.Document(pageSize, 0, 0, 0, 0);
+                iTextSharp.text.pdf.PdfWriter.GetInstance(document, ms).SetFullCompression();
+                document.Open();
+                var image = iTextSharp.text.Image.GetInstance(imagepaths.ToString());
+                document.Add(image);
+                document.Close();
+
+                File.WriteAllBytes(pdfpath + "guide.pdf", ms.ToArray());
+            }                       
         }
+
 
         #endregion
 
@@ -94,5 +118,6 @@ namespace IranAudioGuide_MainServer.Services
                 db = null;
             }
         }
+       
         }
 }
