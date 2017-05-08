@@ -251,6 +251,10 @@
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <None Include="doc\storeproced.text" />
+    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
+    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1797,6 +1801,11 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

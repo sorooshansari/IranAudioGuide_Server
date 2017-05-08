@@ -5,8 +5,9 @@ namespace IranAudioGuide_MainServer.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
+        [RequiredTranclate("ErrorRequire")]
+
+        [DisplayNameTranclate("Email")]
         public string Email { get; set; }
     }
 
@@ -25,15 +26,15 @@ namespace IranAudioGuide_MainServer.Models
 
     public class VerifyCodeViewModel
     {
-        [Required]
+        [RequiredTranclate("ErrorRequire")]
         public string Provider { get; set; }
 
-        [Required]
-        [Display(Name = "Code")]
+        [RequiredTranclate("ErrorRequire")]
+        [DisplayNameTranclate("Code")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [DisplayNameTranclate("RememberBrowser")]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }
@@ -41,21 +42,22 @@ namespace IranAudioGuide_MainServer.Models
 
     public class ForgotViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
+        [RequiredTranclate("ErrorRequire")]
+        [DisplayNameTranclate("Email")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [RequiredTranclate("ErrorRequiredEmail")]
+        [DisplayNameTranclate("Email")]
+        [EmailAddress(ErrorMessageResourceName = "ErrorEmail", ErrorMessageResourceType = typeof(Resources.Global))]
         public string Email { get; set; }
 
-        [Required]
+        //[Required(ErrorMessageResourceName = "ErrorRequiredPassword", ErrorMessageResourceType = typeof(Resources.Global)),]
+        [RequiredTranclate("ErrorRequiredPassword")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [DisplayNameTranclate("PlaceholderPassword")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -65,25 +67,28 @@ namespace IranAudioGuide_MainServer.Models
 
     public class RegisterViewModel
     {
-        [Required]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
-        [Display(Name = "Name")]
+        [RequiredTranclate("ErrorRequiredRegisterName")]
+        //[RequiredTranclate("ErrorRequired")]
+
+        //[StringLengthTranclate(30, "ErrorStringLengthMessage", MinimumLength = 10)]
+        [StringLengthTranclate(30, "ErrorStringLengthMessage", MinimumLength = 3)]
+        [DisplayNameTranclate("PlaceholderName")]
         public string Name { get; set; }
 
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [RequiredTranclate("ErrorRequiredEmail")]
+        [EmailAddress(ErrorMessageResourceName = "ErrorEmail", ErrorMessageResourceType = typeof(Resources.Global) )]
+        [DisplayNameTranclate("PlaceholderEmail")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [RequiredTranclate("ErrorRequiredPassword")]
+        [StringLengthTranclate(100, "ErrorStringLengthMessage", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [DisplayNameTranclate("PlaceholderPassword")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [DisplayNameTranclate("PlaceholderConfirmPassword")]
+        [Compare("Password", ErrorMessageResourceName = "ErrorComparePassword" ,ErrorMessageResourceType = typeof(Resources.Global))]
         public string ConfirmPassword { get; set; }
     }
 
@@ -94,15 +99,18 @@ namespace IranAudioGuide_MainServer.Models
         //[Display(Name = "Email")]
         //public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [RequiredTranclate("ErrorRequire")]
+
+        //[StringLengthTranclate(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLengthTranclate(30, "ErrorStringLengthMessage", MinimumLength = 3)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [DisplayNameTranclate("PlaceholderPassword")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [DisplayNameTranclate("PlaceholderConfirmPassword")]
+        [Compare("Password", ErrorMessageResourceName = "ErrorComparePassword", ErrorMessageResourceType = typeof(Resources.Global))]
+
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -111,9 +119,10 @@ namespace IranAudioGuide_MainServer.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [RequiredTranclate("ErrorRequire")]
+
+        [EmailAddress(ErrorMessageResourceName = "ErrorEmail", ErrorMessageResourceType = typeof(Resources.Global))]
+        [DisplayNameTranclate("Email")]
         public string Email { get; set; }
     }
 }

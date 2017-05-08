@@ -196,11 +196,83 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Code.
+        /// </summary>
+        internal static string DispalyCode {
+            get {
+                return ResourceManager.GetString("DispalyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         internal static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password and confirmation password do not match..
+        /// </summary>
+        internal static string ErrorComparePassword {
+            get {
+                return ResourceManager.GetString("ErrorComparePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid email address.
+        /// </summary>
+        internal static string ErrorEmail {
+            get {
+                return ResourceManager.GetString("ErrorEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The  field is required..
+        /// </summary>
+        internal static string ErrorRequire {
+            get {
+                return ResourceManager.GetString("ErrorRequire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The  Email field is required..
+        /// </summary>
+        internal static string ErrorRequiredEmail {
+            get {
+                return ResourceManager.GetString("ErrorRequiredEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Password field is required..
+        /// </summary>
+        internal static string ErrorRequiredPassword {
+            get {
+                return ResourceManager.GetString("ErrorRequiredPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} field is required..
+        /// </summary>
+        internal static string ErrorRequiredRegisterName {
+            get {
+                return ResourceManager.GetString("ErrorRequiredRegisterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} must be at least {2} characters long..
+        /// </summary>
+        internal static string ErrorStringLengthMessage {
+            get {
+                return ResourceManager.GetString("ErrorStringLengthMessage", resourceCulture);
             }
         }
         
@@ -1133,7 +1205,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email address.
+        ///   Looks up a localized string similar to Email.
         /// </summary>
         internal static string PlaceholderEmail {
             get {
@@ -1183,6 +1255,15 @@ namespace Resources {
         internal static string RegisterAsNewUser {
             get {
                 return ResourceManager.GetString("RegisterAsNewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember this browser?.
+        /// </summary>
+        internal static string RememberBrowser {
+            get {
+                return ResourceManager.GetString("RememberBrowser", resourceCulture);
             }
         }
         

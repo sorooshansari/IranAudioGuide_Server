@@ -75,6 +75,12 @@ namespace IranAudioGuide_MainServer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.View = Views.Login;
+
+                return View(model);
+            }
             var serviceIpAdress = new ServiceIpAdress();
             ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
             if (!ViewBag.IsTheFirstLogin)
@@ -87,12 +93,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
             }
 
-            if (!ModelState.IsValid)
-            {
-                ViewBag.View = Views.Login;
-
-                return View(model);
-            }
+       
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true

@@ -1043,7 +1043,7 @@ namespace IranAudioGuide_MainServer.Controllers
             var city = new city() { Cit_Name = model.CityName, Cit_Description = model.CityDesc, TranslateCities = new List<TranslateCity>() };
             var tcity = new TranslateCity()
             {
-                langId = LangService.GetId(model.lang),
+                langId = lang, // LangService.GetId(model.lang),
                 TrC_Name = model.CityName,
                 TrC_Description = model.CityDesc
             };

@@ -12,7 +12,11 @@ namespace IranAudioGuide_MainServer
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+                "Localization", // Route name
+                "{lang}/{controller}/{action}/{id}", // URL with parameters
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
