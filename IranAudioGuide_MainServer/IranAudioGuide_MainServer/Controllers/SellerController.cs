@@ -18,7 +18,12 @@ namespace IranAudioGuide_MainServer.Controllers
         public ActionResult Index(bool isError = false)
         {
             ViewBag.isError = isError;
-            return View();
+            List<SelectListItem> prices = new List<SelectListItem>();
+            using (var service = new BarcodeServices())
+            {
+                prices = service.getPrices();
+            }
+            return View(new CreatBarCodeVM() { prices = prices });
         }
         [Authorize(Roles = "Seller")]
         public ActionResult CreatNewBarcode(CreatBarCodeVM model) {
@@ -31,7 +36,7 @@ namespace IranAudioGuide_MainServer.Controllers
             string name = User.Identity.Name;
             using (var BarService = new BarcodeServices())
             {
-                res = BarService.Creatbarcode(model.price, model.quantity, name);
+                res = BarService.Creatbarcode(model.PriceId, model.quantity, name);
             }
             return RedirectToAction("Index", "Seller", res);
         }

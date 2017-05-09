@@ -9,22 +9,48 @@ using MessagingToolkit.QRCode.Codec.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using iTextSharp.text;
+using System.Web.Mvc;
 
 namespace IranAudioGuide_MainServer.Services
 {
     public class BarcodeServices : IDisposable
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        public bool Creatbarcode(double Price, int Quantity, string SellerName)
+        public List<SelectListItem> getPrices()
+        {
+            try
+            {
+                //var res = (from p in db.Prices
+                //           select new PriceVM()
+                //           {
+                //               id = p.Pri_Id,
+                //               value = p.Pri_Value
+                //           }).ToList();
+                var res = db.Prices.OrderBy(x=>x.Pri_Value).Select(x => new SelectListItem()
+                {
+                    Value = x.Pri_Id.ToString(),
+                    Text = x.Pri_Value.ToString()
+                }).ToList();
+                return res;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        public bool Creatbarcode(int PriceId, int Quantity, string SellerName)
         {
             using (var dbTran = db.Database.BeginTransaction())
             {
                 try
                 {
+                    //var price = (from p in db.Prices where p.Pri_Id == PriceId select p).FirstOrDefault();
+                    var price = db.Prices.Where(x => x.Pri_Id == PriceId).FirstOrDefault();
                     List<Barcode> barcodes = new List<Barcode>();
                     for (int i = 0; i < Quantity; i++)
                     {
-                        barcodes.Add(new Barcode() { Bar_Price = Price, Bar_IsUsed = false, Bar_SellerName = SellerName });
+                        barcodes.Add(new Barcode() { Bar_Price = price, Bar_IsUsed = false, Bar_SellerName = SellerName });
                     }
                     db.Barcodes.AddRange(barcodes);
                     db.SaveChanges();
@@ -32,7 +58,7 @@ namespace IranAudioGuide_MainServer.Services
                     //System.Drawing.Image logo = System.Drawing.Image.FromFile(logoPath);
                     foreach (var b in barcodes)
                     {
-                        string barcodeString = string.Format("{0}#{1}#{2}", b.Bar_Id, Price, SellerName);
+                        string barcodeString = string.Format("{0}#{1}#{2}", b.Bar_Id, price.Pri_Value.ToString(), SellerName);
                         //byte[] barcodeArray = GetBarcodeImg(barcodeString);
                         string imgName = string.Format("{0}.jpeg", b.Bar_Id);
                         string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);

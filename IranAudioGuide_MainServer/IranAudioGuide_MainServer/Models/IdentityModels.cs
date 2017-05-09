@@ -468,11 +468,24 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Bar_Id { get; set; }
-        public double Bar_Price { get; set; }
+        public int Pri_Id { get; set; }
+        public Price Bar_Price { get; set; }
         public string Bar_SellerName { get; set; }
         public bool Bar_IsUsed { get; set; }
         public string Bar_Image_Url { get; set; }
         public DateTime Bar_DateTime { get; set; }
+    }
+    public class Price
+    {
+        public Price()
+        {
+           
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Pri_Id { get; set; }
+        public double Pri_Value { get; set; }
+        public string Pri_Description { get; set; }
     }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -515,6 +528,7 @@ namespace IranAudioGuide_MainServer.Models
 
         //seller
         public DbSet<Barcode> Barcodes { get; set; }
+        public DbSet<Price> Prices { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -1,9 +1,10 @@
-﻿@model IranAudioGuide_MainServer.Models.CreatBarCodeVM
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 @using IranAudioGuide_MainServer.Models
 @using Resources
+
+@model CreatBarCodeVM
 
 @section Styles{
     <style>
@@ -63,7 +64,10 @@
                         <div class="col-md-8">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                @Html.TextBoxFor(m => m.price, new { @class = "form-control", placeholder ="price" })
+                                @*@Html.DropDownListFor(m =>m.Pri_Value , new SelectList(Model.Pri_Id))*@
+                                @Html.DropDownListFor(x=>x.PriceId, Model.prices, new { @class = "form-control", placeholder = "price" })
+                                
+                                @*@Html.TextBoxFor(m => m.PriceId, new { @class = "form-control", placeholder ="price" })*@
                             </div>
                         </div>
                     </div>
