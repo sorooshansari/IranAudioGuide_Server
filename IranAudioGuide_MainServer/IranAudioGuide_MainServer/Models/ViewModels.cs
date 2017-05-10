@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -472,9 +473,9 @@ namespace IranAudioGuide_MainServer.Models
     public class NewPlace
     {
      
-        [Required(ErrorMessageResourceType = typeof(Resources.Global),
+        [Required(ErrorMessageResourceType = typeof(Global),
              ErrorMessageResourceName = "testError1")]
-        [StringLength(50, ErrorMessageResourceType = typeof(Resources.Global),
+        [StringLength(50, ErrorMessageResourceType = typeof(Global),
                      ErrorMessageResourceName = "testError2")]
         public string PlaceName { get; set; }
         public string PlaceDesc { get; set; }

@@ -80,7 +80,7 @@ namespace IranAudioGuide_MainServer.Models_v2
 
             foreach (var item in list)
             {
-                item.LangTitle = Enum.GetName(typeof(LangEnum), item.LangId).ToString();
+                item.LangTitle = Enum.GetName(typeof(EnumLang), item.LangId).ToString();
 
             }
             return list;

@@ -8,6 +8,7 @@ namespace IranAudioGuide_MainServer.Services
 {
     public static class ExtensionMethod
     {
+
         //convertToGuid
         public static Guid convertToGuid(this object obj)
         {

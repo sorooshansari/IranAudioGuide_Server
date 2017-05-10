@@ -799,7 +799,50 @@ END"
 		            END
 	            END"};
         public static readonly List<string> Commands_v2 = new List<string>()
-        {
+        {@"
+CREATE PROCEDURE InsertTranclate
+AS
+BEGIN
+DECLARE @langId int = 1
+
+UPDATE [dbo].[Packages]  SET  [langId] =@langId
+
+INSERT INTO [dbo].[TranslateCities]
+           ([TrC_Name]
+           ,[TrC_Description]
+           ,[Cit_Id]
+           ,[langId])
+   
+SELECT Cit_Name, Cit_Description, Cit_Id, @langId from cities
+
+
+
+INSERT INTO [dbo].[TranslateImages]
+           ([TrI_Name]
+           ,[TrI_Description]
+           ,[Img_Id]
+           ,[langId])
+   
+SELECT Img_Name, Img_Description, Img_Id, @langId from Images
+
+
+INSERT INTO [dbo].[TranslatePlaces]
+           ([TrP_Name]
+           ,[TrP_Description]
+           ,[TrP_Address]
+           ,[Pla_Id]
+           ,[langId])
+SELECT  Pla_Name,Pla_Discription,Pla_Address,Pla_Id, @langId from Places
+
+UPDATE [dbo].[Stories]  SET [langId] = @langId;
+
+UPDATE [dbo].[Audios]  SET [langId] = @langId;
+
+UPDATE [dbo].[Tips]   SET [langId] = @langId;
+
+END
+GO
+",
             @"CREATE FUNCTION [dbo].[AllAudios_v2]() 
             RETURNS 
             @Audios TABLE 

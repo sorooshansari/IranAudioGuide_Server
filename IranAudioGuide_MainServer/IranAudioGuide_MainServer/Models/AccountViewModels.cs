@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
+
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequiredEmail), ErrorMessageResourceType = typeof(Global))]
+        [Display(Name = nameof(Global.PlaceholderEmail))]
         public string Email { get; set; }
     }
 
@@ -20,89 +22,91 @@ namespace IranAudioGuide_MainServer.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
         public string ReturnUrl { get; set; }
+
         public bool RememberMe { get; set; }
     }
 
     public class VerifyCodeViewModel
     {
-        [Required]
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequire), ErrorMessageResourceType = typeof(Global))]
         public string Provider { get; set; }
 
-        [Required]
-        [Display(Name = "Code")]
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequire), ErrorMessageResourceType = typeof(Global))]
+        [Display(Name = nameof(Global.DispalyCode), ResourceType = typeof(Global))]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = nameof(Global.RememberBrowser), ResourceType = typeof(Global))]
         public bool RememberBrowser { get; set; }
 
+        [Display(Name = nameof(Global.LabelForRememberMe), ResourceType = typeof(Global))]
         public bool RememberMe { get; set; }
     }
 
     public class ForgotViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
+
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequiredEmail), ErrorMessageResourceType = typeof(Global))]
+        [Display(Name = nameof(Global.PlaceholderEmail))]
+        [EmailAddress(ErrorMessageResourceName = nameof(Global.ErrorEmail), ErrorMessageResourceType = typeof(Global))]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequiredEmail), ErrorMessageResourceType = typeof(Global))]
+        [Display(Name = nameof(Global.PlaceholderEmail))]
+        [EmailAddress(ErrorMessageResourceName = nameof(Global.ErrorEmail), ErrorMessageResourceType = typeof(Global))]
         public string Email { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequiredPassword), ErrorMessageResourceType = typeof(Global))]
+        [DataType(DataType.Password, ErrorMessageResourceName = nameof(Global.ErrorRequiredPassword), ErrorMessageResourceType = typeof(Global))]
+        [Display(Name = nameof(Global.PlaceholderPassword), ResourceType = typeof(Global))]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = nameof(Global.LabelForRememberMe), ResourceType = typeof(Global))]
         public bool RememberMe { get; set; }
         //public bool IsTheFirstLogin { get; set; }
     }
 
     public class RegisterViewModel
     {
-        [Required]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
-
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequiredEmail), ErrorMessageResourceType = typeof(Global))]
+        [Display(Name = nameof(Global.PlaceholderEmail))]
+        [EmailAddress(ErrorMessageResourceName = nameof(Global.ErrorEmail), ErrorMessageResourceType = typeof(Global))]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequiredRegisterName), ErrorMessageResourceType = typeof(Global))]
+        [StringLength(30, ErrorMessageResourceName = nameof(Global.ErrorStringLengthMessage), ErrorMessageResourceType = typeof(Global), MinimumLength = 3)]
+        [Display(Name = nameof(Global.PlaceholderName), ResourceType = typeof(Global))]
+        public string Name { get; set; }
+
+
+        [StringLength(100, ErrorMessageResourceName = nameof(Global.ErrorStringLengthMessage), ErrorMessageResourceType = typeof(Global), MinimumLength = 6)]
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequiredPassword), ErrorMessageResourceType = typeof(Global))]
+        [DataType(DataType.Password, ErrorMessageResourceName = nameof(Global.ErrorRequiredPassword), ErrorMessageResourceType = typeof(Global))]
+        [Display(Name = nameof(Global.PlaceholderPassword), ResourceType = typeof(Global))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = nameof(Global.PlaceholderConfirmPassword), ResourceType = typeof(Global))]
+        [Compare("Password", ErrorMessageResourceName = nameof(Global.ErrorComparePassword), ErrorMessageResourceType = typeof(Global))]
         public string ConfirmPassword { get; set; }
     }
 
     public class ResetPasswordViewModel
     {
-        //[Required]
-        //[EmailAddress]
-        //[Display(Name = "Email")]
-        //public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [StringLength(30, ErrorMessageResourceName = nameof(Global.ErrorStringLengthMessage), ErrorMessageResourceType = typeof(Global), MinimumLength = 3)]
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequiredPassword), ErrorMessageResourceType = typeof(Global))]
+        [DataType(DataType.Password, ErrorMessageResourceName = nameof(Global.ErrorRequiredPassword), ErrorMessageResourceType = typeof(Global))]
+        [Display(Name = nameof(Global.PlaceholderPassword), ResourceType = typeof(Global))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = nameof(Global.PlaceholderConfirmPassword), ResourceType = typeof(Global))]
+        [Compare("Password", ErrorMessageResourceName = nameof(Global.ErrorComparePassword), ErrorMessageResourceType = typeof(Global))]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -111,9 +115,10 @@ namespace IranAudioGuide_MainServer.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+
+        [Required(ErrorMessageResourceName = nameof(Global.ErrorRequiredEmail), ErrorMessageResourceType = typeof(Global))]
+        [Display(Name = nameof(Global.PlaceholderEmail))]
+        [EmailAddress(ErrorMessageResourceName = nameof(Global.ErrorEmail), ErrorMessageResourceType = typeof(Global))]
         public string Email { get; set; }
     }
 }

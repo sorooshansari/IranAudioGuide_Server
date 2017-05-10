@@ -6,9 +6,9 @@ using System.Web.Mvc;
 namespace IranAudioGuide_MainServer.Controllers
 {
     [Authorize]
-    [LocalizationAttribute]
+    //[Localization]
 
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private IAuthenticationManager AuthenticationManager
         {
@@ -35,11 +35,13 @@ namespace IranAudioGuide_MainServer.Controllers
             return View();
         }
         [Authorize(Roles = "AppUser")]
+        //[LogActionFilter]
         public ActionResult Packages()
         {
             return View();
         }
         [Authorize(Roles = "AppUser")]
+        //[LogActionFilter]
         public ActionResult DeactivateMobile()
         {
             return View();

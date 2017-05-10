@@ -627,4 +627,34 @@
   <data name="signInSubHeader" xml:space="preserve">
     <value>از این طریق می توانید به راحتی حساب کاربری خود را مدیریت کنید</value>
   </data>
+  <data name="ErrorEmail" xml:space="preserve">
+    <value>fa-----------Invalid email address</value>
+  </data>
+  <data name="ErrorRequiredPassword" xml:space="preserve">
+    <value>fa----The Password field is required.</value>
+  </data>
+  <data name="ErrorRequiredRegisterName" xml:space="preserve">
+    <value>fa----The {0} field is required.</value>
+  </data>
+  <data name="ErrorStringLengthMessage" xml:space="preserve">
+    <value>fa-----The {0} must be at least {2} characters long</value>
+  </data>
+  <data name="DispalyCode" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="ErrorComparePassword" xml:space="preserve">
+    <value>fa-The password and confirmation password do not match.</value>
+  </data>
+  <data name="ErrorRequire" xml:space="preserve">
+    <value>fa----The  field is required.</value>
+  </data>
+  <data name="ErrorRequiredEmail" xml:space="preserve">
+    <value>fa----The Email field is required.</value>
+  </data>
+  <data name="RememberBrowser" xml:space="preserve">
+    <value>Remember this browser?</value>
+  </data>
+  <data name="LabelForRememberMe" xml:space="preserve">
+    <value>مرا به خاطر بسپار؟</value>
+  </data>
 </root>

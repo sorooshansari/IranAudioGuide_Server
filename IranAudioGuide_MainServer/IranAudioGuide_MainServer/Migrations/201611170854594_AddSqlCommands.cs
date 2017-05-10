@@ -14,8 +14,13 @@ namespace IranAudioGuide_MainServer.Migrations
                 Sql(command);
             foreach (var command in SqlCommands.ElamSqlCommands)
                 Sql(command);
-            foreach (var command in SqlCommands.DownloadCommands)
+            foreach (var command in SqlCommands.Commands_Download)
                 Sql(command);
+
+            foreach (var command in SqlCommands.Commands_v2)
+                Sql(command);
+
+
         }
 
         public override void Down()

@@ -47,8 +47,9 @@
 
 }]);
 userApp.service('userServices', ['dataServices', function (dataServices) {
+    this.baseUrl = "/en"
     this.LogOff = function () {
-        dataServices.get('/User/LogOff');
+        dataServices.get(this.baseUrl+'/User/LogOff');
     }
     this.getpayment = function () {
 

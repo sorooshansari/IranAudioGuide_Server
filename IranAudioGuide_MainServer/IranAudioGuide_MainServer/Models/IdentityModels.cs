@@ -39,9 +39,9 @@ namespace IranAudioGuide_MainServer.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UsL_Id { get; set; }
-        [Display(Name = "FirstName", ResourceType = typeof(Resources.Global))]
-       
-        //[Display(Name = "Unified Unique Identifier")]
+        // [Display(Name = "FirstName", ResourceType = typeof(Resources.Global))]
+
+        [Display(Name = "Unified Unique Identifier")]
         public string UsL_UUId { get; set; }
         [Display(Name = "date time")]
         public DateTime UsL_DateTime { get; set; }
@@ -103,7 +103,7 @@ namespace IranAudioGuide_MainServer.Models
 
         // id for TranslateImage
         public Guid? TrI_Id { get; set; }
-      //  public Guid? Img_Id { get; set; }
+        //  public Guid? Img_Id { get; set; }
 
         public Guid? Sto_Id { get; set; }
         public Guid? Tip_Id { get; set; }
@@ -340,8 +340,9 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Pro_Id { get; set; }
-
-        // This is true only if the payment was successful
+        /// <summary>
+        ///This is true only if the payment was successful 
+        /// </summary>
         [Display(Name = "Payment Finished")]
         public bool Pro_PaymentFinished { get; set; }
         [Display(Name = "Insert Datetime")]
@@ -388,7 +389,6 @@ namespace IranAudioGuide_MainServer.Models
         public DownloadLink()
         {
             IsDisable = false;
-            //Path = "test";
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -13,7 +13,7 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
           .state('user', {
               url: "/profile",
               //abstract: true,
-              templateUrl: "/user/UserProfile",
+              templateUrl: "/fa/user/UserProfile",
               controller: "userCtrl",
               //resolve: {
               //    locale: ['$http', function ($http) {
@@ -29,14 +29,14 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
 
           .state('PackagesPurchased', {
               url: "/pakagePurchased",
-              templateUrl: "/user/PackagesPurchased",
+              templateUrl: "/fa/user/PackagesPurchased",
               controller: "pakagePurchasedCtrl"
 
 
           })
             .state('Packages', {
                 url: "/pakages",
-                templateUrl: "/user/Packages",
+                templateUrl: "/fa/user/Packages",
                 controller: "PackagesCtrl"
 
 
@@ -47,7 +47,7 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
                      try {
                          var model = "?pacId=" + $stateParams.PackageId + "&IsZarinpal=" + $stateParams.IsChooesZarinpal;
                          console.log(model)
-                         return "/Payment/PaymentWeb" + model;
+                         return "/fa/Payment/PaymentWeb" +model;
                      }
                      catch (error) {
 
@@ -57,7 +57,7 @@ var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
              })
          .state('deactivateMobile', {
              url: "/deactivateMobile",
-             templateUrl: "/user/deactivateMobile",
+             templateUrl: "/fa/user/deactivateMobile",
              controller: "PackagesCtrl"
          })
     }])

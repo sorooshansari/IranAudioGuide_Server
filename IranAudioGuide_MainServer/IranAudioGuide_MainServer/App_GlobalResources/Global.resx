@@ -383,7 +383,7 @@
     <value>Confirm Password</value>
   </data>
   <data name="PlaceholderEmail" xml:space="preserve">
-    <value>Email address</value>
+    <value>Email</value>
   </data>
   <data name="PlaceholderMessage" xml:space="preserve">
     <value>Your Message...</value>
@@ -628,5 +628,35 @@
   </data>
   <data name="signInSubHeader" xml:space="preserve">
     <value>Manage your Iran Audio Guide account easily through our website</value>
+  </data>
+  <data name="DispalyCode" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="ErrorEmail" xml:space="preserve">
+    <value>Invalid email address</value>
+  </data>
+  <data name="ErrorRequiredEmail" xml:space="preserve">
+    <value>The  Email field is required.</value>
+  </data>
+  <data name="ErrorRequiredPassword" xml:space="preserve">
+    <value>The Password field is required.</value>
+  </data>
+  <data name="ErrorRequiredRegisterName" xml:space="preserve">
+    <value>The {0} field is required.</value>
+  </data>
+  <data name="ErrorStringLengthMessage" xml:space="preserve">
+    <value>The {0} must be at least {2} characters long.</value>
+  </data>
+  <data name="ErrorComparePassword" xml:space="preserve">
+    <value>The password and confirmation password do not match.</value>
+  </data>
+  <data name="ErrorRequire" xml:space="preserve">
+    <value>The  field is required.</value>
+  </data>
+  <data name="RememberBrowser" xml:space="preserve">
+    <value>Remember this browser?</value>
+  </data>
+  <data name="LabelForRememberMe" xml:space="preserve">
+    <value>Remember Me?</value>
   </data>
 </root>
