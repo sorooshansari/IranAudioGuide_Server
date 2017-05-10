@@ -27,7 +27,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             get
             {
-                return (int)LangEnum.en;
+                return (int)EnumLang.en;
             }
         }
         //private const string storagePrefix = "http://iranaudioguide.com/";
@@ -998,7 +998,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     UpdateLog(updatedTable.TImage, removeitem.Img_Id, true);
 
                 }
-                if (lang == (int)LangEnum.en)
+                if (lang == (int)EnumLang.en)
                 {
                     img.Img_Description = model.ImageDesc;
                     UpdateLog(updatedTable.ExtraImage, img.Img_Id);
@@ -1105,7 +1105,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 db.TranslateCities.Add(cityT);
             }
             //todo remove this for v2
-            if (lang == (int)LangEnum.en)
+            if (lang == (int)EnumLang.en)
             {
                 cityT.city.Cit_Name = model.CityName;
                 cityT.city.Cit_Description = model.CityDesc;
@@ -1580,7 +1580,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
             List<PackageVM> packages = db.Packages
                 .Include(x => x.Pac_Cities.Select(c => c.TranslateCities))//.Include("Pac_Cities.TranslateCities")
-              .Where(x => x.langId == (int)LangEnum.en)
+              .Where(x => x.langId == (int)EnumLang.en)
                 .Select(p => new PackageVM()
                 {
                     PackageName = p.Pac_Name,

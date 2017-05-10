@@ -1,6 +1,7 @@
 ﻿using Elmah;
 using IranAudioGuide_MainServer.Models;
 using IranAudioGuide_MainServer.Services;
+using IranAudioGuide_MainServer.App_GlobalResources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -208,10 +209,10 @@ namespace IranAudioGuide_MainServer.Controllers
                         user.uuid = null;
                     }
                     else
-                        return BadRequest(string.Format(  Resources.Global.ServerDeactivateMobileInavlid ,(30 * 6) + daywating ));
+                        return BadRequest(string.Format(Global.ServerDeactivateMobileInavlid ,(30 * 6) + daywating ));
                 }
                 db.SaveChanges();
-                return Ok(Resources.Global.ServerDeactivateMobile);
+                return Ok(Global.ServerDeactivateMobile);
             }
         }
 

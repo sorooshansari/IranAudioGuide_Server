@@ -244,6 +244,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\AppManagerV2Controller.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -290,7 +291,8 @@
     <Compile Include="Services\CustomSqlErrorLog.cs" />
     <Compile Include="Services\ExtensionMethod.cs" />
     <Compile Include="Services\GlobalPath.cs" />
-    <Compile Include="Services\LocalizationAttribute.cs" />
+    <Compile Include="Services\ServiceCulture.cs" />
+    <Compile Include="Services\ServicePathCulture.cs" />
     <Compile Include="Services\ServiceDownload.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
@@ -576,10 +578,12 @@
     <Content Include="Content\css\main2.css" />
     <Content Include="Content\css\notify-metro.css" />
     <Content Include="Content\css\PakageTemplate.css" />
+    <Content Include="Content\css\profile_fa.css" />
     <Content Include="Content\css\profile.css" />
     <Content Include="Content\css\responsiveslides.css" />
     <Content Include="Content\css\select.css" />
     <Content Include="Content\css\select.min.css" />
+    <Content Include="Content\css\simple-sidebar_fa.css" />
     <Content Include="Content\css\simple-sidebar.css" />
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\css\sliderArrow.css" />
@@ -706,11 +710,14 @@
     <Content Include="Content\global\plugins\toastr\toastr.css" />
     <Content Include="Content\global\plugins\toastr\toastr.min.css" />
     <Content Include="Content\global\plugins\toastr\toastr.min.js" />
+    <Content Include="Content\images\160x100.png" />
     <Content Include="Content\images\arrow.svg" />
     <Content Include="Content\images\bars.svg" />
     <Content Include="Content\images\close.svg" />
     <Content Include="Content\images\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
     <Content Include="Content\images\file_add.png" />
+    <Content Include="Content\images\flag-fa.png" />
+    <Content Include="Content\images\flag-uk.png" />
     <Content Include="Content\images\Get_it_on_Google_play.svg" />
     <Content Include="Content\images\ie\grad0-15.svg" />
     <Content Include="Content\images\overlay.png" />
@@ -1776,6 +1783,7 @@
     <Folder Include="Download\" />
     <Folder Include="fonts\NewFonts\" />
     <Folder Include="images\slidepics\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1791,16 +1799,16 @@
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\Global.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+    <EmbeddedResource Include="App_GlobalResources\Global.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_GlobalResources\Global.fa.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_GlobalResources\Global.fa.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">

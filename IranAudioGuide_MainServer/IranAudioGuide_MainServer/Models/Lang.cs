@@ -2,37 +2,30 @@
 namespace IranAudioGuide_MainServer.Models
 {
 
-    [Flags]
-    public enum LangEnum
-    {
-        en = 1,
-        fa = 2,
-
-    }
     public static class LangService
     {
 
-        public static LangEnum FindByName( string str)
+        public static EnumLang FindByName( string str)
         {
-            foreach (LangEnum val in Enum.GetValues(typeof(LangEnum)))
+            foreach (EnumLang val in Enum.GetValues(typeof(EnumLang)))
                 if (val.ToString() == str)
                     return val;
-            return LangEnum.en;
+            return EnumLang.en;
         }
-        public static int GetId(LangEnum en)
+        public static int GetId(EnumLang en)
         {
             return (int)en;
         }
         public static int GetId(string Name)
         {
-            foreach (LangEnum val in Enum.GetValues(typeof(LangEnum)))
+            foreach (EnumLang val in Enum.GetValues(typeof(EnumLang)))
                 if (val.ToString() == Name)
                     return  (int) val;
-            return (int) LangEnum.en;
+            return (int) EnumLang.en;
         }
         public static string GetNameById(int id)
         {
-            return Enum.GetName(typeof(LangEnum), id);
+            return Enum.GetName(typeof(EnumLang), id);
         }
     }
 

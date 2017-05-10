@@ -654,4 +654,7 @@
   <data name="RememberBrowser" xml:space="preserve">
     <value>Remember this browser?</value>
   </data>
+  <data name="LabelForRememberMe" xml:space="preserve">
+    <value>مرا به خاطر بسپار؟</value>
+  </data>
 </root>
