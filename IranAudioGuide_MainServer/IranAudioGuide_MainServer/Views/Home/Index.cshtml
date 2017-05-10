@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Iran Audio Guide";
+    ViewBag.Title = Global.IranAudioGuide;
 }
 @using Resources
-<a href="#page-wrapper" id="goTopButton" class="scrolly"><i class="fa fa-chevron-up"></i></a>
+<a href="#page-wrapper" id="goTopButton" class="scrolly goTopButton"><i class="fa fa-chevron-up"></i></a>
 <section id="banner">
     <div class="inner">
         <div id="logo">
@@ -194,9 +194,8 @@
 
                 <div class="row">
                     <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
-                        <img class="img-thumbnail member-th" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
+                        <img class="img-thumbnail member-th" src="~/Content/images/Members/defaultW.jpg" alt="@Global.Mona" style="width:100%">
                     </div>
-
                     <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
                         <div class="col-xs-6 member-social">
                             <ul class="icons">
@@ -215,7 +214,7 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
-                        <img class="img-thumbnail member-th" src="~/images/Members/Soroosh.JPG" alt="@Global.Soroosh" style="width:100%">
+                        <img class="img-thumbnail member-th" src="~/Content/images/Members/defaultM.jpg" alt="@Global.Soroosh" style="width:100%">
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
                         <div class="col-xs-6 member-social">
@@ -234,7 +233,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
-                        <img class="img-thumbnail member-th" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
+                        <img class="img-thumbnail member-th" src="~/Content/images/Members/defaultW.jpg" alt="@Global.Mona" style="width:100%">
                     </div>
 
                     <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
@@ -387,15 +386,15 @@
 </footer>
 @section scripts{
     <script>
-        window.onscroll = function () { scrollFunction() };
+        //window.onscroll = function () { scrollFunction() };
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                document.getElementById("goTopButton").style.display = "block";
-            } else {
-                document.getElementById("goTopButton").style.display = "none";
-            }
-        }
+        //function scrollFunction() {
+        //    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        //        document.getElementById("goTopButton").style.display = "block";
+        //    } else {
+        //        document.getElementById("goTopButton").style.display = "none";
+        //    }
+        //}
 
 
 

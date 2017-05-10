@@ -251,6 +251,10 @@
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <None Include="doc\storeproced.text" />
+    <Compile Include="Migrations\201705080950325_t1.cs" />
+    <Compile Include="Migrations\201705080950325_t1.Designer.cs">
+      <DependentUpon>201705080950325_t1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -707,8 +711,12 @@
     <Content Include="Content\images\close.svg" />
     <Content Include="Content\images\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
     <Content Include="Content\images\file_add.png" />
+    <Content Include="Content\images\flag-fa.png" />
+    <Content Include="Content\images\flag-uk.png" />
     <Content Include="Content\images\Get_it_on_Google_play.svg" />
     <Content Include="Content\images\ie\grad0-15.svg" />
+    <Content Include="Content\images\Members\defaultM.jpg" />
+    <Content Include="Content\images\Members\defaultW.jpg" />
     <Content Include="Content\images\overlay.png" />
     <Content Include="Content\images\playpause-48-48-1.png" />
     <Content Include="Content\images\prevnext-48-48-1.png" />
@@ -1797,6 +1805,11 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201705080950325_t1.resx">
+      <DependentUpon>201705080950325_t1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

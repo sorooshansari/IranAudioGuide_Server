@@ -38,14 +38,14 @@
         {
         "@@type": "Person",
         "name": "Soroosh Ansari Mehr",
-        "image": "http://iranaudioguide.com/images/Members/Soroosh.jpg",
+        "image": "http://iranaudioguide.com/content/images/Members/Soroosh.jpg",
         "jobTitle": "CTO",
         "email": "mailto:soroosh@iranaudioguide.com"
         },
         {
         "@@type": "Person",
         "name": "Mona Akhlaghi",
-        "image": "http://iranaudioguide.com/images/Members/Mona.jpg",
+        "image": "http://iranaudioguide.com/content/images/Members/Mona.jpg",
         "jobTitle": "CEO",
         "email": "mailto:mona@iranaudioguide.com"
         } ],
@@ -64,10 +64,10 @@
         "availableLanguage": ["Farsi","English"]
         }],
         "sameAs": [
+        "https://www.telegram.me/iranaudioguide",
         "https://www.twitter.com/iranaudioguide",
         "https://www.facebook.com/iranaudioguide",
-        "https://www.instagram.com/iran.audio.guide",
-        "https://www.telegram.me/iranaudioguide"
+        "https://www.instagram.com/iran.audio.guide"
         ]}
     </script>
     <meta property="og:title" content="@Global.IndexTitle" />
@@ -168,7 +168,7 @@
                                 }
                                 else
                                 {
-                                    if (User.IsInRole("Admin"))
+                                    if (User.IsInRole("Admin")) 
                                     {
                                         <li><a rel="nofollow" href="@Url.Action("index", "Admin")"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>
 
@@ -203,10 +203,17 @@
     @RenderSection("scripts", required: false)
     <script>
         window.onscroll = function () { scrollFunction() };
+        
 
         function scrollFunction() {
             if ($(window).width() < 800) {
-                console.log(document.body.scrollTop, document.documentElement.scrollTop);
+                //console.log(document.body.scrollTop, document.documentElement.scrollTop);
+
+                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                    document.getElementById("goTopButton").classList.add('goTopButtonShow');
+                } else {
+                    document.getElementById("goTopButton").classList.remove('goTopButtonShow');
+                }
 
                 if (document.body.scrollTop >70 || document.documentElement.scrollTop > 70) {
                     if ($('header#header').hasClass('alt')) {
@@ -216,6 +223,13 @@
                     if (!$('header#header').hasClass('alt')) {
                         $('header#header').addClass('alt');
                     }
+                }
+            }
+            else {
+                if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                    document.getElementById("goTopButton").classList.add('goTopButtonShow');
+                } else {
+                    document.getElementById("goTopButton").classList.remove('goTopButtonShow');
                 }
             }
         }
