@@ -1,6 +1,7 @@
 ﻿using Elmah;
 using IranAudioGuide_MainServer.Models;
 using IranAudioGuide_MainServer.Services;
+using IranAudioGuide_MainServer.App_GlobalResources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -208,10 +209,10 @@ namespace IranAudioGuide_MainServer.Controllers
                         user.uuid = null;
                     }
                     else
-                        return BadRequest(string.Format(  Resources.Global.ServerDeactivateMobileInavlid ,(30 * 6) + daywating ));
+                        return BadRequest(string.Format(Global.ServerDeactivateMobileInavlid ,(30 * 6) + daywating ));
                 }
                 db.SaveChanges();
-                return Ok(Resources.Global.ServerDeactivateMobile);
+                return Ok(Global.ServerDeactivateMobile);
             }
         }
 
@@ -229,8 +230,8 @@ namespace IranAudioGuide_MainServer.Controllers
                         if (getimg == null)
                             continue;
                         getimg.Tmg_Order = img.Index;
-                        db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Ima_Id == getimg.Img_Id));
-                        db.UpdateLogs.Add(new UpdateLog() { Ima_Id = getimg.Img_Id, isRemoved = false });
+                        db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Img_Id == getimg.Img_Id));
+                        db.UpdateLogs.Add(new UpdateLog() { Img_Id = getimg.Img_Id, isRemoved = false });
                     }
                     //var Imgs = db.Images.Where(x => listImg.Any(i => i.ImageId == x.Img_Id)).ToList();
                     db.SaveChanges();

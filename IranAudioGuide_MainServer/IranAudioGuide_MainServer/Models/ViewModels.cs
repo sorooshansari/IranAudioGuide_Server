@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -145,7 +146,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Id { get; set; }
         [Required]
         [Display(Name = "Package name")]
-        public string PackageName { get; set; }
+        public string Name { get; set; }
         public string PackageDesc { get; set; }
         [Required]
         [Display(Name = "Package price Toman")]
@@ -411,6 +412,7 @@ namespace IranAudioGuide_MainServer.Models
         [Required]
         [Display(Name = "City Image")]
         public HttpPostedFileBase CityImage { get; set; }
+        public string lang { get; set; }
     }
     public class CityVM
     {
@@ -470,7 +472,11 @@ namespace IranAudioGuide_MainServer.Models
 
     public class NewPlace
     {
-        [Required]
+     
+        [Required(ErrorMessageResourceType = typeof(Global),
+             ErrorMessageResourceName = "testError1")]
+        [StringLength(50, ErrorMessageResourceType = typeof(Global),
+                     ErrorMessageResourceName = "testError2")]
         public string PlaceName { get; set; }
         public string PlaceDesc { get; set; }
         public string PlaceAddress { get; set; }
@@ -479,6 +485,10 @@ namespace IranAudioGuide_MainServer.Models
         public int PlaceCityId { get; set; }
         [Required]
         public HttpPostedFileBase Image { get; set; }
+    }
+    public class ImagRemoveVm {
+        public string Name { get; set; }
+        public Guid Id { get; set; }
     }
     public class EditPlaceVM
     {
@@ -536,6 +546,7 @@ namespace IranAudioGuide_MainServer.Models
     {
         public Guid ImageId { get; set; }
         public string ImageDesc { get; set; }
+        public string Name { get; set; }
     }
     public class NewImageVM
     {
@@ -645,7 +656,11 @@ namespace IranAudioGuide_MainServer.Models
         Tip,
         ExtraImage,
         City,
-        Place
+        Place,
+        TCity,
+        TPlace,
+        TImage,
+
     }
     public class CommentVm
     {
@@ -672,7 +687,8 @@ namespace IranAudioGuide_MainServer.Models
         invalidId = 6,
         forignKeyError = 7,
         removeOnlinePlace = 8,
-        InvalidUsre = 9
+        InvalidUsre = 9,
+        
     }
     public class Respond
     {

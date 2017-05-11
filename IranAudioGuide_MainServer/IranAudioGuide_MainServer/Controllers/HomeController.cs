@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Web.Mvc;
 using IranAudioGuide_MainServer.Models;
+using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
-    [LocalizationAttribute]
-    public class HomeController : Controller
+    //[Localization]
+    public class HomeController : BaseController
     {
         [Compress]
         public ActionResult Index()
@@ -25,7 +26,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new Respond(Resources.Global.ServerContactEmail, status.invalidInput));
+                return Json(new Respond(Global.ServerContactEmail, status.invalidInput));
             }
             try
             {
@@ -48,12 +49,12 @@ namespace IranAudioGuide_MainServer.Controllers
                     Destination = "danialby@gmail.com",
                     Subject = model.name + " - " + model.email
                 });
-                //soroosh@iranaudioguide.com
-                return Json(new Respond(Resources.Global.ServerEmailSending, status.success));
+
+                return Json(new Respond(Global.ServerEmailSending, status.success));
             }
             catch (Exception ex)
             {
-                return Json(new Respond(Resources.Global.ServerEmailErrorSending, status.unknownError));
+                return Json(new Respond(Global.ServerEmailErrorSending, status.unknownError));
             }
         }
 

@@ -1,0 +1,35 @@
+@import url('profile.css');
+
+@font-face {
+    font-family: 'SDDT-Light-web';
+    src: url('../../fonts/SDDT-Light-web.woff') format('woff');
+}
+
+ * {
+    font-family: 'SDDT-Light-web' !important;
+    letter-spacing: 0px !important;
+}
+
+ .fa {
+    font-family: FontAwesome !important;
+}
+
+
+
+.rslides .caption {
+   
+    border-right: 2px solid #ffb41f;
+    border-left:none;
+}
+.menu-mobail {
+    right: 0px;
+    direction: rtl;
+}
+.userEmail {
+        margin: 0 0 0 9px;
+    border-radius: 10px 0px 0px 10px;
+}
+
+li {
+    direction: rtl;
+}

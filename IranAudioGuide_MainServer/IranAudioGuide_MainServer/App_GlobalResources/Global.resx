@@ -139,7 +139,7 @@
     <value>Iran Audio Guide</value>
   </data>
   <data name="Lang" xml:space="preserve">
-    <value>en-US</value>
+    <value>en</value>
   </data>
   <data name="MenuContactUs" xml:space="preserve">
     <value>Contact Us</value>
@@ -286,19 +286,19 @@
     <value>Who we are?</value>
   </data>
   <data name="Parameter24" xml:space="preserve">
-    <value>Hi! We are Mona Akhlaghi and Soroosh Ansari Mehr, two individuals with a passion for creativity — creativity makes us happy. We truly believe in the transformative power of illustration and design and their ability to simplify communications</value>
+    <value>The Iran Audio Guide appication has been created by a dedicated team with a combination of experties. We always feel obligied to present the highest standard in all aspects of our work</value>
   </data>
   <data name="Parameter25" xml:space="preserve">
     <value>Mona Akhlaghi</value>
   </data>
   <data name="Parameter26" xml:space="preserve">
-    <value>Cras sit amet nibh libero</value>
+    <value>CEO</value>
   </data>
   <data name="Parameter27" xml:space="preserve">
     <value>Soroosh Ansari Mehr</value>
   </data>
   <data name="Parameter28" xml:space="preserve">
-    <value>Cras sit amet nibh libero</value>
+    <value>CTO</value>
   </data>
   <data name="Parameter29" xml:space="preserve">
     <value>Feel free to Contact us...</value>
@@ -314,7 +314,7 @@
         logging in.</value>
   </data>
   <data name="Parameter32" xml:space="preserve">
-    <value>Use social services to log in.</value>
+    <value>Sign in with:</value>
   </data>
   <data name="Parameter33" xml:space="preserve">
     <value>There are no external authentication services configured.</value>
@@ -341,13 +341,13 @@
     <value>Enter your email.</value>
   </data>
   <data name="Parameter40" xml:space="preserve">
-    <value>Email Link</value>
+    <value>Send Link</value>
   </data>
   <data name="Parameter41" xml:space="preserve">
     <value>Please check your email to reset your password.</value>
   </data>
   <data name="Parameter42" xml:space="preserve">
-    <value>Use your Login Credentials to access your profile.</value>
+    <value>Wellcome back!</value>
   </data>
   <data name="Parameter43" xml:space="preserve">
     <value>Join us!</value>
@@ -356,7 +356,7 @@
     <value>It only takes a minute!</value>
   </data>
   <data name="Parameter45" xml:space="preserve">
-    <value>By registering you will access to all Iran Audio Guide has to offer. Hopefully you will soon agree that its quite worth while</value>
+    <value>By registering, you will access to all Iran Audio Guide has to offer</value>
   </data>
   <data name="Parameter46" xml:space="preserve">
     <value>Register</value>
@@ -383,7 +383,7 @@
     <value>Confirm Password</value>
   </data>
   <data name="PlaceholderEmail" xml:space="preserve">
-    <value>Email address</value>
+    <value>Email</value>
   </data>
   <data name="PlaceholderMessage" xml:space="preserve">
     <value>Your Message...</value>
@@ -583,5 +583,80 @@
   </data>
   <data name="PaymentPage28" xml:space="preserve">
     <value>Reference ID</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="Instagram" xml:space="preserve">
+    <value>Instagram</value>
+  </data>
+  <data name="IranAudioGuideOffice" xml:space="preserve">
+    <value>Iran Audio Guide Office</value>
+  </data>
+  <data name="OfficeAddress" xml:space="preserve">
+    <value>Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard&lt;br/&gt;Shiraz, Iran</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Telegram" xml:space="preserve">
+    <value>Telegram</value>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot?</value>
+  </data>
+  <data name="Google" xml:space="preserve">
+    <value>Google</value>
+  </data>
+  <data name="RegisterAsNewUser" xml:space="preserve">
+    <value>Register as a new user?</value>
+  </data>
+  <data name="SEOdesc" xml:space="preserve">
+    <value>Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions.</value>
+  </data>
+  <data name="forgotEnterEmail" xml:space="preserve">
+    <value>Enter your email address to receive a reset password link</value>
+  </data>
+  <data name="MenuRegister" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="signInSubHeader" xml:space="preserve">
+    <value>Manage your Iran Audio Guide account easily through our website</value>
+  </data>
+  <data name="DispalyCode" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="ErrorEmail" xml:space="preserve">
+    <value>Invalid email address</value>
+  </data>
+  <data name="ErrorRequiredEmail" xml:space="preserve">
+    <value>The  Email field is required.</value>
+  </data>
+  <data name="ErrorRequiredPassword" xml:space="preserve">
+    <value>The Password field is required.</value>
+  </data>
+  <data name="ErrorRequiredRegisterName" xml:space="preserve">
+    <value>The {0} field is required.</value>
+  </data>
+  <data name="ErrorStringLengthMessage" xml:space="preserve">
+    <value>The {0} must be at least {2} characters long.</value>
+  </data>
+  <data name="ErrorComparePassword" xml:space="preserve">
+    <value>The password and confirmation password do not match.</value>
+  </data>
+  <data name="ErrorRequire" xml:space="preserve">
+    <value>The  field is required.</value>
+  </data>
+  <data name="RememberBrowser" xml:space="preserve">
+    <value>Remember this browser?</value>
+  </data>
+  <data name="LabelForRememberMe" xml:space="preserve">
+    <value>Remember Me?</value>
   </data>
 </root>

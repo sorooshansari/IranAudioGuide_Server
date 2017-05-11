@@ -47,8 +47,9 @@
 
 }]);
 userApp.service('userServices', ['dataServices', function (dataServices) {
+    this.baseUrl = "/en"
     this.LogOff = function () {
-        dataServices.get('/User/LogOff');
+        dataServices.get(this.baseUrl+'/User/LogOff');
     }
     this.getpayment = function () {
 
@@ -158,59 +159,3 @@ userApp.filter('propsFilter', [function () {
         return out;
     };
 }]);
-userApp.factory('localezationService', ['dataServices', '$rootScope', '$timeout', function (dataServices, $rootScope, $timeout) {
-    that = this;
-    isSetCurrentLocale = false;
-    isCallSetCurrentLocale = 0;
-    currentLocale = null;
-    setCurrentLocale = function (localeId) {
-        try {
-            if (typeof localeId == 'undefined' || localeId == 'fa-ir')
-                dataServices.get('/Content/Scripts/locales/fa-ir.js').then(function (result) {
-                    currentLocale = result[0];
-                    isSetCurrentLocale = true;
-                    $rootScope.$broadcast('setLocale', currentLocale);
-                });
-        }
-        catch (e) {
-            console.log('error: dont add local , has this error:', e)
-        }
-    };
-    getLocale = function () {
-        if (isSetCurrentLocale)
-            return currentLocale;
-        else {
-            if (isCallSetCurrentLocale < 1) {
-                isCallSetCurrentLocale++;
-                setCurrentLocale();
-                $timeout(function () {
-                    getLocale();
-                }, 2000);
-            }
-            else
-                return null;
-        }
-        return null;
-    };
-    return {
-        getLocale: getLocale
-    }
-}]);
-userApp.filter('localezationFilter', function (locale) {
-    return function (input) {
-        if (input && locale.length != 0) {
-            parts = input.toLowerCase().split('.');
-            localizedString = locale[0];
-            for (_i = 0, _len = parts.length; _i < _len; _i++) {
-                var part = parts[_i];
-                localizedString = localizedString[part];
-                if (!localizedString) {
-                    break;
-                }
-            }
-            if (localizedString) {
-                return localizedString;
-            }
-        }
-    };
-});

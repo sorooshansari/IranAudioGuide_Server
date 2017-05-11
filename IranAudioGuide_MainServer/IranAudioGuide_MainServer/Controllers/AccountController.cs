@@ -8,13 +8,14 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IranAudioGuide_MainServer.Models;
 using IranAudioGuide_MainServer.Services;
+using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
     [Authorize]
-    [LocalizationAttribute]
+    //[Localization]
 
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
 
         private ApplicationSignInManager _signInManager;
@@ -75,6 +76,12 @@ namespace IranAudioGuide_MainServer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.View = Views.Login;
+
+                return View(model);
+            }
             var serviceIpAdress = new ServiceIpAdress();
             ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
             if (!ViewBag.IsTheFirstLogin)
@@ -87,12 +94,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
             }
 
-            if (!ModelState.IsValid)
-            {
-                ViewBag.View = Views.Login;
-
-                return View(model);
-            }
+       
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -103,16 +105,29 @@ namespace IranAudioGuide_MainServer.Controllers
                     serviceIpAdress.RemoveIpadressFailuers();
                     var user = UserManager.FindByName(model.Email);
                     string UserRole = UserManager.GetRoles(user.Id).FirstOrDefault();
-                    if (UserRole == "Admin")
-                        return RedirectToAction("Index", "Admin");
-                    else if (UserRole == "AppUser")
+                    switch (UserRole)
                     {
-                        if (returnUrl != null && returnUrl.Length > 0)
+                        case "Admin":
+                            return RedirectToAction("Index", "Admin");
+                        case "AppUser":
+                            if (returnUrl != null && returnUrl.Length > 0)
+                                return RedirectToLocal(returnUrl);
+                            return RedirectToAction("Index", "User");
+                        case "Seller":
+                            return RedirectToAction("Index", "Seller");
+                        default:
                             return RedirectToLocal(returnUrl);
-                        return RedirectToAction("Index", "User");
                     }
-                    else
-                        return RedirectToLocal(returnUrl);
+                    //if (UserRole == "Admin")
+                    //    return RedirectToAction("Index", "Admin");
+                    //else if (UserRole == "AppUser")
+                    //{
+                    //    if (returnUrl != null && returnUrl.Length > 0)
+                    //        return RedirectToLocal(returnUrl);
+                    //    return RedirectToAction("Index", "User");
+                    //}
+                    //else
+                    //    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View();
                 case SignInStatus.RequiresVerification:
@@ -124,10 +139,10 @@ namespace IranAudioGuide_MainServer.Controllers
                 case SignInStatus.Failure:
                     serviceIpAdress.SaveIpadressFailuers();
                     ViewBag.IsTheFirstLogin = false;
-                    ModelState.AddModelError("", Resources.Global.ServerErrorInvalidUsernameOrPassword);
+                    ModelState.AddModelError("", Global.ServerErrorInvalidUsernameOrPassword);
                     return View(model);
                 default:
-                    ModelState.AddModelError("", Resources.Global.ServerInvalidLoginAttempt);
+                    ModelState.AddModelError("", Global.ServerInvalidLoginAttempt);
                     return View(model);
             }
         }
@@ -170,7 +185,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", Resources.Global.ServerInvalidCode);
+                    ModelState.AddModelError("", Global.ServerInvalidCode);
                     return View(model);
             }
         }
@@ -193,7 +208,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.Name };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -205,7 +220,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     //code = HttpUtility.UrlEncode(code);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, Resources.Global.ServerConfirmTitel, string.Format(Resources.Global.ServerConfirmMessage, callbackUrl));
+                    await UserManager.SendEmailAsync(user.Id, Global.ServerConfirmTitel, string.Format(Global.ServerConfirmMessage, callbackUrl));
 
                     return RedirectToAction("Index", "User");
                 }
@@ -225,7 +240,7 @@ namespace IranAudioGuide_MainServer.Controllers
             try
             {
                 if (!User.Identity.IsAuthenticated)
-                                  return Json(new Respond("", status.InvalidUsre));
+                    return Json(new Respond("", status.InvalidUsre));
 
 
                 var UserId = User.Identity.GetUserId();
@@ -238,9 +253,9 @@ namespace IranAudioGuide_MainServer.Controllers
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(UserId);
                 //  code = HttpUtility.UrlEncode(code);
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = UserId, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(UserId, Resources.Global.ServerConfirmTitel, string.Format(Resources.Global.ServerConfirmMessage, callbackUrl));
+                await UserManager.SendEmailAsync(UserId, Global.ServerConfirmTitel, string.Format(Global.ServerConfirmMessage, callbackUrl));
                 // return new HttpResponseMessage(HttpStatusCode.OK);
-                return Json(new Respond(Resources.Global.ServerEmailSendingSuccess, status.success));
+                return Json(new Respond(Global.ServerEmailSendingSuccess, status.success));
 
             }
             catch (Exception ex)
@@ -260,8 +275,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = Resources.Global.ServerErrorConfirmSubject,
-                        Message = Resources.Global.ServerErrorUnknown,
+                        Subject = Global.ServerErrorConfirmSubject,
+                        Message = Global.ServerErrorUnknown,
                         //IsShowUrl = true
                     });
                 }
@@ -270,16 +285,16 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = Resources.Global.ServerEmailConfirmation,
-                        Message = Resources.Global.ServerEmailConfirmationSucceeded,
+                        Subject = Global.ServerEmailConfirmation,
+                        Message = Global.ServerEmailConfirmationSucceeded,
                     });
                 }
                 else
                 {
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = Resources.Global.ServerErrorConfirmSubject,
-                        Message = Resources.Global.ServerEmailConfirmationMessage2,
+                        Subject = Global.ServerErrorConfirmSubject,
+                        Message = Global.ServerEmailConfirmationMessage2,
                         //IsShowUrl = true
                     });
                 }
@@ -288,8 +303,8 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = Resources.Global.ServerErrorConfirmSubject,
-                    Message = Resources.Global.ServerErrorUnknown,
+                    Subject = Global.ServerErrorConfirmSubject,
+                    Message = Global.ServerErrorUnknown,
                     //IsShowUrl = true
                 });
             }
@@ -317,8 +332,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = Resources.Global.ServerForgotPassword,
-                        Message  = Resources.Global.ServerForgotPasswordMessage,
+                        Subject = Global.ServerForgotPassword,
+                        Message = Global.ServerForgotPasswordMessage,
                     });
                 }
 
@@ -329,12 +344,12 @@ namespace IranAudioGuide_MainServer.Controllers
                 string baseUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
                 var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, user.Id, code);
                 //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, Resources.Global.ServerResetPassword, string.Format(Resources.Global.ServerResetPasswordMessage, callbackUrl) );
+                await UserManager.SendEmailAsync(user.Id, Global.ServerResetPassword, string.Format(Global.ServerResetPasswordMessage, callbackUrl));
                 string ResetLink = Url.Action("ForgotPassword", "Account", model);
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = Resources.Global.ServerResetPassword,
-                    Message = string.Format(Resources.Global.ServerResetPasswordMessage2, ResetLink, model.Email)
+                    Subject = Global.ServerResetPassword,
+                    Message = string.Format(Global.ServerResetPasswordMessage2, ResetLink, model.Email)
                 });
             }
 
@@ -370,8 +385,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 // Don't reveal that the user does not exist
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = Resources.Global.ServerPasswordChanged,
-                    Message = Resources.Global.ServerPasswordChangedMessage
+                    Subject = Global.ServerPasswordChanged,
+                    Message = Global.ServerPasswordChangedMessage
                 });
             }
             //var code = model.Code.Replace(" ", "+");
@@ -380,8 +395,8 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = Resources.Global.ServerPasswordChanged,
-                    Message = Resources.Global.ServerPasswordChangedMessage
+                    Subject = Global.ServerPasswordChanged,
+                    Message = Global.ServerPasswordChangedMessage
                 });
             }
             AddErrors(result);

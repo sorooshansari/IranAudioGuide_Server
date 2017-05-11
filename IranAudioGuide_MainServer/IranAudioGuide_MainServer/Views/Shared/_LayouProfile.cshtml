@@ -10,30 +10,15 @@
 }
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
-<head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
-    <meta name="title" content="Best audio guide application for Iran travel" />
-    <meta name="Description"
-          content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-
-    <meta property="og:title" content="Best audio guide application for Iran travel" />
-    <meta property="og:site_name" content="Iran Audio Guide" />
-    <meta property="og:type" content="Audio Guide" />
-    <meta property="og:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
-    <meta property="og:url" content="http://iranaudioguide.com" />
-    <meta property="og:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-    <meta property="fb:admins" content="iranaudioguide" />
-
-    <meta property="twitter:card" content="Iran Audio Guide" />
-    <meta property="twitter:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-    <meta property="twitter:url" content="http://iranaudioguide.com" />
-    <meta property="twitter:title" content="Best audio guide application for Iran travel" />
-    <meta property="twitter:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
-
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/ProfileCss")
+    <meta name="title" content="@ViewBag.Title" />
+    <meta name="Description"
+          content="Iran audio Guide - @ViewBag.Title" />
+
+    @Styles.Render("~/ProfileCss"+ Global.Lang )
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -170,5 +155,64 @@
         <!-- jQuery -->
 
         @Scripts.Render("~/Profile/minJs")
+    <script>
+        //, 'ui.select'
+        var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
+            .config(['$urlRouterProvider', '$stateProvider', '$sceProvider', function ($urlRouterProvider, $stateProvider, $sceProvider) {
+                $sceProvider.enabled(false);
+
+                //
+                // For any unmatched url, redirect to /state1
+                $urlRouterProvider.otherwise("/profile");
+                //
+                // Now set up the states
+                $stateProvider
+                  .state('user', {
+                      url: "/profile",
+                      //abstract: true,
+                      templateUrl: "/@Global.Lang/user/UserProfile",
+                      controller: "userCtrl",
+                  })
+
+                  .state('PackagesPurchased', {
+                      url: "/pakagePurchased",
+                      templateUrl: "/@Global.Lang/user/PackagesPurchased",
+                      controller: "pakagePurchasedCtrl"
+
+
+                  })
+                    .state('Packages', {
+                        url: "/pakages",
+                        templateUrl: "/@Global.Lang/user/Packages",
+                        controller: "PackagesCtrl"
+
+
+                    })
+                     .state('Payment', {
+                         url: "/payment?PackageId&IsChooesZarinpal",
+                         templateUrl: function ($stateParams) {
+                             try {
+                                 var model = "?pacId=" + $stateParams.PackageId + "&IsZarinpal=" + $stateParams.IsChooesZarinpal;
+                                 console.log(model)
+                                 return "/@Global.Lang/Payment/PaymentWeb" + model;
+                             }
+                             catch (error) {
+
+                             }
+                         },
+                         controller: "paymentCtrl"
+                     })
+                 .state('deactivateMobile', {
+                     url: "/deactivateMobile",
+                     templateUrl: "/@Global.Lang/user/deactivateMobile",
+                     controller: "PackagesCtrl"
+                 })
+            }])
+
+
+        ;
+    </script>
+
+    @Scripts.Render("~/Profile/ang")
 </body>
 </html>

@@ -1,4 +1,5 @@
-﻿using IranAudioGuide_MainServer.Services;
+﻿using IranAudioGuide_MainServer.Models;
+using IranAudioGuide_MainServer.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace IranAudioGuide_MainServer.Models
+namespace IranAudioGuide_MainServer.Models_v1
 {
   
     public class dbManager
