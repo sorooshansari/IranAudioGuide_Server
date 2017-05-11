@@ -251,10 +251,6 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201704221119511_s.cs" />
-    <Compile Include="Migrations\201704221119511_s.Designer.cs">
-      <DependentUpon>201704221119511_s.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -704,6 +700,8 @@
     <Content Include="Content\images\arrow.svg" />
     <Content Include="Content\images\bars.svg" />
     <Content Include="Content\images\close.svg" />
+    <Content Include="Content\images\Shetab.png" />
+    <Content Include="Content\images\visa-mastercard.png" />
     <Content Include="images\defProfilew.png" />
     <Content Include="Content\images\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
     <Content Include="Content\images\flag-uk.png" />
@@ -1807,10 +1805,8 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704221119511_s.resx">
-      <DependentUpon>201704221119511_s.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

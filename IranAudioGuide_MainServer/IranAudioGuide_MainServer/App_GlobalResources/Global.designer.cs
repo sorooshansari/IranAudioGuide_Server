@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to buy.
+        ///   Looks up a localized string similar to Get.
         /// </summary>
         internal static string btnBuy {
             get {
@@ -971,7 +971,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to Cities Included.
         /// </summary>
         internal static string PaymentPage21 {
             get {

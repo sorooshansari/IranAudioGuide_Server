@@ -29,7 +29,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             try
             {
-                System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/ContactEmailTemplate.html"));
+                System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/HTMLAliTemplate.html"));
                 string body = sr.ReadToEnd();
                 sr.Close();
                 body = body.Replace("#NameFamily#", model.name);
@@ -45,10 +45,10 @@ namespace IranAudioGuide_MainServer.Controllers
                 EmailService.SendWithoutTemplateAsync(new Microsoft.AspNet.Identity.IdentityMessage()
                 {
                     Body = body,
-                    Destination = "iranaudioguide@gmail.com",
+                    Destination = "danialby@gmail.com",
                     Subject = model.name + " - " + model.email
                 });
-
+                //soroosh@iranaudioguide.com
                 return Json(new Respond(Resources.Global.ServerEmailSending, status.success));
             }
             catch (Exception ex)

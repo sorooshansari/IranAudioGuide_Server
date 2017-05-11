@@ -94,7 +94,7 @@
                         @Global.PageProfile12
                     </a>
                 </li>
-                <li>
+                <li id="Langli">
                     <div class="country">
                         <div class="countrySelected">
                             @foreach (var item in locales.Get)
@@ -103,7 +103,7 @@
                                 {
                                     <span>
                                         <img src="@item.Icon" alt="@item.Id" />
-                                        <span class="siteFlagText">@item.Title</span>
+                                        <span class="siteFlagText">@item.Title &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class="fa fa-gear"></i></span>
                                     </span>
                                     break;
                                 }
@@ -121,7 +121,7 @@
                                 }
                                 <a href="@Url.Action("Index", "Home", new { lang = item.Id})" hreflang="@item.Id" lang="@item.Id">
                                     <img src="@item.Icon" alt="@item.Id" />
-                                    <span class="siteFlagText">@item.Title</span>
+                                    <span style="cursor: pointer;" class="siteFlagText">@item.Title</span>
                                 </a>
 
                             }
