@@ -1,15 +1,10 @@
 ﻿
-@model string
-@{
-    var locales = new langsVM();
-    var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
-    var action = Url.RequestContext.RouteData.Values["action"].ToString();
-}
+@model IranAudioGuide_MainServer.Models.SelectLangVM
 <div class="country">
     <div class="countrySelected">
-        @foreach (var item in locales.Get)
+        @foreach (var item in Model.langs)
         {
-            if (item.Id == Model)
+            if (item.Id == Model.currentLang)
             {
                 <img src="@item.Icon" alt="@item.Id" />
                 <span class="siteFlagText">@item.Title</span>
@@ -18,12 +13,12 @@
         }
     </div>
     <div class="countryDropdown">
-        @foreach (var item in locales.Get)
+        @foreach (var item in Model.langs)
         {
-            if (item.Id != Model)
+            if (item.Id != Model.currentLang)
             {
-                <a href="@Url.Action(action,controller, new { lang = Model})">
-                    <img src="@item.Icon" alt="@item.Id" />
+                <a href="@Url.Action(Model.action, Model.controller, new { lang = item.Id })">
+                    <img src="@item.Icon" alt="@item.Title" />
                     <span class="siteFlagText">@item.Title</span>
                 </a>
             }
