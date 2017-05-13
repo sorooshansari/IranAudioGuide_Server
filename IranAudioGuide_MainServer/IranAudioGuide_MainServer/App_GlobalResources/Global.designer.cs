@@ -124,7 +124,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to buy.
+        ///   Looks up a localized string similar to Get.
         /// </summary>
         public static string btnBuy {
             get {
@@ -1169,7 +1169,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to Cities Included.
         /// </summary>
         public static string PaymentPage21 {
             get {

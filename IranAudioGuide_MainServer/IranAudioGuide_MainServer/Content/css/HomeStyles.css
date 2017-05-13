@@ -113,31 +113,31 @@
     }
 }
 
-.Location dt {
-    text-shadow: 1px 1px 5px rgb(20, 68, 130);
-    color: rgb(242, 242, 242);
-    width: 20px;
-}
-
-.Location dd {
-    margin-left: 40px;
-}
-
-.Location a {
-    border-bottom: none;
-}
-
-    .Location a:hover {
+    .Location dt {
+        text-shadow: 1px 1px 5px rgb(20, 68, 130);
         color: rgb(242, 242, 242);
-        text-decoration: none;
-        text-shadow: 1px 1px 10px rgb(6, 23, 45);
+        width: 20px;
     }
 
-.Location .panel-heading {
-    color: #f5f5f5;
-    background-color: #15437f;
-    border-color: #ddd;
-}
+    .Location dd {
+        margin-left: 40px;
+    }
+
+    .Location a {
+        border-bottom: none;
+    }
+
+        .Location a:hover {
+            color: rgb(242, 242, 242);
+            text-decoration: none;
+            text-shadow: 1px 1px 10px rgb(6, 23, 45);
+        }
+
+    .Location .panel-heading {
+        color: #f5f5f5;
+        background-color: #15437f;
+        border-color: #ddd;
+    }
 
 .LocationInfo .panel .panel-body p {
     font-size: smaller;
@@ -177,14 +177,11 @@
     width: 10%;
 }
 
-    .member-social ul.icons {
-        padding: 0;
-        margin: 0;
-        font-size: medium;
-    }
-
-.iwTailHolder {
-    top: -20px !important;
+    .member-social ul.icons
+    {
+        padding:0;
+        margin:0;
+        font-size:medium;
 }
 
 .iwCloseBtn {
@@ -215,12 +212,12 @@
         display: inline-block;
     }
 
-        .Location .LocationInfo {
-            position: relative;
-            width: 100%;
-            padding: 0;
-            margin-bottom: 0;
-        }
+    .Location .LocationInfo {
+        position: relative;
+        width: 100%;
+        padding: 0;
+        margin-bottom: 0;
+    }
 
     .LocationInfo .panel {
         border-radius: 0;

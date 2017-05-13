@@ -142,8 +142,8 @@ userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeou
     })
 
     $scope.typeEachItemFoSelection = [
-        { type: 0, name: 'City', icon: "fa fa-bolt", className: "itemSelcted box-city" },
-        { type: 1, name: 'Place', icon: "fa fa-leaf", className: "itemSelcted box-place" }
+        { type: 0, name: 'City', icon: "fa fa-map-marker", className: "itemSelcted box-city" },
+        { type: 1, name: 'Place', icon: "fa fa-map-pin", className: "itemSelcted box-place" }
     ];
     $scope.searhPakage = {
         item: []
