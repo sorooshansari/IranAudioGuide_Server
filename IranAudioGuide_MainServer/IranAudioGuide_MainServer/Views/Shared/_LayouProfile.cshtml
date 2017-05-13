@@ -3,11 +3,10 @@
 
 @{
     Layout = null;
-    var locales = new langsVM();
     //var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
     //var action = Url.RequestContext.RouteData.Values["action"].ToString();
     //var id = Url.RequestContext.RouteData.Values["id"];
-    var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
+    //var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
 }
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
@@ -42,7 +41,7 @@
             <div style="background-color: #001644;min-height: 145px;border-top-right-radius: 10px; width:245px; box-shadow: 1px 5px 5px black;">
                 <div class="userEmail">
                     <div>
-                        <img src="{{user.uImageUrl}}">
+                        <img ng-src="{{user.uImageUrl}}">
                         <span>{{user.FullName}}</span>
                     </div>
                 </div>
@@ -81,7 +80,12 @@
                     </a>
                 </li>
                 <li id="Langli">
-                    <div class="country">
+
+                    @*@Html.Partial("_SelectLangBtn", Global.Lang)*@
+
+
+
+                    @*<div class="country">
                         <div class="countrySelected">
                             @foreach (var item in locales.Get)
                             {
@@ -115,7 +119,10 @@
                         </div>
 
 
-                    </div>
+                    </div>*@
+
+
+
                 </li>
             </ul>
         </div>

@@ -2,11 +2,11 @@
 @using IranAudioGuide_MainServer.App_GlobalResources;
 
 @{
-    string downloadSection = (ViewBag.View == null) ? "/Home/Index/#Download_Application" : ((Views)ViewBag.View == Views.Index) ? "#Download_Application" : "/Home/Index/#Download_Application";
-    string contactSection = (ViewBag.View == null) ? "/Home/Index/#contact" : ((Views)ViewBag.View == Views.Index) ? "#contact" : "/Home/Index/#contact";
-    var locales = new langsVM();
-    var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
-    var action = Url.RequestContext.RouteData.Values["action"].ToString();
+    string downloadSection = (ViewBag.View != null && (Views)ViewBag.View == Views.Index) ? "#Download_Application" : Global.Lang+"/Home/Index/#Download_Application";
+    string contactSection = (ViewBag.View != null && (Views)ViewBag.View == Views.Index) ? "#contact" : Global.Lang+"/Home/Index/#contact";
+    //var locales = new langsVM();
+    //var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
+    //var action = Url.RequestContext.RouteData.Values["action"].ToString();
     //var id = Url.RequestContext.RouteData.Values["id"];
     //var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
     var lang = Global.Lang;
@@ -113,37 +113,7 @@
             <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
 
 
-            <div class="country">
-                <div class="countrySelected">
-                    @foreach (var item in locales.Get)
-                    {
-                        if (item.Id == lang)
-                        {
-                            <img src="@item.Icon" alt="@item.Id" />
-                            <span class="siteFlagText">@item.Title</span>
-                            break;
-                        }
-
-
-                    }
-
-                </div>
-                <div class="countryDropdown">
-                    @foreach (var item in locales.Get)
-                    {
-                        if (item.Id != lang)
-                        {
-                            <a href="@string.Format("/{0}/{1}/{2}", item.Id, controller, action)" hreflang="@item.Id" lang="@item.Id">
-                                <img src="@item.Icon" alt="@item.Id" />
-                                <span class="siteFlagText">@item.Title</span>
-                            </a>
-                        }
-                    }
-
-                </div>
-
-
-            </div>
+            @Html.Partial("_SelectLangBtn", Global.Lang)
             <nav id="nav">
 
                 <ul>
@@ -162,8 +132,8 @@
 
                                 @if (User.Identity.IsAuthenticated == false)
                                 {
-                                    <li><a rel="nofollow" href="@Url.Action("Login","Account", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuLogin</a></li>
-                                    <li><a rel="nofollow" href="@Url.Action("Register","Account", new { lang = lang})"><i class="fa fa-user-plus"></i>@Global.MenuRegister</a></li>
+                                    <li><a href="@Url.Action("Login","Account", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuLogin</a></li>
+                                    <li><a href="@Url.Action("Register","Account", new { lang = lang})"><i class="fa fa-user-plus"></i>@Global.MenuRegister</a></li>
 
                                 }
                                 else
@@ -179,7 +149,7 @@
                                     }
                                     else
                                     {
-                                        <li><a rel="nofollow" href="@Url.Action("index", "user", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>
+                                        <li><a rel="nofollow" href="@Url.Action("index", "user")"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>
 
                                     }
                                     <li><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>@Global.MenuLogout</a></li>

@@ -300,6 +300,11 @@
     <Compile Include="Services\ServiceJob.cs" />
     <Compile Include="Services\ServiceRecaptcha.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Content\images\default_avatar.png" />
+    <Content Include="Content\images\Members\Soroosh.jpg" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="images\Members\alireza.jpg" />
+    <Content Include="Views\Shared\_SelectLangBtn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\admin\css\components-rtl.css" />
@@ -1651,6 +1656,11 @@
     <Content Include="fonts\Arcon-Regular.otf" />
     <Content Include="fonts\Arcon-Rounded-Regular.otf" />
     <Content Include="fonts\SDDT-Light-web.woff" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />

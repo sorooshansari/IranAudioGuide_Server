@@ -8,7 +8,7 @@ namespace IranAudioGuide_MainServer
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new StyleBundle("~/ProfileCss").Include(
+            bundles.Add(new StyleBundle("~/ProfileCssen").Include(
                             "~/Content/global/plugins/toastr/toastr.min.css",
                             "~/Content/css/bootstrap.3.3.7.min.css",
                             "~/Content/css/select.min.css",

@@ -1,0 +1,34 @@
+﻿
+@model string
+@{
+    var locales = new langsVM();
+    var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
+    var action = Url.RequestContext.RouteData.Values["action"].ToString();
+}
+<div class="country">
+    <div class="countrySelected">
+        @foreach (var item in locales.Get)
+        {
+            if (item.Id == Model)
+            {
+                <img src="@item.Icon" alt="@item.Id" />
+                <span class="siteFlagText">@item.Title</span>
+                break;
+            }
+        }
+    </div>
+    <div class="countryDropdown">
+        @foreach (var item in locales.Get)
+        {
+            if (item.Id != Model)
+            {
+                <a href="@Url.Action(action,controller, new { lang = Model})">
+                    <img src="@item.Icon" alt="@item.Id" />
+                    <span class="siteFlagText">@item.Title</span>
+                </a>
+            }
+        }
+
+    </div>
+</div>
+

@@ -33,8 +33,8 @@ userApp.service('fileUpload', ['$http', function ($http) {
 
 userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
     function ($window, $scope, userServices, $timeout, notific, $http, $state) {
-        
-     
+
+
         $scope.profile = {
             istest: true,
             packages: [],
@@ -63,14 +63,13 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             $window.location.href = 'http://iranaudioguide.com';
         }
         userServices.getUser().then(function (data) {
-            
+
             $scope.user = data;
             $scope.user.FullName = data.Email;
-            if(data.ImgUrl == null)
-            {
-                data.ImgUrl = "../images/defProfilewsf.png";
+            if (data.imgUrl == null) {
+                data.imgUrl = "../images/default_avatar.png";
             }
-            $scope.user.uImageUrl = data.ImgUrl;
+            $scope.user.uImageUrl = data.imgUrl;
             if (data.FullName !== null)
                 $scope.user.FullName = data.FullName
             $scope.user.isAutintication = true;
@@ -135,7 +134,7 @@ userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeou
         $scope.isChooesZarinpal = isChooesZarinpal;
     }
     $('#myModal').on('hidden.bs.modal', function (e) {
-         $state.go('Payment', {
+        $state.go('Payment', {
             PackageId: $scope.pak.PackageId,
             IsChooesZarinpal: $scope.isChooesZarinpal
         });
@@ -352,5 +351,5 @@ userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout',
     });
 }]);
 userApp.controller('paymentCtrl', ['$scope', function ($scope) {
-     $scope.profile.isCompletedLoading = false;
+    $scope.profile.isCompletedLoading = false;
 }]);
