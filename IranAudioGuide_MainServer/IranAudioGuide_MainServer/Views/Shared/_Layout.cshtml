@@ -52,7 +52,7 @@
         "name": "Iran Audio Guide",
         "legalName" : "Shiraz Durandish Programers Co.",
         "url": "http://iranaudioguide.com",
-        "logo": "http://iranaudioguide.com/IAGSITELOGO.png",
+        "logo": "http://iranaudioguide.com/logo.png",
         "foundingDate": "2016",
         "founders": [
         {
@@ -90,19 +90,34 @@
         "https://www.instagram.com/iran.audio.guide"
         ]}
     </script>
-    <meta property="og:title" content="@Global.IndexTitle" />
-    <meta property="og:site_name" content="@Global.IranAudioGuide" />
+    <meta property="og:title" content="The only guide you will need in Iran" />
+    <meta property="og:site_name" content="Iran Audio Guide" />
     <meta property="og:type" content="Audio Guide" />
-    <meta property="og:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
+    <meta property="og:image" content="http://iranaudioguide.com/logo.png" />
     <meta property="og:url" content="http://iranaudioguide.com" />
-    <meta property="og:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+    <meta property="og:description" content="Iran audio Guide - The only guide you will need in Iran" />
     <meta property="fb:admins" content="iranaudioguide" />
 
-    <meta property="twitter:card" content="@Global.IranAudioGuide" />
-    <meta property="twitter:description" content="@Global.IranAudioGuide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-    <meta property="twitter:url" content="http://iranaudioguide.com" />
-    <meta property="twitter:title" content="@Global.IndexTitle" />
-    <meta property="twitter:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
+    <meta name="twitter:card" content="app">
+    <meta name="twitter:site" content="@("@iranaudioguide")">
+    <meta name="twitter:description" content="Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions.">
+    <meta name="twitter:app:country" content="US">
+    <meta name="twitter:app:name:iphone" content="IRAN Audio Guide">
+    <meta name="twitter:app:id:iphone" content="1214729999">
+    @*<meta name="twitter:app:url:iphone" content="cannonball://poem/5149e249222f9e600a7540ef">*@
+    @*<meta name="twitter:app:name:ipad" content="Cannonball">
+    <meta name="twitter:app:id:ipad" content="929750075">
+    <meta name="twitter:app:url:ipad" content="cannonball://poem/5149e249222f9e600a7540ef">*@
+    <meta name="twitter:app:name:googleplay" content="IRAN Audio Guide">
+    <meta name="twitter:app:id:googleplay" content="com.IranAudioGuide.androidl">
+    @*<meta name="twitter:app:url:googleplay" content="http://cannonball.fabric.io/poem/5149e249222f9e600a7540ef">*@
+
+    @*<meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@("@iranaudioguide")" />
+    <meta name="twitter:title" content="Iran Audio Guide" />
+    <meta name="twitter:description" content="Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+    <meta name="twitter:image" content="http://iranaudioguide.com/logo.png" />*@
+
     <title>@Global.IranAudioGuide</title>
 
     @Styles.Render("~/HomeCss")
@@ -130,7 +145,7 @@
     <div id="page-wrapper">
         <!-- Header -->
         <header id="header" class="alt">
-            <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
+            <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" alt="mallWhiteLogo" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
 
 
             @Html.Partial("_SelectLangBtn", new SelectLangVM()

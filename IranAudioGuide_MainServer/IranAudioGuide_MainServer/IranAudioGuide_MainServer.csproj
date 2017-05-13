@@ -304,6 +304,7 @@
     <Content Include="Content\images\Members\Soroosh.jpg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="images\Members\alireza.jpg" />
+    <Content Include="logo.png" />
     <Content Include="Views\Shared\_SelectLangBtn.cshtml" />
   </ItemGroup>
   <ItemGroup>
