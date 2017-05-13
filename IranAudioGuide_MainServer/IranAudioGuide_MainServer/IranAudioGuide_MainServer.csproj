@@ -227,11 +227,13 @@
       <DependentUpon>Global.fa.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="App_GlobalResources\Global.designer.cs">
       <DependentUpon>Global.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -244,6 +246,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\AppManagerV2Controller.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -251,9 +254,9 @@
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <None Include="doc\storeproced.text" />
-    <Compile Include="Migrations\201705080950325_t1.cs" />
-    <Compile Include="Migrations\201705080950325_t1.Designer.cs">
-      <DependentUpon>201705080950325_t1.cs</DependentUpon>
+    <Compile Include="Migrations\201705101220532_big_update.cs" />
+    <Compile Include="Migrations\201705101220532_big_update.Designer.cs">
+      <DependentUpon>201705101220532_big_update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -290,7 +293,7 @@
     <Compile Include="Services\CustomSqlErrorLog.cs" />
     <Compile Include="Services\ExtensionMethod.cs" />
     <Compile Include="Services\GlobalPath.cs" />
-    <Compile Include="Services\LocalizationAttribute.cs" />
+    <Compile Include="Services\ServiceCulture.cs" />
     <Compile Include="Services\ServiceDownload.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
@@ -717,6 +720,7 @@
     <Content Include="Content\images\ie\grad0-15.svg" />
     <Content Include="Content\images\Members\defaultM.jpg" />
     <Content Include="Content\images\Members\defaultW.jpg" />
+    <Content Include="Content\images\Members\Mona.jpg" />
     <Content Include="Content\images\overlay.png" />
     <Content Include="Content\images\playpause-48-48-1.png" />
     <Content Include="Content\images\prevnext-48-48-1.png" />
@@ -1795,20 +1799,19 @@
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\Global.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+    <EmbeddedResource Include="App_GlobalResources\Global.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_GlobalResources\Global.fa.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_GlobalResources\Global.fa.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705080950325_t1.resx">
-      <DependentUpon>201705080950325_t1.cs</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705101220532_big_update.resx">
+      <DependentUpon>201705101220532_big_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

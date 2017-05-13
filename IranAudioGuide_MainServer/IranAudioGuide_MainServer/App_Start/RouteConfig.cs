@@ -13,15 +13,15 @@ namespace IranAudioGuide_MainServer
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute(
-                "Localization", // Route name
+                "Default", // Route name
                 "{lang}/{controller}/{action}/{id}", // URL with parameters
                 new { lang = UrlParameter.Optional, controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
                 );
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
 
             //routes.MapRoute(
             //    name: "DefaultLocalized",

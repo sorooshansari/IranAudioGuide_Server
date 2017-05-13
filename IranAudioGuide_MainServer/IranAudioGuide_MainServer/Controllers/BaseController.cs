@@ -12,7 +12,7 @@ namespace IranAudioGuide_MainServer.Controllers
     {
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
-             ServiceCulture.SetCulture();    
+            ServiceCulture.SetCulture();
             return base.BeginExecuteCore(callback, state);
         }
         //protected override bool DisableAsyncSupport
