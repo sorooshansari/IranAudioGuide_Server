@@ -799,50 +799,129 @@ END"
 		            END
 	            END"};
         public static readonly List<string> Commands_v2 = new List<string>()
-        {@"
-CREATE PROCEDURE InsertTranclate
-AS
-BEGIN
-DECLARE @langId int = 1
+        {
+            @" CREATE PROCEDURE [dbo].[GetPackages_website]
+                @langId int
+            AS
+            BEGIN
+ 
+            DECLARE @Packages TABLE  
+            (
+	            PackageId  UNIQUEIDENTIFIER ,
+	            PackageName NVARCHAR(MAX),
+	            PackagePrice bigint,
+	            PackagePriceDollar real,
+	            PackageOrder INT,
+	            CityId  int ,
+	            CityName NVARCHAR(MAX),
+	            CityOrder INT
+            )
+            INSERT @Packages
+	            SELECT  Packages.Pac_Id,
+                        Packages.Pac_Name,
+                        Packages.Pac_Price,
+                        Packages.Pac_Price_Dollar,
+                        Packages.Pac_Order,
+                        cities.Cit_Id,
+                        TranslateCities.TrC_Name,
+                        cities.Cit_Order
+	
+	            FROM    Packages 
+			            INNER JOIN Packagecities ON Packages.Pac_Id = Packagecities.Package_Pac_Id 
+			            INNER JOIN cities ON Packagecities.city_Cit_Id = cities.Cit_Id 
+			            INNER JOIN TranslateCities ON cities.Cit_Id = TranslateCities.Cit_Id
+			            WHERE Packages.langId = @langId and TranslateCities.langId =@langId
+						 
 
-UPDATE [dbo].[Packages]  SET  [langId] =@langId
 
-INSERT INTO [dbo].[TranslateCities]
-           ([TrC_Name]
-           ,[TrC_Description]
-           ,[Cit_Id]
-           ,[langId])
+						 
+            DECLARE @Places TABLE 
+            (	
+	            Pla_Id UNIQUEIDENTIFIER,
+	            Name  NVARCHAR(MAX),
+	            Discription  NVARCHAR(MAX),
+	            Address  NVARCHAR(MAX),
+	            ImgUrl  NVARCHAR(MAX),
+	            TumbImgUrl  NVARCHAR(MAX),
+	            AudiosCount INT,
+	            StoriesCount INT,
+	            Cit_Id INT,
+	            OrderItem  INT
+            )
+               INSERT @Places
+		            SELECT 
+			              Places.Pla_Id,
+			              TranslatePlaces.TrP_Name,
+			              TranslatePlaces.TrP_Description,
+			              TranslatePlaces.TrP_Address,
+			              Places.Pla_ImgUrl,
+			              Places.Pla_TumbImgUrl ,
+			              dbo.AudiosCount_v2(Places.Pla_Id,@langId),
+			              dbo.StoriesCount_v2(Places.Pla_Id,@langId),
+			              Pla_city_Cit_Id,
+			              Pla_Order
+
+		            FROM  Places 
+			              INNER JOIN TranslatePlaces ON Places.Pla_Id = TranslatePlaces.Pla_Id 
+		            WHERE TranslatePlaces.langId = @langId 
+		            and Pla_isOnline = 1 
+		            and Pla_Deactive = 0
+		
+						 
+						 
+						 
+            SELECT * fROM @Places
+            SELECT * FROM @Packages
+            END
+            GO
+
+
+
+            ",
+            @"
+            CREATE PROCEDURE InsertTranclate
+            AS
+            BEGIN
+            DECLARE @langId int = 1
+
+            UPDATE [dbo].[Packages]  SET  [langId] =@langId
+
+            INSERT INTO [dbo].[TranslateCities]
+                       ([TrC_Name]
+                       ,[TrC_Description]
+                       ,[Cit_Id]
+                       ,[langId])
    
-SELECT Cit_Name, Cit_Description, Cit_Id, @langId from cities
+            SELECT Cit_Name, Cit_Description, Cit_Id, @langId from cities
 
 
 
-INSERT INTO [dbo].[TranslateImages]
-           ([TrI_Name]
-           ,[TrI_Description]
-           ,[Img_Id]
-           ,[langId])
+            INSERT INTO [dbo].[TranslateImages]
+                       ([TrI_Name]
+                       ,[TrI_Description]
+                       ,[Img_Id]
+                       ,[langId])
    
-SELECT Img_Name, Img_Description, Img_Id, @langId from Images
+            SELECT Img_Name, Img_Description, Img_Id, @langId from Images
 
 
-INSERT INTO [dbo].[TranslatePlaces]
-           ([TrP_Name]
-           ,[TrP_Description]
-           ,[TrP_Address]
-           ,[Pla_Id]
-           ,[langId])
-SELECT  Pla_Name,Pla_Discription,Pla_Address,Pla_Id, @langId from Places
+            INSERT INTO [dbo].[TranslatePlaces]
+                       ([TrP_Name]
+                       ,[TrP_Description]
+                       ,[TrP_Address]
+                       ,[Pla_Id]
+                       ,[langId])
+            SELECT  Pla_Name,Pla_Discription,Pla_Address,Pla_Id, @langId from Places
 
-UPDATE [dbo].[Stories]  SET [langId] = @langId;
+            UPDATE [dbo].[Stories]  SET [langId] = @langId;
 
-UPDATE [dbo].[Audios]  SET [langId] = @langId;
+            UPDATE [dbo].[Audios]  SET [langId] = @langId;
 
-UPDATE [dbo].[Tips]   SET [langId] = @langId;
+            UPDATE [dbo].[Tips]   SET [langId] = @langId;
 
-END
-GO
-",
+            END
+            GO
+            ",
             @"CREATE FUNCTION [dbo].[AllAudios_v2]() 
             RETURNS 
             @Audios TABLE 
