@@ -227,11 +227,13 @@
       <DependentUpon>Global.fa.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="App_GlobalResources\Global.designer.cs">
       <DependentUpon>Global.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -252,9 +254,9 @@
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <None Include="doc\storeproced.text" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    <Compile Include="Migrations\201705101220532_big_update.cs" />
+    <Compile Include="Migrations\201705101220532_big_update.Designer.cs">
+      <DependentUpon>201705101220532_big_update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -292,13 +294,18 @@
     <Compile Include="Services\ExtensionMethod.cs" />
     <Compile Include="Services\GlobalPath.cs" />
     <Compile Include="Services\ServiceCulture.cs" />
-    <Compile Include="Services\ServicePathCulture.cs" />
     <Compile Include="Services\ServiceDownload.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
     <Compile Include="Services\ServiceJob.cs" />
     <Compile Include="Services\ServiceRecaptcha.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Content\images\default_avatar.png" />
+    <Content Include="Content\images\Members\Soroosh.jpg" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="images\Members\alireza.jpg" />
+    <Content Include="logo.png" />
+    <Content Include="Views\Shared\_SelectLangBtn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\admin\css\components-rtl.css" />
@@ -578,12 +585,10 @@
     <Content Include="Content\css\main2.css" />
     <Content Include="Content\css\notify-metro.css" />
     <Content Include="Content\css\PakageTemplate.css" />
-    <Content Include="Content\css\profile_fa.css" />
     <Content Include="Content\css\profile.css" />
     <Content Include="Content\css\responsiveslides.css" />
     <Content Include="Content\css\select.css" />
     <Content Include="Content\css\select.min.css" />
-    <Content Include="Content\css\simple-sidebar_fa.css" />
     <Content Include="Content\css\simple-sidebar.css" />
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\css\sliderArrow.css" />
@@ -710,7 +715,6 @@
     <Content Include="Content\global\plugins\toastr\toastr.css" />
     <Content Include="Content\global\plugins\toastr\toastr.min.css" />
     <Content Include="Content\global\plugins\toastr\toastr.min.js" />
-    <Content Include="Content\images\160x100.png" />
     <Content Include="Content\images\arrow.svg" />
     <Content Include="Content\images\bars.svg" />
     <Content Include="Content\images\close.svg" />
@@ -720,6 +724,9 @@
     <Content Include="Content\images\flag-uk.png" />
     <Content Include="Content\images\Get_it_on_Google_play.svg" />
     <Content Include="Content\images\ie\grad0-15.svg" />
+    <Content Include="Content\images\Members\defaultM.jpg" />
+    <Content Include="Content\images\Members\defaultW.jpg" />
+    <Content Include="Content\images\Members\Mona.jpg" />
     <Content Include="Content\images\overlay.png" />
     <Content Include="Content\images\playpause-48-48-1.png" />
     <Content Include="Content\images\prevnext-48-48-1.png" />
@@ -1650,6 +1657,11 @@
     <Content Include="fonts\Arcon-Regular.otf" />
     <Content Include="fonts\Arcon-Rounded-Regular.otf" />
     <Content Include="fonts\SDDT-Light-web.woff" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />
@@ -1783,7 +1795,6 @@
     <Folder Include="Download\" />
     <Folder Include="fonts\NewFonts\" />
     <Folder Include="images\slidepics\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1802,17 +1813,16 @@
     <EmbeddedResource Include="App_GlobalResources\Global.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_GlobalResources\Global.fa.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705101220532_big_update.resx">
+      <DependentUpon>201705101220532_big_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

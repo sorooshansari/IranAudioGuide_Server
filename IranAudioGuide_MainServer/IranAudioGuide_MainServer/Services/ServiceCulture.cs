@@ -33,21 +33,59 @@ namespace IranAudioGuide_MainServer
         }
         public static void SetCulture()
         {
+            var langHeader = string.Empty;
             var lang = HttpContext.Current.Request.RequestContext.RouteData.Values["lang"];
-
-            if (lang == null || lang == DBNull.Value)
+            if (lang != null)
             {
-                lang = HttpContext.Current.Request.Cookies["IranAudioGuide.Models.CurrentUICulture"].Value;
+                langHeader = lang.ToString();
+            }
+            else
+            {
+                // load the culture info from the cookie
+                var cookie = HttpContext.Current.Request.Cookies.Get("IranAudioGuide.CurrentUICulture");
+                if (cookie != null)
+                {
+                    // set the culture by the cookie content
+                    langHeader = Find(cookie.Value);
+                }
+                else if (HttpContext.Current.Request.UserLanguages.Length > 0)
+                {
+                    // set the culture by the location if not speicified
+                    langHeader = Find(HttpContext.Current.Request.UserLanguages[0]);
+                }
+                else
+                {
+                    langHeader = "en";
+                }
             }
 
-            if (lang == null || lang == DBNull.Value)
-            {
-                lang = HttpContext.Current.Request.UserLanguages[0];
-            }
+            // set the lang value into route data
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(langHeader);
+            HttpContext.Current.Request.RequestContext.RouteData.Values["lang"] = langHeader;
+            // save the location into cookie
+            HttpCookie _cookie = new HttpCookie("IranAudioGuide.CurrentUICulture", Thread.CurrentThread.CurrentUICulture.Name);
+            _cookie.Expires = DateTime.Now.AddYears(1);
+            HttpContext.Current.Response.SetCookie(_cookie);
 
-            string _eLang = Find(lang.ToString());
 
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(_eLang);
+
+
+
+            //var lang = HttpContext.Current.Request.RequestContext.RouteData.Values["lang"];
+
+            //if (lang == null || lang == DBNull.Value)
+            //{
+            //    lang = HttpContext.Current.Request.Cookies["IranAudioGuide.Models.CurrentUICulture"].Value;
+            //}
+
+            //if (lang == null || lang == DBNull.Value)
+            //{
+            //    lang = HttpContext.Current.Request.UserLanguages[0];
+            //}
+
+            //string _eLang = Find(lang.ToString());
+
+            //Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(_eLang);
         }
     }
 

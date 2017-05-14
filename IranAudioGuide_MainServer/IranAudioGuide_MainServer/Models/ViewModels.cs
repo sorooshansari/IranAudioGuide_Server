@@ -19,6 +19,13 @@ namespace IranAudioGuide_MainServer.Models
         notConfirmed = 4,
         unknownError = 5
     }
+    public class SelectLangVM
+    {
+        public string action { get; set; }
+        public string controller { get; set; }
+        public string currentLang { get; set; }
+        public List<LangVM> langs { get; set; }
+    }
     public class vmessageVM
     {
         public string Subject { get; set; }

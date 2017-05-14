@@ -49,7 +49,7 @@ namespace IranAudioGuide_MainServer
             bundles.Add(new StyleBundle("~/HomeCss").Include(
                       "~/Content/css/bootstrap.min.css",
                       "~/Content/css/bootstrap-social.min.css",
-                      // "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
+                      "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
                       "~/Content/css/toggle.min.css",
                       "~/Content/css/styles.min.css",
                       "~/Content/css/HomeStyles.css",

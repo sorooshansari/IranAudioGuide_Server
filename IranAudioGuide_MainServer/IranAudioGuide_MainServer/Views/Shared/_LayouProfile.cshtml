@@ -1,12 +1,12 @@
-﻿@using Resources
+﻿
+@using IranAudioGuide_MainServer.App_GlobalResources
 
 @{
     Layout = null;
-    var locales = new langsVM();
     //var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
     //var action = Url.RequestContext.RouteData.Values["action"].ToString();
     //var id = Url.RequestContext.RouteData.Values["id"];
-    var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
+    //var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
 }
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
@@ -41,7 +41,7 @@
             <div style="background-color: #001644;min-height: 145px;border-top-right-radius: 10px; width:245px; box-shadow: 1px 5px 5px black;">
                 <div class="userEmail">
                     <div>
-                        <img src="{{user.uImageUrl}}">
+                        <img ng-src="{{user.uImageUrl}}">
                         <span>{{user.FullName}}</span>
                     </div>
                 </div>
@@ -79,8 +79,13 @@
                         @Global.PageProfile12
                     </a>
                 </li>
-                <li>
-                    <div class="country">
+                <li id="Langli">
+
+                    @*@Html.Partial("_SelectLangBtn", Global.Lang)*@
+
+
+
+                    @*<div class="country">
                         <div class="countrySelected">
                             @foreach (var item in locales.Get)
                             {
@@ -88,7 +93,7 @@
                                 {
                                     <span>
                                         <img src="@item.Icon" alt="@item.Id" />
-                                        <span class="siteFlagText">@item.Title</span>
+                                        <span class="siteFlagText">@item.Title &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class="fa fa-gear"></i></span>
                                     </span>
                                     break;
                                 }
@@ -106,7 +111,7 @@
                                 }
                                 <a href="@Url.Action("Index", "Home", new { lang = item.Id})" hreflang="@item.Id" lang="@item.Id">
                                     <img src="@item.Icon" alt="@item.Id" />
-                                    <span class="siteFlagText">@item.Title</span>
+                                    <span style="cursor: pointer;" class="siteFlagText">@item.Title</span>
                                 </a>
 
                             }
@@ -114,7 +119,10 @@
                         </div>
 
 
-                    </div>
+                    </div>*@
+
+
+
                 </li>
             </ul>
         </div>

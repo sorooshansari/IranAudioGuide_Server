@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Iran Audio Guide";
+    ViewBag.Title = Global.IranAudioGuide;
 }
-@using Resources
-<a href="#page-wrapper" id="goTopButton" class="scrolly"><i class="fa fa-chevron-up"></i></a>
+@using IranAudioGuide_MainServer.App_GlobalResources;
+<a href="#page-wrapper" id="goTopButton" class="scrolly goTopButton"><i class="fa fa-chevron-up"></i></a>
 <section id="banner">
     <div class="inner">
         <div id="logo">
-            <img src="~/images/IAGSITELOGO.png" />
+            <img src="~/images/IAGSITELOGO.png" alt="SITELOGO"/>
         </div>
         <h2>@Global.IranAudioGuide</h2>
         <p></p>
@@ -193,11 +193,10 @@
                 </p>
 
                 <div class="row">
-                    <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
-                        <img class="img-thumbnail member-th" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
+                    <div class="col-xs-2 InfoImage">
+                        <img class="img-thumbnail member-th" src="~/Content/images/Members/defaultW.jpg" alt="@Global.Mona" style="width:100%">
                     </div>
-
-                    <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
+                    <div class="col-xs-10 member-det">
                         <div class="col-xs-6 member-social">
                             <ul class="icons">
                                 @*<li>
@@ -208,16 +207,16 @@
                                 </li>
                             </ul>
                         </div>
-                        <h5 class="mt-0">@Global.Parameter25 </h5>
+                        <h5 class="mt-0">@Global.Mona </h5>
                         @Global.Parameter26
                     </div>
                 </div>
                 <br />
                 <div class="row">
-                    <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
-                        <img class="img-thumbnail member-th" src="~/images/Members/Soroosh.JPG" alt="@Global.Soroosh" style="width:100%">
+                    <div class="col-xs-2 InfoImage">
+                        <img class="img-thumbnail member-th" src="~/Content/images/Members/defaultM.jpg" alt="@Global.Soroosh" style="width:100%">
                     </div>
-                    <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
+                    <div class="col-xs-10 member-det">
                         <div class="col-xs-6 member-social">
                             <ul class="icons">
                                 @*<li>
@@ -228,36 +227,35 @@
                                 </li>
                             </ul>
                         </div>
-                        <h5 class="mt-0">@Global.Parameter27</h5>
+                        <h5 class="mt-0">@Global.Soroosh</h5>
                         @Global.Parameter28
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
-                        <img class="img-thumbnail member-th" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
+                    <div class="col-xs-2 InfoImage">
+                        <img class="img-thumbnail member-th" src="~/Content/images/Members/defaultM.jpg" alt="@Global.danial" style="width:100%">
                     </div>
-
-                    <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
+                    <div class="col-xs-10 member-det">
                         <div class="col-xs-6 member-social">
                             <ul class="icons">
                                 @*<li>
-                                        <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
-                                    </li>*@
+                            <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                        </li>*@
                                 <li>
-                                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
+                                    <a href="mailto:soroosh@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
                                 </li>
                             </ul>
                         </div>
-                        <h5 class="mt-0">@Global.Parameter25 </h5>
-                        @Global.Parameter26
+                        <h5 class="mt-0">@Global.danial</h5>
+                        @Global.danialOc
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-2 col-sm-3 col-xs-4 InfoImage">
-                        <img class="img-thumbnail member-th" src="~/images/Members/Mona.jpg" alt="@Global.Mona" style="width:100%">
+                    <div class="col-xs-2 InfoImage">
+                        <img class="img-thumbnail member-th" src="~/Content/images/Members/defaultW.jpg" alt="@Global.purmand" style="width:100%">
                     </div>
 
-                    <div class="col-lg-10 col-sm-9 col-xs-8 member-det">
+                    <div class="col-xs-10 member-det">
                         <div class="col-xs-6 member-social">
                             <ul class="icons">
                                 @*<li>
@@ -268,8 +266,28 @@
                                 </li>
                             </ul>
                         </div>
-                        <h5 class="mt-0">@Global.Parameter25 </h5>
-                        @Global.Parameter26
+                        <h5 class="mt-0">@Global.purmand </h5>
+                        @Global.purmandOc
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 InfoImage">
+                        <img class="img-thumbnail member-th" src="~/Content/images/Members/defaultM.jpg" alt="@Global.aliReza" style="width:100%">
+                    </div>
+
+                    <div class="col-xs-10 member-det">
+                        <div class="col-xs-6 member-social">
+                            <ul class="icons">
+                                @*<li>
+                            <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram"></a>
+                        </li>*@
+                                <li>
+                                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <h5 class="mt-0">@Global.aliReza </h5>
+                        @Global.aliRezaOc
                     </div>
                 </div>
                 @*<dl class="dl-horizontal">
@@ -342,7 +360,7 @@
         </form>
         <!--<Contact overlay> -->
         <div ng-show="overlay" class="contactoverlay">
-            <img ng-show="!sent" src="~/Content/images/bars.svg" />
+            <img ng-show="!sent" src="~/Content/images/bars.svg" alt="Sending" />
             <p ng-show="sent" ng-bind="sentMessage"></p>
         </div>
         <!--</Contact overlay> -->
@@ -387,15 +405,15 @@
 </footer>
 @section scripts{
     <script>
-        window.onscroll = function () { scrollFunction() };
+        //window.onscroll = function () { scrollFunction() };
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                document.getElementById("goTopButton").style.display = "block";
-            } else {
-                document.getElementById("goTopButton").style.display = "none";
-            }
-        }
+        //function scrollFunction() {
+        //    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        //        document.getElementById("goTopButton").style.display = "block";
+        //    } else {
+        //        document.getElementById("goTopButton").style.display = "none";
+        //    }
+        //}
 
 
 

@@ -10,8 +10,8 @@
 
 namespace IranAudioGuide_MainServer.App_GlobalResources {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -61,6 +61,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alireza Motaghi.
+        /// </summary>
+        public static string aliReza {
+            get {
+                return ResourceManager.GetString("aliReza", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio Editor.
+        /// </summary>
+        public static string aliRezaOc {
+            get {
+                return ResourceManager.GetString("aliRezaOc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download it on App Store.
         /// </summary>
         public static string alt {
@@ -106,7 +124,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to buy.
+        ///   Looks up a localized string similar to Get.
         /// </summary>
         public static string btnBuy {
             get {
@@ -192,6 +210,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string copyright23 {
             get {
                 return ResourceManager.GetString("copyright23", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danial Babadi Yousefi.
+        /// </summary>
+        public static string danial {
+            get {
+                return ResourceManager.GetString("danial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Designer.
+        /// </summary>
+        public static string danialOc {
+            get {
+                return ResourceManager.GetString("danialOc", resourceCulture);
             }
         }
         
@@ -1133,7 +1169,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to Cities Included.
         /// </summary>
         public static string PaymentPage21 {
             get {
@@ -1255,6 +1291,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string PlaceholderSubject {
             get {
                 return ResourceManager.GetString("PlaceholderSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taiebe Pourmand.
+        /// </summary>
+        public static string purmand {
+            get {
+                return ResourceManager.GetString("purmand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Developer.
+        /// </summary>
+        public static string purmandOc {
+            get {
+                return ResourceManager.GetString("purmandOc", resourceCulture);
             }
         }
         

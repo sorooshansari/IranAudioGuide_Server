@@ -1,5 +1,5 @@
 ﻿@using IranAudioGuide_MainServer.Models
-@using Resources
+@using IranAudioGuide_MainServer.App_GlobalResources
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
 <head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
@@ -54,31 +54,30 @@
 
         <footer id="footer">
 
-            <ul class="icons">
+           
+            <ul id="copyright" class="copyright">
+                <li><a href="#" style="font-weight:bold;">@Html.Raw(Global.copyright2)</a><font> - </font><a href="#" style="font-weight:bold;">@Html.Raw(Global.copyright21) </a></li>
+            </ul>
+            <ul class="icons" style="display: inline-flex;">
                 <li>
-                    <a target="_blank" href="https://www.twitter.com/iranaudioguide" class="icon fa-twitter tooltips"><span>Twitter</span></a>
+                    <a target="_blank" href="https://www.twitter.com/iranaudioguide" class="icon fa-twitter tooltips">@*<span>Twitter</span>*@</a>
                 </li>
                 <li>
-                    <a target="_blank" href="https://www.facebook.com/iranaudioguide" class="icon fa-facebook tooltips"><span>Facebook</span></a>
+                    <a target="_blank" href="https://www.facebook.com/iranaudioguide" class="icon fa-facebook tooltips">@*<span>Facebook</span>*@</a>
                 </li>
                 <li>
-                    <a target="_blank" href="https://www.instagram.com/iran.audio.guide/" class="icon fa-instagram tooltips"><span>Instagram</span></a>
+                    <a target="_blank" href="https://www.instagram.com/iran.audio.guide/" class="icon fa-instagram tooltips">@*<span>Instagram</span>*@</a>
                 </li>
                 <li>
-                    <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram tooltips"><span>Telegram</span></a>
+                    <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram tooltips">@*<span>Telegram</span>*@</a>
                 </li>
                 <li>
-                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips"><span>Email</span></a>
+                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips">@*<span>Email</span>*@</a>
                 </li>
             </ul>
-            <ul id="copyright" class="copyright">
-                <li><a href="#">@Html.Raw(Global.copyright2)</a></li>
-                <li><a href="#">@Html.Raw(Global.copyright21) </a></li>
-            </ul>
-
-            <ul id="copyright" class="copyright">
+            <ul id="copyright" class="copyright _2ndCopy">
                 <li>©@DateTime.Now.Year - @Html.Raw(Global.copyright22)</li>
-                <li>@Html.Raw(Global.copyright23)<a rel="author" href="https://plus.google.com/112268338441138496929">@Global.Soroosh</a></li>
+                <li>@Html.Raw(Global.copyright23)<a style="font-weight:bold;" rel="author" href="https://plus.google.com/112268338441138496929"> @Global.Soroosh</a></li>
             </ul>
 
            

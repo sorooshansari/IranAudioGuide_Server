@@ -1,15 +1,18 @@
 ﻿@using IranAudioGuide_MainServer.Models
-@using Resources;
+@using IranAudioGuide_MainServer.App_GlobalResources;
 
 @{
-    string downloadSection = (ViewBag.View == null) ? "/Home/Index/#Download_Application" : ((Views)ViewBag.View == Views.Index) ? "#Download_Application" : "/Home/Index/#Download_Application";
-    string contactSection = (ViewBag.View == null) ? "/Home/Index/#contact" : ((Views)ViewBag.View == Views.Index) ? "#contact" : "/Home/Index/#contact";
+    string lang = Global.Lang;
     var locales = new langsVM();
     var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
     var action = Url.RequestContext.RouteData.Values["action"].ToString();
+    //string downloadSection = (ViewBag.View != null && (Views)ViewBag.View == Views.Index) ? "#Download_Application" : Url.Action("Index", "Home", new { lang = lang })+"#Download_Application";
+    string contactSection = (ViewBag.View != null && (Views)ViewBag.View == Views.Index) ? "#contact" : Url.Action("Index", "Home", new { lang = lang }) + "#contact";
+    //var locales = new langsVM();
+    //var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
+    //var action = Url.RequestContext.RouteData.Values["action"].ToString();
     //var id = Url.RequestContext.RouteData.Values["id"];
     //var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
-    var lang = Global.Lang;
 }
 
 <!DOCTYPE html>
@@ -19,12 +22,29 @@
     <meta name="title" content="@Global.IndexTitle" />
     <meta name="Description"
           content="@Global.IranAudioGuide - @Global.SEOdesc" />
-    <meta name="keywords" content="Iran Audio Guide,Iran Traveling,Travel,Turism,audio guide,tour,guide,application,android,ios,iphone,ipad,
-          mp3 download,download mp3,audible,audio,audio books,mp3 free download,short stories,free download mp3,download apps,stories for kids,free audio books,youtube music downloader,audiobook,short stories for kids,audio speakers,kids story,children stories,audio books free,english story,story book,storiesonline,audio songs download,audio downloader,audible app,stories for children,best audiobooks,books for free,download converter,mp3 downloader online,english short stories,english story for kids,english story book,kids story books,short story english,email domain,free books for kids,free audio books online,stories to read,story books in english,short stories for children,nline stories,download audio books,audiobooks for free,audio books free download,audio books online,audio stories,small stories for kids,mp3 audio,kids short stories,apps download free,free audiobook,download free apps,download audio,download video mp3,audiobook free,talking books,children short stories,story for kids in english,free audio books apphildren story books,free audible books,audio books for kids,audio books download,story english,free audio,music audio,audio app,translate farsi to english,free youtube music downloader,kindle audio books,audio software,audiobook download,free stories,audiobook app,audio books app,reading stories,audible free books,online books for kids,video to mp3 downloader,free audio books download,mp3 sound,good audio books,mp3 player downloader free,dictionary farsi to english,download free audio books,short stories for kids in english,,audio guide,audio book reader,audible books free,mp3 software,farsi to english translation,free mp3 download online,listening books,audio books free online listen,,kids audio books,audioguide,book story,audio hifi,mp3 player software,story kids,best free audio books,short stories in english for students,video mp3 download,kids story in english,audio books online free,audiobook english,mp3 converter download free,free story books,free audio books mp3,star wars audio books,farsi to english dictionary,audio recorders,english audio books,children's stories online,cheap audio books,online stories for kids,children's audio books,free audio books for kids,converter mp3 free download,free online audiobooks,online audio books,free mp3 converter download,books on tape free,story reading,free download audio songs,stories for toddlers,stories for childrens in english,read stories online,kids story online,free audiobook download,free audiobook app,sound book,mp3 download free online,mp3 free download online,mp3 audio download,audio textbooks,english short stories for kids,online short stories,audio stories for kids,stories for kids online,short stories for kindergarten,book audio,free audio download,shop audible,free books on tape,download audio books free,audio books free online listen without downloading,free audio books streaming,free download converter,audio books free online,music converter download,audio books free download mp3,stories to read online,free stories for kids,short stories to read,buy audio books,short story for kid,free download audio books,listen to books,translate farsi,audio books for children,streaming audiobooks,convert to mp3 free download,talking books free,free audio files,audiobook free download,download audiobook,reading story books,good stories for kids,free english books,bedtime stories audio,english audiobooks,free kids stories,free children's stories,free audible,apps download apps download,download music to mp3,child story in english,audiobooks in english,download music free online mp3,english books free download,motivational audio books,story of kids,simple stories for kids,stories read online,mp3 books,audible free,music converter free download,books on audio,download audio converter,popular audiobooks,reading stories for kids,listen to books online,free books on audible,free talking books,free stories online,the best audio books,books on tape app,download audible books,listening english stories,free bedtime stories for kids,story book english,free kids audio books,english short stories for beginners,audio bedtime stories,classic audio books,free books for children,audiobook download free,english audio stories,audio books mp3,short stories for childrens in english,library audio books,free children's audio books,a short story for kids,english story audio,audiobook library,audiobook streaming,mp3 audiobooks,audio novels,listen to books for free,free online stories,listen to audiobooks,english short stories for students,listen to books online free,books on audio free,where to buy audio books,converter to mp3 free download,audio books library,download audiobooks for free,listen to stories,audio player software,download story books,free audio tracks,listen to audiobooks free,audio books kids,audiobook mp3,audio books with text,story audio,free audio books android,free short stories for kids,audio short stories,english talking book,listening stories,listen to free audio books,
-          significant,soon,love,millenniums,poets,email,story,log,images,download,team,achievements,attraction,soroosh,step,tails,address,thorough,allows,accurate,open,content,send,see,history,scientist,great,attractions,details,late,art,liberating,scandals,persian,victories,enter,feel,need,people,advising,interested,narrate,explain,techniques,ansari,please,close,walk,learn,release,kings,tracks,visiting,visit,tell,myth,iran,facebook,stories,convenient,methods,developer,choose,just,menu,crafts,gossips,instagram,pace,discovery,hear,culture,listen,mehr,twitter,wars,application,profile,worries,coming,persia,accept,look,correct,guide,providing,iranian,webmoney,audio,telegram,historic,famous,notify,contact,figures,available,tips,architecture,unique" />
-    <meta name="author" content="@Global.Parameter27, @Global.Parameter25">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    @*mp3 download,download mp3,audible,audio,audio books,mp3 free download,short stories,free download mp3,download apps,stories for kids,free audio books,youtube music downloader,audiobook,short stories for kids,audio speakers,kids story,children stories,audio books free,english story,story book,storiesonline,audio songs download,audio downloader,audible app,stories for children,best audiobooks,books for free,download converter,mp3 downloader online,english short stories,english story for kids,english story book,kids story books,short story english,email domain,free books for kids,free audio books online,stories to read,story books in english,short stories for children,nline stories,download audio books,audiobooks for free,audio books
+        free download,audio books online,audio stories,small stories for kids,mp3 audio,kids short stories,apps download free,free audiobook,download free apps,download audio,download video mp3,audiobook free,talking books,children short stories,story for kids in english,free audio books apphildren story books,free audible books,audio books for kids,audio books download,story english,free audio,music audio,audio app,translate farsi to english,free youtube music downloader,kindle audio books,audio software,audiobook download,free stories,audiobook app,audio books app,reading stories,audible free books,online books for kids,video to mp3 downloader,free audio books download,mp3 sound,good audio books,mp3 player downloader free,dictionary farsi to english,
+        download free audio books,short stories for kids in english,,audio guide,audio book reader,audible books free,mp3 software,farsi to english translation,free mp3 download online,listening books,audio books free online listen,,kids audio books,audioguide,book story,audio hifi,mp3 player software,story kids,best free audio books,short stories in english for students,video mp3 download,kids story in english,audio books online free,audiobook english,mp3 converter download free,free story books,free audio books mp3,star wars audio books,farsi to english dictionary,audio recorders,english audio books,children's stories online,cheap audio books,online stories for kids,children's audio books,free audio books for kids,converter mp3 free download,
+        free online audiobooks,online audio books,free mp3 converter download,books on tape free,story reading,free download audio songs,stories for toddlers,stories for childrens in english,read stories online,kids story online,free audiobook download,free audiobook app,sound book,mp3 download free online,mp3 free download online,mp3 audio download,audio textbooks,english short stories for kids,online short stories,audio stories for kids,stories for kids online,short stories for kindergarten,book audio,free audio download,shop audible,free books on tape,download audio books free,audio books free online listen without downloading,free audio books streaming,free download converter,audio books free online,music converter download,audio books free download mp3,
+        stories to read online,free stories for kids,short stories to read,buy audio books,short story for kid,free download audio books,listen to books,translate farsi,audio books for children,streaming audiobooks,convert to mp3 free download,talking books free,free audio files,audiobook free download,download audiobook,reading story books,good stories for kids,free english books,bedtime stories audio,english audiobooks,free kids stories,free children's stories,free audible,apps download apps download,download music to mp3,child story in english,audiobooks in english,download music free online mp3,english books free download,motivational audio books,story of kids,simple stories for kids,stories read online,mp3 books,audible free,music converter free download,
+        books on audio,download audio converter,popular audiobooks,reading stories for kids,listen to books online,free books on audible,free talking books,free stories online,the best audio books,books on tape app,download audible books,listening english stories,free bedtime stories for kids,story book english,free kids audio books,english short stories for beginners,audio bedtime stories,classic audio books,free books for children,audiobook download free,english audio stories,audio books mp3,short stories for childrens in english,library audio books,free children's audio books,a short story for kids,english story audio,audiobook library,audiobook streaming,mp3 audiobooks,audio novels,listen to books for free,free online stories,listen to audiobooks,
+        english short stories for students,listen to books online free,books on audio free,where to buy audio books,converter to mp3 free download,audio books library,download audiobooks for free,listen to stories,audio player software,download story books,free audio tracks,listen to audiobooks free,audio books kids,audiobook mp3,audio books with text,story audio,free audio books android,free short stories for kids,audio short stories,english talking book,listening stories,listen to free audio books,significant,soon,love,millenniums,poets,email,story,log,images,download,team,achievements,attraction,soroosh,step,tails,address,thorough,allows,accurate,open,content,send,see,history,scientist,great,attractions,details,late,art,liberating,scandals,persian,
+        victories,enter,feel,need,people,advising,interested,narrate,explain,techniques,ansari,please,close,walk,learn,release,kings,tracks,visiting,visit,tell,myth,iran,facebook,stories,convenient,methods,developer,choose,just,menu,crafts,gossips,instagram,pace,discovery,hear,culture,listen,mehr,twitter,wars,application,profile,worries,coming,persia,accept,look,correct,guide,providing,iranian,webmoney,audio,telegram,historic,famous,notify,contact,figures,available,tips,architecture,unique"*@
+
+    <meta name="keywords" content="Iran Audio Guide,Iran Traveling,Travel,Turism,audio guide,tour,guide,application,android,ios,iphone,ipad" />
+    <meta name="author" content="@Global.Parameter27, @Global.Parameter25">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href="@("http://iranaudioguide.com"+Url.Action(action, controller, new { lang = lang }))">
+    @foreach (var item in locales.Get)
+    {
+        <link rel="alternate"
+              href="@("http://iranaudioguide.com"+Url.Action(action, controller, new { lang = item.Id }))"
+              hreflang="@item.Id" />
+    }
+    <link rel="alternate" href="@("http://iranaudioguide.com"+Url.Action(action, controller, new { lang = "en" }))"
+          hreflang="x-default" />
     <script type="application/ld+json">
         {
         "@@context": "http://schema.org",
@@ -32,20 +52,20 @@
         "name": "Iran Audio Guide",
         "legalName" : "Shiraz Durandish Programers Co.",
         "url": "http://iranaudioguide.com",
-        "logo": "http://iranaudioguide.com/IAGSITELOGO.png",
+        "logo": "http://iranaudioguide.com/logo.png",
         "foundingDate": "2016",
         "founders": [
         {
         "@@type": "Person",
         "name": "Soroosh Ansari Mehr",
-        "image": "http://iranaudioguide.com/images/Members/Soroosh.jpg",
+        "image": "http://iranaudioguide.com/content/images/Members/Soroosh.jpg",
         "jobTitle": "CTO",
         "email": "mailto:soroosh@iranaudioguide.com"
         },
         {
         "@@type": "Person",
         "name": "Mona Akhlaghi",
-        "image": "http://iranaudioguide.com/images/Members/Mona.jpg",
+        "image": "http://iranaudioguide.com/content/images/Members/Mona.jpg",
         "jobTitle": "CEO",
         "email": "mailto:mona@iranaudioguide.com"
         } ],
@@ -64,35 +84,50 @@
         "availableLanguage": ["Farsi","English"]
         }],
         "sameAs": [
+        "https://www.telegram.me/iranaudioguide",
         "https://www.twitter.com/iranaudioguide",
         "https://www.facebook.com/iranaudioguide",
-        "https://www.instagram.com/iran.audio.guide",
-        "https://www.telegram.me/iranaudioguide"
+        "https://www.instagram.com/iran.audio.guide"
         ]}
     </script>
-    <meta property="og:title" content="@Global.IndexTitle" />
-    <meta property="og:site_name" content="@Global.IranAudioGuide" />
+    <meta property="og:title" content="The only guide you will need in Iran" />
+    <meta property="og:site_name" content="Iran Audio Guide" />
     <meta property="og:type" content="Audio Guide" />
-    <meta property="og:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
+    <meta property="og:image" content="http://iranaudioguide.com/logo.png" />
     <meta property="og:url" content="http://iranaudioguide.com" />
-    <meta property="og:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+    <meta property="og:description" content="Iran audio Guide - The only guide you will need in Iran" />
     <meta property="fb:admins" content="iranaudioguide" />
 
-    <meta property="twitter:card" content="@Global.IranAudioGuide" />
-    <meta property="twitter:description" content="@Global.IranAudioGuide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-    <meta property="twitter:url" content="http://iranaudioguide.com" />
-    <meta property="twitter:title" content="@Global.IndexTitle" />
-    <meta property="twitter:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
+    <meta name="twitter:card" content="app">
+    <meta name="twitter:site" content="@("@iranaudioguide")">
+    <meta name="twitter:description" content="Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions.">
+    <meta name="twitter:app:country" content="US">
+    <meta name="twitter:app:name:iphone" content="IRAN Audio Guide">
+    <meta name="twitter:app:id:iphone" content="1214729999">
+    @*<meta name="twitter:app:url:iphone" content="cannonball://poem/5149e249222f9e600a7540ef">*@
+    @*<meta name="twitter:app:name:ipad" content="Cannonball">
+    <meta name="twitter:app:id:ipad" content="929750075">
+    <meta name="twitter:app:url:ipad" content="cannonball://poem/5149e249222f9e600a7540ef">*@
+    <meta name="twitter:app:name:googleplay" content="IRAN Audio Guide">
+    <meta name="twitter:app:id:googleplay" content="com.IranAudioGuide.androidl">
+    @*<meta name="twitter:app:url:googleplay" content="http://cannonball.fabric.io/poem/5149e249222f9e600a7540ef">*@
+
+    @*<meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@("@iranaudioguide")" />
+    <meta name="twitter:title" content="Iran Audio Guide" />
+    <meta name="twitter:description" content="Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+    <meta name="twitter:image" content="http://iranaudioguide.com/logo.png" />*@
+
     <title>@Global.IranAudioGuide</title>
 
     @Styles.Render("~/HomeCss")
     @RenderSection("Styles", required: false)
 
-    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <!--[if lte IE 8]><script src="~/Content/Scripts/ie/html5shiv.js"></script><![endif]-->
     <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/css/ie9.css" /><![endif]-->
-    <!-- Start Visual Website Optimizer Asynchronous Code -->
-    @*<script type='text/javascript'>
+    @*<!-- Start Visual Website Optimizer Asynchronous Code -->
+    <script type='text/javascript'>
             var _vwo_code = (function () {
                 var account_id = 291614,
                 settings_tolerance = 2000,
@@ -101,8 +136,8 @@
                 /* DO NOT EDIT BELOW THIS LINE */
                 f = false, d = document; return { use_existing_jquery: function () { return use_existing_jquery; }, library_tolerance: function () { return library_tolerance; }, finish: function () { if (!f) { f = true; var a = d.getElementById('_vis_opt_path_hides'); if (a) a.parentNode.removeChild(a); } }, finished: function () { return f; }, load: function (a) { var b = d.createElement('script'); b.src = a; b.type = 'text/javascript'; b.innerText; b.onerror = function () { _vwo_code.finish(); }; d.getElementsByTagName('head')[0].appendChild(b); }, init: function () { settings_timer = setTimeout('_vwo_code.finish()', settings_tolerance); var a = d.createElement('style'), b = 'body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}', h = d.getElementsByTagName('head')[0]; a.setAttribute('id', '_vis_opt_path_hides'); a.setAttribute('type', 'text/css'); if (a.styleSheet) a.styleSheet.cssText = b; else a.appendChild(d.createTextNode(b)); h.appendChild(a); this.load('//dev.visualwebsiteoptimizer.com/j.php?a=' + account_id + '&u=' + encodeURIComponent(d.URL) + '&r=' + Math.random()); return settings_timer; } };
             }()); _vwo_settings_timer = _vwo_code.init();
-        </script>*@
-    <!-- End Visual Website Optimizer Asynchronous Code -->
+        </script>
+    <!-- End Visual Website Optimizer Asynchronous Code -->*@
     @*<link href="~/Content/test.css" rel="stylesheet" />*@
 </head>
 <body class="landing _@Global.Lang" ng-app="HomePage" ng-controller="HomeController">
@@ -110,40 +145,16 @@
     <div id="page-wrapper">
         <!-- Header -->
         <header id="header" class="alt">
-            <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
+            <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" alt="mallWhiteLogo" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
 
 
-            <div class="country">
-                <div class="countrySelected">
-                    @foreach (var item in locales.Get)
-                    {
-                        if (item.Id == lang)
-                        {
-                            <img src="@item.Icon" alt="@item.Id" />
-                            <span class="siteFlagText">@item.Title</span>
-                            break;
-                        }
-
-
-                    }
-
-                </div>
-                <div class="countryDropdown">
-                    @foreach (var item in locales.Get)
-                    {
-                        if (item.Id != lang)
-                        {
-                            <a href="@string.Format("/{0}/{1}/{2}", item.Id, controller, action)" hreflang="@item.Id" lang="@item.Id">
-                                <img src="@item.Icon" alt="@item.Id" />
-                                <span class="siteFlagText">@item.Title</span>
-                            </a>
-                        }
-                    }
-
-                </div>
-
-
-            </div>
+            @Html.Partial("_SelectLangBtn", new SelectLangVM()
+       {
+           action = action,
+           controller = controller,
+           currentLang = lang,
+           langs = locales.Get
+       })
             <nav id="nav">
 
                 <ul>
@@ -151,19 +162,13 @@
                         <a href="#menu" class="menuToggle"><span>@Global.MenuName</span></a>
                         <section id="menu">
                             <ul>
-                                @*@foreach (var l in locales)
-                                    {
-                                        <li>@Html.ActionLink(l.Value, action, controller, new { lang = l.Key, id = id }, null)</li>
-                                    }*@
                                 <li><a id="HomeLink" href="@Url.Action("Index", "Home", new { lang = lang})"><i class="fa fa-home"></i>@Global.IranAudioGuide</a></li>
-                                @*<li><a class="scrolly" href="@downloadSection"><i class="fa fa-download"></i>Download</a></li>*@
-                                @*<li><a rel="nofollow" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" style="font-size:16px;"></i>Register</a></li>*@
                                 <li><a class="scrolly" rel="nofollow" href="@contactSection"><i class="fa fa-at"></i>@Global.MenuContactUs</a></li>
 
                                 @if (User.Identity.IsAuthenticated == false)
                                 {
-                                    <li><a rel="nofollow" href="@Url.Action("Login","Account", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuLogin</a></li>
-                                    <li><a rel="nofollow" href="@Url.Action("Register","Account", new { lang = lang})"><i class="fa fa-user-plus"></i>@Global.MenuRegister</a></li>
+                                    <li><a href="@Url.Action("Login","Account", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuLogin</a></li>
+                                    <li><a href="@Url.Action("Register","Account", new { lang = lang})"><i class="fa fa-user-plus"></i>@Global.MenuRegister</a></li>
 
                                 }
                                 else
@@ -179,7 +184,7 @@
                                     }
                                     else
                                     {
-                                        <li><a rel="nofollow" href="@Url.Action("index", "user", new { lang = lang})"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>
+                                        <li><a rel="nofollow" href="@Url.Action("index", "user")"><i class="fa fa-sign-in"></i>@Global.MenuProfile</a></li>
 
                                     }
                                     <li><a href="@Url.Action("LogOff", "User")"><i class="fa fa-sign-in"></i>@Global.MenuLogout</a></li>
@@ -196,19 +201,21 @@
 
     </div>
     <link href="~/Content/css/loading.css" rel="stylesheet" />
-
-    @*<script src='https://www.google.com/recaptcha/api.js'></script>*@
-
     @Scripts.Render("~/bundles/minJs")
     @RenderSection("scripts", required: false)
     <script>
         window.onscroll = function () { scrollFunction() };
 
+
         function scrollFunction() {
             if ($(window).width() < 800) {
-                console.log(document.body.scrollTop, document.documentElement.scrollTop);
+                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                    document.getElementById("goTopButton").classList.add('goTopButtonShow');
+                } else {
+                    document.getElementById("goTopButton").classList.remove('goTopButtonShow');
+                }
 
-                if (document.body.scrollTop >70 || document.documentElement.scrollTop > 70) {
+                if (document.body.scrollTop > 70 || document.documentElement.scrollTop > 70) {
                     if ($('header#header').hasClass('alt')) {
                         $('header#header').removeClass('alt');
                     }
@@ -216,6 +223,13 @@
                     if (!$('header#header').hasClass('alt')) {
                         $('header#header').addClass('alt');
                     }
+                }
+            }
+            else {
+                if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                    document.getElementById("goTopButton").classList.add('goTopButtonShow');
+                } else {
+                    document.getElementById("goTopButton").classList.remove('goTopButtonShow');
                 }
             }
         }
