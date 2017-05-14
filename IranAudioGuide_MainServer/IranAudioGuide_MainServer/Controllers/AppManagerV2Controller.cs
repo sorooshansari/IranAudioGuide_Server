@@ -66,11 +66,12 @@ namespace IranAudioGuide_MainServer.Controllers
 
         public BuyWithBarcodeStatus BuyWithBarcode(Guid packId, string email, string uuid, string barcode)
         {
-            int id_bar;
-            double price_pri;
-            string sellername;
+            //int id_bar;
+            //double price_pri;
+            //string sellername;
+           
             try
-            {
+            {              
                 var user = acTools.getUser(email);
                 var status =
                     (user == null) ? BuyWithBarcodeStatus.notUser :
@@ -81,14 +82,20 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     return status;
                 }
+                ConvertBarcodetoStringVM cbs = new ConvertBarcodetoStringVM();
+                using (BarcodeServices brs = new BarcodeServices() )
 
-                try
                 {
-                    ///List-->b.Bar_Id#price.Pri_Value#SellerName
-                    var list = barcode.Split('%').ToList();
-                    id_bar = int.Parse(list[0]);
-                    price_pri = int.Parse(list[1]);
-                    sellername = list[2];
+                    try
+                {
+                        ///List-->b.Bar_Id#price.Pri_Value#SellerName
+                        //var list = barcode.Split('%').ToList();
+                        //id_bar = int.Parse(list[0]);
+                        //price_pri = int.Parse(list[1]);
+                        //sellername = list[2];
+                        
+                        cbs=brs.ConvertBarcodetoString(barcode); 
+                                        
                 }
                 catch (Exception)
                 {
@@ -96,20 +103,20 @@ namespace IranAudioGuide_MainServer.Controllers
                     Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                     return BuyWithBarcodeStatus.invalidBarcode;
                 }
-
                 long packPrice;
 
                 BarcodeVM bav = new BarcodeVM();
-                using (BarcodeServices brs = new BarcodeServices())
-                {
+
 
                     packPrice = brs.Getpackage(packId);
-                    bav = brs.GetBarcodes(id_bar);
-                    if (price_pri != bav.price)
+                    
+                    
+                    bav = brs.GetBarcodes(cbs.CBS_id_bar);
+                    if (cbs.CBS_price_pri != bav.price)
                     {
                         return BuyWithBarcodeStatus.invalidprice;
                     }
-                    if (sellername != bav.sellerName)
+                    if (cbs.CBS_sellername != bav.sellerName)
                     {
                         return BuyWithBarcodeStatus.invalidSellerName;
                     }
@@ -130,11 +137,11 @@ namespace IranAudioGuide_MainServer.Controllers
                         return BuyWithBarcodeStatus.unknownError;
                     }
                     //var item = db.Barcodes.FirstOrDefault(s => s.Bar_Id == id_bar);
-                    var bars = db.Barcodes.Where(s => s.Bar_Id == id_bar).FirstOrDefault();
+                    var bars = db.Barcodes.Where(s => s.Bar_Id == cbs.CBS_id_bar).FirstOrDefault();
                     bars.Bar_IsUsed = true;
 
 
-                    var t = new Procurement { Bar_Id = id_bar, Pro_PaymentFinished = true, Id = user.Id, Pac_Id = packId };
+                    var t = new Procurement { Bar_Id = cbs.CBS_id_bar, Pro_PaymentFinished = true, Id = user.Id, Pac_Id = packId };
                     db.Procurements.Add(t);
                     db.SaveChanges();
 

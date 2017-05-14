@@ -155,15 +155,31 @@ namespace IranAudioGuide_MainServer.Services
         /// <returns>is used,price</returns>
         public BarcodeVM GetBarcodes(int id)
         {
-                var res = (from b in db.Barcodes
-                           where b.Bar_Id == id
-                           select new BarcodeVM()
-                           {
-                               isUsed = b.Bar_IsUsed,
-                               price = b.Bar_Price.Pri_Value,
-                               sellerName=b.Bar_SellerName
-                           }).FirstOrDefault();
-                return res;           
+            var res = (from b in db.Barcodes
+                       where b.Bar_Id == id
+                       select new BarcodeVM()
+                       {
+                           isUsed = b.Bar_IsUsed,
+                           price = b.Bar_Price.Pri_Value,
+                           sellerName = b.Bar_SellerName
+                       }).FirstOrDefault();
+            return res;
+        }
+        public ConvertBarcodetoStringVM ConvertBarcodetoString(string barcode)
+        {
+            //int id_bar;
+            //double price_pri;
+            //string sellername;
+
+            ///List-->b.Bar_Id#price.Pri_Value#SellerName
+            var list = barcode.Split(';').ToList();
+            ConvertBarcodetoStringVM cbs = new ConvertBarcodetoStringVM()
+            {
+                CBS_id_bar = int.Parse(list[0]),
+                CBS_price_pri = double.Parse(list[1]),
+                CBS_sellername = list[2]
+            };
+            return cbs;
         }
         #endregion
         public void Dispose()

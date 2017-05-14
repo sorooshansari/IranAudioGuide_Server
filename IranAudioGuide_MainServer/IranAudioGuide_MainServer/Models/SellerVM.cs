@@ -53,11 +53,15 @@ namespace IranAudioGuide_MainServer.Models
         notConfirmed = 4,
         unknownError = 5,
         invalidBarcode = 6,
-        invalidprice=7,
-        isused_true=8,
-        invalidSellerName=9,
-        invalidpackprice=10,
+        invalidprice = 7,
+        isused_true = 8,
+        invalidSellerName = 9,
+        invalidpackprice = 10,
         success = 11
-
+    }
+    public class ConvertBarcodetoStringVM{
+        public int CBS_id_bar { get; set; }
+        public double CBS_price_pri { get; set; }
+        public string CBS_sellername { get; set; }
     }
 }
