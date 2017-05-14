@@ -274,6 +274,10 @@
     <Compile Include="Migrations\201705091155338_priceAdded.Designer.cs">
       <DependentUpon>201705091155338_priceAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705100732218_pro-bar.cs" />
+    <Compile Include="Migrations\201705100732218_pro-bar.Designer.cs">
+      <DependentUpon>201705100732218_pro-bar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1833,6 +1837,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705091155338_priceAdded.resx">
       <DependentUpon>201705091155338_priceAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705100732218_pro-bar.resx">
+      <DependentUpon>201705100732218_pro-bar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

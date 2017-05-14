@@ -26,7 +26,7 @@ namespace IranAudioGuide_MainServer.Services
                 //               id = p.Pri_Id,
                 //               value = p.Pri_Value
                 //           }).ToList();
-                var res = db.Prices.OrderBy(x=>x.Pri_Value).Select(x => new SelectListItem()
+                var res = db.Prices.OrderBy(x => x.Pri_Value).Select(x => new SelectListItem()
                 {
                     Value = x.Pri_Id.ToString(),
                     Text = x.Pri_Value.ToString()
@@ -64,14 +64,14 @@ namespace IranAudioGuide_MainServer.Services
                         string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);
                         string pdfpath = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/pdf"), imgName);
                         CreateCode(barcodeString, path);
-                        ImagesToPdf(path,pdfpath);
+                        ImagesToPdf(path, pdfpath);
                         //var fs = new BinaryWriter(new FileStream(path, FileMode.Create, FileAccess.Write));
                         //fs.Write(barcodeArray);
                         //fs.Close();
                         b.Bar_Image_Url = imgName;
                     }
                     db.SaveChanges();
-                    
+
                     dbTran.Commit();
                     return true;
                 }
@@ -82,8 +82,8 @@ namespace IranAudioGuide_MainServer.Services
                     return false;
                 }
             }
-            
-                    
+
+
         }
         #region tools
         protected void CreateCode(string value, string destPath)
@@ -113,7 +113,7 @@ namespace IranAudioGuide_MainServer.Services
         //}
         public void ImagesToPdf(string imagepaths, string pdfpath)
         {
-            iTextSharp.text.Rectangle pageSize =null;
+            iTextSharp.text.Rectangle pageSize = null;
 
             using (var srcImage = new Bitmap(imagepaths.ToString()))
             {
@@ -130,12 +130,42 @@ namespace IranAudioGuide_MainServer.Services
                 document.Close();
 
                 File.WriteAllBytes(pdfpath + "guide.pdf", ms.ToArray());
-            }                       
+            }
         }
+        public long Getpackage(Guid id)
+        {
+            try
+            {
+                var res = (from p in db.Packages
+                           where p.Pac_Id == id
+                           select p.Pac_Price).FirstOrDefault();
+                return (res == default(long)) ? 0 : res;
+            }
 
-
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return 0;
+            }
+        }
+        /// <summary>
+        /// use Getbarcode for BuyWithBarcode
+        /// </summary>
+        /// <param name="id">barcode id</param>
+        /// <returns>is used,price</returns>
+        public BarcodeVM GetBarcodes(int id)
+        {
+                var res = (from b in db.Barcodes
+                           where b.Bar_Id == id
+                           select new BarcodeVM()
+                           {
+                               isUsed = b.Bar_IsUsed,
+                               price = b.Bar_Price.Pri_Value,
+                               sellerName=b.Bar_SellerName
+                           }).FirstOrDefault();
+                return res;           
+        }
         #endregion
-
         public void Dispose()
         {
             if (db != null)
@@ -144,6 +174,6 @@ namespace IranAudioGuide_MainServer.Services
                 db = null;
             }
         }
-       
-        }
+
+    }
 }

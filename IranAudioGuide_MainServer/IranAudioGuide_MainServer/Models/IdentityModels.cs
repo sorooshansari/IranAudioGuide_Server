@@ -353,6 +353,9 @@ namespace IranAudioGuide_MainServer.Models
         //public int? WMPaymentId { get; set; }
         public WMPayment Pro_WMPayment { get; set; }
 
+        public int? Bar_Id { get; set; }
+        public Barcode Pro_bar { get; set; }
+
         #endregion
 
     }

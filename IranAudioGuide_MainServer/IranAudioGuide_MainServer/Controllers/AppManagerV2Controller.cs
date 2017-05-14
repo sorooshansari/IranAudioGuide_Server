@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using IranAudioGuide_MainServer.Services;
+
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -42,6 +44,7 @@ namespace IranAudioGuide_MainServer.Controllers
             return res;
         }
         // POST: api/AppManager/GetAll
+
         [HttpPost]
         public GetAllVM GetAll(string uuid)
         {
@@ -57,6 +60,94 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return res;
         }
+        //private ApplicationDbContext db = new ApplicationDbContext();
+        [HttpPost]
+        //public BuyWithBarcodeStatus BuyWithBarcode(BuyWithBarcodeVM model)
+
+        public BuyWithBarcodeStatus BuyWithBarcode(Guid packId, string email, string uuid, string barcode)
+        {
+            int id_bar;
+            double price_pri;
+            string sellername;
+            try
+            {
+                var user = acTools.getUser(email);
+                var status =
+                    (user == null) ? BuyWithBarcodeStatus.notUser :
+                    (user.uuid != uuid) ? BuyWithBarcodeStatus.uuidMissMatch :
+                    (!user.EmailConfirmed) ? BuyWithBarcodeStatus.notConfirmed :
+                    BuyWithBarcodeStatus.confirmed;
+                if (status != BuyWithBarcodeStatus.confirmed)
+                {
+                    return status;
+                }
+
+                try
+                {
+                    ///List-->b.Bar_Id#price.Pri_Value#SellerName
+                    var list = barcode.Split('%').ToList();
+                    id_bar = int.Parse(list[0]);
+                    price_pri = int.Parse(list[1]);
+                    sellername = list[2];
+                }
+                catch (Exception)
+                {
+                    var ex = new Exception(string.Format("invalid baicode-->{0}", barcode));
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                    return BuyWithBarcodeStatus.invalidBarcode;
+                }
+
+                long packPrice;
+
+                BarcodeVM bav = new BarcodeVM();
+                using (BarcodeServices brs = new BarcodeServices())
+                {
+
+                    packPrice = brs.Getpackage(packId);
+                    bav = brs.GetBarcodes(id_bar);
+                    if (price_pri != bav.price)
+                    {
+                        return BuyWithBarcodeStatus.invalidprice;
+                    }
+                    if (sellername != bav.sellerName)
+                    {
+                        return BuyWithBarcodeStatus.invalidSellerName;
+                    }
+                    try
+                    {
+                        if (bav.price != packPrice)
+                        {
+                            return BuyWithBarcodeStatus.invalidpackprice;
+                        }
+                        if (bav.isUsed == true)
+                        {
+                            return BuyWithBarcodeStatus.isused_true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                        return BuyWithBarcodeStatus.unknownError;
+                    }
+                    //var item = db.Barcodes.FirstOrDefault(s => s.Bar_Id == id_bar);
+                    var bars = db.Barcodes.Where(s => s.Bar_Id == id_bar).FirstOrDefault();
+                    bars.Bar_IsUsed = true;
+
+
+                    var t = new Procurement { Bar_Id = id_bar, Pro_PaymentFinished = true, Id = user.Id, Pac_Id = packId };
+                    db.Procurements.Add(t);
+                    db.SaveChanges();
+
+                    return BuyWithBarcodeStatus.success;
+                }
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return BuyWithBarcodeStatus.unknownError;
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
