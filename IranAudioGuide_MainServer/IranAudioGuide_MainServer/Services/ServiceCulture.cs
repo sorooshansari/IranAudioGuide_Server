@@ -19,8 +19,27 @@ namespace IranAudioGuide_MainServer
     }
     public static class ServiceCulture
     {
+        //public static int GetLangFromUrl
+        //{
+        //    get
+        //    {
+        //        var lang =  HttpContext.Current.GetOwinContext().Request..RouteData.Values["lang"];
+        //        return lang != null ?(int) FindGetInt(lang.ToString()) : (int)EnumLang.en;
+        //    }
+        //}
+        public static EnumLang FindGetInt(string str)
+        {
+            foreach (EnumLang item in Enum.GetValues(typeof(EnumLang)))
+            {
+                if (str.Contains(item.ToString()))
+                {
+                    return item;
+                }
+            }
+            return EnumLang.en;
+        }
 
-        public static string Find(string str)
+        public static string FindGetSting(string str)
         {
             foreach (EnumLang item in Enum.GetValues(typeof(EnumLang)))
             {
@@ -46,12 +65,12 @@ namespace IranAudioGuide_MainServer
                 if (cookie != null)
                 {
                     // set the culture by the cookie content
-                    langHeader = Find(cookie.Value);
+                    langHeader = FindGetSting(cookie.Value);
                 }
                 else if (HttpContext.Current.Request.UserLanguages.Length > 0)
                 {
                     // set the culture by the location if not speicified
-                    langHeader = Find(HttpContext.Current.Request.UserLanguages[0]);
+                    langHeader = FindGetSting(HttpContext.Current.Request.UserLanguages[0]);
                 }
                 else
                 {

@@ -10,8 +10,8 @@
 
 namespace IranAudioGuide_MainServer.App_GlobalResources {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -426,6 +426,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string Lang {
             get {
                 return ResourceManager.GetString("Lang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to fa.
+        /// </summary>
+        public static string LangOther {
+            get {
+                return ResourceManager.GetString("LangOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string LangTitle {
+            get {
+                return ResourceManager.GetString("LangTitle", resourceCulture);
             }
         }
         

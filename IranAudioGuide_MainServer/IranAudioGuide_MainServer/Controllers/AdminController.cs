@@ -10,12 +10,14 @@ using System.Data.Entity.Infrastructure;
 using IranAudioGuide_MainServer.Services;
 using System.Data.Entity;
 using Elmah;
+using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
     [Authorize]
     public class AdminController : Controller
     {
+
         private ApplicationDbContext db = new ApplicationDbContext();
         private const int pagingLen = 10;
         private Object ChangeImgLock = new Object();
@@ -27,7 +29,8 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             get
             {
-                return (int)EnumLang.en;
+                var lang = HttpContext.Request.RequestContext.RouteData.Values["lang"];
+                return lang != null ? (int)ServiceCulture.FindGetInt(lang.ToString()) : (int)EnumLang.en;
             }
         }
         //private const string storagePrefix = "http://iranaudioguide.com/";
@@ -35,6 +38,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
+            ServiceCulture.SetCulture();
             ViewBag.View = Views.AdminIndex;
             var currentUser = GetCurrentUserInfo();
             if (currentUser == null)
@@ -874,7 +878,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult AddPlaceExtraImage(NewImageVM model)
-         {
+        {
             if (!ModelState.IsValid)
             {
                 return Json(new Respond("Check input fields", status.invalidInput));
@@ -1301,20 +1305,24 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                List<PlaceVM> Places = db.Places.Include(i => i.TranslatePlaces).Include(i => i.Pla_city.TranslateCities).Select(place => new PlaceVM()
-                {
-                    PlaceId = place.Pla_Id,
-                    ImgUrl = place.Pla_ImgUrl,
-                    TumbImgUrl = place.Pla_TumbImgUrl,
-                    PlaceDesc = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Description,
-                    PlaceName = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Name,
-                    CityName = place.Pla_city.TranslateCities.FirstOrDefault(x => x.langId == lang).TrC_Name,
-                    PlaceAddress = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Address,
-                    PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
-                    PlaceCityId = place.Pla_city.Cit_Id,
-                    isOnline = place.Pla_isOnline,
-                    isPrimary = place.Pla_isPrimary
-                }).ToList();
+                List<PlaceVM> Places = db.Places
+                    .Include(i => i.TranslatePlaces)
+                    .Include(i => i.Pla_city.TranslateCities)
+                    .OrderBy(X => X.Pla_city.Cit_Order)
+                    .Select(place => new PlaceVM()
+                    {
+                        PlaceId = place.Pla_Id,
+                        ImgUrl = place.Pla_ImgUrl,
+                        TumbImgUrl = place.Pla_TumbImgUrl,
+                        PlaceDesc = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Description,
+                        PlaceName = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Name,
+                        CityName = place.Pla_city.TranslateCities.FirstOrDefault(x => x.langId == lang).TrC_Name,
+                        PlaceAddress = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Address,
+                        PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
+                        PlaceCityId = place.Pla_city.Cit_Id,
+                        isOnline = place.Pla_isOnline,
+                        isPrimary = place.Pla_isPrimary
+                    }).ToList();
 
                 //List<PlaceVM> Places =
                 //    (from place in db.Places
@@ -1334,7 +1342,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 //         isOnline = place.Pla_isOnline,
                 //         isPrimary = place.Pla_isPrimary
                 //     }).ToList();
-                return Places.AsEnumerable().Reverse().ToList();
+                return Places.ToList();
             }
             catch (Exception ex)
             {
@@ -1580,7 +1588,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
             List<PackageVM> packages = db.Packages
                 .Include(x => x.Pac_Cities.Select(c => c.TranslateCities))//.Include("Pac_Cities.TranslateCities")
-              .Where(x => x.langId == (int)EnumLang.en)
+              .Where(x => x.langId == lang)
                 .Select(p => new PackageVM()
                 {
                     PackageName = p.Pac_Name,

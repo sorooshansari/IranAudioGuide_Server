@@ -16,8 +16,8 @@
     <link href="~/Content/css/ionicons.css" rel="stylesheet" />
     <link href="~/Content/css/AdiminMain.css" rel="stylesheet" />
     <link href="~/Content/css/AdminCustom.css" rel="stylesheet" />
-    <link href="~/Content/global/plugins/toastr/toastr.min.css"  rel="stylesheet" />
-    <link href="~/Content/global/plugins/ladda/ladda-themeless.min.css" rel="stylesheet" />  
+    <link href="~/Content/global/plugins/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/global/plugins/ladda/ladda-themeless.min.css" rel="stylesheet" />
 
 </head>
 <body ng-app="AdminPage" ng-controller="AdminController">
@@ -39,6 +39,17 @@
                 <!-- Nav -->
                 <nav id="nav">
                     <ul>
+                        <li class="lang">
+                            Current languages
+                            <span>
+                                @Global.LangTitle
+                            </span>
+                        </li>
+                        <li class="lang">
+                            <a href="/@Global.LangOther/Admin/index">
+                                Change language
+                            </a>
+                        </li>
                         <li>
                             <a href="@(hrefPrefix)#top" id="top-link" class="skel-layers-ignoreHref">
                                 <span class="icon fa-home">Top</span>
@@ -74,6 +85,7 @@
                                 <span class="icon fa-sign-out">Log out</span>
                             </a>
                         </li>
+
                     </ul>
                 </nav>
             }

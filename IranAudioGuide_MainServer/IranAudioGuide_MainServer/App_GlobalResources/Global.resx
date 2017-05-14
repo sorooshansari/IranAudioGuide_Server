@@ -677,4 +677,10 @@
   <data name="purmandOc" xml:space="preserve">
     <value>Developer</value>
   </data>
+  <data name="LangTitle" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LangOther" xml:space="preserve">
+    <value>fa</value>
+  </data>
 </root>

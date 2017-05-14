@@ -653,3 +653,14 @@ form textarea {
 .selectedRow {
     background-color: lightblue !important;
 }
+
+.lang{
+        font-size: 17px;
+    text-align: center;
+    margin: 0 34px 0 0;
+
+
+}
+.lang span{
+        color: #84b0ae;
+}
