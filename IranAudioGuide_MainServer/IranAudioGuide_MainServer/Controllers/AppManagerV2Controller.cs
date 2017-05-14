@@ -60,7 +60,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return res;
         }
-        //private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
         [HttpPost]
         //public BuyWithBarcodeStatus BuyWithBarcode(BuyWithBarcodeVM model)
 
