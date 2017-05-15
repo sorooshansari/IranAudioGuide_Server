@@ -413,9 +413,6 @@ namespace IranAudioGuide_MainServer.Models
             WMP_SYS_TRANS_DATE = date;
             WMP_SYS_TRANS_DATE_Result = date;
         }
-
-
-
         [Key]
         //[Display(Name = "Payment Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

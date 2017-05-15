@@ -59,6 +59,9 @@ namespace IranAudioGuide_MainServer.Models
         invalidpackprice = 10,
         success = 11
     }
+    /// <summary>
+    /// convert barcode to string for buy with barcode
+    /// </summary>
     public class ConvertBarcodetoStringVM{
         public int CBS_id_bar { get; set; }
         public double CBS_price_pri { get; set; }

@@ -58,7 +58,7 @@ namespace IranAudioGuide_MainServer.Services
                     //System.Drawing.Image logo = System.Drawing.Image.FromFile(logoPath);
                     foreach (var b in barcodes)
                     {
-                        string barcodeString = string.Format("{0}#{1}#{2}", b.Bar_Id, price.Pri_Value.ToString(), SellerName);
+                        string barcodeString = string.Format("{0};{1};{2}", b.Bar_Id, price.Pri_Value.ToString(), SellerName);
                         //byte[] barcodeArray = GetBarcodeImg(barcodeString);
                         string imgName = string.Format("{0}.jpeg", b.Bar_Id);
                         string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);
@@ -167,11 +167,6 @@ namespace IranAudioGuide_MainServer.Services
         }
         public ConvertBarcodetoStringVM ConvertBarcodetoString(string barcode)
         {
-            //int id_bar;
-            //double price_pri;
-            //string sellername;
-
-            ///List-->b.Bar_Id#price.Pri_Value#SellerName
             var list = barcode.Split(';').ToList();
             ConvertBarcodetoStringVM cbs = new ConvertBarcodetoStringVM()
             {
@@ -180,6 +175,20 @@ namespace IranAudioGuide_MainServer.Services
                 CBS_sellername = list[2]
             };
             return cbs;
+        }
+        /// <summary>
+        ///  new row  Procurement and barisused
+        /// </summary>
+        /// <param name="CBS_id_bar">ConvertBarcodetoString id</param>
+        /// <param name="userid">userid</param>
+        /// <param name="packid">packageid</param>
+        public void saved(int CBS_id_bar,string userid,Guid packid)
+        {           
+            var bars = db.Barcodes.Where(s => s.Bar_Id == CBS_id_bar).FirstOrDefault();
+            bars.Bar_IsUsed = true;          
+            var t = new Procurement { Bar_Id = CBS_id_bar, Pro_PaymentFinished = true, Id = userid, Pac_Id = packid };
+            db.Procurements.Add(t);
+            db.SaveChanges();
         }
         #endregion
         public void Dispose()

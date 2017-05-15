@@ -62,20 +62,14 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         private ApplicationDbContext db = new ApplicationDbContext();
         [HttpPost]
-        //public BuyWithBarcodeStatus BuyWithBarcode(BuyWithBarcodeVM model)
-
-        public BuyWithBarcodeStatus BuyWithBarcode(Guid packId, string email, string uuid, string barcode)
+        public BuyWithBarcodeStatus BuyWithBarcode(BuyWithBarcodeVM model)
         {
-            //int id_bar;
-            //double price_pri;
-            //string sellername;
-           
             try
-            {              
-                var user = acTools.getUser(email);
+            {
+                var user = acTools.getUser(model.email);
                 var status =
                     (user == null) ? BuyWithBarcodeStatus.notUser :
-                    (user.uuid != uuid) ? BuyWithBarcodeStatus.uuidMissMatch :
+                    (user.uuid != model.uuid) ? BuyWithBarcodeStatus.uuidMissMatch :
                     (!user.EmailConfirmed) ? BuyWithBarcodeStatus.notConfirmed :
                     BuyWithBarcodeStatus.confirmed;
                 if (status != BuyWithBarcodeStatus.confirmed)
@@ -83,34 +77,21 @@ namespace IranAudioGuide_MainServer.Controllers
                     return status;
                 }
                 ConvertBarcodetoStringVM cbs = new ConvertBarcodetoStringVM();
-                using (BarcodeServices brs = new BarcodeServices() )
-
+                using (BarcodeServices brs = new BarcodeServices())
                 {
                     try
-                {
-                        ///List-->b.Bar_Id#price.Pri_Value#SellerName
-                        //var list = barcode.Split('%').ToList();
-                        //id_bar = int.Parse(list[0]);
-                        //price_pri = int.Parse(list[1]);
-                        //sellername = list[2];
-                        
-                        cbs=brs.ConvertBarcodetoString(barcode); 
-                                        
-                }
-                catch (Exception)
-                {
-                    var ex = new Exception(string.Format("invalid baicode-->{0}", barcode));
-                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                    return BuyWithBarcodeStatus.invalidBarcode;
-                }
-                long packPrice;
-
-                BarcodeVM bav = new BarcodeVM();
-
-
-                    packPrice = brs.Getpackage(packId);
-                    
-                    
+                    {
+                        cbs = brs.ConvertBarcodetoString(model.barcode);
+                    }
+                    catch (Exception)
+                    {
+                        var ex = new Exception(string.Format("invalid baicode-->{0}", model.barcode));
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                        return BuyWithBarcodeStatus.invalidBarcode;
+                    }
+                    long packPrice;
+                    BarcodeVM bav = new BarcodeVM();
+                    packPrice = brs.Getpackage(model.packId);
                     bav = brs.GetBarcodes(cbs.CBS_id_bar);
                     if (cbs.CBS_price_pri != bav.price)
                     {
@@ -136,15 +117,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                         return BuyWithBarcodeStatus.unknownError;
                     }
-                    //var item = db.Barcodes.FirstOrDefault(s => s.Bar_Id == id_bar);
-                    var bars = db.Barcodes.Where(s => s.Bar_Id == cbs.CBS_id_bar).FirstOrDefault();
-                    bars.Bar_IsUsed = true;
-
-
-                    var t = new Procurement { Bar_Id = cbs.CBS_id_bar, Pro_PaymentFinished = true, Id = user.Id, Pac_Id = packId };
-                    db.Procurements.Add(t);
-                    db.SaveChanges();
-
+                    brs.saved(cbs.CBS_id_bar,user.Id, model.packId);
                     return BuyWithBarcodeStatus.success;
                 }
             }
