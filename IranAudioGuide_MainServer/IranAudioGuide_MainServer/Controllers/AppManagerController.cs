@@ -95,16 +95,13 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return res;
         }
-//todo???
-
         [HttpPost]
         // POST: api/AppManager/GetPackages/5
         public GetPackagesVM GetPackages(int cityId)
         {
             return dbTools.GetPackagesByCity(cityId);
         }
-
-        //todo
+        
         [HttpPost]
         // POST: api/AppManager/GetUpdates/5
         public GetUpdateVM GetUpdates(int LastUpdateNumber, string uuid)
@@ -124,7 +121,6 @@ namespace IranAudioGuide_MainServer.Controllers
         // POST: api/AppManager/GetAll
         
             
-        //todo
         [HttpPost]
         public GetAllVM GetAll(string uuid)
         {

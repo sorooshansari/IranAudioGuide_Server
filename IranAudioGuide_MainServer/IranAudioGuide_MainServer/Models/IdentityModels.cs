@@ -8,7 +8,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System;
 using IranAudioGuide_MainServer.Services;
-using System.ComponentModel;
 
 namespace IranAudioGuide_MainServer.Models
 {// You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
@@ -32,6 +31,31 @@ namespace IranAudioGuide_MainServer.Models
         public IList<Procurement> procurements { get; set; }
 
     }
+    public class UpdateLog
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UpL_Id { get; set; }
+        public Guid? Aud_Id { get; set; }
+
+        //id TranslatePlace
+        public Guid? TrP_Id { get; set; }
+        public Guid? Pla_ID { get; set; }
+
+        //id TranslateCity
+        public Guid? TrC_Id { get; set; }
+        public int? Cit_ID { get; set; }
+
+        // id for TranslateImage
+        public Guid? TrI_Id { get; set; }
+        //  public Guid? Img_Id { get; set; }
+
+        public Guid? Sto_Id { get; set; }
+        public Guid? Tip_Id { get; set; }
+        public Guid? Img_Id { get; set; }
+        public bool isRemoved { get; set; }
+    }
+
 
     public class UserLog
     {
@@ -45,6 +69,23 @@ namespace IranAudioGuide_MainServer.Models
         public string UsL_UUId { get; set; }
         [Display(Name = "date time")]
         public DateTime UsL_DateTime { get; set; }
+    }
+    public class TrafficDownloadLog
+    {
+        [Key]
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Tra_Id { get; set; }   
+        public DateTime Tra_DateTime { get; set; }
+        [MaxLength(128)]
+        public string Tra_UserId { get; set; }
+        public ApplicationUser Tra_User { get; set; }
+
+        public Guid? Tra_StorYId { get; set; }
+        public Story Tra_Storr { get; set; }
+
+        public Guid? Tra_AudioId { get; set; }
+        public Audio Tra_Audio { get; set; }
     }
     public class LogUserFailure
     {
@@ -86,31 +127,6 @@ namespace IranAudioGuide_MainServer.Models
         public string Pay_BankName { get; set; }
 
     }
-    public class UpdateLog
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UpL_Id { get; set; }
-        public Guid? Aud_Id { get; set; }
-
-        //id TranslatePlace
-        public Guid? TrP_Id { get; set; }
-        public Guid? Pla_ID { get; set; }
-
-        //id TranslateCity
-        public Guid? TrC_Id { get; set; }
-        public int? Cit_ID { get; set; }
-
-        // id for TranslateImage
-        public Guid? TrI_Id { get; set; }
-        //  public Guid? Img_Id { get; set; }
-
-        public Guid? Sto_Id { get; set; }
-        public Guid? Tip_Id { get; set; }
-        public Guid? Img_Id { get; set; }
-        public bool isRemoved { get; set; }
-    }
-
     public class Audio
     {
         [Key]
@@ -485,17 +501,18 @@ namespace IranAudioGuide_MainServer.Models
         {
             return new ApplicationDbContext();
         }
+        public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<UpdateLog> UpdateLogs { get; set; }
+     //   public DbSet<TrafficDownloadLog> TrafficDownloadLog { get; set; }
         public DbSet<Audio> Audios { get; set; }
         public DbSet<Story> Storys { get; set; }
         public DbSet<Place> Places { get; set; }
         public DbSet<city> Cities { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<Image> Images { get; set; }
-        public DbSet<UpdateLog> UpdateLogs { get; set; }
         public DbSet<Tip> Tips { get; set; }
         public DbSet<TipCategory> TipCategories { get; set; }
         public DbSet<Payment> Payments { get; set; }
-        public DbSet<UserLog> UserLogs { get; set; }
         public DbSet<LogUserFailure> LogUserFailures { get; set; }
         //public DbSet<OnlinePlace> OnlinePlaces { get; set; }
         public DbSet<Comment> Comments { get; set; }

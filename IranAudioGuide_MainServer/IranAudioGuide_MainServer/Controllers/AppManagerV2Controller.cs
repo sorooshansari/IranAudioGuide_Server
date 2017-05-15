@@ -50,6 +50,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 var isAdmin = User.IsInRole("Admin");
                 var url = Services.ServiceDownload.GetUrl(model, isAdmin);
                 //var result= new GetAudioUrlRes(url);
+                
                 return Ok(url);
             }
             catch (Exception ex)

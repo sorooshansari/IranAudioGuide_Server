@@ -79,7 +79,7 @@ namespace IranAudioGuide_MainServer
             }
 
             // set the lang value into route data
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(langHeader);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(FindGetSting(langHeader));
             HttpContext.Current.Request.RequestContext.RouteData.Values["lang"] = langHeader;
             // save the location into cookie
             HttpCookie _cookie = new HttpCookie("IranAudioGuide.CurrentUICulture", Thread.CurrentThread.CurrentUICulture.Name);

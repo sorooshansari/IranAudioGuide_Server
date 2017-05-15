@@ -22,10 +22,10 @@
      //    //error.statusText
      //})
 
-     //var data2 = {
-     //    username: 'testuser@iranaudioguide.com',
-     //    uuid: "1212",
-     //};
+     var data2 = {
+         username: 'testuser@iranaudioguide.com',
+         uuid: "1212",
+     };
      //$http.post('/api/AppManagerV2/GetAutorizedCities', data2).then(function (result) {
      //    console.log("GetAutorizedCities");
      //    console.log(result.data);

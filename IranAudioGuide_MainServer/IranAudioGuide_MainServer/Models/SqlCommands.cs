@@ -128,7 +128,32 @@ BEGIN
 	SELECT @LastUpdateNumber = MAX([UpL_Id])
 	  FROM [dbo].[UpdateLogs]
 	RETURN @LastUpdateNumber
-END", @"
+END",@"
+CREATE FUNCTION [dbo].[AllAudios]() 
+RETURNS 
+@Audios TABLE 
+(
+	Id UNIQUEIDENTIFIER,
+	Name NVARCHAR(MAX),
+	Url NVARCHAR(MAX),
+	Descript NVARCHAR(MAX),
+	PlaceId UNIQUEIDENTIFIER
+)
+AS
+BEGIN
+	INSERT @Audios
+	SELECT [Aud_Id]
+		    ,[Aud_Name]
+		    ,[Aud_Url]
+		    ,[Aud_Discription]
+		    ,[Place_Pla_Id]
+	    FROM [dbo].[Audios]
+	RETURN 
+END
+
+GO
+",
+            @"
 
 CREATE FUNCTION [dbo].[AllStories]()
 RETURNS
@@ -227,146 +252,106 @@ BEGIN
 END",@"
 
 CREATE PROCEDURE [dbo].[GetUpdates]
-	@UpdateNumber AS INT,
-	@uuid NVARCHAR(MAX)
+	 @UpdateNumber AS INT,
+      @uuid NVARCHAR(MAX)
 AS
 BEGIN
-	INSERT INTO [dbo].[UserLogs] (UsL_UUId, UsL_DateTime)
-	VALUES (@uuid, getdate())
+      INSERT INTO [dbo].[UserLogs] (UsL_UUId, UsL_DateTime)
+      VALUES (@uuid, getdate())
 
-	SELECT [dbo].[GetLastUpdate]() AS LastUpdate
-	--GETING NEW ENTITIES
-	SELECT * FROM [dbo].AllPlaces() p
-	WHERE p.Id IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
-	)
+      SELECT [dbo].[GetLastUpdate]() AS LastUpdate
+      --GETING NEW ENTITIES
+      SELECT * FROM [dbo].AllPlaces() p
+      WHERE p.Id IN
+      (
+            SELECT Pla_ID
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
+      )
 
-	SELECT * FROM [dbo].AllAudios() a
-	WHERE a.Id IN
-	(
-		SELECT Aud_Id
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Aud_Id IS NOT NULL AND isRemoved = 0
-	) OR a.PlaceId IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
-	)
-	
-	SELECT * FROM [dbo].AllStories() s
-	WHERE s.Id IN
-	(
-		SELECT Sto_Id
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Sto_Id IS NOT NULL AND isRemoved = 0
-	) OR s.PlaceId IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
-	)
+      SELECT * FROM [dbo].AllAudios() a
+      WHERE a.Id IN
+      (
+            SELECT Aud_Id
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Aud_Id IS NOT NULL AND isRemoved = 0
+      ) OR a.PlaceId IN
+      (
+            SELECT Pla_ID
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
+      )
+      
+      SELECT * FROM [dbo].AllStories() s
+      WHERE s.Id IN
+      (
+            SELECT Sto_Id
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Sto_Id IS NOT NULL AND isRemoved = 0
+      ) OR s.PlaceId IN
+      (
+            SELECT Pla_ID
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
+      )
 
-	SELECT * FROM [dbo].AllImages() i
-	WHERE i.Id IN
-	(
-		SELECT Img_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Img_ID IS NOT NULL AND isRemoved = 0
-	) OR i.PlaceId IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
-	)
+      SELECT * FROM [dbo].AllImages() i
+      WHERE i.Id IN
+      (
+            SELECT Img_ID
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Img_ID IS NOT NULL AND isRemoved = 0
+      ) OR i.PlaceId IN
+      (
+            SELECT Pla_ID
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
+      )
 
-	SELECT * FROM [dbo].AllTips() t
-	WHERE t.Id IN
-	(
-		SELECT Tip_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Tip_ID IS NOT NULL AND isRemoved = 0
-	) OR t.PlaceId IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
-	)
+      SELECT * FROM [dbo].AllTips() t
+      WHERE t.Id IN
+      (
+            SELECT Tip_ID
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Tip_ID IS NOT NULL AND isRemoved = 0
+      ) OR t.PlaceId IN
+      (
+            SELECT Pla_ID
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
+      )
 
-	SELECT * FROM [dbo].AllCities() c
-	WHERE c.Id IN
-	(
-		SELECT Cit_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 0
-	)
-	--GETING REMOVED ENTITIES
-	SELECT Pla_ID AS Id
-	FROM [dbo].[UpdateLogs]
-	WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
+      SELECT * FROM [dbo].AllCities() c
+      WHERE c.Id IN
+      (
+            SELECT Cit_ID
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 0
+      )
+      --GETING REMOVED ENTITIES
+      SELECT Pla_ID AS Id
+      FROM [dbo].[UpdateLogs]
+      WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
 
-	SELECT a.Id AS Id FROM [dbo].AllAudios() a
-	WHERE a.Id IN
-	(
-		SELECT Aud_Id
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Aud_Id IS NOT NULL AND isRemoved = 1
-	) OR a.PlaceId IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
-	)
-	
-	SELECT s.Id AS Id FROM [dbo].AllStories() s
-	WHERE s.Id IN
-	(
-		SELECT Sto_Id
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Sto_Id IS NOT NULL AND isRemoved = 1
-	) OR s.PlaceId IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
-	)
+      SELECT Aud_Id AS Id
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Aud_Id IS NOT NULL AND isRemoved = 1
+      
+      SELECT Sto_Id AS Id
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Sto_Id IS NOT NULL AND isRemoved = 1
 
-	SELECT i.Id AS Id FROM [dbo].AllImages() i
-	WHERE i.Id IN
-	(
-		SELECT Img_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Img_ID IS NOT NULL AND isRemoved = 1
-	) OR i.PlaceId IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
-	)
+      SELECT Img_ID AS Id
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Img_ID IS NOT NULL AND isRemoved = 1
 
-	SELECT t.Id AS Id FROM [dbo].AllTips() t
-	WHERE t.Id IN
-	(
-		SELECT Tip_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Tip_ID IS NOT NULL AND isRemoved = 1
-	) OR t.PlaceId IN
-	(
-		SELECT Pla_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
-	)
+      SELECT Tip_ID AS Id
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Tip_ID IS NOT NULL AND isRemoved = 1
+      SELECT Cit_ID  AS Id
+            FROM [dbo].[UpdateLogs]
+            WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 1
 
-	SELECT c.Id AS Id FROM [dbo].AllCities() c
-	WHERE c.Id IN
-	(
-		SELECT Cit_ID
-		FROM [dbo].[UpdateLogs]
-		WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 1
-	)
 END",@"
 CREATE PROCEDURE [dbo].[GetAutorizedCities]
 	@UserID AS nvarchar(128)
@@ -669,6 +654,19 @@ END"
         public static readonly List<string> Commands_Download = new List<string>()
 
         {
+            @"CREATE TABLE [dbo].[TrafficDownloadLogs](
+	            [Tra_Id] [int] IDENTITY(1,1) NOT NULL,
+	            [Tra_DateTime] [datetime] NOT NULL,
+	            [Tra_Username] [nvarchar](max) NOT NULL,
+	            [Tra_IdTrack] [uniqueidentifier] NOT NULL,
+	            [Tra_IsAudio] [bit] NOT NULL,
+             CONSTRAINT [PK_TrafficDownloadLogs] PRIMARY KEY CLUSTERED 
+            (
+	            [Tra_Id] ASC
+            )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+            ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+            GO",
             @"CREATE PROCEDURE Download_LinkDelete  
                 @id uniqueidentifier
             AS
@@ -681,8 +679,6 @@ END"
 	            SELECT DownloadLinks.Path		
 	            FROM DownloadLinks		WHERE (IsDisable = 1) AND (TimeToVisit <= DATEADD (mi , 20 , TimeToVisit))
             END",
-
-
             @"CREATE PROCEDURE [dbo].[Download_LinkCreate]
 	            @FileName nvarchar(max),
 	            @IsAudio bit,
@@ -731,7 +727,7 @@ END"
 
 
                 @"CREATE PROCEDURE [dbo].[Download_Link_GetURL] 
-                @IsAudio bit,
+                    @IsAudio bit,
                 @IsAdmin bit,
                 @FileId uniqueidentifier,
                 @UserName nvarchar(max),
@@ -747,13 +743,14 @@ END"
                 DECLARE @IsUpdate bit
                 DECLARE	@langId int
                 DECLARE @IdDownload uniqueidentifier 
+                DECLARE @IdTrack uniqueidentifier 
 
 			
 
                 IF @IsAudio = 1
 		            BEGIN
 					
-			              SELECT  @FileName = Audios.Aud_Url, @langId = Audios.langId,  @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
+			              SELECT @IdTrack = Aud_Id,  @FileName = Audios.Aud_Url, @langId = Audios.langId,  @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
 				            FROM   Audios 
 					            INNER JOIN Places ON Audios.Place_Pla_Id = Places.Pla_Id 
 					            INNER JOIN	cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
@@ -763,7 +760,7 @@ END"
 		            END
                 ELSE 
 		            BEGIN
-			            SELECT  @FileName = Stories.Sto_Url,@langId = Stories.langId, @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
+			            SELECT @IdTrack = Sto_Id,  @FileName = Stories.Sto_Url,@langId = Stories.langId, @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
 				            FROM   Stories 
 					            INNER JOIN Places ON Stories.Place_Pla_Id = Places.Pla_Id 
 					            INNER JOIN	cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
@@ -792,7 +789,12 @@ END"
 								@IdDownload = @IdDownload OUTPUT
 
 		                SELECT	@Path as PathFile , @FileName as FileName , @IsUpdate as IsUpdate , 1 as isAccess, @langId as  langId,@IdDownload as IdDownload
-	                END
+	              
+				  INSERT INTO TrafficDownloadLogs
+                               (Tra_Username, Tra_DateTime,Tra_IsAudio ,Tra_IdTrack)
+						 VALUES (@UserName, GETDATE(),@IsAudio,@IdTrack)
+				  
+				    END
                 ELSE 
 		            BEGIN
 		                SELECT	null as PathFile , null as FileName , null as IsUpdate , 0 as isAccess , @langId as  langId,@IdDownload as IdDownload
@@ -1372,170 +1374,139 @@ END"
 	            @uuid NVARCHAR(MAX)
             AS
             BEGIN
-	          	INSERT INTO [dbo].[UserLogs] (UsL_UUId, UsL_DateTime)
-                VALUES (@uuid, getdate())
+				INSERT INTO [dbo].[UserLogs] (UsL_UUId, UsL_DateTime)
+				VALUES (@uuid, getdate())
 
-                SELECT [dbo].[GetLastUpdate_v2]() AS LastUpdate
-                --GETING NEW ENTITIES
+				SELECT [dbo].[GetLastUpdate_v2]() AS LastUpdate
+				--GETING NEW ENTITIES
 	
 	
-                SELECT * FROM [dbo].AllPlaces_v2() p
-                WHERE p.Id IN
-                (
-	                SELECT Pla_ID
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
-                )
+				SELECT * FROM [dbo].AllPlaces_v2() p
+				WHERE p.Id IN
+				(
+					SELECT Pla_ID
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 0
+				)
 	
 	
-                SELECT * FROM [dbo].AllTranslatePlaces_v2() p
-                WHERE p.Id IN
-                (
-	                SELECT TrP_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND TrP_Id IS NOT NULL AND isRemoved = 0
-                )
+				SELECT * FROM [dbo].AllTranslatePlaces_v2() p
+				WHERE p.Id IN
+				(
+					SELECT TrP_Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND TrP_Id IS NOT NULL AND isRemoved = 0
+				)
 	
-                SELECT * FROM [dbo].AllTranslateCities_v2() p
-                WHERE p.Id IN
-                (
-	                SELECT TrC_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND TrC_Id IS NOT NULL AND isRemoved = 0
-                )
-	
-	
-                SELECT * FROM [dbo].AllTranslateImages_v2() p
-                WHERE p.Id IN
-                (
-	                SELECT TrI_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND TrI_Id IS NOT NULL AND isRemoved = 0
-                )
+				SELECT * FROM [dbo].AllTranslateCities_v2() p
+				WHERE p.Id IN
+				(
+					SELECT TrC_Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND TrC_Id IS NOT NULL AND isRemoved = 0
+				)
 	
 	
-                SELECT * FROM [dbo].AllAudios_v2() a
-                WHERE a.Id IN
-                (
-	                SELECT Aud_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Aud_Id IS NOT NULL AND isRemoved = 0
-                )
+				SELECT * FROM [dbo].AllTranslateImages_v2() p
+				WHERE p.Id IN
+				(
+					SELECT TrI_Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND TrI_Id IS NOT NULL AND isRemoved = 0
+				)
 	
-                SELECT * FROM [dbo].AllStories_v2() s
-                WHERE s.Id IN
-                (
-	                SELECT Sto_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Sto_Id IS NOT NULL AND isRemoved = 0
-                ) 
-
 	
-                SELECT * FROM [dbo].AllImages_v2() i
-                WHERE i.Id IN
-                (
-	                SELECT Img_ID
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Img_ID IS NOT NULL AND isRemoved = 0
-                ) 
+				SELECT * FROM [dbo].AllAudios_v2() a
+				WHERE a.Id IN
+				(
+					SELECT Aud_Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Aud_Id IS NOT NULL AND isRemoved = 0
+				)
+	
+				SELECT * FROM [dbo].AllStories_v2() s
+				WHERE s.Id IN
+				(
+					SELECT Sto_Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Sto_Id IS NOT NULL AND isRemoved = 0
+				) 
 
 	
-                SELECT * FROM [dbo].AllTips_v2() t
-                WHERE t.Id IN
-                (
-	                SELECT Tip_ID
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Tip_ID IS NOT NULL AND isRemoved = 0
-                )
-	
-                SELECT * FROM [dbo].AllCities_v2() c
-                WHERE c.Id IN
-                (
-	                SELECT Cit_ID
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 0
-                )
-	
-	
-                --GETING REMOVED ENTITIES
-                SELECT Pla_ID AS Id
-                FROM [dbo].[UpdateLogs]
-                WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
+				SELECT * FROM [dbo].AllImages_v2() i
+				WHERE i.Id IN
+				(
+					SELECT Img_ID
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Img_ID IS NOT NULL AND isRemoved = 0
+				) 
 
 	
+				SELECT * FROM [dbo].AllTips_v2() t
+				WHERE t.Id IN
+				(
+					SELECT Tip_ID
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Tip_ID IS NOT NULL AND isRemoved = 0
+				)
 	
-                SELECT a.Id AS Id FROM [dbo].AllAudios_v2() a
-                WHERE a.Id IN
-                (
-	                SELECT Aud_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Aud_Id IS NOT NULL AND isRemoved = 1
-                )
+				SELECT * FROM [dbo].AllCities_v2() c
+				WHERE c.Id IN
+				(
+					SELECT Cit_ID
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 0
+				)
 	
 	
-	
-                SELECT s.Id AS Id FROM [dbo].AllStories_v2() s
-                WHERE s.Id IN
-                (
-	                SELECT Sto_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Sto_Id IS NOT NULL AND isRemoved = 1
-                ) 
+				--GETING REMOVED ENTITIES
+				SELECT Pla_ID AS Id
+				FROM [dbo].[UpdateLogs]
+				WHERE UpL_Id > @UpdateNumber AND Pla_ID IS NOT NULL AND isRemoved = 1
 
 	
-                SELECT i.Id AS Id FROM [dbo].AllImages_v2() i
-                WHERE i.Id IN
-                (
-	                SELECT Img_ID
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Img_ID IS NOT NULL AND isRemoved = 1
-                ) 
-
+					SELECT Aud_Id AS Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Aud_Id IS NOT NULL AND isRemoved = 1
 	
-                SELECT t.Id AS Id FROM [dbo].AllTips_v2() t
-                WHERE t.Id IN
-                (
-	                SELECT Tip_ID
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Tip_ID IS NOT NULL AND isRemoved = 1
-                ) 
-
-
+				SELECT Sto_Id AS Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Sto_Id IS NOT NULL AND isRemoved = 1
 	
-                SELECT c.Id AS Id FROM [dbo].AllCities_v2() c
-                WHERE c.Id IN
-                (
-	                SELECT Cit_ID
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 1
-                )
+				
 
+					SELECT Img_ID AS Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Img_ID IS NOT NULL AND isRemoved = 1
+	
+				
 
+					SELECT Tip_ID AS Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Tip_ID IS NOT NULL AND isRemoved = 1
 	
-                SELECT c.Id AS Id FROM [dbo].AllTranslatePlaces_v2() c
-                WHERE c.Id IN
-                (
-	                SELECT TrP_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND TrP_Id IS NOT NULL AND isRemoved = 1
-                )
+				
 
+					SELECT Cit_ID AS Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND Cit_ID IS NOT NULL AND isRemoved = 1
 	
-                SELECT c.Id AS Id FROM [dbo].AllTranslateCities_v2() c
-                WHERE c.Id IN
-                (
-	                SELECT TrC_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND TrC_Id IS NOT NULL AND isRemoved = 1
-                )
+				
 	
-                SELECT c.Id AS Id FROM [dbo].AllTranslateImages_v2() c
-                WHERE c.Id IN
-                (
-	                SELECT TrI_Id
-	                FROM [dbo].[UpdateLogs]
-	                WHERE UpL_Id > @UpdateNumber AND TrI_Id IS NOT NULL AND isRemoved = 1
-                )
+					SELECT TrP_Id AS Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND TrP_Id IS NOT NULL AND isRemoved = 1
+			
+	
+					SELECT TrC_Id  AS Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND TrC_Id IS NOT NULL AND isRemoved = 1
+				
+	
+					SELECT TrI_Id AS Id
+					FROM [dbo].[UpdateLogs]
+					WHERE UpL_Id > @UpdateNumber AND TrI_Id IS NOT NULL AND isRemoved = 1
+				
                 END"};
        
 

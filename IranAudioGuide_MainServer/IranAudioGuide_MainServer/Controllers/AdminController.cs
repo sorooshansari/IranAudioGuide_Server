@@ -620,13 +620,27 @@ namespace IranAudioGuide_MainServer.Controllers
             place.Pla_Name = model.PlaceName;
             place.Pla_Discription = model.PlaceDesc;
             place.Pla_Address = model.PlaceAddress;
-
+            
+            var newLang = false;
 
             var t = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang);
+            if (t == null)
+            {
+                t = new TranslatePlace() { langId = lang};
+                newLang = true;
+            }
+           
 
             t.TrP_Name = model.PlaceName;
             t.TrP_Description = model.PlaceDesc;
             t.TrP_Address = model.PlaceAddress;
+
+            if (newLang)
+                place.TranslatePlaces.Add(t);
+            else
+            {
+                db.Entry(t).State = EntityState.Modified;
+            }
 
             if (place.Pla_city.Cit_Id != model.PlaceCityId)
                 place.Pla_city = db.Cities.Where(x => x.Cit_Id == model.PlaceCityId).FirstOrDefault();
