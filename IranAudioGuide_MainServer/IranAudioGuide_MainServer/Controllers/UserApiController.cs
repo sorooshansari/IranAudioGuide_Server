@@ -7,13 +7,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Data.Entity;
+using IranAudioGuide_MainServer.Models_v2;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
     [Authorize]
     public class UserApiController : ApiController
     {
- 
+
         [HttpPost]
         public IHttpActionResult GetCurrentUserInfo()
         {
@@ -74,12 +77,117 @@ namespace IranAudioGuide_MainServer.Controllers
             var serviceIpAdress = new ServiceIpAdress();
             return serviceIpAdress.IsTheFirstLogin();
         }
+        [HttpPost]
+        public IHttpActionResult GetPackages()
+        {
+            var pro_list= GetPackagesProcurements();
+
+
+            var lang = ServiceCulture.GeLangFromCookie();
+            var d = new dbManagerV2();
+
+            var parameter = new System.Data.SqlClient.SqlParameter("@langId", lang);
+            var listdata = d.MultiTableResultSP("GetPackages_website", parameter);
+
+            var getModel = new List<PackageUserVM>();
+
+            foreach (DataRow c in listdata[1].Rows)
+            {
+                getModel.Add(new PackageUserVM
+                {
+                    PackageId = c["PackageId"].convertToGuid(),
+                    PackageName = c["PackageName"].convertToString(),
+                    PackagePrice = c["PackagePrice"].convertToString(),
+                    PackagePriceDollar = c["PackagePriceDollar"].convertToString(),
+                    PackageOrder = c["PackageOrder"].convertToInt(),
+                    CityId = c["CityId"].convertToInt(),
+                    CityName = c["CityName"].convertToString(),
+                    CityOrder = c["CityOrder"].convertToString(),
+                    CityImageUrl = c["CityImgUrl"].convertToString(),
+                    CityDescription = c["CityDescription"].convertToString(),
+
+                });
+            };
+            var listPlaces = new List<PlaceUserVM>();
+            foreach (DataRow c in listdata[0].Rows)
+            {
+
+                listPlaces.Add(new PlaceUserVM
+                {
+                    PlaceId = c["Pla_Id"].convertToGuid(),
+                    PlaceName = c["Name"].convertToString(),
+                    PlaceDesc = c["Discription"].convertToString(),
+                    PlaceAddress = c["Address"].convertToString(),
+                    ImgUrl = c["ImgUrl"].convertToString(),
+                    TumbImgUrl = c["TumbImgUrl"].convertToString(),
+                    AudiosCount = c["AudiosCount"].convertToInt(),
+                    StoriesCount = c["StoriesCount"].convertToInt(),
+                    Cit_Id = c["Cit_Id"].convertToInt(),
+                    OrderItem = c["OrderItem"].convertToInt()
+                });
+            }
+            var resualt = getModel.OrderBy(x => x.PackageOrder).Select(p => new PackageUserVM()
+            {
+                PackagePrice = p.PackagePrice,
+                PackagePriceDollar = p.PackagePriceDollar,
+                PackageId = p.PackageId,
+                PackageName = p.PackageName,
+               isPackagesPurchased = pro_list.Any(pr => pr == p.PackageId),
+                PackageCities = getModel.Where(pc => pc.CityId == p.CityId).OrderBy(x => x.CityOrder).Select(c => new CityUserVM()
+                {
+                    CityName = c.CityName,
+                    CityID = c.CityId,
+                    CityImageUrl = c.CityImageUrl,
+                    CityDesc = c.CityDescription,
+                    TotalTrackCount = listPlaces.Where(lp => lp.Cit_Id == c.CityId).Sum(pl => pl.AudiosCount + pl.StoriesCount),
+                    Places = listPlaces.Where(lp => lp.Cit_Id == c.CityId).OrderBy(x=> x.OrderItem)
+                                   .Select(pl => new PlaceUserVM()
+                                   {
+                                       PlaceName = pl.PlaceName,
+                                       PlaceId = pl.PlaceId,
+                                     //  CityName = pl.CityName,
+                                       //PlaceAddress = pl.PlaceAddress,
+                                       //PlaceDesc = pl.PlaceDesc,
+                                       //ImgUrl = pl.ImgUrl,
+                                       //TumbImgUrl = pl.TumbImgUrl,
+                                       //AudiosCount = pl.AudiosCount,
+                                       //StoriesCount = pl.StoriesCount,
+                                       //Cit_Id = pl.Cit_Id,
+                                       //OrderItem = pl.OrderItem
+                                   }).ToList()
+                }).ToList()
+            }).ToList();
+
+            return Ok(resualt);
+        }
+
+
+        [HttpPost]
+        public List<Guid> GetPackagesProcurements()
+        {
+            var dt1 = new DataTable();
+            using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
+            {
+
+                SqlCommand cmd = new SqlCommand("GetPackagesProcurements_website", sqlConnection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@Username", User.Identity.Name));
+
+                sqlConnection.Open();
+                var reader = cmd.ExecuteReader();
+
+                dt1.Load(reader);
+            }
+            var result = dt1.AsEnumerable().Select(x => x["Pac_Id"].convertToGuid()).ToList();
+            return result;
+        }
 
         [HttpPost]
         [Authorize(Roles = "AppUser")]
 
-        public IHttpActionResult GetPackages()
+        public IHttpActionResult GetPackages1()
         {
+
             try
             {
                 using (var db = new ApplicationDbContext())
@@ -209,7 +317,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         user.uuid = null;
                     }
                     else
-                        return BadRequest(string.Format(Global.ServerDeactivateMobileInavlid ,(30 * 6) + daywating ));
+                        return BadRequest(string.Format(Global.ServerDeactivateMobileInavlid, (30 * 6) + daywating));
                 }
                 db.SaveChanges();
                 return Ok(Global.ServerDeactivateMobile);

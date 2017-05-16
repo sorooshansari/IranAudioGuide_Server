@@ -198,7 +198,27 @@ namespace IranAudioGuide_MainServer.Models
         public bool isPackagesPurchased { get; set; }
 
     }
+    public class PackageUserVM
+    {
+        public PackageUserVM()
+        {
+            PackageCities = new List<CityUserVM>();
+        }
+        public int Index { get; internal set; }
+        public Guid PackageId { get; set; }
+        public string PackageName { get; set; }
+        public string PackagePrice { get; set; }
+        public string PackagePriceDollar { get; set; }
+        public bool isPackagesPurchased { get; set; }
+        public int PackageOrder { get; internal set; }
 
+        public List<CityUserVM> PackageCities { get; set; }
+        public int CityId { get; set; }
+        public string CityName { get; set; }
+        public string CityOrder { get; set; }
+        public string CityImageUrl { get; internal set; }
+        public string CityDescription { get; internal set; }
+    }
     public class AddTipVM
     {
         public Guid PlaceId { get; set; }
@@ -421,6 +441,24 @@ namespace IranAudioGuide_MainServer.Models
         public HttpPostedFileBase CityImage { get; set; }
         public string lang { get; set; }
     }
+    public class CityUserVM
+    {
+        public int CityID { get; set; }
+        public string _imageUrl { get; set; }
+        public string CityImageUrl
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathImageCity + value; }
+        }
+        [Display(Name = "Name")]
+        public string CityName { get; set; }
+        [Display(Name = "Description")]
+      
+        public IList<PlaceUserVM> Places { get; set; }
+        public int TotalTrackCount { get; internal set; }
+        public string CityDesc { get; internal set; }
+    }
+
     public class CityVM
     {
         [Display(Name = "#")]
@@ -508,6 +546,37 @@ namespace IranAudioGuide_MainServer.Models
         public string PlaceCordinates { get; set; }
         [Required]
         public int PlaceCityId { get; set; }
+    }
+    public class PlaceUserVM
+    {
+        internal bool isShow;
+
+        public System.Guid PlaceId { get; set; }
+        public int Index { get; set; }
+        public string PlaceName { get; set; }
+        public string PlaceDesc { get; set; }
+        public string CityName { get; set; }
+        public int PlaceCityId { get; set; }
+        public string _imageUrl { get; set; }
+        public string ImgUrl
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathImagePlace + value; }
+        }
+        public string _tumbImgUrl { get; set; }
+        public string TumbImgUrl
+        {
+            get { return _tumbImgUrl; }
+            set { _tumbImgUrl = GlobalPath.FullPathImageTumbnail + value; }
+        }
+        public string PlaceAddress { get; set; }
+        public string PlaceCordinates { get; set; }
+        public bool isOnline { get; set; }
+        public bool isPrimary { get; set; }
+        public int AudiosCount { get; internal set; }
+        public int StoriesCount { get; internal set; }
+        public int Cit_Id { get; internal set; }
+        public int OrderItem { get; internal set; }
     }
     public class PlaceVM
     {

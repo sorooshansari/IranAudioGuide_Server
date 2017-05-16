@@ -8,23 +8,26 @@ namespace IranAudioGuide_MainServer
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new StyleBundle("~/ProfileCssen").Include(
+            bundles.Add(new StyleBundle("~/ProfileCss").Include(
                             "~/Content/global/plugins/toastr/toastr.min.css",
                             "~/Content/css/bootstrap.3.3.7.min.css",
                             "~/Content/css/select.min.css",
                             "~/Content/css/simple-sidebar.css",
                             "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
                             "~/Content/css/profile.css",
-                            "~/Content/css/PakageTemplate.css"));
-
-            bundles.Add(new StyleBundle("~/ProfileCssfa").Include(
-                           "~/Content/global/plugins/toastr/toastr.min.css",
-                           "~/Content/css/bootstrap.3.3.7.min.css",
-                           "~/Content/css/select.min.css",
+                            "~/Content/css/PakageTemplate.css",
                            "~/Content/css/simple-sidebar_fa.css",
-                           "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
-                           "~/Content/css/profile_fa.css",
-                           "~/Content/css/PakageTemplate.css"));
+                           "~/Content/css/profile_fa.css"));
+
+            //bundles.Add(new StyleBundle("~/ProfileCssfa").Include(
+            //               "~/Content/global/plugins/toastr/toastr.min.css",
+            //               "~/Content/css/bootstrap.3.3.7.min.css",
+            //               "~/Content/css/select.min.css",
+            //               "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
+            //               "~/Content/css/PakageTemplate.css",
+                          
+            //               "~/Content/css/simple-sidebar_fa.css",
+            //               "~/Content/css/profile_fa.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Content/Scripts/jquery-{version}.js"));

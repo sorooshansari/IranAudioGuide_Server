@@ -4,7 +4,7 @@ namespace IranAudioGuide_MainServer.Services
     public static class GlobalPath
     {
         //pourmand
-        //public static readonly string ConnectionString = @"Data Source=.;Initial Catalog=iranaud3;Integrated Security=True";
+     public static readonly string ConnectionString = @"Data Source=.;Initial Catalog=last-completed-iranaud;Integrated Security=True";
         //sina Connection
         //public static readonly string ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = IranAudTest; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         //Danial Connection
@@ -12,7 +12,7 @@ namespace IranAudioGuide_MainServer.Services
         //Soroosh Connection
         //public static readonly string ConnectionString = @"Data Source=DESKTOP-PA8TBNK\SOROOSH;Initial Catalog=iranaudi_test2;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public static readonly string ConnectionStringElmah = "Password = Zcvd14?3; Persist Security Info=True;User ID = iranaudi_Elmah; Initial Catalog = iranaudi_Elmah; Data Source = 185.55.224.3";
-        public static readonly string ConnectionString = "Password = 1Kr?g4e7; Persist Security Info=True;User ID = iranaud1_admin; Initial Catalog = iranaud1_db; Data Source = 164.138.23.164";
+     //  public static readonly string ConnectionString = "Password = 1Kr?g4e7; Persist Security Info=True;User ID = iranaud1_admin; Initial Catalog = iranaud1_db; Data Source = 164.138.23.164";
         public static readonly string hostFtp = "ftp://lnx1.morvahost.com"; // "ftp://iranaudioguide.com/test.iranaudioguide.com";
         public static readonly string host = "http://iranaudioguide.net";// "http://test.iranaudioguide.com";
         public static readonly string UsernameFtp = "admin@iranaudioguide.net";//"pourmand";
@@ -39,6 +39,7 @@ namespace IranAudioGuide_MainServer.Services
 
         public static readonly string DownloadPathStory = "/Download/Stories/";
         public static readonly string DownloadPathAudios = "/Download/Audios/";
+    //    public static readonly string ImagePath = host + "/Images/";
         
     }
 }

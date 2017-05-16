@@ -247,6 +247,7 @@
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\AppManagerV2Controller.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -254,10 +255,19 @@
     <Compile Include="Controllers\testController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Content Include="Content\css\bootstrap-theme.css.map" />
+    <Content Include="Content\css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\css\bootstrap.css.map" />
+    <Content Include="Content\css\bootstrap.min.css.map" />
+    <Content Include="Content\css\fontawesome-webfont.eot" />
+    <Content Include="Content\css\fontawesome-webfont.ttf" />
+    <Content Include="Content\css\fontawesome-webfont.woff" />
+    <Content Include="Content\css\fontawesome-webfont.woff2" />
+    <Content Include="Content\css\FontAwesome.otf" />
     <None Include="doc\storeproced.text" />
-    <Compile Include="Migrations\201705101220532_big_update.cs" />
-    <Compile Include="Migrations\201705101220532_big_update.Designer.cs">
-      <DependentUpon>201705101220532_big_update.cs</DependentUpon>
+    <Compile Include="Migrations\201705161006421_s.cs" />
+    <Compile Include="Migrations\201705161006421_s.Designer.cs">
+      <DependentUpon>201705161006421_s.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -301,13 +311,58 @@
     <Compile Include="Services\ServiceJob.cs" />
     <Compile Include="Services\ServiceRecaptcha.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Content\css\AdiminMain.css" />
+    <Content Include="Content\css\AdminCustom.css" />
+    <Content Include="Content\css\bootstrap-social.css" />
+    <Content Include="Content\css\bootstrap-social.min.css" />
+    <Content Include="Content\css\bootstrap-theme.css" />
+    <Content Include="Content\css\bootstrap-theme.min.css" />
+    <Content Include="Content\css\bootstrap.3.3.7.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\bs_leftnavi.css" />
+    <Content Include="Content\css\components-md.css" />
+    <Content Include="Content\css\Custom4.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\fontawesome-webfont.svg" />
+    <Content Include="Content\css\HomeStyles.css" />
+    <Content Include="Content\css\Home_fa.css" />
+    <Content Include="Content\css\ie8.css" />
+    <Content Include="Content\css\ie9.css" />
+    <Content Include="Content\css\ionic.css" />
+    <Content Include="Content\css\ionic.min.css" />
+    <Content Include="Content\css\ionicons.css" />
+    <Content Include="Content\css\ionicons.min.css" />
+    <Content Include="Content\css\loading.css" />
+    <Content Include="Content\css\main2.css" />
+    <Content Include="Content\css\notify-metro.css" />
+    <Content Include="Content\css\PakageTemplate.css" />
+    <Content Include="Content\css\profile.css" />
+    <Content Include="Content\css\profile_fa.css" />
+    <Content Include="Content\css\responsiveslides.css" />
+    <Content Include="Content\css\select.css" />
+    <Content Include="Content\css\select.min.css" />
+    <Content Include="Content\css\simple-sidebar.css" />
+    <Content Include="Content\css\simple-sidebar_fa.css" />
+    <Content Include="Content\css\Site.css" />
+    <Content Include="Content\css\sliderArrow.css" />
+    <Content Include="Content\css\style-library-1.css" />
+    <Content Include="Content\css\styles.min.css" />
+    <Content Include="Content\css\toastr.min.css" />
+    <Content Include="Content\css\toggle.css" />
+    <Content Include="Content\css\toggle.min.css" />
+    <Content Include="Content\css\UserCustom.css" />
+    <Content Include="Content\css\UserMain.css" />
     <Content Include="Content\images\default_avatar.png" />
     <Content Include="Content\images\Members\Soroosh.jpg" />
+    <Content Include="doc\fullStoredProcedure.sql" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="images\logo.png" />
     <Content Include="images\Members\alireza.jpg" />
     <Content Include="logo.png" />
     <Content Include="Views\Shared\_SelectLangBtn.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\admin\css\components-rtl.css" />
@@ -556,51 +611,6 @@
     <Content Include="Content\admin\scripts\login.js" />
     <Content Include="Content\admin\scripts\metronic.js" />
     <Content Include="Content\admin\scripts\quick-sidebar.js" />
-    <Content Include="Content\css\AdiminMain.css" />
-    <Content Include="Content\css\AdminCustom.css" />
-    <Content Include="Content\css\bootstrap-social.css" />
-    <Content Include="Content\css\bootstrap-social.min.css" />
-    <Content Include="Content\css\bootstrap-theme.css" />
-    <Content Include="Content\css\bootstrap-theme.css.map" />
-    <Content Include="Content\css\bootstrap-theme.min.css" />
-    <Content Include="Content\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\css\bootstrap.3.3.7.min.css" />
-    <Content Include="Content\css\bootstrap.css" />
-    <Content Include="Content\css\bootstrap.css.map" />
-    <Content Include="Content\css\bootstrap.min.css" />
-    <Content Include="Content\css\bootstrap.min.css.map" />
-    <Content Include="Content\css\bs_leftnavi.css" />
-    <Content Include="Content\css\components-md.css" />
-    <Content Include="Content\css\Custom4.css" />
-    <Content Include="Content\css\font-awesome.css" />
-    <Content Include="Content\css\font-awesome.min.css" />
-    <Content Include="Content\css\fontawesome-webfont.svg" />
-    <Content Include="Content\css\HomeStyles.css" />
-    <Content Include="Content\css\Home_fa.css" />
-    <Content Include="Content\css\ie8.css" />
-    <Content Include="Content\css\ie9.css" />
-    <Content Include="Content\css\ionic.css" />
-    <Content Include="Content\css\ionic.min.css" />
-    <Content Include="Content\css\ionicons.css" />
-    <Content Include="Content\css\ionicons.min.css" />
-    <Content Include="Content\css\loading.css" />
-    <Content Include="Content\css\main2.css" />
-    <Content Include="Content\css\notify-metro.css" />
-    <Content Include="Content\css\PakageTemplate.css" />
-    <Content Include="Content\css\profile.css" />
-    <Content Include="Content\css\responsiveslides.css" />
-    <Content Include="Content\css\select.css" />
-    <Content Include="Content\css\select.min.css" />
-    <Content Include="Content\css\simple-sidebar.css" />
-    <Content Include="Content\css\Site.css" />
-    <Content Include="Content\css\sliderArrow.css" />
-    <Content Include="Content\css\style-library-1.css" />
-    <Content Include="Content\css\styles.min.css" />
-    <Content Include="Content\css\toastr.min.css" />
-    <Content Include="Content\css\toggle.css" />
-    <Content Include="Content\css\toggle.min.css" />
-    <Content Include="Content\css\UserCustom.css" />
-    <Content Include="Content\css\UserMain.css" />
     <Content Include="Content\fonts\arcon-regular-webfont.woff" />
     <Content Include="Content\fonts\arcon-regular-webfont.woff2" />
     <Content Include="Content\fonts\arcon-rounded-regular-webfont.woff" />
@@ -1548,11 +1558,6 @@
     <Content Include="Content\Scripts\util.js" />
     <Content Include="Content\Scripts\util.min.js" />
     <Content Include="Content\Scripts\version.json" />
-    <Content Include="Content\css\fontawesome-webfont.eot" />
-    <Content Include="Content\css\fontawesome-webfont.ttf" />
-    <Content Include="Content\css\fontawesome-webfont.woff" />
-    <Content Include="Content\css\fontawesome-webfont.woff2" />
-    <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="doc\store.js" />
     <Content Include="google60352dff0d3dbd69.html" />
     <Content Include="images\marker.png" />
@@ -1824,8 +1829,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705101220532_big_update.resx">
-      <DependentUpon>201705101220532_big_update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705161006421_s.resx">
+      <DependentUpon>201705161006421_s.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -250,6 +250,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error!.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password and confirmation password do not match..
         /// </summary>
         public static string ErrorComparePassword {
@@ -264,6 +273,33 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string ErrorEmail {
             get {
                 return ResourceManager.GetString("ErrorEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email not confirmed yet!.
+        /// </summary>
+        public static string ErrorEmailNotConfirmed {
+            get {
+                return ResourceManager.GetString("ErrorEmailNotConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For purchasing, first need to confirm your email. Please click &lt;a id=&apos;loginlink&apos; href=&apos;/en/Account/Login&apos;&gt;here&lt;/a&gt; to Login.
+        /// </summary>
+        public static string ErrorEmailNotConfirmedMessage {
+            get {
+                return ResourceManager.GetString("ErrorEmailNotConfirmedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unauthorized device!.
+        /// </summary>
+        public static string ErrorPaymentUnauthorizedDevice {
+            get {
+                return ResourceManager.GetString("ErrorPaymentUnauthorizedDevice", resourceCulture);
             }
         }
         
@@ -426,6 +462,33 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string Lang {
             get {
                 return ResourceManager.GetString("Lang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to fa.
+        /// </summary>
+        public static string LangOther {
+            get {
+                return ResourceManager.GetString("LangOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string LangTitle {
+            get {
+                return ResourceManager.GetString("LangTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string loadingtxt {
+            get {
+                return ResourceManager.GetString("loadingtxt", resourceCulture);
             }
         }
         
@@ -1286,11 +1349,29 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to City or Location.
+        /// </summary>
+        public static string PlaceholderSearchPackage {
+            get {
+                return ResourceManager.GetString("PlaceholderSearchPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subject.
         /// </summary>
         public static string PlaceholderSubject {
             get {
                 return ResourceManager.GetString("PlaceholderSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please try again.
+        /// </summary>
+        public static string PleaseTryAgain {
+            get {
+                return ResourceManager.GetString("PleaseTryAgain", resourceCulture);
             }
         }
         
@@ -1458,7 +1539,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Try to send another confirmation email through your profile page. Please click &lt;a id=&apos;loginlink&apos; href=&apos;/Account/Login&apos;&gt;here&lt;/a&gt; to Login.
+        ///   Looks up a localized string similar to Try to send another confirmation email through your profile page. Please click &lt;a id=&apos;loginlink&apos; href=&apos;/en/Account/Login&apos;&gt;here&lt;/a&gt; to Login.
         /// </summary>
         public static string ServerEmailConfirmationMessage2 {
             get {

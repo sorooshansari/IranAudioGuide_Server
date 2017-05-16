@@ -202,7 +202,7 @@
     <value>خطای 404</value>
   </data>
   <data name="PageError1" xml:space="preserve">
-    <value>با عرض پوزش؛ سایت درخواستی یافت نشد!</value>
+    <value>با عرض پوزش؛  صفحه درخواستی یافت نشد!</value>
   </data>
   <data name="PageError2" xml:space="preserve">
     <value>اینجا چه می کنید؟</value>
@@ -674,5 +674,32 @@
   </data>
   <data name="purmandOc" xml:space="preserve">
     <value>توسعه دهنده</value>
+  </data>
+  <data name="LangTitle" xml:space="preserve">
+    <value>فارسی</value>
+  </data>
+  <data name="LangOther" xml:space="preserve">
+    <value>en</value>
+  </data>
+  <data name="PlaceholderSearchPackage" xml:space="preserve">
+    <value>نام شهر یا مکان مورد نظر خود را وارد کنید</value>
+  </data>
+  <data name="ErrorEmailNotConfirmed" xml:space="preserve">
+    <value>Email not confirmed yet!</value>
+  </data>
+  <data name="ErrorEmailNotConfirmedMessage" xml:space="preserve">
+    <value>For purchasing, first need to confirm your email. Please click &lt;a id='loginlink' href='/fa/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="ErrorPaymentUnauthorizedDevice" xml:space="preserve">
+    <value>Unauthorized device!</value>
+  </data>
+  <data name="loadingtxt" xml:space="preserve">
+    <value>لطفا منتظر بمانید</value>
+  </data>
+  <data name="PleaseTryAgain" xml:space="preserve">
+    <value>Please try again</value>
   </data>
 </root>

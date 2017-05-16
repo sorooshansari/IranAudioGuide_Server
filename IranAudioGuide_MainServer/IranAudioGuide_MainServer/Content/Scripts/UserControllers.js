@@ -51,7 +51,11 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
                 withCredentials: true,
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.identity
-            }).then(function () { console.log("test success") }, function (error) { console.log("error", error) });
+            }).then(function () {
+                //console.log("test success")
+            }, function (error) {
+                //console.log("error", error)
+            });
 
         };
         $scope.user = {
@@ -91,15 +95,16 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
 
             if ($scope.profile.packages.length == 0) {
                 userServices.getPackages().then(function (data) {
+                    //console.log("getpackfrom service", data)
                     $scope.profile.packages = data;
                     angular.forEach(data, function (item, index) {
                         if (item.isPackagesPurchased == true) {
                             $scope.profile.packagesPurchased.push(item);
                         }
                     });
-                    $scope.profile.isCompletedLoading = false;
+                  //  $scope.profile.isCompletedLoading = false;
                 }, function () {
-                    $scope.profile.isCompletedLoading = false;
+                  //  $scope.profile.isCompletedLoading = false;
 
                 });
             }
@@ -113,7 +118,7 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
 
         $scope.sendEmailConfirmedAgain = function () {
             userServices.sendEmailConfirmedAgain().then(function (data) {
-                console.log(data);
+                //console.log(data);
                 if (data.status == 0)
                     notific.success("", data.content);
 
@@ -123,14 +128,19 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
 
     }]);
 userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeout', function ($state, $scope, userServices, $timeout) {
+    $timeout(function () {
+        $scope.profile.isCompletedLoading = false;
+    }, 1000);
+   
     $scope.pak = {};
     $scope.showModal = function (pak) {
+        //console.log(pak);
         $scope.pak = pak;
         $('#myModal').modal('show');
     }
     $scope.buyPakages = function (isChooesZarinpal) {
         $('#myModal').modal('hide');
-        $scope.profile.isCompletedLoading = true;
+       // $scope.profile.isCompletedLoading = true;
         $scope.isChooesZarinpal = isChooesZarinpal;
     }
     $('#myModal').on('hidden.bs.modal', function (e) {
@@ -287,7 +297,7 @@ userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeou
         })//end each $scope.profile.package
 
         $scope.listPakages = angular.copy($scope.profile.packages);
-
+        //console.log($scope.listPakages);
     }
     //_
     //$scope.profile.city = data[0].PackageCities[0];
@@ -337,7 +347,7 @@ userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeou
 
 }]);
 
-userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
+userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', function ($scope, userServices) {
 
     $scope.$watch("profile.packagesPurchased", function (newval, oldval) {
         if (typeof newval != undefined) {
@@ -351,5 +361,5 @@ userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout',
     });
 }]);
 userApp.controller('paymentCtrl', ['$scope', function ($scope) {
-    $scope.profile.isCompletedLoading = false;
+   
 }]);

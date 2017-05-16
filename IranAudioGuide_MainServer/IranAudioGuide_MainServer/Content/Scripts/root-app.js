@@ -73,12 +73,37 @@
          username: "test",
          isAdmin: false,
      };
+     $scope.isCompletedLoading = true;
+
      var init = function () {
+         var start = new Date().getMilliseconds();
+         //var start = date.getMilliseconds();
          if (angular.element('#chechLogin').length !== 0) {
+
+             $scope.isCompletedLoading = true;
              $http.get('/api/UserApi/IsTheFirstLogin').then(function (result) {
                  $scope.isTheFirstLogin = result.data;
+                 var stop = new Date().getMilliseconds();
+                 if (stop - start > 3000) {
+                     $scope.isCompletedLoading = false;
+                 }
+                 else {
+                     $timeout(function () {
+                         $scope.isCompletedLoading = false;
+                     }, 3000 - stop + start);
+                 }
+
              }, function (error, status, headers, config) {
-                 $scope.isTheFirstLogin = false;
+
+                 var stop = new Date().getMilliseconds();
+                 if (stop - start > 3000) {
+                     $scope.isCompletedLoading = false;
+                 }
+                 else {
+                     $timeout(function () {
+                         $scope.isCompletedLoading = false;
+                     }, 3000 - stop + start);
+                 }
              });
          }
      };
