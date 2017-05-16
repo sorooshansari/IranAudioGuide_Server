@@ -10,48 +10,67 @@ using System.Web;
 namespace IranAudioGuide_MainServer.Services
 {
 
-    public class AdminService
-    {
-        public object RunStoreProcedure(string nameStoreProcdeure, SqlParameter[] param)
+    public class AdminService {
+       
+
+        public object GetAll()
         {
+            var dt1 = new DataTable();
+            List<DataTable> listdata = new List<DataTable>(); 
             try
             {
-                var dataTable = new DataTable();
                 using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand(nameStoreProcdeure, sqlConnection);
+                    var ddd = Global.Lang;
+                    SqlCommand cmd = new SqlCommand("GetPackages_website", sqlConnection);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    foreach (var item in param)
-                    {
-                        
-                    }cmd.Parameters.Add(new SqlParameter("@langId", 1));
+                    cmd.Parameters.Add(new SqlParameter("@langId", 1));
                     sqlConnection.Open();
                     var reader = cmd.ExecuteReader();
-                    dataTable.Load(reader);
+
+                    dt1.Load(reader);
+                    listdata.Add(dt1);
                 }
-                return dataTable;
+
+                foreach (var item in dt1.AsEnumerable())
+                {
+                    var d = item.Table.AsEnumerable().ToList();
+                }
+                var links = new
+                {
+                    pathDestination = listdata[0].AsEnumerable().Select(c => new
+                    {
+                        Pla_Id = c["Pla_Id"],
+                        Name = c["Name"],
+                        Discription = c["Discription"],
+                        Address = c["Address"],
+                        ImgUrl = c["ImgUrl"],
+                        TumbImgUrl = c["TumbImgUrl"],
+                        AudiosCount = c["AudiosCount"],
+                        StoriesCount = c["StoriesCount"],
+                        Cit_Id = c["Cit_Id"],
+                        OrderItem = c["OrderItem"]
+                    }).ToList(),
+                    FileName = listdata[1].AsEnumerable().Select(c => new
+                    {
+                        PackageId = c["PackageId"],
+                        PackageName = c["PackageName"],
+                        PackagePrice = c["PackagePrice"],
+                        PackagePriceDollar = c["PackagePriceDollar"],
+                        PackageOrder = c["PackageOrder"],
+                        CityId = c["CityId"],
+                        CityName = c["CityName"],
+                        CityOrder = c["CityOrder"]
+                    }).ToList()
+                };
+
+                return links;
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return null;
             }
-        }
-
-
-
-        public object GetAll()
-        {
-            var prm = new[] { new SqlParameter("@langId", Global.Lang) };
-            var dt1 = (List<DataTable>)RunStoreProcedure("GetPackages_website", prm);
-
-            var links = dt1[0].AsEnumerable().Select(x => new
-            {
-                pathDestination = x["d"],
-                FileName = x["f"],
-
-            }).FirstOrDefault();
-            return links;
         }
     }
     //internal void addEditPackage(NewPackage model)

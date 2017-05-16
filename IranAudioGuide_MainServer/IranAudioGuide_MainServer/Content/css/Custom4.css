@@ -69,7 +69,7 @@ input[type="text"], input[type="password"], input[type="email"], select:focus, t
 }
 
 #footer {
-    /*padding: 4em 0 4em 0;*/
+    padding: 4em 0 4em 0;
 }
 
 #Download_Application {
@@ -352,32 +352,11 @@ section h2, section h3, section h4, section h5, section h6 {
     #Message {
         min-height: 90px;
     }
-
 }
 
-@media(min-width:426px) and (max-width:768px) {
-    #CheckOutSection #infocontainer {
-        width: 70% !important;
-        left: 15% !important;
-    }
+/*tooltip*/
 
-    #PkgPaymentBlock {
-        left: 15% !important;
-        width: 70% !important;
-    }
 
-    #CheckOutSection .PkgDetTD {
-        width: 70% !important;
-        left: 15% !important;
-    }
-
-#footer .copyright li a.tooltips:before{
-    text-decoration: none;
-    font-size:medium;
-}
-    /*tooltip*/
-
-}
 li.tooltips {
     position: relative;
     display: inline;
@@ -845,7 +824,7 @@ a:hover.tooltips span {
 }
 
 .sorooshInvalid {
-    background-color: #fd3223;
+    background-color: #de0000;
 }
 
 /*.input-group .ng-invalid {
@@ -1086,15 +1065,5 @@ ul.actions {
         width: 130px !important;
         border-bottom:0.8px solid rgb(204, 204, 204) !important;
     }
-        #footer .icons {
-    margin: 0 0 0 0;
-    top: 25px;
-    position: relative;
-}
-        ._2ndCopy
-        {
-            margin-top:25px;
-        }
-
 }
 

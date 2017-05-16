@@ -14,7 +14,7 @@
 <div class="input-group  searchPackage">
     <span class="input-group-addon"><i class="fa fa-search"></i></span>
     <ui-select class="SearchSelect" multiple ng-model="searhPakage.item" theme="bootstrap">
-        <ui-select-match placeholder="City or Location">
+        <ui-select-match placeholder="@Global.PlaceholderSearchPackage">
             <i ng-class="typeEachItemFoSelection[$item.type].icon"></i>
             <span> {{$item.title}} </span>
         </ui-select-match>
@@ -53,8 +53,8 @@
                         <div id="pkg{{city.CityID}}" onclick="OpenList(this.id)" class="ultoggle">
                             <i class="fa fa-plus-square"></i>
                             &nbsp; Cities Included
-                            &emsp;&emsp;<span id="ulPlaceQty"><i class="fa fa-map-marker"></i> 10</span>
-                            &emsp;<span id="ulAudioLength"><i class="fa fa-microphone"></i> 10</span>
+                            &emsp;&emsp;<span id="ulPlaceQty"><i class="fa fa-map-marker"></i> {{city.Places.length}}</span>
+                            &emsp;<span id="ulAudioLength"><i class="fa fa-microphone"></i> {{ city.TotalTrackCount}}</span>
                         </div>
                         <ul id="ulpkg{{city.CityID}}" class="pkgcityul ulclosed">
                             <li ng-repeat="plc in city.Places">&bull; {{plc.PlaceName}}</li>

@@ -1304,6 +1304,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to City or Location.
+        /// </summary>
+        public static string PlaceholderSearchPackage {
+            get {
+                return ResourceManager.GetString("PlaceholderSearchPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subject.
         /// </summary>
         public static string PlaceholderSubject {

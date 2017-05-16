@@ -8,7 +8,7 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     //[Localization]
 
-    public class UserController: Controller
+    public class UserController: BaseController
     {
         private IAuthenticationManager AuthenticationManager
         {
@@ -20,7 +20,7 @@ namespace IranAudioGuide_MainServer.Controllers
         // GET: User
         [Authorize(Roles = "AppUser")]
         public ActionResult Index()
-        {
+        {           
             return View();
         }
         [Authorize(Roles = "AppUser")]

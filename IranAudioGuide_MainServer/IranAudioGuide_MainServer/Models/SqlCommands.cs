@@ -649,7 +649,7 @@ END"
                     @TimeUtc  
   
                 )"
-        };      
+        };
 
         public static readonly List<string> Commands_Download = new List<string>()
 
@@ -1508,7 +1508,98 @@ END"
 					WHERE UpL_Id > @UpdateNumber AND TrI_Id IS NOT NULL AND isRemoved = 1
 				
                 END"};
-       
 
+
+        public static readonly List<string> Commands_Web = new List<string>()
+        {
+            @"CREATE PROCEDURE [dbo].[GetPackagesProcurements_website]
+            @Username Nvarchar(max)
+            AS
+            BEGIN 
+                SELECT   Procurements.Pac_Id as Pac_Id
+                FROM            Procurements INNER JOIN  AspNetUsers ON Procurements.Id = AspNetUsers.Id
+                Where			AspNetUsers.UserName =@Username 
+		                and	Procurements.Pro_PaymentFinished = 1						
+            END",
+            @"
+            CREATE PROCEDURE [dbo].[GetPackages_website]
+            @langId int
+            AS
+            BEGIN
+ 
+                DECLARE @Packages TABLE  
+                (
+                    PackageId  UNIQUEIDENTIFIER ,
+                    PackageName NVARCHAR(MAX),
+                    PackagePrice bigint,
+                    PackagePriceDollar real,
+                    PackageOrder INT,
+                    CityId  int ,
+                    CityName NVARCHAR(MAX),
+                    CityOrder INT,
+                    CityImgUrl nvarchar(max),
+                    CityDescription nvarchar(max)
+
+                )
+                INSERT @Packages
+                    SELECT  Packages.Pac_Id,
+                    Packages.Pac_Name,
+                    Packages.Pac_Price,
+                    Packages.Pac_Price_Dollar,
+                    Packages.Pac_Order,
+                    cities.Cit_Id,
+                    TranslateCities.TrC_Name,
+                    cities.Cit_Order,
+                    cities.Cit_ImageUrl,
+                    cities.Cit_Description
+                FROM    Packages 
+                INNER JOIN Packagecities ON Packages.Pac_Id = Packagecities.Package_Pac_Id 
+                INNER JOIN cities ON Packagecities.city_Cit_Id = cities.Cit_Id 
+                INNER JOIN TranslateCities ON cities.Cit_Id = TranslateCities.Cit_Id
+                WHERE Packages.langId = @langId and TranslateCities.langId =@langId
+						 
+
+
+						 
+                DECLARE @Places TABLE 
+                (	
+                    Pla_Id UNIQUEIDENTIFIER,
+                    Name  NVARCHAR(MAX),
+                    Discription  NVARCHAR(MAX),
+                    Address  NVARCHAR(MAX),
+                    ImgUrl  NVARCHAR(MAX),
+                    TumbImgUrl  NVARCHAR(MAX),
+                    AudiosCount INT,
+                    StoriesCount INT,
+                    Cit_Id INT,
+                    OrderItem  INT
+                )
+                INSERT @Places
+                SELECT 
+	                Places.Pla_Id,
+	                TranslatePlaces.TrP_Name,
+	                TranslatePlaces.TrP_Description,
+	                TranslatePlaces.TrP_Address,
+	                Places.Pla_ImgUrl,
+	                Places.Pla_TumbImgUrl ,
+	                dbo.AudiosCount_v2(Places.Pla_Id,@langId),
+	                dbo.StoriesCount_v2(Places.Pla_Id,@langId),
+	                Pla_city_Cit_Id,
+	                Pla_Order
+
+                FROM  Places 
+	                INNER JOIN TranslatePlaces ON Places.Pla_Id = TranslatePlaces.Pla_Id 
+                WHERE TranslatePlaces.langId = @langId 
+                and Pla_isOnline = 1 
+                and Pla_Deactive = 0
+		
+						 
+						 
+						 
+                SELECT * fROM @Places
+                SELECT * FROM @Packages
+            END"
+
+        };
     }
 }

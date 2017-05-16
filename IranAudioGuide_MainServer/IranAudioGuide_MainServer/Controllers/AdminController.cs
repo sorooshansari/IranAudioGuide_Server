@@ -30,7 +30,7 @@ namespace IranAudioGuide_MainServer.Controllers
             get
             {
                 var lang = HttpContext.Request.RequestContext.RouteData.Values["lang"];
-                return lang != null ? (int)ServiceCulture.FindGetInt(lang.ToString()) : (int)EnumLang.en;
+                return lang != null ? ServiceCulture.GetIntLang(lang.ToString()) : (int)EnumLang.en;
             }
         }
         //private const string storagePrefix = "http://iranaudioguide.com/";

@@ -681,4 +681,7 @@
   <data name="LangOther" xml:space="preserve">
     <value>en</value>
   </data>
+  <data name="PlaceholderSearchPackage" xml:space="preserve">
+    <value>نام شهر یا مکان مورد نظر خود را وارد کنید</value>
+  </data>
 </root>

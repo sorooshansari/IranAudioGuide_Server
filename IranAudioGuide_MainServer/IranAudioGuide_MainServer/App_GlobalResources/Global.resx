@@ -683,4 +683,7 @@
   <data name="LangOther" xml:space="preserve">
     <value>fa</value>
   </data>
+  <data name="PlaceholderSearchPackage" xml:space="preserve">
+    <value>City or Location</value>
+  </data>
 </root>

@@ -27,16 +27,16 @@ namespace IranAudioGuide_MainServer
         //        return lang != null ?(int) FindGetInt(lang.ToString()) : (int)EnumLang.en;
         //    }
         //}
-        public static EnumLang FindGetInt(string str)
+        public static int GetIntLang(string str)
         {
             foreach (EnumLang item in Enum.GetValues(typeof(EnumLang)))
             {
                 if (str.Contains(item.ToString()))
                 {
-                    return item;
+                    return (int)item;
                 }
             }
-            return EnumLang.en;
+            return (int)EnumLang.en;
         }
 
         public static string FindGetSting(string str)
@@ -106,7 +106,21 @@ namespace IranAudioGuide_MainServer
 
             //Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(_eLang);
         }
+
+        public static int GeLangFromCookie()
+        {
+
+            // load the culture info from the cookie
+            var cookie = HttpContext.Current.Request.Cookies.Get("IranAudioGuide.CurrentUICulture");
+            if (cookie != null)
+            {
+                // set the culture by the cookie content
+                return GetIntLang(cookie.Value.ToString());
+            }
+            return (int)EnumLang.en;
+        }
     }
+}
 
     //public class StringLengthTranclateAttribute : System.ComponentModel.DataAnnotations.StringLengthAttribute
     //{
@@ -199,4 +213,3 @@ namespace IranAudioGuide_MainServer
     ////        return resourceKey; // Fallback with the key name
     ////    }
     ////}
-}
