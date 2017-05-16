@@ -499,10 +499,10 @@
     <value>لطفاً ایمیل خود را چک کنید</value>
   </data>
   <data name="ServerEmailConfirmationMessage2" xml:space="preserve">
-    <value>در تلاش برای ارسال تأییدیه ای دوباره به صفحه ی پروفایل شما. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>در تلاش برای ارسال تأییدیه ای دوباره به صفحه ی پروفایل شما. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerEmailConfirmationSucceeded" xml:space="preserve">
-    <value>سپاس بابت تأیید ایمیل. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>سپاس بابت تأیید ایمیل. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerEmailErrorSending" xml:space="preserve">
     <value>ارسال ایمیل ناموفق بود</value>
@@ -526,7 +526,7 @@
     <value>رمز عبور را فراموش کرده ام</value>
   </data>
   <data name="ServerForgotPasswordMessage" xml:space="preserve">
-    <value>لطفاً ایمیل خود را برای تغییر رمز عبور چک کنید. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>لطفاً ایمیل خود را برای تغییر رمز عبور چک کنید. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerInvalidCode" xml:space="preserve">
     <value>کد نامعتبر است</value>
@@ -541,7 +541,7 @@
     <value>رمزعبور تغییر کرده است</value>
   </data>
   <data name="ServerPasswordChangedMessage" xml:space="preserve">
-    <value>رمزعبورتان تغییر کرده است. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>رمزعبورتان تغییر کرده است. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerResetPassword" xml:space="preserve">
     <value>تغییر رمزعبور</value>
@@ -628,31 +628,31 @@
     <value>از این طریق می توانید به راحتی حساب کاربری خود را مدیریت کنید</value>
   </data>
   <data name="ErrorEmail" xml:space="preserve">
-    <value>fa-----------Invalid email address</value>
+    <value>ایمیل وارد شده نامعتبر است</value>
   </data>
   <data name="ErrorRequiredPassword" xml:space="preserve">
-    <value>fa----The Password field is required.</value>
+    <value>رمز عبور باید وارد شود</value>
   </data>
   <data name="ErrorRequiredRegisterName" xml:space="preserve">
-    <value>fa----The {0} field is required.</value>
+    <value>{0} باید پر شود</value>
   </data>
   <data name="ErrorStringLengthMessage" xml:space="preserve">
-    <value>fa-----The {0} must be at least {2} characters long</value>
+    <value>{0} باید حداقل {2} حرف باشد</value>
   </data>
   <data name="DispalyCode" xml:space="preserve">
-    <value>Code</value>
+    <value>کد</value>
   </data>
   <data name="ErrorComparePassword" xml:space="preserve">
-    <value>fa-The password and confirmation password do not match.</value>
+    <value>رمز عبور و تأییدیه ی آن همخوانی ندارند</value>
   </data>
   <data name="ErrorRequire" xml:space="preserve">
-    <value>fa----The  field is required.</value>
+    <value>این قسمت مورد نیاز است</value>
   </data>
   <data name="ErrorRequiredEmail" xml:space="preserve">
-    <value>fa----The Email field is required.</value>
+    <value>ایمیل باید وارد شود</value>
   </data>
   <data name="RememberBrowser" xml:space="preserve">
-    <value>Remember this browser?</value>
+    <value>این مررورگر را به خاطر بسپار؟</value>
   </data>
   <data name="LabelForRememberMe" xml:space="preserve">
     <value>مرا به خاطر بسپار؟</value>

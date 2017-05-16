@@ -251,6 +251,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\SellerController.cs" />
+    <Compile Include="Controllers\testController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <None Include="doc\storeproced.text" />
@@ -303,6 +304,7 @@
     <Content Include="Content\images\default_avatar.png" />
     <Content Include="Content\images\Members\Soroosh.jpg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="images\logo.png" />
     <Content Include="images\Members\alireza.jpg" />
     <Content Include="logo.png" />
     <Content Include="Views\Shared\_SelectLangBtn.cshtml" />
@@ -1795,6 +1797,7 @@
     <Folder Include="Download\" />
     <Folder Include="fonts\NewFonts\" />
     <Folder Include="images\slidepics\" />
+    <Folder Include="Views\test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

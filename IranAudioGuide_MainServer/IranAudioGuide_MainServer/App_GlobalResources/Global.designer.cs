@@ -10,8 +10,8 @@
 
 namespace IranAudioGuide_MainServer.App_GlobalResources {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -1467,7 +1467,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you for confirming your email. Please click &lt;a id=&apos;loginlink&apos; href=&apos;/Account/Login&apos;&gt;here&lt;/a&gt; to Login.
+        ///   Looks up a localized string similar to Thank you for confirming your email. Please click &lt;a id=&apos;loginlink&apos; href=&apos;/en/Account/Login&apos;&gt;here&lt;/a&gt; to Login.
         /// </summary>
         public static string ServerEmailConfirmationSucceeded {
             get {
@@ -1539,7 +1539,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please check your email to reset your password. Please click &lt;a id=&apos;loginlink&apos; href=&apos;/Account/Login&apos;&gt;here&lt;/a&gt; to Login.
+        ///   Looks up a localized string similar to Please check your email to reset your password. Please click &lt;a id=&apos;loginlink&apos; href=&apos;/en/Account/Login&apos;&gt;here&lt;/a&gt; to Login.
         /// </summary>
         public static string ServerForgotPasswordMessage {
             get {
@@ -1584,7 +1584,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your password has been changed. Please click &lt;a id=&apos;loginlink&apos; href=&apos;/Account/Login&apos;&gt;here&lt;/a&gt; to Login.
+        ///   Looks up a localized string similar to Your password has been changed. Please click &lt;a id=&apos;loginlink&apos; href=&apos;/en/Account/Login&apos;&gt;here&lt;/a&gt; to Login.
         /// </summary>
         public static string ServerPasswordChangedMessage {
             get {
