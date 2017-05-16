@@ -486,10 +486,10 @@
     <value>Email Confirmation</value>
   </data>
   <data name="ServerEmailConfirmationMessage2" xml:space="preserve">
-    <value>Try to send another confirmation email through your profile page. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+    <value>Try to send another confirmation email through your profile page. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
   </data>
   <data name="ServerEmailConfirmationSucceeded" xml:space="preserve">
-    <value>Thank you for confirming your email. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+    <value>Thank you for confirming your email. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
   </data>
   <data name="ServerErrorConfirmSubject" xml:space="preserve">
     <value>Confirmation Failed!</value>
@@ -504,7 +504,7 @@
     <value>Forgot Password</value>
   </data>
   <data name="ServerForgotPasswordMessage" xml:space="preserve">
-    <value>Please check your email to reset your password. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+    <value>Please check your email to reset your password. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
   </data>
   <data name="ServerInvalidCode" xml:space="preserve">
     <value>Invalid code</value>
@@ -519,7 +519,7 @@
     <value>Password changed</value>
   </data>
   <data name="ServerPasswordChangedMessage" xml:space="preserve">
-    <value>Your password has been changed. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+    <value>Your password has been changed. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
   </data>
   <data name="ServerResetPassword" xml:space="preserve">
     <value>Reset Password</value>
@@ -685,5 +685,23 @@
   </data>
   <data name="PlaceholderSearchPackage" xml:space="preserve">
     <value>City or Location</value>
+  </data>
+  <data name="ErrorEmailNotConfirmed" xml:space="preserve">
+    <value>Email not confirmed yet!</value>
+  </data>
+  <data name="ErrorEmailNotConfirmedMessage" xml:space="preserve">
+    <value>For purchasing, first need to confirm your email. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="ErrorPaymentUnauthorizedDevice" xml:space="preserve">
+    <value>Unauthorized device!</value>
+  </data>
+  <data name="loadingtxt" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="PleaseTryAgain" xml:space="preserve">
+    <value>Please try again</value>
   </data>
 </root>

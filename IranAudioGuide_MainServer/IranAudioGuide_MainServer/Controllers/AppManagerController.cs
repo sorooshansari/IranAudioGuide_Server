@@ -42,8 +42,11 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(model.email) ||(string.IsNullOrEmpty(model.uuid)))
+                if (string.IsNullOrEmpty(model.uuid))
                     return new GetAudioUrlRes("", true);
+
+                if (string.IsNullOrEmpty(model.email))
+                    model.email = string.Empty;
                 var isAdmin = User.IsInRole("Admin");
                 var url = Services.ServiceDownload.GetUrl(model, isAdmin);
                 return new GetAudioUrlRes(url);

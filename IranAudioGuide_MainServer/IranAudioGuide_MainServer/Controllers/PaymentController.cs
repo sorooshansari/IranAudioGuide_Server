@@ -107,6 +107,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "AppUser")]
         public async Task<ActionResult> PaymentWeb(Guid pacId, bool IsZarinpal)
         {
+
             try
             {
 
@@ -124,8 +125,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (!user.EmailConfirmed)
                     return View("ErrorPageProfile", new vmessageVM()
                     {
-                        Subject = "Email not confirmed yet!",
-                        Message = @"For purchasing, first need to confirm your email. Please Login Again",
+                        Subject = App_GlobalResources.Global.ErrorEmailNotConfirmed,
+                        Message = App_GlobalResources.Global.ErrorEmailNotConfirmedMessage,
                     });
                 PackageVM package = (from p in db.Packages
                                      where p.Pac_Id == info.packageId
@@ -153,8 +154,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return View("ErrorPageProfile", new vmessageVM()
                 {
-                    Subject = "Error!",
-                    Message = "Please try again",
+                    Subject = App_GlobalResources.Global.Error,
+                    Message = App_GlobalResources.Global.PleaseTryAgain,
                 });
             }
         }

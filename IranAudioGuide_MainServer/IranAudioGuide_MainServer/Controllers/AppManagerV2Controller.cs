@@ -38,15 +38,18 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult GetUrl(GetAudioUrlVM model)
+        public IHttpActionResult GetAudioUrl(GetAudioUrlVM model)
         {
             try
             {
-                if (string.IsNullOrEmpty(model.email) || (string.IsNullOrEmpty(model.uuid)))
+                if (string.IsNullOrEmpty(model.uuid))
                 {
-                    //var result = new GetAudioUrlRes("", true);
                     return BadRequest(((int)GetAudioUrlStatus.unauthorizedUser).ToString());
                 }
+
+                if (string.IsNullOrEmpty(model.email))
+                    model.email = string.Empty;
+
                 var isAdmin = User.IsInRole("Admin");
                 var url = Services.ServiceDownload.GetUrl(model, isAdmin);
                 //var result= new GetAudioUrlRes(url);

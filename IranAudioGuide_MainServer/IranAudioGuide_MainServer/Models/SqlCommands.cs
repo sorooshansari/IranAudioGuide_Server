@@ -654,20 +654,7 @@ END"
         public static readonly List<string> Commands_Download = new List<string>()
 
         {
-            @"CREATE TABLE [dbo].[TrafficDownloadLogs](
-	            [Tra_Id] [int] IDENTITY(1,1) NOT NULL,
-	            [Tra_DateTime] [datetime] NOT NULL,
-	            [Tra_Username] [nvarchar](max) NOT NULL,
-	            [Tra_IdTrack] [uniqueidentifier] NOT NULL,
-	            [Tra_IsAudio] [bit] NOT NULL,
-             CONSTRAINT [PK_TrafficDownloadLogs] PRIMARY KEY CLUSTERED 
-            (
-	            [Tra_Id] ASC
-            )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-            ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-            GO",
-            @"CREATE PROCEDURE Download_LinkDelete  
+           @"CREATE PROCEDURE Download_LinkDelete  
                 @id uniqueidentifier
             AS
             BEGIN

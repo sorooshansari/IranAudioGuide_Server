@@ -15,8 +15,12 @@ namespace IranAudioGuide_MainServer
             routes.MapRoute(
                 "Default", // Route name
                 "{lang}/{controller}/{action}/{id}", // URL with parameters
-                new { lang = UrlParameter.Optional, controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { lang = "en", controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
                 );
+
+
+            //routes.MapRoute(name: "error",
+            //    url: "ErrorPage", defaults: new {  controller = "Home", action = "Error" });
             //routes.MapRoute(
             //    name: "Default",
             //    url: "{controller}/{action}/{id}",

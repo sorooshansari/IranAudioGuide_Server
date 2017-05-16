@@ -202,7 +202,7 @@
     <value>خطای 404</value>
   </data>
   <data name="PageError1" xml:space="preserve">
-    <value>با عرض پوزش؛ سایت درخواستی یافت نشد!</value>
+    <value>با عرض پوزش؛  صفحه درخواستی یافت نشد!</value>
   </data>
   <data name="PageError2" xml:space="preserve">
     <value>اینجا چه می کنید؟</value>
@@ -499,10 +499,10 @@
     <value>لطفاً ایمیل خود را چک کنید</value>
   </data>
   <data name="ServerEmailConfirmationMessage2" xml:space="preserve">
-    <value>در تلاش برای ارسال تأییدیه ای دوباره به صفحه ی پروفایل شما. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>در تلاش برای ارسال تأییدیه ای دوباره به صفحه ی پروفایل شما. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerEmailConfirmationSucceeded" xml:space="preserve">
-    <value>سپاس بابت تأیید ایمیل. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>سپاس بابت تأیید ایمیل. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerEmailErrorSending" xml:space="preserve">
     <value>ارسال ایمیل ناموفق بود</value>
@@ -526,7 +526,7 @@
     <value>رمز عبور را فراموش کرده ام</value>
   </data>
   <data name="ServerForgotPasswordMessage" xml:space="preserve">
-    <value>لطفاً ایمیل خود را برای تغییر رمز عبور چک کنید. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>لطفاً ایمیل خود را برای تغییر رمز عبور چک کنید. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerInvalidCode" xml:space="preserve">
     <value>کد نامعتبر است</value>
@@ -541,7 +541,7 @@
     <value>رمزعبور تغییر کرده است</value>
   </data>
   <data name="ServerPasswordChangedMessage" xml:space="preserve">
-    <value>رمزعبورتان تغییر کرده است. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>رمزعبورتان تغییر کرده است. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerResetPassword" xml:space="preserve">
     <value>تغییر رمزعبور</value>
@@ -683,5 +683,23 @@
   </data>
   <data name="PlaceholderSearchPackage" xml:space="preserve">
     <value>نام شهر یا مکان مورد نظر خود را وارد کنید</value>
+  </data>
+  <data name="ErrorEmailNotConfirmed" xml:space="preserve">
+    <value>Email not confirmed yet!</value>
+  </data>
+  <data name="ErrorEmailNotConfirmedMessage" xml:space="preserve">
+    <value>For purchasing, first need to confirm your email. Please click &lt;a id='loginlink' href='/fa/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="ErrorPaymentUnauthorizedDevice" xml:space="preserve">
+    <value>Unauthorized device!</value>
+  </data>
+  <data name="loadingtxt" xml:space="preserve">
+    <value>لطفا منتظر بمانید</value>
+  </data>
+  <data name="PleaseTryAgain" xml:space="preserve">
+    <value>Please try again</value>
   </data>
 </root>

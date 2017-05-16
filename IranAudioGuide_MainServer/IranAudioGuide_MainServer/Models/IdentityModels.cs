@@ -76,16 +76,10 @@ namespace IranAudioGuide_MainServer.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Tra_Id { get; set; }   
-        public DateTime Tra_DateTime { get; set; }
-        [MaxLength(128)]
-        public string Tra_UserId { get; set; }
-        public ApplicationUser Tra_User { get; set; }
-
-        public Guid? Tra_StorYId { get; set; }
-        public Story Tra_Storr { get; set; }
-
-        public Guid? Tra_AudioId { get; set; }
-        public Audio Tra_Audio { get; set; }
+        public DateTime Tra_DateTime { get; set; }   
+        public string Tra_Uuid { get; set; }
+        public Guid Tra_IdTrack { get; set; }
+        public bool Tra_IsAudio { get; set; }
     }
     public class LogUserFailure
     {
@@ -503,7 +497,7 @@ namespace IranAudioGuide_MainServer.Models
         }
         public DbSet<UserLog> UserLogs { get; set; }
         public DbSet<UpdateLog> UpdateLogs { get; set; }
-     //   public DbSet<TrafficDownloadLog> TrafficDownloadLog { get; set; }
+        public DbSet<TrafficDownloadLog> TrafficDownloadLogs { get; set; }
         public DbSet<Audio> Audios { get; set; }
         public DbSet<Story> Storys { get; set; }
         public DbSet<Place> Places { get; set; }
