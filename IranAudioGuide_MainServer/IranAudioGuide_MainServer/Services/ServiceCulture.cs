@@ -95,11 +95,11 @@ namespace IranAudioGuide_MainServer
             {
                 langHeader = cookie.Value.ToString();
             }
-            else if (HttpContext.Current.Request.UserLanguages.Length > 0)
-            {
-                // set the culture by the location if not speicified
-                langHeader = HttpContext.Current.Request.UserLanguages[0];
-            }
+            //else if (HttpContext.Current.Request.UserLanguages.Length > 0)
+            //{
+            //    // set the culture by the location if not speicified
+            //    langHeader = HttpContext.Current.Request.UserLanguages[0];
+            //}
             else
                 langHeader = EnumLang.en.ToString();
 
