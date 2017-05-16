@@ -8,7 +8,6 @@ using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using iTextSharp.text;
 using System.Web.Mvc;
 
 namespace IranAudioGuide_MainServer.Services
@@ -64,7 +63,7 @@ namespace IranAudioGuide_MainServer.Services
                         string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);
                         string pdfpath = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/pdf"), imgName);
                         CreateCode(barcodeString, path);
-                        ImagesToPdf(path, pdfpath);
+                        //ImagesToPdf(path, pdfpath);
                         //var fs = new BinaryWriter(new FileStream(path, FileMode.Create, FileAccess.Write));
                         //fs.Write(barcodeArray);
                         //fs.Close();
@@ -111,27 +110,27 @@ namespace IranAudioGuide_MainServer.Services
         //    barcode.Code = value;
         //    return barcode.GetBarcodeImage(System.Drawing.Imaging.ImageFormat.Jpeg);
         //}
-        public void ImagesToPdf(string imagepaths, string pdfpath)
-        {
-            iTextSharp.text.Rectangle pageSize = null;
+        //public void ImagesToPdf(string imagepaths, string pdfpath)
+        //{
+        //    iTextSharp.text.Rectangle pageSize = null;
 
-            using (var srcImage = new Bitmap(imagepaths.ToString()))
-            {
-                pageSize = new iTextSharp.text.Rectangle(0, 0, srcImage.Width, srcImage.Height);
-            }
+        //    using (var srcImage = new Bitmap(imagepaths.ToString()))
+        //    {
+        //        pageSize = new iTextSharp.text.Rectangle(0, 0, srcImage.Width, srcImage.Height);
+        //    }
 
-            using (var ms = new MemoryStream())
-            {
-                var document = new iTextSharp.text.Document(pageSize, 0, 0, 0, 0);
-                iTextSharp.text.pdf.PdfWriter.GetInstance(document, ms).SetFullCompression();
-                document.Open();
-                var image = iTextSharp.text.Image.GetInstance(imagepaths.ToString());
-                document.Add(image);
-                document.Close();
+        //    using (var ms = new MemoryStream())
+        //    {
+        //        var document = new iTextSharp.text.Document(pageSize, 0, 0, 0, 0);
+        //        iTextSharp.text.pdf.PdfWriter.GetInstance(document, ms).SetFullCompression();
+        //        document.Open();
+        //        var image = iTextSharp.text.Image.GetInstance(imagepaths.ToString());
+        //        document.Add(image);
+        //        document.Close();
 
-                File.WriteAllBytes(pdfpath + "guide.pdf", ms.ToArray());
-            }
-        }
+        //        File.WriteAllBytes(pdfpath + "guide.pdf", ms.ToArray());
+        //    }
+        //}
         public long Getpackage(Guid id)
         {
             try
@@ -189,6 +188,38 @@ namespace IranAudioGuide_MainServer.Services
             var t = new Procurement { Bar_Id = CBS_id_bar, Pro_PaymentFinished = true, Id = userid, Pac_Id = packid };
             db.Procurements.Add(t);
             db.SaveChanges();
+        }
+        public GeneratePDFModel DownloadPDF1()
+        {
+            try
+            {
+                var model = new GeneratePDFModel();
+                Barcode b = new Barcode();
+
+                //get the information to display in pdf from database
+                //for the time
+                //Hard coding values are here, these are the content to display in pdf 
+                var content = "<h2>Iran Audio Guide<h2>" +
+                 "<p>Ohh This is very easy to generate pdf using Rotativa <p>";
+                var logoFile = @"/Images/as.png";
+                var img = @"/Content/images/barcodes/95.jpeg";
+                
+                              
+                model.PDFContent = content;
+                model.PDFLogo = HttpContext.Current.Server.MapPath(logoFile);
+                model.bar_image= HttpContext.Current.Server.MapPath(img);
+
+                return (model);
+
+                //Use ViewAsPdf Class to generate pdf using GeneratePDF.cshtml view
+                
+            }
+
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         #endregion
         public void Dispose()

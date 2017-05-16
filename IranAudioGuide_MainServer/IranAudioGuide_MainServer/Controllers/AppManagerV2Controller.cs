@@ -62,6 +62,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         private ApplicationDbContext db = new ApplicationDbContext();
         [HttpPost]
+        //public BuyWithBarcodeStatus BuyWithBarcode(Guid packId, string email, string uuid, string barcode)
         public BuyWithBarcodeStatus BuyWithBarcode(BuyWithBarcodeVM model)
         {
             try

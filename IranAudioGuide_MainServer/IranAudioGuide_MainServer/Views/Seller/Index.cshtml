@@ -28,23 +28,6 @@
 }
 
 
-@*@using (Html.BeginForm("CreatNewBarcode", "Seller", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <table>
-        <tr>
-            <td>Price:</td>
-            <td>@Html.TextBoxFor(x => x.price)</td>
-        </tr>
-        <tr>
-            <td>Quantity:</td>
-            <td>@Html.TextBoxFor(x => x.quantity)</td>
-        </tr>
-        <tr>
-            <td colspan="2"><button type="submit">Insert</button></td>
-        </tr>
-    </table>
-}*@
-
 <section id="promo" class="content-block min-height-600px">
     <div class="container">
         <div class="row">
@@ -59,20 +42,16 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
-                    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-                    @*@Html.ValidationMessageFor(m => m.price, "", new { @class = "text-danger", placeholder = Global.PlaceholderEmail })*@
                     <div class="form-group">
                         <div class="col-md-8">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                @*@Html.DropDownListFor(m =>m.Pri_Value , new SelectList(Model.Pri_Id))*@
                                 @Html.DropDownListFor(x=>x.PriceId, Model.prices, "--select price--", new { @class = "form-control",  })
                                 
-                                @*@Html.TextBoxFor(m => m.PriceId, new { @class = "form-control", placeholder ="price" })*@
                             </div>
                         </div>
                     </div>
-                    @*@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger", placeholder = Global.PlaceholderPassword })*@
+                   
                     <div class="form-group">
                         <div class="col-md-8">
                             <div class="input-group">
@@ -101,7 +80,10 @@
                             <button id="signbtn" type="submit"  class="btn btn-inverse"><i class="fa fa-plus"></i>Insert</button>
                         </div>
                     </div>
-                    
+                    <div>
+                        <a href="@Url.Action("DownloadPDF", "Seller")">Download ViewAsPdf</a>
+                    </div>
+
                     @*<p class="TextLinkp">
                         @Html.ActionLink(Global.RegisterAsNewUser, "Register")
                     </p>

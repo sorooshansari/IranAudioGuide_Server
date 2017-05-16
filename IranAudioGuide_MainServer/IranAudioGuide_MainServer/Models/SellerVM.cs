@@ -67,4 +67,10 @@ namespace IranAudioGuide_MainServer.Models
         public double CBS_price_pri { get; set; }
         public string CBS_sellername { get; set; }
     }
+    public class GeneratePDFModel
+    {
+        public string PDFContent { get; set; }
+        public string PDFLogo { get; set; }
+        public string bar_image { get; set; }
+    }
 }
