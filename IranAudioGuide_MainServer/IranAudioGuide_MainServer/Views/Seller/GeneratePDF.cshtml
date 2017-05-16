@@ -1,0 +1,23 @@
+﻿@model IranAudioGuide_MainServer.Models.GeneratePDFModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GeneratePDF</title>
+</head>
+<body>
+    <div>
+        <img src="@Model.PDFLogo" alt="" />
+        <h1>hi</h1>
+    </div>
+    <div>
+        @Html.Raw(Model.PDFContent)
+        <img src="@Model.bar_image" alt="" />
+    </div>
+</body>
+</html>

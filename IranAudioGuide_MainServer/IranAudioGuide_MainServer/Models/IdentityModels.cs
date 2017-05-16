@@ -376,6 +376,9 @@ namespace IranAudioGuide_MainServer.Models
         //public int? WMPaymentId { get; set; }
         public WMPayment Pro_WMPayment { get; set; }
 
+        public int? Bar_Id { get; set; }
+        public Barcode Pro_bar { get; set; }
+
         #endregion
 
     }
@@ -432,9 +435,6 @@ namespace IranAudioGuide_MainServer.Models
             WMP_SYS_TRANS_DATE = date;
             WMP_SYS_TRANS_DATE_Result = date;
         }
-
-
-
         [Key]
         //[Display(Name = "Payment Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -481,6 +481,34 @@ namespace IranAudioGuide_MainServer.Models
         public string WMP_PAYER_IP { get; set; }
 
     }
+    public class Barcode
+    {
+        public Barcode()
+        {
+            Bar_DateTime = DateTime.Now;
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Bar_Id { get; set; }
+        public int Pri_Id { get; set; }
+        public Price Bar_Price { get; set; }
+        public string Bar_SellerName { get; set; }
+        public bool Bar_IsUsed { get; set; }
+        public string Bar_Image_Url { get; set; }
+        public DateTime Bar_DateTime { get; set; }
+    }
+    public class Price
+    {
+        public Price()
+        {
+           
+        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Pri_Id { get; set; }
+        public double Pri_Value { get; set; }
+        public string Pri_Description { get; set; }
+    }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -521,6 +549,10 @@ namespace IranAudioGuide_MainServer.Models
         //public DbSet<TranslatePackage> TranslatePackages { get; set; }
         public DbSet<TranslatePlace> TranslatePlaces { get; set; }
 
+        //seller
+        public DbSet<Barcode> Barcodes { get; set; }
+        public DbSet<Price> Prices { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -530,6 +562,7 @@ namespace IranAudioGuide_MainServer.Models
             //modelBuilder.Configurations.Add(new PackageConfig());
             base.OnModelCreating(modelBuilder);
         }
+
 
     }
 }

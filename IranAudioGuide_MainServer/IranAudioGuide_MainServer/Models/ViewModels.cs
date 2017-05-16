@@ -387,7 +387,8 @@ namespace IranAudioGuide_MainServer.Models
         Login,
         AdminIndex,
         UserIndex,
-        vmessage
+        vmessage,
+        Seller
     }
     public class AdminIndexVM
     {

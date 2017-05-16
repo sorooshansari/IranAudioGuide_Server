@@ -62,6 +62,10 @@
       <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MessagingToolkit.QRCode, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagingToolkit.QRCode.1.3.0\lib\MessagingToolkit.QRCode.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -95,6 +99,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -227,13 +235,11 @@
       <DependentUpon>Global.fa.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="App_GlobalResources\Global.designer.cs">
       <DependentUpon>Global.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -246,28 +252,31 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\AppManagerV2Controller.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\SellerController.cs" />
-    <Compile Include="Controllers\testController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Content Include="Content\css\bootstrap-theme.css.map" />
-    <Content Include="Content\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\css\bootstrap.css.map" />
-    <Content Include="Content\css\bootstrap.min.css.map" />
-    <Content Include="Content\css\fontawesome-webfont.eot" />
-    <Content Include="Content\css\fontawesome-webfont.ttf" />
-    <Content Include="Content\css\fontawesome-webfont.woff" />
-    <Content Include="Content\css\fontawesome-webfont.woff2" />
-    <Content Include="Content\css\FontAwesome.otf" />
-    <None Include="doc\storeproced.text" />
-    <Compile Include="Migrations\201705161205356_s.cs" />
-    <Compile Include="Migrations\201705161205356_s.Designer.cs">
-      <DependentUpon>201705161205356_s.cs</DependentUpon>
+    <Compile Include="Migrations\201705070826316_a1.cs" />
+    <Compile Include="Migrations\201705070826316_a1.Designer.cs">
+      <DependentUpon>201705070826316_a1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705071034384_Bar.cs" />
+    <Compile Include="Migrations\201705071034384_Bar.Designer.cs">
+      <DependentUpon>201705071034384_Bar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705071043376_Bar2.cs" />
+    <Compile Include="Migrations\201705071043376_Bar2.Designer.cs">
+      <DependentUpon>201705071043376_Bar2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705091155338_priceAdded.cs" />
+    <Compile Include="Migrations\201705091155338_priceAdded.Designer.cs">
+      <DependentUpon>201705091155338_priceAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705100732218_pro-bar.cs" />
+    <Compile Include="Migrations\201705100732218_pro-bar.Designer.cs">
+      <DependentUpon>201705100732218_pro-bar.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -283,6 +292,7 @@
     <Compile Include="Models\Lang.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mappings.cs" />
+    <Compile Include="Models\SellerVM.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Variables.cs" />
@@ -290,9 +300,6 @@
     <Compile Include="Models\LangVM.cs" />
     <Compile Include="Models\WBViewModel.cs" />
     <Compile Include="Models\WebMoneyTools.cs" />
-    <Compile Include="Models_v2\ApiViewModels_v2.cs" />
-    <Compile Include="Models_v2\dbManager_v2.cs" />
-    <Compile Include="Models_v2\dbTools_v2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Zarinpal\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -300,69 +307,17 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Services\AdminService.cs" />
+    <Compile Include="Services\BarcodeServices.cs" />
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
-    <Compile Include="Services\ExtensionMethod.cs" />
     <Compile Include="Services\GlobalPath.cs" />
-    <Compile Include="Services\ServiceCulture.cs" />
+    <Compile Include="Services\LocalizationAttribute.cs" />
     <Compile Include="Services\ServiceDownload.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
     <Compile Include="Services\ServiceJob.cs" />
     <Compile Include="Services\ServiceRecaptcha.cs" />
     <Compile Include="Startup.cs" />
-    <Content Include="Content\css\AdiminMain.css" />
-    <Content Include="Content\css\AdminCustom.css" />
-    <Content Include="Content\css\bootstrap-social.css" />
-    <Content Include="Content\css\bootstrap-social.min.css" />
-    <Content Include="Content\css\bootstrap-theme.css" />
-    <Content Include="Content\css\bootstrap-theme.min.css" />
-    <Content Include="Content\css\bootstrap.3.3.7.min.css" />
-    <Content Include="Content\css\bootstrap.css" />
-    <Content Include="Content\css\bootstrap.min.css" />
-    <Content Include="Content\css\bs_leftnavi.css" />
-    <Content Include="Content\css\components-md.css" />
-    <Content Include="Content\css\Custom4.css" />
-    <Content Include="Content\css\font-awesome.css" />
-    <Content Include="Content\css\font-awesome.min.css" />
-    <Content Include="Content\css\fontawesome-webfont.svg" />
-    <Content Include="Content\css\HomeStyles.css" />
-    <Content Include="Content\css\Home_fa.css" />
-    <Content Include="Content\css\ie8.css" />
-    <Content Include="Content\css\ie9.css" />
-    <Content Include="Content\css\ionic.css" />
-    <Content Include="Content\css\ionic.min.css" />
-    <Content Include="Content\css\ionicons.css" />
-    <Content Include="Content\css\ionicons.min.css" />
-    <Content Include="Content\css\loading.css" />
-    <Content Include="Content\css\main2.css" />
-    <Content Include="Content\css\notify-metro.css" />
-    <Content Include="Content\css\PakageTemplate.css" />
-    <Content Include="Content\css\profile.css" />
-    <Content Include="Content\css\profile_fa.css" />
-    <Content Include="Content\css\responsiveslides.css" />
-    <Content Include="Content\css\select.css" />
-    <Content Include="Content\css\select.min.css" />
-    <Content Include="Content\css\simple-sidebar.css" />
-    <Content Include="Content\css\simple-sidebar_fa.css" />
-    <Content Include="Content\css\Site.css" />
-    <Content Include="Content\css\sliderArrow.css" />
-    <Content Include="Content\css\style-library-1.css" />
-    <Content Include="Content\css\styles.min.css" />
-    <Content Include="Content\css\toastr.min.css" />
-    <Content Include="Content\css\toggle.css" />
-    <Content Include="Content\css\toggle.min.css" />
-    <Content Include="Content\css\UserCustom.css" />
-    <Content Include="Content\css\UserMain.css" />
-    <Content Include="Content\images\default_avatar.png" />
-    <Content Include="Content\images\Members\Soroosh.jpg" />
-    <Content Include="doc\fullStoredProcedure.sql" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
-    <Content Include="images\logo.png" />
-    <Content Include="images\Members\alireza.jpg" />
-    <Content Include="logo.png" />
-    <Content Include="Views\Shared\_SelectLangBtn.cshtml" />
-    <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\admin\css\components-rtl.css" />
@@ -611,6 +566,51 @@
     <Content Include="Content\admin\scripts\login.js" />
     <Content Include="Content\admin\scripts\metronic.js" />
     <Content Include="Content\admin\scripts\quick-sidebar.js" />
+    <Content Include="Content\css\AdiminMain.css" />
+    <Content Include="Content\css\AdminCustom.css" />
+    <Content Include="Content\css\bootstrap-social.css" />
+    <Content Include="Content\css\bootstrap-social.min.css" />
+    <Content Include="Content\css\bootstrap-theme.css" />
+    <Content Include="Content\css\bootstrap-theme.css.map" />
+    <Content Include="Content\css\bootstrap-theme.min.css" />
+    <Content Include="Content\css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\css\bootstrap.3.3.7.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.css.map" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap.min.css.map" />
+    <Content Include="Content\css\bs_leftnavi.css" />
+    <Content Include="Content\css\components-md.css" />
+    <Content Include="Content\css\Custom4.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\fontawesome-webfont.svg" />
+    <Content Include="Content\css\HomeStyles.css" />
+    <Content Include="Content\css\Home_fa.css" />
+    <Content Include="Content\css\ie8.css" />
+    <Content Include="Content\css\ie9.css" />
+    <Content Include="Content\css\ionic.css" />
+    <Content Include="Content\css\ionic.min.css" />
+    <Content Include="Content\css\ionicons.css" />
+    <Content Include="Content\css\ionicons.min.css" />
+    <Content Include="Content\css\loading.css" />
+    <Content Include="Content\css\main2.css" />
+    <Content Include="Content\css\notify-metro.css" />
+    <Content Include="Content\css\PakageTemplate.css" />
+    <Content Include="Content\css\profile.css" />
+    <Content Include="Content\css\responsiveslides.css" />
+    <Content Include="Content\css\select.css" />
+    <Content Include="Content\css\select.min.css" />
+    <Content Include="Content\css\simple-sidebar.css" />
+    <Content Include="Content\css\Site.css" />
+    <Content Include="Content\css\sliderArrow.css" />
+    <Content Include="Content\css\style-library-1.css" />
+    <Content Include="Content\css\styles.min.css" />
+    <Content Include="Content\css\toastr.min.css" />
+    <Content Include="Content\css\toggle.css" />
+    <Content Include="Content\css\toggle.min.css" />
+    <Content Include="Content\css\UserCustom.css" />
+    <Content Include="Content\css\UserMain.css" />
     <Content Include="Content\fonts\arcon-regular-webfont.woff" />
     <Content Include="Content\fonts\arcon-regular-webfont.woff2" />
     <Content Include="Content\fonts\arcon-rounded-regular-webfont.woff" />
@@ -732,13 +732,9 @@
     <Content Include="Content\images\close.svg" />
     <Content Include="Content\images\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
     <Content Include="Content\images\file_add.png" />
-    <Content Include="Content\images\flag-fa.png" />
-    <Content Include="Content\images\flag-uk.png" />
     <Content Include="Content\images\Get_it_on_Google_play.svg" />
     <Content Include="Content\images\ie\grad0-15.svg" />
-    <Content Include="Content\images\Members\defaultM.jpg" />
-    <Content Include="Content\images\Members\defaultW.jpg" />
-    <Content Include="Content\images\Members\Mona.jpg" />
+    <Content Include="Content\images\miniBWlogo.jpg" />
     <Content Include="Content\images\overlay.png" />
     <Content Include="Content\images\playpause-48-48-1.png" />
     <Content Include="Content\images\prevnext-48-48-1.png" />
@@ -1558,13 +1554,18 @@
     <Content Include="Content\Scripts\util.js" />
     <Content Include="Content\Scripts\util.min.js" />
     <Content Include="Content\Scripts\version.json" />
-    <Content Include="doc\store.js" />
+    <Content Include="Content\css\fontawesome-webfont.eot" />
+    <Content Include="Content\css\fontawesome-webfont.ttf" />
+    <Content Include="Content\css\fontawesome-webfont.woff" />
+    <Content Include="Content\css\fontawesome-webfont.woff2" />
+    <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="google60352dff0d3dbd69.html" />
     <Content Include="images\marker.png" />
     <Content Include="images\v_blue_on_transp_en.png" />
     <Content Include="images\v_blue_on_white_en.png" />
     <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="robots.txt" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="sitemap.xml" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -1616,6 +1617,7 @@
     <Content Include="Content\fonts\NewFonts\segoeuil.ttf" />
     <Content Include="Content\fonts\NewFonts\segoeuisl.ttf" />
     <Content Include="Content\fonts\NewFonts\sourcesanspro-regular-webfont.woff" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
     <Content Include="favicon.ico" />
@@ -1664,11 +1666,6 @@
     <Content Include="fonts\Arcon-Regular.otf" />
     <Content Include="fonts\Arcon-Rounded-Regular.otf" />
     <Content Include="fonts\SDDT-Light-web.woff" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />
@@ -1795,14 +1792,16 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Seller\Index.cshtml" />
+    <Content Include="Views\Seller\GeneratePDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Content\images\barcodes\" />
+    <Folder Include="Content\images\pdf\" />
     <Folder Include="Download\" />
     <Folder Include="fonts\NewFonts\" />
     <Folder Include="images\slidepics\" />
-    <Folder Include="Views\test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1818,19 +1817,32 @@
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="App_GlobalResources\Global.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+    <Content Include="App_GlobalResources\Global.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Global.designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\Global.fa.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_GlobalResources\Global.fa.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201705070826316_a1.resx">
+      <DependentUpon>201705070826316_a1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705161205356_s.resx">
-      <DependentUpon>201705161205356_s.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705071034384_Bar.resx">
+      <DependentUpon>201705071034384_Bar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705071043376_Bar2.resx">
+      <DependentUpon>201705071043376_Bar2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705091155338_priceAdded.resx">
+      <DependentUpon>201705091155338_priceAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705100732218_pro-bar.resx">
+      <DependentUpon>201705100732218_pro-bar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
