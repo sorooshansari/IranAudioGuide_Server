@@ -96,7 +96,7 @@
 }
 
 ._fa .captchaHolder {
-    padding: 0;    
+    padding: 0;
     float: right;
     margin-right: -7px;
 }
@@ -120,6 +120,28 @@
 
 @media (min-width: 1024px) {
     ._fa #goTopButton {
-    padding-top: 10px;
+        padding-top: 10px;
     }
 }
+
+@media (min-width: 768px) {
+    ._fa .Location .panel {
+        max-width: 360px;
+    }
+
+    @media (min-width: 1280px) {
+        ._fa .Location .panel {
+            max-width: inherit;
+        }
+
+        ._fa .member-th {
+            width: 55% !important;
+        }
+    }
+    /*._fa .LocationInfo .panel-body .row {
+    margin: 0 !important;
+}
+
+._fa .member-th {
+    width: 100%;
+}*/

@@ -265,9 +265,9 @@
     <Content Include="Content\css\fontawesome-webfont.woff2" />
     <Content Include="Content\css\FontAwesome.otf" />
     <None Include="doc\storeproced.text" />
-    <Compile Include="Migrations\201705161006421_s.cs" />
-    <Compile Include="Migrations\201705161006421_s.Designer.cs">
-      <DependentUpon>201705161006421_s.cs</DependentUpon>
+    <Compile Include="Migrations\201705161205356_s.cs" />
+    <Compile Include="Migrations\201705161205356_s.Designer.cs">
+      <DependentUpon>201705161205356_s.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -1829,8 +1829,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705161006421_s.resx">
-      <DependentUpon>201705161006421_s.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705161205356_s.resx">
+      <DependentUpon>201705161205356_s.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
