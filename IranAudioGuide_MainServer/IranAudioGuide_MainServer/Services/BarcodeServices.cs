@@ -60,9 +60,9 @@ namespace IranAudioGuide_MainServer.Services
                         string barcodeString = string.Format("{0};{1};{2}", b.Bar_Id, price.Pri_Value.ToString(), SellerName);
                         //byte[] barcodeArray = GetBarcodeImg(barcodeString);
                         string imgName = string.Format("{0}.jpeg", b.Bar_Id);
-                        string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);
-                        string pdfpath = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/pdf"), imgName);
-                        CreateCode(barcodeString, path);
+                        //string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);
+                        //string pdfpath = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/pdf"), imgName);
+                        CreateCode(barcodeString, imgName);
                         //ImagesToPdf(path, pdfpath);
                         //var fs = new BinaryWriter(new FileStream(path, FileMode.Create, FileAccess.Write));
                         //fs.Write(barcodeArray);
@@ -85,7 +85,7 @@ namespace IranAudioGuide_MainServer.Services
 
         }
         #region tools
-        protected void CreateCode(string value, string destPath)
+        protected void CreateCode(string value, string name)
         {
             QRCodeEncoder encoder = new QRCodeEncoder();
 
@@ -101,7 +101,14 @@ namespace IranAudioGuide_MainServer.Services
 
             //g.DrawImage(logo, new Point(left, top));
 
-            img.Save(destPath, ImageFormat.Jpeg);
+
+            //img.Save(destPath, ImageFormat.Jpeg);
+            var request = new ServiceFtp();
+
+            var fullpath = GlobalPath.FtpPathBarcodes + "/" + name;
+            var isSuccess = request.Upload(img, fullpath);
+            //if (isSuccess)
+            //    throw new ArgumentException("Dont save image in Server", "original");
         }
         //private byte[] GetBarcodeImg(string value)
         //{
