@@ -284,7 +284,7 @@
     width: 50px;
     height: 50px;
     border-radius: 100%;
-    background-color: #2170d7;
+    background-color: #21b2a6;
     z-index: 99;
     text-align: center;
     padding-top: 10px;
@@ -312,10 +312,10 @@
     -o-transition: all 4s!important;
     transition: all 4s!important;*/
     opacity: 1;
-    -moz-transition: -moz-transform .75s ease,opacity .75s ease;
-    -webkit-transition: -webkit-transform .75s ease,opacity .75s ease;
-    -ms-transition: -ms-transform .75s ease,opacity .75s ease;
-    transition: transform .75s ease,opacity .75s ease;
+    -moz-transition: -moz-transform .75s ease,opacity .75s ease,background-color .75s ease;
+    -webkit-transition: -webkit-transform .75s ease,opacity .75s ease,background-color .75s ease;
+    -ms-transition: -ms-transform .75s ease,opacity .75s ease,background-color .75s ease;
+    transition: transform .75s ease,opacity .75s ease,background-color .75s ease;
     /*-moz-transition-delay: 3.5s;
     -webkit-transition-delay: 3.5s;
     -ms-transition-delay: 3.5s;
@@ -325,7 +325,12 @@
     -ms-transform: translateY(0);
     transform: translateY(0);
 }
-
+.goTopButtonShow i{
+    -webkit-transition: all .75s ease;
+    -moz-transition: all .75s ease;
+    -o-transition: all .75s ease;
+    transition: all .75s ease;
+}
 
 /*#goTopButton i {
     -webkit-transition: all 4s;
@@ -334,21 +339,21 @@
     transition: all 4s;
     }*/
 
-#goTopButton:hover {
-    -webkit-transition: all 200ms;
-    -moz-transition: all 200ms;
-    -o-transition: all 200ms;
-    transition: all 200ms;
+.goTopButtonShow:hover {
+    -webkit-transition: all .75s ease;
+    -moz-transition: all .75s ease;
+    -o-transition: all .75s ease;
+    transition: all .75s ease;
     box-shadow: 0px 0px 1px inset;
     background-color: #fff;
 }
 
-    #goTopButton:hover i {
-        -webkit-transition: all 200ms;
-        -moz-transition: all 200ms;
-        -o-transition: all 200ms;
-        transition: all 200ms;
-        color: #15437f;
+    .goTopButtonShow:hover i {
+    -webkit-transition: all .75s ease;
+    -moz-transition: all .75s ease;
+    -o-transition: all .75s ease;
+    transition: all .75s ease;
+        color: #21b2a6;
     }
 
 

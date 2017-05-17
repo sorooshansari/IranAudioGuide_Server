@@ -697,7 +697,7 @@
     <value>Unauthorized device!</value>
   </data>
   <data name="loadingtxt" xml:space="preserve">
-    <value>لطفا منتظر بمانید</value>
+    <value>لطفا منتظر بمانید ...</value>
   </data>
   <data name="PleaseTryAgain" xml:space="preserve">
     <value>Please try again</value>

@@ -484,7 +484,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading....
+        ///   Looks up a localized string similar to Loading ....
         /// </summary>
         public static string loadingtxt {
             get {
