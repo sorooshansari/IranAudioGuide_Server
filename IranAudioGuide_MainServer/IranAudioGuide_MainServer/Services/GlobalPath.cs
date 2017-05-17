@@ -37,6 +37,8 @@ namespace IranAudioGuide_MainServer.Services
 
         public static readonly string DownloadPathStory = "/Download/Stories/";
         public static readonly string DownloadPathAudios = "/Download/Audios/";
-        
+
+        public static readonly string FtpPathBarcodes = hostFtp + "/Images/Barcodes";
+        public static readonly string PathBarcodes = host + "/Images/Barcodes";
     }
 }
