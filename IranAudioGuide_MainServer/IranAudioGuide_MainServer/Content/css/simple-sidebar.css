@@ -20,27 +20,34 @@ body {
 .wrapper-show {
     display: block !important;
 }
-#wrapper {
+
+body._en #wrapper {
     padding-left: 0;
+}
+
+#wrapper {
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    display:none;
+    display: none;
 }
 
-    #wrapper.toggled {
-        padding-left: 250px;
-    }
+body._en #wrapper.toggled {
+    padding-left: 250px;
+}
+
+body._en #sidebar-wrapper {
+    left: 250px;
+    margin-left: -250px;
+}
 
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
     /* bottom: 0px; */
-    left: 250px;
     width: 0;
     height: 100%;
-    margin-left: -250px;
     overflow-y: hidden;
     overflow-x: auto;
     background: #dfdfdf;
@@ -62,7 +69,7 @@ body {
     padding: 15px;
 }
 
-#wrapper.toggled #page-content-wrapper {
+body._en #wrapper.toggled #page-content-wrapper {
     position: absolute;
     margin-right: -250px;
 }
@@ -76,13 +83,14 @@ body {
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }*/
-.logo:hover #IAGLink{
+.logo:hover #IAGLink {
     text-shadow: 0px 0px 10px white;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }
+
 .logo {
     position: relative;
     /* top: -150px; */
@@ -117,18 +125,18 @@ body {
 }
 
 #IAGLink {
-    color:#fff;
-    text-decoration:none;
-        -webkit-transition: all 0.5s ease;
+    color: #fff;
+    text-decoration: none;
+    -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }
 
 #IAGTextLink {
-color: #144482;
+    color: #001644;
     margin-top: 20px;
-    font-weight: 400;
+    font-weight: 500;
     text-shadow: 1px 1px 4px #6b6b6b;
 }
 
@@ -137,7 +145,6 @@ color: #144482;
     line-height: 40px;
     font-size: 15px;
     text-align: left;
-
 }
 
     .sidebar-nav li a {
@@ -156,21 +163,22 @@ color: #144482;
         width: 90%;
         margin: 0 auto;
     }
-    .sidebar-nav li:hover{
-            text-decoration: none;
-    color: rgba(255, 255, 255, 0.82);
-    background: rgba(51, 122, 183, 0.44);
+
+    .sidebar-nav li:hover {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.82);
+        background: rgba(51, 122, 183, 0.44);
     }
-        /*.sidebar-nav li a:hover {
+    /*.sidebar-nav li a:hover {
             text-decoration: none;
             color: rgba(255, 255, 255, 0.82);
             background: rgba(51, 122, 183, 0.44);
         }*/
 
-        .sidebar-nav li a:active,
-        .sidebar-nav li a:focus {
-            text-decoration: none;
-        }
+    .sidebar-nav li a:active,
+    .sidebar-nav li a:focus {
+        text-decoration: none;
+    }
 
 .sidebar-nav > .sidebar-brand {
     height: 65px;
@@ -189,13 +197,13 @@ color: #144482;
 
 @media(min-width:768px) {
 
-    #wrapper {
+    body._en #wrapper {
         padding-left: 250px;
     }
 
-        #wrapper.toggled {
-            padding-left: 0;
-        }
+    body._en #wrapper.toggled {
+        padding-left: 0;
+    }
 
     #sidebar-wrapper {
         width: 250px;
@@ -214,31 +222,30 @@ color: #144482;
         position: relative;
         margin-right: 0;
     }
-
 }
 
 @media screen and (max-width: 980px) {
 
-  
+
     #page-content-wrapper {
         /*background-image: -ms-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
         background-image: -moz-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
         background-image: -webkit-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
         background-image: -o-linear-gradient(top,rgba(0,0,0,.5),rgba(0,0,0,.5)),url(/images/banner.jpg);
         background-size: cover;*/
-        padding-top:30px;
+        padding-top: 30px;
     }
 }
 
-@media screen and (max-width: 760px) {  
-    #page-content-wrapper { 
-        padding-top:60px;
+@media screen and (max-width: 760px) {
+    #page-content-wrapper {
+        padding-top: 60px;
     }
 }
 /********* end menu right ***************************
 *****************************************************/
 .menu-username {
-margin: 0;
+    margin: 0;
     padding: 0;
     font-weight: 500;
     font-size: 14px;

@@ -62,6 +62,10 @@
       <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MessagingToolkit.QRCode, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagingToolkit.QRCode.1.3.0\lib\MessagingToolkit.QRCode.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -95,6 +99,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -244,16 +252,15 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\AppManagerV2Controller.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\SellerController.cs" />
+    <Compile Include="Controllers\testController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201705070826316_a1.cs" />
-    <Compile Include="Migrations\201705070826316_a1.Designer.cs">
-      <DependentUpon>201705070826316_a1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -268,6 +275,7 @@
     <Compile Include="Models\Lang.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mappings.cs" />
+    <Compile Include="Models\SellerVM.cs" />
     <Compile Include="Models\SqlCommands.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Variables.cs" />
@@ -275,6 +283,9 @@
     <Compile Include="Models\LangVM.cs" />
     <Compile Include="Models\WBViewModel.cs" />
     <Compile Include="Models\WebMoneyTools.cs" />
+    <Compile Include="Models_v2\ApiViewModels_v2.cs" />
+    <Compile Include="Models_v2\dbManager_v2.cs" />
+    <Compile Include="Models_v2\dbTools_v2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Zarinpal\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -282,10 +293,12 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Services\AdminService.cs" />
+    <Compile Include="Services\BarcodeServices.cs" />
     <Compile Include="Services\ChallengeResult.cs" />
     <Compile Include="Services\CustomSqlErrorLog.cs" />
+    <Compile Include="Services\ExtensionMethod.cs" />
     <Compile Include="Services\GlobalPath.cs" />
-    <Compile Include="Services\LocalizationAttribute.cs" />
+    <Compile Include="Services\ServiceCulture.cs" />
     <Compile Include="Services\ServiceDownload.cs" />
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
@@ -708,6 +721,7 @@
     <Content Include="Content\images\file_add.png" />
     <Content Include="Content\images\Get_it_on_Google_play.svg" />
     <Content Include="Content\images\ie\grad0-15.svg" />
+    <Content Include="Content\images\miniBWlogo.jpg" />
     <Content Include="Content\images\overlay.png" />
     <Content Include="Content\images\playpause-48-48-1.png" />
     <Content Include="Content\images\prevnext-48-48-1.png" />
@@ -1538,6 +1552,7 @@
     <Content Include="images\v_blue_on_white_en.png" />
     <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="robots.txt" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="sitemap.xml" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -1589,6 +1604,7 @@
     <Content Include="Content\fonts\NewFonts\segoeuil.ttf" />
     <Content Include="Content\fonts\NewFonts\segoeuisl.ttf" />
     <Content Include="Content\fonts\NewFonts\sourcesanspro-regular-webfont.woff" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
     <Content Include="favicon.ico" />
@@ -1763,10 +1779,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Seller\Index.cshtml" />
+    <Content Include="Views\Seller\GeneratePDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Content\images\barcodes\" />
+    <Folder Include="Content\images\pdf\" />
     <Folder Include="Download\" />
     <Folder Include="fonts\NewFonts\" />
     <Folder Include="images\slidepics\" />
@@ -1795,11 +1814,6 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705070826316_a1.resx">
-      <DependentUpon>201705070826316_a1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

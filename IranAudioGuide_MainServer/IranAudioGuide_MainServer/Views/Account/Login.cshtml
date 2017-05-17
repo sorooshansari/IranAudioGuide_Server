@@ -1,5 +1,6 @@
 ﻿@using IranAudioGuide_MainServer.Models
-@using Resources
+@using IranAudioGuide_MainServer.App_GlobalResources
+
 @model LoginViewModel
 @{
     ViewBag.Title = Global.TitlePageLogIn;
@@ -22,6 +23,18 @@
             }
         }
     </style>
+}
+@section topLoading{
+    <div ng-class="{ 'unload': isCompletedLoading == false, 'load': isCompletedLoading == true}">
+        <div id="fpcontainer">
+            <img id="IAGLogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" />
+            <div style="text-align:center;">
+                @*<img id="spinbars" src="@Global.ImagePath/bars.svg" />*@
+                <span>@Global.loadingtxt</span>
+
+            </div>
+        </div>
+    </div>
 }
 <section id="promo" class="content-block min-height-600px">
     <div class="container">

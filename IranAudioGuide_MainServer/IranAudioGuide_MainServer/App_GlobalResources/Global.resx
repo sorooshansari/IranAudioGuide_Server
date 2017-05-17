@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnBuy" xml:space="preserve">
-    <value>buy</value>
+    <value>Get</value>
   </data>
   <data name="btnPurchased" xml:space="preserve">
     <value>Purchased</value>
@@ -383,7 +383,7 @@
     <value>Confirm Password</value>
   </data>
   <data name="PlaceholderEmail" xml:space="preserve">
-    <value>Email address</value>
+    <value>Email</value>
   </data>
   <data name="PlaceholderMessage" xml:space="preserve">
     <value>Your Message...</value>
@@ -486,10 +486,10 @@
     <value>Email Confirmation</value>
   </data>
   <data name="ServerEmailConfirmationMessage2" xml:space="preserve">
-    <value>Try to send another confirmation email through your profile page. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+    <value>Try to send another confirmation email through your profile page. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
   </data>
   <data name="ServerEmailConfirmationSucceeded" xml:space="preserve">
-    <value>Thank you for confirming your email. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+    <value>Thank you for confirming your email. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
   </data>
   <data name="ServerErrorConfirmSubject" xml:space="preserve">
     <value>Confirmation Failed!</value>
@@ -504,7 +504,7 @@
     <value>Forgot Password</value>
   </data>
   <data name="ServerForgotPasswordMessage" xml:space="preserve">
-    <value>Please check your email to reset your password. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+    <value>Please check your email to reset your password. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
   </data>
   <data name="ServerInvalidCode" xml:space="preserve">
     <value>Invalid code</value>
@@ -519,7 +519,7 @@
     <value>Password changed</value>
   </data>
   <data name="ServerPasswordChangedMessage" xml:space="preserve">
-    <value>Your password has been changed. Please click &lt;a id='loginlink' href='/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+    <value>Your password has been changed. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
   </data>
   <data name="ServerResetPassword" xml:space="preserve">
     <value>Reset Password</value>
@@ -561,7 +561,7 @@
     <value>Places</value>
   </data>
   <data name="PaymentPage21" xml:space="preserve">
-    <value>Description</value>
+    <value>Cities Included</value>
   </data>
   <data name="PaymentPage22" xml:space="preserve">
     <value>Payment Gateway</value>
@@ -628,5 +628,89 @@
   </data>
   <data name="signInSubHeader" xml:space="preserve">
     <value>Manage your Iran Audio Guide account easily through our website</value>
+  </data>
+  <data name="DispalyCode" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="ErrorEmail" xml:space="preserve">
+    <value>Invalid email address</value>
+  </data>
+  <data name="ErrorRequiredEmail" xml:space="preserve">
+    <value>The  Email field is required.</value>
+  </data>
+  <data name="ErrorRequiredPassword" xml:space="preserve">
+    <value>The Password field is required.</value>
+  </data>
+  <data name="ErrorRequiredRegisterName" xml:space="preserve">
+    <value>The {0} field is required.</value>
+  </data>
+  <data name="ErrorStringLengthMessage" xml:space="preserve">
+    <value>The {0} must be at least {2} characters long.</value>
+  </data>
+  <data name="ErrorComparePassword" xml:space="preserve">
+    <value>The password and confirmation password do not match.</value>
+  </data>
+  <data name="ErrorRequire" xml:space="preserve">
+    <value>The  field is required.</value>
+  </data>
+  <data name="RememberBrowser" xml:space="preserve">
+    <value>Remember this browser?</value>
+  </data>
+  <data name="LabelForRememberMe" xml:space="preserve">
+    <value>Remember Me?</value>
+  </data>
+  <data name="aliReza" xml:space="preserve">
+    <value>Alireza Motaghi</value>
+  </data>
+  <data name="aliRezaOc" xml:space="preserve">
+    <value>Audio Editor</value>
+  </data>
+  <data name="danial" xml:space="preserve">
+    <value>Danial Babadi Yousefi</value>
+  </data>
+  <data name="danialOc" xml:space="preserve">
+    <value>Designer</value>
+  </data>
+  <data name="purmand" xml:space="preserve">
+    <value>Taiebe Pourmand</value>
+  </data>
+  <data name="purmandOc" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="LangTitle" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LangOther" xml:space="preserve">
+    <value>fa</value>
+  </data>
+  <data name="PlaceholderSearchPackage" xml:space="preserve">
+    <value>City or Location</value>
+  </data>
+  <data name="ErrorEmailNotConfirmed" xml:space="preserve">
+    <value>Email not confirmed yet!</value>
+  </data>
+  <data name="ErrorEmailNotConfirmedMessage" xml:space="preserve">
+    <value>For purchasing, first need to confirm your email. Please click &lt;a id='loginlink' href='/en/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="ErrorPaymentUnauthorizedDevice" xml:space="preserve">
+    <value>Unauthorized device!</value>
+  </data>
+  <data name="loadingtxt" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="PleaseTryAgain" xml:space="preserve">
+    <value>Please try again</value>
+  </data>
+  <data name="ImagePath" xml:space="preserve">
+    <value>http://iranaudioguide.net/Images</value>
+  </data>
+  <data name="ErrorRegisterDuplicateUserName" xml:space="preserve">
+    <value>This Email  is already taken.</value>
+  </data>
+  <data name="ErrorUnknown" xml:space="preserve">
+    <value>Connection Error Please Try Again Later</value>
   </data>
 </root>

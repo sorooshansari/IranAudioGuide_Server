@@ -4,30 +4,43 @@ using System.Linq;
 
 namespace IranAudioGuide_MainServer.Services
 {
-    public static class ExtensionMethods {
+    public static class ExtensionMethods
+    {
         public static string UserIPAddress
         {
 
             get { return HttpContext.Current.Request.UserHostAddress; }
         }
-        public  static IPData GetInfoIPAddress(){
+        public static IPData GetInfoIPAddress()
+        {
             try
             {
                 System.Net.WebClient client = new System.Net.WebClient();
                 string response = client.DownloadString("http://ip-api.com/json/" + UserIPAddress);
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<IPData>(response);
             }
-            catch {
-                return null; 
+            catch
+            {
+                return null;
             }
         }
 
-     
-      //  public static bool IsIran { get { return (GetInfoIPAddress().countryCode == "IR") ? true : false; } }
-        public static bool IsForeign { get {
 
-                return (GetInfoIPAddress().countryCode == "IR" ) ? false : true; } }
-
+        //  public static bool IsIran { get { return (GetInfoIPAddress().countryCode == "IR") ? true : false; } }
+        public static bool IsForeign
+        {
+            get
+            {
+                try
+                {
+                    return (GetInfoIPAddress().countryCode == "IR") ? false : true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
     }
     public class ServiceIpAdress
     {

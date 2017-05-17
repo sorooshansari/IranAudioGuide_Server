@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IranAudioGuide_MainServer.App_GlobalResources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,8 +18,8 @@ namespace IranAudioGuide_MainServer
         public langsVM()
         {
             Get = new List<LangVM>() {
-                new LangVM() { Id = "en" , Icon ="/Content/images/flag-uk.png" , Title="English"},
-                new LangVM() { Id = "fa" , Icon ="/Content/images/flag-fa.png" , Title="فارسی"}
+                new LangVM() { Id = "en" , Icon =Global.ImagePath+ "/flag-uk.png" , Title="En"},
+                new LangVM() { Id = "fa" , Icon =Global.ImagePath+ "/flag-fa.png" , Title="فا"}
             };
 
         }

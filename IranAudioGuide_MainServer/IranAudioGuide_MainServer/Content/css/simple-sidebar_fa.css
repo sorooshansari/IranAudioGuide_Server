@@ -1,0 +1,37 @@
+
+body._fa #wrapper {
+    padding-right: 0;
+}
+
+    body._fa #wrapper.toggled {
+        padding-right: 250px;
+    }
+   
+
+body._fa #sidebar-wrapper {
+    right: 250px;
+    margin-right: -250px;
+}
+
+body._fa #wrapper.toggled #page-content-wrapper {
+       position: absolute;
+    margin-left: -250px;
+}
+
+body._fa .sidebar-nav li {
+    text-align: right;
+}
+
+@media(min-width:768px) {
+    body._fa #wrapper {
+        padding-right: 250px;
+    }
+
+        body._fa #wrapper.toggled {
+            padding-right: 0;
+        }
+}
+
+body._fa .menu-username {
+    right: 5px;
+}

@@ -202,7 +202,7 @@
     <value>خطای 404</value>
   </data>
   <data name="PageError1" xml:space="preserve">
-    <value>با عرض پوزش؛ سایت درخواستی یافت نشد!</value>
+    <value>با عرض پوزش؛  صفحه درخواستی یافت نشد!</value>
   </data>
   <data name="PageError2" xml:space="preserve">
     <value>اینجا چه می کنید؟</value>
@@ -325,7 +325,7 @@
     <value>درباره ی ما</value>
   </data>
   <data name="Parameter24" xml:space="preserve">
-    <value>با درود فراوان! ما دو نفر، منا اخلاقی و سروش انصاری مهر هستیم و از آنجایی که نوآوری برای هر دوی ما معنای خاصی داشت، تصمیم به همکاری گرفته و عمیقاً به قدرت دگرگون کنندگی تصویر و طراحی و قابلیت خارق العاده آنها در سهولت برای برقراری ارتباط باور داریم. در نتیجه مفتخریم که به عنوان اولین راهنمای صوتی گردشگری در ایران، بهترین و کامل ترین مجموعه را در اختیار شما قرار دهیم</value>
+    <value>با درود فراوان! ما همگی عمیقا اعتقاد به قدرت دگرگونی تکنولوژی و فناوری در دگرگونی درک و لذت افراد در تمامی ابعاد زندگی داریم. ما با همکاری تصمیم به ارایه نرم افزاری گرفتیم که با ترکیب درک لذت و علاقه همگان را به تاریخ و فرهنگ ایران زمین متحول کند. در نتیجه مفتخریم که به عنوان اولین راهنمای صوتی گردشگری در ایران، بهترین و کامل ترین مجموعه را در اختیار شما قرار دهیم</value>
   </data>
   <data name="Parameter25" xml:space="preserve">
     <value>منا اخلاقی</value>
@@ -499,10 +499,10 @@
     <value>لطفاً ایمیل خود را چک کنید</value>
   </data>
   <data name="ServerEmailConfirmationMessage2" xml:space="preserve">
-    <value>در تلاش برای ارسال تأییدیه ای دوباره به صفحه ی پروفایل شما. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>در تلاش برای ارسال تأییدیه ای دوباره به صفحه ی پروفایل شما. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerEmailConfirmationSucceeded" xml:space="preserve">
-    <value>سپاس بابت تأیید ایمیل. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>سپاس بابت تأیید ایمیل. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerEmailErrorSending" xml:space="preserve">
     <value>ارسال ایمیل ناموفق بود</value>
@@ -526,7 +526,7 @@
     <value>رمز عبور را فراموش کرده ام</value>
   </data>
   <data name="ServerForgotPasswordMessage" xml:space="preserve">
-    <value>لطفاً ایمیل خود را برای تغییر رمز عبور چک کنید. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>لطفاً ایمیل خود را برای تغییر رمز عبور چک کنید. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerInvalidCode" xml:space="preserve">
     <value>کد نامعتبر است</value>
@@ -541,7 +541,7 @@
     <value>رمزعبور تغییر کرده است</value>
   </data>
   <data name="ServerPasswordChangedMessage" xml:space="preserve">
-    <value>رمزعبورتان تغییر کرده است. لطفاً برای ورود &lt;a id='loginlink' href='/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>رمز عبورتان تغییر کرده است. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerResetPassword" xml:space="preserve">
     <value>تغییر رمزعبور</value>
@@ -607,7 +607,7 @@
     <value>توییتر</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
-    <value>رمز عبور خود را فراموش کرده اید؟</value>
+    <value>رمز  عبور   خود را فراموش کرده اید؟</value>
   </data>
   <data name="Google" xml:space="preserve">
     <value>گوگل</value>
@@ -626,5 +626,86 @@
   </data>
   <data name="signInSubHeader" xml:space="preserve">
     <value>از این طریق می توانید به راحتی حساب کاربری خود را مدیریت کنید</value>
+  </data>
+  <data name="ErrorEmail" xml:space="preserve">
+    <value>ایمیل وارد شده نامعتبر است</value>
+  </data>
+  <data name="ErrorRequiredPassword" xml:space="preserve">
+    <value>رمز عبور باید وارد شود</value>
+  </data>
+  <data name="ErrorRequiredRegisterName" xml:space="preserve">
+    <value>{0} باید پر شود</value>
+  </data>
+  <data name="ErrorStringLengthMessage" xml:space="preserve">
+    <value>{0} باید حداقل {2} حرف باشد</value>
+  </data>
+  <data name="DispalyCode" xml:space="preserve">
+    <value>کد</value>
+  </data>
+  <data name="ErrorComparePassword" xml:space="preserve">
+    <value>رمز عبور و تأییدیه ی آن همخوانی ندارند</value>
+  </data>
+  <data name="ErrorRequire" xml:space="preserve">
+    <value>این قسمت مورد نیاز است</value>
+  </data>
+  <data name="ErrorRequiredEmail" xml:space="preserve">
+    <value>ایمیل باید وارد شود</value>
+  </data>
+  <data name="RememberBrowser" xml:space="preserve">
+    <value>این مررورگر را به خاطر بسپار؟</value>
+  </data>
+  <data name="LabelForRememberMe" xml:space="preserve">
+    <value>مرا به خاطر بسپار؟</value>
+  </data>
+  <data name="aliReza" xml:space="preserve">
+    <value>علی رضا متقی</value>
+  </data>
+  <data name="aliRezaOc" xml:space="preserve">
+    <value>ادیتور صدا</value>
+  </data>
+  <data name="danial" xml:space="preserve">
+    <value>دانیال بابادی یوسفی</value>
+  </data>
+  <data name="danialOc" xml:space="preserve">
+    <value>طراح</value>
+  </data>
+  <data name="purmand" xml:space="preserve">
+    <value>طیبه پورمند</value>
+  </data>
+  <data name="purmandOc" xml:space="preserve">
+    <value>توسعه دهنده</value>
+  </data>
+  <data name="LangTitle" xml:space="preserve">
+    <value>فارسی</value>
+  </data>
+  <data name="LangOther" xml:space="preserve">
+    <value>en</value>
+  </data>
+  <data name="PlaceholderSearchPackage" xml:space="preserve">
+    <value>نام شهر یا مکان مورد نظر خود را وارد کنید</value>
+  </data>
+  <data name="ErrorEmailNotConfirmed" xml:space="preserve">
+    <value>Email not confirmed yet!</value>
+  </data>
+  <data name="ErrorEmailNotConfirmedMessage" xml:space="preserve">
+    <value>For purchasing, first need to confirm your email. Please click &lt;a id='loginlink' href='/fa/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="ErrorPaymentUnauthorizedDevice" xml:space="preserve">
+    <value>Unauthorized device!</value>
+  </data>
+  <data name="loadingtxt" xml:space="preserve">
+    <value>لطفا منتظر بمانید</value>
+  </data>
+  <data name="PleaseTryAgain" xml:space="preserve">
+    <value>Please try again</value>
+  </data>
+  <data name="ErrorRegisterDuplicateUserName" xml:space="preserve">
+    <value>این ایمل قبلا مورد استفاده قرار گرفته</value>
+  </data>
+  <data name="ErrorUnknown" xml:space="preserve">
+    <value>خطا در برقراری ارتباط با شبکه، چند لحظه دیگر امتحان کنید</value>
   </data>
 </root>

@@ -1,7 +1,121 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
+@using IranAudioGuide_MainServer.Models
+@using Resources
 
-<h2>Index</h2>
+@model CreatBarCodeVM
+
+@section Styles{
+    <style>
+        #rc-imageselect, .g-recaptcha {
+            transform: scale(0.86);
+            -webkit-transform: scale(0.86);
+            transform-origin: 0 0;
+            -webkit-transform-origin: 0 0;
+        }
+
+        @@media screen and (min-width: 992px) {
+            #rc-imageselect, .g-recaptcha {
+                transform: scale(0.92);
+                -webkit-transform: scale(0.92);
+                transform-origin: 0 0;
+                -webkit-transform-origin: 0 0;
+
+            }
+        }
+    </style>
+}
+
+
+<section id="promo" class="content-block min-height-600px">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-5">
+                @*  Please don't remove item  *@
+                <span id="chechLogin"></span>
+                <h2>@Global.Parameter42</h2>
+                <p id="regdet">
+                    @Global.signInSubHeader
+                </p>
+                @using (Html.BeginForm("CreatNewBarcode", "Seller", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                @Html.DropDownListFor(x=>x.PriceId, Model.prices, "--select price--", new { @class = "form-control",  })
+                                
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-qrcode"></i></span>
+                                @Html.TextBoxFor(m => m.quantity, new { @class = "form-control ", placeholder = "Quantity", @min="1" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" ng-show="isTheFirstLogin == false">
+                        <div class="col-md-8 captchaHolder">
+                            @* for localhost *@
+                            <div class="input-group">
+                                <div class="g-recaptcha" data-sitekey="6LffxRMUAAAAAK7Fv690WPwcjVKcX1niaz_N6dHn"></div>
+                            </div>
+                            @*  for server
+                                <div class="g-recaptcha" data-sitekey="6LdmbRMUAAAAAJK7NTs6f4lHluxq-6ZI7efyiXsV"></div>
+                            *@
+                        </div>
+                    </div>
+
+                <!-- Button -->
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <button id="signbtn" type="submit"  class="btn btn-inverse"><i class="fa fa-plus"></i>Insert</button>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="@Url.Action("DownloadPDF", "Seller")">Download ViewAsPdf</a>
+                    </div>
+
+                    @*<p class="TextLinkp">
+                        @Html.ActionLink(Global.RegisterAsNewUser, "Register")
+                    </p>
+                    <p class="TextLinkp">
+                        @Html.ActionLink(Global.TitlePageForgot, "ForgotPassword")
+                    </p>*@
+                  
+                }
+
+            </div>
+            <!-- /.col -->
+            @*<div class="col-xs-12 col-md-6 col-md-offset-1">
+                <div class="ExternalLogin">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </div>
+            </div>*@
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+    
+</section>
+
+@section scripts{
+    @if (Global.Lang != "en")
+    {
+        <script src='https://www.google.com/recaptcha/api.js?hl= @Global.Lang'></script>
+    }
+    else
+    {
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    }
+}
 

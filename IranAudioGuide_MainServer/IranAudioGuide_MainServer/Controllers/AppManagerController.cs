@@ -1,5 +1,6 @@
 ﻿using Elmah;
 using IranAudioGuide_MainServer.Models;
+using IranAudioGuide_MainServer.Models_v1;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -34,14 +35,18 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             return Services.GlobalPath.host;
         }
+        //todo?????????
 
         [HttpPost]
         public GetAudioUrlRes GetAudioUrl(GetAudioUrlVM model)
         {
             try
             {
-                if (string.IsNullOrEmpty(model.email) ||(string.IsNullOrEmpty(model.uuid)))
+                if (string.IsNullOrEmpty(model.uuid))
                     return new GetAudioUrlRes("", true);
+
+                if (string.IsNullOrEmpty(model.email))
+                    model.email = string.Empty;
                 var isAdmin = User.IsInRole("Admin");
                 var url = Services.ServiceDownload.GetUrl(model, isAdmin);
                 return new GetAudioUrlRes(url);
@@ -66,6 +71,8 @@ namespace IranAudioGuide_MainServer.Controllers
             //    return new GetAudioUrlRes(GetAudioUrlStatus.unknownError, ex.Message);
             //}
         }
+
+        //todo?????????
         [HttpPost]
         public AutorizedCitiesVM GetAutorizedCities(GetAutorizedCitiesVM model)
         {
@@ -97,6 +104,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             return dbTools.GetPackagesByCity(cityId);
         }
+        
         [HttpPost]
         // POST: api/AppManager/GetUpdates/5
         public GetUpdateVM GetUpdates(int LastUpdateNumber, string uuid)
@@ -114,6 +122,8 @@ namespace IranAudioGuide_MainServer.Controllers
             return res;
         }
         // POST: api/AppManager/GetAll
+        
+            
         [HttpPost]
         public GetAllVM GetAll(string uuid)
         {

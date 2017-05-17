@@ -1,4 +1,5 @@
 ﻿
+@using IranAudioGuide_MainServer.App_GlobalResources;
 @using IranAudioGuide_MainServer.Models
 @{
     ViewBag.Title = "PaymentRef";
@@ -148,7 +149,8 @@
 <section id="PaymentRefSection" onload="time_dec()">
     <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
         <div class="col-xs-12 checkout-content chkout-img">
-            <img src="~/images/IAGSITELOGO.png" />
+
+            <img src="@Global.ImagePath/IAGSITELOGO.png" />
             <h1>@Html.Raw(ViewBag.Image) @ViewBag.Message</h1>
         </div>
 
@@ -182,7 +184,7 @@
                         <tr style="background-color:white;">
                             <td class="_1sttd" style="background-color: white;"><div class="col-xs-12"><i class="fa fa-credit-card-alt"></i>Payment Gateway</div></td>
                             <td class="_2ndtd" style="background-color:white;     font-size: small; font-weight: 600;">
-                                <img style="width:55px; vertical-align: middle;" src="/images/icon-128x128.png"><br>
+                                <img style="width:55px; vertical-align: middle;" src="@Global.ImagePath/icon-128x128.png"><br>
                                 ZarrinPal
                             </td>
                         </tr>
@@ -239,7 +241,7 @@
                     <tr style="background-color:white;">
                         <td class="_1sttd">Payment Gateway</td>
                         <td class="_2ndtd">
-                            <img style="width:75px;" src="~/images/icon-128x128.png" />
+                            <img style="width:75px;" src="@Global.ImagePath/icon-128x128.png"/>
                         </td>
                     </tr>
                 </table>

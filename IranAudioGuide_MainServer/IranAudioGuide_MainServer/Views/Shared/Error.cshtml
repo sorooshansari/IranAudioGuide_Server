@@ -1,7 +1,9 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
+@using IranAudioGuide_MainServer.App_GlobalResources;
 @{
     ViewBag.Title = "Error";
 }
+@using IranAudioGuide_MainServer.App_GlobalResources
 
 
 <style type="text/css">
@@ -72,18 +74,25 @@
             text-shadow: 1px 1px 2px #808080 !important;
             line-height: 25px;
         }
+
+    #header.alt .country {
+        display: none;
+    }
+    #header .country {
+        display: none;
+    }
 </style>
-@using Resources
 <section id="ErrorSection">
     <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
         <div class="col-md-4 col-sm-8 col-xs-10 error-content err-img">
-            <img src="~/images/IAGSITELOGO.png" />
+
+        <img src="@Global.ImagePath/IAGSITELOGO.png" />
         </div>
         <div class="col-md-4  col-sm-10 col-xs-12 error-content err-text">
             <h1 style="font-size:xx-large;">@Global.PageError0</h1>
             <h1>@Global.PageError1</h1>
-            <p>@Global.PageError2</p>
-            <a href="/">@Global.PageError3</a>
+            <p>@*@Global.PageError2*@</p>
+            @*<a href="/">@Global.PageError3</a>*@
         </div>
     </div>
 </section>

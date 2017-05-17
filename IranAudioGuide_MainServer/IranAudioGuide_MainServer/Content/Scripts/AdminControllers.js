@@ -699,7 +699,7 @@ angular.module('AdminPage.controllers', [])
         $scope.selectCityImg = false;
         $scope.AddCity = function (NewCity, form) {
             if (form.$valid && $scope.selectCityImg) {
-                $rootScope.AddCityLoading = true;
+                $rootScope.AddCityLoading = true;                
                 CityServices.AddCity(NewCity);
 
             }

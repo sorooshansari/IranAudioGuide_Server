@@ -1,24 +1,36 @@
 ﻿@model IranAudioGuide_MainServer.Models.PackageVM
-
+@using Resources
 @{
     Layout = "~/Views/Shared/_PaymentLayout.cshtml";
 }
-
-
 <style type="text/css">
-    #page-wrapper {
-        height: 96vh;
+    /*#page-wrapper {
         background: none !important;
-            background-color: #001644 !important;
+    }*/
+    body
+    {
+        background-color: #dfdfdf;
+    }
+    #page-wrapper {
+        background-image: none !important;
+        background-color: #ececec;
+        overflow: hidden;
+        height: 95vh;
+    }
+    #footer {
+        background-color: #dfdfdf !important;
     }
 
-    .spotlightv {
+    table tbody tr {
+     border:none !important; 
+    border-left: 0;
+    border-right: 0;
+}
+    #CheckOutSection .spotlightv {
         margin-top: 25vh;
     }
 
     #header.alt h1 {
-        /*-ms-pointer-events: none;*/
-        /* pointer-events: none; */
         opacity: 1 !important;
     }
 
@@ -27,329 +39,450 @@
         border-bottom: thin solid white;
     }
 
-    body {
-        background: #15437f;
-    }
-
-    #MainSection {
-        /* position: absolute; */
+    #CheckOutSection #MainSection {
         margin-top: 100px;
         height: 400px;
         width: 100%;
     }
 
-    .Main-content {
+    #CheckOutSection h3 {
+        text-transform: none;
+        color: #15437f;
+        text-shadow: 1px 1px 1px #ccc;
+    }
+
+    #CheckOutSection .Main-content {
         float: right;
     }
 
-    .Main-text {
+    #CheckOutSection .Main-text {
         padding: 3em;
         padding-top: 175px;
     }
 
-    #infocontainer {
-    background-color: transparent;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    min-height: 65vh;
-    margin-top: 20px;
-    margin-bottom: 25px;
-    padding: 10px;
+    #CheckOutSection #infocontainer {
+    width: 95%;
+    left: 2.5%;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 30px;
+    /* border-bottom-right-radius: 30px; */
+    box-shadow: 0px 0px 10px black;
+    min-height: 74vh;
+    margin-top: 30px !important;
+    margin-bottom: -36px !important;
+    padding: 0;
     }
 
+    #footer .icons {
+        margin: 0 0 0 0;
+    }
 
-    .chkout-img {
+        #footer .icons li a {
+            color: #001644;
+            text-shadow: 0px 0px 1px #000000;
+        }
+
+    #footer .copyright {
+        color: rgb(0, 22, 68);
+        font-weight: 600;
+        text-shadow: none;
+    }
+
+        #footer .copyright li {
+            font-size: 9px;
+            letter-spacing: 1px;
+            height: 12px;
+        }
+
+            #footer .copyright li a, #footer .copyright li a:visited {
+                text-decoration: none;
+            }
+    #footer .icons a:hover {
+        top:3px;
+    color: #15437f;
+    text-shadow: none;
+}
+    #CheckOutSection .chkout-img {
         text-align: center;
     }
 
-        .chkout-img img {
+        #CheckOutSection .chkout-img img {
             width: 150px;
             margin-bottom: 20px;
         }
 
-    .chkout-text {
-        padding: 0em 0em 2em 0em;
+    #CheckOutSection .chkout-text {
+            padding: 0em 0em 3.5em 0em;
         margin: 0 auto;
     }
 
-        .chkout-text h1, .chkout-text p {
+        #CheckOutSection .chkout-text h1, .chkout-text p {
             color: #15437f !important;
             text-shadow: 1px 1px 2px #808080 !important;
             line-height: 25px;
         }
 
 
-    ._1sttd {
-    font-size: 14px;
-    width: 50%;
-    /*border-right: 1px solid #15437f !important;*/
-    vertical-align: middle;
-    font-weight: 600;
-    }
-
-    ._1sttd i
-    {
-    /*position: absolute;
-    left: 5px;
-    top: 5px;
-    font-size: large;*/
-    }
-
-    ._2ndtd {
+    #CheckOutSection ._1sttd {
+        font-size: 14px;
         width: 50%;
-
+        vertical-align: middle;
+        font-weight: 600;
     }
 
-    .table-mybordered > thead > tr > th, .table-mybordered > tbody > tr > th, .table-mybordered > tfoot > tr > th, .table-mybordered > thead > tr > td, .table-mybordered > tbody > tr > td, .table-mybordered > tfoot > tr > td {
+        /*#CheckOutSection ._1sttd i {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            font-size: large;
+        }*/
+
+        #CheckOutSection ._1sttd .col-xs-12 {
+            padding-left: 25px;
+        }
+
+    #CheckOutSection ._2ndtd {
+        width: 50%;
+    }
+
+    #CheckOutSection .table-mybordered > thead > tr > th, .table-mybordered > tbody > tr > th, .table-mybordered > tfoot > tr > th, .table-mybordered > thead > tr > td, .table-mybordered > tbody > tr > td, .table-mybordered > tfoot > tr > td {
         border: 1px solid #b6b6b6;
-        /*border-left: none !important;
-        border-right: none !important;*/
     }
 
-    table tbody tr {
+    #CheckOutSection table tbody tr {
         background: none !important;
     }
 
-    .desc
-    {
+    #CheckOutSection .desc {
         font-weight: 600;
-        font-size:x-small;
-        padding:10px 10px !important;
+        font-size: x-small;
+        padding: 0 10px !important;
     }
 
-    .purchasebtn
-    {
-        width:110px;
-        background-color:rgb(0, 124, 113);
-        color:white;
-        font-size:small;
-    }
-    
-    #wmcheck
-    {
-        /*position: absolute; left: 0;*/ border-bottom:none;
+    #CheckOutSection .purchasebtn {
+        width: 120px;
+        background-color: #15437f;
+        color: white;
+        font-size: small;
     }
 
-    #PriceLabel
-    {
-    color: white;
+    #CheckOutSection .zarinpalicon fa {
+        background: url(/images/icon-128x128.png) no-repeat center right;
+        display: block;
+        height: 38px;
+        width: 38PX;
+        background-size: cover;
+    }
+
+    #CheckOutSection .webmoneyicon fa {
+        background: url(/images/webmoney2.png) no-repeat center right;
+        display: block;
+        height: 38px;
+        width: 38PX;
+        background-size: cover;
+    }
+
+    #CheckOutSection .btn-info {
+        color: #fff;
+        background-color: #15437f;
+        border-color: #041a35;
+    }
+
+    #CheckOutSection ul.icons {
+        list-style: none;
+    }
+
+    #CheckOutSection .desc {
+        font-weight: 600;
+        font-size: x-small;
+        padding: 10px 10px !important;
+    }
+
+    #CheckOutSection .purchasebtn {
+        width: 110px;
+        background-color: #009083;
+        color: white;
+        font-size: small;
+    }
+
+    #CheckOutSection #wmcheck {
+        /*position: absolute; left: 0;*/
+        border-bottom: none;
+    }
+
+    #CheckOutSection #PriceLabel {
+    color: #ececec;
     font-size: large;
-    font-weight: 600;
-    padding: 8px 50px;
-    border-radius: 7px;
-    background: #F44336;
-    box-shadow: 3px 3px 8px black;
-    text-shadow: 1px 1px 2px black;
-    }
-    #UserIdentity {
-        text-transform:none; color:white; text-shadow:none; font-weight:600;
-    }
-
-    #ChkTable
-    {
-        width: 85%;  margin:0 auto; margin-bottom: 0px !important; border-top:none !important;  color: #15437f; text-shadow:none; text-align:center;
+    font-weight: 500;
+    padding: 9px 16px;
+    border-radius: 0px 0px 10px 10px;
+    position: relative;
+    top: -9px;
+    background: #001644;
+    box-shadow: 0px 0px 4px #222222;
+    /* text-shadow: 1px 1px 2px black; */
     }
 
-    #PkgNameRow {
-        background-color: #007c71 !important;
-        color: #ffffff;
+    #CheckOutSection #UserIdentity {
+        text-transform: none;
+        color: white;
+        text-shadow: none;
+        font-weight: 600;
+    }
+
+    #CheckOutSection #ChkTable {
+        width: 100%;
+        padding: 20px 0px;
+        margin: 0px auto;
+    margin-bottom: 2.5em !important;
+        border-top: none !important;
+        color: #ececec;
+        text-shadow: none;
+        text-align: center;
+
+    }
+
+    #CheckOutSection #PkgNameRow {
+        background-color: #001644 !important;
         border: none !important;
-        margin-bottom: 10px;
-    }
-    #PurchacebtnBlock
-    {
-text-align: center;
-    padding: 0;
-    top: 15px;
-    }
-        #PkgName
-    {
-        border:none !important;
-        text-transform:capitalize; 
-        font-size:medium; 
-        font-weight: 100; 
-        border-radius: 5px 5px 0 0; 
+        text-transform: capitalize;
+        font-size: large;
+        font-weight: 700;
+        /* border-radius: 5px 5px 0 0; */
         letter-spacing: 0.1em;
-            text-shadow: 1px 1px 2px #191919;
+        /* text-shadow: 1px 1px 2px #191919; */
     }
 
-        #PkgDetailsTbl{
-            width: 100%; 
-            border-radius:10px 10px 0 0; 
-            margin:0px 0 10px 0;  color: #15437f; 
-            text-shadow:none; 
-            text-align:center; 
-            background-color: transparent;
-        }
+    #CheckOutSection #PurchacebtnBlock {
+        text-align: center;
+        padding: 0;
+        /*top: 30px;*/
+    }
 
-        .PkgDetTD{
-            background-color:#001644 !important;  
-            font-size:small; 
-            font-weight:600; 
-            font-style:italic; 
-            color:white !important;
-        }
-        #wminfobtn
-        {
-            position:relative;
-            right:0px;
-        }
+    #CheckOutSection #PkgName {
+    padding: 10px;
+    border: none !important;
+    text-transform: capitalize;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 30px 30px 0px 0px;
+    letter-spacing: 0.2em;
+    }
 
-        #awi
-        {
-            /*position: absolute; 
-            left: 0; 
-            border-bottom:none; 
+    #CheckOutSection #PkgDetailsTbl {
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+        margin: 0px 0 10px 0;
+        color: #15437f;
+        text-shadow: none;
+        text-align: center;
+        background-color: transparent;
+        float:left;
+    }
+
+    #CheckOutSection .PkgDetTD {
+    background-color: transparent;
+    position: fixed;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: italic;
+    text-align: center;
+    border: none;
+    border-bottom: 5px solid #001644;
+    color: #001644;
+    padding: 0;
+    /* height: 40px; */
+    /* padding-top: 0px; */
+    width: 95%;
+    /* left: 7.5px; */
+    margin-top: -28px;
+    text-shadow: 0px 0px 2px #000000;
+    }
+
+    #CheckOutSection #wminfobtn {
+        position: relative;
+        right: 0px;
+    }
+
+    #CheckOutSection #awi {
+        /*position: absolute;
+            left: 0;
+            border-bottom:none;
             top: 30px;*/
-            font-size: xx-small; 
+        font-size: xx-small;
+    }
 
-        }
-            #awi a {
+        #CheckOutSection #awi a {
             border-bottom: none !important;
+            color: #001644;
+            font-weight: 700;
+            font-size: 10px;
         }
-            .icons li
-            {
-                    padding: 0 1em 0 0 !important;
-            }
+
+    #WMLinks {
+        display: inline-flex;
+        margin: 0;
+        padding-left: 0;
+        width: 50%;
+        margin-top: 15px;
+    }
+
+        #WMLinks li {
+            width: inherit;
+        }
+
+    #PkgPaymentBlock {
+        /* height: 128px; */
+        /* width: 25%; */
+        /* float: none; */
+        position: fixed;
+        top: 55%;
+        border-radius: 10px 10px 30px 30px;
+        left: 2.5%;
+        width: 95%;
+        box-shadow: 0px -10px 15px #e6e6e6;
+        background-color: #ececec;
+    }
+
+    #IntGateWay {
+    width: 160px;
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 0px 0px 4px #222222;
+    background-color: #006dae;
+    padding: 3px;
+    }
+
 </style>
 
 <section id="CheckOutSection">
     <div id="infocontainer" class="col col-sm-12 col-xs-12">
-        <div class="col-xs-12 checkout-content chkout-img">
-            <h3 id="UserIdentity"><br><i class="icon fa-user-circle-o"></i>&nbsp;@User.Identity.Name</h3>
-        </div>
 
-        <div class="col-md-8 col-sm-8 col-md-push-2 col-sm-push-2 col-xs-10 col-xs-push-1 checkout-content chkout-text">
+        <div class="col-md-10 col-sm-12 col-xs-12 checkout-content chkout-text">
 
             <table id="ChkTable" class="table-mybordered table-condensed">
 
                 <tr id="PkgNameRow">
-                    <td id="PkgName" class="_2ndtd"><i class="icon fa-briefcase"></i>&nbsp;@Model.PackageName</td>
+                    <td id="PkgName" class="_2ndtd"><i class="icon fa fa-briefcase"></i>&nbsp;@Model.PackageName</td>
                 </tr>
 
             </table>
-            <table id="PkgDetailsTbl" class="table-mybordered tbldotted table-condensed">
-                <tr>
-                    <td class="_1sttd PkgDetTD"><i class="icon fa-map-signs"></i>&nbsp;Places</td>
-                    <td class="_2ndtd PkgDetTD"><i class="icon fa-clipboard"></i>&nbsp;Description</td>
-                </tr>
-
-
-
-
-                @foreach (var item in Model.PackageCities)
-                {
-
-                    <tr style="background-color: #19304c !important;">
-                        <td class="_1sttd" style="background-color:transparent;"><div class="col-xs-12" style="color:white; font-size:small; font-weight:300;">@item.CityName</div></td>
-                        <td class="_2ndtd desc" style="background-color:transparent; color:white; padding-top: 10px !important; font-weight:300;">@item.CityDesc</td>
-                    </tr>
-                }
-
-
-                <tr style="background-color: #19304c !important;">
-                    <td class="_1sttd" colspan="2" style="background-color:#001644 !important;">
-                        <div class="col-xs-12" style="color:white; font-size:small; font-weight:600; font-style:italic; padding:5px;">
-                            <i class="icon fa-credit-card-alt"></i>
-                            &nbsp;Payment Gateway
-                        </div>
-                    </td>
-
-                </tr>
-                <tr>
-    @if (ViewBag.IsChooesZarinpal)
-    {
-    <td class="_2ndtd" style="color:white; font-size:small; background-color:#fdcf41; font-weight:300; vertical-align:middle;">
-        <img style="width:35%;" src="~/images/icon-128x128.png" />
-        </td>
-    }
-    else
-    {
-        <td class="_2ndtd" style="color:white; font-size:small;  background-color:#006dae; font-weight:300; vertical-align:middle;">
-            <img style="width:90%;" src="~/images/WebMoney-logo-white_8.png" />
-        </td>
-    }
-
-                    <td class="_2ndtd" style="color:white; font-size:small; font-weight:300; vertical-align:middle;">
-                        <div class="col-xs-12" style="text-align:center; padding:0;">
-                            @if (ViewBag.IsChooesZarinpal)
-            {
-                                <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
-                                <p style="color:black; text-shadow:none; font-size:10px;">You can check your payment trustfulness by click on ZarinPal Logo above</p>
-
-                            }
-                            else
-                            {
-                                <ul class="icons" style="margin:0;">
-                                    <li>
-                                        <a href="#" style="margin:5px 0px; border-bottom: 0.8px solid white; background-color:transparent; color:whitesmoke; font-size:10px;" type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#procedure">Payment procedure</a>
-                                    </li>
-                                </ul>
-                                <div id="awi"><a href="#"><i id="wminfobtn" class="icon fa-info-circle"></i>&nbsp;About WebMoney</a></div>
-
-                                                <!-- begin WebMoney Transfer : attestation label -->
-                                <a id="wmcheck" href="https://passport.webmoney.ru/asp/certview.asp?wmid=059551878952" target=_blank>
-                                    <IMG SRC="~/images/v_blue_on_transp_en.png" title="Here is your WM passport 059551878952" border="0">@*<br>
-                                        <font size=1>Check Passport</font>*@
-                                </a>
-                <!-- end WebMoney Transfer : attestation label -->
-
-                            }
-
-                        </div>
-                    </td>
-                </tr>
-                @*<tr>
-                        <td colspan="2" class="_1sttd" style="background-color:#001644 !important;"><div class="col-xs-12" style="color:white; font-size:small; font-weight:600; font-style:italic;"><i class="icon fa-money"></i>&nbsp;Price</div></td>
-
-                    </tr>
+            <div style="height:41vh; overflow:scroll;">
+                <table id="PkgDetailsTbl" class="tbldotted table-condensed">
                     <tr>
-                        @if (ViewBag.IsChooesZarinpal)
-                        {
+                        @*<td class="_1sttd PkgDetTD"><i class="icon fa fa-map-signs"></i>&nbsp;@Global.PaymentPage2</td>*@
+                        <td colspan="2" class="_2ndtd PkgDetTD"><i class="icon fa fa-clipboard"></i>&nbsp;@Global.PaymentPage21</td>
+                    </tr>
 
-                            <td colspan="2" class="_2ndtd" style="vertical-align:middle; height:65px;">
-                                <span style="color:white; font-size:large; font-weight:600; padding:10px; border-radius:8px; background:#F44336;">@string.Format("{0:#,##0.##}", Model.PackagePrice * 10) IRR</span>
+                    @foreach (var item in Model.PackageCities)
+                    {
+
+                        <tr style="background-color: #d7d7d7  !important;     border-bottom: 2px solid #001644;">
+                            <td class="_1sttd" style="background-color:transparent;" colspan="2">
+                                <div class="col-xs-12" style="text-align:left; color:#001644; font-size:medium; font-weight:600; text-shadow:0px 0px 1px black;">
+                                    <i class="icon fa fa-map-marker"></i>&nbsp;@item.CityName
+                                </div>
+                                <div class="col-xs-12" style="text-align:left; color:#1f1f1f; font-size:x-small; font-weight:500; text-shadow:1px 1px 1px grey;">
+                                    @item.CityDesc
+                                </div>
                             </td>
+                        </tr>
+                    }
 
-                        }
-                        else
-                        {
+                    @*<tr>
+                    <td colspan="2" class="_1sttd" style="background-color:#001644 !important;"><div class="col-xs-12" style="color:white; font-size:small; font-weight:600; font-style:italic;"><i class="icon fa fa-money"></i>&nbsp;Price</div></td>
 
-                            <td colspan="2" class="_2ndtd" style="vertical-align:middle;  height:65px;">
-                                <span id="PriceLabel">@string.Format("{0:#,##0.##}", Model.PackagePriceDollar) $</span>
-                            </td>
-                        }
-                    </tr>*@
-            </table>
-
-            <div class="col-xs-12" style="padding:0px; color:white; font-size:small; font-weight:600; font-style:italic; text-align:center; top:5px;">
-                <i class="icon fa-money"></i>&nbsp;Price :
-                @if (ViewBag.IsChooesZarinpal)
-                {
-                        <span style="color:white; font-size:large; font-weight:600; padding:10px; border-radius:8px; background:#F44336;">@string.Format("{0:#,##0.##}", Model.PackagePrice * 10) IRR</span>
-                }
-                else
-                {
-                        <span id="PriceLabel">@string.Format("{0:#,##0.##}", Model.PackagePriceDollar) $</span>
-                }
-                <div id="PurchacebtnBlock" class="col-xs-12">
-
-                    <a class="btn btn-sm btn-default" href="mobile/close" style="width:100px; font-size:small;"><i class="icon fa-close"></i>&nbsp; Cancel</a>
+                </tr>
+                <tr>
                     @if (ViewBag.IsChooesZarinpal)
                     {
-                        @Html.ActionLink(" Purchase", "Purchase", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = false }, new { @class = "btn btn-default icon fa-check-square-o purchasebtn" })
+
+                        <td colspan="2" class="_2ndtd" style="vertical-align:middle; height:65px;">
+                            <span style="color:white; font-size:large; font-weight:600; padding:10px; border-radius:8px; background:#F44336;">@string.Format("{0:#,##0.##}", Model.PackagePrice * 10) IRR</span>
+                        </td>
+
                     }
                     else
                     {
-                        @Html.ActionLink(" Purchase", "WMPurchase", new { packageId = Model.PackageId, isFromApp = true }, new { @class = "btn btn-default icon fa-check-square-o purchasebtn" })
+
+                        <td colspan="2" class="_2ndtd" style="vertical-align:middle;  height:65px;">
+                            <span id="PriceLabel">@string.Format("{0:#,##0.##}", Model.PackagePriceDollar) $</span>
+                        </td>
                     }
-
-                </div>
+                </tr>*@
+                </table>
             </div>
+            <table id="PkgPaymentBlock">
+                <tr style="background-color: #19304c !important; ">
+                    <td class="_1sttd" colspan="2" style="background-color:#ececec !important; border-bottom:5px solid #001644; padding:0; padding-top:5px;">
+                        <div class="col-xs-12" style="background-color: transparent;     text-shadow: 0px 0px 2px #000000; font-weight: 500; font-style: italic; text-align: center; color: #001644;">
+                            <i class="icon fa fa-credit-card-alt"></i>
+                            &nbsp;@Global.PaymentPage22
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    @if (ViewBag.IsChooesZarinpal)
+                    {
+                        <td class="_2ndtd" colspan="1" style="color:white; font-size:small; background-color:#fdcf41; font-weight:300; vertical-align:middle;">
+                            <img style="width:35%;" src="~/images/icon-128x128.png" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="_2ndtd" colspan="1" style="background-color: #ececec; color:white; font-size:small; padding: 0px; padding-left: 15px; font-weight:300; /* padding: 15px 0;*/ text-align:center; ">
+                            <img id="IntGateWay" style="" src="~/images/WebMoney-logo-white_8.png" />
+                        </td>
+                            <td class="_2ndtd" style="background-color: #ececec; color: #001644; padding: 0px; font-size: small; font-weight: 600;  vertical-align: middle; border: none; text-align:center;">
+                                @if (ViewBag.IsChooesZarinpal)
+                                {
+                                    <span id="PriceLabel">@string.Format("{0:#,##0.##}", Model.PackagePrice * 10) IRR</span>
+                                }
+                                else
+                                {
+                                    <span id="PriceLabel">@string.Format("{0:#,##0.##}", Model.PackagePriceDollar) $</span>
+                                }
+                            </td>
+                    }
+                </tr>
+                @*<tr style="border-bottom:2px solid #001644;">
+
+                    <td class="_2ndtd" style="background-color: #001644; color: #ececec; padding: 3px; font-size: small; font-weight: 600;  vertical-align: middle;  border: none;  text-align:center;">
+                        <i class="icon fa fa-money"></i>&nbsp;Price :
+
+                    </td>
+
+                </tr>*@
+
+
+                <tr>
+                    <td colspan="2" style="padding: 0px;">
+                        <div id="PurchacebtnBlock" class="col-xs-12">
+
+                            <a class="btn btn-sm btn-default" href="@Url.Action("User")" style="width:100px; font-size:small;"><i class="icon fa fa-close"></i>&nbsp; @Global.btnCancel</a>
+                            @if (ViewBag.IsChooesZarinpal)
+                            {
+                                <a class="btn btn-default purchasebtn" href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true })"><span>@Global.PaymentPage26 </span></a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-default purchasebtn" href="@Url.Action("WMPurchase", "Payment",new { packageId = Model.PackageId, isFromApp = false })"><i class="icon fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase  </a>
+                            }
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
 
 
 
-           
+
+
+
         </div>
 
 
@@ -360,3 +493,115 @@ text-align: center;
 
     </div>
 </section>
+<div class="col-xs-12" style="text-align:center; padding:0;     margin-bottom: 10px;">
+
+    @if (ViewBag.IsChooesZarinpal)
+            {
+        <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
+                <p style="color:black; text-shadow:none; font-size:10px;">@Global.PaymentPage23</p>
+
+    }
+    else
+    {
+        <a id="wmcheck" href="https://passport.webmoney.ru/asp/certview.asp?wmid=059551878952" target=_blank>
+            <IMG SRC="~/images/v_blue_on_transp_en.png" title="Here is your WM passport 059551878952" border="0">@*<br>
+                <font size=1>Check Passport</font>*@
+        </a>
+    }
+    </div>
+    <!-- Modal -->
+    <div id="howto" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">How to pay with webmoney</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Click the bottom "Purchase", the page will go to the Webmoney transfer.<br />
+                        You will see several methods of payment with web money. If you are a Webmoney user you can use the Webmoney keeper.<br />
+                        If you’re not familiar with Webmoney services, choose the Quick payment. For the payment to proceed you will you need to receive a sms. So be sure your sim card is active and you can receive the text messages.
+                    </p>
+                    <a href="https://www.wmtransfer.com/eng/information/short/index.shtml">About Webmoney</a>
+                    <br />
+                    <h5>Account details</h5>
+                    <dl>
+                        <dt>WebMoney ID</dt>
+                        <dd> 059551878952</dd>
+                        <dt>Merchant</dt>
+                        <dd>Iran Audio Guide</dd>
+                    </dl>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="procedure" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Payment procedure</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        In order to purchase a package, you either need an Iranian cash card or you have to use the webmoney transfer system which provides various payment methods.
+                    </p>
+                    <p>
+                        The procedure will only take a few minutes. The system will guide you through the steps. As soon the process has finished, the packages will be activated for you automatically. In case the procedures fail contact us.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="Terms" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Terms & Conditions</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Once you have purchased a packaged the price is not refundable.
+                        <br />
+                        Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions.
+                        <br />
+                        Users agree to the price of each package and by purchasing a package, users terminate their right of any future complaint toward the price and content of the packages.
+                        <br />
+                        Iranaudioguide preserve the right to restrict any user’s access, in case of doubt of identity, and users agree to reply to iranaudioguide contacts to clear the issue. In case the users do not comply, Iranaudioguide has the right to deny the users access.
+                        <br />
+                        If it is proven to Iranaudioguide that a user is misusing the software in anyway, Iranaudioguide preserves to right to disable any access the user had and restrain any future access.
+                        <br />
+                        Iranaudioguide is not a purely scientific source. The content is based on scientific facts but entertainment aspects are also considered.
+                        <br />
+                        All rights of this application are strictly reserved to the brand owner. Any illegal use, will follow with legal prosecution.
+                        <br />
+                        Users agree to allow iranaudioguide use the personal data they have provided to Iranaduioguide, for the improvement of the application.
+                        <br />
+                        Each user can only change their active device once they change their personal device. In case it is proven to Iranaudioguide that users have changed the active device, to allow other individual access their packages, Iranaudioguide can restrict their access.
+                        <br />
+                        Offered services provided here are not at the order of an individual or enterprise operating any of the Transaction banks, active on Iranaudioguide. This means the banks is not connected in any way with the sales conducted in Iranaudioguide.
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>

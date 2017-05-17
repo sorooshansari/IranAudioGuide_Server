@@ -5,6 +5,41 @@ using System.Data.Entity.ModelConfiguration;
 namespace IranAudioGuide_MainServer.Models
 {
 
+    public class PlaceConfig : EntityTypeConfiguration<Place>
+    {
+        public PlaceConfig()
+        {
+            // one-to-one
+            this.HasMany(x => x.TranslatePlaces)
+                .WithRequired(x => x.Place)
+                .WillCascadeOnDelete(true);
+
+            // one-to-one
+            this.HasMany(x => x.Pla_ExtraImages)
+                .WithRequired(x => x.Place)
+                .WillCascadeOnDelete(true);
+            
+            // one-to-one
+            this.HasMany(x => x.Pla_Tips)
+                .WithRequired(x => x.Place)
+                .WillCascadeOnDelete(true);
+
+
+        }
+    }
+
+    public class ImageConfig : EntityTypeConfiguration<Image>
+    {
+        public ImageConfig()
+        {
+            // one-to-one
+            this.HasMany(x => x.TranslateImages)
+                .WithRequired(x => x.Image)
+                .WillCascadeOnDelete(true);
+            
+
+        }
+    }
     public class ProcurementConfig : EntityTypeConfiguration<Procurement>
     {
         public ProcurementConfig()

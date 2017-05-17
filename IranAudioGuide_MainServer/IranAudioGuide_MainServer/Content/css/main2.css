@@ -1,4 +1,4 @@
-@import url(/Content/global/plugins/font-awesome/font-awesome.min.css);
+@import url(/Content/global/plugins/font-awesome/css/font-awesome.min.css);
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic");
 
 
@@ -3180,7 +3180,7 @@ button,
 }
 
 #menu .close {
-    background-image: url("/Content/images/close.svg");
+    background-image: url("http://iranaudioguide.net/images/close.svg");
     background-position: 4.85em 1em;
     background-repeat: no-repeat;
     border: 0;
@@ -3295,7 +3295,7 @@ body.is-menu-visible #menu {
                 }
 
                     #header nav > ul > li > a.menuToggle:after {
-                        background-image: url("/Content/images/bars.svg");
+                        background-image: url("http://iranaudioguide.net/images/bars.svg");
                         background-position: right center;
                         background-repeat: no-repeat;
                         content: '';
@@ -3447,7 +3447,7 @@ body.is-menu-visible #menu {
     }
 
         #banner .more:after {
-            background-image: url("/Content/images/arrow.svg");
+            background-image: url("http://iranaudioguide.net/images/arrow.svg");
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;

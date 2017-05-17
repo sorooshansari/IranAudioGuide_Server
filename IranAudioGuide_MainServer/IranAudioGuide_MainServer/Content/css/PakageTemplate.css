@@ -44,10 +44,21 @@
 .planFeatures p.cityName {
     color: #ffffff;
     text-align: center;
-    font-weight: 900;
+    font-weight: 400;
     width: 100%;
+    padding: 15px 30px 15px 30px;
+    text-shadow: 0px 0px 5px white !important;
     display: inline-block;
-    text-shadow: 1px 1px 1px #0b0c27,-1px 1px 1px #0b0c27,0px -2px 3px #0b0c27;
+    font-style: italic;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+    box-shadow: 1px 25px 50px rgba(255, 255, 255, 0.15);
+    height: auto;
+    font-size: smaller;
+    min-height: 90px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .PlanPricing .planFeatures ul.rslides {
@@ -62,13 +73,9 @@
     }
 
     .PlanPricing .planFeatures ul.rslides ul {
-        /*background-color: green;
-                position: relative;
-                display: inline-block;
-                width: 100%;
-                z-index: 2000000000000;
-                top: -99px;*/
         font-size: 12px;
+        margin-left: -35px;
+        font-weight: 600;
     }
 
 .PlanPricing p {
@@ -92,7 +99,7 @@
 
 
 .template4 {
-    transition: all 1s linear 0s;
+    transition: all 0.5s linear 0s;
     padding: 0;
     background: rgb(0, 22, 68);
     -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
@@ -100,10 +107,11 @@
     box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    border-radius: 3px;
-    border-top-right-radius: 7px;
-    border-top-left-radius: 7px;
+    border-radius: 15px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
     margin: 20px auto;
+    padding-bottom: 10px;
 }
 
 .input-group-addon
@@ -134,6 +142,9 @@
 .ui-select-multiple.ui-select-bootstrap {
     height: 30px !important;
     padding: 0px 3px 0 !important;
+}
+.ui-select-multiple.ui-select-bootstrap .ui-select-match-item {
+    margin: 3px !important;
 }
 /*
     .PlanPricing:hover {
@@ -240,13 +251,79 @@
     /* box-shadow: -8px -1px 13px #ccc; */
 }
 .PkgTitle {
-    width: 100%;
+    font-size:15px;
+    width: auto;
+    max-width: 190px;
     position: absolute;
-    margin: 0;
-    padding-top: 15px;
+    /* margin-top: 10px; */
+    /* margin: 0; */
+    border-bottom-right-radius: 10px;
+    /* box-shadow: 1px 1px 3px black; */
+    border-top-right-radius: 10px;
+    padding: 15px;
     padding-left: 25px;
     text-align: left;
     text-shadow: 1px 1px 5px black;
+    font-style: italic;
+    font-weight: 400;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.ultoggle {
+    font-size: small;
+    background-color: #091e4b;
+    text-align: left;
+    padding-left: 30px;
+    cursor:pointer;
+}
+.ultoggled{
+        background-color:#001236  !important;
+}
+.pkgcityul
+{
+    /*-moz-transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    height:100%;
+    opacity:1;*/
+    display:block;
+}
+
+.ulclosed
+{
+    /*-moz-transition: all 0s ease;
+    -webkit-transition: all 0s ease;
+    -ms-transition: all 0s ease;
+    -o-transition: all 0s ease;
+    transition: all 0s ease;
+    opacity:0 !important;
+    height:0 !important;*/  
+    display:none !important;
+}
+#paymentmodalhead {
+    color: white;
+    text-align: center;
+    padding: 15px;
+    background-color: #001644;
+    border-radius: 10px 10px 5px 5px;
+    box-shadow: 0px 5px 5px #2f2f2f;
+}
+#PaymentModalPanel
+{
+    font-size: medium;
+    padding: 0;
+}
+
+.ModalPrice{
+        color: #001644;
+    font-weight: 700;
+}
+.chooesPanel
+{
+    padding:15px;
 }
 
 .orange {
@@ -260,7 +337,7 @@
 }
 .col-flex-1 .rslides li {
    
-margin-bottom: 77px;
+margin-bottom: 25px;
 }
 
 .col-flex-2 .rslides li {
@@ -276,18 +353,20 @@ margin-bottom: 77px;
 }
 
 .rslides .caption {
-    overflow: hidden;
+    /* overflow: hidden; */
     min-height: 44px;
-    max-height: 64px;
-    font-size: 10pt;
-    line-height: 14px;
+    max-height: 75px;
+    font-size: 12px;
+    line-height: 15px;
     width: 90%;
     text-align: left;
-    display: inline-block;
-    margin: 0 3%;
+    display: block;
+    margin: 0px 0px 20px 0;
     /* background-color: white; */
-    border-left: 2px solid #ffb41f;
+    border-left: 15px solid #009083;
     padding: 7px 0px 7px 10px;
+    position: relative;
+    left: 0;
 }
 
 .rslides img {
@@ -312,14 +391,19 @@ margin-bottom: 77px;
 
 .PlanPricing .planFeatures ul.rslides ul li {
     text-align: left;
-    border-top: 1px solid;
+    border-top: 1px rgba(0, 144, 131, 0.2) solid;
     margin: 0 auto;
-    width: 86%;
-    line-height: 11px;
-    padding: 7px 0 5px 8px;
+    width: 85%;
+    line-height: 12px;
+    padding: 7px 0 5px 20px;
 
 }
-
+.ui-select-bootstrap .ui-select-choices-row>span {
+    padding: 3px 10px;
+}
+.box-place {
+    margin: 0px 0 0 10px;
+}
 .col-flex-1 {
     width: 30%;
     box-shadow: 1px 1px 1px #95afd4;
@@ -365,8 +449,42 @@ margin-bottom: 77px;
         float: none;
     }
 }
-
-@media screen and (max-width: 766px) and (min-width: 427px) {
+@media (min-width: 319px) and (max-width: 426px) {
+    .ultoggle {
+        font-size: 10px;
+        background-color: #091e4b;
+        text-align: left;
+        padding-left: 20px;
+        cursor: pointer;
+    }
+    #paymentmodalhead {
+    width: 95%;
+    left: 2.5%;
+}
+    .PlanPricing .planFeatures ul.rslides ul li {
+        font-size: x-small;
+            padding: 4px 0 5px 20px;
+    }
+    .itemSelcted h6 span {
+    font-size: small;
+}
+    .ui-select-bootstrap .ui-select-choices-row.active .itemSelcted p {
+    font-size:9px;
+}
+    .itemSelcted p {
+    color: rgba(54, 56, 74, 0.72);
+    font-size:9px;
+}
+    .itemSelcted i {
+    float: left;
+    font-size: 14px;
+    padding-right: 5px;
+}
+.container-fluid {
+padding:0 !important;
+}
+}
+@media screen and (max-width: 768px) and (min-width: 427px) {
      
 
 
@@ -376,13 +494,13 @@ margin-bottom: 77px;
     }
 }
 a.btn.btn-success.btn-large {
-    background: #ffb41f;
+    background: #009083;
 
 }
 a.btn.btn-success.btn-large:hover {
-    background-color: #237572;
+    background-color: #fba826;
 }
 a.btn.btn-green.btn-large {
-    background-color: #237572;
+    background-color: #fba826;
         cursor: not-allowed;
 }

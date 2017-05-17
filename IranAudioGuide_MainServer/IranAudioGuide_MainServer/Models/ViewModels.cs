@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -17,6 +18,13 @@ namespace IranAudioGuide_MainServer.Models
         uuidMissMatch = 3,
         notConfirmed = 4,
         unknownError = 5
+    }
+    public class SelectLangVM
+    {
+        public string action { get; set; }
+        public string controller { get; set; }
+        public string currentLang { get; set; }
+        public List<LangVM> langs { get; set; }
     }
     public class vmessageVM
     {
@@ -145,7 +153,7 @@ namespace IranAudioGuide_MainServer.Models
         public string Id { get; set; }
         [Required]
         [Display(Name = "Package name")]
-        public string PackageName { get; set; }
+        public string Name { get; set; }
         public string PackageDesc { get; set; }
         [Required]
         [Display(Name = "Package price Toman")]
@@ -190,7 +198,27 @@ namespace IranAudioGuide_MainServer.Models
         public bool isPackagesPurchased { get; set; }
 
     }
+    public class PackageUserVM
+    {
+        public PackageUserVM()
+        {
+            PackageCities = new List<CityUserVM>();
+        }
+        public int Index { get; internal set; }
+        public Guid PackageId { get; set; }
+        public string PackageName { get; set; }
+        public string PackagePrice { get; set; }
+        public string PackagePriceDollar { get; set; }
+        public bool isPackagesPurchased { get; set; }
+        public int PackageOrder { get; internal set; }
 
+        public List<CityUserVM> PackageCities { get; set; }
+        public int CityId { get; set; }
+        public string CityName { get; set; }
+        public string CityOrder { get; set; }
+        public string CityImageUrl { get; internal set; }
+        public string CityDescription { get; internal set; }
+    }
     public class AddTipVM
     {
         public Guid PlaceId { get; set; }
@@ -359,7 +387,8 @@ namespace IranAudioGuide_MainServer.Models
         Login,
         AdminIndex,
         UserIndex,
-        vmessage
+        vmessage,
+        Seller
     }
     public class AdminIndexVM
     {
@@ -411,7 +440,26 @@ namespace IranAudioGuide_MainServer.Models
         [Required]
         [Display(Name = "City Image")]
         public HttpPostedFileBase CityImage { get; set; }
+        public string lang { get; set; }
     }
+    public class CityUserVM
+    {
+        public int CityID { get; set; }
+        public string _imageUrl { get; set; }
+        public string CityImageUrl
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathImageCity + value; }
+        }
+        [Display(Name = "Name")]
+        public string CityName { get; set; }
+        [Display(Name = "Description")]
+      
+        public IList<PlaceUserVM> Places { get; set; }
+        public int TotalTrackCount { get; internal set; }
+        public string CityDesc { get; internal set; }
+    }
+
     public class CityVM
     {
         [Display(Name = "#")]
@@ -470,7 +518,11 @@ namespace IranAudioGuide_MainServer.Models
 
     public class NewPlace
     {
-        [Required]
+     
+        [Required(ErrorMessageResourceType = typeof(Global),
+             ErrorMessageResourceName = "testError1")]
+        [StringLength(50, ErrorMessageResourceType = typeof(Global),
+                     ErrorMessageResourceName = "testError2")]
         public string PlaceName { get; set; }
         public string PlaceDesc { get; set; }
         public string PlaceAddress { get; set; }
@@ -479,6 +531,10 @@ namespace IranAudioGuide_MainServer.Models
         public int PlaceCityId { get; set; }
         [Required]
         public HttpPostedFileBase Image { get; set; }
+    }
+    public class ImagRemoveVm {
+        public string Name { get; set; }
+        public Guid Id { get; set; }
     }
     public class EditPlaceVM
     {
@@ -491,6 +547,37 @@ namespace IranAudioGuide_MainServer.Models
         public string PlaceCordinates { get; set; }
         [Required]
         public int PlaceCityId { get; set; }
+    }
+    public class PlaceUserVM
+    {
+        internal bool isShow;
+
+        public System.Guid PlaceId { get; set; }
+        public int Index { get; set; }
+        public string PlaceName { get; set; }
+        public string PlaceDesc { get; set; }
+        public string CityName { get; set; }
+        public int PlaceCityId { get; set; }
+        public string _imageUrl { get; set; }
+        public string ImgUrl
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = GlobalPath.FullPathImagePlace + value; }
+        }
+        public string _tumbImgUrl { get; set; }
+        public string TumbImgUrl
+        {
+            get { return _tumbImgUrl; }
+            set { _tumbImgUrl = GlobalPath.FullPathImageTumbnail + value; }
+        }
+        public string PlaceAddress { get; set; }
+        public string PlaceCordinates { get; set; }
+        public bool isOnline { get; set; }
+        public bool isPrimary { get; set; }
+        public int AudiosCount { get; internal set; }
+        public int StoriesCount { get; internal set; }
+        public int Cit_Id { get; internal set; }
+        public int OrderItem { get; internal set; }
     }
     public class PlaceVM
     {
@@ -536,6 +623,7 @@ namespace IranAudioGuide_MainServer.Models
     {
         public Guid ImageId { get; set; }
         public string ImageDesc { get; set; }
+        public string Name { get; set; }
     }
     public class NewImageVM
     {
@@ -645,7 +733,11 @@ namespace IranAudioGuide_MainServer.Models
         Tip,
         ExtraImage,
         City,
-        Place
+        Place,
+        TCity,
+        TPlace,
+        TImage,
+
     }
     public class CommentVm
     {
@@ -672,7 +764,8 @@ namespace IranAudioGuide_MainServer.Models
         invalidId = 6,
         forignKeyError = 7,
         removeOnlinePlace = 8,
-        InvalidUsre = 9
+        InvalidUsre = 9,
+        
     }
     public class Respond
     {

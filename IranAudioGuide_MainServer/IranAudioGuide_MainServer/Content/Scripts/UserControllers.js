@@ -31,16 +31,10 @@ userApp.service('fileUpload', ['$http', function ($http) {
     }
 }]);
 
-userApp.controller('userCtrl', ['localezationService', '$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
-    function (localezationService, $window, $scope, userServices, $timeout, notific, $http, $state) {
-        
-        //$scope.$on('setLocale', function (data) {
-        //    console.log(localezationService.currentLocale);
-        //    console.log(data);
-        //    $scope.test = localezationService.getLocale();
-        //});
-        $scope.test = "test";
-        $scope.test = localezationService.getLocale();
+userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
+    function ($window, $scope, userServices, $timeout, notific, $http, $state) {
+
+
         $scope.profile = {
             istest: true,
             packages: [],
@@ -57,7 +51,11 @@ userApp.controller('userCtrl', ['localezationService', '$window', '$scope', 'use
                 withCredentials: true,
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.identity
-            }).then(function () { console.log("test success") }, function (error) { console.log("error", error) });
+            }).then(function () {
+                //console.log("test success")
+            }, function (error) {
+                //console.log("error", error)
+            });
 
         };
         $scope.user = {
@@ -69,14 +67,13 @@ userApp.controller('userCtrl', ['localezationService', '$window', '$scope', 'use
             $window.location.href = 'http://iranaudioguide.com';
         }
         userServices.getUser().then(function (data) {
-            
+
             $scope.user = data;
             $scope.user.FullName = data.Email;
-            if(data.ImgUrl == null)
-            {
-                data.ImgUrl = "../images/defProfilewsf.png";
+            if (data.imgUrl == null) {
+                data.imgUrl = "../images/default_avatar.png";
             }
-            $scope.user.uImageUrl = data.ImgUrl;
+            $scope.user.uImageUrl = data.imgUrl;
             if (data.FullName !== null)
                 $scope.user.FullName = data.FullName
             $scope.user.isAutintication = true;
@@ -98,15 +95,16 @@ userApp.controller('userCtrl', ['localezationService', '$window', '$scope', 'use
 
             if ($scope.profile.packages.length == 0) {
                 userServices.getPackages().then(function (data) {
+                    //console.log("getpackfrom service", data)
                     $scope.profile.packages = data;
                     angular.forEach(data, function (item, index) {
                         if (item.isPackagesPurchased == true) {
                             $scope.profile.packagesPurchased.push(item);
                         }
                     });
-                    $scope.profile.isCompletedLoading = false;
+                  //  $scope.profile.isCompletedLoading = false;
                 }, function () {
-                    $scope.profile.isCompletedLoading = false;
+                  //  $scope.profile.isCompletedLoading = false;
 
                 });
             }
@@ -120,7 +118,7 @@ userApp.controller('userCtrl', ['localezationService', '$window', '$scope', 'use
 
         $scope.sendEmailConfirmedAgain = function () {
             userServices.sendEmailConfirmedAgain().then(function (data) {
-                console.log(data);
+                //console.log(data);
                 if (data.status == 0)
                     notific.success("", data.content);
 
@@ -130,26 +128,31 @@ userApp.controller('userCtrl', ['localezationService', '$window', '$scope', 'use
 
     }]);
 userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeout', function ($state, $scope, userServices, $timeout) {
+    $timeout(function () {
+        $scope.profile.isCompletedLoading = false;
+    }, 1000);
+   
     $scope.pak = {};
     $scope.showModal = function (pak) {
+        //console.log(pak);
         $scope.pak = pak;
         $('#myModal').modal('show');
     }
     $scope.buyPakages = function (isChooesZarinpal) {
         $('#myModal').modal('hide');
-        $scope.profile.isCompletedLoading = true;
+       // $scope.profile.isCompletedLoading = true;
         $scope.isChooesZarinpal = isChooesZarinpal;
     }
     $('#myModal').on('hidden.bs.modal', function (e) {
-         $state.go('Payment', {
+        $state.go('Payment', {
             PackageId: $scope.pak.PackageId,
             IsChooesZarinpal: $scope.isChooesZarinpal
         });
     })
 
     $scope.typeEachItemFoSelection = [
-        { type: 0, name: 'City', icon: "fa fa-bolt", className: "itemSelcted box-city" },
-        { type: 1, name: 'Place', icon: "fa fa-leaf", className: "itemSelcted box-place" }
+        { type: 0, name: 'City', icon: "fa fa-map-marker", className: "itemSelcted box-city" },
+        { type: 1, name: 'Place', icon: "fa fa-map-pin", className: "itemSelcted box-place" }
     ];
     $scope.searhPakage = {
         item: []
@@ -294,7 +297,7 @@ userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeou
         })//end each $scope.profile.package
 
         $scope.listPakages = angular.copy($scope.profile.packages);
-
+        //console.log($scope.listPakages);
     }
     //_
     //$scope.profile.city = data[0].PackageCities[0];
@@ -344,7 +347,7 @@ userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeou
 
 }]);
 
-userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout', function ($scope, userServices, $timeout) {
+userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', function ($scope, userServices) {
 
     $scope.$watch("profile.packagesPurchased", function (newval, oldval) {
         if (typeof newval != undefined) {
@@ -358,5 +361,5 @@ userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', '$timeout',
     });
 }]);
 userApp.controller('paymentCtrl', ['$scope', function ($scope) {
-     $scope.profile.isCompletedLoading = false;
+   
 }]);

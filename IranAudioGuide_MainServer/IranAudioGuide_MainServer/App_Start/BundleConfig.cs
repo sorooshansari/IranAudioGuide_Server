@@ -15,16 +15,19 @@ namespace IranAudioGuide_MainServer
                             "~/Content/css/simple-sidebar.css",
                             "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
                             "~/Content/css/profile.css",
-                            "~/Content/css/PakageTemplate.css"));
+                            "~/Content/css/PakageTemplate.css",
+                           "~/Content/css/simple-sidebar_fa.css",
+                           "~/Content/css/profile_fa.css"));
 
-            bundles.Add(new StyleBundle("~/ProfileCss-fa").Include(
-                           "~/Content/global/plugins/toastr/toastr.min.css",
-                           "~/Content/css/bootstrap.3.3.7.min.css",
-                           "~/Content/css/select.min.css",
-                           "~/Content/css/simple-sidebar.css",
-                           "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
-                           "~/Content/css/profile.css",
-                           "~/Content/css/PakageTemplate.css"));
+            //bundles.Add(new StyleBundle("~/ProfileCssfa").Include(
+            //               "~/Content/global/plugins/toastr/toastr.min.css",
+            //               "~/Content/css/bootstrap.3.3.7.min.css",
+            //               "~/Content/css/select.min.css",
+            //               "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
+            //               "~/Content/css/PakageTemplate.css",
+                          
+            //               "~/Content/css/simple-sidebar_fa.css",
+            //               "~/Content/css/profile_fa.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Content/Scripts/jquery-{version}.js"));
@@ -45,7 +48,7 @@ namespace IranAudioGuide_MainServer
                       "~/Content/css/bootstrap.css",
                       "~/Content/css/site.css",
                       "~/Content/global/plugins/font-awesome/css/font-awesome.min.css"));
-            bundles.Add(new StyleBundle("~/Content/css/minCss").Include(
+            bundles.Add(new StyleBundle("~/HomeCss").Include(
                       "~/Content/css/bootstrap.min.css",
                       "~/Content/css/bootstrap-social.min.css",
                       "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
@@ -86,11 +89,15 @@ namespace IranAudioGuide_MainServer
                     "~/Content/global/plugins/angularjs/angular-ui-router.min.js",
                     "~/Content/Scripts/toastr.min.js",
                     "~/Content/Scripts/select.min.js",
-                    "~/Content/Scripts/Underscore.js",
-                    "~/Content/Scripts/UserCustom.js",
-                    "~/Content/Scripts/UserServices.js",
-                    "~/Content/Scripts/menu.js",
-                    "~/Content/Scripts/UserControllers.js"));
-        }
+                    "~/Content/Scripts/Underscore.js"
+                    // "~/Content/Scripts/UserCustom.js"
+                    ));
+
+            bundles.Add(new ScriptBundle("~/Profile/ang")
+                .Include(
+                "~/Content/Scripts/UserServices.js",
+                "~/Content/Scripts/menu.js",
+                "~/Content/Scripts/UserControllers.js"));
+                }
     }
 }

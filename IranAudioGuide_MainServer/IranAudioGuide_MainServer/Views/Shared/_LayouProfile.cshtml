@@ -1,12 +1,12 @@
-﻿@using Resources
+﻿
+@using IranAudioGuide_MainServer.App_GlobalResources
 
 @{
     Layout = null;
-    var locales = new langsVM();
     //var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
     //var action = Url.RequestContext.RouteData.Values["action"].ToString();
     //var id = Url.RequestContext.RouteData.Values["id"];
-    var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
+    //var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
 }
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
@@ -27,21 +27,30 @@
     <![endif]-->
 
 </head>
-<body onresize="onResizeBody()" ng-app="userApp" ng-controller="userCtrl">
+<body class="_@Global.Lang" onresize="onResizeBody()" ng-app="userApp" ng-controller="userCtrl">
+    <div id="FullPageLoading" ng-class="{ 'unload': profile.isCompletedLoading == false, 'load': profile.isCompletedLoading == true}">
+        <div id="fpcontainer">
+            <img id="IAGLogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" />
+            <div style="text-align:center;">
+                @*<img id="spinbars" src="@Global.ImagePath/bars.svg" />*@
+                <span>@Global.loadingtxt</span>
+            </div>
+        </div>
+    </div>
     <div id="wrapper" ng-class="{ 'wrapper-show': profile.isCompletedLoading == false}">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <div class="logo">
                 @*// class="sidebar-brand">*@
                 <a id="IAGLink" href="http://iranaudioguide.com/">
-                    <img src="/images/IAGSITELOGO.png">
+                    <img src="@Global.ImagePath/IAGSITELOGO.png">
                     <div id="IAGTextLink">Iran Audio Guide</div>
                 </a>
             </div>
             <div style="background-color: #001644;min-height: 145px;border-top-right-radius: 10px; width:245px; box-shadow: 1px 5px 5px black;">
                 <div class="userEmail">
                     <div>
-                        <img src="{{user.uImageUrl}}">
+                        <img ng-src="{{user.uImageUrl}}">
                         <span>{{user.FullName}}</span>
                     </div>
                 </div>
@@ -79,8 +88,13 @@
                         @Global.PageProfile12
                     </a>
                 </li>
-                <li>
-                    <div class="country">
+                <li id="Langli">
+
+                    @*@Html.Partial("_SelectLangBtn", Global.Lang)*@
+
+
+
+                    @*<div class="country">
                         <div class="countrySelected">
                             @foreach (var item in locales.Get)
                             {
@@ -88,7 +102,7 @@
                                 {
                                     <span>
                                         <img src="@item.Icon" alt="@item.Id" />
-                                        <span class="siteFlagText">@item.Title</span>
+                                        <span class="siteFlagText">@item.Title &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i class="fa fa-gear"></i></span>
                                     </span>
                                     break;
                                 }
@@ -106,7 +120,7 @@
                                 }
                                 <a href="@Url.Action("Index", "Home", new { lang = item.Id})" hreflang="@item.Id" lang="@item.Id">
                                     <img src="@item.Icon" alt="@item.Id" />
-                                    <span class="siteFlagText">@item.Title</span>
+                                    <span style="cursor: pointer;" class="siteFlagText">@item.Title</span>
                                 </a>
 
                             }
@@ -114,7 +128,10 @@
                         </div>
 
 
-                    </div>
+                    </div>*@
+
+
+
                 </li>
             </ul>
         </div>
@@ -140,20 +157,70 @@
             <!-- /#page-content-wrapper -->
         </div>
 
-        <div id="FullPageLoading" ng-class="{ 'unload': profile.isCompletedLoading == false, 'load': profile.isCompletedLoading == true}">
-            <div id="fpcontainer">
-                <img id="IAGLogo" src="~/images/IAGSmallWhiteLogo.png" />
-                <div style="text-align:center;">
-                    <img id="spinbars" src="~/Content/images/bars.svg" />
-
-                    @*<p id="LoadingText">Loading... <br /> Change the "FullPageLoading" element class from "load" to "unload" using angularJS when whole page is loaded.<br />Set "#LoadingText" style to "display:none"<br /> Done...<br /> Thank you!</p>*@
-                </div>
-            </div>
-        </div>
+        
         </div>
         <!-- /#wrapper -->
         <!-- jQuery -->
 
         @Scripts.Render("~/Profile/minJs")
+    <script>
+        //, 'ui.select'
+        var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
+            .config(['$urlRouterProvider', '$stateProvider', '$sceProvider', function ($urlRouterProvider, $stateProvider, $sceProvider) {
+                $sceProvider.enabled(false);
+
+                //
+                // For any unmatched url, redirect to /state1
+                $urlRouterProvider.otherwise("/profile");
+                //
+                // Now set up the states
+                $stateProvider
+                  .state('user', {
+                      url: "/profile",
+                      //abstract: true,
+                      templateUrl: "/@Global.Lang/user/UserProfile",
+                      controller: "userCtrl",
+                  })
+
+                  .state('PackagesPurchased', {
+                      url: "/pakagePurchased",
+                      templateUrl: "/@Global.Lang/user/PackagesPurchased",
+                      controller: "pakagePurchasedCtrl"
+
+
+                  })
+                    .state('Packages', {
+                        url: "/pakages",
+                        templateUrl: "/@Global.Lang/user/Packages",
+                        controller: "PackagesCtrl"
+
+
+                    })
+                     .state('Payment', {
+                         url: "/payment?PackageId&IsChooesZarinpal",
+                         templateUrl: function ($stateParams) {
+                             try {
+                                 var model = "?pacId=" + $stateParams.PackageId + "&IsZarinpal=" + $stateParams.IsChooesZarinpal;
+                                 console.log(model)
+                                 return "/@Global.Lang/Payment/PaymentWeb" + model;
+                             }
+                             catch (error) {
+
+                             }
+                         },
+                         controller: "paymentCtrl"
+                     })
+                 .state('deactivateMobile', {
+                     url: "/deactivateMobile",
+                     templateUrl: "/@Global.Lang/user/deactivateMobile",
+                     controller: "PackagesCtrl"
+                 })
+            }])
+
+
+        ;
+    </script>
+
+    @Scripts.Render("~/Profile/ang")
 </body>
 </html>
