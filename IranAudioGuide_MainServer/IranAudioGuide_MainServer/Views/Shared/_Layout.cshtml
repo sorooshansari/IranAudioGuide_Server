@@ -142,11 +142,13 @@
 </head>
 <body class="landing _@Global.Lang" ng-app="HomePage" ng-controller="HomeController">
     @RenderSection("topLoading", required: false)
+    <a href="#page-wrapper" id="goTopButton" class="scrolly goTopButton"><i class="fa fa-chevron-up"></i></a>
     <!-- Page Wrapper -->
     <div id="page-wrapper">
         <!-- Header -->
         <header id="header" class="alt">
-            <h1><img id="toplogo" src="~/images/IAGSmallWhiteLogo.png" alt="mallWhiteLogo" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
+            <h1>
+            <img id="toplogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" alt="mallWhiteLogo" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
 
 
             @Html.Partial("_SelectLangBtn", new SelectLangVM()

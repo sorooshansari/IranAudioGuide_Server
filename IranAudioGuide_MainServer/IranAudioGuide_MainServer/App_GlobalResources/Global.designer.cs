@@ -304,6 +304,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This Email  is already taken..
+        /// </summary>
+        public static string ErrorRegisterDuplicateUserName {
+            get {
+                return ResourceManager.GetString("ErrorRegisterDuplicateUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The  field is required..
         /// </summary>
         public static string ErrorRequire {
@@ -349,6 +358,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connection Error Please Try Again Later.
+        /// </summary>
+        public static string ErrorUnknown {
+            get {
+                return ResourceManager.GetString("ErrorUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Facebook.
         /// </summary>
         public static string Facebook {
@@ -381,6 +399,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string Google {
             get {
                 return ResourceManager.GetString("Google", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://iranaudioguide.net/Images.
+        /// </summary>
+        public static string ImagePath {
+            get {
+                return ResourceManager.GetString("ImagePath", resourceCulture);
             }
         }
         

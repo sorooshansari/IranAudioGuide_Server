@@ -541,7 +541,7 @@
     <value>رمزعبور تغییر کرده است</value>
   </data>
   <data name="ServerPasswordChangedMessage" xml:space="preserve">
-    <value>رمزعبورتان تغییر کرده است. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
+    <value>رمز عبورتان تغییر کرده است. لطفاً برای ورود &lt;a id='loginlink' href='/fa/Account/Login'&gt; اینجا &lt;/a&gt;  را کلیک کنید</value>
   </data>
   <data name="ServerResetPassword" xml:space="preserve">
     <value>تغییر رمزعبور</value>
@@ -607,7 +607,7 @@
     <value>توییتر</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
-    <value>رمز عبور خود را فراموش کرده اید؟</value>
+    <value>رمز  عبور   خود را فراموش کرده اید؟</value>
   </data>
   <data name="Google" xml:space="preserve">
     <value>گوگل</value>
@@ -701,5 +701,11 @@
   </data>
   <data name="PleaseTryAgain" xml:space="preserve">
     <value>Please try again</value>
+  </data>
+  <data name="ErrorRegisterDuplicateUserName" xml:space="preserve">
+    <value>این ایمل قبلا مورد استفاده قرار گرفته</value>
+  </data>
+  <data name="ErrorUnknown" xml:space="preserve">
+    <value>خطا در برقراری ارتباط با شبکه، چند لحظه دیگر امتحان کنید</value>
   </data>
 </root>

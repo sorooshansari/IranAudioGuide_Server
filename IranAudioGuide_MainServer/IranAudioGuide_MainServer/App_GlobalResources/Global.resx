@@ -704,4 +704,13 @@
   <data name="PleaseTryAgain" xml:space="preserve">
     <value>Please try again</value>
   </data>
+  <data name="ImagePath" xml:space="preserve">
+    <value>http://iranaudioguide.net/Images</value>
+  </data>
+  <data name="ErrorRegisterDuplicateUserName" xml:space="preserve">
+    <value>This Email  is already taken.</value>
+  </data>
+  <data name="ErrorUnknown" xml:space="preserve">
+    <value>Connection Error Please Try Again Later</value>
+  </data>
 </root>

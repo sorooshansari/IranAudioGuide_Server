@@ -39,10 +39,10 @@
         /*background-color: #ffea00;*/
         border: 0;
         cursor: pointer;
-        background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("/Content/images/overlay.png");
-        background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("/Content/images/overlay.png");
-        background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("/Content/images/overlay.png");
-        background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("/Content/images/overlay.png");
+        background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("http://iranaudioguide.net/images/overlay.png");
+        background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("http://iranaudioguide.net/images/overlay.png");
+        background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("http://iranaudioguide.net/images/overlay.png");
+        background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("http://iranaudioguide.net/images/overlay.png");
         -moz-transition: background-color 0.35s ease-in-out;
         -webkit-transition: background-color 0.35s ease-in-out;
         -ms-transition: background-color 0.35s ease-in-out;
@@ -265,7 +265,7 @@ form textarea {
         width: 48px;
         height: 48px;
         cursor: pointer;
-        background-image: url("/Content/images/playpause-48-48-1.png");
+        background-image: url("http://iranaudioguide.net/images/playpause-48-48-1.png");
         background-position: left top;
         background-repeat: no-repeat;
     }
