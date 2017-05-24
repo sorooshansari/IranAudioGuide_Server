@@ -235,11 +235,13 @@
       <DependentUpon>Global.fa.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="App_GlobalResources\Global.designer.cs">
       <DependentUpon>Global.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -258,7 +260,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\SellerController.cs" />
-    <Compile Include="Controllers\testController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -717,10 +718,19 @@
     <Content Include="Content\images\arrow.svg" />
     <Content Include="Content\images\bars.svg" />
     <Content Include="Content\images\close.svg" />
+    <Content Include="Content\images\default_avatar.png" />
     <Content Include="Content\images\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
     <Content Include="Content\images\file_add.png" />
+    <Content Include="Content\images\flag-fa.png" />
+    <Content Include="Content\images\flag-uk.png" />
     <Content Include="Content\images\Get_it_on_Google_play.svg" />
     <Content Include="Content\images\ie\grad0-15.svg" />
+    <Content Include="Content\images\Members\defaultM.jpg" />
+    <Content Include="Content\images\Members\defaultM_O.jpg" />
+    <Content Include="Content\images\Members\defaultW.jpg" />
+    <Content Include="Content\images\Members\defaultW_O.jpg" />
+    <Content Include="Content\images\Members\Mona.jpg" />
+    <Content Include="Content\images\Members\Soroosh.jpg" />
     <Content Include="Content\images\miniBWlogo.jpg" />
     <Content Include="Content\images\overlay.png" />
     <Content Include="Content\images\playpause-48-48-1.png" />
@@ -1547,6 +1557,7 @@
     <Content Include="Content\css\fontawesome-webfont.woff2" />
     <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="google60352dff0d3dbd69.html" />
+    <Content Include="images\logo.png" />
     <Content Include="images\marker.png" />
     <Content Include="images\v_blue_on_transp_en.png" />
     <Content Include="images\v_blue_on_white_en.png" />
@@ -1605,6 +1616,7 @@
     <Content Include="Content\fonts\NewFonts\segoeuisl.ttf" />
     <Content Include="Content\fonts\NewFonts\sourcesanspro-regular-webfont.woff" />
     <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Content\images\pdfguide.pdf" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
     <Content Include="favicon.ico" />
@@ -1808,12 +1820,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_GlobalResources\Global.fa.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </Content>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
