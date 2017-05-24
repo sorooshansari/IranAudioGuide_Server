@@ -261,10 +261,6 @@
     <Compile Include="Controllers\testController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201705240441268_we.cs" />
-    <Compile Include="Migrations\201705240441268_we.Designer.cs">
-      <DependentUpon>201705240441268_we.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1817,10 +1813,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705240441268_we.resx">
-      <DependentUpon>201705240441268_we.cs</DependentUpon>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
