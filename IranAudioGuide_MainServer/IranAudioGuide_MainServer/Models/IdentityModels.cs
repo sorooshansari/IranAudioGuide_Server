@@ -75,8 +75,8 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Tra_Id { get; set; }   
-        public DateTime Tra_DateTime { get; set; }   
+        public int Tra_Id { get; set; }
+        public DateTime Tra_DateTime { get; set; }
         public string Tra_Uuid { get; set; }
         public Guid Tra_IdTrack { get; set; }
         public bool Tra_IsAudio { get; set; }
@@ -205,8 +205,7 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid TrI_Id { get; set; }
-
-        public string TrI_Name { get; set; }
+        //public string TrI_Name { get; set; }
         public string TrI_Description { get; set; }
 
         public Guid Img_Id { get; set; }
@@ -501,7 +500,7 @@ namespace IranAudioGuide_MainServer.Models
     {
         public Price()
         {
-           
+
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
