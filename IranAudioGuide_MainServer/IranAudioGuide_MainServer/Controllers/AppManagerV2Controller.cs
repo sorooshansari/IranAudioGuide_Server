@@ -36,7 +36,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public string getBaseUrl()
         {
-            return Services.GlobalPath.host;
+            return GlobalPath.host;
         }
 
         [HttpPost]
@@ -53,7 +53,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     model.email = string.Empty;
 
                 var isAdmin = User.IsInRole("Admin");
-                var url = Services.ServiceDownload.GetUrl(model, isAdmin);
+                var url = ServiceDownload.GetUrl(model, isAdmin);
                 //var result= new GetAudioUrlRes(url);
                 
                 return Ok(url);
@@ -64,7 +64,6 @@ namespace IranAudioGuide_MainServer.Controllers
                 return BadRequest(((int)GetAudioUrlStatus.unknownError).ToString());
             }
         }
-
         [HttpPost]
         public IHttpActionResult GetAutorizedCities(GetAutorizedCitiesVM model)
 
@@ -72,6 +71,12 @@ namespace IranAudioGuide_MainServer.Controllers
             var res = new AutorizedCitiesVM();
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    res.status = getUserStatus.notUser;
+                    ModelState.AddModelError("error", ((int)res.status).ToString());
+                    return BadRequest(ModelState);
+                }
 
                 var user = acTools.getUser(model.username);
                 res.status =
@@ -116,6 +121,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
+        
 
         [HttpPost]
         // [Route("GetUpdates")]
@@ -134,6 +140,20 @@ namespace IranAudioGuide_MainServer.Controllers
                 return BadRequest(ModelState);
             }
         }
+        public IHttpActionResult GetAllEntitiesRemoved()
+        {
+            try
+            {
+
+                return Ok(dbTools.GetAllEntitiesRemoved());
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                ModelState.AddModelError("ex", ex);
+                return BadRequest(ModelState);
+            }
+        }
         // POST: api/AppManager/GetAll
 
         [HttpPost]
@@ -141,8 +161,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                var d = dbTools.GetAllEntries(model.uuid);
-               return Ok(d);
+               return Ok(dbTools.GetAllEntries(model.uuid));
             }
             catch (Exception ex)
             {
@@ -222,7 +241,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     catch (Exception)
                     {
                         var ex = new Exception(string.Format("invalid baicode-->{0}", model.barcode));
-                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                        ErrorSignal.FromCurrentContext().Raise(ex);
                         return BuyWithBarcodeStatus.invalidBarcode;
                     }
                     long packPrice;

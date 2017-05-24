@@ -16,6 +16,16 @@
 
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
+                    <div>
+                        @*@foreach (var modelStateVal in ViewData.ModelState.Values)
+                        {
+                            foreach (var error in modelStateVal.Errors)
+                            {
+                                <p></p>
+                                <p>Html.ValidationMessageFor(error.ErrorMessage, "", new { class = "text-danger" })</p>
+                            }
+                        }*@
+                    </div>
                     @Html.AntiForgeryToken()
                     @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                     <div class="form-group">

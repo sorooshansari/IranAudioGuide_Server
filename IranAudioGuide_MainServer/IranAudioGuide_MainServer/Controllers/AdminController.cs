@@ -912,7 +912,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     var img = new Image()
                     {
                         Place = getPlace,
-                        Tmg_Order = o,
+                        Tmg_Order = o
                         //todo do it
                         //TranslateImages = new List<TranslateImage>()
                     };
@@ -1003,7 +1003,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     langId = lang,
                     TrI_Description = model.ImageDesc,
-                    TrI_Name = model.Name,
+                    //TrI_Name = model.Name,
                 };
                 if (img.TranslateImages.Count == 0)
                 {
@@ -1016,6 +1016,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     UpdateLog(updatedTable.TImage, removeitem.Img_Id, true);
 
                 }
+                img.Img_Name = model.Name;
                 if (lang == (int)EnumLang.en)
                 {
                     img.Img_Description = model.ImageDesc;

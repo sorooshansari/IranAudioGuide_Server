@@ -25,9 +25,23 @@ namespace IranAudioGuide_MainServer
             //               "~/Content/css/select.min.css",
             //               "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
             //               "~/Content/css/PakageTemplate.css",
-                          
+
             //               "~/Content/css/simple-sidebar_fa.css",
             //               "~/Content/css/profile_fa.css"));
+
+
+
+            bundles.UseCdn = true;
+               
+            var jqueryCdnPath =  @"//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.js";
+            var jqueryBundle = new ScriptBundle("~/bundles/jqueryCdn", jqueryCdnPath)
+                                   .Include("~/Content/Scripts/jquery-{version}.min.js");
+
+
+        BundleTable.EnableOptimizations = true;
+            //bundles.UseCdn = true;
+            //bundles.Add(new ScriptBundle("~/bundles/jqueryCdn", @"//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/")
+            //.Include("~/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Content/Scripts/jquery-{version}.js"));

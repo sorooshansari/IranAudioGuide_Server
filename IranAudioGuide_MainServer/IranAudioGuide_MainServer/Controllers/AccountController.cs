@@ -224,7 +224,25 @@ namespace IranAudioGuide_MainServer.Controllers
 
                     return RedirectToAction("Index", "User");
                 }
-                AddErrors(result);
+                //AddErrors(result);
+
+                //foreach (var error in result.Errors)
+                //{
+                //    if(error.Contains("already taken"))
+                //    {
+                //        ServiceCulture.SetCultureFromCookie();
+                //        ModelState.AddModelError("CustomError", Global.ErrorRegisterDuplicateUserName);
+                //        break;
+                //    }
+                //    else if(error.Contains("unknown"))
+                //    {
+                //        ServiceCulture.SetCultureFromCookie();
+                //        ModelState.AddModelError("CustomError", Global.ErrorUnknown);
+                //        break;
+
+                //    }
+                //    //ModelState.AddModelError("CustomError", error);
+                //}
             }
 
             // If we got this far, something failed, redisplay form
@@ -638,7 +656,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError("CustomError", error);
             }
         }
 

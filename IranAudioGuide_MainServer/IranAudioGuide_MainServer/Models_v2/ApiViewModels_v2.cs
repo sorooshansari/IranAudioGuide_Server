@@ -1,8 +1,7 @@
 ﻿using IranAudioGuide_MainServer.Models;
 using System;
 using System.Collections.Generic;
-
-
+using System.ComponentModel.DataAnnotations;
 
 namespace IranAudioGuide_MainServer.Models_v2
 {
@@ -38,20 +37,21 @@ namespace IranAudioGuide_MainServer.Models_v2
     }
     public class GetAutorizedCitiesVM
     {
+        [Required]
         public string username { get; set; }
+        [Required]
         public string uuid { get; set; }
     }
     public class citiesLng
     {
-
         public int cityID { get; set; }
         public int LangId { get; set; }
-        public string LangTitle { get; set; }
+        //public string LangTitle { get; set; }
     }
     public class AutorizedCitiesVM
     {
         public List<citiesLng> cities { get; set; }
-        public string errorMessage { get; set; }
+        //public string errorMessage { get; set; }
         public getUserStatus status { get; set; }
     }
     public class GetPackagesByLangVM
@@ -101,6 +101,9 @@ namespace IranAudioGuide_MainServer.Models_v2
         public List<Guid> Stories { get; set; }
         public List<Guid> Images { get; set; }
         public List<Guid> Tips { get; set; }
+        public List<Guid> TCity { get; set; }
+        public List<Guid> TPlace { get; set; }
+        public List<Guid> TImage { get; set; }
         public List<int> Cities { get; set; }
 
     }
@@ -189,20 +192,19 @@ namespace IranAudioGuide_MainServer.Models_v2
     }
     public class ImagesVm
     {
-
         public Guid ID { get; set; }
-        public string Url { get; set; }
-        public string Desc { get; set; }
+        public string Name { get; internal set; }
+        //public string Url { get; set; }
+        //public string Desc { get; set; }
         public Guid PlaceId { get; set; }
         public int OrderItem { get; internal set; }
-        public string Name { get; internal set; }
     }
     public class CitiesVm
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        //public string Name { get; set; }
         public string ImageUrl { get; set; }
-        public string Desc { get; set; }
+        //public string Desc { get; set; }
         public int OrderItem { get; internal set; }
       //  public int LangId { get; internal set; }
     }
@@ -252,7 +254,7 @@ namespace IranAudioGuide_MainServer.Models_v2
     public class TranslateImageVm
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+       // public string Name { get; set; }
 
         public string Description { get; set; }
         public int ImageId { get; set; }

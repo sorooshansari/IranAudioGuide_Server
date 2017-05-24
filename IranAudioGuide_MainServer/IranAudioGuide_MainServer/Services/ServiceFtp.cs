@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Net;
 
@@ -75,7 +76,51 @@ namespace IranAudioGuide_MainServer.Services
 
         }
 
+        public bool Upload(Bitmap img, string fullPath)
+        {
+            try
+            {
+                using (var stream = new MemoryStream())
+                {
+                    img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
 
+                    var fileContents = stream.ToArray();
+
+                    var uploadRequest = (FtpWebRequest)WebRequest.Create(new Uri(fullPath));
+                    uploadRequest.Method = WebRequestMethods.Ftp.UploadFile;
+                    uploadRequest.Credentials = new NetworkCredential(user, pass);
+                    uploadRequest.UseBinary = true;
+                    uploadRequest.KeepAlive = true;
+
+
+                    Stream requestStream = uploadRequest.GetRequestStream();
+                    requestStream.Write(fileContents, 0, fileContents.Length);
+                    requestStream.Close();
+                    FtpWebResponse response = (FtpWebResponse)uploadRequest.GetResponse();
+                    var f = response.StatusCode;
+                  
+
+                    if (FtpStatusCode.ClosingData == response.StatusCode)
+                    {
+                        response.Close();
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+
+
+            
+
+                // return false;
+            }
+            catch (WebException ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return false;
+            }
+
+        }
         public bool Copy(string pathSource, string pathDestination)
         {
             try
