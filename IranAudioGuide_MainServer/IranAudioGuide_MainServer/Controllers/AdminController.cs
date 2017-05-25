@@ -108,14 +108,14 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                List<TipVM> res = (from t in db.Tips
-                                   where t.Place.Pla_Id == placeId
-                                   select new TipVM()
-                                   {
-                                       Content = t.Tip_Content,
-                                       id = t.Tip_Id,
-                                       TipcategoryID = t.Tip_Category.TiC_Id
-                                   }).ToList();
+                List<TipVM> res = db.Tips.Include(x => x.Place)
+                    .Where(x => x.Place.Pla_Id == placeId && x.langId == lang)
+                    .Select(t => new TipVM()
+                    {
+                        Content = t.Tip_Content,
+                        id = t.Tip_Id,
+                        TipcategoryID = t.Tip_Category.TiC_Id
+                    }).ToList();
                 return Json(res);
             }
             catch (Exception ex)
@@ -616,20 +616,23 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 return Json(new Respond("Invalid Place Id", status.invalidId));
             }
+            if (lang == (int)EnumLang.en)
+            {
 
-            place.Pla_Name = model.PlaceName;
-            place.Pla_Discription = model.PlaceDesc;
-            place.Pla_Address = model.PlaceAddress;
-            
+                place.Pla_Name = model.PlaceName;
+                place.Pla_Discription = model.PlaceDesc;
+                place.Pla_Address = model.PlaceAddress;
+            }
+
             var newLang = false;
 
             var t = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang);
             if (t == null)
             {
-                t = new TranslatePlace() { langId = lang};
+                t = new TranslatePlace() { langId = lang };
                 newLang = true;
             }
-           
+
 
             t.TrP_Name = model.PlaceName;
             t.TrP_Description = model.PlaceDesc;
@@ -664,6 +667,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             try
             {
+                UpdateLog(updatedTable.TPlace, t.TrP_Id);
                 UpdateLog(updatedTable.Place, place.Pla_Id);
                 db.SaveChanges();
             }
@@ -1040,15 +1044,16 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public JsonResult GetExtraImages(Guid placeId)
         {
-            var img = (from i in db.Images
-                       where i.Place == db.Places.Where(x => x.Pla_Id == placeId).FirstOrDefault()
-                       select new ImageVM()
+            var img = db.Images.Include(x=>x.TranslateImages).Include(x=>x.Place)
+                .Where(x=> x.Place.Pla_Id == placeId)
+                .Select(i=>new ImageVM()
                        {
                            ImageId = i.Img_Id,
                            ImageName = i.Img_Name,
-                           ImageDesc = i.Img_Description,
+                           ImageDesc =  i.TranslateImages.FirstOrDefault(tr => tr.langId == lang).TrI_Description,
                            Index = i.Tmg_Order
                        }).ToList();
+            
             return Json(img);
         }
         [HttpPost]
@@ -1409,7 +1414,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             //where a.Place == db.Places.Where(x => x.Pla_Id.ToString() == PlaceId).FirstOrDefault()
 
-            List<StoryVM> Storys = db.Storys.Include(s => s.Place)
+            List<StoryVM> Storys = db.Storys.Where(x=> x.langId == lang).Include(s => s.Place)
                 .Where(x => x.Place.Pla_Id.ToString() == PlaceId)
                 .Select(a => new StoryVM()
                 {
@@ -1437,7 +1442,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         private List<AudioVM> GetAudios(string PlaceId)
         {
-            List<AudioVM> list = db.Audios.Include(s => s.Place)
+            List<AudioVM> list = db.Audios.Where(x=> x.langId == lang).Include(s => s.Place)
                .Where(x => x.Place.Pla_Id.ToString() == PlaceId)
                .Select(a => new AudioVM()
                {
