@@ -9,7 +9,9 @@ namespace IranAudioGuide_MainServer.Models_v2
 
     public class GetUpdateInfoVm
     {
-        public int LastUpdateNumber { get; set; }
+        [Required]
+        public string LastUpdateNumber { get; set; }
+        [Required]
         public string uuid { get; set; }
     }
     public class ConfirmEmailVM
@@ -267,7 +269,7 @@ namespace IranAudioGuide_MainServer.Models_v2
         public string Description { get; set; }
         public string Adr { get; set; }
         public int LangId { get; set; }
-        public int PlaceId { get; set; }
+        public Guid PlaceId { get; set; }
         
     }
 }

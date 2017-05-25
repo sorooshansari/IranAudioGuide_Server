@@ -11,6 +11,12 @@ namespace IranAudioGuide_MainServer.Models
     public class ViewModels
     {
     }
+    public class GetVersoinVm
+    {
+        public string version { get; set; }
+        public bool isIOS { get; set; }     
+
+}
     public enum getUserStatus
     {
         confirmed = 1,
