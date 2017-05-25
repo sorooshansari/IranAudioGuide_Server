@@ -177,6 +177,9 @@ namespace IranAudioGuide_MainServer.Models_v2
 
             var res = new GetAllVm()
             {
+
+
+
                 UpdateNumber = GetNumFromdataTable(dt[0], "LastUpdate"),
                 Places = FillPlaceVM(dt[1]),
                 Audios = FillAudio(dt[2]),

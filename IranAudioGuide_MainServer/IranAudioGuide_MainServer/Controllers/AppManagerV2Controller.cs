@@ -199,6 +199,9 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+
+
+
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 return CreatingUserResult.fail;
             }
