@@ -367,7 +367,7 @@ namespace IranAudioGuide_MainServer.Models_v2
                     Description = x["Description"].convertToString(),
                     LangId = x["langId"].convertToInt(),
                     Id = x["Id"].convertToGuid(),
-                    ImageId = x["ImageId"].convertToInt(),
+                    ImageId = x["ImageId"].convertToGuid(),
                     //  Name = x["Name"].convertToString(),
                 }).ToList();
             }

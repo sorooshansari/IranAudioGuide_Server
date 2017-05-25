@@ -130,8 +130,8 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
-                return Ok(dbTools.GetUpdate(model));
+                if (ModelState.IsValid)
+                    return Ok(dbTools.GetUpdate(model));
                 ModelState.AddModelError("error", "Information received is not valid ");
                 return BadRequest(ModelState);
             }

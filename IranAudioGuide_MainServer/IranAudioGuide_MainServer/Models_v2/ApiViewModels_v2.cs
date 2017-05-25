@@ -259,7 +259,7 @@ namespace IranAudioGuide_MainServer.Models_v2
        // public string Name { get; set; }
 
         public string Description { get; set; }
-        public int ImageId { get; set; }
+        public Guid ImageId { get; set; }
         public int LangId { get; set; }
     }
     public class TranslatePlacesVm
