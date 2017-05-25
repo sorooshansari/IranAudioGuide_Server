@@ -87,10 +87,10 @@ namespace IranAudioGuide_MainServer.Models_v2
 
         }
 
-        public GetUpdateVM GetUpdate(int LastUpdateNumber, string uuid)
+        public GetUpdateVM GetUpdate(GetUpdateInfoVm model)
         {
-            var SP1 = new SqlParameter("@UpdateNumber", LastUpdateNumber);
-            var SP2 = new SqlParameter("@uuid", uuid);
+            var SP1 = new SqlParameter("@UpdateNumber", model.LastUpdateNumber);
+            var SP2 = new SqlParameter("@uuid", model.uuid);
             SP1.SqlDbType = SqlDbType.Int;
             SP1.SqlDbType = SqlDbType.NVarChar;
             var dt = dbManager.MultiTableResultSP("GetUpdates_v2", SP1, SP2);
@@ -105,7 +105,7 @@ namespace IranAudioGuide_MainServer.Models_v2
                 Cities = FillCityVM(dt[6]),
                 TranslateCities = FillTranslateCities(dt[7]),
                 TranslateImages = FillTranslateImage(dt[8]),
-                TranslatePlaces = FillTranslatePlaces(dt[9]),
+                TranslatePlaces = FillTranslatePlaces(dt[3]),
                 RemovedEntries = new RemovedEntries()
                 {
                     Places = GetTableIds(dt[10]),
@@ -177,6 +177,9 @@ namespace IranAudioGuide_MainServer.Models_v2
 
             var res = new GetAllVm()
             {
+
+
+
                 UpdateNumber = GetNumFromdataTable(dt[0], "LastUpdate"),
                 Places = FillPlaceVM(dt[1]),
                 Audios = FillAudio(dt[2]),
@@ -382,7 +385,7 @@ namespace IranAudioGuide_MainServer.Models_v2
                     Description = x["Description"].convertToString(),
                     LangId = x["langId"].convertToInt(),
                     Id = x["Id"].convertToGuid(),
-                    PlaceId = x["PlaceId"].convertToInt(),
+                    PlaceId = x["PlaceId"].convertToGuid(),
                     Name = x["Name"].convertToString(),
                     Adr = x["Adr"].convertToString(),
                 }).ToList();

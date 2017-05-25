@@ -34,7 +34,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
         [HttpPost]
-        public string getBaseUrl()
+        public string getBaseUrl(GetVersoinVm version)
         {
             return GlobalPath.host;
         }
@@ -55,7 +55,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 var isAdmin = User.IsInRole("Admin");
                 var url = ServiceDownload.GetUrl(model, isAdmin);
                 //var result= new GetAudioUrlRes(url);
-                
+
                 return Ok(url);
             }
             catch (Exception ex)
@@ -121,7 +121,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
-        
+
 
         [HttpPost]
         // [Route("GetUpdates")]
@@ -130,8 +130,10 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-
-                return Ok( dbTools.GetUpdate(model.LastUpdateNumber,model.uuid));
+                if(ModelState.IsValid)
+                return Ok(dbTools.GetUpdate(model));
+                ModelState.AddModelError("error", "Information received is not valid ");
+                return BadRequest(ModelState);
             }
             catch (Exception ex)
             {
@@ -161,14 +163,14 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-               return Ok(dbTools.GetAllEntries(model.uuid));
+                return Ok(dbTools.GetAllEntries(model.uuid));
             }
             catch (Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 ModelState.AddModelError("ex", ex);
                 //return BadRequest(ModelState);
-              return  Content(System.Net.HttpStatusCode.BadRequest, "Any object");
+                return Content(System.Net.HttpStatusCode.BadRequest, "Any object");
             }
         }
         [HttpPost]
@@ -197,6 +199,9 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             catch (Exception ex)
             {
+
+
+
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 return CreatingUserResult.fail;
             }
@@ -207,7 +212,7 @@ namespace IranAudioGuide_MainServer.Controllers
             string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
             var res = await acTools.CreateAppUser(user.fullName, user.email, user.password, user.uuid, baseUrl);
             return Json(res);
-            }
+        }
         [HttpPost]
         public async Task<AuthorizedUser> AuthorizeAppUser(AppUser user)
         {
@@ -272,7 +277,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                         return BuyWithBarcodeStatus.unknownError;
                     }
-                    brs.saved(cbs.CBS_id_bar,user.Id, model.packId);
+                    brs.saved(cbs.CBS_id_bar, user.Id, model.packId);
                     return BuyWithBarcodeStatus.success;
                 }
             }
