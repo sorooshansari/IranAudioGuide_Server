@@ -699,7 +699,7 @@
     <value>Unauthorized device!</value>
   </data>
   <data name="loadingtxt" xml:space="preserve">
-    <value>Loading...</value>
+    <value>Loading ...</value>
   </data>
   <data name="PleaseTryAgain" xml:space="preserve">
     <value>Please try again</value>

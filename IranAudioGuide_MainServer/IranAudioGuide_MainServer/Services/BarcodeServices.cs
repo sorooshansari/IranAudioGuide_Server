@@ -9,6 +9,7 @@ using MessagingToolkit.QRCode.Codec.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Web.Mvc;
+using IranAudioGuide_MainServer.Services;
 
 namespace IranAudioGuide_MainServer.Services
 {
@@ -44,7 +45,6 @@ namespace IranAudioGuide_MainServer.Services
             {
                 try
                 {
-                    //var price = (from p in db.Prices where p.Pri_Id == PriceId select p).FirstOrDefault();
                     var price = db.Prices.Where(x => x.Pri_Id == PriceId).FirstOrDefault();
                     List<Barcode> barcodes = new List<Barcode>();
                     for (int i = 0; i < Quantity; i++)
@@ -57,12 +57,12 @@ namespace IranAudioGuide_MainServer.Services
                     //System.Drawing.Image logo = System.Drawing.Image.FromFile(logoPath);
                     foreach (var b in barcodes)
                     {
-                        string barcodeString = string.Format("{0};{1};{2}", b.Bar_Id, price.Pri_Value.ToString(), SellerName);
+                        string barcodeString = CryptographyService.Encrypt(string.Format("{0};{1};{2}", b.Bar_Id, price.Pri_Value.ToString(), SellerName), true);
                         //byte[] barcodeArray = GetBarcodeImg(barcodeString);
                         string imgName = string.Format("{0}.jpeg", b.Bar_Id);
                         string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);
-                        string pdfpath = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/pdf"), imgName);
-                        CreateCode(barcodeString, path);
+                        //string pdfpath = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/pdf"), imgName);
+                        CreateQRCode(barcodeString, path);
                         //ImagesToPdf(path, pdfpath);
                         //var fs = new BinaryWriter(new FileStream(path, FileMode.Create, FileAccess.Write));
                         //fs.Write(barcodeArray);
@@ -85,7 +85,7 @@ namespace IranAudioGuide_MainServer.Services
 
         }
         #region tools
-        protected void CreateCode(string value, string destPath)
+        protected void CreateQRCode(string value, string destPath)
         {
             QRCodeEncoder encoder = new QRCodeEncoder();
 
@@ -166,7 +166,8 @@ namespace IranAudioGuide_MainServer.Services
         }
         public ConvertBarcodetoStringVM ConvertBarcodetoString(string barcode)
         {
-            var list = barcode.Split(';').ToList();
+            string decryptedBarcode = CryptographyService.Decrypt(barcode, true);
+            var list = decryptedBarcode.Split(';').ToList();
             ConvertBarcodetoStringVM cbs = new ConvertBarcodetoStringVM()
             {
                 CBS_id_bar = int.Parse(list[0]),
