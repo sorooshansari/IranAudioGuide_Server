@@ -717,7 +717,7 @@
     <Content Include="Content\global\plugins\toastr\toastr.min.css" />
     <Content Include="Content\global\plugins\toastr\toastr.min.js" />
     <Content Include="Content\images\arrow.svg" />
-    <Content Include="Content\images\bars.svg" />
+    <Content Include="Content\images\bars-menu.svg" />
     <Content Include="Content\images\close.svg" />
     <Content Include="Content\images\default_avatar.png" />
     <Content Include="Content\images\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
@@ -1793,6 +1793,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Seller\Index.cshtml" />
     <Content Include="Views\Seller\GeneratePDF.cshtml" />
+    <Content Include="Views\Shared\_SelectLangBtn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

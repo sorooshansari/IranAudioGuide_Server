@@ -31,14 +31,14 @@ namespace IranAudioGuide_MainServer
 
 
 
-            bundles.UseCdn = true;
+        //    bundles.UseCdn = true;
                
-            var jqueryCdnPath =  @"//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.js";
-            var jqueryBundle = new ScriptBundle("~/bundles/jqueryCdn", jqueryCdnPath)
-                                   .Include("~/Content/Scripts/jquery-{version}.min.js");
+        //    var jqueryCdnPath =  @"//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.js";
+        //    var jqueryBundle = new ScriptBundle("~/bundles/jqueryCdn", jqueryCdnPath)
+        //                           .Include("~/Content/Scripts/jquery-{version}.min.js");
 
 
-        BundleTable.EnableOptimizations = true;
+        //BundleTable.EnableOptimizations = true;
             //bundles.UseCdn = true;
             //bundles.Add(new ScriptBundle("~/bundles/jqueryCdn", @"//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/")
             //.Include("~/jquery-{version}.js"));

@@ -22,6 +22,28 @@
                 -webkit-transform-origin: 0 0;
             }
         }
+
+        .load {
+            opacity: 1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #15437f;
+            text-align: center;
+            padding: 14% 0 0 0;
+            z-index: 900000;
+        }
+
+        .unload {
+            opacity: 0;
+            display: none;
+            -moz-transition: all 1s ease-in-out;
+            -webkit-transition: all 1s ease-in-out;
+            -o-transition: all 1s ease-in-out;
+            transition: all 1s ease-in-out;
+        }
     </style>
 }
 @section topLoading{
