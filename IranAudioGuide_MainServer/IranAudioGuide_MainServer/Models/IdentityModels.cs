@@ -206,7 +206,7 @@ namespace IranAudioGuide_MainServer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid TrI_Id { get; set; }
 
-        public string TrI_Name { get; set; }
+       // public string TrI_Name { get; set; }
         public string TrI_Description { get; set; }
 
         public Guid Img_Id { get; set; }

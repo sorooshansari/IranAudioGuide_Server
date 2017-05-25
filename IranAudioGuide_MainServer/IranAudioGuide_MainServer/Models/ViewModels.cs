@@ -627,6 +627,7 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class EditEIDescVM
     {
+        [Required]
         public Guid ImageId { get; set; }
         public string ImageDesc { get; set; }
         public string Name { get; set; }

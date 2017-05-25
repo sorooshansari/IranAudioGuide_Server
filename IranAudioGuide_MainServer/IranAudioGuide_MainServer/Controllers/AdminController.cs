@@ -998,38 +998,28 @@ namespace IranAudioGuide_MainServer.Controllers
 
             try
             {
-                var img = db.Images.Include(x => x.TranslateImages).FirstOrDefault(x => x.Img_Id == model.ImageId);
-                if (img == default(Image))
+                if (!ModelState.IsValid)
                 {
-                    return Json(new Respond("Invalid Image Id", status.invalidId));
+                    return Json(new Respond("invalid img id", status.invalidInput));
                 }
-                var tImage = new TranslateImage()
+                var trImg = db.TranslateImages.FirstOrDefault(ti => ti.Img_Id == model.ImageId && ti.langId == lang);
+                if (trImg == default(TranslateImage))
                 {
-                    langId = lang,
-                    TrI_Description = model.ImageDesc,
-                    //TrI_Name = model.Name,
-                };
-                if (img.TranslateImages.Count == 0)
-                {
-                    img.TranslateImages = new List<TranslateImage>();
+                    db.TranslateImages.Add(new TranslateImage()
+                    {
+                        langId = lang,
+                        Img_Id = model.ImageId,
+                        TrI_Description = model.ImageDesc
+                    });
+                    db.SaveChanges();
+                    UpdateLog(updatedTable.TImage, trImg.Img_Id, false);
                 }
                 else
                 {
-                    var removeitem = img.TranslateImages.FirstOrDefault(x => x.langId == lang);
-                    img.TranslateImages.Remove(removeitem);
-                    UpdateLog(updatedTable.TImage, removeitem.Img_Id, true);
-
+                    trImg.TrI_Description = model.ImageDesc;
+                    UpdateLog(updatedTable.TImage, trImg.Img_Id, false);
                 }
-                img.Img_Name = model.Name;
-                if (lang == (int)EnumLang.en)
-                {
-                    img.Img_Description = model.ImageDesc;
-                    UpdateLog(updatedTable.ExtraImage, img.Img_Id);
-                }
-                img.TranslateImages.Add(tImage);
-                db.SaveChanges();
-                UpdateLog(updatedTable.TImage, img.Img_Id);
-                db.SaveChanges();
+                db.SaveChanges();      
                 return Json(new Respond());
             }
             catch (Exception ex)
@@ -1044,16 +1034,16 @@ namespace IranAudioGuide_MainServer.Controllers
         [Authorize(Roles = "Admin")]
         public JsonResult GetExtraImages(Guid placeId)
         {
-            var img = db.Images.Include(x=>x.TranslateImages).Include(x=>x.Place)
-                .Where(x=> x.Place.Pla_Id == placeId)
-                .Select(i=>new ImageVM()
-                       {
-                           ImageId = i.Img_Id,
-                           ImageName = i.Img_Name,
-                           ImageDesc =  i.TranslateImages.FirstOrDefault(tr => tr.langId == lang).TrI_Description,
-                           Index = i.Tmg_Order
-                       }).ToList();
-            
+            var img = db.Images.Include(x => x.TranslateImages).Include(x => x.Place)
+                .Where(x => x.Place.Pla_Id == placeId)
+                .Select(i => new ImageVM()
+                {
+                    ImageId = i.Img_Id,
+                    ImageName = i.Img_Name,
+                    ImageDesc = i.TranslateImages.FirstOrDefault(tr => tr.langId == lang).TrI_Description,
+                    Index = i.Tmg_Order
+                }).ToList();
+
             return Json(img);
         }
         [HttpPost]
@@ -1414,7 +1404,7 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             //where a.Place == db.Places.Where(x => x.Pla_Id.ToString() == PlaceId).FirstOrDefault()
 
-            List<StoryVM> Storys = db.Storys.Where(x=> x.langId == lang).Include(s => s.Place)
+            List<StoryVM> Storys = db.Storys.Where(x => x.langId == lang).Include(s => s.Place)
                 .Where(x => x.Place.Pla_Id.ToString() == PlaceId)
                 .Select(a => new StoryVM()
                 {
@@ -1442,7 +1432,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         private List<AudioVM> GetAudios(string PlaceId)
         {
-            List<AudioVM> list = db.Audios.Where(x=> x.langId == lang).Include(s => s.Place)
+            List<AudioVM> list = db.Audios.Where(x => x.langId == lang).Include(s => s.Place)
                .Where(x => x.Place.Pla_Id.ToString() == PlaceId)
                .Select(a => new AudioVM()
                {
