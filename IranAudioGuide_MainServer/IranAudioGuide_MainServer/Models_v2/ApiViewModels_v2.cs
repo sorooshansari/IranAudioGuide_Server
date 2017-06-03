@@ -216,7 +216,7 @@ namespace IranAudioGuide_MainServer.Models_v2
 
         public Guid ID { get; set; }
         public string Name { get; set; }
-        //public string Url { get; set; }
+        public string Url { get; set; }
         public string Desc { get; set; }
         public Guid PlaceId { get; set; }
         public int OrderItem { get; set; }
