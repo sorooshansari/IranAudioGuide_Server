@@ -262,6 +262,10 @@
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Migrations\201705251234220_changeTranslateImg.cs" />
+    <Compile Include="Migrations\201705251234220_changeTranslateImg.Designer.cs">
+      <DependentUpon>201705251234220_changeTranslateImg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1829,6 +1833,9 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705251234220_changeTranslateImg.resx">
+      <DependentUpon>201705251234220_changeTranslateImg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

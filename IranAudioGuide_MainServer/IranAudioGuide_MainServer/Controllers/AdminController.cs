@@ -1005,19 +1005,20 @@ namespace IranAudioGuide_MainServer.Controllers
                 var trImg = db.TranslateImages.FirstOrDefault(ti => ti.Img_Id == model.ImageId && ti.langId == lang);
                 if (trImg == default(TranslateImage))
                 {
-                    db.TranslateImages.Add(new TranslateImage()
+                    var newTrImg = new TranslateImage()
                     {
                         langId = lang,
                         Img_Id = model.ImageId,
                         TrI_Description = model.ImageDesc
-                    });
+                    };
+                    db.TranslateImages.Add(newTrImg);
                     db.SaveChanges();
-                    UpdateLog(updatedTable.TImage, trImg.Img_Id, false);
+                    UpdateLog(updatedTable.TImage, newTrImg.TrI_Id, false);
                 }
                 else
                 {
                     trImg.TrI_Description = model.ImageDesc;
-                    UpdateLog(updatedTable.TImage, trImg.Img_Id, false);
+                    UpdateLog(updatedTable.TImage, trImg.TrI_Id, false);
                 }
                 db.SaveChanges();      
                 return Json(new Respond());
