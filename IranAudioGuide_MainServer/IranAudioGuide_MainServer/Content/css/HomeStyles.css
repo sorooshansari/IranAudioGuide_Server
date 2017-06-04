@@ -1,4 +1,8 @@
-﻿
+﻿h2 ,h3, .panel-heading, legend
+{
+        font-weight: 900 !important;
+    text-shadow: 1px 2px 5px black !important;
+}
 .form-request {
     width: 416px;
     margin: auto;
@@ -107,6 +111,11 @@
         box-shadow: 1px 1px 5px black;
     }
 
+    #header .country .countryDropdown
+{
+    background-color:transparent !important;
+    color:white !important;
+}
 @media (min-width: 768px) {
     .Location .panel {
         max-width: 400px;

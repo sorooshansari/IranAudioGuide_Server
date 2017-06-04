@@ -45,6 +45,25 @@
     direction: rtl;
 }
 
+._fa #LoginForm .input-group
+{
+    direction:ltr;
+}
+
+._fa #LoginForm .input-group-addon {
+    border-bottom-right-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 4px !important;
+    border-top-left-radius: 4px !important;
+}
+
+._fa #LoginForm .form-control {
+    border-bottom-right-radius: 4px !important;
+    border-top-right-radius: 4px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+}
+
 ._fa .input-group-addon {
     border-bottom-right-radius: 4px !important;
     border-top-right-radius: 4px !important;
