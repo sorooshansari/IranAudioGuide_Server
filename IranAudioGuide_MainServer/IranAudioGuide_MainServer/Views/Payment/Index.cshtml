@@ -426,13 +426,13 @@
                     @if (ViewBag.IsChooesZarinpal)
                     {
                         <td class="_2ndtd" colspan="1" style="color:white; font-size:small; background-color:#fdcf41; font-weight:300; vertical-align:middle;">
-                            <img style="width:35%;" src="~/images/icon-128x128.png" />
+                            <img style="width:35%;" src="@Global.ImagePath/icon-128x128.png" />
                         </td>
                     }
                     else
                     {
                         <td class="_2ndtd" colspan="1" style="background-color: #ececec; color:white; font-size:small; padding: 0px; padding-left: 15px; font-weight:300; /* padding: 15px 0;*/ text-align:center; ">
-                            <img id="IntGateWay" style="" src="~/images/WebMoney-logo-white_8.png" />
+                            <img id="IntGateWay" style="" src="@Global.ImagePath/WebMoney-logo-white_8.png" />
                         </td>
                             <td class="_2ndtd" style="background-color: #ececec; color: #001644; padding: 0px; font-size: small; font-weight: 600;  vertical-align: middle; border: none; text-align:center;">
                                 @if (ViewBag.IsChooesZarinpal)
@@ -504,7 +504,7 @@
     else
     {
         <a id="wmcheck" href="https://passport.webmoney.ru/asp/certview.asp?wmid=059551878952" target=_blank>
-            <IMG SRC="~/images/v_blue_on_transp_en.png" title="Here is your WM passport 059551878952" border="0">@*<br>
+            <IMG SRC="@Global.ImagePath/v_blue_on_transp_en.png" title="Here is your WM passport 059551878952" border="0">@*<br>
                 <font size=1>Check Passport</font>*@
         </a>
     }
