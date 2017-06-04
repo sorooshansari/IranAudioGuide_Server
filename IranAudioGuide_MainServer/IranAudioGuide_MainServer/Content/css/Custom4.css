@@ -346,7 +346,7 @@ section h2, section h3, section h4, section h5, section h6 {
     }
 
     #footer .icons {
-        margin: 0 0 1em 0;
+        margin: 1em 0 0 0 !important;
     }
 
     #Message {

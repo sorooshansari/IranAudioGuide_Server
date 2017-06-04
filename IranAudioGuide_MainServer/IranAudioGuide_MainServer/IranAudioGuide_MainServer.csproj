@@ -262,10 +262,6 @@
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201705251234220_changeTranslateImg.cs" />
-    <Compile Include="Migrations\201705251234220_changeTranslateImg.Designer.cs">
-      <DependentUpon>201705251234220_changeTranslateImg.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1566,6 +1562,7 @@
     <Content Include="images\marker.png" />
     <Content Include="images\v_blue_on_transp_en.png" />
     <Content Include="images\v_blue_on_white_en.png" />
+    <Content Include="images\WebMoney-logo-white_8.png" />
     <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="robots.txt" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
@@ -1833,9 +1830,6 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705251234220_changeTranslateImg.resx">
-      <DependentUpon>201705251234220_changeTranslateImg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
