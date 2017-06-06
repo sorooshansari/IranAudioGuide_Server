@@ -5,28 +5,6 @@
     ViewBag.Title = "PaymentRef";
     Layout = "~/Views/Shared/_PaymentLayout.cshtml";
 }
-@*
-    <script type="text/javascript">
-        var time_left = 10;
-        var cinterval;
-
-        function time_dec() {
-            time_left--;
-            document.getElementById('countdown').innerHTML = time_left;
-            if (time_left == 0) {
-                var originalstring = document.getElementById('countdown2').innerHTML;
-                var newstring = originalstring.replace('seconds', 'second');
-                document.getElementById('countdown2').innerHTML = newstring;
-                var url = document.getElementById("url").getAttribute("value");
-
-                window.location.replace(url);
-                clearInterval(cinterval);
-            }
-        }
-
-        cinterval = setInterval('time_dec()', 1000);
-    </script>*@
-
 <style type="text/css">
     #page-wrapper {
         height: 100vh;
@@ -160,10 +138,6 @@
                     @Html.Raw(ViewBag.ErrDesc)
                 </p>
             </div>
-
-
-
-
             <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
 
                 <table class="table-mybordered tbldotted table-condensed" style="width: 100%; border-radius: 10px 10px 0px 0px; margin: 0px 0px 10px; color: rgb(20, 68, 130); text-shadow: none; text-align: center; background-color: transparent;">
@@ -171,12 +145,12 @@
                         @if (ViewBag.Succeeded)
                         {
                             <tr>
-                                <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-briefcase"></i>Package Name</div></td>
+                                <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-briefcase"></i>@Global.PaymentPage27</div></td>
                                 <td class="_2ndtd" style="background-color: transparent; text-transform:capitalize; font-size: medium;">@ViewBag.Packname</td>
                             </tr>
                         }
                         <tr>
-                            <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-key"></i>Reference ID</div></td>
+                            <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-key"></i>@Global.ReturnPaymentReferenceID</div></td>
                             <td class="_2ndtd" style="background-color:transparent;">@ViewBag.SaleReferenceId</td>
                         </tr>
                     </tbody>
@@ -184,11 +158,11 @@
                 <div class="col-xs-12" style="text-align:right;">
                     @if (ViewBag.Succeeded)
                     {
-                        <a class="btn btn-sm btn-default purchasebtn" href="mobile/purchased" style="width:100px; font-size:small;">Continue</a>
+                        <a class="btn btn-sm btn-default purchasebtn" href="mobile/purchased" style="width:100px; font-size:small;">@Global.btnContinue</a>
                     }
                     else
                     {
-                        <a class="btn btn-sm btn-default purchasebtn" href="mobile/close" style="width:100px; font-size:small;">Continue</a>
+                        <a class="btn btn-sm btn-default purchasebtn" href="mobile/close" style="width:100px; font-size:small;">@Global.btnContinue</a>
                     }
                 </div>
             </div>

@@ -355,10 +355,8 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             using (var dbTran = db.Database.BeginTransaction())
             {
-
                 try
                 {
-
                     var audio = db.Audios.Where(x => x.Aud_Id == Id).FirstOrDefault();
                     if (audio == default(Audio))
                         return Json(new Respond("Invalid Audio Id", status.invalidInput));
@@ -400,13 +398,15 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             if (model.Image.ContentLength > 0 && IsImage(model.Image))
             {
-                var place = new Place()
-                {
-                    Pla_Name = model.PlaceName,
-                    Pla_Discription = model.PlaceDesc,
-                    Pla_Address = model.PlaceAddress,
-                    TranslatePlaces = new List<TranslatePlace>()
-                };
+                var place = new Place();
+
+             
+                place.Pla_Name = model.PlaceName;
+                place.Pla_Discription = model.PlaceDesc;
+                place.Pla_Address = model.PlaceAddress;
+                place.TranslatePlaces = new List<TranslatePlace>();
+
+
                 TranslatePlace tp = new TranslatePlace()
                 {
                     langId = lang,
@@ -1019,7 +1019,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     trImg.TrI_Description = model.ImageDesc;
                     UpdateLog(updatedTable.TImage, trImg.Img_Id, false);
                 }
-                db.SaveChanges();      
+                db.SaveChanges();
                 return Json(new Respond());
             }
             catch (Exception ex)

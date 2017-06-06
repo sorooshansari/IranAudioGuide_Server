@@ -20,41 +20,27 @@
     <meta property="twitter:url" content="http://iranaudioguide.com" />
     <meta property="twitter:title" content="Best audio guide application for Iran travel" />
     <meta property="twitter:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
-
-
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>@ViewBag.Title</title>
-
-    @*<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/css/bootstrap-social.css" rel="stylesheet" />
-    <link href="~/Content/css/toggle.css" rel="stylesheet" />
-    <link href="~/Content/css/main2.css" rel="stylesheet" />
-
-    <link href="~/Content/css/Custom4.css" rel="stylesheet" />*@
-
     @Styles.Render("~/Content/css/paymentCss");
-
-    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-    <!--[if lte IE 8]><link rel="stylesheet" href="~/Content/ie8.css" /><![endif]-->
-    <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/ie9.css" /><![endif]-->
-
 </head>
 <body class="landing" ng-app="HomePage" ng-controller="HomeController">
     <!-- Page Wrapper -->
     <div id="page-wrapper">
         <!-- Header -->
         <header id="header" class="alt">
-            <h1><img id="toplogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" /><a href="@Url.Action("Index", "Home")">Iran Audio Guide</a></h1>
+            <h1>
+                <img id="toplogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" />
+                <a href="@Url.Action("Index", "Home")">Iran Audio Guide</a>
+            </h1>
         </header>
 
         @RenderBody()
 
         <footer id="footer">
 
-           
+
             <ul id="copyright" class="copyright">
                 <li><a href="#" style="font-weight:bold;">@Html.Raw(Global.copyright2)</a><font> - </font><a href="#" style="font-weight:bold;">@Html.Raw(Global.copyright21) </a></li>
             </ul>
@@ -80,14 +66,14 @@
                 <li>@Html.Raw(Global.copyright23)<a style="font-weight:bold;" rel="author" href="https://plus.google.com/112268338441138496929"> @Global.Soroosh</a></li>
             </ul>
 
-           
+
         </footer>
     </div>
-   
+
 
     @Scripts.Render("~/bundles/paymentJs")
 
     @*<script src="~/Content/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Content/Scripts/bootstrap.min.js"></script>*@
+        <script src="~/Content/Scripts/bootstrap.min.js"></script>*@
 </body>
 </html>
