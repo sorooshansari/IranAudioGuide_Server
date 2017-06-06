@@ -1570,6 +1570,7 @@
     <Content Include="robots.txt" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="sitemap.xml" />
+    <Content Include="Views\Payment\PaymentIndex.html" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
