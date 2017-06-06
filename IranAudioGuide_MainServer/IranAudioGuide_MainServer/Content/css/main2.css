@@ -2443,9 +2443,12 @@ button,
 
         .features li:before {
             left: 0;
-            margin: 0 0 1em 0;
+            margin: 0px 0 0 0.5em;
             position: relative;
             top: 0;
+            width: auto;
+            float: right;
+            text-shadow: 1px 2px 5px black !important;
         }
 }
 

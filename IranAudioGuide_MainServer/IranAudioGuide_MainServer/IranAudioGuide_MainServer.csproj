@@ -1562,6 +1562,7 @@
     <Content Include="images\marker.png" />
     <Content Include="images\v_blue_on_transp_en.png" />
     <Content Include="images\v_blue_on_white_en.png" />
+    <Content Include="images\WebMoney-logo-white_8.png" />
     <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="robots.txt" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />

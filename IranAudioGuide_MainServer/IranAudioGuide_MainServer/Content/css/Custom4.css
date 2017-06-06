@@ -346,7 +346,7 @@ section h2, section h3, section h4, section h5, section h6 {
     }
 
     #footer .icons {
-        margin: 0 0 1em 0;
+        margin: 1em 0 0 0 !important;
     }
 
     #Message {
@@ -527,9 +527,15 @@ a:hover.tooltips span {
 }
 
 .features p {
+    font-size: 15px;
     margin-bottom: 1em;
+    text-align: justify;
+    color: whitesmoke;
 }
-
+.features li h3 {
+    font-size: 15px;
+    color: #0fc;
+}
 
 @media (min-width:992px) and (max-width:1199px) {
     .image {

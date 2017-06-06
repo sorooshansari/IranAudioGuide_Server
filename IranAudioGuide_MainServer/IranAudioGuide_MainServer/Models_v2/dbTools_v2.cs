@@ -105,7 +105,7 @@ namespace IranAudioGuide_MainServer.Models_v2
                 Cities = FillCityVM(dt[6]),
                 TranslateCities = FillTranslateCities(dt[7]),
                 TranslateImages = FillTranslateImage(dt[8]),
-                TranslatePlaces = FillTranslatePlaces(dt[3]),
+                TranslatePlaces = FillTranslatePlaces(dt[9]),
                 RemovedEntries = new RemovedEntries()
                 {
                     Places = GetTableIds(dt[10]),
@@ -301,7 +301,7 @@ namespace IranAudioGuide_MainServer.Models_v2
                     ID = dr["Id"].convertToGuid(),
                     Name = dr["Name"].convertToString(),
                     Desc = dr["Descript"].convertToString(),
-                    //Url = dr["Url"].convertToString(),
+                   Url = dr["Url"].convertToString(),
                     OrderItem = dr["OrderItem"].convertToInt(),
                     LangId = dr["LangId"].convertToInt(),
                 }).ToList();
