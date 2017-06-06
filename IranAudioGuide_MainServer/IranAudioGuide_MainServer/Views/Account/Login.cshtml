@@ -68,7 +68,7 @@
                 <p id="regdet">
                     @Global.signInSubHeader
                 </p>
-                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id="LoginForm" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)

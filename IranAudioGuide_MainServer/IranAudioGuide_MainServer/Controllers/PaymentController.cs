@@ -12,7 +12,7 @@ using IranAudioGuide_MainServer.Services;
 namespace IranAudioGuide_MainServer.Controllers
 {
     [Authorize]
-    public class PaymentController : Controller
+    public class PaymentController : BaseController
     {
         public static string packname;
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -87,7 +87,13 @@ namespace IranAudioGuide_MainServer.Controllers
                                                               CityID = c.Cit_Id,
                                                               CityName = c.Cit_Name
                                                           }).ToList()
-                                     }).First();
+                                     }).FirstOrDefault();
+                if (package == null)
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = "Error!",
+                        Message = "Not Found Package",
+                    });
                 packname = package.PackageName;
                 await t;
                 ViewBag.Error = info.ErrorMessage;

@@ -148,7 +148,7 @@
         <!-- Header -->
         <header id="header" class="alt">
             <h1>
-            <img id="toplogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" alt="mallWhiteLogo" /><a href="@Url.Action("Index", "Home", new { lang = lang})">Iran Audio Guide</a></h1>
+            <img id="toplogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" alt="mallWhiteLogo" /><a href="@Url.Action("Index", "Home", new { lang = lang})">@Global.IranAudioGuide</a></h1>
 
 
             @Html.Partial("_SelectLangBtn", new SelectLangVM()

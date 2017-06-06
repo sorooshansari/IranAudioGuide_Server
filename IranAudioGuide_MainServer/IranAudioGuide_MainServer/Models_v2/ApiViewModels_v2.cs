@@ -26,7 +26,7 @@ namespace IranAudioGuide_MainServer.Models_v2
             if (isError)
                 this.status = GetAudioUrlStatus.unauthorizedUser;
             else
-               this.status = GetAudioUrlStatus.success;
+                this.status = GetAudioUrlStatus.success;
         }
         public GetAudioUrlRes(GetAudioUrlStatus status, string error = "")
         {
@@ -208,15 +208,13 @@ namespace IranAudioGuide_MainServer.Models_v2
         public string ImageUrl { get; set; }
         //public string Desc { get; set; }
         public int OrderItem { get; internal set; }
-      //  public int LangId { get; internal set; }
+        //  public int LangId { get; internal set; }
     }
     public class AudioVm
     {
-   
-
         public Guid ID { get; set; }
         public string Name { get; set; }
-        public string Url { get; set; }
+        // public string Url { get; set; }
         public string Desc { get; set; }
         public Guid PlaceId { get; set; }
         public int OrderItem { get; set; }
@@ -241,7 +239,7 @@ namespace IranAudioGuide_MainServer.Models_v2
         public int UpdateNumber { get; set; }
         public bool isPrimary { get; set; }
         public int OrderItem { get; set; }
-        
+
     }
     public class TranslateCityVm
     {
@@ -256,7 +254,7 @@ namespace IranAudioGuide_MainServer.Models_v2
     public class TranslateImageVm
     {
         public Guid Id { get; set; }
-       // public string Name { get; set; }
+        // public string Name { get; set; }
 
         public string Description { get; set; }
         public Guid ImageId { get; set; }
@@ -270,6 +268,6 @@ namespace IranAudioGuide_MainServer.Models_v2
         public string Adr { get; set; }
         public int LangId { get; set; }
         public Guid PlaceId { get; set; }
-        
+
     }
 }

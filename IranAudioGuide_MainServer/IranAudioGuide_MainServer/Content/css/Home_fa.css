@@ -36,13 +36,54 @@
         direction: ltr !important;
     }
 }
-
-._fa .features li:before {
-    right: 1.75em;
+@media screen and (max-width: 736px) {
+    ._fa .features p {
+        font-size: 12px !important;
+    }
+    ._fa .features li h3 {
+    font-size: 13px;
+}
 }
 
+._fa .features li:before {
+            right: 1.75em;
+            margin: 0px 0 0 0.5em;
+            float: right;
+            text-shadow: 1px 2px 5px black !important;
+}
+
+._fa .features li h3 {
+    font-size: 15px;
+    color: #0fc;
+    text-align:right;
+}
+._fa .features p {
+    font-size: 14px;
+    margin-bottom: 2.5em;
+    text-align: justify;
+    color: whitesmoke;
+}
 ._fa #contact {
     direction: rtl;
+}
+
+._fa #LoginForm .input-group
+{
+    direction:ltr;
+}
+
+._fa #LoginForm .input-group-addon {
+    border-bottom-right-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 4px !important;
+    border-top-left-radius: 4px !important;
+}
+
+._fa #LoginForm .form-control {
+    border-bottom-right-radius: 4px !important;
+    border-top-right-radius: 4px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
 }
 
 ._fa .input-group-addon {

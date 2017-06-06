@@ -713,4 +713,64 @@
   <data name="ErrorUnknown" xml:space="preserve">
     <value>Connection Error Please Try Again Later</value>
   </data>
+  <data name="btnClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="PaymentProcedure" xml:space="preserve">
+    <value>Payment procedure</value>
+  </data>
+  <data name="PaymentProcedure1" xml:space="preserve">
+    <value>In order to purchase a package, you either need an Iranian cash card or you have to use the webmoney transfer system which provides various payment methods.</value>
+  </data>
+  <data name="PaymentProcedure2" xml:space="preserve">
+    <value>The procedure will only take a few minutes. The system will guide you through the steps. As soon the process has finished, the packages will be activated for you automatically. In case the procedures fail contact us.</value>
+  </data>
+  <data name="PaymentTermsConditions" xml:space="preserve">
+    <value>Terms &amp; Conditions</value>
+  </data>
+  <data name="PaymentTermsConditions1" xml:space="preserve">
+    <value>Once you have purchased a packaged the price is not refundable.
+                        &lt;br /&gt;
+                        Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions.
+                        &lt;br /&gt;
+                        Users agree to the price of each package and by purchasing a package, users terminate their right of any future complaint toward the price and content of the packages.
+                        &lt;br /&gt;
+                        Iranaudioguide preserve the right to restrict any user’s access, in case of doubt of identity, and users agree to reply to iranaudioguide contacts to clear the issue. In case the users do not comply, Iranaudioguide has the right to deny the users access.
+                        &lt;br /&gt;
+                        If it is proven to Iranaudioguide that a user is misusing the software in anyway, Iranaudioguide preserves to right to disable any access the user had and restrain any future access.
+                        &lt;br /&gt;
+                        Iranaudioguide is not a purely scientific source. The content is based on scientific facts but entertainment aspects are also considered.
+                        &lt;br /&gt;
+                        All rights of this application are strictly reserved to the brand owner. Any illegal use, will follow with legal prosecution.
+                        &lt;br /&gt;
+                        Users agree to allow iranaudioguide use the personal data they have provided to Iranaduioguide, for the improvement of the application.
+                        &lt;br /&gt;
+                        Each user can only change their active device once they change their personal device. In case it is proven to Iranaudioguide that users have changed the active device, to allow other individual access their packages, Iranaudioguide can restrict their access.
+                        &lt;br /&gt;
+                        Offered services provided here are not at the order of an individual or enterprise operating any of the Transaction banks, active on Iranaudioguide. This means the banks is not connected in any way with the sales conducted in Iranaudioguide.</value>
+  </data>
+  <data name="WebmoneyAbout" xml:space="preserve">
+    <value>About Webmoney</value>
+  </data>
+  <data name="WebmoneyAbout1" xml:space="preserve">
+    <value>Account Details</value>
+  </data>
+  <data name="WebmoneyAbout2" xml:space="preserve">
+    <value>WebMoney ID</value>
+  </data>
+  <data name="WebmoneyAbout3" xml:space="preserve">
+    <value>059551878952</value>
+  </data>
+  <data name="WebmoneyAbout4" xml:space="preserve">
+    <value>Merchant</value>
+  </data>
+  <data name="WebmoneyDescription" xml:space="preserve">
+    <value>Click the button "Purchase", the page will go to the Webmoney transfer.&lt;br /&gt; You will see several methods of payment with web money. If you are a Webmoney user you can use the Webmoney keeper.&lt;br /&gt;If you’re not familiar with Webmoney services, choose the Quick payment. For the payment to proceed you will you need to receive a sms. So be sure your sim card is active and you can receive the text messages.</value>
+  </data>
+  <data name="ChooseYourPaymentGateway" xml:space="preserve">
+    <value>Choose your payment gateway</value>
+  </data>
+  <data name="ReturnPaymentReferenceID" xml:space="preserve">
+    <value>Reference ID</value>
+  </data>
 </root>

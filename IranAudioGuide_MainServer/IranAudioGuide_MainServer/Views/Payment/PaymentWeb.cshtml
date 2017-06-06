@@ -340,7 +340,7 @@
 
                 <tr>
 
-                    <td colspan="2" class="_2ndtd PkgDetTD"><i class="icon fa fa-clipboard"></i>&nbsp;Cities Included</td>
+                    <td colspan="2" class="_2ndtd PkgDetTD"><i class="icon fa fa-clipboard"></i>&nbsp;@Global.PaymentPage21</td>
                 </tr>
             </tbody>
         </table>
@@ -349,11 +349,6 @@
 
             <div style="height:35vh; overflow:scroll;">
                 <table id="PkgDetailsTbl" class="tbldotted table-condensed">
-                    @*<tr>
-                        @*<td class="_1sttd PkgDetTD"><i class="icon fa fa-map-signs"></i>&nbsp;@Global.PaymentPage2</td>*@
-                        @*<td colspan="2" class="_2ndtd PkgDetTD"><i class="icon fa fa-clipboard"></i>&nbsp;@Global.PaymentPage21</td>
-                    </tr>*@
-
                     @foreach (var item in Model.PackageCities)
                     {
 
@@ -368,28 +363,6 @@
                             </td>
                         </tr>
                     }
-
-                    @*<tr>
-                    <td colspan="2" class="_1sttd" style="background-color:#001644 !important;"><div class="col-xs-12" style="color:white; font-size:small; font-weight:600; font-style:italic;"><i class="icon fa fa-money"></i>&nbsp;Price</div></td>
-
-                </tr>
-                <tr>
-                    @if (ViewBag.IsChooesZarinpal)
-                    {
-
-                        <td colspan="2" class="_2ndtd" style="vertical-align:middle; height:65px;">
-                            <span style="color:white; font-size:large; font-weight:600; padding:10px; border-radius:8px; background:#F44336;">@string.Format("{0:#,##0.##}", Model.PackagePrice * 10) IRR</span>
-                        </td>
-
-                    }
-                    else
-                    {
-
-                        <td colspan="2" class="_2ndtd" style="vertical-align:middle;  height:65px;">
-                            <span id="PriceLabel">@string.Format("{0:#,##0.##}", Model.PackagePriceDollar) $</span>
-                        </td>
-                    }
-                </tr>*@
                 </table>
                 </div>
                 <table id="PkgPaymentBlock">
@@ -472,20 +445,7 @@
                         <td></td>
                     </tr>
                 </table>
-
-
-
-
-
-
             </div>
-
-
-
-
-
-
-
     </div>
 </section>
 <div class="col-xs-12" style="text-align:center; padding:0;">
@@ -504,22 +464,21 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        Click the bottom "Purchase", the page will go to the Webmoney transfer.<br />
-                        You will see several methods of payment with web money. If you are a Webmoney user you can use the Webmoney keeper.<br />
-                        If you’re not familiar with Webmoney services, choose the Quick payment. For the payment to proceed you will you need to receive a sms. So be sure your sim card is active and you can receive the text messages.
+                        @Global.WebmoneyDescription
+                        
                     </p>
-                    <a href="https://www.wmtransfer.com/eng/information/short/index.shtml">About Webmoney</a>
+                    <a href="https://www.wmtransfer.com/eng/information/short/index.shtml">@Global.WebmoneyAbout</a>
                     <br />
-                    <h5>Account details</h5>
+                    <h5>@Global.WebmoneyAbout1</h5>
                     <dl>
-                        <dt>WebMoney ID</dt>
-                        <dd> 059551878952</dd>
-                        <dt>Merchant</dt>
-                        <dd>Iran Audio Guide</dd>
+                        <dt>@Global.WebmoneyAbout2</dt>
+                        <dd>@Global.WebmoneyAbout3</dd>
+                        <dt>@Global.WebmoneyAbout4 </dt>
+                        <dd>@Global.IranAudioGuide</dd>
                     </dl>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Global.btnClose</button>
                 </div>
             </div>
         </div>
@@ -532,18 +491,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Payment procedure</h4>
+                    <h4 class="modal-title">@Global.PaymentProcedure</h4>
                 </div>
                 <div class="modal-body">
                     <p>
-                        In order to purchase a package, you either need an Iranian cash card or you have to use the webmoney transfer system which provides various payment methods.
+                      @Global.PaymentProcedure1  
                     </p>
                     <p>
-                        The procedure will only take a few minutes. The system will guide you through the steps. As soon the process has finished, the packages will be activated for you automatically. In case the procedures fail contact us.
+                      @Global.PaymentProcedure2  
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Global.btnClose</button>
                 </div>
             </div>
         </div>
@@ -556,34 +515,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Terms & Conditions</h4>
+                    <h4 class="modal-title">@Global.PaymentTermsConditions</h4>
                 </div>
                 <div class="modal-body">
                     <p>
-                        Once you have purchased a packaged the price is not refundable.
-                        <br />
-                        Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions.
-                        <br />
-                        Users agree to the price of each package and by purchasing a package, users terminate their right of any future complaint toward the price and content of the packages.
-                        <br />
-                        Iranaudioguide preserve the right to restrict any user’s access, in case of doubt of identity, and users agree to reply to iranaudioguide contacts to clear the issue. In case the users do not comply, Iranaudioguide has the right to deny the users access.
-                        <br />
-                        If it is proven to Iranaudioguide that a user is misusing the software in anyway, Iranaudioguide preserves to right to disable any access the user had and restrain any future access.
-                        <br />
-                        Iranaudioguide is not a purely scientific source. The content is based on scientific facts but entertainment aspects are also considered.
-                        <br />
-                        All rights of this application are strictly reserved to the brand owner. Any illegal use, will follow with legal prosecution.
-                        <br />
-                        Users agree to allow iranaudioguide use the personal data they have provided to Iranaduioguide, for the improvement of the application.
-                        <br />
-                        Each user can only change their active device once they change their personal device. In case it is proven to Iranaudioguide that users have changed the active device, to allow other individual access their packages, Iranaudioguide can restrict their access.
-                        <br />
-                        Offered services provided here are not at the order of an individual or enterprise operating any of the Transaction banks, active on Iranaudioguide. This means the banks is not connected in any way with the sales conducted in Iranaudioguide.
-
+                        @Global.PaymentTermsConditions1
+                       
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Global.btnClose</button>
                 </div>
             </div>
         </div>

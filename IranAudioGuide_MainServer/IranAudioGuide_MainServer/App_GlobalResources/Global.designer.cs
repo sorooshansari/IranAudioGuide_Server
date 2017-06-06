@@ -142,6 +142,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string btnClose {
+            get {
+                return ResourceManager.GetString("btnClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string btnContinue {
@@ -174,6 +183,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string btnSubmit {
             get {
                 return ResourceManager.GetString("btnSubmit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose your payment gateway.
+        /// </summary>
+        public static string ChooseYourPaymentGateway {
+            get {
+                return ResourceManager.GetString("ChooseYourPaymentGateway", resourceCulture);
             }
         }
         
@@ -1331,6 +1349,57 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment procedure.
+        /// </summary>
+        public static string PaymentProcedure {
+            get {
+                return ResourceManager.GetString("PaymentProcedure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In order to purchase a package, you either need an Iranian cash card or you have to use the webmoney transfer system which provides various payment methods..
+        /// </summary>
+        public static string PaymentProcedure1 {
+            get {
+                return ResourceManager.GetString("PaymentProcedure1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The procedure will only take a few minutes. The system will guide you through the steps. As soon the process has finished, the packages will be activated for you automatically. In case the procedures fail contact us..
+        /// </summary>
+        public static string PaymentProcedure2 {
+            get {
+                return ResourceManager.GetString("PaymentProcedure2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms &amp; Conditions.
+        /// </summary>
+        public static string PaymentTermsConditions {
+            get {
+                return ResourceManager.GetString("PaymentTermsConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Once you have purchased a packaged the price is not refundable.
+        ///                        &lt;br /&gt;
+        ///                        Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions.
+        ///                        &lt;br /&gt;
+        ///                        Users agree to the price of each package and by purchasing a package, users terminate their right of any future complaint toward the price and content of the packages.
+        ///                        &lt;br /&gt;
+        ///             [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string PaymentTermsConditions1 {
+            get {
+                return ResourceManager.GetString("PaymentTermsConditions1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
         public static string PlaceholderConfirmPassword {
@@ -1435,6 +1504,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string RememberBrowser {
             get {
                 return ResourceManager.GetString("RememberBrowser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reference ID.
+        /// </summary>
+        public static string ReturnPaymentReferenceID {
+            get {
+                return ResourceManager.GetString("ReturnPaymentReferenceID", resourceCulture);
             }
         }
         
@@ -1841,6 +1919,60 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string Twitter {
             get {
                 return ResourceManager.GetString("Twitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Webmoney.
+        /// </summary>
+        public static string WebmoneyAbout {
+            get {
+                return ResourceManager.GetString("WebmoneyAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Details.
+        /// </summary>
+        public static string WebmoneyAbout1 {
+            get {
+                return ResourceManager.GetString("WebmoneyAbout1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WebMoney ID.
+        /// </summary>
+        public static string WebmoneyAbout2 {
+            get {
+                return ResourceManager.GetString("WebmoneyAbout2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 059551878952.
+        /// </summary>
+        public static string WebmoneyAbout3 {
+            get {
+                return ResourceManager.GetString("WebmoneyAbout3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merchant.
+        /// </summary>
+        public static string WebmoneyAbout4 {
+            get {
+                return ResourceManager.GetString("WebmoneyAbout4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click the button &quot;Purchase&quot;, the page will go to the Webmoney transfer.&lt;br /&gt; You will see several methods of payment with web money. If you are a Webmoney user you can use the Webmoney keeper.&lt;br /&gt;If you’re not familiar with Webmoney services, choose the Quick payment. For the payment to proceed you will you need to receive a sms. So be sure your sim card is active and you can receive the text messages..
+        /// </summary>
+        public static string WebmoneyDescription {
+            get {
+                return ResourceManager.GetString("WebmoneyDescription", resourceCulture);
             }
         }
     }
