@@ -591,6 +591,7 @@
     <Content Include="Content\css\main2.css" />
     <Content Include="Content\css\notify-metro.css" />
     <Content Include="Content\css\PakageTemplate.css" />
+    <Content Include="Content\css\PaymentIndex.css" />
     <Content Include="Content\css\profile.css" />
     <Content Include="Content\css\responsiveslides.css" />
     <Content Include="Content\css\select.css" />
@@ -1572,7 +1573,6 @@
     <Content Include="robots.txt" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="sitemap.xml" />
-    <Content Include="Views\Payment\PaymentIndex.html" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -1769,7 +1769,7 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\apiTest\Index.cshtml" />
-    <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Payment\Index_old.cshtml" />
     <None Include="Service References\Zarinpal\PaymentGatewayImplementationService.wsdl" />
     <Content Include="Views\Payment\Return.cshtml" />
     <Content Include="Views\Shared\CheckOut.cshtml" />
@@ -1801,6 +1801,9 @@
     <Content Include="Views\Seller\Index.cshtml" />
     <Content Include="Views\Seller\GeneratePDF.cshtml" />
     <Content Include="Views\Shared\_SelectLangBtn.cshtml" />
+    <Content Include="Views\Payment\Index_Old2.cshtml" />
+    <Content Include="Views\Payment\Index.2cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
