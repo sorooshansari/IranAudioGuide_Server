@@ -225,7 +225,6 @@ namespace IranAudioGuide_MainServer.Models_v2
         public Guid PlaceId { get; set; }
         public int UpdateNum { get; set; }
     }
-
     public class PlaceVm
     {
         public Guid Id { get; set; }
