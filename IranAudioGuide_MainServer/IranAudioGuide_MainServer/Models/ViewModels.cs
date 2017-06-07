@@ -207,17 +207,19 @@ namespace IranAudioGuide_MainServer.Models
     public class CityPymentVM
     {
         public int CityID { get; set; }
-        public string _imageUrl { get; set; }
-        public string CityImageUrl
-        {
-            get { return _imageUrl; }
-            set { _imageUrl = GlobalPath.FullPathImageCity + value; }
-        }
+        //public string _imageUrl { get; set; }
+        //public string CityImageUrl
+        //{
+        //    get { return _imageUrl; }
+        //    set { _imageUrl = GlobalPath.FullPathImageCity + value; }
+        //}
         [Display(Name = "Name")]
         public string CityName { get; set; }
         [Display(Name = "Description")]    
         public string CityDesc { get; internal set; }
-        public int Order { get; set; }
+    //    public int Order { get; set; }
+        public int AudiosCount { get; internal set; }
+        public int StoriesCount { get; internal set; }
     }
 
     public class PackagePymentVM

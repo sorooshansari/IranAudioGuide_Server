@@ -1,4 +1,4 @@
-﻿@model IranAudioGuide_MainServer.Models.PackageVM
+﻿@model IranAudioGuide_MainServer.Models.PackagePymentVM
 @using IranAudioGuide_MainServer.App_GlobalResources
 @{
     Layout = "~/Views/Shared/_PaymentLayout.cshtml";
@@ -437,7 +437,7 @@
                             <td class="_2ndtd" style="background-color: #ececec; color: #001644; padding: 0px; font-size: small; font-weight: 600;  vertical-align: middle; border: none; text-align:center;">
                                 @if (ViewBag.IsChooesZarinpal)
                                 {
-                                    <span id="PriceLabel">@string.Format("{0:#,##0.##}", Model.PackagePrice * 10) IRR</span>
+                                    <span id="PriceLabel">@string.Format("{0:#,##0.##}0", Model.PackagePrice ) IRR</span>
                                 }
                                 else
                                 {
