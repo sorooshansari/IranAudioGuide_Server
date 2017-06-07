@@ -718,10 +718,10 @@
     <value>مراحل پرداخت</value>
   </data>
   <data name="PaymentProcedure1" xml:space="preserve">
-    <value>In order to purchase a package, you either need an Iranian cash card or you have to use the webmoney transfer system which provides various payment methods.</value>
+    <value>به منظور خرید بسته، شما یا به یک کارت پرداخت نقدی ایران نیاز دارید و یا مجبور به استفاده از سیستم انتقال وب مانی هستید که روش های پرداخت مختلفی فراهم می کند.</value>
   </data>
   <data name="PaymentProcedure2" xml:space="preserve">
-    <value>The procedure will only take a few minutes. The system will guide you through the steps. As soon the process has finished, the packages will be activated for you automatically. In case the procedures fail contact us.</value>
+    <value>این فرآیند تنها چند دقیقه طول خواهد کشید. سیستم شما را از طریق مراحلی راهنمایی می کند. به محض اینکه روند به پایان رسید، بسته به طور خودکار برای شما فعال می شود. در مواردی که این فرآیند نا موفق بود، با ما تماس بگیرید.</value>
   </data>
   <data name="PaymentTermsConditions" xml:space="preserve">
     <value>شرایط و ضوابط</value>

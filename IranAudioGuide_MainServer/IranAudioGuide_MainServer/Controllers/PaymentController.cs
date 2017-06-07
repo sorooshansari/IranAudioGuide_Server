@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using IranAudioGuide_MainServer.Services;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -40,10 +42,45 @@ namespace IranAudioGuide_MainServer.Controllers
                 _userManager = value;
             }
         }
-
-        public ActionResult test(int id)
+        private PackagePymentVM getPackageById(Guid pacId)
         {
-            return View();
+            try
+            {
+                var lang = ServiceCulture.GeLangFromCookie();
+
+                using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("GetPackageById_website", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@langId", lang));
+                    cmd.Parameters.Add(new SqlParameter("@PackageId", pacId));
+                    sqlConnection.Open();
+                    var reader = cmd.ExecuteReader();
+                    var dt1 = new DataTable();
+                    dt1.Load(reader);
+                    var Packege = dt1.AsEnumerable().Select(p => new PackagePymentVM()
+                    {
+                        PackageId = p["PackageId"].convertToGuid(),
+                        PackageName = p["PackageName"].convertToString(),
+                        PackagePrice = p["PackagePrice"].convertToString(),
+                        PackagePriceDollar = p["PackagePriceDollar"].convertToString(),
+                        PackageCities = dt1.AsEnumerable().Select(c => new CityPymentVM()
+                        {
+                            CityID = c["CityId"].convertToInt(),
+                            CityName = c["CityName"].convertToString(),
+                            Order = c["CityOrder"].convertToInt(),
+                            CityImageUrl = c["CityImgUrl"].convertToString(),
+                            CityDesc = c["CityDescription"].convertToString(),
+                        }).ToList()
+                    }).FirstOrDefault();
+                    return Packege;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
         }
         // GET: Payment
         [AllowAnonymous]
@@ -57,6 +94,11 @@ namespace IranAudioGuide_MainServer.Controllers
                     ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
 
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
+                if(user == default(ApplicationUser))
+                {
+                    ViewBag.Error = "Unauthorized device!";
+                    return View("customError");
+                }
                 if (user.uuid != info.uuid)
                 {
                     ViewBag.Error = "Unauthorized device!";
@@ -67,27 +109,11 @@ namespace IranAudioGuide_MainServer.Controllers
                     return View("vmessage", new vmessageVM()
                     {
                         Subject = "Email not confirmed yet!",
-                        Message = @"For purchasing, first need to confirm your email. Please click <a id='loginlink' href='/Account/Login'>here</a> to Login",
+                        Message = @"For purchasing, first need to confirm your email.<br/><a id='close' href='mobile/close'>Close</a>",
                     });
                 }
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                PackageVM package = (from p in db.Packages
-                                     where p.Pac_Id == info.packageId
-                                     select new PackageVM()
-                                     {
-                                         PackageId = p.Pac_Id,
-                                         PackageName = p.Pac_Name,
-                                         PackagePrice = p.Pac_Price,
-                                         PackagePriceDollar = p.Pac_Price_Dollar,
-                                         PackageCities = (from c in db.Cities
-                                                          where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-                                                          select new CityVM()
-                                                          {
-                                                              CityDesc = c.Cit_Description,
-                                                              CityID = c.Cit_Id,
-                                                              CityName = c.Cit_Name
-                                                          }).ToList()
-                                     }).FirstOrDefault();
+                var package = getPackageById(info.packageId);
                 if (package == null)
                     return View("vmessage", new vmessageVM()
                     {
@@ -134,6 +160,24 @@ namespace IranAudioGuide_MainServer.Controllers
                         Subject = App_GlobalResources.Global.ErrorEmailNotConfirmed,
                         Message = App_GlobalResources.Global.ErrorEmailNotConfirmedMessage,
                     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 PackageVM package = (from p in db.Packages
                                      where p.Pac_Id == info.packageId
                                      select new PackageVM()

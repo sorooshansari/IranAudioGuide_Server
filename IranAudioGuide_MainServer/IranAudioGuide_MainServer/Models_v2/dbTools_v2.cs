@@ -269,7 +269,6 @@ namespace IranAudioGuide_MainServer.Models_v2
                 return null;
             }
         }
-
         private List<CitiesVm> FillCityVM(DataTable dataTable)
         {
             try
@@ -301,7 +300,7 @@ namespace IranAudioGuide_MainServer.Models_v2
                     ID = dr["Id"].convertToGuid(),
                     Name = dr["Name"].convertToString(),
                     Desc = dr["Descript"].convertToString(),
-                   Url = dr["Url"].convertToString(),
+                    //Url = dr["Url"].convertToString(),
                     OrderItem = dr["OrderItem"].convertToInt(),
                     LangId = dr["LangId"].convertToInt(),
                 }).ToList();

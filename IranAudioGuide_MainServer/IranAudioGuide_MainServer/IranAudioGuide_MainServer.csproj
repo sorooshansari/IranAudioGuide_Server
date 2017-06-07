@@ -255,6 +255,7 @@
     <Compile Include="Controllers\AppManagerController.cs" />
     <Compile Include="Controllers\AppManagerV2Controller.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ElmahErrorController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -262,6 +263,10 @@
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Migrations\201706061037278_g.cs" />
+    <Compile Include="Migrations\201706061037278_g.Designer.cs">
+      <DependentUpon>201706061037278_g.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1830,6 +1835,9 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061037278_g.resx">
+      <DependentUpon>201706061037278_g.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
