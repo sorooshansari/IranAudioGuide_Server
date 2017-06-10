@@ -552,7 +552,7 @@
     <value>Privacy &amp;amp; Policy</value>
   </data>
   <data name="copyright22" xml:space="preserve">
-    <value>Soroosh Developer Team</value>
+    <value>Shiraz Dourandish Developers</value>
   </data>
   <data name="copyright23" xml:space="preserve">
     <value>Developer:</value>
@@ -772,5 +772,15 @@
   </data>
   <data name="ReturnPaymentReferenceID" xml:space="preserve">
     <value>Reference ID</value>
+  </data>
+  <data name="PaymentPage30" xml:space="preserve">
+    <value>Payment Info</value>
+  </data>
+  <data name="PaymentPage31" xml:space="preserve">
+    <value>By purchasing this package, you will again access to all audio guide  tracks in the cities mentioned above.
+Your purchased packages will be set on and accessible through your current user account.</value>
+  </data>
+  <data name="TitlePayment" xml:space="preserve">
+    <value>Payment</value>
   </data>
 </root>

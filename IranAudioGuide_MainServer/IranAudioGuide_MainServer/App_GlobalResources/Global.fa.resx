@@ -157,7 +157,7 @@
     <value>سیاست &amp;amp;  حفظ حریم خصوصی</value>
   </data>
   <data name="copyright22" xml:space="preserve">
-    <value>تیم توسعه دهنده ی سروش</value>
+    <value>دوراندیش برنامه نویسان شیراز</value>
   </data>
   <data name="copyright23" xml:space="preserve">
     <value>توسعه دهنده:</value>
@@ -767,5 +767,15 @@
   </data>
   <data name="WebmoneyDescription" xml:space="preserve">
     <value>Click the bottom "Purchase", the page will go to the Webmoney transfer.&lt;br /&gt; You will see several methods of payment with web money. If you are a Webmoney user you can use the Webmoney keeper.&lt;br /&gt;If you’re not familiar with Webmoney services, choose the Quick payment. For the payment to proceed you will you need to receive a sms. So be sure your sim card is active and you can receive the text messages.</value>
+  </data>
+  <data name="PaymentPage30" xml:space="preserve">
+    <value>اطلاعات پرداخت</value>
+  </data>
+  <data name="TitlePayment" xml:space="preserve">
+    <value>پرداخت</value>
+  </data>
+  <data name="PaymentPage31" xml:space="preserve">
+    <value>با خرید این بسته شما به تمامی توضیحات صوتی شهرهای نام برده در بالا دسترسی پیدا می کنید.
+بسته های خریداری شده بر روی نام کاربری شما ذخیره شده و قابلیت دسترسی و بازیابی دارند.</value>
   </data>
 </root>

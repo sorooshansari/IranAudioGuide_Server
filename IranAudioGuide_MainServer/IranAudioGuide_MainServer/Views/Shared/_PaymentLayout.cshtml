@@ -1,79 +1,84 @@
-﻿@using IranAudioGuide_MainServer.Models
+﻿
 @using IranAudioGuide_MainServer.App_GlobalResources
 <!DOCTYPE html>
-<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
-<head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
-    <meta name="title" content="Best audio guide application for Iran travel" />
-    <meta name="Description"
-          content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-
-    <meta property="og:title" content="Best audio guide application for Iran travel" />
-    <meta property="og:site_name" content="Iran Audio Guide" />
-    <meta property="og:type" content="Audio Guide" />
-    <meta property="og:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
-    <meta property="og:url" content="http://iranaudioguide.com" />
-    <meta property="og:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-    <meta property="fb:admins" content="iranaudioguide" />
-
-    <meta property="twitter:card" content="Iran Audio Guide" />
-    <meta property="twitter:description" content="Iran audio Guide - Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-    <meta property="twitter:url" content="http://iranaudioguide.com" />
-    <meta property="twitter:title" content="Best audio guide application for Iran travel" />
-    <meta property="twitter:image" content="http://iranaudioguide.com/IAGSITELOGO.png" />
+<html lang="@Global.Lang">
+<head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css/paymentCss");
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+          crossorigin="anonymous">
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    <link href="~/Content/css/PaymentIndex.css" rel="stylesheet" />
+    <title>@Global.TitlePayment - @Global.IranAudioGuide</title>
+
+    @*@Styles.Render("~/Content/css/paymentCss");*@
+
+    <style>
+        body._fa {
+            direction: rtl;
+        }
+
+        ._fa .offset-2 {
+            margin-left: 0;
+            margin-right: 16.666667%;
+        }
+    </style>
 </head>
-<body class="landing" ng-app="HomePage" ng-controller="HomeController">
-    <!-- Page Wrapper -->
-    <div id="page-wrapper">
-        <!-- Header -->
-        <header id="header" class="alt">
-            <h1>
-                <img id="toplogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" />
-                <a href="@Url.Action("Index", "Home")">Iran Audio Guide</a>
-            </h1>
-        </header>
-
-        @RenderBody()
-
-        <footer id="footer">
-
-
+<body class="_@Global.Lang">
+    @RenderBody()
+    <footer class="footer text-center text-muted">
+        <div class="container-fluid">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a target="_blank" href="https://www.twitter.com/iranaudioguide"
+                       class="m-2 fa fa-twitter"
+                       data-toggle="tooltip" data-placement="top" title="twitter"></a>
+                </li>
+                <li class="list-inline-item">
+                    <a target="_blank" href="https://www.facebook.com/iranaudioguide"
+                       class="m-2 fa fa-facebook"
+                       data-toggle="tooltip" data-placement="top" title="facebook"></a>
+                </li>
+                <li class="list-inline-item">
+                    <a target="_blank" href="https://www.instagram.com/iran.audio.guide/"
+                       class="m-2 fa fa-instagram"
+                       data-toggle="tooltip" data-placement="top" title="instagram"></a>
+                </li>
+                <li class="list-inline-item">
+                    <a target="_blank" href="https://www.telegram.me/iranaudioguide"
+                       class="m-2 fa fa-telegram"
+                       data-toggle="tooltip" data-placement="top" title="telegram"></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="mailto:info@iranaudioguide.com"
+                       class="m-2 fa fa-envelope-o"
+                       data-toggle="tooltip" data-placement="top" title="Email"></a>
+                </li>
+            </ul>
             <ul id="copyright" class="copyright">
-                <li><a href="#" style="font-weight:bold;">@Html.Raw(Global.copyright2)</a><font> - </font><a href="#" style="font-weight:bold;">@Html.Raw(Global.copyright21) </a></li>
+                <li><a href="#" style="font-weight:bold;"> @Html.Raw(Global.copyright2)</a><font> - </font><a href="#" style="font-weight:bold;">@Html.Raw(Global.copyright21)</a></li>
             </ul>
-            <ul class="icons" style="display: inline-flex;">
-                <li>
-                    <a target="_blank" href="https://www.twitter.com/iranaudioguide" class="icon fa-twitter tooltips">@*<span>Twitter</span>*@</a>
-                </li>
-                <li>
-                    <a target="_blank" href="https://www.facebook.com/iranaudioguide" class="icon fa-facebook tooltips">@*<span>Facebook</span>*@</a>
-                </li>
-                <li>
-                    <a target="_blank" href="https://www.instagram.com/iran.audio.guide/" class="icon fa-instagram tooltips">@*<span>Instagram</span>*@</a>
-                </li>
-                <li>
-                    <a target="_blank" href="https://www.telegram.me/iranaudioguide" class="icon fa-telegram tooltips">@*<span>Telegram</span>*@</a>
-                </li>
-                <li>
-                    <a href="mailto:info@iranaudioguide.com" class="icon fa-envelope-o tooltips">@*<span>Email</span>*@</a>
-                </li>
+            <ul id="copyright">
+                <li class="">&copy;@DateTime.Now.Year - @Global.copyright22</li>
             </ul>
-            <ul id="copyright" class="copyright _2ndCopy">
-                <li>©@DateTime.Now.Year - @Html.Raw(Global.copyright22)</li>
-                <li>@Html.Raw(Global.copyright23)<a style="font-weight:bold;" rel="author" href="https://plus.google.com/112268338441138496929"> @Global.Soroosh</a></li>
-            </ul>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 
 
-        </footer>
-    </div>
-
-
-    @Scripts.Render("~/bundles/paymentJs")
-
-    @*<script src="~/Content/Scripts/jquery-1.10.2.min.js"></script>
-        <script src="~/Content/Scripts/bootstrap.min.js"></script>*@
+    @* @Scripts.Render("~/bundles/paymentJs")*@
 </body>
 </html>

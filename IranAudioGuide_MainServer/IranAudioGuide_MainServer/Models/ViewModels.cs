@@ -218,8 +218,9 @@ namespace IranAudioGuide_MainServer.Models
         [Display(Name = "Description")]    
         public string CityDesc { get; internal set; }
     //    public int Order { get; set; }
-        public int AudiosCount { get; internal set; }
-        public int StoriesCount { get; internal set; }
+        public int TrackCount { get; internal set; }
+        public int PlaceCount { get; internal set; }
+     //   public int PlaceCount { get; set; }
     }
 
     public class PackagePymentVM

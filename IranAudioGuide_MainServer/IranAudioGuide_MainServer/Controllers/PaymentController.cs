@@ -69,14 +69,14 @@ namespace IranAudioGuide_MainServer.Controllers
                             CityID = c["CityId"].convertToInt(),
                             CityName = c["CityName"].convertToString(),
                             CityDesc = c["CityDescription"].convertToString(),
-                            AudiosCount =c["AudiosCount"].convertToInt(),
-                            StoriesCount =c["StoriesCount"].convertToInt()
+                            TrackCount =c["TrackCount"].convertToInt(),
+                            PlaceCount =c["PlaceCount"].convertToInt()
                         }).ToList()
                     }).FirstOrDefault();
                     return Packege;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }

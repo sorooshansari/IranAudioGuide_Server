@@ -62,17 +62,10 @@ namespace IranAudioGuide_MainServer
                       "~/Content/css/bootstrap.css",
                       "~/Content/css/site.css",
                       "~/Content/global/plugins/font-awesome/css/font-awesome.min.css"));
-            bundles.Add(new StyleBundle("~/HomeCss").Include(
-                      "~/Content/css/bootstrap.min.css",
-                      "~/Content/css/bootstrap-social.min.css",
-                      "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
-                      "~/Content/css/toggle.min.css",
-                      "~/Content/css/styles.min.css",
-                      "~/Content/css/HomeStyles.css",
-                      "~/Content/css/Home_fa.css"));
+       
 
             bundles.Add(new ScriptBundle("~/bundles/minJs").Include(
-                        "~/Content/Scripts/jquery.min.js",
+                        //"~/Content/Scripts/jquery.min.js",
                         "~/Content/Scripts/jquery.scrollex.min.js",
                         "~/Content/Scripts/jquery.scrolly.min.js",
                         "~/Content/Scripts/skel.min.js",
@@ -95,11 +88,21 @@ namespace IranAudioGuide_MainServer
                         "~/Content/Scripts/jquery.min.js",
                         "~/Content/Scripts/bootstrap.min.js"));
 
+
+            bundles.Add(new StyleBundle("~/HomeCss").Include(
+                 //"~/Content/css/bootstrap.min.css",
+                 "~/Content/css/loading.css",
+                 "~/Content/css/bootstrap-social.min.css",
+                 "~/Content/global/plugins/font-awesome/css/font-awesome.min.css",
+                 "~/Content/css/toggle.min.css",
+                 "~/Content/css/styles.min.css",
+                 "~/Content/css/HomeStyles.css",
+                 "~/Content/css/Home_fa.css"));
             bundles.Add(new ScriptBundle("~/Profile/minJs")
                 .Include(
-                    "~/Content/Scripts/jquery-2.2.3.js",
-                    "~/Content/Scripts/bootstrap.min.js",
-                    "~/Content/global/plugins/angularjs/angular.min.js",
+                   // "~/Content/Scripts/jquery-2.2.3.js",
+                   // "~/Content/Scripts/bootstrap.min.js",
+                  //  "~/Content/global/plugins/angularjs/angular.min.js",
                     "~/Content/global/plugins/angularjs/angular-ui-router.min.js",
                     "~/Content/Scripts/toastr.min.js",
                     "~/Content/Scripts/select.min.js",

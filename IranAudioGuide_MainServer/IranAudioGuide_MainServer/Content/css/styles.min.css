@@ -4062,6 +4062,7 @@ ul.actions {
         border-radius: 97%;
         box-shadow: none;
     }
+
     #header .country .countryDropdown {
         background-color: rgba(255, 255, 255, 0.59);
         width: 100px;
@@ -4079,21 +4080,26 @@ ul.actions {
         opacity: 1;
         height: auto;
         transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-
     }
 
     #header .country {
         margin: 0px 120px 0 0;
         position: relative;
+        background-color: rgba(21, 67, 127, 0.66);
+        padding: 0 16px 0 0;
         display: inline-block;
     }
 
-    #header.alt .country a {
-        border: none;
-        border: none;
-        direction: ltr;
-        display: block;
+    #header.alt .country {
+        background-color: inherit;
     }
+
+        #header.alt .country a {
+            border: none;
+            border: none;
+            direction: ltr;
+            display: block;
+        }
 
     #header .country a {
         border: none;
@@ -4104,18 +4110,28 @@ ul.actions {
 
 
 @media screen and (max-width:736px) {
+
+
     #header .country {
-        margin: 3px 47px 0 0;
+        margin: 12px 42px 0 0;
+        line-height: 25px;
+        padding: 0 5px;
+        /*border: 1px solid;*/
     }
 
         #header .country .countrySelected span {
             display: none;
         }
-         #header.alt .country .countrySelected span {
-            display: inline-block;
-        }
-        #header .country img {
-            top: 2px;
-        }
+
+    #header.alt .country .countrySelected span {
+        display: inline-block;
+    }
+
+    #header .country img {
+        top: 2px;
+    }
 }
 /******************************** end menu  country *****************************************/
+#header nav {
+    /*border: 3px solid green;*/
+}

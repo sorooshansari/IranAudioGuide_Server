@@ -214,7 +214,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Soroosh Developer Team.
+        ///   Looks up a localized string similar to Shiraz Dourandish Developers.
         /// </summary>
         public static string copyright22 {
             get {
@@ -1349,6 +1349,25 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment Info.
+        /// </summary>
+        public static string PaymentPage30 {
+            get {
+                return ResourceManager.GetString("PaymentPage30", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By purchasing this package, you will again access to all audio guide  tracks in the cities mentioned above.
+        ///Your purchased packages will be set on and accessible through your current user account..
+        /// </summary>
+        public static string PaymentPage31 {
+            get {
+                return ResourceManager.GetString("PaymentPage31", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment procedure.
         /// </summary>
         public static string PaymentProcedure {
@@ -1910,6 +1929,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string TitlePageSendCode {
             get {
                 return ResourceManager.GetString("TitlePageSendCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string TitlePayment {
+            get {
+                return ResourceManager.GetString("TitlePayment", resourceCulture);
             }
         }
         
