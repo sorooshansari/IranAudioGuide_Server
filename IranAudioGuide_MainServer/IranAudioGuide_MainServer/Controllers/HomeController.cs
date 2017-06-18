@@ -20,7 +20,7 @@ namespace IranAudioGuide_MainServer.Controllers
             return View();
         }
 
-        
+
         [HttpPost]
         public JsonResult ContactEmailSender(ContactEmailVM model)
         {
@@ -69,6 +69,12 @@ namespace IranAudioGuide_MainServer.Controllers
             return Json("ok", JsonRequestBehavior.AllowGet);
         }
 
-        
+
+        //Home/PrivacyPolicy
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
+
     }
 }

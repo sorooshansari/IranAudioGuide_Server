@@ -783,4 +783,22 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="TitlePayment" xml:space="preserve">
     <value>Payment</value>
   </data>
+  <data name="ErrorEmailNotConfirmedMessageForMobile" xml:space="preserve">
+    <value>For purchasing, first need to confirm your email.&lt;br/&gt;&lt;a id='close' href='mobile/close'&gt;Close&lt;/a&gt;</value>
+  </data>
+  <data name="ErrorNotFoundPackage" xml:space="preserve">
+    <value>Not Found Package</value>
+  </data>
+  <data name="UnauthorizedDevice" xml:space="preserve">
+    <value>Unauthorized device!</value>
+  </data>
+  <data name="PackageInfo" xml:space="preserve">
+    <value>Package Info</value>
+  </data>
+  <data name="PaymentEmailInfo" xml:space="preserve">
+    <value> در صورت بروز هر گونه مشکلی به Info@iranaudioguide.com ایمیل بزنید</value>
+  </data>
+  <data name="PageProfile133" xml:space="preserve">
+    <value>Want to change your device?</value>
+  </data>
 </root>

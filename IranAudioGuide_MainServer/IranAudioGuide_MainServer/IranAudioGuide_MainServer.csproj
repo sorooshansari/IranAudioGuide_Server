@@ -263,10 +263,6 @@
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201706061037278_g.cs" />
-    <Compile Include="Migrations\201706061037278_g.Designer.cs">
-      <DependentUpon>201706061037278_g.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -743,6 +739,7 @@
     <Content Include="Content\images\playpause-48-48-1.png" />
     <Content Include="Content\images\prevnext-48-48-1.png" />
     <Content Include="Content\images\themes.gif" />
+    <Content Include="Content\images\zarinpal.png" />
     <Content Include="Content\Scripts\AdminControllers.js" />
     <Content Include="Content\Scripts\AdminCustom.js" />
     <Content Include="Content\Scripts\AdminDirectives.js" />
@@ -1804,6 +1801,8 @@
     <Content Include="Views\Payment\Index_Old2.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Home\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Payment\Return - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1839,9 +1838,6 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706061037278_g.resx">
-      <DependentUpon>201706061037278_g.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

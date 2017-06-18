@@ -82,8 +82,9 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             var pro_list= GetPackagesProcurements();
 
-
-            var lang = ServiceCulture.GeLangFromCookie();
+            //todo uncomment
+            //var lang = ServiceCulture.GeLangFromCookie();
+            var lang = 1;
             var d = new dbManagerV2();
 
             var parameter = new System.Data.SqlClient.SqlParameter("@langId", lang);

@@ -10,6 +10,7 @@ using System.Data.Entity;
 using IranAudioGuide_MainServer.Services;
 using System.Data.SqlClient;
 using System.Data;
+using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -42,15 +43,17 @@ namespace IranAudioGuide_MainServer.Controllers
                 _userManager = value;
             }
         }
+
+
+
         private PackagePymentVM getPackageById(Guid pacId)
         {
             try
             {
                 var lang = ServiceCulture.GeLangFromCookie();
-
                 using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("GetPackageById_website", sqlConnection);
+                    SqlCommand cmd = new SqlCommand("GetPackageById_v2", sqlConnection);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@langId", lang));
                     cmd.Parameters.Add(new SqlParameter("@PackageId", pacId));
@@ -69,8 +72,8 @@ namespace IranAudioGuide_MainServer.Controllers
                             CityID = c["CityId"].convertToInt(),
                             CityName = c["CityName"].convertToString(),
                             CityDesc = c["CityDescription"].convertToString(),
-                            TrackCount =c["TrackCount"].convertToInt(),
-                            PlaceCount =c["PlaceCount"].convertToInt()
+                            TrackCount = c["TrackCount"].convertToInt(),
+                            PlaceCount = c["PlaceCount"].convertToInt()
                         }).ToList()
                     }).FirstOrDefault();
                     return Packege;
@@ -82,6 +85,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
 
         }
+
         // GET: Payment
         [AllowAnonymous]
         public async Task<ActionResult> Index(AppPaymentReqVM info)
@@ -94,22 +98,22 @@ namespace IranAudioGuide_MainServer.Controllers
                     ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
 
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
-                if(user == default(ApplicationUser))
+                if (user == default(ApplicationUser))
                 {
-                    ViewBag.Error = "Unauthorized device!";
+                    ViewBag.Error = Global.UnauthorizedDevice;
                     return View("customError");
                 }
                 if (user.uuid != info.uuid)
                 {
-                    ViewBag.Error = "Unauthorized device!";
+                    ViewBag.Error = Global.UnauthorizedDevice;
                     return View("customError");
                 }
                 if (!user.EmailConfirmed)
                 {
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = "Email not confirmed yet!",
-                        Message = @"For purchasing, first need to confirm your email.<br/><a id='close' href='mobile/close'>Close</a>",
+                        Subject = Global.ErrorEmailNotConfirmed,
+                        Message = Global.ErrorEmailNotConfirmedMessageForMobile
                     });
                 }
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -117,8 +121,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (package == null)
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = "Error!",
-                        Message = "Not Found Package",
+                        Subject = Global.Error,
+                        Message = Global.ErrorNotFoundPackage,
                     });
                 packname = package.PackageName;
                 await t;
@@ -130,85 +134,12 @@ namespace IranAudioGuide_MainServer.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return View("vmessage", new vmessageVM()
                 {
-                    Subject = "Error!",
-                    Message = "Please try again",
+                    Subject = Global.Error,
+                    Message = Global.PleaseTryAgain,
                 });
             }
         }
-        //Payment/PaymentWeb
-        [Authorize(Roles = "AppUser")]
-        public async Task<ActionResult> PaymentWeb(Guid pacId, bool IsZarinpal)
-        {
-
-            try
-            {
-
-                if (IsZarinpal && ExtensionMethods.IsForeign)
-                    ViewBag.IsChooesZarinpal = false;
-                else
-                    ViewBag.IsChooesZarinpal = IsZarinpal;
-
-                var info = new AppPaymentReqVM()
-                {
-                    packageId = pacId,
-                    email = User.Identity.Name
-                };
-                ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
-                if (!user.EmailConfirmed)
-                    return View("ErrorPageProfile", new vmessageVM()
-                    {
-                        Subject = App_GlobalResources.Global.ErrorEmailNotConfirmed,
-                        Message = App_GlobalResources.Global.ErrorEmailNotConfirmedMessage,
-                    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                PackageVM package = (from p in db.Packages
-                                     where p.Pac_Id == info.packageId
-                                     select new PackageVM()
-                                     {
-                                         PackageId = p.Pac_Id,
-                                         PackageName = p.Pac_Name,
-                                         PackagePrice = p.Pac_Price,
-                                         PackagePriceDollar = p.Pac_Price_Dollar,
-                                         PackageCities = (from c in db.Cities
-                                                          where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-                                                          select new CityVM()
-                                                          {
-                                                              CityDesc = c.Cit_Description,
-                                                              CityID = c.Cit_Id,
-                                                              CityName = c.Cit_Name
-                                                          }).ToList()
-                                     }).FirstOrDefault();
-                packname = package.PackageName;
-                ViewBag.Error = info.ErrorMessage;
-                return View(package);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return View("ErrorPageProfile", new vmessageVM()
-                {
-                    Subject = App_GlobalResources.Global.Error,
-                    Message = App_GlobalResources.Global.PleaseTryAgain,
-                });
-            }
-        }
+        
         [Authorize(Roles = "AppUser")]
         public ActionResult WMPurchase(Guid packageId, bool isFromApp = false)
         {
@@ -474,7 +405,10 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return View();
         }
-        /********************************************/
+
+        /****  for website 
+         **************************************************************/
+
         [AllowAnonymous]
         public ActionResult ReturnToWebPage(string paymentId)
         {
@@ -496,7 +430,65 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             return View();
         }
-        /***********************************************************/
+        /********************************************/
+        //Payment/PaymentWeb
+        [Authorize(Roles = "AppUser")]
+        public async Task<ActionResult> PaymentWeb(Guid pacId, bool IsZarinpal)
+        {
+
+            try
+            {
+
+                if (IsZarinpal && ExtensionMethods.IsForeign)
+                    ViewBag.IsChooesZarinpal = false;
+                else
+                    ViewBag.IsChooesZarinpal = IsZarinpal;
+
+                var info = new AppPaymentReqVM()
+                {
+                    packageId = pacId,
+                    email = User.Identity.Name
+                };
+                ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
+                if (!user.EmailConfirmed)
+                    return View("ErrorPageProfile", new vmessageVM()
+                    {
+                        Subject = App_GlobalResources.Global.ErrorEmailNotConfirmed,
+                        Message = App_GlobalResources.Global.ErrorEmailNotConfirmedMessage,
+                    });
+
+                PackageVM package = (from p in db.Packages
+                                     where p.Pac_Id == info.packageId
+                                     select new PackageVM()
+                                     {
+                                         PackageId = p.Pac_Id,
+                                         PackageName = p.Pac_Name,
+                                         PackagePrice = p.Pac_Price,
+                                         PackagePriceDollar = p.Pac_Price_Dollar,
+                                         PackageCities = (from c in db.Cities
+                                                          where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
+                                                          select new CityVM()
+                                                          {
+                                                              CityDesc = c.Cit_Description,
+                                                              CityID = c.Cit_Id,
+                                                              CityName = c.Cit_Name
+                                                          }).ToList()
+                                     }).FirstOrDefault();
+                packname = package.PackageName;
+                ViewBag.Error = info.ErrorMessage;
+                return View(package);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return View("ErrorPageProfile", new vmessageVM()
+                {
+                    Subject = App_GlobalResources.Global.Error,
+                    Message = App_GlobalResources.Global.PleaseTryAgain,
+                });
+            }
+        }
+
         #region zarinpal tools
 
 

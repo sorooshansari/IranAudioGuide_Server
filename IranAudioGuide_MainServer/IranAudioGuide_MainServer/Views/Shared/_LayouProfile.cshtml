@@ -88,6 +88,9 @@
                         @Global.PageProfile12
                     </a>
                 </li>
+                <li>
+                    {{profile.isCompletedLoading}}
+                </li>
                 <li id="Langli">
 
                     @*@Html.Partial("_SelectLangBtn", Global.Lang)*@
@@ -162,7 +165,11 @@
         <!-- /#wrapper -->
         <!-- jQuery -->
 
-        @Scripts.Render("~/Profile/minJs")
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js" integrity="sha256-6Sr0HqNgUf/p88g6vsl87CrAnNqiOWhjlY6LS8jeWHA=" crossorigin="anonymous"></script>
+
+    @Scripts.Render("~/Profile/minJs")
     <script>
         //, 'ui.select'
         var userApp = angular.module('userApp', ["ui.router", 'ui.select'])
@@ -220,7 +227,7 @@
 
         ;
     </script>
-
+   
     @Scripts.Render("~/Profile/ang")
 </body>
 </html>

@@ -86,12 +86,13 @@
                     </div>
                 </div>
                 <div class="row chooesPanel">
-                    <div ng-hide="user.IsForeign" class="col-xs-12">
+                    @*ng-hide="user.IsForeign"*@
+                    <div class="col-xs-12">
 
                         <a class="ShetabIcon" ng-click="buyPakages(true)">
-                            <img src="@Global.ImagePath/Shetab.png" />
+                            <img class="hoverable" src="~/images/icon-128x128.png" />
+                            @*<img src="@Global.ImagePath/Shetab.png" />*@
                             <br />@Global.PageProfile24
-                            @*<img class="hoverable" src="~/images/icon-128x128.png" />*@
                         </a>
                         <p class="ModalPrice">{{pak.PackagePrice}}T</p>
                     </div>
@@ -99,8 +100,10 @@
                         @*ng-hide="user.IsForeign"*@
 
                         <a class="IntmoneyIcon" ng-click="buyPakages(false)">
-                            <img src="@Global.ImagePath/visa-mastercard.png" /><br />@Global.PageProfile23
-                            @*<img class="hoverable" src="~/images/wmlogo_vector_blue.png" />*@
+                            <img class="hoverable" src="~/images/wmlogo_vector_blue.png" />
+                            @*<img src="@Global.ImagePath/visa-mastercard.png" />*@
+                            <br />@Global.PageProfile23
+
                         </a>
                         <p class="ModalPrice">{{pak.PackagePriceDollar}}$</p>
                     </div>

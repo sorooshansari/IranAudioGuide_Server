@@ -400,9 +400,10 @@
                 <!-- end WebMoney Transfer : attestation label -->
             </li>
         </ul>*@
-    <ul id="copyright" class="copyright">
-        <li>©@DateTime.Now.Year - Iran Audio Guide Team</li>
-        <li>Developer: <a rel="author" href="https://plus.google.com/112268338441138496929">Soroosh Ansari Mehr</a></li>
+    <ul  class="copyright">
+        <li><a href="#" style="font-weight:bold;"> @Html.Raw(Global.copyright2)</a><font> - </font><a href="/@Global.Lang/home/PrivacyPolicy" style="font-weight:bold;">@Html.Raw(Global.copyright21)</a></li>
+   
+        <li class="">&copy;@DateTime.Now.Year - @Global.copyright22</li>
     </ul>
 </footer>
 @section scripts{

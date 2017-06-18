@@ -161,7 +161,6 @@ namespace IranAudioGuide_MainServer.Models
         {
             try
             {
-
                 int paymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
                 using (var db = new ApplicationDbContext())
                 {

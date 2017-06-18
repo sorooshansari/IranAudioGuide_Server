@@ -3,18 +3,20 @@
 @{
     Layout = "~/Views/Shared/_PaymentLayout.cshtml";
 }
+
 <div class="container-fluid">
     <!-- Image and text -->
     <nav class="navbar navbar-ligth pt-0">
         <div class="navbar-brand pt-0">
-            <img src="~/images/IAGSITELOGO.png"  class="d-inline-block navImg" alt="@Global.IranAudioGuide">
-            @*<img src="@Global.ImagePath/IAGSmallWhiteLogo.png"/>*@
+            <img src="~/images/IAGSITELOGO.png" class="d-inline-block navImg" alt="@Global.IranAudioGuide" />
             <span class="align-middle navHeader">@Global.IranAudioGuide</span>
         </div>
     </nav>
 
     <div class="jumbotron my-3">
-        <h3 class="display-10"><i class="fa fa-briefcase"></i> @Model.PackageName</h3>
+        <h3 class="titel-package mb-4">  @Model.PackageName </h3>
+
+        <h4><i class="fa fa-briefcase"></i> @Global.PackageInfo</h4>
         <!--<p class="lead">Cities Included</p>-->
         <div class="mt-4 ml-4">
             @foreach (var item in Model.PackageCities)
@@ -45,8 +47,14 @@
             <div class="row py-2">
                 <h5 class="d-inline-block col-12 col-sm-3">@Global.PaymentPage22</h5>
                 <div class="offset-2 col-8 col-sm-6">
-                    <img src="~/images/WebMoney-logo-white_8.png" class="rounded w-100" style="background-color:#006dae"/>
-                    @*<img src="http://iranaudioguide.net/Images/WebMoney-logo-white_8.png">*@
+                    @if (ViewBag.IsChooesZarinpal)
+                    {
+                        <img src="~/Content/images/zarinpal.png" class="rounded w-100"  />
+                    }
+                    else
+                    {
+                        <img src="~/images/WebMoney-logo-white_8.png" class="rounded w-100" style="background-color:#006dae">
+                    }
                 </div>
             </div>
             <div class="row py-2">
@@ -64,15 +72,30 @@
                             <h5>@string.Format("{0:#,##0.##}", Model.PackagePriceDollar)<i class="fa fa-usd"></i></h5>
                         </div>
                     }
-                </div>
+                </div>`
             </div>
         </div>
         <p>@Global.PaymentPage31</p>
+        <p> @Global.PaymentEmailInfo</p>
         <p class="lead">
-            <a class="btn btn-primary btn-responsive float-right"
-               href="/en/Payment/WMPurchase?packageId=18619136-9afd-e611-80bf-20cf30561859&amp;isFromApp=true" role="button">
-                <i class="fa fa-check-square-o"></i> @Global.btnPurchase
-            </a>
+
+            @if (ViewBag.IsChooesZarinpal)
+            {
+                <a class="btn btn-primary btn-responsive float-right"
+                   role="button"
+                   href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true })">
+                    <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-primary btn-responsive float-right"
+                   role="button"
+                   href="@Url.Action("WMPurchase", "Payment",new { packageId = Model.PackageId, isFromApp = false })">
+                    <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
+                </a>
+            }
+
             <a class="btn btn-default btn-responsive float-right"
                href="mobile/close" role="button">
                 @Global.btnCancel

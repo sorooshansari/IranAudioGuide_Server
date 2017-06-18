@@ -313,6 +313,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to For purchasing, first need to confirm your email.&lt;br/&gt;&lt;a id=&apos;close&apos; href=&apos;mobile/close&apos;&gt;Close&lt;/a&gt;.
+        /// </summary>
+        public static string ErrorEmailNotConfirmedMessageForMobile {
+            get {
+                return ResourceManager.GetString("ErrorEmailNotConfirmedMessageForMobile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Found Package.
+        /// </summary>
+        public static string ErrorNotFoundPackage {
+            get {
+                return ResourceManager.GetString("ErrorNotFoundPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unauthorized device!.
         /// </summary>
         public static string ErrorPaymentUnauthorizedDevice {
@@ -610,6 +628,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Package Info.
+        /// </summary>
+        public static string PackageInfo {
+            get {
+                return ResourceManager.GetString("PackageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error - 404.
         /// </summary>
         public static string PageError0 {
@@ -696,6 +723,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string PageProfile13 {
             get {
                 return ResourceManager.GetString("PageProfile13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Want to change your device?.
+        /// </summary>
+        public static string PageProfile133 {
+            get {
+                return ResourceManager.GetString("PageProfile133", resourceCulture);
             }
         }
         
@@ -1264,6 +1300,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string Parameter51 {
             get {
                 return ResourceManager.GetString("Parameter51", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  در صورت بروز هر گونه مشکلی به Info@iranaudioguide.com ایمیل بزنید.
+        /// </summary>
+        public static string PaymentEmailInfo {
+            get {
+                return ResourceManager.GetString("PaymentEmailInfo", resourceCulture);
             }
         }
         
@@ -1947,6 +1992,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string Twitter {
             get {
                 return ResourceManager.GetString("Twitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unauthorized device!.
+        /// </summary>
+        public static string UnauthorizedDevice {
+            get {
+                return ResourceManager.GetString("UnauthorizedDevice", resourceCulture);
             }
         }
         

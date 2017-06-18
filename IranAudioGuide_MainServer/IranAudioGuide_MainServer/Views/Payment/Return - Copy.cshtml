@@ -142,13 +142,13 @@
 
                 <table class="table-mybordered tbldotted table-condensed" style="width: 100%; border-radius: 10px 10px 0px 0px; margin: 0px 0px 10px; color: rgb(20, 68, 130); text-shadow: none; text-align: center; background-color: transparent;">
                     <tbody>
-                       
+                        @if (ViewBag.Succeeded)
+                        {
                             <tr>
                                 <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-briefcase"></i>@Global.PaymentPage27</div></td>
                                 <td class="_2ndtd" style="background-color: transparent; text-transform:capitalize; font-size: medium;">@ViewBag.Packname</td>
                             </tr>
-                       @if (ViewBag.Succeeded)
-                       { }
+                        }
                         <tr>
                             <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-key"></i>@Global.ReturnPaymentReferenceID</div></td>
                             <td class="_2ndtd" style="background-color:transparent;">@ViewBag.SaleReferenceId</td>
@@ -157,14 +157,13 @@
                 </table>
                 <div class="col-xs-12" style="text-align:right;">
                     @if (ViewBag.Succeeded)
-                    { }
-                    else
-                    { }
+                    {
                         <a class="btn btn-sm btn-default purchasebtn" href="mobile/purchased" style="width:100px; font-size:small;">@Global.btnContinue</a>
-                   
-                    
+                    }
+                    else
+                    {
                         <a class="btn btn-sm btn-default purchasebtn" href="mobile/close" style="width:100px; font-size:small;">@Global.btnContinue</a>
-                   
+                    }
                 </div>
             </div>
         </div>

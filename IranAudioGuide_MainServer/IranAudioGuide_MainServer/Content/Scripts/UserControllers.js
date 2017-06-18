@@ -140,7 +140,7 @@ userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeou
     }
     $scope.buyPakages = function (isChooesZarinpal) {
         $('#myModal').modal('hide');
-       // $scope.profile.isCompletedLoading = true;
+        $scope.profile.isCompletedLoading = true;
         $scope.isChooesZarinpal = isChooesZarinpal;
     }
     $('#myModal').on('hidden.bs.modal', function (e) {
@@ -361,5 +361,5 @@ userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', function ($
     });
 }]);
 userApp.controller('paymentCtrl', ['$scope', function ($scope) {
-   
+    $scope.profile.isCompletedLoading = false;
 }]);

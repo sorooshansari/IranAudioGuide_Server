@@ -8,8 +8,8 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     //[Localization]
 
-    public class UserController: BaseController
-    {
+    //public class UserController: BaseController
+    public class UserController: Controller    {
         private IAuthenticationManager AuthenticationManager
         {
             get

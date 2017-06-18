@@ -31,7 +31,12 @@
     color: #fff;
     padding-top: 0.5rem;
 }
-
+h3.titel-package {
+    text-align: center;
+    font-size: xx-large;
+    font-weight: 300;
+    text-shadow: 1px 1px 5px #fff;
+}
 @media (min-width: 576px) {
     .btn-responsive {
         padding: .75rem 1.5rem;

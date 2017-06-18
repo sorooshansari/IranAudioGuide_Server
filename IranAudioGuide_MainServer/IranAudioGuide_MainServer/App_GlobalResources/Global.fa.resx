@@ -691,7 +691,7 @@
     <value>For purchasing, first need to confirm your email. Please click &lt;a id='loginlink' href='/fa/Account/Login'&gt;here&lt;/a&gt; to Login</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error!</value>
+    <value>خطا!</value>
   </data>
   <data name="ErrorPaymentUnauthorizedDevice" xml:space="preserve">
     <value>Unauthorized device!</value>
@@ -777,5 +777,23 @@
   <data name="PaymentPage31" xml:space="preserve">
     <value>با خرید این بسته شما به تمامی توضیحات صوتی شهرهای نام برده در بالا دسترسی پیدا می کنید.
 بسته های خریداری شده بر روی نام کاربری شما ذخیره شده و قابلیت دسترسی و بازیابی دارند.</value>
+  </data>
+  <data name="ErrorEmailNotConfirmedMessageForMobile" xml:space="preserve">
+    <value>For purchasing, first need to confirm your email.&lt;br/&gt;&lt;a id='close' href='mobile/close'&gt;Close&lt;/a&gt;</value>
+  </data>
+  <data name="ErrorNotFoundPackage" xml:space="preserve">
+    <value>Not Found Package</value>
+  </data>
+  <data name="UnauthorizedDevice" xml:space="preserve">
+    <value>Unauthorized device!</value>
+  </data>
+  <data name="PackageInfo" xml:space="preserve">
+    <value>Package Info</value>
+  </data>
+  <data name="PaymentEmailInfo" xml:space="preserve">
+    <value>sssssssssssssssssssssssssss</value>
+  </data>
+  <data name="PageProfile133" xml:space="preserve">
+    <value>Want to change your device?</value>
   </data>
 </root>

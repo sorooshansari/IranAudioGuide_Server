@@ -1,13 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Reflection;
 using System.Threading;
 using System.Web;
-using System.Web.Mvc;
-using IranAudioGuide_MainServer.App_GlobalResources;
-using System.Collections.Generic;
 
 namespace IranAudioGuide_MainServer
 {
@@ -19,14 +13,6 @@ namespace IranAudioGuide_MainServer
     }
     public static class ServiceCulture
     {
-        //public static int GetLangFromUrl
-        //{
-        //    get
-        //    {
-        //        var lang =  HttpContext.Current.GetOwinContext().Request..RouteData.Values["lang"];
-        //        return lang != null ?(int) FindGetInt(lang.ToString()) : (int)EnumLang.en;
-        //    }
-        //}
         public static int GetIntLang(string str)
         {
             foreach (EnumLang item in Enum.GetValues(typeof(EnumLang)))
@@ -52,40 +38,47 @@ namespace IranAudioGuide_MainServer
         }
         public static void SetCulture()
         {
+            var cookie = HttpContext.Current.Request.Cookies.Get("IranAudioGuide.CurrentUICulture");
             var langHeader = string.Empty;
-            var lang = HttpContext.Current.Request.RequestContext.RouteData.Values["lang"];
-            if (lang != null)
-            {
-                langHeader = lang.ToString();
-            }
+
+            if (HttpContext.Current.Request.RequestContext.RouteData.Values["lang"] != null)
+                langHeader = HttpContext.Current.Request.RequestContext.RouteData.Values["lang"].ToString();
             else
             {
                 // load the culture info from the cookie
-                var cookie = HttpContext.Current.Request.Cookies.Get("IranAudioGuide.CurrentUICulture");
-                if (cookie != null)
+                if (cookie == null)
                 {
-                    // set the culture by the cookie content
-                    langHeader = FindGetSting(cookie.Value);
+                    if (HttpContext.Current.Request.UserLanguages.Length > 0)
+                    {
+                        // set the culture by the location if not speicified
+                        langHeader = HttpContext.Current.Request.UserLanguages[0];
+                    }
+                    else
+                    {
+                        langHeader = "en";
+                    }
                 }
                 else if (HttpContext.Current.Request.UserLanguages.Length > 0)
                 {
                     // set the culture by the location if not speicified
-                    langHeader = FindGetSting(HttpContext.Current.Request.UserLanguages[0]);
+                    langHeader = HttpContext.Current.Request.UserLanguages[0];
                 }
                 else
                 {
                     langHeader = "en";
                 }
             }
-
+            langHeader = FindGetSting(langHeader);
             // set the lang value into route data
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(FindGetSting(langHeader));
-            HttpContext.Current.Request.RequestContext.RouteData.Values["lang"] = langHeader;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(langHeader);
             // save the location into cookie
-            HttpCookie _cookie = new HttpCookie("IranAudioGuide.CurrentUICulture", Thread.CurrentThread.CurrentUICulture.Name);
+            HttpContext.Current.Request.RequestContext.RouteData.Values["lang"] = langHeader;
+            HttpCookie _cookie = new HttpCookie("IranAudioGuide.CurrentUICulture", langHeader);
             _cookie.Expires = DateTime.Now.AddYears(1);
             HttpContext.Current.Response.SetCookie(_cookie);
-            
+            //  HttpContext.Current.Response.Cookies[0].Value
+            if (cookie != null)
+                HttpContext.Current.Request.Cookies["IranAudioGuide.CurrentUICulture"].Value = langHeader;
         }
         public static void SetCultureFromCookie()
         {
@@ -95,20 +88,13 @@ namespace IranAudioGuide_MainServer
             {
                 langHeader = cookie.Value.ToString();
             }
-            //else if (HttpContext.Current.Request.UserLanguages.Length > 0)
-            //{
-            //    // set the culture by the location if not speicified
-            //    langHeader = HttpContext.Current.Request.UserLanguages[0];
-            //}
             else
                 langHeader = EnumLang.en.ToString();
-
             Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(FindGetSting(langHeader));
-            
+
         }
         public static int GeLangFromCookie()
         {
-
             // load the culture info from the cookie
             var cookie = HttpContext.Current.Request.Cookies.Get("IranAudioGuide.CurrentUICulture");
             if (cookie != null)
