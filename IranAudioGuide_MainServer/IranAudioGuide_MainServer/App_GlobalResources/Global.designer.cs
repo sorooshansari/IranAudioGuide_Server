@@ -2077,7 +2077,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to If the payment is deducted from your bank account, The amount will be automatically returned..
         /// </summary>
         public static string ZarinpalPaymentMsg1 {
             get {
@@ -2086,25 +2086,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string ZarinpalPaymentMsg10 {
-            get {
-                return ResourceManager.GetString("ZarinpalPaymentMsg10", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string ZarinpalPaymentMsg11 {
-            get {
-                return ResourceManager.GetString("ZarinpalPaymentMsg11", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Sorry, Your payment was unsuccessful!.
         /// </summary>
         public static string ZarinpalPaymentMsg2 {
             get {
@@ -2113,7 +2095,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Your payment process is not completed..
         /// </summary>
         public static string ZarinpalPaymentMsg3 {
             get {
@@ -2122,7 +2104,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Payment completed successfully..
         /// </summary>
         public static string ZarinpalPaymentMsg4 {
             get {
@@ -2131,7 +2113,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to You have access to the package below. Thank you for your purchase!.
         /// </summary>
         public static string ZarinpalPaymentMsg5 {
             get {
@@ -2140,7 +2122,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Problem occurred in payment process..
         /// </summary>
         public static string ZarinpalPaymentMsg6 {
             get {
@@ -2149,29 +2131,11 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Sorry, please try again in a few minutes..
         /// </summary>
         public static string ZarinpalPaymentMsg7 {
             get {
                 return ResourceManager.GetString("ZarinpalPaymentMsg7", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string ZarinpalPaymentMsg8 {
-            get {
-                return ResourceManager.GetString("ZarinpalPaymentMsg8", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string ZarinpalPaymentMsg9 {
-            get {
-                return ResourceManager.GetString("ZarinpalPaymentMsg9", resourceCulture);
             }
         }
     }

@@ -387,22 +387,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [AllowAnonymous]
         public ActionResult Return(string paymentId)
         {
-            ViewBag.Packname = packname;
-            try
-            {
-                ViewBag.BankName = "ZarinPal Payment Gateway";
-                ZarinpalReturn();
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                ViewBag.BankName = "Your payment gateway is not specified";
-                ViewBag.Message = "No response from payment gateway";
-                ViewBag.ErrDesc = "There is no response from your payment gateway!";
-                ViewBag.SaleReferenceId = "**************";
-                ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
-                ViewBag.Succeeded = false;
-            }
+            ZarinpalReturn();
             return View();
         }
 
@@ -415,7 +400,7 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.Packname = packname;
             try
             {
-                ViewBag.BankName = "ZarinPal Payment Gateway";
+                //  ViewBag.BankName = "ZarinPal Payment Gateway";
                 ZarinpalReturn();
             }
             catch (Exception ex)
@@ -567,9 +552,11 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                ViewBag.Message = "No response from bank gateway.";
                 ViewBag.SaleReferenceId = "**************";
-                ViewBag.ErrDesc = "If the payment is deducted from your bank account, The amount will be automatically returned.";
+                //No response from bank gateway.
+                // "If the payment is deducted from your bank account, The amount will be automatically returned.";
+                ViewBag.Message = Global.ZarinpalPaymentMsg;
+                ViewBag.ErrDesc = Global.ZarinpalPaymentMsg1;
                 ViewBag.Succeeded = false;
 
                 int paymentId = Request.QueryString["PaymentId"].convertToInt();
@@ -583,11 +570,13 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (!Status.Equals("OK"))
                 {
                     UpdatePayment(paymentId, Status, 0, Authority, false);
-                    if (string.IsNullOrEmpty(Authority))
+                    if (!string.IsNullOrEmpty(Authority))
                         ViewBag.SaleReferenceId = Authority;
 
-                    ViewBag.Message = "Sorry, Your payment was unsuccessful!";
-                    ViewBag.ErrDesc = "Your payment process is not completed.";
+                    // "Sorry, Your payment was unsuccessful!";
+                    // "Your payment process is not completed.";
+                    ViewBag.Message = Global.ZarinpalPaymentMsg2;
+                    ViewBag.ErrDesc = Global.ZarinpalPaymentMsg3;
                 }
                 else
                 {
@@ -601,15 +590,17 @@ namespace IranAudioGuide_MainServer.Controllers
 
                     if (returnResults == null)
                     {
-                        ViewBag.Message = "Sorry, Your payment was unsuccessful!";
-                        ViewBag.ErrDesc = "Your payment process is not completed.";
+                        //"Sorry, Your payment was unsuccessful!";
+                        // "Your payment process is not completed.";
+                        ViewBag.Message = Global.ZarinpalPaymentMsg2;
+                        ViewBag.ErrDesc = Global.ZarinpalPaymentMsg3;
                         return;
                     }
 
                     ViewBag.Packname = returnResults.name;
                     ViewBag.Price = returnResults.price.convertToInt();
-
                     long refId = 0;
+
                     System.Net.ServicePointManager.Expect100Continue = false;
                     var zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
                     string merchantCode = "2beca824-a5a6-11e6-8157-005056a205be";
@@ -619,8 +610,10 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         UpdatePayment(paymentId, status.convertToString(), refId, Authority, true);
                         ViewBag.SaleReferenceId = refId;
-                        ViewBag.Message = "Payment completed successfully.";
-                        ViewBag.ErrDesc = "You have access to the package below. Thank you for your purchase!";
+                        //"Payment completed successfully.";
+                        //"You have access to the package below. Thank you for your purchase!";
+                        ViewBag.Message = Global.ZarinpalPaymentMsg4;
+                        ViewBag.ErrDesc = Global.ZarinpalPaymentMsg5;
                         ViewBag.Succeeded = true;
                     }
                     else
@@ -629,7 +622,8 @@ namespace IranAudioGuide_MainServer.Controllers
                         ViewBag.Message = PaymentResult.ZarinPal(Convert.ToString(status));
                         if (refId > 0)
                             ViewBag.SaleReferenceId = refId;
-                        ViewBag.ErrDesc = "Your payment process is not completed.";
+                        ViewBag.ErrDesc = Global.ZarinpalPaymentMsg3;
+
                     }
 
                 }
@@ -638,8 +632,10 @@ namespace IranAudioGuide_MainServer.Controllers
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                ViewBag.Message = "Problem occurred in payment process. ";
-                ViewBag.ErrDesc = "Sorry, please try again in a few minutes.";
+                // "Problem occurred in payment process. ";
+                //"Sorry, please try again in a few minutes.";
+                ViewBag.Message = Global.ZarinpalPaymentMsg6;
+                ViewBag.ErrDesc = Global.ZarinpalPaymentMsg7;
             }
         }
         #endregion
