@@ -46,6 +46,7 @@ namespace IranAudioGuide_MainServer.Models
                 _userManager = value;
             }
         }
+        // todo correct
         public async Task<int> SendEmailConfirmedAgain(string email, string BaseUrl)
         {
             try
@@ -54,11 +55,8 @@ namespace IranAudioGuide_MainServer.Models
                 if (applicationUser != default(ApplicationUser))
                 {
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(applicationUser.Id);
-                  //  code = HttpUtility.UrlEncode(code);
                     var callbackUrl = string.Format("{0}/Account/ConfirmEmail?userId={1}&code={2}", BaseUrl, applicationUser.Id, code);
-                  
-
-                    await UserManager.SendEmailAsync(applicationUser.Id,App_GlobalResources.Global.ServerConfirmTitel, string.Format(App_GlobalResources.Global.ServerConfirmMessage, callbackUrl));
+                    await UserManager.SendEmailAsync(applicationUser.Id, App_GlobalResources.Global.ServerConfirmTitel, string.Format(App_GlobalResources.Global.ServerConfirmMessage, callbackUrl));
                     return 0;
                 }
                 return 1;
@@ -69,6 +67,8 @@ namespace IranAudioGuide_MainServer.Models
                 return 2;
             }
         }
+          
+
         public ApplicationUser getUser(string username)
         {
             return UserManager.FindByName(username);
@@ -118,8 +118,10 @@ namespace IranAudioGuide_MainServer.Models
                     return new AuthorizedUser() { Result = SignInResults.Failure };
             }
         }
+        //todo correct
         public async Task<CreatingUserResult> CreateAppUser(string fullName, string Email, string password, string uuid, string baseUrl)
         {
+            
             var appUser = await UserManager.FindByNameAsync(Email);
             if (appUser != null)
             {
@@ -150,7 +152,8 @@ namespace IranAudioGuide_MainServer.Models
             }
             return CreatingUserResult.fail;
         }
-
+        
+        //todo correct
         public async Task<RecoverPassResults> ForgotPassword(string email, string uuid, string baseUrl)
         {
             try
@@ -164,8 +167,9 @@ namespace IranAudioGuide_MainServer.Models
                     return RecoverPassResults.uuidMissMatch;
                 string code = await UserManager.GeneratePasswordResetTokenAsync(appUser.Id);
                // code = HttpUtility.UrlEncode(code);
+
                 var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, appUser.Id, code);
-                await UserManager.SendEmailAsync(appUser.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                await UserManager.SendEmailAsync(appUser.Id, App_GlobalResources.Global.ServerResetPassword, string.Format(App_GlobalResources.Global.ServerConfirmMessage, callbackUrl));
                 return RecoverPassResults.Success;
             }
             catch (Exception ex)

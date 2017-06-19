@@ -25,13 +25,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 _acTools = value;
             }
         }
-        [HttpPost]
-        public async Task<int> SendEmailConfirmedAgain(ConfirmEmailVM model)
-        {
-            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
-            var res = acTools.SendEmailConfirmedAgain(model.email, baseUrl);
-            return await res;
-        }
+      
 
         [HttpPost]
         public string getBaseUrl(GetVersoinVm version)
@@ -121,8 +115,6 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
-
-
         [HttpPost]
         // [Route("GetUpdates")]
         // POST: api/AppManager/GetUpdates/5
@@ -176,7 +168,9 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> ForgotPassword(ForgotPassUser user)
         {
-            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            var lang = ServiceCulture.FindGetSting(user.lang);
+            ServiceCulture.SetCulture(lang);
+            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority) + "/" + lang + "/";
             var res = await acTools.ForgotPassword(user.email, user.uuid, baseUrl);
             return Json(res);
         }
@@ -206,14 +200,28 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> ResgisterAppUser(AppUser user)
         {
-            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            var lang = ServiceCulture.FindGetSting(user.lang);
+            ServiceCulture.SetCulture(lang);
+            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority) + "/" + lang + "/";
             var res = await acTools.CreateAppUser(user.fullName, user.email, user.password, user.uuid, baseUrl);
             return Json(res);
         }
+
+
+        [HttpPost]
+        public async Task<int> SendEmailConfirmedAgain(ConfirmEmailVM model)
+        {
+            var lang = ServiceCulture.FindGetSting(model.lang);
+            ServiceCulture.SetCulture(lang);
+            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority) + "/" + lang + "/";
+            var res = acTools.SendEmailConfirmedAgain(model.email, baseUrl);
+            return await res;
+        }
+
         [HttpPost]
         public async Task<AuthorizedUser> AuthorizeAppUser(AppUser user)
         {
-            return await acTools.AutorizeAppUser(user.email, user.password, user.uuid);           
+            return await acTools.AutorizeAppUser(user.email, user.password, user.uuid);
         }
         private ApplicationDbContext db = new ApplicationDbContext();
         [HttpPost]

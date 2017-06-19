@@ -1670,6 +1670,7 @@
     <Content Include="fonts\Arcon-Regular.otf" />
     <Content Include="fonts\Arcon-Rounded-Regular.otf" />
     <Content Include="fonts\SDDT-Light-web.woff" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />

@@ -25,7 +25,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public async Task<int> SendEmailConfirmedAgain(ConfirmEmailVM model)
         {
-            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority)+ "/en";
             var res = acTools.SendEmailConfirmedAgain(model.email, baseUrl);
             return await res;
         }
@@ -142,7 +142,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> ForgotPassword(ForgotPassUser user)
         {
-            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority)+"/en";
             var res = await acTools.ForgotPassword(user.email, user.uuid, baseUrl);
             return Json(res);
         }
@@ -172,7 +172,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> ResgisterAppUser(AppUser user)
         {
-            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            string baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority)+"/en";
             var res = await acTools.CreateAppUser(user.fullName, user.email, user.password, user.uuid, baseUrl);
             return Json(res);
         }

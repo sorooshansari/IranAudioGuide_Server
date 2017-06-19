@@ -280,8 +280,13 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class ForgotPassUser
     {
+        public ForgotPassUser()
+        {
+            lang = (int)EnumLang.en;
+        }
         public string email { get; set; }
         public string uuid { get; set; }
+        public int lang { get; set; }
     }
     public class AppUser
     {
@@ -289,6 +294,7 @@ namespace IranAudioGuide_MainServer.Models
         public string email { get; set; }
         public string password { get; set; }
         public string uuid { get; set; }
+        public int lang { get; set; }
     }
     public class GoogleUserInfo
     {

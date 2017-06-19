@@ -16,6 +16,8 @@ namespace IranAudioGuide_MainServer.Models_v2
     }
     public class ConfirmEmailVM
     {
+        public int lang { get; set; }
+
         public string email { get; set; }
     }
     public class GetAudioUrlRes

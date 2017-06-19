@@ -36,6 +36,18 @@ namespace IranAudioGuide_MainServer
             }
             return EnumLang.en.ToString();
         }
+      
+        public static string FindGetSting(int str)
+        {
+            foreach (EnumLang item in Enum.GetValues(typeof(EnumLang)))
+            {
+                if ((int)item == str)
+                {
+                    return item.ToString();
+                }
+            }
+            return EnumLang.en.ToString();
+        }
 
         public static void SetCulture(string langHeader)
         {
@@ -118,6 +130,11 @@ namespace IranAudioGuide_MainServer
                 return GetIntLang(cookie.Value.ToString());
             }
             return (int)EnumLang.en;
+        }
+
+        internal static object FindGetSting(object lang)
+        {
+            throw new NotImplementedException();
         }
     }
 }

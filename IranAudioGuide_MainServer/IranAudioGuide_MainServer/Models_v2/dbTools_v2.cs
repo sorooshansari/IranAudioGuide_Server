@@ -71,19 +71,13 @@ namespace IranAudioGuide_MainServer.Models_v2
         {
             var SP = new SqlParameter("@UserID", userId);
             var dt1 = dbManager.TableResultSP("GetAutorizedCities_v2", SP);
-            var list = dt1.AsEnumerable().Select(x => new citiesLng
+            return dt1.AsEnumerable().Select(x => new citiesLng
             {
                 cityID = CnvertToInt(x["cityID"].ToString()),
                 LangId = CnvertToInt(x["langId"].ToString()),
 
             }).ToList();
-
-            //foreach (var item in list)
-            //{
-            //    item.LangTitle = Enum.GetName(typeof(EnumLang), item.LangId).ToString();
-
-            //}
-            return list;
+            
 
         }
 
@@ -94,7 +88,7 @@ namespace IranAudioGuide_MainServer.Models_v2
             SP1.SqlDbType = SqlDbType.Int;
             SP1.SqlDbType = SqlDbType.NVarChar;
             var dt = dbManager.MultiTableResultSP("GetUpdates_v2", SP1, SP2);
-            var res = new GetUpdateVM()
+           return new GetUpdateVM()
             {
                 UpdateNumber = GetNumFromdataTable(dt[0], "LastUpdate"),
                 Places = FillPlaceVM(dt[1]),
@@ -118,8 +112,7 @@ namespace IranAudioGuide_MainServer.Models_v2
                     TCity = GetTableIds(dt[17]),
                     TImage = GetTableIds(dt[18]),
                 }
-            };
-            return res;
+            };           
         }
 
         public RemovedEntries GetAllEntitiesRemoved()
