@@ -801,4 +801,43 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="PageProfile133" xml:space="preserve">
     <value>Want to change your device?</value>
   </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="ZarinpalPaymentMsg" xml:space="preserve">
+    <value>No response from bank gateway.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg10" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg11" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg2" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg3" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg4" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg5" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg6" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg7" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg8" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZarinpalPaymentMsg9" xml:space="preserve">
+    <value />
+  </data>
 </root>

@@ -139,7 +139,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 });
             }
         }
-        
+
         [Authorize(Roles = "AppUser")]
         public ActionResult WMPurchase(Guid packageId, bool isFromApp = false)
         {
@@ -567,92 +567,80 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                if (Request.QueryString["PaymentId"] != "" && Request.QueryString["Status"] != "" && Request.QueryString["Status"] != null && Request.QueryString["Authority"] != "" && Request.QueryString["Authority"] != null)
+                ViewBag.Message = "No response from bank gateway.";
+                ViewBag.SaleReferenceId = "**************";
+                ViewBag.ErrDesc = "If the payment is deducted from your bank account, The amount will be automatically returned.";
+                ViewBag.Succeeded = false;
+
+                int paymentId = Request.QueryString["PaymentId"].convertToInt();
+                if (paymentId == 0)
+                    return;
+                var Authority = Request.QueryString["Authority"].convertToString();
+                if (string.IsNullOrEmpty(Authority))
+                    return;
+
+                var Status = Request.QueryString["Status"].convertToString();
+                if (!Status.Equals("OK"))
                 {
-                    int paymentId = Convert.ToInt32(Request.QueryString["PaymentId"]);
-                    if (Request.QueryString["Status"].ToString().Equals("OK"))
-                    {
-                        int amount = (int)FindAmountPayment(paymentId);
+                    UpdatePayment(paymentId, Status, 0, Authority, false);
+                    if (string.IsNullOrEmpty(Authority))
+                        ViewBag.SaleReferenceId = Authority;
 
-                        long refId = 0;
-
-                        System.Net.ServicePointManager.Expect100Continue = false;
-
-                        var zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
-
-                        string merchantCode = "2beca824-a5a6-11e6-8157-005056a205be";
-
-                        int status = zp.PaymentVerification(merchantCode, Request.QueryString["Authority"].ToString(), amount, out refId);
-
-                        if (status == 100)
-                        {
-                            UpdatePayment(paymentId, status.ToString(), refId, Request.QueryString["Authority"].ToString(), true);
-
-                            ViewBag.Message = "Payment completed successfully.";
-                            ViewBag.SaleReferenceId = refId;
-                            ViewBag.Image = "<i class=\"fa fa-check\" style=\"color: lightgreen; font-size:35px; vertical-align:sub; \"></i>";
-                            ViewBag.ErrDesc = "You have access to the package below. Thank you for your purchase! <br />";
-                            ViewBag.Succeeded = true;
-                        }
-                        else
-                        {
-                            UpdatePayment(paymentId, status.ToString(), 0, Request.QueryString["Authority"].ToString(), false);
-
-                            ViewBag.Message = PaymentResult.ZarinPal(Convert.ToString(status));
-                            if (refId > 0)
-                                ViewBag.SaleReferenceId = refId;
-                            else
-                                ViewBag.SaleReferenceId = "**************";
-                            ViewBag.Image = "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
-                            ViewBag.ErrDesc = "Your payment process is not completed.";
-                            ViewBag.Succeeded = false;
-                        }
-
-                    }
-                    else
-                    {
-                        UpdatePayment(paymentId, Request.QueryString["Status"].ToString(), 0, Request.QueryString["Authority"].ToString(), false);
-
-                        ViewBag.Message = "Sorry, Your payment was unsuccessful!";
-                        ViewBag.SaleReferenceId = "**************";
-                        try
-                        {
-                            ViewBag.SaleReferenceId = Convert.ToInt64(Request.QueryString["Authority"]);
-                        }
-                        catch (Exception)
-                        {
-                            ViewBag.SaleReferenceId = "**************";
-                        }
-                        ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
-                        ViewBag.ErrDesc = "Your payment process is not completed.";
-                        ViewBag.Succeeded = false;
-                    }
+                    ViewBag.Message = "Sorry, Your payment was unsuccessful!";
+                    ViewBag.ErrDesc = "Your payment process is not completed.";
                 }
                 else
                 {
-                    ViewBag.Message = "No response from bank gateway.";
-                    ViewBag.SaleReferenceId = "**************";
-                    ViewBag.Image = "<i class=\"fa fa-exclamation-triangle\" style=\"color: Yellow; font-size:35px; vertical-align:sub; \"></i>";
-                    ViewBag.ErrDesc = "Sorry, please try again in a few minutes.";
-                    ViewBag.Succeeded = false;
+                    var returnResults = db.Payments.Include("Pay_Procurement.Pro_Package")
+                    .Where(c => c.Pay_Id == paymentId)
+                    .Select(c => new
+                    {
+                        price = c.Pay_Amount,
+                        name = c.Pay_Procurement.Pro_Package.Pac_Name
+                    }).FirstOrDefault();
+
+                    if (returnResults == null)
+                    {
+                        ViewBag.Message = "Sorry, Your payment was unsuccessful!";
+                        ViewBag.ErrDesc = "Your payment process is not completed.";
+                        return;
+                    }
+
+                    ViewBag.Packname = returnResults.name;
+                    ViewBag.Price = returnResults.price.convertToInt();
+
+                    long refId = 0;
+                    System.Net.ServicePointManager.Expect100Continue = false;
+                    var zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
+                    string merchantCode = "2beca824-a5a6-11e6-8157-005056a205be";
+                    int status = zp.PaymentVerification(merchantCode, Authority, ViewBag.Price, out refId);
+
+                    if (status == 100)
+                    {
+                        UpdatePayment(paymentId, status.convertToString(), refId, Authority, true);
+                        ViewBag.SaleReferenceId = refId;
+                        ViewBag.Message = "Payment completed successfully.";
+                        ViewBag.ErrDesc = "You have access to the package below. Thank you for your purchase!";
+                        ViewBag.Succeeded = true;
+                    }
+                    else
+                    {
+                        UpdatePayment(paymentId, status.convertToString(), 0, Authority, false);
+                        ViewBag.Message = PaymentResult.ZarinPal(Convert.ToString(status));
+                        if (refId > 0)
+                            ViewBag.SaleReferenceId = refId;
+                        ViewBag.ErrDesc = "Your payment process is not completed.";
+                    }
+
                 }
+
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                ViewBag.SaleReferenceId = "**************";
-                ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
                 ViewBag.Message = "Problem occurred in payment process. ";
-                ViewBag.ErrDesc = "If the payment is deducted from your bank account, The amount will be automatically returned.";
-                ViewBag.Succeeded = false;
+                ViewBag.ErrDesc = "Sorry, please try again in a few minutes.";
             }
-        }
-        private long FindAmountPayment(int paymentId)
-        {
-
-            long amount = db.Payments.Where(c => c.Pay_Id == paymentId).Select(c => c.Pay_Amount).FirstOrDefault();
-
-            return amount;
         }
         #endregion
         #region Dispose

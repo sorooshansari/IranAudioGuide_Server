@@ -23,13 +23,20 @@ namespace IranAudioGuide_MainServer.Services
         }
         public static string convertToString(this object obj)
         {
-            return (obj == DBNull.Value) ? string.Empty : obj.ToString();
+            try
+            {
+                return (obj == DBNull.Value) ? string.Empty : obj.ToString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
         public static int convertToInt(this object obj, int d = 0)
         {
             try
             {
-                return (obj == DBNull.Value) ? d : Int32.Parse(obj.ToString());              
+                return (obj == DBNull.Value) ? d : Int32.Parse(obj.ToString());
             }
             catch
             {
@@ -71,7 +78,8 @@ namespace IranAudioGuide_MainServer.Services
 
             //Read Datatable column names and types
             var dtlFieldNames = dataTable.Columns.Cast<DataColumn>().
-                Select(item => new {
+                Select(item => new
+                {
                     Name = item.ColumnName,
                     Type = item.DataType
                 }).ToList();

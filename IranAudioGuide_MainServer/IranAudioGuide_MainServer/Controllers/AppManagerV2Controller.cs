@@ -213,8 +213,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public async Task<AuthorizedUser> AuthorizeAppUser(AppUser user)
         {
-            var res = await acTools.AutorizeAppUser(user.email, user.password, user.uuid);
-            return res;
+            return await acTools.AutorizeAppUser(user.email, user.password, user.uuid);           
         }
         private ApplicationDbContext db = new ApplicationDbContext();
         [HttpPost]

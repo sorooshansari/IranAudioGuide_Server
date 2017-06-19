@@ -1768,7 +1768,6 @@
     <Content Include="Views\apiTest\Index.cshtml" />
     <Content Include="Views\Payment\Index_old.cshtml" />
     <None Include="Service References\Zarinpal\PaymentGatewayImplementationService.wsdl" />
-    <Content Include="Views\Payment\Return.cshtml" />
     <Content Include="Views\Shared\CheckOut.cshtml" />
     <Content Include="Views\Shared\PaymentRef.cshtml" />
     <Content Include="Views\Shared\PurchaseDetails.cshtml" />
@@ -1802,7 +1801,8 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Home\PrivacyPolicy.cshtml" />
-    <Content Include="Views\Payment\Return - Copy.cshtml" />
+    <Content Include="Views\Payment\Return-copy.cshtml" />
+    <Content Include="Views\Payment\Return.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

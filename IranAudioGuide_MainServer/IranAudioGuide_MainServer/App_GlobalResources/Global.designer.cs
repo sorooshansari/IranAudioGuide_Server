@@ -1536,6 +1536,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Taiebe Pourmand.
         /// </summary>
         public static string purmand {
@@ -2055,6 +2064,114 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string WebmoneyDescription {
             get {
                 return ResourceManager.GetString("WebmoneyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No response from bank gateway..
+        /// </summary>
+        public static string ZarinpalPaymentMsg {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg1 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg10 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg11 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg2 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg3 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg4 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg5 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg6 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg7 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg8 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ZarinpalPaymentMsg9 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg9", resourceCulture);
             }
         }
     }
