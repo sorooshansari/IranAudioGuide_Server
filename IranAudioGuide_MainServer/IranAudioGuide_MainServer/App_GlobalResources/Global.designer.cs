@@ -61,6 +61,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have access to the package below. Thank you for your purchase!.
+        /// </summary>
+        public static string AccessPackage {
+            get {
+                return ResourceManager.GetString("AccessPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alireza Motaghi.
         /// </summary>
         public static string aliReza {
@@ -1304,11 +1313,56 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If the payment is deducted from your bank account, The amount will be automatically returned. If not, please contact us..
+        /// </summary>
+        public static string PaymentAutomaticallyReturnMoney {
+            get {
+                return ResourceManager.GetString("PaymentAutomaticallyReturnMoney", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  در صورت بروز هر گونه مشکلی به Info@iranaudioguide.com ایمیل بزنید.
         /// </summary>
         public static string PaymentEmailInfo {
             get {
                 return ResourceManager.GetString("PaymentEmailInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, you cant buy this package!.
+        /// </summary>
+        public static string PaymentMsg {
+            get {
+                return ResourceManager.GetString("PaymentMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are already purchased this package..
+        /// </summary>
+        public static string PaymentMsg1 {
+            get {
+                return ResourceManager.GetString("PaymentMsg1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At the moment there is no possibility of connecting to this port..
+        /// </summary>
+        public static string PaymentMsg2 {
+            get {
+                return ResourceManager.GetString("PaymentMsg2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your payment process is not completed..
+        /// </summary>
+        public static string PaymentNotCompleted {
+            get {
+                return ResourceManager.GetString("PaymentNotCompleted", resourceCulture);
             }
         }
         
@@ -1440,6 +1494,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment completed successfully..
+        /// </summary>
+        public static string Paymentsuccessfully {
+            get {
+                return ResourceManager.GetString("Paymentsuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Terms &amp; Conditions.
         /// </summary>
         public static string PaymentTermsConditions {
@@ -1460,6 +1523,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string PaymentTermsConditions1 {
             get {
                 return ResourceManager.GetString("PaymentTermsConditions1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, Your payment was unsuccessful!.
+        /// </summary>
+        public static string PaymentUnsuccessful {
+            get {
+                return ResourceManager.GetString("PaymentUnsuccessful", resourceCulture);
             }
         }
         
@@ -2068,6 +2140,33 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Webmoney Gateway.
+        /// </summary>
+        public static string WebmoneyGateway {
+            get {
+                return ResourceManager.GetString("WebmoneyGateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have access to the package below. Thank you for your purchase! &lt;br /&gt;.
+        /// </summary>
+        public static string WebmoneyPaymentMsg {
+            get {
+                return ResourceManager.GetString("WebmoneyPaymentMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, Your payment was unsuccessful!.
+        /// </summary>
+        public static string WebmoneyPaymentMsg1 {
+            get {
+                return ResourceManager.GetString("WebmoneyPaymentMsg1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No response from bank gateway..
         /// </summary>
         public static string ZarinpalPaymentMsg {
@@ -2077,38 +2176,137 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If the payment is deducted from your bank account, The amount will be automatically returned..
+        ///   Looks up a localized string similar to IP or xCode is not correct.
         /// </summary>
-        public static string ZarinpalPaymentMsg1 {
+        public static string ZarinpalPaymentMsg10 {
             get {
-                return ResourceManager.GetString("ZarinpalPaymentMsg1", resourceCulture);
+                return ResourceManager.GetString("ZarinpalPaymentMsg10", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sorry, Your payment was unsuccessful!.
+        ///   Looks up a localized string similar to Due to the limitations of Shaparak system, opportunity to pay the amount requested is not possible.
         /// </summary>
-        public static string ZarinpalPaymentMsg2 {
+        public static string ZarinpalPaymentMsg11 {
             get {
-                return ResourceManager.GetString("ZarinpalPaymentMsg2", resourceCulture);
+                return ResourceManager.GetString("ZarinpalPaymentMsg11", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your payment process is not completed..
+        ///   Looks up a localized string similar to سطح تاييد پذيرنده پايين تر از سطح نقره اي است..
         /// </summary>
-        public static string ZarinpalPaymentMsg3 {
+        public static string ZarinpalPaymentMsg12 {
             get {
-                return ResourceManager.GetString("ZarinpalPaymentMsg3", resourceCulture);
+                return ResourceManager.GetString("ZarinpalPaymentMsg12", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Payment completed successfully..
+        ///   Looks up a localized string similar to The desired request was not found..
         /// </summary>
-        public static string ZarinpalPaymentMsg4 {
+        public static string ZarinpalPaymentMsg13 {
             get {
-                return ResourceManager.GetString("ZarinpalPaymentMsg4", resourceCulture);
+                return ResourceManager.GetString("ZarinpalPaymentMsg13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editing request is not possible..
+        /// </summary>
+        public static string ZarinpalPaymentMsg14 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any type of financial operations for this transaction was not found..
+        /// </summary>
+        public static string ZarinpalPaymentMsg15 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction is not successful..
+        /// </summary>
+        public static string ZarinpalPaymentMsg16 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The transaction does not match the amount paid..
+        /// </summary>
+        public static string ZarinpalPaymentMsg17 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg17", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction divison limit is passed by number or amount.
+        /// </summary>
+        public static string ZarinpalPaymentMsg18 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg18", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The related method is not accessible..
+        /// </summary>
+        public static string ZarinpalPaymentMsg19 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg19", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent data related to AdditionalData is invalid.
+        /// </summary>
+        public static string ZarinpalPaymentMsg20 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg20", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid payment index lifetime period is between 30 minutes to 45 days..
+        /// </summary>
+        public static string ZarinpalPaymentMsg21 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg21", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The desired request is archived.
+        /// </summary>
+        public static string ZarinpalPaymentMsg22 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg22", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation is successfully done..
+        /// </summary>
+        public static string ZarinpalPaymentMsg23 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg23", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment process has been successful and PaymentVerification has been done..
+        /// </summary>
+        public static string ZarinpalPaymentMsg24 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg24", resourceCulture);
             }
         }
         
@@ -2136,6 +2334,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string ZarinpalPaymentMsg7 {
             get {
                 return ResourceManager.GetString("ZarinpalPaymentMsg7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment was canceld.
+        /// </summary>
+        public static string ZarinpalPaymentMsg8 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submitted information is incomplete.
+        /// </summary>
+        public static string ZarinpalPaymentMsg9 {
+            get {
+                return ResourceManager.GetString("ZarinpalPaymentMsg9", resourceCulture);
             }
         }
     }

@@ -14,9 +14,9 @@ namespace IranAudioGuide_MainServer.Models
     public class GetVersoinVm
     {
         public string version { get; set; }
-        public bool isIOS { get; set; }     
+        public bool isIOS { get; set; }
 
-}
+    }
     public enum getUserStatus
     {
         confirmed = 1,
@@ -49,90 +49,47 @@ namespace IranAudioGuide_MainServer.Models
         /// <returns></returns>
         public static string ZarinPal(string resultId)
         {
-            string result = "";
-            string resultfa = "";
             switch (resultId)
             {
                 case "NOK":
-                    result = "Payment was unsuccessfull.";
-                    resultfa = "پرداخت ناموفق بود";
-                    break;
+                    return Global.PaymentUnsuccessful;
                 case "-100":
-                    result = "Payment was canceld";
-                    resultfa = "پرداخت کنسل شده";
-                    break;
+                    return Global.ZarinpalPaymentMsg8;
                 case "-1":
-                    result = "Submitted information is incomplete";
-                    resultfa = "اطلاعات ارسال شده ناقص است";
-                    break;
+                    return Global.ZarinpalPaymentMsg9;
                 case "-2":
-                    result = "IP or Merchant Code is not correct";
-                    resultfa = "و يا مرچنت كد پذيرنده صحيح نيست IP";
-                    break;
+                    return Global.ZarinpalPaymentMsg10;
                 case "-3":
-                    result = "Due to the limitations of Shaparak system, opportunity to pay the amount requested is not possible";
-                    resultfa = "با توجه به محدوديت هاي شاپرك امكان پرداخت با رقم درخواست شده ميسر نمي باشد";
-                    break;
+                    return Global.ZarinpalPaymentMsg11;
                 case "-4":
-                    result = "سطح تاييد پذيرنده پايين تر از سطح نقره اي است.";
-                    resultfa = "سطح تاييد پذيرنده پايين تر از سطح نقره اي است.";
-                    break;
+                    return Global.ZarinpalPaymentMsg12;
                 case "-11":
-                    result = "The desired request was not found.";
-                    resultfa = "درخواست مورد نظر يافت نشد.";
-                    break;
+                    return Global.ZarinpalPaymentMsg13;
                 case "-12":
-                    result = "Editing request is not possible.";
-                    resultfa = "امكان ويرايش درخواست ميسر نمي باشد.";
-                    break;
+                    return Global.ZarinpalPaymentMsg14;
                 case "-21":
-                    result = "Any type of financial operations for this transaction was not found.";
-                    resultfa = "هيچ نوع عمليات مالي براي اين تراكنش يافت نشد";
-                    break;
+                    return Global.ZarinpalPaymentMsg15;
                 case "-22":
-                    result = "Transaction is not successful.";
-                    resultfa = "تراكنش نا موفق ميباشد.";
-                    break;
+                    return Global.ZarinpalPaymentMsg16;
                 case "-33":
-                    result = "The transaction does not match the amount paid.";
-                    resultfa = "رقم تراكنش با رقم پرداخت شده مطابقت ندارد.";
-                    break;
+                    return Global.ZarinpalPaymentMsg17;
                 case "34":
-                    result = "Transaction divison limit is passed by number or amount";
-                    resultfa = "سقف تقسيم تراكنش از لحاظ تعداد يا رقم عبور نموده است";
-                    break;
+                    return Global.ZarinpalPaymentMsg18;
                 case "40":
-                    result = "The related method is not accessible.";
-                    resultfa = "اجازه دسترسي به متد مربوطه وجود ندارد.";
-                    break;
+                    return Global.ZarinpalPaymentMsg19;
                 case "41":
-                    result = "Sent data related to AdditionalData is invalid";
-                    resultfa = "غيرمعتبر ميباشد. AdditionalData اطلاعات ارسال شده مربوط به";
-                    break;
+                    return Global.ZarinpalPaymentMsg20;
                 case "42":
-                    result = "Valid payment index lifetime period is between 30 minutes to 45 days.";
-                    resultfa = "مدت زمان معتبر طول عمر شناسه پرداخت بايد بين 30 دقيقه تا 45 روز مي باشد.";
-                    break;
+                    return Global.ZarinpalPaymentMsg21;
                 case "54":
-                    result = "The desired request is archived";
-                    resultfa = "درخواست مورد نظر آرشيو شده است.";
-                    break;
+                    return Global.ZarinpalPaymentMsg22;
                 case "100":
-                    result = "Operation is successfully done.";
-                    resultfa = "عمليات با موفقيت انجام گرديده است.";
-                    break;
+                    return Global.ZarinpalPaymentMsg23;
                 case "101":
-                    result = "Payment process has been successful and PaymentVerification has been done.";
-                    resultfa = "تراكنش انجام شده است. PaymentVerification عمليات پرداخت موفق بوده و قبلا";
-                    break;
-
+                    return Global.ZarinpalPaymentMsg24;
                 default:
-                    result = "Unknown Error";
-                    resultfa = "خطای نا مشخص";
-                    break;
-
+                    return Global.ServerErrorUnknown;
             }
-            return result;
         }
 
         #endregion
@@ -215,12 +172,12 @@ namespace IranAudioGuide_MainServer.Models
         //}
         [Display(Name = "Name")]
         public string CityName { get; set; }
-        [Display(Name = "Description")]    
+        [Display(Name = "Description")]
         public string CityDesc { get; internal set; }
-    //    public int Order { get; set; }
+        //    public int Order { get; set; }
         public int TrackCount { get; internal set; }
         public int PlaceCount { get; internal set; }
-     //   public int PlaceCount { get; set; }
+        //   public int PlaceCount { get; set; }
     }
 
     public class PackagePymentVM
@@ -491,7 +448,7 @@ namespace IranAudioGuide_MainServer.Models
         [Display(Name = "Name")]
         public string CityName { get; set; }
         [Display(Name = "Description")]
-      
+
         public IList<PlaceUserVM> Places { get; set; }
         public int TotalTrackCount { get; internal set; }
         public string CityDesc { get; internal set; }
@@ -555,7 +512,7 @@ namespace IranAudioGuide_MainServer.Models
 
     public class NewPlace
     {
-     
+
         [Required(ErrorMessageResourceType = typeof(Global),
              ErrorMessageResourceName = "testError1")]
         [StringLength(50, ErrorMessageResourceType = typeof(Global),
@@ -569,7 +526,8 @@ namespace IranAudioGuide_MainServer.Models
         [Required]
         public HttpPostedFileBase Image { get; set; }
     }
-    public class ImagRemoveVm {
+    public class ImagRemoveVm
+    {
         public string Name { get; set; }
         public Guid Id { get; set; }
     }
@@ -803,7 +761,7 @@ namespace IranAudioGuide_MainServer.Models
         forignKeyError = 7,
         removeOnlinePlace = 8,
         InvalidUsre = 9,
-        
+
     }
     public class Respond
     {

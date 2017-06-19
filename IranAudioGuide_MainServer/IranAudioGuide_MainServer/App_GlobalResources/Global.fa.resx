@@ -796,4 +796,97 @@
   <data name="PageProfile133" xml:space="preserve">
     <value>Want to change your device?</value>
   </data>
+  <data name="ImagePath" xml:space="preserve">
+    <value>http://iranaudioguide.net/Images</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="ZarinpalPaymentMsg" xml:space="preserve">
+    <value>No response from bank gateway.</value>
+  </data>
+  <data name="PaymentAutomaticallyReturnMoney" xml:space="preserve">
+    <value>If the payment is deducted from your bank account, The amount will be automatically returned.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg4" xml:space="preserve">
+    <value>Payment completed successfully.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg5" xml:space="preserve">
+    <value>You have access to the package below. Thank you for your purchase!</value>
+  </data>
+  <data name="ZarinpalPaymentMsg6" xml:space="preserve">
+    <value>Problem occurred in payment process.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg7" xml:space="preserve">
+    <value>Sorry, please try again in a few minutes.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg10" xml:space="preserve">
+    <value>و يا مرچنت كد پذيرنده صحيح نيست IP</value>
+  </data>
+  <data name="ZarinpalPaymentMsg11" xml:space="preserve">
+    <value>با توجه به محدوديت هاي شاپرك امكان پرداخت با رقم درخواست شده ميسر نمي باشد</value>
+  </data>
+  <data name="ZarinpalPaymentMsg12" xml:space="preserve">
+    <value>سطح تاييد پذيرنده پايين تر از سطح نقره اي است.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg13" xml:space="preserve">
+    <value>درخواست مورد نظر يافت نشد.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg14" xml:space="preserve">
+    <value>امكان ويرايش درخواست ميسر نمي باشد.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg15" xml:space="preserve">
+    <value>هيچ نوع عمليات مالي براي اين تراكنش يافت نشد</value>
+  </data>
+  <data name="ZarinpalPaymentMsg16" xml:space="preserve">
+    <value>تراكنش نا موفق ميباشد.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg17" xml:space="preserve">
+    <value>رقم تراكنش با رقم پرداخت شده مطابقت ندارد.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg18" xml:space="preserve">
+    <value>سقف تقسيم تراكنش از لحاظ تعداد يا رقم عبور نموده است</value>
+  </data>
+  <data name="ZarinpalPaymentMsg19" xml:space="preserve">
+    <value>اجازه دسترسي به متد مربوطه وجود ندارد.</value>
+  </data>
+  <data name="PaymentUnsuccessful" xml:space="preserve">
+    <value>پرداخت ناموفق بود</value>
+  </data>
+  <data name="ZarinpalPaymentMsg20" xml:space="preserve">
+    <value>غيرمعتبر ميباشد. AdditionalData اطلاعات ارسال شده مربوط به</value>
+  </data>
+  <data name="ZarinpalPaymentMsg21" xml:space="preserve">
+    <value>مدت زمان معتبر طول عمر شناسه پرداخت بايد بين 30 دقيقه تا 45 روز مي باشد.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg22" xml:space="preserve">
+    <value>درخواست مورد نظر آرشيو شده است.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg23" xml:space="preserve">
+    <value>عمليات با موفقيت انجام گرديده است.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg24" xml:space="preserve">
+    <value>تراكنش انجام شده است. PaymentVerification عمليات پرداخت موفق بوده و قبلا</value>
+  </data>
+  <data name="PaymentNotCompleted" xml:space="preserve">
+    <value>Your payment process is not completed.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg8" xml:space="preserve">
+    <value>پرداخت کنسل شده</value>
+  </data>
+  <data name="ZarinpalPaymentMsg9" xml:space="preserve">
+    <value>اطلاعات ارسال شده ناقص است</value>
+  </data>
+  <data name="AccessPackage" xml:space="preserve">
+    <value>You have access to the package below. Thank you for your purchase!</value>
+  </data>
+  <data name="WebmoneyGateway" xml:space="preserve">
+    <value>Webmoney Gateway</value>
+  </data>
+  <data name="WebmoneyPaymentMsg" xml:space="preserve">
+    <value>You have access to the package below. Thank you for your purchase! &lt;br /&gt;</value>
+  </data>
+  <data name="WebmoneyPaymentMsg1" xml:space="preserve">
+    <value>Sorry, Your payment was unsuccessful!</value>
+  </data>
 </root>

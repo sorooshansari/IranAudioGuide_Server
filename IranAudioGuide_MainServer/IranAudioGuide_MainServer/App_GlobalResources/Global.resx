@@ -704,9 +704,6 @@
   <data name="PleaseTryAgain" xml:space="preserve">
     <value>Please try again</value>
   </data>
-  <data name="ImagePath" xml:space="preserve">
-    <value>http://iranaudioguide.net/Images</value>
-  </data>
   <data name="ErrorRegisterDuplicateUserName" xml:space="preserve">
     <value>This Email  is already taken.</value>
   </data>
@@ -801,22 +798,19 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="PageProfile133" xml:space="preserve">
     <value>Want to change your device?</value>
   </data>
+  <data name="ImagePath" xml:space="preserve">
+    <value>http://iranaudioguide.net/Images</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
   </data>
   <data name="ZarinpalPaymentMsg" xml:space="preserve">
     <value>No response from bank gateway.</value>
   </data>
-  <data name="ZarinpalPaymentMsg1" xml:space="preserve">
-    <value>If the payment is deducted from your bank account, The amount will be automatically returned.</value>
+  <data name="PaymentAutomaticallyReturnMoney" xml:space="preserve">
+    <value>If the payment is deducted from your bank account, The amount will be automatically returned. If not, please contact us.</value>
   </data>
-  <data name="ZarinpalPaymentMsg2" xml:space="preserve">
-    <value>Sorry, Your payment was unsuccessful!</value>
-  </data>
-  <data name="ZarinpalPaymentMsg3" xml:space="preserve">
-    <value>Your payment process is not completed.</value>
-  </data>
-  <data name="ZarinpalPaymentMsg4" xml:space="preserve">
+  <data name="Paymentsuccessfully" xml:space="preserve">
     <value>Payment completed successfully.</value>
   </data>
   <data name="ZarinpalPaymentMsg5" xml:space="preserve">
@@ -827,5 +821,83 @@ Your purchased packages will be set on and accessible through your current user 
   </data>
   <data name="ZarinpalPaymentMsg7" xml:space="preserve">
     <value>Sorry, please try again in a few minutes.</value>
+  </data>
+  <data name="PaymentMsg" xml:space="preserve">
+    <value>Sorry, you cant buy this package!</value>
+  </data>
+  <data name="PaymentMsg1" xml:space="preserve">
+    <value>You are already purchased this package.</value>
+  </data>
+  <data name="PaymentMsg2" xml:space="preserve">
+    <value>At the moment there is no possibility of connecting to this port.</value>
+  </data>
+  <data name="WebmoneyPaymentMsg" xml:space="preserve">
+    <value>You have access to the package below. Thank you for your purchase! &lt;br /&gt;</value>
+  </data>
+  <data name="WebmoneyPaymentMsg1" xml:space="preserve">
+    <value>Sorry, Your payment was unsuccessful!</value>
+  </data>
+  <data name="WebmoneyGateway" xml:space="preserve">
+    <value>Webmoney Gateway</value>
+  </data>
+  <data name="ZarinpalPaymentMsg10" xml:space="preserve">
+    <value>IP or xCode is not correct</value>
+  </data>
+  <data name="ZarinpalPaymentMsg11" xml:space="preserve">
+    <value>Due to the limitations of Shaparak system, opportunity to pay the amount requested is not possible</value>
+  </data>
+  <data name="ZarinpalPaymentMsg12" xml:space="preserve">
+    <value>سطح تاييد پذيرنده پايين تر از سطح نقره اي است.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg13" xml:space="preserve">
+    <value>The desired request was not found.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg14" xml:space="preserve">
+    <value>Editing request is not possible.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg15" xml:space="preserve">
+    <value>Any type of financial operations for this transaction was not found.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg16" xml:space="preserve">
+    <value>Transaction is not successful.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg17" xml:space="preserve">
+    <value>The transaction does not match the amount paid.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg18" xml:space="preserve">
+    <value>Transaction divison limit is passed by number or amount</value>
+  </data>
+  <data name="ZarinpalPaymentMsg19" xml:space="preserve">
+    <value>The related method is not accessible.</value>
+  </data>
+  <data name="PaymentUnsuccessful" xml:space="preserve">
+    <value>Sorry, Your payment was unsuccessful!</value>
+  </data>
+  <data name="ZarinpalPaymentMsg20" xml:space="preserve">
+    <value>Sent data related to AdditionalData is invalid</value>
+  </data>
+  <data name="ZarinpalPaymentMsg21" xml:space="preserve">
+    <value>Valid payment index lifetime period is between 30 minutes to 45 days.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg22" xml:space="preserve">
+    <value>The desired request is archived</value>
+  </data>
+  <data name="ZarinpalPaymentMsg23" xml:space="preserve">
+    <value>Operation is successfully done.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg24" xml:space="preserve">
+    <value>Payment process has been successful and PaymentVerification has been done.</value>
+  </data>
+  <data name="PaymentNotCompleted" xml:space="preserve">
+    <value>Your payment process is not completed.</value>
+  </data>
+  <data name="ZarinpalPaymentMsg8" xml:space="preserve">
+    <value>Payment was canceld</value>
+  </data>
+  <data name="ZarinpalPaymentMsg9" xml:space="preserve">
+    <value>Submitted information is incomplete</value>
+  </data>
+  <data name="AccessPackage" xml:space="preserve">
+    <value>You have access to the package below. Thank you for your purchase!</value>
   </data>
 </root>

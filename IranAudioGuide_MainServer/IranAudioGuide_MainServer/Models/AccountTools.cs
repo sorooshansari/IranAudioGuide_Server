@@ -56,7 +56,9 @@ namespace IranAudioGuide_MainServer.Models
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(applicationUser.Id);
                   //  code = HttpUtility.UrlEncode(code);
                     var callbackUrl = string.Format("{0}/Account/ConfirmEmail?userId={1}&code={2}", BaseUrl, applicationUser.Id, code);
-                    await UserManager.SendEmailAsync(applicationUser.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                  
+
+                    await UserManager.SendEmailAsync(applicationUser.Id,App_GlobalResources.Global.ServerConfirmTitel, string.Format(App_GlobalResources.Global.ServerConfirmMessage, callbackUrl));
                     return 0;
                 }
                 return 1;

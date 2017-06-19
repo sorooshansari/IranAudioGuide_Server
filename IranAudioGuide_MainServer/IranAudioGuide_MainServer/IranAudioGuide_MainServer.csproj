@@ -1803,13 +1803,13 @@
     <Content Include="Views\Home\PrivacyPolicy.cshtml" />
     <Content Include="Views\Payment\Return-copy.cshtml" />
     <Content Include="Views\Payment\Return.cshtml" />
+    <Content Include="Views\Payment\VMResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Content\images\barcodes\" />
     <Folder Include="Content\images\pdf\" />
-    <Folder Include="Download\" />
     <Folder Include="fonts\NewFonts\" />
     <Folder Include="images\slidepics\" />
   </ItemGroup>

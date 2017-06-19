@@ -36,6 +36,21 @@ namespace IranAudioGuide_MainServer
             }
             return EnumLang.en.ToString();
         }
+
+        public static void SetCulture(string langHeader)
+        {
+            langHeader = FindGetSting(langHeader);
+            // set the lang value into route data
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(langHeader);
+            // save the location into cookie
+            HttpContext.Current.Request.RequestContext.RouteData.Values["lang"] = langHeader;
+            HttpCookie _cookie = new HttpCookie("IranAudioGuide.CurrentUICulture", langHeader);
+            _cookie.Expires = DateTime.Now.AddYears(1);
+            HttpContext.Current.Response.SetCookie(_cookie);
+            //  HttpContext.Current.Response.Cookies[0].Value
+            HttpContext.Current.Request.Cookies["IranAudioGuide.CurrentUICulture"].Value = langHeader;
+        }
+
         public static void SetCulture()
         {
             var cookie = HttpContext.Current.Request.Cookies.Get("IranAudioGuide.CurrentUICulture");

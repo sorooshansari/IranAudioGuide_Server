@@ -13,6 +13,7 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class WebmoneyServices
     {
+        //soroosh goft dast be in nazan
         public WMUpdateRes ProccessResult()
         {
 
@@ -53,15 +54,16 @@ namespace IranAudioGuide_MainServer.Models
             {
                 bool isPriceCorrect = primtivePrice == float.Parse(ReturnModel.LMI_PAYMENT_AMOUNT);
                 bool isIntegrate = ControlSignature() && isPriceCorrect;
-                if (!isIntegrate)
-                {
-                    es.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
-                    {
-                        Subject = "failed",
-                        Body = "khodahafez",
-                        Destination = userEmail
-                    });
-                }
+                //todo email check
+                //if (!isIntegrate)
+                //{
+                //    es.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
+                //    {
+                //        Subject = "failed",
+                //        Body = "khodahafez",
+                //        Destination = userEmail
+                //    });
+                //}
                 buy.Pro_WMPayment.WMP_DataIntegrity = isIntegrate;
 
                 if (ReturnModel.LMI_CAPITALLER_WMID != null)
@@ -144,12 +146,13 @@ namespace IranAudioGuide_MainServer.Models
                 buy.Pro_WMPayment.WMP_DataIntegrity = false;
                 db.SaveChanges();
                 db.Dispose();
-                es.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
-                {
-                    Subject = "failed",
-                    Body = "khodahafez",
-                    Destination = userEmail
-                });
+                //todo email check
+                //es.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
+                //{
+                //    Subject = "failed",
+                //    Body = "khodahafez",
+                //    Destination = userEmail
+                //});
                 return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
                         "Your payment process does not completed. <br />",
                         paymentId,
@@ -168,8 +171,8 @@ namespace IranAudioGuide_MainServer.Models
                         .Include(x => x.Pro_WMPayment)
                         .Include(x => x.Pro_Package)
                         .FirstOrDefault(x => x.Pro_WMPayment.WMP_Id == paymentId).Pro_Package.Pac_Name;
-                    return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
-                        "Your payment process does not completed. <br />",
+                    return new WMUpdateRes(App_GlobalResources.Global.PaymentUnsuccessful,
+                       App_GlobalResources.Global.PaymentNotCompleted,
                         paymentId,
                         packName,
                         false);
@@ -177,73 +180,67 @@ namespace IranAudioGuide_MainServer.Models
             }
             catch (Exception)
             {
-                return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
-                    "Your payment process does not completed. <br />",
-                    0,
-                    "",
-                    false);
+                return new WMUpdateRes(App_GlobalResources.Global.PaymentUnsuccessful,
+                                        App_GlobalResources.Global.PaymentNotCompleted,
+                                        0,
+                                        "",
+                                        false);
             }
         }
         public WMUpdateRes Succeeded()
         {
-
-            if (ReturnModel.LMI_PAYMENT_NO != null)
+            try
             {
-                try
+                if (ReturnModel.LMI_PAYMENT_NO == null)
+                    return new WMUpdateRes(App_GlobalResources.Global.WebmoneyPaymentMsg1,
+                        App_GlobalResources.Global.PaymentAutomaticallyReturnMoney, 0, "", false);
+                int WMPaymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
+                using (var db = new ApplicationDbContext())
                 {
 
-
-                    int WMPaymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
-                    using (var db = new ApplicationDbContext())
-                    {
-
-                        var procurement = db.Procurements
-                            .Include(x => x.Pro_WMPayment)
-                            .Include(x => x.Pro_User)
-                            .Include(x => x.Pro_Package)
-                            .Where(x => x.Pro_WMPayment.WMP_Id == WMPaymentId).FirstOrDefault();
-                        if (procurement == default(Procurement))
-                            return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
-                                "You have access to the package below. Thank you for your purchase! <br />",
-                                WMPaymentId,
-                                procurement.Pro_Package.Pac_Name,
-                                false);
-                        procurement.Pro_WMPayment.WMP_SYS_INVS_NO = ReturnModel.LMI_SYS_INVS_NO;
-                        procurement.Pro_WMPayment.WMP_SYS_TRANS_NO = ReturnModel.LMI_SYS_TRANS_NO;
-                        procurement.Pro_WMPayment.WMP_SYS_TRANS_DATE = DateTime.ParseExact(ReturnModel.LMI_SYS_TRANS_DATE, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                        procurement.Pro_PaymentFinished = true;
-                        db.SaveChanges();
-                        var es = new EmailService();
-                        es.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
-                        {
-                            Subject = "success",
-                            Body = "salam",
-                            Destination = procurement.Pro_User.Email
-                        });
-                        return new WMUpdateRes("Payment completed successfully.",
-                            "You have access to the package below. Thank you for your purchase! <br />",
+                    var procurement = db.Procurements
+                        .Include(x => x.Pro_WMPayment)
+                        .Include(x => x.Pro_User)
+                        .Include(x => x.Pro_Package)
+                        .Where(x => x.Pro_WMPayment.WMP_Id == WMPaymentId).FirstOrDefault();
+                    if (procurement == default(Procurement))
+                        return new WMUpdateRes(App_GlobalResources.Global.WebmoneyPaymentMsg,
+                            App_GlobalResources.Global.WebmoneyPaymentMsg,
                             WMPaymentId,
                             procurement.Pro_Package.Pac_Name,
-                            true);
-                    }
-
+                            false);
+                    procurement.Pro_WMPayment.WMP_SYS_INVS_NO = ReturnModel.LMI_SYS_INVS_NO;
+                    procurement.Pro_WMPayment.WMP_SYS_TRANS_NO = ReturnModel.LMI_SYS_TRANS_NO;
+                    procurement.Pro_WMPayment.WMP_SYS_TRANS_DATE = DateTime.ParseExact(ReturnModel.LMI_SYS_TRANS_DATE, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    procurement.Pro_PaymentFinished = true;
+                    db.SaveChanges();
+                    //todo email check
+                    //var es = new EmailService();
+                    //es.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
+                    //{
+                    //    Subject = "success",
+                    //    Body = "salam",
+                    //    Destination = procurement.Pro_User.Email
+                    //});
+                    return new WMUpdateRes(App_GlobalResources.Global.Paymentsuccessfully,
+                                            App_GlobalResources.Global.AccessPackage,
+                                            WMPaymentId,
+                                            procurement.Pro_Package.Pac_Name,
+                                            true);
                 }
-                catch (Exception ex)
-                {
 
-                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                    return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
-                        "If the payment is deducted from your bank account, The amount will be automatically returned. If not, please contact us.",
-                        0,
-                        "",
-                        false);
-                }
             }
-            return new WMUpdateRes("Sorry, Your payment was unsuccessful!",
-                "If the payment is deducted from your bank account, The amount will be automatically returned. If not, please contact us.",
-                0,
-                "",
-                false);
+            catch (Exception ex)
+            {
+
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return new WMUpdateRes(App_GlobalResources.Global.PaymentUnsuccessful,
+                                        App_GlobalResources.Global.PaymentAutomaticallyReturnMoney,
+                                        0,
+                                        "",
+                                        false);
+            }
+
 
         }
         public WMPaymentResult CreatePayment(string UserName, Guid packageId)
@@ -254,7 +251,7 @@ namespace IranAudioGuide_MainServer.Models
                 using (var db = new ApplicationDbContext())
                 {
 
-                    var user = db.Users.Include(x=> x.procurements).FirstOrDefault(x => x.UserName == UserName);
+                    var user = db.Users.Include(x => x.procurements).FirstOrDefault(x => x.UserName == UserName);
                     var isDuplicate = user.procurements.Any(x => x.Pac_Id == packageId && x.Pro_PaymentFinished);
                     //var count = db.Procurements.Include(x => x.Pro_User)
                     //    .Count(x => x.Pro_User.UserName == UserName && x.Pac_Id );
@@ -264,7 +261,7 @@ namespace IranAudioGuide_MainServer.Models
                     }
                     if (user == null)
                     {
-                        Elmah.ErrorSignal.FromCurrentContext().Raise( new Exception("this is Unknown user so he couldn't buy this packages"));
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("this is Unknown user so he couldn't buy this packages"));
                         return new WMPaymentResult() { isDuplicate = true };
 
                     }
@@ -373,6 +370,7 @@ namespace IranAudioGuide_MainServer.Models
         public string LMI_PAYER_PCOUNTRYID { get; set; }
         public string LMI_PAYER_IP { get; set; }
         public bool isFromeApp { get; set; }
+        public string Lang { get; set; }
     }
     public class WMUpdateRes
     {

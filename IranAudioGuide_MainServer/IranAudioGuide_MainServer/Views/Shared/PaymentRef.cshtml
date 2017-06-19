@@ -5,25 +5,25 @@
     ViewBag.Title = "PaymentRef";
 }
 @*<script type="text/javascript">
-    var time_left = 10;
-    var cinterval;
+        var time_left = 10;
+            var cinterval;
 
-    function time_dec() {
-        time_left--;
-        document.getElementById('countdown').innerHTML = time_left;
-        if (time_left == 0) {
-            var originalstring = document.getElementById('countdown2').innerHTML;
-            var newstring = originalstring.replace('seconds', 'second');
-            document.getElementById('countdown2').innerHTML = newstring;
-            var url = document.getElementById("url").getAttribute("value");
+            function time_dec() {
+            time_left--;
+            document.getElementById('countdown').innerHTML = time_left;
+            if (time_left == 0) {
+                var originalstring = document.getElementById('countdown2').innerHTML;
+                var newstring = originalstring.replace('seconds', 'second');
+                document.getElementById('countdown2').innerHTML = newstring;
+                var url = document.getElementById("url").getAttribute("value");
 
-            window.location.replace(url);
-            clearInterval(cinterval);
+                window.location.replace(url);
+                clearInterval(cinterval);
+            }
         }
-    }
 
-    cinterval = setInterval('time_dec()', 1000);
-</script>*@
+        cinterval = setInterval('time_dec()', 1000);
+    </script>*@
 
 <style type="text/css">
     #page-wrapper {
@@ -98,26 +98,26 @@
             line-height: 25px;
         }
 
-   
+
     ._1sttd {
-    font-size: 14px;
-    width: 50%;
-    border-right: 1px solid #15437f !important;
-    vertical-align: middle;
-    font-weight: 600;
+        font-size: 14px;
+        width: 50%;
+        border-right: 1px solid #15437f !important;
+        vertical-align: middle;
+        font-weight: 600;
     }
 
-    ._1sttd i
-    {
-    position: absolute;
-    left: 5px;
-    top: 5px;
-    font-size: large;
-    }
-    ._1sttd .col-xs-12
-    {
-            padding-left:25px;
-    }
+        ._1sttd i {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            font-size: large;
+        }
+
+        ._1sttd .col-xs-12 {
+            padding-left: 25px;
+        }
+
     ._2ndtd {
         width: 50%;
     }
@@ -132,17 +132,17 @@
         background: none !important;
     }
 
-    .desc
-    {
+    .desc {
         font-weight: 600;
-        font-size:x-small; 
-        padding:0 10px !important;
+        font-size: x-small;
+        padding: 0 10px !important;
     }
 
-    .purchasebtn
-    {
-        width:120px; background-color:#15437f; color:white;
-        font-size:small;
+    .purchasebtn {
+        width: 120px;
+        background-color: #15437f;
+        color: white;
+        font-size: small;
     }
 </style>
 
@@ -241,7 +241,7 @@
                     <tr style="background-color:white;">
                         <td class="_1sttd">Payment Gateway</td>
                         <td class="_2ndtd">
-                            <img style="width:75px;" src="@Global.ImagePath/icon-128x128.png"/>
+                            <img style="width:75px;" src="@Global.ImagePath/icon-128x128.png" />
                         </td>
                     </tr>
                 </table>
@@ -260,7 +260,7 @@
                 </div>
 
             </div>
-            </div>
+        </div>
     </div>
 </section>
 

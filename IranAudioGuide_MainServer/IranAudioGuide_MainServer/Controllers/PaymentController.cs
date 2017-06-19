@@ -92,9 +92,9 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
-                if (info.IsChooesZarinpal && ExtensionMethods.IsForeign)
-                    ViewBag.IsChooesZarinpal = false;
-                else
+                //if (info.IsChooesZarinpal && ExtensionMethods.IsForeign)
+                //    ViewBag.IsChooesZarinpal = false;
+                //else
                     ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
 
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
@@ -147,10 +147,12 @@ namespace IranAudioGuide_MainServer.Controllers
             var res = wmService.CreatePayment(User.Identity.Name, packageId);
             if (res.isDuplicate)
             {
-                ViewBag.Message = "Sorry, Your payment was unsuccessful!";
+                //"Sorry, Your payment was unsuccessful!"
+                ViewBag.Message = Global.WebmoneyPaymentMsg1; 
                 ViewBag.SaleReferenceId = "**************";
-                ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
-                ViewBag.ErrDesc = "You are already purchased this package.";
+                //"You are already purchased this package.";
+                ViewBag.ErrDesc = Global.PaymentMsg1;
+
                 ViewBag.Succeeded = false;
                 if (isFromApp)
                     return View("Return");
@@ -172,63 +174,35 @@ namespace IranAudioGuide_MainServer.Controllers
                 sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", WebmoneyPurse.WMZ);
                 //sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
                 sb.AppendFormat("<input type='hidden' name='isFromeApp' value='{0}'>", isFromApp);
+                sb.AppendFormat("<input type='hidden' name='Lang' value='{0}'>", Global.Lang);
                 sb.Append("</form>");
                 sb.Append("</body>");
                 sb.Append("</html>");
                 Response.Write(sb.ToString());
                 Response.End();
                 if (isFromApp)
-                    return RedirectToAction("Index", new WebPaymentReqVM() { packageId = packageId });
+                    return View("Index", new WebPaymentReqVM() { packageId = packageId });
                 else
-                    return RedirectToAction("PaymentWeb", new WebPaymentReqVM() { packageId = packageId, IsChooesZarinpal = false, ErrorMessage = "Please try again." });
+                    return View("PaymentWeb", new WebPaymentReqVM() { packageId = packageId, IsChooesZarinpal = false, ErrorMessage =Global.PleaseTryAgain });
             }
             else
             {
                 var ex = new Exception(string.Format("PaymentId-->{0}, packageId-->{1}, UserName-->{2}", res.PaymentId, packageId, User.Identity.Name));
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                ViewBag.Message = "Sorry, Your payment was unsuccessful!";
                 ViewBag.SaleReferenceId = "**************";
-                ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
-                ViewBag.ErrDesc = "Your payment process is not completed.";
+                //"Sorry, Your payment was unsuccessful!";
+                //"Your payment process is not completed."
+                ViewBag.Message = Global.WebmoneyPaymentMsg1;
+                ViewBag.ErrDesc = Global.PaymentNotCompleted;
+
                 if (isFromApp)
                     return View("Return");
                 else
                     return View("ReturnToWebPage");
             }
-            //if (isFromApp)
-            //    return RedirectToAction("PaymentWeb", new WebPaymentReqVM() { packageId = packageId, IsChooesZarinpal = false, ErrorMessage = "Please try again." });
-            //else
-            //    return RedirectToAction("PaymentWeb", packageId);
-
-            //string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
-            //string success = baseUrl + "/Payment/VMSuccess";
-            //string failed = baseUrl + "/Payment/VMFailed";
-            //using (var client = new HttpClient())
-            //{
-            //    var values = new Dictionary<string, string>
-            //        {
-            //           { "LMI_PAYEE_PURSE", "Z945718891756" },
-            //           { "LMI_PAYMENT_AMOUNT", "5" },
-            //           { "LMI_PAYMENT_NO", "1" },
-            //           { "LMI_PAYMENT_DESC", "helo world" },
-            //           { "LMI_SIM_MODE", "0" },
-            //           { "LMI_SUCCESS_URL", success },
-            //           { "LMI_SUCCESS_METHOD", "1" },
-            //           { "LMI_FAIL_URL", failed },
-            //           { "LMI_FAIL_METHOD", "1" },
-            //           { "myId", "52005" }
-            //        };
-
-            //    var content = new FormUrlEncodedContent(values);
-
-            //    var response = await client.PostAsync("https://merchant.wmtransfer.com/lmi/payment.asp", content);
-
-            //    var responseString = await response.Content.ReadAsStringAsync();
-            //    ViewBag.Error = responseString;
-            //}
-            //RedirectToAction("PaymentWeb", packageId);
         }
 
+        //soroosh goft 
         [HttpPost]
         [AllowAnonymous]
         public ActionResult VMResult(WMReturnModel model)
@@ -241,13 +215,14 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.SaleReferenceId = res.refId;
             ViewBag.Image = res.Image;
             ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
-            return View("ReturnToWebPage");
+            return View();// View("ReturnToWebPage");
         }
+        //todo
         [HttpPost]
         [AllowAnonymous]
         public ActionResult VMSuccess(WMReturnModel model)
         {
-            ViewBag.BankName = "Webmoney Gateway";
+            ViewBag.BankName = Global.WebmoneyGateway;
             var wmService = new WebmoneyServices();
             wmService.ReturnModel = model;
             var res = wmService.Succeeded();
@@ -257,17 +232,18 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.Image = res.Image;
             ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
             ViewBag.Succeeded = res.Succeeded;
+            ServiceCulture.SetCulture(model.Lang);
             if (model.isFromeApp)
                 return View("Return");
             else
                 return View("ReturnToWebPage");
         }
-
+        //todo
         [HttpPost]
         [AllowAnonymous]
         public ActionResult VMFailed(WMReturnModel model)
         {
-            ViewBag.BankName = "Webmoney Gateway";
+            ViewBag.BankName = Global.WebmoneyGateway;
             var wmService = new WebmoneyServices();
             wmService.ReturnModel = model;
             var res = wmService.Failed();
@@ -294,35 +270,19 @@ namespace IranAudioGuide_MainServer.Controllers
                         .Count(x => x.Pro_User.UserName == UserName && x.Pac_Id == packageId && x.Pro_PaymentFinished);
                 if (count > 0)
                 {
-                    ViewBag.Message = "Sorry, Your payment was unsuccessful!";
                     ViewBag.SaleReferenceId = "**************";
-                    ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
-                    ViewBag.ErrDesc = "You are already purchased this package.";
+                    ViewBag.Message = Global.PaymentMsg;
+                    ViewBag.ErrDesc = Global.PaymentMsg1;
                     ViewBag.Succeeded = false;
                     if (isFromWeb)
                         return View("ReturnToWebPage");
                     else
                         return View("Return");
                 }
-
-                //var user = db.Users.Where(x => x.UserName == UserName).First();
-                //var package = db.Packages.Find(packageId);
-                //if (package == null)
-                //{
-                //    ViewBag.Message = "Sorry, Your payment was unsuccessful!";
-                //    ViewBag.SaleReferenceId = "**************";
-                //    ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
-                //    ViewBag.ErrDesc = "Your payment process is not completed.";
-                //    ViewBag.Succeeded = false;
-                //    if (isFromWeb)
-                //        return View("ReturnToWebPage");
-                //    else
-                //        return View("Return");
-                //}
                 string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
-                string redirectPage = baseUrl + "/Payment/Return";
+                string redirectPage = baseUrl + "/" + Global.Lang + "/Payment/Return";
                 if (isFromWeb)
-                    redirectPage = baseUrl + "/Payment/ReturnToWebPage";
+                    redirectPage = baseUrl + "/" + Global.Lang + "/Payment/ReturnToWebPage";
 
 
 
@@ -352,7 +312,6 @@ namespace IranAudioGuide_MainServer.Controllers
                     Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                     ViewBag.Message = error;
                     ViewBag.SaleReferenceId = "**************";
-                    ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
                     ViewBag.Succeeded = false;
                     if (isFromWeb)
                         return View("ReturnToWebPage");
@@ -363,20 +322,21 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     ViewBag.Packname = packname;
                     if (isFromWeb)
-                        return RedirectToAction("PaymentWeb", new WebPaymentReqVM() { packageId = packageId, IsChooesZarinpal = true, ErrorMessage = "Please try again." });
+                        return View("PaymentWeb", new WebPaymentReqVM() { packageId = packageId, IsChooesZarinpal = true, ErrorMessage = "Please try again." });
 
                     else
-                        return RedirectToAction("Index", new WebPaymentReqVM() { packageId = packageId });
+                        return View("Index", new WebPaymentReqVM() { packageId = packageId });
 
                 }
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                ViewBag.Message = "Sorry, Your payment was unsuccessful!";
-                ViewBag.SaleReferenceId = "**************";
-                ViewBag.Image = "<i class=\"fa fa-close\" style=\"color: red; font-size:35px; vertical-align:sub; \"></i>";
-                ViewBag.ErrDesc = "Your payment process is not completed.";
+                // "Problem occurred in payment process. ";
+                //"Sorry, please try again in a few minutes.";
+                ViewBag.Message = Global.ZarinpalPaymentMsg6;
+                ViewBag.ErrDesc = Global.ZarinpalPaymentMsg7; 
+
                 ViewBag.Succeeded = false;
                 if (isFromWeb)
                     return View("ReturnToWebPage");
@@ -536,16 +496,14 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     // فرا خوانی متد آپدیت پی منت برای ویرایش اطلاعات ارسالی از درگاه در صورت عدم اتصال
                     UpdatePayment(paymentId, status.ToString(), 0, null, false);
-
                     // نمایش خطا به کاربر
                     return PaymentResult.ZarinPal(status.ToString());
-
                 }
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return "At the moment there is no possibility of connecting to this port.";
+                return Global.PaymentMsg2;
             }
         }
         private void ZarinpalReturn()
@@ -556,7 +514,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 //No response from bank gateway.
                 // "If the payment is deducted from your bank account, The amount will be automatically returned.";
                 ViewBag.Message = Global.ZarinpalPaymentMsg;
-                ViewBag.ErrDesc = Global.ZarinpalPaymentMsg1;
+                ViewBag.ErrDesc = Global.PaymentAutomaticallyReturnMoney;
                 ViewBag.Succeeded = false;
 
                 int paymentId = Request.QueryString["PaymentId"].convertToInt();
@@ -572,11 +530,6 @@ namespace IranAudioGuide_MainServer.Controllers
                     UpdatePayment(paymentId, Status, 0, Authority, false);
                     if (!string.IsNullOrEmpty(Authority))
                         ViewBag.SaleReferenceId = Authority;
-
-                    // "Sorry, Your payment was unsuccessful!";
-                    // "Your payment process is not completed.";
-                    ViewBag.Message = Global.ZarinpalPaymentMsg2;
-                    ViewBag.ErrDesc = Global.ZarinpalPaymentMsg3;
                 }
                 else
                 {
@@ -592,8 +545,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         //"Sorry, Your payment was unsuccessful!";
                         // "Your payment process is not completed.";
-                        ViewBag.Message = Global.ZarinpalPaymentMsg2;
-                        ViewBag.ErrDesc = Global.ZarinpalPaymentMsg3;
+                        ViewBag.Message = Global.PaymentUnsuccessful;
+                        ViewBag.ErrDesc = Global.PaymentNotCompleted;
                         return;
                     }
 
@@ -605,14 +558,13 @@ namespace IranAudioGuide_MainServer.Controllers
                     var zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
                     string merchantCode = "2beca824-a5a6-11e6-8157-005056a205be";
                     int status = zp.PaymentVerification(merchantCode, Authority, ViewBag.Price, out refId);
-
                     if (status == 100)
                     {
                         UpdatePayment(paymentId, status.convertToString(), refId, Authority, true);
                         ViewBag.SaleReferenceId = refId;
                         //"Payment completed successfully.";
                         //"You have access to the package below. Thank you for your purchase!";
-                        ViewBag.Message = Global.ZarinpalPaymentMsg4;
+                        ViewBag.Message = Global.Paymentsuccessfully;
                         ViewBag.ErrDesc = Global.ZarinpalPaymentMsg5;
                         ViewBag.Succeeded = true;
                     }
@@ -622,12 +574,9 @@ namespace IranAudioGuide_MainServer.Controllers
                         ViewBag.Message = PaymentResult.ZarinPal(Convert.ToString(status));
                         if (refId > 0)
                             ViewBag.SaleReferenceId = refId;
-                        ViewBag.ErrDesc = Global.ZarinpalPaymentMsg3;
-
+                        ViewBag.ErrDesc = Global.PaymentNotCompleted;
                     }
-
                 }
-
             }
             catch (Exception ex)
             {
