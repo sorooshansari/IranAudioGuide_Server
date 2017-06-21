@@ -595,7 +595,7 @@
     <value>دفتر راهنمای صوتی ایران</value>
   </data>
   <data name="OfficeAddress" xml:space="preserve">
-    <value>شیراز، بلوار دکتر حسابی،&lt;br/&gt;شهرک آرین، پارک علم و فناوری</value>
+    <value>Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard&lt;br/&gt;Shiraz, Iran &lt;br/&gt;ساختمان مهرگان اتاق 1112 کد پستی 7197687811 تلفن 071363634709</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>ارسال</value>
@@ -888,5 +888,8 @@
   </data>
   <data name="WebmoneyPaymentMsg1" xml:space="preserve">
     <value>Sorry, Your payment was unsuccessful!</value>
+  </data>
+  <data name="InvalidUserName" xml:space="preserve">
+    <value>چنین حساب کاربری وجود ندارد</value>
   </data>
 </root>

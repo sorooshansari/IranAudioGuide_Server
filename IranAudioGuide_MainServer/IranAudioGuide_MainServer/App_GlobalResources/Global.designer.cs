@@ -502,6 +502,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Not Register.
+        /// </summary>
+        public static string InvalidUserName {
+            get {
+                return ResourceManager.GetString("InvalidUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Iran Audio Guide.
         /// </summary>
         public static string IranAudioGuide {
@@ -628,7 +637,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard&lt;br/&gt;Shiraz, Iran.
+        ///   Looks up a localized string similar to Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard&lt;br/&gt;Shiraz, Iran &lt;br/&gt;ساختمان مهرگان اتاق 1112 کد پستی 7197687811 تلفن 071363634709.
         /// </summary>
         public static string OfficeAddress {
             get {
@@ -1322,7 +1331,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  در صورت بروز هر گونه مشکلی به Info@iranaudioguide.com ایمیل بزنید.
+        ///   Looks up a localized string similar to Incase you encounter any problems, please send an email to Info@iranaudioguide.com.
         /// </summary>
         public static string PaymentEmailInfo {
             get {
@@ -2194,7 +2203,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to سطح تاييد پذيرنده پايين تر از سطح نقره اي است..
+        ///   Looks up a localized string similar to In order to access this service you need at least a silver lever membership.
         /// </summary>
         public static string ZarinpalPaymentMsg12 {
             get {

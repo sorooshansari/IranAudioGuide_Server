@@ -1570,6 +1570,7 @@
     <Content Include="robots.txt" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="sitemap.xml" />
+    <Content Include="Views\Shared\UserEmailTemplate.html" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -1739,7 +1740,6 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\loading-overlay-template.html" />
     <Content Include="Views\Shared\AutoRespondEmailTemplate.html" />
-    <Content Include="Views\Shared\UserEmailTemplate.html" />
     <Content Include="Views\Shared\ContactEmailTemplate.html" />
     <Content Include="Views\Shared\_PaymentLayout.cshtml" />
     <Content Include="Web.config">

@@ -36,40 +36,43 @@
         direction: ltr !important;
     }
 }
+
 @media screen and (max-width: 736px) {
     ._fa .features p {
         font-size: 12px !important;
     }
+
     ._fa .features li h3 {
-    font-size: 13px;
-}
+        font-size: 13px;
+    }
 }
 
 ._fa .features li:before {
-            right: 1.75em;
-            margin: 0px 0 0 0.5em;
-            float: right;
-            text-shadow: 1px 2px 5px black !important;
+    right: 1.75em;
+    margin: 0px 0 0 0.5em;
+    float: right;
+    text-shadow: 1px 2px 5px black !important;
 }
 
 ._fa .features li h3 {
     font-size: 15px;
     color: #0fc;
-    text-align:right;
+    text-align: right;
 }
+
 ._fa .features p {
     font-size: 14px;
     margin-bottom: 2.5em;
     text-align: justify;
     color: whitesmoke;
 }
+
 ._fa #contact {
     direction: rtl;
 }
 
-._fa #LoginForm .input-group
-{
-    direction:ltr;
+._fa #LoginForm .input-group {
+    direction: ltr;
 }
 
 ._fa #LoginForm .input-group-addon {
@@ -179,10 +182,27 @@
             width: 55% !important;
         }
     }
-    /*._fa .LocationInfo .panel-body .row {
-    margin: 0 !important;
 }
 
-._fa .member-th {
-    width: 100%;
-}*/
+._fa .chkout-text h1, .chkout-text p {
+    padding-right: 70px;
+    padding-left: initial;
+}
+
+    ._fa .chkout-text h1 i, ._fa .chkout-text p i {
+        left: initial;
+        right: 35px;
+    }
+
+._fa .chkout-text {
+    margin: 0 14%;
+}
+
+._fa .contentPrivacy {
+    text-align: right;
+}
+
+.contentPrivacy h2 {
+    margin: 13px 0 16px 0 !important;
+    line-height: 26px !important;
+}

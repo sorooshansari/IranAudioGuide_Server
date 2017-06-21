@@ -25,7 +25,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 _acTools = value;
             }
         }
-      
+
 
         [HttpPost]
         public string getBaseUrl(GetVersoinVm version)
@@ -161,7 +161,6 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 ModelState.AddModelError("ex", ex);
-                //return BadRequest(ModelState);
                 return Content(System.Net.HttpStatusCode.BadRequest, "Any object");
             }
         }

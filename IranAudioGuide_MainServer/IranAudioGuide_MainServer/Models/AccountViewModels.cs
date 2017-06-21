@@ -120,5 +120,6 @@ namespace IranAudioGuide_MainServer.Models
         [Display(Name = nameof(Global.PlaceholderEmail))]
         [EmailAddress(ErrorMessageResourceName = nameof(Global.ErrorEmail), ErrorMessageResourceType = typeof(Global))]
         public string Email { get; set; }
+      
     }
 }

@@ -94,7 +94,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
             }
 
-       
+
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -118,16 +118,16 @@ namespace IranAudioGuide_MainServer.Controllers
                         default:
                             return RedirectToLocal(returnUrl);
                     }
-                    //if (UserRole == "Admin")
-                    //    return RedirectToAction("Index", "Admin");
-                    //else if (UserRole == "AppUser")
-                    //{
-                    //    if (returnUrl != null && returnUrl.Length > 0)
-                    //        return RedirectToLocal(returnUrl);
-                    //    return RedirectToAction("Index", "User");
-                    //}
-                    //else
-                    //    return RedirectToLocal(returnUrl);
+                //if (UserRole == "Admin")
+                //    return RedirectToAction("Index", "Admin");
+                //else if (UserRole == "AppUser")
+                //{
+                //    if (returnUrl != null && returnUrl.Length > 0)
+                //        return RedirectToLocal(returnUrl);
+                //    return RedirectToAction("Index", "User");
+                //}
+                //else
+                //    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View();
                 case SignInStatus.RequiresVerification:
@@ -350,18 +350,14 @@ namespace IranAudioGuide_MainServer.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("vmessage", new vmessageVM()
                     {
-                        Subject = Global.ServerForgotPassword,
-                        Message = Global.ServerForgotPasswordMessage,
+                        Subject = Global.Error,
+                        Message = Global.InvalidUserName,
                     });
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                //  code = HttpUtility.UrlEncode(code);
                 string baseUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
-                var callbackUrl = string.Format("{0}/Account/ResetPassword?userId={1}&code={2}", baseUrl, user.Id, code);
-                //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { UserId = user.Id, code = code, lang = Global.Lang }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, Global.ServerResetPassword, string.Format(Global.ServerResetPasswordMessage, callbackUrl));
                 string ResetLink = Url.Action("ForgotPassword", "Account", model);
                 return View("vmessage", new vmessageVM()
@@ -400,7 +396,6 @@ namespace IranAudioGuide_MainServer.Controllers
             var user = await UserManager.FindByIdAsync(model.userId);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
                 return View("vmessage", new vmessageVM()
                 {
                     Subject = Global.ServerPasswordChanged,
@@ -409,16 +404,24 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             //var code = model.Code.Replace(" ", "+");
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return View("vmessage", new vmessageVM()
-                {
-                    Subject = Global.ServerPasswordChanged,
-                    Message = Global.ServerPasswordChangedMessage
-                });
+                AddErrors(result);
+                return View();
             }
-            AddErrors(result);
-            return View();
+            user.PasswordHash = UserManager.PasswordHasher.HashPassword(model.Password);
+            result = await UserManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                AddErrors(result);
+                return View();
+            }
+            return View("vmessage", new vmessageVM()
+            {
+                Subject = Global.ServerPasswordChanged,
+                Message = Global.ServerPasswordChangedMessage
+            });
+
         }
 
         //
