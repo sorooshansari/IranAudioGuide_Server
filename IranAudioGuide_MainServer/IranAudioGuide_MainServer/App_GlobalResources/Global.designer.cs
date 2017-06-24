@@ -205,6 +205,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cities.
+        /// </summary>
+        public static string Cities {
+            get {
+                return ResourceManager.GetString("Cities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Terms &amp;amp; Conditions.
         /// </summary>
         public static string copyright2 {
@@ -1640,6 +1649,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string purmandOc {
             get {
                 return ResourceManager.GetString("purmandOc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receipt For Invoice.
+        /// </summary>
+        public static string ReceiptForInvoice {
+            get {
+                return ResourceManager.GetString("ReceiptForInvoice", resourceCulture);
             }
         }
         

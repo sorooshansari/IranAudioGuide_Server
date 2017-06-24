@@ -99,6 +99,46 @@ namespace IranAudioGuide_MainServer
             }
             return Task.FromResult(0);
         }
+        public Task SendEmailTemplateAsync(IdentityMessage message)
+        {
+            try
+            {
+                // Plug in your email service here to send an email.
+                var credentialUserName = "info@iranaudioguide.com";
+                var sentFrom = "info@iranaudioguide.com";
+                var pwd = "QQwwee11@@";
+
+                // Configure the client:
+                System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("mail.iranaudioguide.com");
+
+                client.Port = 25;
+                client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+
+                // Creatte the credentials:
+                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
+                client.EnableSsl = false;
+                client.Credentials = credentials;
+
+
+                // Create the message:
+                var mail = new MailMessage();
+                mail.From = new MailAddress(sentFrom, "Iran Audio Guide");
+                //mail.Sender = new MailAddress(sentFrom, "Iran Audio Guide");
+                mail.To.Add(new MailAddress(message.Destination));
+                mail.Subject = "[IranAudioGuide] " + message.Subject;
+                mail.Body = message.Body;
+                mail.IsBodyHtml = true;
+
+                client.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(1);
+            }
+            return Task.FromResult(0);
+        }
+
     }
 
     public class SmsService : IIdentityMessageService

@@ -800,7 +800,7 @@
     <value>http://iranaudioguide.net/Images</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>Price</value>
+    <value>قیمت</value>
   </data>
   <data name="ZarinpalPaymentMsg" xml:space="preserve">
     <value>No response from bank gateway.</value>
@@ -891,5 +891,11 @@
   </data>
   <data name="InvalidUserName" xml:space="preserve">
     <value>چنین حساب کاربری وجود ندارد</value>
+  </data>
+  <data name="Cities" xml:space="preserve">
+    <value>لیست شهر ها</value>
+  </data>
+  <data name="ReceiptForInvoice" xml:space="preserve">
+    <value>رسید خرید </value>
   </data>
 </root>

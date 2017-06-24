@@ -1,171 +1,89 @@
-﻿
-@using IranAudioGuide_MainServer.App_GlobalResources;
-@model IranAudioGuide_MainServer.Models.PackageVM
+﻿@using IranAudioGuide_MainServer.App_GlobalResources
 @{
-    ViewBag.Title = "PaymentRef";
+    ViewBag.Title = "Return";
     Layout = "~/Views/Shared/_PaymentLayout.cshtml";
 }
-<style type="text/css">
-    #page-wrapper {
-        height: 100vh;
-        background: none !important;
-    }
-
-    .spotlightv {
-        margin-top: 25vh;
-    }
-
-    #header.alt h1 {
-        /*-ms-pointer-events: none;*/
-        /* pointer-events: none; */
-        opacity: 1 !important;
-    }
-
-    #header.alt {
-        background: #15437f !important;
-        border-bottom: thin solid white;
-    }
-
-    body {
-        background: #15437f;
-    }
-
-    #MainSection {
-        /* position: absolute; */
-        margin-top: 100px;
-        height: 400px;
-        width: 100%;
-    }
-
-    .Main-content {
-        float: right;
-    }
-
-    .Main-text {
-        padding: 3em;
-        padding-top: 175px;
-    }
-
-    #infocontainer {
-        background-color: white;
-        border-bottom-left-radius: 30px;
-        border-bottom-right-radius: 30px;
-        box-shadow: 0px 0px 10px black;
-        min-height: 85vh;
-        margin-top: 45px;
-        margin-bottom: 30px;
-    }
-
-    .chkout-img {
+<style>
+    .jumbotron {
         text-align: center;
+        /*display: inline-block;
+        display: -webkit-inline-box;*/
     }
 
-        .chkout-img img {
-            width: 150px;
-            margin-bottom: 20px;
-        }
-
-    .chkout-text {
-        padding: 1em 0em 2em 0em;
+    .content-jumbotron {
+        text-align: center;
+        max-width: 483px;
         margin: 0 auto;
+        /*border: 1px solid red;*/
     }
 
-        .chkout-text h1, .chkout-text p {
-            color: #15437f !important;
-            text-shadow: 1px 1px 2px #808080 !important;
-            line-height: 25px;
-        }
-
-    ._1sttd {
-        font-size: 14px;
-        width: 50%;
-        border-right: 1px solid #15437f !important;
-        vertical-align: middle;
-        font-weight: 600;
+    .failePayment {
+        background-color: #fddd02;
+        padding: 2px 0px 0 0;
     }
 
-        ._1sttd i {
-            position: absolute;
-            left: 5px;
-            top: 5px;
-            font-size: large;
-        }
-
-        ._1sttd .col-xs-12 {
-            padding-left: 25px;
-        }
-
-    ._2ndtd {
-        width: 50%;
+    .successPayment {
+        background-color: #8fc140;
     }
 
-    .table-mybordered > thead > tr > th, .table-mybordered > tbody > tr > th, .table-mybordered > tfoot > tr > th, .table-mybordered > thead > tr > td, .table-mybordered > tbody > tr > td, .table-mybordered > tfoot > tr > td {
-        border: 1px solid #b6b6b6;
-        /*border-left: none !important;
-        border-right: none !important;*/
+    .fa-box {
+        color: rgb(255, 255, 255);
+        text-shadow: 0px 0px 1px #000;
+        font-size: 45px;
+        text-align: center;
+        border-radius: 50%;
+        margin: 0 auto;
+        width: 75px;
+        height: 75px;
     }
 
-    table tbody tr {
-        background: none !important;
+    p.title {
+        font-weight: 700;
+        font-size: 23px;
     }
 
-    .desc {
-        font-weight: 600;
-        font-size: x-small;
-        padding: 0 10px !important;
+    .box-info {
+        line-height: 15px;
+        padding-top: 16px;
+        color: #000;
     }
 
-    .purchasebtn {
-        width: 120px;
-        background-color: #15437f;
-        color: white;
-        font-size: small;
+    p.packInfo {
+        font-weight: 500;
     }
 </style>
-
-<section id="PaymentRefSection" onload="time_dec()">
-    <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
-        <div class="col-xs-12 checkout-content chkout-img">
-
-        <img src="@Global.ImagePath/IAGSITELOGO.png" />
-            <h1 style="color:#15437f; text-shadow:none;">@Html.Raw(ViewBag.Image) @ViewBag.Message</h1>
-        </div>
-
-        <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
-
-            <div class="col-xs-12" style="text-align:center;">
-                <p>
-                    @Html.Raw(ViewBag.ErrDesc)
+<table class="container-fluid">
+    <tr>
+            <!-- Image and text -->
+            <td class="navbar navbar-ligth pt-0">
+                <p class="navbar-brand pt-0">
+                    <img src="~/images/IAGSITELOGO.png" class="d-inline-block navImg" />
+                    <span class="align-middle navHeader">@Global.IranAudioGuide</span>
                 </p>
-            </div>
-            <div class="col-md-10 col-sm-10 col-md-push-1 col-sm-push-1 col-xs-12 checkout-content chkout-text">
+            </td>
 
-                <table class="table-mybordered tbldotted table-condensed" style="width: 100%; border-radius: 10px 10px 0px 0px; margin: 0px 0px 10px; color: rgb(20, 68, 130); text-shadow: none; text-align: center; background-color: transparent;">
-                    <tbody>
-                        @if (ViewBag.Succeeded)
-                        {
-                            <tr>
-                                <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-briefcase"></i>@Global.PaymentPage27</div></td>
-                                <td class="_2ndtd" style="background-color: transparent; text-transform:capitalize; font-size: medium;">@ViewBag.Packname</td>
-                            </tr>
-                        }
-                        <tr>
-                            <td class="_1sttd" style="background-color: transparent;"><div class="col-xs-12"><i class="fa fa-key"></i>@Global.ReturnPaymentReferenceID</div></td>
-                            <td class="_2ndtd" style="background-color:transparent;">@ViewBag.SaleReferenceId</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="col-xs-12" style="text-align:right;">
-                    @if (ViewBag.Succeeded)
-                    {
-                        <a class="btn btn-sm btn-default purchasebtn" href="mobile/purchased" style="width:100px; font-size:small;">@Global.btnContinue</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-sm btn-default purchasebtn" href="mobile/close" style="width:100px; font-size:small;">@Global.btnContinue</a>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </tr>
+    <tr>
+        <td class="jumbotron my-3 ">
+
+            <p class="content-jumbotron">
+
+                <p class="fa-box successPayment">
+                    <i class="fa fa-thumbs-o-up"></i>
+                </p>
+
+                <p class="title"> Payment completed successfully.   </p> @*Global.Paymentsuccessfully*@
+                <p>You have access to the package below. Thank you for your purchase!</p>@*Global.ZarinpalPaymentMsg5*@
+                <p class="box-info">
+                    <p class="packInfo">Reference ID </p>
+                    <p><i class="fa fa-key"></i> @ViewBag.SaleReferenceId <p>@*@Global.ReturnPaymentReferenceID*@
+                    <p class="packInfo"> Package Name @*@Global.PaymentPage27*@</p>
+                    <p><i class="fa fa-briefcase"></i> Packname  </p>
+                    <p class="packInfo">Price @*@Global.Price*@</p>
+                    <p><i class="fa fa-briefcase"></i> Price  </p>
+
+                </p>
+            </p>
+        </td>
+    </tr>
+</table>

@@ -903,4 +903,10 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="InvalidUserName" xml:space="preserve">
     <value>User Not Register</value>
   </data>
+  <data name="Cities" xml:space="preserve">
+    <value>Cities</value>
+  </data>
+  <data name="ReceiptForInvoice" xml:space="preserve">
+    <value>Receipt For Invoice</value>
+  </data>
 </root>
