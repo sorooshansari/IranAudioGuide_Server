@@ -2,22 +2,124 @@
 @{
     Layout = null;
 }
+<!DOCTYPE html >
+<style>
+    body{
+        width:100%;
+        font-family:Tahoma;
+    }
+    .barcodePdf {
+        width: 49%;
+        float: left;
+        border: 3px dashed;
 
-<!DOCTYPE html>
+    }
 
-<html>
+    .barcodePdf2 {
+        width: 49%;
+        float: right;
+        border: 3px dashed;
+    }
+
+    .imgpdfbarcode {
+        width: 50%;
+        float: left;
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+
+    .imgpdfbarcode2 {
+        width: 50%;
+        float: left;
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom:10px;
+    }
+
+    .txtpdf {
+        width: 50%;
+        float: right;
+        text-align: center
+    }
+
+    .iagpdf {
+        height: 33%;
+        font-size: 23px;
+        padding-top: 20px;
+        padding-bottom: 28px
+    }
+
+    .contentpdf {
+        height: 33%;
+        padding-bottom: 32px;
+        font-size: 15px;
+
+    }
+
+    .pricepdf {
+        height: 33%;
+        font-size: 20px;
+        padding-bottom:5px;
+
+    }
+
+    .imgpdf {
+        width: 205px;
+        height: 205px;
+        padding: 15px;
+        justify-content: center
+    }
+
+    .pdfgenrate {
+        height: 100%;
+      
+    }
+
+    .pdfbody {
+        width: 100%;
+    }
+</style>
+<html class="pdfgenrate">
+
 <head>
+    <link href="~/Content/css/Home_fa.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width" />
-    <title>GeneratePDF</title>
+    <title>BarcodePDF</title>
 </head>
 <body>
     <div>
-        <img src="@Model.PDFLogo" alt="" />
-        <h1>hi</h1>
-    </div>
-    <div>
-        @Html.Raw(Model.PDFContent)
-        <img src="@Model.bar_image" alt="" />
+@for (int i = 0; i < Model.ImageInfoes.Count(); i++)
+{
+        if (i%2== 1) {
+        <div class="barcodePdf">
+            <div class="imgpdfbarcode"><img src="@Model.ImageInfoes[i].ImageUrl" alt="" class="imgpdf" /></div>
+            <div class="txtpdf">
+                <div class="iagpdf">@Model.PDFContent</div>
+                <div class="contentpdf">
+                    <p>با تشکر از خرید شما</p>
+                    با اسکن این کد، با دوربین گوشی خود، به بسته مورد نظر دسترسی پیدا خواهید کرد
+                </div>
+               <div class="pricepdf">@Model.ImageInfoes[i].Price</div>
+            </div>
+            
+        </div>
+    }
+    else
+    {
+        <div class="barcodePdf2">
+            <div class="imgpdfbarcode2"><img src="@Model.ImageInfoes[i].ImageUrl" alt="" class="imgpdf" /></div>
+            <div class="txtpdf">
+                <div class="iagpdf">@Model.PDFContent</div>
+                <div class="contentpdf">
+                    <p>با تشکر از خرید شما</p>
+                    با اسکن این کد، با دوربین گوشی خود، به بسته مورد نظر دسترسی پیدا خواهید کرد
+                </div>
+                <div class="pricepdf">@Model.ImageInfoes[i].Price</div>
+            </div>
+        </div>
+    }
+}
     </div>
 </body>
 </html>

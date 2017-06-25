@@ -224,15 +224,16 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         private ApplicationDbContext db = new ApplicationDbContext();
         [HttpPost]
-        //public BuyWithBarcodeStatus BuyWithBarcode(Guid packId, string email, string uuid, string barcode)
-        public BuyWithBarcodeStatus BuyWithBarcode(BuyWithBarcodeVM model)
+        public BuyWithBarcodeStatus BuyWithBarcode(Guid packId, string email, string uuid, string barcode)
         {
+        //    public BuyWithBarcodeStatus BuyWithBarcode(BuyWithBarcodeVM model)
+        //{
             try
             {
-                var user = acTools.getUser(model.email);
+                var user = acTools.getUser(email);
                 var status =
                     (user == null) ? BuyWithBarcodeStatus.notUser :
-                    (user.uuid != model.uuid) ? BuyWithBarcodeStatus.uuidMissMatch :
+                    (user.uuid != uuid) ? BuyWithBarcodeStatus.uuidMissMatch :
                     (!user.EmailConfirmed) ? BuyWithBarcodeStatus.notConfirmed :
                     BuyWithBarcodeStatus.confirmed;
                 if (status != BuyWithBarcodeStatus.confirmed)
@@ -244,17 +245,17 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     try
                     {
-                        cbs = brs.ConvertBarcodetoString(model.barcode);
+                        cbs = brs.ConvertBarcodetoString(barcode);
                     }
                     catch (Exception)
                     {
-                        var ex = new Exception(string.Format("invalid baicode-->{0}", model.barcode));
+                        var ex = new Exception(string.Format("invalid baicode-->{0}", barcode));
                         ErrorSignal.FromCurrentContext().Raise(ex);
                         return BuyWithBarcodeStatus.invalidBarcode;
                     }
                     long packPrice;
                     BarcodeVM bav = new BarcodeVM();
-                    packPrice = brs.Getpackage(model.packId);
+                    packPrice = brs.Getpackage(packId);
                     bav = brs.GetBarcodes(cbs.CBS_id_bar);
                     if (cbs.CBS_price_pri != bav.price)
                     {
@@ -280,7 +281,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                         return BuyWithBarcodeStatus.unknownError;
                     }
-                    brs.saved(cbs.CBS_id_bar, user.Id, model.packId);
+                    brs.saved(cbs.CBS_id_bar, user.Id, packId);
                     return BuyWithBarcodeStatus.success;
                 }
             }

@@ -42,9 +42,11 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         public ActionResult DownloadPDF()
         {
-            var model = new GeneratePDFModel();
-            BarcodeServices br = new BarcodeServices();
-            model = br.DownloadPDF1();
+                var model = new GeneratePDFModel();
+                BarcodeServices br = new BarcodeServices();
+                model = br.DownloadPDF1();
+            
+
 
             //try
             //{

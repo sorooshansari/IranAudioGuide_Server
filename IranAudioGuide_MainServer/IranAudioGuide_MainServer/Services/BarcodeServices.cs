@@ -9,6 +9,9 @@ using MessagingToolkit.QRCode.Codec.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Data;
 using IranAudioGuide_MainServer.Services;
 
 namespace IranAudioGuide_MainServer.Services
@@ -194,26 +197,37 @@ namespace IranAudioGuide_MainServer.Services
         {
             try
             {
-                var model = new GeneratePDFModel();
-                Barcode b = new Barcode();
-
                 //get the information to display in pdf from database
                 //for the time
                 //Hard coding values are here, these are the content to display in pdf 
-                var content = "<h2>Iran Audio Guide<h2>" +
-                 "<p>Ohh This is very easy to generate pdf using Rotativa <p>";
-                var logoFile = @"/Images/as.png";
-                var img = @"/Content/images/barcodes/95.jpeg";
-                
-                              
-                model.PDFContent = content;
-                model.PDFLogo = HttpContext.Current.Server.MapPath(logoFile);
-                model.bar_image= HttpContext.Current.Server.MapPath(img);
+                var content = "راهنمای صوتی ایران";
+                 //   +
+                 //"<p>Ohh This is very easy to generate pdf using Rotativa <p>";
+                var logoFile = @"/Images/IAGappHeaderLOGO.png";
+                string barImgPath = @"/Content/images/barcodes/";
 
-                return (model);
+                var userName = HttpContext.Current.User.Identity.Name;
+
+                List<BarImageInfo> ImgInfo = db.Barcodes
+                    .Where(x => x.Bar_IsUsed == false && x.Bar_SellerName == userName)
+                    .Select(t => new BarImageInfo()
+                    {
+                        ImageUrl = barImgPath + t.Bar_Image_Url,
+                        Price = t.Bar_Price.Pri_Value
+                    }).ToList();
+                //var img = @"/Content/images/barcodes/8/.jpeg";
+                var result = new GeneratePDFModel()
+                {
+                    PDFContent = content,
+                    PDFLogo = HttpContext.Current.Server.MapPath(logoFile),
+                    ImageInfoes = ImgInfo
+                };
+                
+                
+                return (result);
 
                 //Use ViewAsPdf Class to generate pdf using GeneratePDF.cshtml view
-                
+
             }
 
             catch (Exception ex)
