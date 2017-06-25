@@ -1561,6 +1561,7 @@
     <Content Include="Content\css\fontawesome-webfont.woff2" />
     <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="google60352dff0d3dbd69.html" />
+    <Content Include="images\IAGappHeaderLOGO.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\marker.png" />
     <Content Include="images\v_blue_on_transp_en.png" />

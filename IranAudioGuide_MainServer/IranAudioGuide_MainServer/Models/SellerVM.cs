@@ -62,7 +62,8 @@ namespace IranAudioGuide_MainServer.Models
     /// <summary>
     /// convert barcode to string for buy with barcode
     /// </summary>
-    public class ConvertBarcodetoStringVM{
+    public class ConvertBarcodetoStringVM
+    {
         public int CBS_id_bar { get; set; }
         public double CBS_price_pri { get; set; }
         public string CBS_sellername { get; set; }
@@ -71,6 +72,12 @@ namespace IranAudioGuide_MainServer.Models
     {
         public string PDFContent { get; set; }
         public string PDFLogo { get; set; }
-        public string bar_image { get; set; }
+        public List<BarImageInfo> ImageInfoes { get; set; }
+
+    }
+    public class BarImageInfo
+    {
+        public string ImageUrl { get; set; }
+        public double Price { get; set; }
     }
 }
