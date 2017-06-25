@@ -1573,6 +1573,8 @@
     <Content Include="Views\Shared\IAGSITELOGO.png" />
     <Content Include="Views\Shared\UserEmailTemplate.html" />
     <Content Include="Views\Shared\UserEmailTemplatePayment.html" />
+    <Content Include="Views\Shared\UserEmailTemplatePayment - Copy.html" />
+    <Content Include="Views\Shared\UserEmailTemplatePayment-notwork.html" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -1805,6 +1807,7 @@
     <Content Include="Views\Payment\Return.cshtml" />
     <Content Include="Views\Payment\VMResult.cshtml" />
     <Content Include="Views\Payment\Return - Copy.cshtml" />
+    <Content Include="Views\Home\TermsConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

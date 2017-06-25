@@ -14,9 +14,8 @@
         <p></p>
 
         <p>
-            @Global.IndexTitle01<br />
-            <br />
-            @Global.IndexTitle02 <br />
+         @Html.Raw(Global.IndexTitle)<br />
+            
         </p>
 
         <ul class="actions">
@@ -191,7 +190,7 @@
             <div class="panel-body">
 
                 <p>
-                    @Global.Parameter24
+                   @Html.Raw(Global.Parameter24)
                 </p>
 
                 <div class="row">
@@ -401,7 +400,7 @@
             </li>
         </ul>*@
     <ul  class="copyright">
-        <li><a href="#" style="font-weight:bold;"> @Html.Raw(Global.copyright2)</a><font> - </font><a href="/@Global.Lang/home/PrivacyPolicy" style="font-weight:bold;">@Html.Raw(Global.copyright21)</a></li>
+        <li><a href="#" style="font-weight:bold;"> @Html.Raw(Global.TermsConditions)</a><font> - </font><a href="/@Global.Lang/home/PrivacyPolicy" style="font-weight:bold;">@Html.Raw(Global.PrivacyPolicy)</a></li>
    
         <li class="">&copy;@DateTime.Now.Year - @Global.copyright22</li>
     </ul>

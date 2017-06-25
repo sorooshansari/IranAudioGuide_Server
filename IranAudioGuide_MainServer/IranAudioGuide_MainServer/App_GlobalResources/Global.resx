@@ -130,10 +130,7 @@
     <value>Learn More</value>
   </data>
   <data name="IndexTitle" xml:space="preserve">
-    <value>The only guide you will need in Iran</value>
-  </data>
-  <data name="IndexTitle02" xml:space="preserve">
-    <value>Convenient, thorough, liberating</value>
+    <value>The only guide you will need in Iran &lt;br/&gt;&lt;br /&gt; Convenient, thorough, liberating</value>
   </data>
   <data name="IranAudioGuide" xml:space="preserve">
     <value>Iran Audio Guide</value>
@@ -422,9 +419,6 @@
   <data name="SpotlightContentP" xml:space="preserve">
     <value>Listen to the tracks your interested in, choose among all the content available</value>
   </data>
-  <data name="IndexTitle01" xml:space="preserve">
-    <value>The only guide you will need in Iran</value>
-  </data>
   <data name="TitlePageConfirmEmail" xml:space="preserve">
     <value>Confirm Email</value>
   </data>
@@ -545,10 +539,10 @@
   <data name="btnPurchase" xml:space="preserve">
     <value>Purchase</value>
   </data>
-  <data name="copyright2" xml:space="preserve">
-    <value>Terms &amp;amp; Conditions</value>
+  <data name="TermsConditions" xml:space="preserve">
+    <value>Terms &amp; Conditions</value>
   </data>
-  <data name="copyright21" xml:space="preserve">
+  <data name="PrivacyPolicy" xml:space="preserve">
     <value>Privacy &amp;amp; Policy</value>
   </data>
   <data name="copyright22" xml:space="preserve">
@@ -672,7 +666,7 @@
     <value>Designer</value>
   </data>
   <data name="purmand" xml:space="preserve">
-    <value>Taiebe Pourmand</value>
+    <value>Tayebeh Pourmand</value>
   </data>
   <data name="purmandOc" xml:space="preserve">
     <value>Developer</value>
@@ -721,30 +715,6 @@
   </data>
   <data name="PaymentProcedure2" xml:space="preserve">
     <value>The procedure will only take a few minutes. The system will guide you through the steps. As soon the process has finished, the packages will be activated for you automatically. In case the procedures fail contact us.</value>
-  </data>
-  <data name="PaymentTermsConditions" xml:space="preserve">
-    <value>Terms &amp; Conditions</value>
-  </data>
-  <data name="PaymentTermsConditions1" xml:space="preserve">
-    <value>Once you have purchased a packaged the price is not refundable.
-                        &lt;br /&gt;
-                        Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions.
-                        &lt;br /&gt;
-                        Users agree to the price of each package and by purchasing a package, users terminate their right of any future complaint toward the price and content of the packages.
-                        &lt;br /&gt;
-                        Iranaudioguide preserve the right to restrict any user’s access, in case of doubt of identity, and users agree to reply to iranaudioguide contacts to clear the issue. In case the users do not comply, Iranaudioguide has the right to deny the users access.
-                        &lt;br /&gt;
-                        If it is proven to Iranaudioguide that a user is misusing the software in anyway, Iranaudioguide preserves to right to disable any access the user had and restrain any future access.
-                        &lt;br /&gt;
-                        Iranaudioguide is not a purely scientific source. The content is based on scientific facts but entertainment aspects are also considered.
-                        &lt;br /&gt;
-                        All rights of this application are strictly reserved to the brand owner. Any illegal use, will follow with legal prosecution.
-                        &lt;br /&gt;
-                        Users agree to allow iranaudioguide use the personal data they have provided to Iranaduioguide, for the improvement of the application.
-                        &lt;br /&gt;
-                        Each user can only change their active device once they change their personal device. In case it is proven to Iranaudioguide that users have changed the active device, to allow other individual access their packages, Iranaudioguide can restrict their access.
-                        &lt;br /&gt;
-                        Offered services provided here are not at the order of an individual or enterprise operating any of the Transaction banks, active on Iranaudioguide. This means the banks is not connected in any way with the sales conducted in Iranaudioguide.</value>
   </data>
   <data name="WebmoneyAbout" xml:space="preserve">
     <value>About Webmoney</value>
@@ -870,7 +840,7 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="ZarinpalPaymentMsg19" xml:space="preserve">
     <value>The related method is not accessible.</value>
   </data>
-  <data name="PaymentUnsuccessful" xml:space="preserve">
+  <data name="PaymentUnsuccessfully" xml:space="preserve">
     <value>Sorry, Your payment was unsuccessful!</value>
   </data>
   <data name="ZarinpalPaymentMsg20" xml:space="preserve">
@@ -894,9 +864,6 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="ZarinpalPaymentMsg8" xml:space="preserve">
     <value>Payment was canceld</value>
   </data>
-  <data name="ZarinpalPaymentMsg9" xml:space="preserve">
-    <value>Submitted information is incomplete</value>
-  </data>
   <data name="AccessPackage" xml:space="preserve">
     <value>You have access to the package below. Thank you for your purchase!</value>
   </data>
@@ -908,5 +875,20 @@ Your purchased packages will be set on and accessible through your current user 
   </data>
   <data name="ReceiptForInvoice" xml:space="preserve">
     <value>Receipt For Invoice</value>
+  </data>
+  <data name="ZarinpalPaymentMsg9" xml:space="preserve">
+    <value>Submitted information is incomplete</value>
+  </data>
+  <data name="DateTite" xml:space="preserve">
+    <value>Date Of Purchase</value>
+  </data>
+  <data name="MailSubjectForPayment" xml:space="preserve">
+    <value> پرداخت</value>
+  </data>
+  <data name="ThankYouForYourPurchase" xml:space="preserve">
+    <value>Thank you for your purchase</value>
+  </data>
+  <data name="PaymentMsg5" xml:space="preserve">
+    <value>You have access to the package below.</value>
   </data>
 </root>

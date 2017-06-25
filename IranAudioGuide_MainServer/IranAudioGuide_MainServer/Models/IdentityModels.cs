@@ -480,6 +480,10 @@ namespace IranAudioGuide_MainServer.Models
         public string WMP_PAYER_PCOUNTRYID { get; set; }
         public string WMP_PAYER_IP { get; set; }
 
+        internal object Select(Func<object, SendEmailForPaymentVM> p)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class Barcode
     {

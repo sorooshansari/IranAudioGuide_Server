@@ -54,6 +54,18 @@ namespace IranAudioGuide_MainServer.Services
                 return 0;
             }
         }
+        public static string ConvertToHtml(this string str)
+        {
+            try
+            {
+                return System.Web.HttpUtility.HtmlEncode(str);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+       
 
     }
 

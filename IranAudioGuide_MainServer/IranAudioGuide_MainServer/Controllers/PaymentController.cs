@@ -11,6 +11,7 @@ using IranAudioGuide_MainServer.Services;
 using System.Data.SqlClient;
 using System.Data;
 using IranAudioGuide_MainServer.App_GlobalResources;
+using IranAudioGuide_MainServer.Models_v2;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -95,7 +96,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 //if (info.IsChooesZarinpal && ExtensionMethods.IsForeign)
                 //    ViewBag.IsChooesZarinpal = false;
                 //else
-                    ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
+                ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
 
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user == default(ApplicationUser))
@@ -148,7 +149,7 @@ namespace IranAudioGuide_MainServer.Controllers
             if (res.isDuplicate)
             {
                 //"Sorry, Your payment was unsuccessful!"
-                ViewBag.Message = Global.WebmoneyPaymentMsg1; 
+                ViewBag.Message = Global.WebmoneyPaymentMsg1;
                 ViewBag.SaleReferenceId = "**************";
                 //"You are already purchased this package.";
                 ViewBag.ErrDesc = Global.PaymentMsg1;
@@ -183,7 +184,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (isFromApp)
                     return View("Index", new WebPaymentReqVM() { packageId = packageId });
                 else
-                    return View("PaymentWeb", new WebPaymentReqVM() { packageId = packageId, IsChooesZarinpal = false, ErrorMessage =Global.PleaseTryAgain });
+                    return View("PaymentWeb", new WebPaymentReqVM() { packageId = packageId, IsChooesZarinpal = false, ErrorMessage = Global.PleaseTryAgain });
             }
             else
             {
@@ -233,6 +234,8 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.Packname = (res.PackName == "") ? packname : res.PackName;
             ViewBag.Succeeded = res.Succeeded;
             ServiceCulture.SetCulture(model.Lang);
+            if (res.Succeeded == true)
+                SendEmail(res.EmailInfo);
             if (model.isFromeApp)
                 return View("Return");
             else
@@ -335,7 +338,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 // "Problem occurred in payment process. ";
                 //"Sorry, please try again in a few minutes.";
                 ViewBag.Message = Global.ZarinpalPaymentMsg6;
-                ViewBag.ErrDesc = Global.ZarinpalPaymentMsg7; 
+                ViewBag.ErrDesc = Global.ZarinpalPaymentMsg7;
 
                 ViewBag.Succeeded = false;
                 if (isFromWeb)
@@ -458,6 +461,9 @@ namespace IranAudioGuide_MainServer.Controllers
 
                 db.Entry(procurement).State = EntityState.Modified;
                 db.SaveChanges();
+
+
+
             }
             else
             {
@@ -468,6 +474,59 @@ namespace IranAudioGuide_MainServer.Controllers
                 // اطلاعاتی از دیتابیس پیدا نشد
             }
         }
+
+        //private void SendEmail(PaymentInfoForEmailVM returnResults)
+        //{
+
+        //    System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/UserEmailTemplatePayment.html"));
+        //    string body = sr.ReadToEnd();
+        //    sr.Close();
+        //    body = body.Replace("#ReturnPaymentReferenceID#", Global.ReturnPaymentReferenceID);
+        //    body = body.Replace("#PaymentPage27#", Global.PaymentPage27);
+        //    body = body.Replace("#PriceTite#", Global.Price);
+        //    body = body.Replace("#Cities#", Global.Cities);
+        //    body = body.Replace("#ReceiptForInvoice#", Global.ReceiptForInvoice);
+        //    body = body.Replace("#ThankYouForYourPurchase#", Global.ThankYouForYourPurchase);
+        //    body = body.Replace("#PaymentMsg#", Global.Paymentsuccessfully + Global.PaymentMsg5);
+        //    body = body.Replace("#DateTite#", Global.DateTite);
+        //    body = body.Replace("#ReferenceID#", "9382387437");
+        //    body = body.Replace("#PackageName#", returnResults.Name);
+        //    body = body.Replace("#Price#", returnResults.Price.ToString());
+        //    body = body.Replace("#PrivacyPolicy#", Global.PrivacyPolicy);
+        //    body = body.Replace("#TermsConditions#", Global.TermsConditions);
+        //    body = body.Replace("#lang#", Global.Lang);
+
+
+        //    if (Global.Lang.Contains("fa"))
+        //    {
+
+        //        var pCalendar = new System.Globalization.PersianCalendar();
+        //        DateTime a = DateTime.Now;
+        //        int year = pCalendar.GetYear(returnResults.Date);
+        //        int month = pCalendar.GetMonth(returnResults.Date);
+        //        int day = pCalendar.GetDayOfMonth(returnResults.Date);
+
+        //        body = body.Replace("#Date#", year + "/" + month + "/" + day);
+        //        body = body.Replace("#langStyle#", $"style=\"font-family: Tahoma;  direction:rtl\"");
+        //    }
+        //    else
+        //    {
+        //        body = body.Replace("#Date#", returnResults.Date.ToString());
+        //        body = body.Replace("#langStyle#", $"style=\"font-family:'Open Sans'\"");
+        //    }
+
+
+        //    var listCity = "";
+        //    foreach (var item in returnResults.Cities)
+        //    {
+        //        listCity = listCity + string.Format("<p style='font-size: 21px;background-color:#15437f;color:#ffffff;margin:3% auto;padding:4px 12px;box-shadow: 1px 1px 1px #15437f;font-weight:bold;display: table;min-width:201px;text-shadow: 1px 1px 2px #171514'>{0}<p>", item);
+        //    }
+        //    body = body.Replace("#CityItem#", listCity);
+
+        //    var msg = new Microsoft.AspNet.Identity.IdentityMessage() { Body = body, Destination = dest, Subject = Global.ReceiptForInvoice };
+        //    EmailService es = new EmailService();
+        //    es.SendAsync2(msg);
+        //}
 
         private string ZarinpalPayment(long price, string redirectPage, int paymentId, string packageName)
         {
@@ -533,25 +592,28 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 else
                 {
-                    var returnResults = db.Payments.Include("Pay_Procurement.Pro_Package")
-                    .Where(c => c.Pay_Id == paymentId)
-                    .Select(c => new
-                    {
-                        price = c.Pay_Amount,
-                        name = c.Pay_Procurement.Pro_Package.Pac_Name
-                    }).FirstOrDefault();
+                    var returnResults = db.Payments.Include("Pay_Procurement.Pro_Package.Pac_Cities")
+                                    .Where(c => c.Pay_Id == paymentId)
+                                    .Select(c => new SendEmailForPaymentVM
+                                    {
+                                        Price = c.Pay_Amount.ToString(),
+                                        Pac_Name = c.Pay_Procurement.Pro_Package.Pac_Name,
+                                        Cities = c.Pay_Procurement.Pro_Package.Pac_Cities.Select(x => x.Cit_Name).ToList(),
+                                        Date = c.Pay_Procurement.Pro_InsertDatetime
+                                    }).FirstOrDefault();
+
 
                     if (returnResults == null)
                     {
                         //"Sorry, Your payment was unsuccessful!";
                         // "Your payment process is not completed.";
-                        ViewBag.Message = Global.PaymentUnsuccessful;
+                        ViewBag.Message = Global.PaymentUnsuccessfully;
                         ViewBag.ErrDesc = Global.PaymentNotCompleted;
                         return;
                     }
 
-                    ViewBag.Packname = returnResults.name;
-                    ViewBag.Price = returnResults.price.convertToInt();
+                    ViewBag.Packname = returnResults.Pac_Name;
+                    ViewBag.Price = returnResults.Price;
                     long refId = 0;
 
                     System.Net.ServicePointManager.Expect100Continue = false;
@@ -562,11 +624,13 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         UpdatePayment(paymentId, status.convertToString(), refId, Authority, true);
                         ViewBag.SaleReferenceId = refId;
+                        returnResults.ReferenceID = refId.ToString();
                         //"Payment completed successfully.";
                         //"You have access to the package below. Thank you for your purchase!";
                         ViewBag.Message = Global.Paymentsuccessfully;
                         ViewBag.ErrDesc = Global.ZarinpalPaymentMsg5;
                         ViewBag.Succeeded = true;
+                        SendEmail(returnResults);
                     }
                     else
                     {
@@ -586,6 +650,30 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.Message = Global.ZarinpalPaymentMsg6;
                 ViewBag.ErrDesc = Global.ZarinpalPaymentMsg7;
             }
+        }
+
+        private void SendEmail(SendEmailForPaymentVM Message)
+        {
+            var sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/UserEmailTemplatePayment.html"));
+            var body = sr.ReadToEnd();
+            sr.Close();
+            body = body.Replace("#ReturnPaymentReferenceID#", Global.ReturnPaymentReferenceID);
+            body = body.Replace("#PaymentPage27#", Global.PaymentPage27);
+            body = body.Replace("#PriceTite#", Global.Price);
+            body = body.Replace("#Cities#", Global.Cities);
+            body = body.Replace("#ReceiptForInvoice#", Global.ReceiptForInvoice);
+            body = body.Replace("#ThankYouForYourPurchase#", Global.ThankYouForYourPurchase);
+            body = body.Replace("#PaymentMsg#", Global.Paymentsuccessfully + Global.PaymentMsg5);
+            body = body.Replace("#DateTite#", Global.DateTite);
+            body = body.Replace("#ReferenceID#", Message.ReferenceID);
+            body = body.Replace("#PackageName#", Message.Pac_Name);
+            body = body.Replace("#Price#", Message.Price);
+            body = body.Replace("#PrivacyPolicy#", Global.PrivacyPolicy);
+            body = body.Replace("#TermsConditions#", Global.TermsConditions);
+            body = body.Replace("#lang#", Global.Lang);
+            Message.Body = body;
+            EmailService es = new EmailService();
+            es.SendEmail(Message);
         }
         #endregion
         #region Dispose
