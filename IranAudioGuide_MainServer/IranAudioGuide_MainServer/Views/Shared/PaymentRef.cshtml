@@ -117,9 +117,11 @@
         ._1sttd .col-xs-12 {
             padding-left: 25px;
         }
+
     ._2ndtd {
         width: 50%;
     }
+
     .table-mybordered > thead > tr > th, .table-mybordered > tbody > tr > th, .table-mybordered > tfoot > tr > th, .table-mybordered > thead > tr > td, .table-mybordered > tbody > tr > td, .table-mybordered > tfoot > tr > td {
         border: 1px solid #b6b6b6;
         /*border-left: none !important;
@@ -147,7 +149,7 @@
     <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
         <div class="col-xs-12 checkout-content chkout-img">
 
-            <img src="@Global.ImagePath/IAGSITELOGO.png" />
+            <img src="@GlobalPath.ImagePath/IAGSITELOGO.png" />
             <h1>@Html.Raw(ViewBag.Image) @ViewBag.Message</h1>
         </div>
 
@@ -181,7 +183,7 @@
                         <tr style="background-color:white;">
                             <td class="_1sttd" style="background-color: white;"><div class="col-xs-12"><i class="fa fa-credit-card-alt"></i>Payment Gateway</div></td>
                             <td class="_2ndtd" style="background-color:white;     font-size: small; font-weight: 600;">
-                                <img style="width:55px; vertical-align: middle;" src="@Global.ImagePath/icon-128x128.png"><br>
+                                <img style="width:55px; vertical-align: middle;" src="@GlobalPath.ImagePath/icon-128x128.png"><br>
                                 ZarrinPal
                             </td>
                         </tr>
@@ -225,7 +227,7 @@
                     <tr style="background-color:white;">
                         <td class="_1sttd">Payment Gateway</td>
                         <td class="_2ndtd">
-                            <img style="width:75px;" src="@Global.ImagePath/icon-128x128.png" />
+                            <img style="width:75px;" src="@GlobalPath.ImagePath/icon-128x128.png" />
                         </td>
                     </tr>
                 </table>

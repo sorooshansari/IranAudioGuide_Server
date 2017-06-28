@@ -1322,7 +1322,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incase you encounter any problems, please send an email to Info@iranaudioguide.com.
+        ///   Looks up a localized string similar to Incase you encounter any problems, please send an email to &lt;a href=&quot;mailto:info@iranaudioguide.com&quot; &gt; Info@iranaudioguide.com&lt;/a&gt;.
         /// </summary>
         public static string PaymentEmailInfo {
             get {
@@ -1598,6 +1598,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string Price {
             get {
                 return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IRR.
+        /// </summary>
+        public static string PriceSign {
+            get {
+                return ResourceManager.GetString("PriceSign", resourceCulture);
             }
         }
         

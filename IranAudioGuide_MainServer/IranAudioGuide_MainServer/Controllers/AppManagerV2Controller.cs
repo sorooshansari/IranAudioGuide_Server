@@ -173,6 +173,28 @@ namespace IranAudioGuide_MainServer.Controllers
             var res = await acTools.ForgotPassword(user.email, user.uuid, baseUrl);
             return Json(res);
         }
+
+        [HttpPost]
+        public string CreateComment(CommentVm comment)
+        {
+            try
+            {
+                var newComment = new Comment()
+                {
+                    Message = comment.Message,
+                    uuid = comment.uuid,
+                    Subject = "",
+                    Email = comment.email
+                };
+                dbTools.CreateComment(newComment);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return ex.Message;
+            }
+        }
         [HttpPost]
         public async Task<CreatingUserResult> AutenticateGoogleUser(GoogleUserInfo user)
         {
@@ -224,16 +246,16 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         private ApplicationDbContext db = new ApplicationDbContext();
         [HttpPost]
-        public BuyWithBarcodeStatus BuyWithBarcode(Guid packId, string email, string uuid, string barcode)
-        {
-        //    public BuyWithBarcodeStatus BuyWithBarcode(BuyWithBarcodeVM model)
+        //public BuyWithBarcodeStatus BuyWithBarcode(Guid packId, string email, string uuid, string barcode)
         //{
+        public BuyWithBarcodeStatus BuyWithBarcode(BuyWithBarcodeVM model)
+        {
             try
             {
-                var user = acTools.getUser(email);
+                var user = acTools.getUser(model.email);
                 var status =
                     (user == null) ? BuyWithBarcodeStatus.notUser :
-                    (user.uuid != uuid) ? BuyWithBarcodeStatus.uuidMissMatch :
+                    (user.uuid != model.uuid) ? BuyWithBarcodeStatus.uuidMissMatch :
                     (!user.EmailConfirmed) ? BuyWithBarcodeStatus.notConfirmed :
                     BuyWithBarcodeStatus.confirmed;
                 if (status != BuyWithBarcodeStatus.confirmed)
@@ -245,17 +267,17 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     try
                     {
-                        cbs = brs.ConvertBarcodetoString(barcode);
+                        cbs = brs.ConvertBarcodetoString(model.barcode);
                     }
                     catch (Exception)
                     {
-                        var ex = new Exception(string.Format("invalid baicode-->{0}", barcode));
+                        var ex = new Exception(string.Format("invalid baicode-->{0}", model.barcode));
                         ErrorSignal.FromCurrentContext().Raise(ex);
                         return BuyWithBarcodeStatus.invalidBarcode;
                     }
                     long packPrice;
                     BarcodeVM bav = new BarcodeVM();
-                    packPrice = brs.Getpackage(packId);
+                    packPrice = brs.Getpackage(model.packId);
                     bav = brs.GetBarcodes(cbs.CBS_id_bar);
                     if (cbs.CBS_price_pri != bav.price)
                     {
@@ -281,7 +303,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                         return BuyWithBarcodeStatus.unknownError;
                     }
-                    brs.saved(cbs.CBS_id_bar, user.Id, packId);
+                    brs.saved(cbs.CBS_id_bar, user.Id, model.packId);
                     return BuyWithBarcodeStatus.success;
                 }
             }

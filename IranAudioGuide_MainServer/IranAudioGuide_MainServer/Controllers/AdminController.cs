@@ -10,7 +10,6 @@ using System.Data.Entity.Infrastructure;
 using IranAudioGuide_MainServer.Services;
 using System.Data.Entity;
 using Elmah;
-using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer.Controllers
 {

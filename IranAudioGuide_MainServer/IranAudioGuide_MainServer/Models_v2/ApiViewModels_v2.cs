@@ -19,8 +19,8 @@ namespace IranAudioGuide_MainServer.Models_v2
 
         public DateTime Date { get; set; }
 
-        [Required]
-        public string Lang { get; set; }
+        //[Required]
+        //public string Lang { get; set; }
         [Required]
         public string ReferenceID { get; set; }
     }

@@ -80,8 +80,10 @@ namespace IranAudioGuide_MainServer.Services
         {
             try
             {
+                
                 using (var stream = new MemoryStream())
                 {
+                    // Convert  Bitmap to array
                     img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
 
                     var fileContents = stream.ToArray();
@@ -98,7 +100,7 @@ namespace IranAudioGuide_MainServer.Services
                     requestStream.Close();
                     FtpWebResponse response = (FtpWebResponse)uploadRequest.GetResponse();
                     var f = response.StatusCode;
-                  
+
 
                     if (FtpStatusCode.ClosingData == response.StatusCode)
                     {
@@ -110,7 +112,7 @@ namespace IranAudioGuide_MainServer.Services
                 }
 
 
-            
+
 
                 // return false;
             }
@@ -194,7 +196,7 @@ namespace IranAudioGuide_MainServer.Services
                     return false;
 
                 /* Create an FTP Request */
-                ftpRequest = (FtpWebRequest)WebRequest.Create(fullPath  + deleteFile);
+                ftpRequest = (FtpWebRequest)WebRequest.Create(fullPath + deleteFile);
                 /* Log in to the FTP Server with the User Name and Password Provided */
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
                 /* When in doubt, use these options */
@@ -396,7 +398,7 @@ namespace IranAudioGuide_MainServer.Services
             try
             {
                 /* Create an FTP Request */
-                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host  + directory);
+                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + directory);
                 /* Log in to the FTP Server with the User Name and Password Provided */
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
                 /* When in doubt, use these options */

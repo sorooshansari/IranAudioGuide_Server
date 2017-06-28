@@ -9,9 +9,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using IranAudioGuide_MainServer.Models;
 using System.Net.Mail;
-using IranAudioGuide_MainServer.Services;
 using IranAudioGuide_MainServer.Models_v2;
-using IranAudioGuide_MainServer.App_GlobalResources;
 
 namespace IranAudioGuide_MainServer
 {
@@ -23,32 +21,6 @@ namespace IranAudioGuide_MainServer
             var body = Message.Body;
            
 
-
-            if (Message.Lang.Contains("fa"))
-            {
-
-                var pCalendar = new System.Globalization.PersianCalendar();
-                DateTime a = DateTime.Now;
-                int year = pCalendar.GetYear(Message.Date);
-                int month = pCalendar.GetMonth(Message.Date);
-                int day = pCalendar.GetDayOfMonth(Message.Date);
-
-                body = body.Replace("#Date#", year + "/" + month + "/" + day);
-                body = body.Replace("#langStyle#", $"style=\"font-family: Tahoma;  direction:rtl\"");
-            }
-            else
-            {
-                body = body.Replace("#Date#", Message.Date.ToString());
-                body = body.Replace("#langStyle#", $"style=\"font-family:'Open Sans'\"");
-            }
-
-
-            var listCity = "";
-            foreach (var item in Message.Cities)
-            {
-                listCity = listCity + string.Format("<p style='font-size: 21px;background-color:#15437f;color:#ffffff;margin:3% auto;padding:4px 12px;box-shadow: 1px 1px 1px #15437f;font-weight:bold;display: table;min-width:201px;text-shadow: 1px 1px 2px #171514'>{0}<p>", item);
-            }
-            body = body.Replace("#CityItem#", listCity);
 
             var msg = new IdentityMessage() { Body = body, Destination = Message.Destination, Subject = Message.Subject };
             try

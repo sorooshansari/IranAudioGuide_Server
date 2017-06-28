@@ -763,7 +763,7 @@ Your purchased packages will be set on and accessible through your current user 
     <value>Package Info</value>
   </data>
   <data name="PaymentEmailInfo" xml:space="preserve">
-    <value>Incase you encounter any problems, please send an email to Info@iranaudioguide.com</value>
+    <value>Incase you encounter any problems, please send an email to &lt;a href="mailto:info@iranaudioguide.com" &gt; Info@iranaudioguide.com&lt;/a&gt;</value>
   </data>
   <data name="PageProfile133" xml:space="preserve">
     <value>Want to change your device?</value>
@@ -890,5 +890,8 @@ Your purchased packages will be set on and accessible through your current user 
   </data>
   <data name="PaymentMsg5" xml:space="preserve">
     <value>You have access to the package below.</value>
+  </data>
+  <data name="PriceSign" xml:space="preserve">
+    <value>IRR</value>
   </data>
 </root>

@@ -497,8 +497,8 @@ a:hover.tooltips span {
 
 
 /*#region detblocks */
-.image1 {
-    background-image: url(../../images/blockpics/accurate_information.jpg);
+/*.image1 {
+    background-image: url(../../images/accurate_information.jpg);
     background-position: 8% 0%;
 }
 
@@ -510,7 +510,7 @@ a:hover.tooltips span {
 .image3 {
     background-image: url(../../images/blockpics/whattolisten.jpg);
     background-position: 8% 0%;
-}
+}*/
 
 .image {
     background-repeat: no-repeat;

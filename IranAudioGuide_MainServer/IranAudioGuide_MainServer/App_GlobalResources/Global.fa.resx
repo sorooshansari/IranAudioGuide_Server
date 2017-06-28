@@ -755,10 +755,10 @@
     <value>این دستگاه ثبت نشده است.</value>
   </data>
   <data name="PackageInfo" xml:space="preserve">
-    <value>Package Info</value>
+    <value>اطلاعات بسته</value>
   </data>
   <data name="PaymentEmailInfo" xml:space="preserve">
-    <value>اگر سوال یا هر مشکلی  داشتید، لطفا یک ایمیل به Info@iranaudioguide.com ارسال کنید</value>
+    <value>اگر سوال یا هر مشکلی  داشتید، لطفا یک ایمیل به &lt;a href="mailto:info@iranaudioguide.com" &gt; Info@iranaudioguide.com&lt;/a&gt; ارسال کنید</value>
   </data>
   <data name="PageProfile133" xml:space="preserve">
     <value>Want to change your device?</value>
@@ -888,5 +888,8 @@
   </data>
   <data name="ThankYouForYourPurchase" xml:space="preserve">
     <value>از خرید شما سپاس گذاریم</value>
+  </data>
+  <data name="PriceSign" xml:space="preserve">
+    <value>ریال</value>
   </data>
 </root>

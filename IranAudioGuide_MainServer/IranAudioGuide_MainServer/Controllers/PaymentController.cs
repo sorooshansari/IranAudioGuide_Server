@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -283,6 +282,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         return View("Return");
                 }
                 string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+                // string baseUrl = "localhost:8462";
                 string redirectPage = baseUrl + "/" + Global.Lang + "/Payment/Return";
                 if (isFromWeb)
                     redirectPage = baseUrl + "/" + Global.Lang + "/Payment/ReturnToWebPage";
@@ -401,8 +401,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (!user.EmailConfirmed)
                     return View("ErrorPageProfile", new vmessageVM()
                     {
-                        Subject = App_GlobalResources.Global.ErrorEmailNotConfirmed,
-                        Message = App_GlobalResources.Global.ErrorEmailNotConfirmedMessage,
+                        Subject = Global.ErrorEmailNotConfirmed,
+                        Message = Global.ErrorEmailNotConfirmedMessage,
                     });
 
                 PackageVM package = (from p in db.Packages
@@ -431,8 +431,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return View("ErrorPageProfile", new vmessageVM()
                 {
-                    Subject = App_GlobalResources.Global.Error,
-                    Message = App_GlobalResources.Global.PleaseTryAgain,
+                    Subject = Global.Error,
+                    Message = Global.PleaseTryAgain,
                 });
             }
         }
@@ -619,8 +619,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     System.Net.ServicePointManager.Expect100Continue = false;
                     var zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
                     string merchantCode = "2beca824-a5a6-11e6-8157-005056a205be";
-                    int status = zp.PaymentVerification(merchantCode, Authority, ViewBag.Price, out refId);
-                    if (status == 100)
+                    int status = zp.PaymentVerification(merchantCode, Authority, returnResults.Price.convertToInt(), out refId);
+                    if (status == 100 || status == 101)
                     {
                         UpdatePayment(paymentId, status.convertToString(), refId, Authority, true);
                         ViewBag.SaleReferenceId = refId;
@@ -654,26 +654,62 @@ namespace IranAudioGuide_MainServer.Controllers
 
         private void SendEmail(SendEmailForPaymentVM Message)
         {
-            var sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/UserEmailTemplatePayment.html"));
-            var body = sr.ReadToEnd();
-            sr.Close();
-            body = body.Replace("#ReturnPaymentReferenceID#", Global.ReturnPaymentReferenceID);
-            body = body.Replace("#PaymentPage27#", Global.PaymentPage27);
-            body = body.Replace("#PriceTite#", Global.Price);
-            body = body.Replace("#Cities#", Global.Cities);
-            body = body.Replace("#ReceiptForInvoice#", Global.ReceiptForInvoice);
-            body = body.Replace("#ThankYouForYourPurchase#", Global.ThankYouForYourPurchase);
-            body = body.Replace("#PaymentMsg#", Global.Paymentsuccessfully + Global.PaymentMsg5);
-            body = body.Replace("#DateTite#", Global.DateTite);
-            body = body.Replace("#ReferenceID#", Message.ReferenceID);
-            body = body.Replace("#PackageName#", Message.Pac_Name);
-            body = body.Replace("#Price#", Message.Price);
-            body = body.Replace("#PrivacyPolicy#", Global.PrivacyPolicy);
-            body = body.Replace("#TermsConditions#", Global.TermsConditions);
-            body = body.Replace("#lang#", Global.Lang);
-            Message.Body = body;
-            EmailService es = new EmailService();
-            es.SendEmail(Message);
+            try
+            {
+                var sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/UserEmailTemplatePayment.html"));
+                var body = sr.ReadToEnd();
+                sr.Close();
+                body = body.Replace("#ReturnPaymentReferenceID#", Global.ReturnPaymentReferenceID);
+                body = body.Replace("#PaymentPage27#", Global.PaymentPage27);
+                body = body.Replace("#PriceTite#", Global.Price);
+                body = body.Replace("#Cities#", Global.Cities);
+                body = body.Replace("#ReceiptForInvoice#", Global.ReceiptForInvoice);
+                body = body.Replace("#ThankYouForYourPurchase#", Global.ThankYouForYourPurchase);
+                body = body.Replace("#PaymentMsg#", Global.Paymentsuccessfully + Global.PaymentMsg5);
+                body = body.Replace("#DateTite#", Global.DateTite);
+                body = body.Replace("#ReferenceID#", Message.ReferenceID);
+                body = body.Replace("#PackageName#", Message.Pac_Name);
+                body = body.Replace("#Price#", Message.Price);
+                body = body.Replace("#PrivacyPolicy#", Global.PrivacyPolicy);
+                body = body.Replace("#TermsConditions#", Global.TermsConditions);
+                body = body.Replace("#lang#", Global.Lang);
+                if (Global.Lang.Contains("fa"))
+                {
+
+                    var pCalendar = new System.Globalization.PersianCalendar();
+                    DateTime a = DateTime.Now;
+                    int year = pCalendar.GetYear(Message.Date);
+                    int month = pCalendar.GetMonth(Message.Date);
+                    int day = pCalendar.GetDayOfMonth(Message.Date);
+
+                    body = body.Replace("#Date#", year + "/" + month + "/" + day);
+                    body = body.Replace("#langStyle#", $"style=\"font-family: Tahoma;  direction:rtl\"");
+                }
+                else
+                {
+                    body = body.Replace("#Date#", Message.Date.ToString());
+                    body = body.Replace("#langStyle#", $"style=\"font-family:'Open Sans'\"");
+                }
+
+
+                var listCity = "";
+                foreach (var item in Message.Cities)
+                {
+                    listCity = listCity + string.Format("<p style='font-size: 21px;background-color:#15437f;color:#ffffff;margin:3% auto;padding:4px 12px;box-shadow: 1px 1px 1px #15437f;font-weight:bold;display: table;min-width:201px;text-shadow: 1px 1px 2px #171514'>{0}<p>", item);
+                }
+                body = body.Replace("#CityItem#", listCity);
+
+                Message.Body = body;
+                Message.Subject = Global.ReceiptForInvoice;
+                Message.Destination = User.Identity.Name;
+                EmailService es = new EmailService();
+                es.SendEmail(Message);
+
+            }
+            catch
+            {
+
+            }
         }
         #endregion
         #region Dispose
