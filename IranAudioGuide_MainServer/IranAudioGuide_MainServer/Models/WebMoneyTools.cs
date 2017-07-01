@@ -171,7 +171,7 @@ namespace IranAudioGuide_MainServer.Models
                         .Include(x => x.Pro_WMPayment)
                         .Include(x => x.Pro_Package)
                         .FirstOrDefault(x => x.Pro_WMPayment.WMP_Id == paymentId).Pro_Package.Pac_Name;
-                    return new WMUpdateRes(App_GlobalResources.Global.PaymentUnsuccessful,
+                    return new WMUpdateRes(App_GlobalResources.Global.PaymentUnsuccessfully,
                        App_GlobalResources.Global.PaymentNotCompleted,
                         paymentId,
                         packName,
@@ -180,7 +180,7 @@ namespace IranAudioGuide_MainServer.Models
             }
             catch (Exception)
             {
-                return new WMUpdateRes(App_GlobalResources.Global.PaymentUnsuccessful,
+                return new WMUpdateRes(App_GlobalResources.Global.PaymentUnsuccessfully,
                                         App_GlobalResources.Global.PaymentNotCompleted,
                                         0,
                                         "",
@@ -197,36 +197,44 @@ namespace IranAudioGuide_MainServer.Models
                 int WMPaymentId = Convert.ToInt32(ReturnModel.LMI_PAYMENT_NO);
                 using (var db = new ApplicationDbContext())
                 {
+                    var WMPayment = db.WMPayment.Include("WMP_Procurement.Pro_Package.Pac_Cities")
+                           .Where(x => x.WMP_Id == WMPaymentId).FirstOrDefault();
 
-                    var procurement = db.Procurements
-                        .Include(x => x.Pro_WMPayment)
-                        .Include(x => x.Pro_User)
-                        .Include(x => x.Pro_Package)
-                        .Where(x => x.Pro_WMPayment.WMP_Id == WMPaymentId).FirstOrDefault();
-                    if (procurement == default(Procurement))
+                    //var procurement = db.Procurements
+                    //    .Include(x => x.Pro_WMPayment)
+                    //    .Include(x => x.Pro_User)
+                    //    .Include(x => x.Pro_Package)
+                    //    .Where(x => x.Pro_WMPayment.WMP_Id == WMPaymentId).FirstOrDefault();
+
+
+                    if (WMPayment == default(WMPayment))
                         return new WMUpdateRes(App_GlobalResources.Global.WebmoneyPaymentMsg,
                             App_GlobalResources.Global.WebmoneyPaymentMsg,
                             WMPaymentId,
-                            procurement.Pro_Package.Pac_Name,
+                            WMPayment.WMP_Procurement.Pro_Package.Pac_Name,
                             false);
-                    procurement.Pro_WMPayment.WMP_SYS_INVS_NO = ReturnModel.LMI_SYS_INVS_NO;
-                    procurement.Pro_WMPayment.WMP_SYS_TRANS_NO = ReturnModel.LMI_SYS_TRANS_NO;
-                    procurement.Pro_WMPayment.WMP_SYS_TRANS_DATE = DateTime.ParseExact(ReturnModel.LMI_SYS_TRANS_DATE, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    procurement.Pro_PaymentFinished = true;
+
+
+                    WMPayment.WMP_SYS_INVS_NO = ReturnModel.LMI_SYS_INVS_NO;
+                    WMPayment.WMP_SYS_TRANS_NO = ReturnModel.LMI_SYS_TRANS_NO;
+                    WMPayment.WMP_SYS_TRANS_DATE = DateTime.ParseExact(ReturnModel.LMI_SYS_TRANS_DATE, "yyyyMMdd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    WMPayment.WMP_Procurement.Pro_PaymentFinished = true;
                     db.SaveChanges();
-                    //todo email check
-                    //var es = new EmailService();
-                    //es.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage()
-                    //{
-                    //    Subject = "success",
-                    //    Body = "salam",
-                    //    Destination = procurement.Pro_User.Email
-                    //});
-                    return new WMUpdateRes(App_GlobalResources.Global.Paymentsuccessfully,
+
+                    var message = new WMUpdateRes(App_GlobalResources.Global.Paymentsuccessfully,
                                             App_GlobalResources.Global.AccessPackage,
                                             WMPaymentId,
-                                            procurement.Pro_Package.Pac_Name,
+                                            WMPayment.WMP_Procurement.Pro_Package.Pac_Name,
                                             true);
+                    message.EmailInfo = new Models_v2.SendEmailForPaymentVM()
+                    {
+                        Price = WMPayment.WMP_PAYMENT_AMOUNT.ToString(),
+                        Pac_Name = WMPayment.WMP_Procurement.Pro_Package.Pac_Name,
+                        Cities = WMPayment.WMP_Procurement.Pro_Package.Pac_Cities.Select(x => x.Cit_Name).ToList(),
+                        Date = WMPayment.WMP_Procurement.Pro_InsertDatetime
+                    };
+
+                    return (message);
                 }
 
             }
@@ -234,7 +242,7 @@ namespace IranAudioGuide_MainServer.Models
             {
 
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return new WMUpdateRes(App_GlobalResources.Global.PaymentUnsuccessful,
+                return new WMUpdateRes(App_GlobalResources.Global.PaymentUnsuccessfully,
                                         App_GlobalResources.Global.PaymentAutomaticallyReturnMoney,
                                         0,
                                         "",
@@ -390,5 +398,6 @@ namespace IranAudioGuide_MainServer.Models
         public string ErrDesc { get; set; }
         public string PackName { get; set; }
         public bool Succeeded { get; set; }
+        public Models_v2.SendEmailForPaymentVM EmailInfo { get; set; }
     }
 }

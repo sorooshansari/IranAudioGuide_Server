@@ -52,7 +52,7 @@ namespace IranAudioGuide_MainServer.Models
             switch (resultId)
             {
                 case "NOK":
-                    return Global.PaymentUnsuccessful;
+                    return Global.PaymentUnsuccessfully;
                 case "-100":
                     return Global.ZarinpalPaymentMsg8;
                 case "-1":

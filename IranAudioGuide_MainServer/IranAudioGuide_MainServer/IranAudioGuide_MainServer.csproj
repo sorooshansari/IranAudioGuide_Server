@@ -721,7 +721,6 @@
     <Content Include="Content\images\arrow.svg" />
     <Content Include="Content\images\bars-menu.svg" />
     <Content Include="Content\images\close.svg" />
-    <Content Include="Content\images\default_avatar.png" />
     <Content Include="Content\images\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
     <Content Include="Content\images\file_add.png" />
     <Content Include="Content\images\flag-fa.png" />
@@ -737,7 +736,6 @@
     <Content Include="Content\images\miniBWlogo.jpg" />
     <Content Include="Content\images\overlay.png" />
     <Content Include="Content\images\playpause-48-48-1.png" />
-    <Content Include="Content\images\prevnext-48-48-1.png" />
     <Content Include="Content\images\themes.gif" />
     <Content Include="Content\images\zarinpal.png" />
     <Content Include="Content\Scripts\AdminControllers.js" />
@@ -1561,20 +1559,13 @@
     <Content Include="Content\css\fontawesome-webfont.woff2" />
     <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="google60352dff0d3dbd69.html" />
-    <Content Include="images\IAGappHeaderLOGO.png" />
-    <Content Include="images\logo.png" />
-    <Content Include="images\marker.png" />
-    <Content Include="images\v_blue_on_transp_en.png" />
-    <Content Include="images\v_blue_on_white_en.png" />
     <Content Include="images\WebMoney-logo-white_8.png" />
-    <Content Include="images\wmlogo_vector_blue.png" />
     <Content Include="robots.txt" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="sitemap.xml" />
     <Content Include="Views\Shared\IAGSITELOGO.png" />
     <Content Include="Views\Shared\UserEmailTemplate.html" />
     <Content Include="Views\Shared\UserEmailTemplatePayment.html" />
-    <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -1626,6 +1617,7 @@
     <Content Include="Content\fonts\NewFonts\sourcesanspro-regular-webfont.woff" />
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Content\images\pdfguide.pdf" />
+    <Content Include="WMT405DB3C3.HTML" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
     <Content Include="favicon.ico" />
@@ -1675,6 +1667,10 @@
     <Content Include="fonts\Arcon-Rounded-Regular.otf" />
     <Content Include="fonts\SDDT-Light-web.woff" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile3.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile4.pubxml" />
     <None Include="Properties\PublishProfiles\iag_server.pubxml" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />
@@ -1806,6 +1802,7 @@
     <Content Include="Views\Payment\Return.cshtml" />
     <Content Include="Views\Payment\VMResult.cshtml" />
     <Content Include="Views\Payment\Return - Copy.cshtml" />
+    <Content Include="Views\Home\TermsConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

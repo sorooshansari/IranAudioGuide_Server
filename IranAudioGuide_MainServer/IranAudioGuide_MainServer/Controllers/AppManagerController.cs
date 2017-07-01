@@ -33,7 +33,7 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public string getBaseUrl(GetVersoinVm version)
         {
-            return Services.GlobalPath.host;
+            return GlobalPath.host;
         }
         //todo?????????
 

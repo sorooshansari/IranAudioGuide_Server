@@ -8,27 +8,26 @@
 <section id="banner">
     <div class="inner">
         <div id="logo">
-            <img  src="@Global.ImagePath/IAGSITELOGO.png" alt="SITELOGO"/>
+            <img  src="@GlobalPath.ImagePath/IAGSITELOGO.png" alt="SITELOGO"/>
         </div>
         <h2>@Global.IranAudioGuide</h2>
         <p></p>
 
         <p>
-            @Global.IndexTitle01<br />
-            <br />
-            @Global.IndexTitle02 <br />
+         @Html.Raw(Global.IndexTitle)<br />
+            
         </p>
 
         <ul class="actions">
             <li>
                 <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8">
-                    <img style="width:auto;height:40px;" alt="@Global.alt" src="@Global.ImagePath/Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
+                    <img style="width:auto;height:40px;" alt="@Global.alt" src="@GlobalPath.ImagePath/Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
                     @*<span class="csspan">App Store</span>*@
                 </a>
             </li>
             <li>
                 <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android">
-                    <img style="width:auto;height:40px;" alt=@Global.alt1 src="@Global.ImagePath/Get_it_on_Google_play.svg" />
+                    <img style="width:auto;height:40px;" alt=@Global.alt1 src="@GlobalPath.ImagePath/Get_it_on_Google_play.svg" />
                     @*<span class="csspan">Google Play</span>*@
                 </a>
             </li>
@@ -96,7 +95,7 @@
 <section id="two" class="wrapper alt style2" style="background-color:transparent !important">
     <section class="spotlight">
         <div class="image image1">
-            <img id="accurate_information" src="@Global.ImagePath/accurate_information.jpg" alt=@Global.alt2 scroll-spy />
+            <img id="accurate_information" src="@GlobalPath.ImagePath/accurate_information.jpg" alt=@Global.alt2 scroll-spy />
         </div>
         <div class="content">
             <h2>
@@ -112,7 +111,7 @@
 
     <section class="spotlight  spotlightv" style="background-color:transparent !important;">
         <div class="image image2">
-            <img id="whattolisten" src="@Global.ImagePath/whattolisten.jpg" alt=@Global.alt3 scroll-spy-event="elementScrolledIntoView" scroll-spy />
+            <img id="whattolisten" src="@GlobalPath.ImagePath/whattolisten.jpg" alt=@Global.alt3 scroll-spy-event="elementScrolledIntoView" scroll-spy />
         </div>
         <div class="content">
             <h2 class="">
@@ -129,7 +128,7 @@
 
     <section class="spotlight">
         <div class="image image3">
-            <img id="yourownpace" src="@Global.ImagePath/yourownpace.jpg" alt="@Global.alt4" scroll-spy />
+            <img id="yourownpace" src="@GlobalPath.ImagePath/yourownpace.jpg" alt="@Global.alt4" scroll-spy />
         </div><div class="content">
             <h2>
                 @Global.Parameter01 <br />
@@ -191,12 +190,12 @@
             <div class="panel-body">
 
                 <p>
-                    @Global.Parameter24
+                   @Html.Raw(Global.Parameter24)
                 </p>
 
                 <div class="row">
                     <div class="col-xs-2 InfoImage">
-                        <img class="img-thumbnail member-th" src="@Global.ImagePath/defaultW.jpg" alt="@Global.Mona" style="width:100%">
+                        <img class="img-thumbnail member-th" src="@GlobalPath.ImagePath/defaultW.jpg" alt="@Global.Mona" style="width:100%">
                     </div>
                     <div class="col-xs-10 member-det">
                         <div class="col-xs-6 member-social">
@@ -216,7 +215,7 @@
                 <br />
                 <div class="row">
                     <div class="col-xs-2 InfoImage">
-                        <img class="img-thumbnail member-th" src="@Global.ImagePath/defaultM.jpg" alt="@Global.Soroosh" style="width:100%">
+                        <img class="img-thumbnail member-th" src="@GlobalPath.ImagePath/defaultM.jpg" alt="@Global.Soroosh" style="width:100%">
                     </div>
                     <div class="col-xs-10 member-det">
                         <div class="col-xs-6 member-social">
@@ -235,7 +234,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-2 InfoImage">
-                        <img class="img-thumbnail member-th" src="@Global.ImagePath/defaultM.jpg" alt="@Global.danial" style="width:100%">
+                        <img class="img-thumbnail member-th" src="@GlobalPath.ImagePath/defaultM.jpg" alt="@Global.danial" style="width:100%">
                     </div>
                     <div class="col-xs-10 member-det">
                         <div class="col-xs-6 member-social">
@@ -254,7 +253,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-2 InfoImage">
-                        <img class="img-thumbnail member-th" src="@Global.ImagePath/defaultW.jpg" alt="@Global.purmand" style="width:100%">
+                        <img class="img-thumbnail member-th" src="@GlobalPath.ImagePath/defaultW.jpg" alt="@Global.purmand" style="width:100%">
                     </div>
 
                     <div class="col-xs-10 member-det">
@@ -274,7 +273,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-2 InfoImage">
-                        <img class="img-thumbnail member-th" src="@Global.ImagePath/defaultM.jpg" alt="@Global.aliReza" style="width:100%">
+                        <img class="img-thumbnail member-th" src="@GlobalPath.ImagePath/defaultM.jpg" alt="@Global.aliReza" style="width:100%">
                     </div>
 
                     <div class="col-xs-10 member-det">
@@ -362,7 +361,7 @@
         </form>
         <!--<Contact overlay> -->
         <div ng-show="overlay" class="contactoverlay">
-            <img ng-show="!sent" src="@Global.ImagePath/bars.svg" alt="Sending" />
+            <img ng-show="!sent" src="@GlobalPath.ImagePath/bars.svg" alt="Sending" />
             <p ng-show="sent" ng-bind="sentMessage"></p>
         </div>
         <!--</Contact overlay> -->
@@ -401,7 +400,7 @@
             </li>
         </ul>*@
     <ul  class="copyright">
-        <li><a href="#" style="font-weight:bold;"> @Html.Raw(Global.copyright2)</a><font> - </font><a href="/@Global.Lang/home/PrivacyPolicy" style="font-weight:bold;">@Html.Raw(Global.copyright21)</a></li>
+        <li><a href="#" style="font-weight:bold;"> @Html.Raw(Global.TermsConditions)</a><font> - </font><a href="/@Global.Lang/home/PrivacyPolicy" style="font-weight:bold;">@Html.Raw(Global.PrivacyPolicy)</a></li>
    
         <li class="">&copy;@DateTime.Now.Year - @Global.copyright22</li>
     </ul>

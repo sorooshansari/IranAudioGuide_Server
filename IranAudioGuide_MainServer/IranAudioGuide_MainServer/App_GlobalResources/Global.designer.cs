@@ -214,24 +214,6 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Terms &amp;amp; Conditions.
-        /// </summary>
-        public static string copyright2 {
-            get {
-                return ResourceManager.GetString("copyright2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Privacy &amp;amp; Policy.
-        /// </summary>
-        public static string copyright21 {
-            get {
-                return ResourceManager.GetString("copyright21", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Shiraz Dourandish Developers.
         /// </summary>
         public static string copyright22 {
@@ -264,6 +246,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string danialOc {
             get {
                 return ResourceManager.GetString("danialOc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Of Purchase.
+        /// </summary>
+        public static string DateTite {
+            get {
+                return ResourceManager.GetString("DateTite", resourceCulture);
             }
         }
         
@@ -475,29 +466,11 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The only guide you will need in Iran.
+        ///   Looks up a localized string similar to The only guide you will need in Iran &lt;br/&gt;&lt;br /&gt; Convenient, thorough, liberating.
         /// </summary>
         public static string IndexTitle {
             get {
                 return ResourceManager.GetString("IndexTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The only guide you will need in Iran.
-        /// </summary>
-        public static string IndexTitle01 {
-            get {
-                return ResourceManager.GetString("IndexTitle01", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Convenient, thorough, liberating.
-        /// </summary>
-        public static string IndexTitle02 {
-            get {
-                return ResourceManager.GetString("IndexTitle02", resourceCulture);
             }
         }
         
@@ -579,6 +552,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string loadingtxt {
             get {
                 return ResourceManager.GetString("loadingtxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  پرداخت.
+        /// </summary>
+        public static string MailSubjectForPayment {
+            get {
+                return ResourceManager.GetString("MailSubjectForPayment", resourceCulture);
             }
         }
         
@@ -1340,7 +1322,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incase you encounter any problems, please send an email to Info@iranaudioguide.com.
+        ///   Looks up a localized string similar to Incase you encounter any problems, please send an email to &lt;a href=&quot;mailto:info@iranaudioguide.com&quot; &gt; Info@iranaudioguide.com&lt;/a&gt;.
         /// </summary>
         public static string PaymentEmailInfo {
             get {
@@ -1372,6 +1354,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string PaymentMsg2 {
             get {
                 return ResourceManager.GetString("PaymentMsg2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have access to the package below..
+        /// </summary>
+        public static string PaymentMsg5 {
+            get {
+                return ResourceManager.GetString("PaymentMsg5", resourceCulture);
             }
         }
         
@@ -1521,35 +1512,11 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Terms &amp; Conditions.
-        /// </summary>
-        public static string PaymentTermsConditions {
-            get {
-                return ResourceManager.GetString("PaymentTermsConditions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Once you have purchased a packaged the price is not refundable.
-        ///                        &lt;br /&gt;
-        ///                        Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions.
-        ///                        &lt;br /&gt;
-        ///                        Users agree to the price of each package and by purchasing a package, users terminate their right of any future complaint toward the price and content of the packages.
-        ///                        &lt;br /&gt;
-        ///             [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string PaymentTermsConditions1 {
-            get {
-                return ResourceManager.GetString("PaymentTermsConditions1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sorry, Your payment was unsuccessful!.
         /// </summary>
-        public static string PaymentUnsuccessful {
+        public static string PaymentUnsuccessfully {
             get {
-                return ResourceManager.GetString("PaymentUnsuccessful", resourceCulture);
+                return ResourceManager.GetString("PaymentUnsuccessfully", resourceCulture);
             }
         }
         
@@ -1635,7 +1602,25 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Taiebe Pourmand.
+        ///   Looks up a localized string similar to IRR.
+        /// </summary>
+        public static string PriceSign {
+            get {
+                return ResourceManager.GetString("PriceSign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy &amp;amp; Policy.
+        /// </summary>
+        public static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tayebeh Pourmand.
         /// </summary>
         public static string purmand {
             get {
@@ -2019,6 +2004,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string Telegram {
             get {
                 return ResourceManager.GetString("Telegram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms &amp; Conditions.
+        /// </summary>
+        public static string TermsConditions {
+            get {
+                return ResourceManager.GetString("TermsConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you for your purchase.
+        /// </summary>
+        public static string ThankYouForYourPurchase {
+            get {
+                return ResourceManager.GetString("ThankYouForYourPurchase", resourceCulture);
             }
         }
         

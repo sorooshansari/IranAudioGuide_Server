@@ -63,9 +63,9 @@ namespace IranAudioGuide_MainServer.Services
                         string barcodeString = CryptographyService.Encrypt(string.Format("{0};{1};{2}", b.Bar_Id, price.Pri_Value.ToString(), SellerName), true);
                         //byte[] barcodeArray = GetBarcodeImg(barcodeString);
                         string imgName = string.Format("{0}.jpeg", b.Bar_Id);
-                        string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);
+                        //string path = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/barcodes"), imgName);
                         //string pdfpath = string.Format("{0}/{1}", HttpContext.Current.Server.MapPath("~/Content/images/pdf"), imgName);
-                        CreateQRCode(barcodeString, path);
+                        CreateQRCode(barcodeString, imgName);
                         //ImagesToPdf(path, pdfpath);
                         //var fs = new BinaryWriter(new FileStream(path, FileMode.Create, FileAccess.Write));
                         //fs.Write(barcodeArray);
@@ -88,7 +88,7 @@ namespace IranAudioGuide_MainServer.Services
 
         }
         #region tools
-        protected void CreateQRCode(string value, string destPath)
+        protected void CreateQRCode(string value, string imgName)
         {
             QRCodeEncoder encoder = new QRCodeEncoder();
 
@@ -104,7 +104,9 @@ namespace IranAudioGuide_MainServer.Services
 
             //g.DrawImage(logo, new Point(left, top));
 
-            img.Save(destPath, ImageFormat.Jpeg);
+            //img.Save(destPath, ImageFormat.Jpeg);
+            var ftp = new ServiceFtp();
+            ftp.Upload(img, GlobalPath.FtpPathQRCode + imgName);
         }
         //private byte[] GetBarcodeImg(string value)
         //{
@@ -200,11 +202,9 @@ namespace IranAudioGuide_MainServer.Services
                 //get the information to display in pdf from database
                 //for the time
                 //Hard coding values are here, these are the content to display in pdf 
-                var content = "راهنمای صوتی ایران";
-                 //   +
-                 //"<p>Ohh This is very easy to generate pdf using Rotativa <p>";
-                var logoFile = @"/Images/IAGappHeaderLOGO.png";
-                string barImgPath = @"/Content/images/barcodes/";
+                var content = "راهنمای صوتی ایران";;
+                //var logoFile = GlobalPath.ImagePath + "/IAGappHeaderLOGO.png";
+                string barImgPath = GlobalPath.PathQRCode;
 
                 var userName = HttpContext.Current.User.Identity.Name;
 
@@ -218,7 +218,7 @@ namespace IranAudioGuide_MainServer.Services
                 var result = new GeneratePDFModel()
                 {
                     PDFContent = content,
-                    PDFLogo = HttpContext.Current.Server.MapPath(logoFile),
+                  //  PDFLogo = HttpContext.Current.Server.MapPath(logoFile),
                     ImageInfoes = ImgInfo
                 };
                 

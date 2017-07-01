@@ -5,6 +5,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IranAudioGuide_MainServer.Models_v2
 {
+    public class SendEmailForPaymentVM : Microsoft.AspNet.Identity.IdentityMessage
+    {
+
+        [Required]
+        public string Price { get; set; }
+
+        [Required]
+        public string Pac_Name { get; set; }
+
+        [Required]
+        public List<string> Cities { get; set; }
+
+        public DateTime Date { get; set; }
+
+        //[Required]
+        //public string Lang { get; set; }
+        [Required]
+        public string ReferenceID { get; set; }
+    }
 
 
     public class GetUpdateInfoVm

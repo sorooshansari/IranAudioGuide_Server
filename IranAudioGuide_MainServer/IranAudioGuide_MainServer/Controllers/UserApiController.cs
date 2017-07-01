@@ -84,10 +84,10 @@ namespace IranAudioGuide_MainServer.Controllers
 
             //todo uncomment
             //var lang = ServiceCulture.GeLangFromCookie();
-            var lang = 1;
+            var lang = 2;
             var d = new dbManagerV2();
 
-            var parameter = new System.Data.SqlClient.SqlParameter("@langId", lang);
+            var parameter = new SqlParameter("@langId", lang);
             var listdata = d.MultiTableResultSP("GetPackages_website", parameter);
 
             var getModel = new List<PackageUserVM>();

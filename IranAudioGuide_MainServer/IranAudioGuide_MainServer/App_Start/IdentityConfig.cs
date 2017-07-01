@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,25 +9,67 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using IranAudioGuide_MainServer.Models;
 using System.Net.Mail;
+using IranAudioGuide_MainServer.Models_v2;
 
 namespace IranAudioGuide_MainServer
 {
     public class EmailService : IIdentityMessageService
     {
+        public Task SendEmail(SendEmailForPaymentVM Message)
+        {
+
+            var body = Message.Body;
+           
+
+
+            var msg = new IdentityMessage() { Body = body, Destination = Message.Destination, Subject = Message.Subject };
+            try
+            {
+                // Plug in your email service here to send an email.
+                var credentialUserName = GlobalPath.CredentialUserName;
+                var sentFrom = GlobalPath.EmailAddress;
+                var pwd = GlobalPath.EmailAddressPassword;
+
+                // Configure the client:
+                SmtpClient client = new SmtpClient(GlobalPath.ServerEmail);
+
+                client.Port = 25;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+
+                // Creatte the credentials:
+                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
+                client.EnableSsl = false;
+                client.Credentials = credentials;
+
+                // Create the message:
+                var mail = new MailMessage(sentFrom, Message.Destination);
+                mail.Subject = Message.Subject;
+                mail.Body = Message.Body;
+                mail.IsBodyHtml = true;
+
+                client.Send(mail);
+            }
+            catch
+            {
+                return Task.FromResult(1);
+            }
+            return Task.FromResult(0);
+        }
         public Task SendAsync(IdentityMessage message)
         {
             try
             {
                 // Plug in your email service here to send an email.
-                var credentialUserName = "info@iranaudioguide.com";
-                var sentFrom = "info@iranaudioguide.com";
-                var pwd = "QQwwee11@@";
+                var credentialUserName = GlobalPath.CredentialUserName;
+                var sentFrom = GlobalPath.EmailAddress;
+                var pwd = GlobalPath.EmailAddressPassword;
 
                 // Configure the client:
-                System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("mail.iranaudioguide.com");
+                SmtpClient client = new SmtpClient(GlobalPath.ServerEmail);
 
                 client.Port = 25;
-                client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
 
                 // Creatte the credentials:
@@ -57,7 +96,44 @@ namespace IranAudioGuide_MainServer
 
                 client.Send(mail);
             }
-            catch (Exception ex)
+            catch 
+            {
+                return Task.FromResult(1);
+            }
+            return Task.FromResult(0);
+        }
+        public Task SendAsync2(IdentityMessage message)
+        {
+            try
+            {
+                // Plug in your email service here to send an email.
+                var credentialUserName = GlobalPath.CredentialUserName;
+                var sentFrom = GlobalPath.EmailAddress;
+                var pwd = GlobalPath.EmailAddressPassword;
+
+                // Configure the client:
+                SmtpClient client = new SmtpClient(GlobalPath.ServerEmail);
+
+                client.Port = 25;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+
+                // Creatte the credentials:
+                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
+                client.EnableSsl = false;
+                client.Credentials = credentials;
+
+
+                // Create the message:
+                var mail = new MailMessage();
+                mail.From = new MailAddress(sentFrom, "Iran Audio Guide");
+                mail.To.Add(new MailAddress(message.Destination));
+                mail.Subject = "[IranAudioGuide] " + message.Subject;
+                mail.Body = message.Body;
+                mail.IsBodyHtml = true;
+                client.Send(mail);
+            }
+            catch
             {
                 return Task.FromResult(1);
             }
@@ -69,15 +145,15 @@ namespace IranAudioGuide_MainServer
             try
             {
                 // Plug in your email service here to send an email.
-                var credentialUserName = "info@iranaudioguide.com";
-                var sentFrom = "info@iranaudioguide.com";
-                var pwd = "QQwwee11@@";
+                var credentialUserName = GlobalPath.CredentialUserName;
+                var sentFrom = GlobalPath.EmailAddress;
+                var pwd = GlobalPath.EmailAddressPassword;
 
                 // Configure the client:
-                System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("mail.iranaudioguide.com");
+                SmtpClient client = new SmtpClient(GlobalPath.ServerEmail);
 
                 client.Port = 25;
-                client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
 
                 // Creatte the credentials:
@@ -86,15 +162,14 @@ namespace IranAudioGuide_MainServer
                 client.Credentials = credentials;
 
                 // Create the message:
-                var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+                var mail = new MailMessage(sentFrom, message.Destination);
                 mail.Subject = message.Subject;
                 mail.Body = message.Body;
                 mail.IsBodyHtml = true;
 
                 client.Send(mail);
             }
-            catch (Exception ex)
-            {
+            catch { 
                 return Task.FromResult(1);
             }
             return Task.FromResult(0);
@@ -103,16 +178,15 @@ namespace IranAudioGuide_MainServer
         {
             try
             {
-                // Plug in your email service here to send an email.
-                var credentialUserName = "info@iranaudioguide.com";
-                var sentFrom = "info@iranaudioguide.com";
-                var pwd = "QQwwee11@@";
+                var credentialUserName = GlobalPath.CredentialUserName;
+                var sentFrom = GlobalPath.EmailAddress;
+                var pwd = GlobalPath.EmailAddressPassword;
 
                 // Configure the client:
-                System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("mail.iranaudioguide.com");
+                SmtpClient client = new SmtpClient(GlobalPath.ServerEmail);
 
                 client.Port = 25;
-                client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
 
                 // Creatte the credentials:

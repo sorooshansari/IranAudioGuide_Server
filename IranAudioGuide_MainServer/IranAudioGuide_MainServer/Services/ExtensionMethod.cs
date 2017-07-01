@@ -21,6 +21,18 @@ namespace IranAudioGuide_MainServer.Services
                 return Guid.Empty;
             }
         }
+        public static string convertToString(this long obj)
+        {
+            try
+            {
+
+                return obj.ToString();
+            }
+            catch
+            {
+                return "0";
+            }
+        }
         public static string convertToString(this object obj)
         {
             try
@@ -54,6 +66,18 @@ namespace IranAudioGuide_MainServer.Services
                 return 0;
             }
         }
+        public static string ConvertToHtml(this string str)
+        {
+            try
+            {
+                return System.Web.HttpUtility.HtmlEncode(str);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
     }
 

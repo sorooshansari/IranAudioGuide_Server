@@ -1,8 +1,4 @@
-﻿using IranAudioGuide_MainServer.App_GlobalResources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace IranAudioGuide_MainServer
 {
@@ -18,8 +14,8 @@ namespace IranAudioGuide_MainServer
         public langsVM()
         {
             Get = new List<LangVM>() {
-                new LangVM() { Id = "en" , Icon =Global.ImagePath+ "/flag-uk.png" , Title="En"},
-                new LangVM() { Id = "fa" , Icon =Global.ImagePath+ "/flag-fa.png" , Title="فا"}
+                new LangVM() { Id = "en" , Icon =GlobalPath.ImagePath+ "/flag-uk.png" , Title="En"},
+                new LangVM() { Id = "fa" , Icon =GlobalPath.ImagePath+ "/flag-fa.png" , Title="فا"}
             };
 
         }

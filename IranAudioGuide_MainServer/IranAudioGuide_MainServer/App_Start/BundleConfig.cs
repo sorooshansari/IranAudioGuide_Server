@@ -72,7 +72,7 @@ namespace IranAudioGuide_MainServer
                         "~/Content/Scripts/util.min.js",
                         "~/Content/Scripts/main.min.js",
                         "~/Content/Scripts/bootstrap.min.js",
-                        "~/Content/global/plugins/angularjs/angular.min.js",
+                        //"~/Content/global/plugins/angularjs/angular.min.js",
                         "~/Content/Scripts/root-app.js",
                         "~/Content/Scripts/root-function.js"));
 

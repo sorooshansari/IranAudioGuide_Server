@@ -47,11 +47,10 @@
     </style>
 }
 @section topLoading{
-    <div ng-class="{ 'unload': isCompletedLoading == false, 'load': isCompletedLoading == true}">
+    <div  ng-class="{ 'unload': isCompletedLoading == false, 'load': isCompletedLoading == true}">
         <div id="fpcontainer">
-            <img id="IAGLogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" />
+            <img id="IAGLogo" src="@GlobalPath.ImagePath/IAGSmallWhiteLogo.png" />
             <div style="text-align:center;">
-                @*<img id="spinbars" src="@Global.ImagePath/bars.svg" />*@
                 <span>@Global.loadingtxt</span>
 
             </div>

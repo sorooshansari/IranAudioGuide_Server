@@ -30,9 +30,8 @@
 <body class="_@Global.Lang" onresize="onResizeBody()" ng-app="userApp" ng-controller="userCtrl">
     <div id="FullPageLoading" ng-class="{ 'unload': profile.isCompletedLoading == false, 'load': profile.isCompletedLoading == true}">
         <div id="fpcontainer">
-            <img id="IAGLogo" src="@Global.ImagePath/IAGSmallWhiteLogo.png" />
+            <img id="IAGLogo" src="@GlobalPath.ImagePath/IAGSmallWhiteLogo.png" />
             <div style="text-align:center;">
-                @*<img id="spinbars" src="@Global.ImagePath/bars.svg" />*@
                 <span>@Global.loadingtxt</span>
             </div>
         </div>
@@ -43,7 +42,7 @@
             <div class="logo">
                 @*// class="sidebar-brand">*@
                 <a id="IAGLink" href="http://iranaudioguide.com/">
-                    <img src="@Global.ImagePath/IAGSITELOGO.png">
+                    <img src="@GlobalPath.ImagePath/IAGSITELOGO.png">
                     <div id="IAGTextLink">Iran Audio Guide</div>
                 </a>
             </div>

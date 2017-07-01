@@ -8,7 +8,8 @@
     <!-- Image and text -->
     <nav class="navbar navbar-ligth pt-0">
         <div class="navbar-brand pt-0">
-            <img src="~/images/IAGSITELOGO.png" class="d-inline-block navImg" alt="@Global.IranAudioGuide" />
+            @*d-inline-block*@
+            <img src="~/images/IAGSITELOGO.png" class="navImg" alt="@Global.IranAudioGuide" />
             <span class="align-middle navHeader">@Global.IranAudioGuide</span>
         </div>
     </nav>
@@ -63,7 +64,7 @@
                     @if (ViewBag.IsChooesZarinpal)
                     {
                         <div class="bg-primary rounded priceValue text-center">
-                            <h5> @string.Format("{0:#,##0.##}0", Model.PackagePrice) IRR</h5>
+                            <h5> @string.Format("{0:#,##0.##}0", Model.PackagePrice) @Global.PriceSign</h5>
                         </div>
                     }
                     else
@@ -76,14 +77,14 @@
             </div>
         </div>
         <p>@Global.PaymentPage31</p>
-        <p> @Global.PaymentEmailInfo</p>
+        <p> @Html.Raw(Global.PaymentEmailInfo)</p>
         <p class="lead">
 
             @if (ViewBag.IsChooesZarinpal)
             {
                 <a class="btn btn-primary btn-responsive float-right"
                    role="button"
-                   href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true })">
+                   href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = false })">
                     <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
                 </a>
             }
@@ -91,7 +92,7 @@
             {
                 <a class="btn btn-primary btn-responsive float-right"
                    role="button"
-                   href="@Url.Action("WMPurchase", "Payment",new { packageId = Model.PackageId, isFromApp = false })">
+                   href="@Url.Action("WMPurchase", "Payment",new { packageId = Model.PackageId, isFromApp = true })">
                     <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
                 </a>
             }
@@ -100,6 +101,8 @@
                href="mobile/close" role="button">
                 @Global.btnCancel
             </a>
+            @*style="text-decoration:none; color:#000;"*@
+            
         </p>
         <div class="clearfix"></div>
     </div>

@@ -3,7 +3,7 @@
 @using IranAudioGuide_MainServer.App_GlobalResources
 @{
     ViewBag.Title = "PaymentRef";
-    Layout = "~/Views/Shared/_LayouProfile.cshtml";
+    Layout = "~/Views/Shared/_PaymentLayout.cshtml";
 }
 
 
@@ -53,6 +53,8 @@
         min-height: 85vh;
         margin-top: 45px;
         margin-bottom: 30px;
+        width: 70%;
+        margin: auto;
     }
 
     .chkout-img {
@@ -84,9 +86,9 @@
     }
 
         ._1sttd i {
-            position: absolute;
-            left: 5px;
-            top: 5px;
+            position: relative;
+            left: -10px;
+            top: 2px;
             font-size: large;
         }
 
@@ -118,13 +120,19 @@
         color: white;
         font-size: small;
     }
+    .text-muted {
+        color: #ffffff !important;
+    }
+    .footer a {
+        color: #fcfeff;
+    }
 </style>
 
 <section id="PaymentRefSection" onload="time_dec()">
     <div id="infocontainer" class="col col-sm-push-1 col-sm-pull-1 col-sm-10 col-xs-12">
         <div class="col-xs-12 checkout-content chkout-img">
 
-            <img src="@Global.ImagePath/IAGSITELOGO.png" />
+            <img src="@GlobalPath.ImagePath/IAGSITELOGO.png" />
             <h1 style="color:#15437f; text-shadow:none;">@Html.Raw(ViewBag.Image) @ViewBag.Message</h1>
         </div>
 
@@ -157,7 +165,7 @@
                     </tbody>
                 </table>
                 <div class="col-xs-12" style="text-align:right;">
-                    <a href="/user" class="btn btn-sm btn-default purchasebtn" style="width:100px; font-size:small;">@Global.btnContinue</a>
+                    <a href="@Url.Action("Index", "User", new { lang = Global.Lang})"class="btn btn-sm btn-default purchasebtn" style="width:100px; font-size:small;">@Global.btnContinue</a>
                 </div>
             </div>
         </div>

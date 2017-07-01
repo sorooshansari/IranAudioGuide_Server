@@ -153,8 +153,8 @@
   <data name="copyright2" xml:space="preserve">
     <value>شرایط و &amp;amp;  ضوابط</value>
   </data>
-  <data name="copyright21" xml:space="preserve">
-    <value>سیاست &amp;amp;  حفظ حریم خصوصی</value>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>حریم خصوصی</value>
   </data>
   <data name="copyright22" xml:space="preserve">
     <value>دوراندیش برنامه نویسان شیراز</value>
@@ -166,13 +166,7 @@
     <value>بیشتر بدانید</value>
   </data>
   <data name="IndexTitle" xml:space="preserve">
-    <value>تنها راهنمای مورد نیاز در ایران</value>
-  </data>
-  <data name="IndexTitle01" xml:space="preserve">
-    <value>تنها راهنمای مورد نیاز در ایران</value>
-  </data>
-  <data name="IndexTitle02" xml:space="preserve">
-    <value>بهینه، کامل، با آزادی عمل</value>
+    <value>تنها راهنمای مورد نیاز در ایران  &lt;br /&gt;&lt;br/&gt; بهینه، کامل، با آزادی عمل</value>
   </data>
   <data name="IranAudioGuide" xml:space="preserve">
     <value>راهنمای صوتی ایران</value>
@@ -685,22 +679,22 @@
     <value>نام شهر یا مکان مورد نظر خود را وارد کنید</value>
   </data>
   <data name="ErrorEmailNotConfirmed" xml:space="preserve">
-    <value>Email not confirmed yet!</value>
+    <value>ایمیل وارد شده هنوز تایید نشده است.</value>
   </data>
   <data name="ErrorEmailNotConfirmedMessage" xml:space="preserve">
-    <value>For purchasing, first need to confirm your email. Please click &lt;a id='loginlink' href='/fa/Account/Login'&gt;here&lt;/a&gt; to Login</value>
+    <value>برای خرید بسته باید ایمیل شما تایید شود. لطفا ایمیل خود را تایید کنید، سپس  &lt;a id='loginlink' href='/fa/Account/Login'&gt;  اینجا&lt;/a&gt;را کلیک کنید.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>خطا!</value>
   </data>
   <data name="ErrorPaymentUnauthorizedDevice" xml:space="preserve">
-    <value>Unauthorized device!</value>
+    <value>از این دستگاه دسترسی امکان پذیر نیست.</value>
   </data>
   <data name="loadingtxt" xml:space="preserve">
     <value>لطفا منتظر بمانید ...</value>
   </data>
   <data name="PleaseTryAgain" xml:space="preserve">
-    <value>Please try again</value>
+    <value>لطفا دوباره امتحان کنید</value>
   </data>
   <data name="ErrorRegisterDuplicateUserName" xml:space="preserve">
     <value>این ایمل قبلا مورد استفاده قرار گرفته</value>
@@ -723,30 +717,6 @@
   <data name="PaymentProcedure2" xml:space="preserve">
     <value>این فرآیند تنها چند دقیقه طول خواهد کشید. سیستم شما را از طریق مراحلی راهنمایی می کند. به محض اینکه روند به پایان رسید، بسته به طور خودکار برای شما فعال می شود. در مواردی که این فرآیند نا موفق بود، با ما تماس بگیرید.</value>
   </data>
-  <data name="PaymentTermsConditions" xml:space="preserve">
-    <value>شرایط و ضوابط</value>
-  </data>
-  <data name="PaymentTermsConditions1" xml:space="preserve">
-    <value>Once you have purchased a packaged the price is not refundable.
-                        &lt;br /&gt;
-                        Iranaudioguide is not responsible for failure of the transaction. Contact your bank to follow up on failed transactions.
-                        &lt;br /&gt;
-                        Users agree to the price of each package and by purchasing a package, users terminate their right of any future complaint toward the price and content of the packages.
-                        &lt;br /&gt;
-                        Iranaudioguide preserve the right to restrict any user’s access, in case of doubt of identity, and users agree to reply to iranaudioguide contacts to clear the issue. In case the users do not comply, Iranaudioguide has the right to deny the users access.
-                        &lt;br /&gt;
-                        If it is proven to Iranaudioguide that a user is misusing the software in anyway, Iranaudioguide preserves to right to disable any access the user had and restrain any future access.
-                        &lt;br /&gt;
-                        Iranaudioguide is not a purely scientific source. The content is based on scientific facts but entertainment aspects are also considered.
-                        &lt;br /&gt;
-                        All rights of this application are strictly reserved to the brand owner. Any illegal use, will follow with legal prosecution.
-                        &lt;br /&gt;
-                        Users agree to allow iranaudioguide use the personal data they have provided to Iranaduioguide, for the improvement of the application.
-                        &lt;br /&gt;
-                        Each user can only change their active device once they change their personal device. In case it is proven to Iranaudioguide that users have changed the active device, to allow other individual access their packages, Iranaudioguide can restrict their access.
-                        &lt;br /&gt;
-                        Offered services provided here are not at the order of an individual or enterprise operating any of the Transaction banks, active on Iranaudioguide. This means the banks is not connected in any way with the sales conducted in Iranaudioguide.</value>
-  </data>
   <data name="ReturnPaymentReferenceID" xml:space="preserve">
     <value>شناسه ی مرجع</value>
   </data>
@@ -763,10 +733,7 @@
     <value>059551878952</value>
   </data>
   <data name="WebmoneyAbout4" xml:space="preserve">
-    <value>Merchant</value>
-  </data>
-  <data name="WebmoneyDescription" xml:space="preserve">
-    <value>Click the bottom "Purchase", the page will go to the Webmoney transfer.&lt;br /&gt; You will see several methods of payment with web money. If you are a Webmoney user you can use the Webmoney keeper.&lt;br /&gt;If you’re not familiar with Webmoney services, choose the Quick payment. For the payment to proceed you will you need to receive a sms. So be sure your sim card is active and you can receive the text messages.</value>
+    <value>فروشنده</value>
   </data>
   <data name="PaymentPage30" xml:space="preserve">
     <value>اطلاعات پرداخت</value>
@@ -779,19 +746,19 @@
 بسته های خریداری شده بر روی نام کاربری شما ذخیره شده و قابلیت دسترسی و بازیابی دارند.</value>
   </data>
   <data name="ErrorEmailNotConfirmedMessageForMobile" xml:space="preserve">
-    <value>For purchasing, first need to confirm your email.&lt;br/&gt;&lt;a id='close' href='mobile/close'&gt;Close&lt;/a&gt;</value>
+    <value>برای خرید بسته باید ایمیل شما تایید شود. لطفا ایمیل خود را تایید کنید..&lt;br/&gt;&lt;a id='close' href='mobile/close'&gt; بستن &lt;/a&gt;</value>
   </data>
   <data name="ErrorNotFoundPackage" xml:space="preserve">
-    <value>Not Found Package</value>
+    <value>بسته مورد نظر  وجود ندارد.</value>
   </data>
   <data name="UnauthorizedDevice" xml:space="preserve">
-    <value>Unauthorized device!</value>
+    <value>این دستگاه ثبت نشده است.</value>
   </data>
   <data name="PackageInfo" xml:space="preserve">
-    <value>Package Info</value>
+    <value>اطلاعات بسته</value>
   </data>
   <data name="PaymentEmailInfo" xml:space="preserve">
-    <value>sssssssssssssssssssssssssss</value>
+    <value>اگر سوال یا هر مشکلی  داشتید، لطفا یک ایمیل به &lt;a href="mailto:info@iranaudioguide.com" &gt; Info@iranaudioguide.com&lt;/a&gt; ارسال کنید</value>
   </data>
   <data name="PageProfile133" xml:space="preserve">
     <value>Want to change your device?</value>
@@ -803,22 +770,19 @@
     <value>قیمت</value>
   </data>
   <data name="ZarinpalPaymentMsg" xml:space="preserve">
-    <value>No response from bank gateway.</value>
+    <value>پاسخی از درگاه بانک دریافت نشد.</value>
   </data>
   <data name="PaymentAutomaticallyReturnMoney" xml:space="preserve">
-    <value>If the payment is deducted from your bank account, The amount will be automatically returned.</value>
-  </data>
-  <data name="ZarinpalPaymentMsg4" xml:space="preserve">
-    <value>Payment completed successfully.</value>
+    <value>اگر پرداخت از حساب بانکی شما کسر می شود، مبلغ به صورت خودکار بازگشت می شود.</value>
   </data>
   <data name="ZarinpalPaymentMsg5" xml:space="preserve">
-    <value>You have access to the package below. Thank you for your purchase!</value>
+    <value>شما به بسته زیر دسترسی پیدا کردید. از خرید شما سپاس گذاریم.</value>
   </data>
   <data name="ZarinpalPaymentMsg6" xml:space="preserve">
-    <value>Problem occurred in payment process.</value>
+    <value>در مراحل پرداخت شما خطایی رخ داده است.</value>
   </data>
   <data name="ZarinpalPaymentMsg7" xml:space="preserve">
-    <value>Sorry, please try again in a few minutes.</value>
+    <value>در حال حاضر امکان پذیر نیست، لطفا دقایقی دیگر دوباره امتحان کنید.</value>
   </data>
   <data name="ZarinpalPaymentMsg10" xml:space="preserve">
     <value>و يا مرچنت كد پذيرنده صحيح نيست IP</value>
@@ -850,7 +814,7 @@
   <data name="ZarinpalPaymentMsg19" xml:space="preserve">
     <value>اجازه دسترسي به متد مربوطه وجود ندارد.</value>
   </data>
-  <data name="PaymentUnsuccessful" xml:space="preserve">
+  <data name="PaymentUnsuccessfully" xml:space="preserve">
     <value>پرداخت ناموفق بود</value>
   </data>
   <data name="ZarinpalPaymentMsg20" xml:space="preserve">
@@ -869,7 +833,7 @@
     <value>تراكنش انجام شده است. PaymentVerification عمليات پرداخت موفق بوده و قبلا</value>
   </data>
   <data name="PaymentNotCompleted" xml:space="preserve">
-    <value>Your payment process is not completed.</value>
+    <value>عملیات پرداخت شما موف آمیز نبوده است</value>
   </data>
   <data name="ZarinpalPaymentMsg8" xml:space="preserve">
     <value>پرداخت کنسل شده</value>
@@ -878,16 +842,16 @@
     <value>اطلاعات ارسال شده ناقص است</value>
   </data>
   <data name="AccessPackage" xml:space="preserve">
-    <value>You have access to the package below. Thank you for your purchase!</value>
+    <value>بسته با موفقیت خریداری شد. شما به بسته زیر دسترسی دارید.</value>
   </data>
   <data name="WebmoneyGateway" xml:space="preserve">
-    <value>Webmoney Gateway</value>
+    <value>درگاه پرداخت Webmoney</value>
   </data>
   <data name="WebmoneyPaymentMsg" xml:space="preserve">
-    <value>You have access to the package below. Thank you for your purchase! &lt;br /&gt;</value>
+    <value>از خرید شما سپاسگذاریم. شما به بسته زیر دسترسی پیدا کردید</value>
   </data>
   <data name="WebmoneyPaymentMsg1" xml:space="preserve">
-    <value>Sorry, Your payment was unsuccessful!</value>
+    <value>با عرض پوزش در مراحل پرداخت مشکلی پیس آمده است.</value>
   </data>
   <data name="InvalidUserName" xml:space="preserve">
     <value>چنین حساب کاربری وجود ندارد</value>
@@ -897,5 +861,35 @@
   </data>
   <data name="ReceiptForInvoice" xml:space="preserve">
     <value>رسید خرید </value>
+  </data>
+  <data name="PaymentMsg" xml:space="preserve">
+    <value>Sorry, you cant buy this package!</value>
+  </data>
+  <data name="PaymentMsg1" xml:space="preserve">
+    <value>You are already purchased this package.</value>
+  </data>
+  <data name="PaymentMsg2" xml:space="preserve">
+    <value>At the moment there is no possibility of connecting to this port.</value>
+  </data>
+  <data name="Paymentsuccessfully" xml:space="preserve">
+    <value>پرداخت با موفقیت انجام شد.</value>
+  </data>
+  <data name="WebmoneyDescription" xml:space="preserve">
+    <value>Click the button "Purchase", the page will go to the Webmoney transfer.&lt;br /&gt; You will see several methods of payment with web money. If you are a Webmoney user you can use the Webmoney keeper.&lt;br /&gt;If you’re not familiar with Webmoney services, choose the Quick payment. For the payment to proceed you will you need to receive a sms. So be sure your sim card is active and you can receive the text messages.</value>
+  </data>
+  <data name="DateTite" xml:space="preserve">
+    <value>تاریخ خرید</value>
+  </data>
+  <data name="TermsConditions" xml:space="preserve">
+    <value>شرایط  استفاده</value>
+  </data>
+  <data name="PaymentMsg5" xml:space="preserve">
+    <value>شما به بسته زیر دسترسی پیدا کردید. </value>
+  </data>
+  <data name="ThankYouForYourPurchase" xml:space="preserve">
+    <value>از خرید شما سپاس گذاریم</value>
+  </data>
+  <data name="PriceSign" xml:space="preserve">
+    <value>ریال</value>
   </data>
 </root>
