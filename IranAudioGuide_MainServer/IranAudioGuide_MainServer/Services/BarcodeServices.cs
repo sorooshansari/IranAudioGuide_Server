@@ -213,7 +213,8 @@ namespace IranAudioGuide_MainServer.Services
                     .Select(t => new BarImageInfo()
                     {
                         ImageUrl = barImgPath + t.Bar_Image_Url,
-                        Price = t.Bar_Price.Pri_Value
+                        Price = t.Bar_Price.Pri_Value,
+                        Id_imginfo = t.Bar_Id
                     }).ToList();
                 var result = new GeneratePDFModel()
                 {
