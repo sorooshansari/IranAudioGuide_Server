@@ -215,7 +215,6 @@ namespace IranAudioGuide_MainServer.Services
                         ImageUrl = barImgPath + t.Bar_Image_Url,
                         Price = t.Bar_Price.Pri_Value
                     }).ToList();
-                //var img = @"/Content/images/barcodes/8/.jpeg";
                 var result = new GeneratePDFModel()
                 {
                     PDFContent = content,
