@@ -3208,7 +3208,7 @@ body.is-mobile.landing #banner, body.is-mobile.landing .wrapper.style4 {
 }
 
 #contact {
-    width: 45%;
+    width: 95%;
 }
 
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, select:focus, textarea:focus {

@@ -1,0 +1,278 @@
+﻿@using IranAudioGuide_MainServer.App_GlobalResources
+
+@{
+    ViewBag.Title = Global.IranAudioGuide;
+}
+<style>
+    footer {
+        background-color: #0c1a1e;
+        min-height: 350px;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .footerleft {
+        margin-top: 50px;
+        padding: 0 36px;
+    }
+
+    .logofooter {
+        margin-bottom: 10px;
+        color: #fff;
+        width:inherit;
+    }
+
+    .footerleft p {
+        color: #fff;
+        font-size: 12px !important;
+        font-family: 'Open Sans', sans-serif;
+        margin-bottom: 15px;
+    }
+
+        .footerleft p i {
+            width: 20px;
+            color: #999;
+        }
+
+
+    .paddingtop-bottom {
+        margin-top: 50px;
+    }
+
+    .footer-ul {
+        list-style-type: none;
+        padding-left: 0px;
+        margin-left: 2px;
+    }
+
+        .footer-ul li {
+            line-height: 29px;
+            font-size: 12px;
+        }
+
+            .footer-ul li a {
+                color: #a0a3a4;
+                transition: color 0.2s linear 0s, background 0.2s linear 0s;
+            }
+
+        .footer-ul i {
+            margin-right: 10px;
+        }
+
+        .footer-ul li a:hover {
+            transition: color 0.2s linear 0s, background 0.2s linear 0s;
+            color: #ff670f;
+        }
+
+    .social:hover {
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -o-transform: scale(1.1);
+    }
+    .icon-ul {
+        list-style-type: none !important;
+        margin: 0px;
+        padding: 0px;
+    }
+
+        .icon-ul li {
+            line-height: 75px;
+            width: 100%;
+            float: left;
+        }
+
+    .icon {
+        float: left;
+        margin-right: 5px;
+    }
+
+
+    .copyright {
+        min-height: 40px;
+        background-color: #000000;
+    }
+
+        .copyright p {
+            text-align: left;
+            color: #FFF;
+            padding: 10px 0;
+            margin-bottom: 0px;
+        }
+
+    .heading7 {
+        font-size: 21px;
+        font-weight: 700;
+        color: #d9d6d6;
+        margin-bottom: 22px;
+        text-align:center;
+    }
+
+    .post p {
+        font-size: 12px;
+        color: #FFF;
+        line-height: 20px;
+    }
+
+        .post p span {
+            display: block;
+            color: #8f8f8f;
+        }
+
+    .bottom_ul {
+        list-style-type: none;
+        float: right;
+        margin-bottom: 0px;
+    }
+
+        .bottom_ul li {
+            float: left;
+            line-height: 40px;
+        }
+
+            .bottom_ul li:after {
+                content: "/";
+                color: #FFF;
+                margin-right: 8px;
+                margin-left: 8px;
+            }
+
+            .bottom_ul li a {
+                color: #FFF;
+                font-size: 12px;
+            }
+</style>
+
+@*<head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>*@
+
+@*<link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">*@
+<!--footer start from here-->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 footerleft ">
+                <div class="logofooter">
+                <img src="~/images/IAGSmallWhiteLogo.png" />
+                </div>
+                <p>Iran audio guide application will enrich your Iran Travel and allow you to freely have access to step by step guides and stories of Persia</p>
+                <p><i class="fa fa-map-pin"></i> 210, Aggarwal Tower, Rohini sec 9, New Delhi -        110085, INDIA</p>
+                <p><i class="fa fa-phone"></i> Phone (India) : +91 9999 878 398</p>
+                <p><i class="fa fa-envelope"></i> E-mail : info@webenlance.com</p>
+                <ul class="icons">
+                    <li>
+                        <a target="_blank" href="https://www.twitter.com/iranaudioguide"
+                           class="icon fa-twitter tooltips"><span>@Global.Twitter</span></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/iranaudioguide"
+                           class="icon fa-facebook tooltips"><span>@Global.Facebook</span></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://www.instagram.com/iran.audio.guide/"
+                           class="icon fa-instagram tooltips"><span>@Global.Instagram</span></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://www.telegram.me/iranaudioguide"
+                           class="icon fa-telegram tooltips"><span>@Global.Telegram</span></a>
+                    </li>
+                    <li>
+                        <a href="mailto:info@iranaudioguide.com"
+                           class="icon fa-envelope-o tooltips"><span>@Global.Email</span></a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-md-6 col-sm-6 paddingtop-bottom">
+                <h6 class="heading7">@Global.Parameter29</h6>
+                <div id="contact" class="form-container">
+                    <form id="contactForm" name="contactForm" class="form-horizontal" ng-submit="ContactUs(ContactFormModel, contactForm)">
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span ng-class="ValidationClass(0)" class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input ng-blur="validator($event, 0)" ng-model="ContactFormModel.name" id="name" name="name" class="form-control" placeholder="@Global.PlaceholderName" type="text" required="">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span ng-class="ValidationClass(1)" class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input ng-blur="validator($event, 1)" ng-model="ContactFormModel.email" id="Email4" name="Email" class="form-control" placeholder="@Global.PlaceholderEmail" type="email" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                                        <input ng-model="ContactFormModel.subject" id="Subject" name="Subject" class="form-control" placeholder="@Global.PlaceholderSubject" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span ng-class="ValidationClass(3)" class="input-group-addon"><i class="fa fa-commenting"></i></span>
+                                        <textarea ng-blur="validator($event, 3)" ng-model="ContactFormModel.message" id="Message" name="Message" class="form-control" placeholder="@Global.PlaceholderMessage" required=""></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Button -->
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button id="SubmitBtn" name="SubmitBtn" class="btn btn-inverse"><i class="fa fa-send"></i>   @Global.Send</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <!--<Contact overlay> -->
+                    <div ng-show="overlay" class="contactoverlay">
+                        <img ng-show="!sent" src="@GlobalPath.ImagePath/bars.svg" alt="Sending" />
+                        <p ng-show="sent" ng-bind="sentMessage"></p>
+                    </div>
+                    <!--</Contact overlay> -->
+                </div>
+            </div>
+            @*<div class="col-md-3 col-sm-6 paddingtop-bottom">
+                <h6 class="heading7">LATEST POST</h6>
+                <div class="post">
+                    <p>facebook crack the movie advertisment code:what it means for you <span>August 3,2015</span></p>
+                    <p>facebook crack the movie advertisment code:what it means for you <span>August 3,2015</span></p>
+                    <p>facebook crack the movie advertisment code:what it means for you <span>August 3,2015</span></p>
+                </div>
+            </div>*@
+            <div class="col-md-2 col-sm-6 paddingtop-bottom">
+                <div class="fb-page" data-href="https://www.facebook.com/facebook" data-tabs="timeline" data-height="300" data-small-header="false" style="margin-bottom:15px;" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                    <div class="fb-xfbml-parse-ignore">
+                        <blockquote cite="https://www.facebook.com/facebook"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--footer start from here-->
+<div class="copyright">
+    <div class="container">
+        <div class="col-md-6">
+            <ul class="copyright">
+                <li class="">&copy;@DateTime.Now.Year - @Global.copyright22</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="bottom_ul">
+                <li><a href="/@Global.Lang/home/TermsConditions" style="font-weight:bold;"> @Html.Raw(Global.TermsConditions)</a></li>
+                <li><a href="/@Global.Lang/home/PrivacyPolicy" style="font-weight:bold;">@Html.Raw(Global.PrivacyPolicy)</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

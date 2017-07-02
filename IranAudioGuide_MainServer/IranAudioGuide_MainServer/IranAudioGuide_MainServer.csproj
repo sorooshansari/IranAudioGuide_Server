@@ -1805,6 +1805,7 @@
     <Content Include="Views\Payment\VMResult.cshtml" />
     <Content Include="Views\Payment\Return - Copy.cshtml" />
     <Content Include="Views\Home\TermsConditions.cshtml" />
+    <Content Include="Views\Home\_Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
