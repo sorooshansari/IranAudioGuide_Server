@@ -1668,6 +1668,9 @@
     <Content Include="fonts\Arcon-Regular.otf" />
     <Content Include="fonts\Arcon-Rounded-Regular.otf" />
     <Content Include="fonts\SDDT-Light-web.woff" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
