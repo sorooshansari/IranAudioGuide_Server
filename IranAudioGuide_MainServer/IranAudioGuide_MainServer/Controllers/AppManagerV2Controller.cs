@@ -187,6 +187,14 @@ namespace IranAudioGuide_MainServer.Controllers
                     Email = comment.email
                 };
                 dbTools.CreateComment(newComment);
+                var email = new EmailService();
+
+                var msg = new Microsoft.AspNet.Identity.IdentityMessage() {
+                    Body = "Comment From :: " + comment.email + "<br />" + comment.Message ,
+                    Destination = "iranaudioguide@gmail.com",
+                    Subject = "Comment From"+ comment.email
+                };
+                email.SendWithoutTemplateAsync(msg);
                 return "";
             }
             catch (Exception ex)

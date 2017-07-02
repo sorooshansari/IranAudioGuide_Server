@@ -81,15 +81,25 @@ namespace IranAudioGuide_MainServer.Controllers
         public IHttpActionResult GetPackages()
         {
             var pro_list= GetPackagesProcurements();
+          //  var lang = ServiceCulture.GeLangFromCookie();          
+            var resualt = GetPackagesByLangId(1);
+            var resualt2 = GetPackagesByLangId(2);
+            resualt.AddRange(resualt2);
 
-            //todo uncomment
-            //var lang = ServiceCulture.GeLangFromCookie();
-            var lang = 2;
+            foreach (var item in resualt)
+            {
+                item.isPackagesPurchased = pro_list.Any(pr => pr == item.PackageId);
+            }
+
+
+            return Ok(resualt);
+        }
+
+        private List<PackageUserVM> GetPackagesByLangId(int lang)
+        {
             var d = new dbManagerV2();
-
             var parameter = new SqlParameter("@langId", lang);
             var listdata = d.MultiTableResultSP("GetPackages_website", parameter);
-
             var getModel = new List<PackageUserVM>();
 
             foreach (DataRow c in listdata[1].Rows)
@@ -127,13 +137,13 @@ namespace IranAudioGuide_MainServer.Controllers
                     OrderItem = c["OrderItem"].convertToInt()
                 });
             }
-            var resualt = getModel.OrderBy(x => x.PackageOrder).Select(p => new PackageUserVM()
+           return getModel.OrderBy(x => x.PackageOrder).Select(p => new PackageUserVM()
             {
                 PackagePrice = p.PackagePrice,
                 PackagePriceDollar = p.PackagePriceDollar,
                 PackageId = p.PackageId,
                 PackageName = p.PackageName,
-               isPackagesPurchased = pro_list.Any(pr => pr == p.PackageId),
+                //isPackagesPurchased = pro_list.Any(pr => pr == p.PackageId),
                 PackageCities = getModel.Where(pc => pc.CityId == p.CityId).OrderBy(x => x.CityOrder).Select(c => new CityUserVM()
                 {
                     CityName = c.CityName,
@@ -141,27 +151,16 @@ namespace IranAudioGuide_MainServer.Controllers
                     CityImageUrl = c.CityImageUrl,
                     CityDesc = c.CityDescription,
                     TotalTrackCount = listPlaces.Where(lp => lp.Cit_Id == c.CityId).Sum(pl => pl.AudiosCount + pl.StoriesCount),
-                    Places = listPlaces.Where(lp => lp.Cit_Id == c.CityId).OrderBy(x=> x.OrderItem)
+                    Places = listPlaces.Where(lp => lp.Cit_Id == c.CityId).OrderBy(x => x.OrderItem)
                                    .Select(pl => new PlaceUserVM()
                                    {
                                        PlaceName = pl.PlaceName,
-                                       PlaceId = pl.PlaceId,
-                                     //  CityName = pl.CityName,
-                                       //PlaceAddress = pl.PlaceAddress,
-                                       //PlaceDesc = pl.PlaceDesc,
-                                       //ImgUrl = pl.ImgUrl,
-                                       //TumbImgUrl = pl.TumbImgUrl,
-                                       //AudiosCount = pl.AudiosCount,
-                                       //StoriesCount = pl.StoriesCount,
-                                       //Cit_Id = pl.Cit_Id,
-                                       //OrderItem = pl.OrderItem
+                                       PlaceId = pl.PlaceId
                                    }).ToList()
                 }).ToList()
             }).ToList();
 
-            return Ok(resualt);
         }
-
 
         [HttpPost]
         public List<Guid> GetPackagesProcurements()
@@ -173,10 +172,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 SqlCommand cmd = new SqlCommand("GetPackagesProcurements_website", sqlConnection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@Username", User.Identity.Name));
-
                 sqlConnection.Open();
                 var reader = cmd.ExecuteReader();
-
                 dt1.Load(reader);
             }
             var result = dt1.AsEnumerable().Select(x => x["Pac_Id"].convertToGuid()).ToList();

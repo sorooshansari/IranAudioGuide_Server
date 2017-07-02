@@ -308,7 +308,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         if (place == null)
                             return Json(new Respond());
 
-                        if (place.Pla_Audios == null)
+                        if (place.Pla_Audios == null || place.Pla_Audios.Count == 0)
                             place.Pla_Audios = new List<Audio>();
                         var audio = new Audio()
                         {
