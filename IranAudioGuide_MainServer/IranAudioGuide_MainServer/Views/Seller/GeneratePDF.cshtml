@@ -67,7 +67,7 @@
     .imgpdf {
         width: 205px;
         height: 205px;
-        padding: 15px;
+        padding:15px 15px 10px 15px;
         justify-content: center
     }
 
@@ -78,6 +78,11 @@
 
     .pdfbody {
         width: 100%;
+    }
+    .id_barcode {
+        font-size: 10px;
+        font-style: normal;
+        margin-right: 180px;
     }
 </style>
 <html class="pdfgenrate">
@@ -93,7 +98,9 @@
 {
         if (i%2== 1) {
         <div class="barcodePdf">
-            <div class="imgpdfbarcode"><img src="@Model.ImageInfoes[i].ImageUrl" alt="" class="imgpdf" /></div>
+            <div class="imgpdfbarcode"><img src="@Model.ImageInfoes[i].ImageUrl" alt="" class="imgpdf" />
+                <i class="id_barcode">@Model.ImageInfoes[i].Id_imginfo</i>
+            </div>
             <div class="txtpdf">
                 <div class="iagpdf">@Model.PDFContent</div>
                 <div class="contentpdf">
@@ -101,14 +108,13 @@
                     با اسکن این کد، از طریق نرم افزار ما، به بسته مورد نظر دسترسی پیدا خواهید کرد
                 </div>
                <div class="pricepdf">@Model.ImageInfoes[i].Price</div>
-            </div>
-            
+            </div>           
         </div>
     }
     else
     {
         <div class="barcodePdf2">
-            <div class="imgpdfbarcode2"><img src="@Model.ImageInfoes[i].ImageUrl" alt="" class="imgpdf" /></div>
+            <div class="imgpdfbarcode2"><img src="@Model.ImageInfoes[i].ImageUrl" alt="" class="imgpdf" /><i class="id_barcode">@Model.ImageInfoes[i].Id_imginfo</i></div>
             <div class="txtpdf">
                 <div class="iagpdf">@Model.PDFContent</div>
                 <div class="contentpdf">
@@ -116,6 +122,7 @@
                     با اسکن این کد، با دوربین گوشی خود، به بسته مورد نظر دسترسی پیدا خواهید کرد
                 </div>
                 <div class="pricepdf">@Model.ImageInfoes[i].Price</div>
+                
             </div>
         </div>
     }

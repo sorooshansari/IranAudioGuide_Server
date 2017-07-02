@@ -79,5 +79,7 @@ namespace IranAudioGuide_MainServer.Models
     {
         public string ImageUrl { get; set; }
         public double Price { get; set; }
+        public int Id_imginfo { get; set; }
+
     }
 }
