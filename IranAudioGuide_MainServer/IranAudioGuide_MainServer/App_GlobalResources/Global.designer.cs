@@ -628,7 +628,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard&lt;br/&gt;Shiraz, Iran &lt;br/&gt;ساختمان مهرگان اتاق 1112 کد پستی 7197687811 تلفن 071363634709.
+        ///   Looks up a localized string similar to Mehregan Building, Room 1112 - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811  - (+98) 71 - 363634709.
         /// </summary>
         public static string OfficeAddress {
             get {
