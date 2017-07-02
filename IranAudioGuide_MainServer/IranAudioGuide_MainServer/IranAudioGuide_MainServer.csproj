@@ -585,6 +585,7 @@
     <Content Include="Content\css\ionicons.min.css" />
     <Content Include="Content\css\loading.css" />
     <Content Include="Content\css\main2.css" />
+    <Content Include="Content\css\menuMain.css" />
     <Content Include="Content\css\notify-metro.css" />
     <Content Include="Content\css\PakageTemplate.css" />
     <Content Include="Content\css\PaymentIndex.css" />
@@ -1618,6 +1619,7 @@
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Content\images\pdfguide.pdf" />
     <Content Include="WMT405DB3C3.HTML" />
+    <Content Include="Content\css\privacyPolicy.css" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
     <Content Include="favicon.ico" />

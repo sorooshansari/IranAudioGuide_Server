@@ -1,0 +1,117 @@
+﻿.contentPrivacy {
+    text-align: center;
+    margin: 6%;
+    text-align: justify;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #292b2c;
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+    .contentPrivacy .iranAudioGuide {
+    
+    }
+
+    .contentPrivacy .titel-privacyPolicy {
+        margin-bottom: 1.5rem !important;
+        text-shadow: initial !important;
+        color: #000;
+        text-align: center;
+    }
+
+#main > header, body.landing #page-wrapper {
+    background-image: none;
+    color: #000;
+    background-color: #fff;
+    height: 100vh;
+    padding: 50px 20px;
+}
+
+#header.alt {
+    background-color: #fff;
+}
+
+#header nav > ul > li > a {
+    color: #060606;
+}
+
+#header .country .countryDropdown {
+    background-color: #15437f !important;
+    color: #ffffff !important;
+}
+
+.contentPrivacy h1, .contentPrivacy h2, .contentPrivacy h3, .contentPrivacy h4, .contentPrivacy h5, .contentPrivacy h6 {
+    color: #000;
+    text-shadow: none;
+    margin: 2% 0px -2px;
+    line-height: 22px;
+    text-align: left;
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+.contentPrivacy p {
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+.tile-ContactingUs {
+    font-weight: 600;
+    font-style: italic;
+}
+
+.email:hover {
+    font-weight: bold;
+    color: #000;
+}
+
+.emai {
+    text-decoration: none;
+}
+
+._fa .contentPrivacy p {
+    margin: 33px 0 -13px;
+    text-align: justify;
+}
+
+@media screen and (max-width:736px) {
+
+
+    #header.alt {
+        background-color: rgb(21, 67, 127);
+        color: #fff;
+    }
+}
+
+.contentPrivacy_fa {
+    text-align: center;
+    margin: 6%;
+    text-align: justify;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #292b2c;
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+    .contentPrivacy_fa h1, .contentPrivacy_fa h2, .contentPrivacy_fa h3, .contentPrivacy_fa h4, .contentPrivacy_fa h5, .contentPrivacy_fa h6 {
+        margin-bottom: 1.5rem !important;
+        text-shadow: initial !important;
+        color: #000;
+    }
+
+    .contentPrivacy_fa p {
+        margin: 29px 0;
+        line-height: 34px;
+    }
+
+    .contentPrivacy_fa .titel-privacyPolicy {
+        margin-bottom: 1.5rem !important;
+        text-shadow: initial !important;
+        color: #000;
+        text-align: center;
+    }
+.termAndConditions p {
+    margin: 19px 0;
+}

@@ -6,7 +6,7 @@
 }
 
 <style>
-    .contentPrivacy {
+    /*.contentPrivacy {
         text-align: center;
         margin: 6%;
         text-align: justify;
@@ -38,18 +38,42 @@
     #header .country .countryDropdown {
         background-color: #15437f !important;
         color: #ffffff !important;
-    }
+    }*/
 </style>
+<link href="~/Content/css/privacyPolicy.css" rel="stylesheet" />
 
 @if (Global.Lang == "en")
 {
-    <div class="contentPrivacy ">
-    
+    <div class="contentPrivacy termAndConditions">
+     <h2 class="titel-privacyPolicy">
+         Term and Conditions 
+     </h2>
+        <p>
+            Upon the use of Iran audio guide application, users agree to the following terms and conditions. It must be noted that the download of the application or purchase of any packages is equivalent to the written approval of accepting Iran Audio Guide term and conditions. All the regulations and conditions of Iran Audio guide are based on and follow the legal regulations of Islamic Republic of Iran, in particular laws of ecommerce and preservation of customer rights.
+            Any future change in these regulations will be published and updates in this page.
+        </p>
+
+        <p>
+            Any package purchased from Iran Audio Guide application is set on user’s email and the device it is purchased through, in case purchase is made through Iran Audio Guide official webpage, the user email and the first mobile device that user loges into after purchase, becomes the accessible device. Users cannot access their account with their email, through a new device. In the website, every 6 months at least users can change their mobile device. And in case any user losses access to their purchased packages, due to misunderstanding these rules, Iran Audio Guide accepts no responsibility.
+        </p>
+        <p>
+            The content available in Iran Audio Guide application, audio, text, graphic, logo etc. has been created specifically for Iran Audio Guide application and is the property of Iran Audio Guide. Any usage of Iran Audio Guide content for commercial usage is due to legal complaint. 
+        </p>
+        <p>
+            The highest accuracy has been taken in creating the content. The most reliable sources have been used for gathering the information offered. But due to the nature of the content. Iran audio guide is not recommended as a scientific source and may not be in complete consistence to all sources. Iran Audio Guide does not accept responsibility for the content presented.
+        </p>
+        <p>
+            Communication with Iran Audio Guide is only officially through the official email of the site. Iran Audio Guide is active in social media but official and urgent reply is only supported through the email link mentioned in the website.
+            The only official website of Iran Audio Guide is <a  class="iranAudioGuide" href="@Url.Action("Index", "Home", new { lang = Global.Lang})" >  www.iranaudioguide.com</a>
+        </p>
+        <p>
+
+        </p>
     </div>
 }
 else
 {
-    <div class="contentPrivacy ">
+    <div class="contentPrivacy_fa ">
         <h2>شرایط و قوانین استفاده از وبسایت و اپلیکیشن راهنمای صوتی ایران</h2>
         <p>
             ورود کاربران به وب‏‌ سایت یا اپلیکشن راهنمای صوتی ایران به معنای آگاه بودن و پذیرفتن شرایط و قوانین و همچنین نحوه استفاده از سرویس‌‏ها و خدمات راهنمای صوتی ایران است. دانلود  و یا خرید بسته در هر زمان نیز به معنی پذیرفتن کامل کلیه شرایط و قوانین دانلود از سوی کاربر است. لازم به ذکر است شرایط و قوانین مندرج، جایگزین کلیه توافق‏‌های قبلی محسوب می‏‌شود.
@@ -88,7 +112,7 @@ else
             راهنمای صوتی ایران به اطلاعات خصوصی اشخاصى که از خدمات سایت استفاده می‏‌کنند، احترام گذاشته و از آن محافظت می‏‌ کند.
             راهنمای صوتی ایران متعهد می‏‌شود در حد توان از حریم شخصی شما دفاع کند و در این راستا، تکنولوژی مورد نیاز برای هرچه مطمئن ‏‌تر و امن ‏‌تر شدن استفاده شما از سایت را، توسعه دهد. در واقع با استفاده از سایت و اپلیکشن راهنمای صوتی ایران ، کاربررضایت خود را از این سیاست نشان می ‏‌دهید.
             همه توضیحات و مطالب در دسترس در اپلیکشن و سایت، مانند متن، گرافیک، آرم، آیکون دکمه، تصاویر، ویدئوهای تصویری، موارد قابل دانلود و کپی، داده‌ها و کلیه محتوای تولید شده توسط راهنمای صوتی ایران جزئی از اموال راهنمای صوتی ایران محسوب می‏‌شود و حق استفاده و نشر تمامی مطالب موجود و در دسترس در انحصار راهنمای صوتی ایران است و هرگونه استفاده بدون کسب مجوز کتبی، حق پیگرد قانونی را برای راهنمای صوتی ایران محفوظ می‏‌دارد و هر گونه استفاده با مقاصد تجاری پیگرد قانونی دارد. کاربران مجاز به بهره‌ ‏برداری و استفاده از لیست محصولات، مشخصات فنی، قیمت و هر گونه استفاده از مشتقات اپلیکشن راهنمای صوتی ایران و یا هر یک از خدمات و یا مطالب، دانلود یا کپی کردن اطلاعات با مقاصد تجاری، هر گونه استفاده از داده کاوی، روبات، یا روش‌‏های مشابه مانند جمع آوری داده‌‏ها و ابزارهای استخراج نیستند و کلیه این حقوق به صراحت برای راهنمای صوتی ایران محفوظ است. در صورت استفاده از هر یک از خدمات راهنمای صوتی ایران ، کاربران مسئول حفظ ایمیل و رمز عبور خود هستند
-            تنها مرجع رسمی ما  پایگاه رسمی این سایت یعنی www.iranaudioguide.com است.
+            تنها مرجع رسمی ما  پایگاه رسمی این سایت یعنی<a class="iranAudioGuide" href="@Url.Action("Index", "Home", new { lang = Global.Lang})">  www.iranaudioguide.com</a> است.
         </p>
         <h2>محتوا</h2>
         <h2></h2>
