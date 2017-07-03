@@ -324,7 +324,7 @@
     </div>
 </section>
 <!-- Footer -->
-@*<footer id="footer">
+<footer id="footer">
     <div id="contact" class="form-container">
         <form id="contactForm" name="contactForm" class="form-horizontal" ng-submit="ContactUs(ContactFormModel, contactForm)">
             <fieldset>
@@ -408,7 +408,7 @@
             <a href="mailto:info@iranaudioguide.com"
                class="icon fa-envelope-o tooltips"><span>@Global.Email</span></a>
         </li>
-    </ul>*@
+    </ul>
     @*<ul class="icons">
             <li>
                 <!-- begin WebMoney Transfer : attestation label -->
@@ -419,13 +419,12 @@
                 <!-- end WebMoney Transfer : attestation label -->
             </li>
         </ul>*@
-    @*<ul  class="copyright">
+    <ul  class="copyright">
         <li><a href="/@Global.Lang/home/TermsConditions"  style="font-weight:bold;"> @Html.Raw(Global.TermsConditions)</a><font> - </font><a href="/@Global.Lang/home/PrivacyPolicy" style="font-weight:bold;">@Html.Raw(Global.PrivacyPolicy)</a></li>
    
         <li class="">&copy;@DateTime.Now.Year - @Global.copyright22</li>
     </ul>
-</footer>*@
-@Html.Partial("_Footer")
+</footer>
 @section scripts{
     <script>
         //window.onscroll = function () { scrollFunction() };

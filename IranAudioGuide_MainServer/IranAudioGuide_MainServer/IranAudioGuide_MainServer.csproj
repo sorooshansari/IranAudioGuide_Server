@@ -700,6 +700,10 @@
     <Content Include="Content\global\plugins\ladda\ladda-themeless.min.css" />
     <Content Include="Content\global\plugins\ladda\ladda.min.js" />
     <Content Include="Content\global\plugins\ladda\spin.min.js" />
+    <Content Include="Content\global\plugins\materialize\css\materialize.css" />
+    <Content Include="Content\global\plugins\materialize\css\materialize.min.css" />
+    <Content Include="Content\global\plugins\materialize\js\materialize.js" />
+    <Content Include="Content\global\plugins\materialize\js\materialize.min.js" />
     <Content Include="Content\global\plugins\ng-file-upload\angular-file-upload-all.js" />
     <Content Include="Content\global\plugins\ng-file-upload\angular-file-upload-all.min.js" />
     <Content Include="Content\global\plugins\ng-file-upload\angular-file-upload-shim.js" />
@@ -1623,6 +1627,16 @@
     <Content Include="Content\images\pdfguide.pdf" />
     <Content Include="WMT405DB3C3.HTML" />
     <Content Include="Content\css\privacyPolicy.css" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Light.woff" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="Content\global\plugins\materialize\fonts\roboto\Roboto-Thin.woff2" />
     <None Include="Content\Scripts\_references.js" />
     <Content Include="IAGSITELOGO.png" />
     <Content Include="favicon.ico" />
@@ -1778,8 +1792,6 @@
     <Content Include="Views\Shared\CheckOut.cshtml" />
     <Content Include="Views\Shared\PaymentRef.cshtml" />
     <Content Include="Views\Shared\PurchaseDetails.cshtml" />
-    <Content Include="Views\Shared\_LayouProfile.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -1812,6 +1824,8 @@
     <Content Include="Views\Payment\Return - Copy.cshtml" />
     <Content Include="Views\Home\TermsConditions.cshtml" />
     <Content Include="Views\Home\_Footer.cshtml" />
+    <Content Include="Views\Shared\_LayouProfile.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
