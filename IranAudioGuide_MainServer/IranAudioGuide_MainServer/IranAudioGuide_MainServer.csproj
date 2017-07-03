@@ -1775,6 +1775,7 @@
     <Content Include="Views\Shared\CheckOut.cshtml" />
     <Content Include="Views\Shared\PaymentRef.cshtml" />
     <Content Include="Views\Shared\PurchaseDetails.cshtml" />
+    <Content Include="Views\Shared\_LayouProfile.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
@@ -1807,6 +1808,7 @@
     <Content Include="Views\Payment\VMResult.cshtml" />
     <Content Include="Views\Payment\Return - Copy.cshtml" />
     <Content Include="Views\Home\TermsConditions.cshtml" />
+    <Content Include="Views\Home\_Footer.cshtml" />
     <Content Include="Views\Shared\_LayouProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
