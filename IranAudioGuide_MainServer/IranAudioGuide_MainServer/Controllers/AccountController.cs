@@ -487,10 +487,17 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 var json = webClient.DownloadString(apiRequestUri);
                 dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-                newUser.Picture = result.picture;
-                newUser.FullName = result.name;
-                newUser.GoogleId = result.id;
-                newUser.gender = result.gender;
+                if (result.picture != null)
+                    newUser.Picture = result.picture;
+
+                if (result.name != null)
+                    newUser.FullName = result.name;
+
+                if (result.id != null)
+                    newUser.GoogleId = result.id;
+
+                if (result.gender != null)
+                    newUser.gender = result.gender;
             }
             var appUser = await UserManager.FindByNameAsync(newUser.Email);
             if (appUser == null)
