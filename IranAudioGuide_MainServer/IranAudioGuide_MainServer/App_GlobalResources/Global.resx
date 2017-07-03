@@ -543,7 +543,7 @@
     <value>Terms &amp; Conditions</value>
   </data>
   <data name="PrivacyPolicy" xml:space="preserve">
-    <value>Privacy &amp;amp; Policy</value>
+    <value>Privacy &amp; Policy</value>
   </data>
   <data name="copyright22" xml:space="preserve">
     <value>Shiraz Dourandish Developers</value>
@@ -893,5 +893,26 @@ Your purchased packages will be set on and accessible through your current user 
   </data>
   <data name="PriceSign" xml:space="preserve">
     <value>IRR</value>
+  </data>
+  <data name="email1" xml:space="preserve">
+    <value>E-mail : info@iranaudioguide.com</value>
+  </data>
+  <data name="footer" xml:space="preserve">
+    <value>Iran audio guide application will enrich your Iran Travel and allow you to freely have access to step by step guides and stories of Persia</value>
+  </data>
+  <data name="officeaddress1" xml:space="preserve">
+    <value>Mehregan Building, Room 1112 - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811</value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value>Phone : (+98) 071 - 36364709</value>
+  </data>
+  <data name="Getit" xml:space="preserve">
+    <value>Get it on</value>
+  </data>
+  <data name="Namad" xml:space="preserve">
+    <value>Symbol of Electronic Trust</value>
+  </data>
+  <data name="Sina" xml:space="preserve">
+    <value>Sina Zandi</value>
   </data>
 </root>

@@ -206,3 +206,18 @@
     margin: 13px 0 16px 0 !important;
     line-height: 26px !important;
 }
+._fa .icon1{
+    float: right !important;
+}
+._fa .container1{
+    direction:rtl;
+}
+._fa .copyright{
+    direction:rtl;
+}
+._fa .bottom_ul{
+    float:left !important;
+}
+._fa ul.icons li {
+    padding: 0 0 0 1em !important;
+}

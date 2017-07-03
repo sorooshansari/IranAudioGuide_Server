@@ -277,6 +277,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-mail : info@iranaudioguide.com.
+        /// </summary>
+        public static string email1 {
+            get {
+                return ResourceManager.GetString("email1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error!.
         /// </summary>
         public static string Error {
@@ -421,6 +430,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Iran audio guide application will enrich your Iran Travel and allow you to freely have access to step by step guides and stories of Persia.
+        /// </summary>
+        public static string footer {
+            get {
+                return ResourceManager.GetString("footer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your email address to receive a reset password link.
         /// </summary>
         public static string forgotEnterEmail {
@@ -435,6 +453,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string ForgotPassword {
             get {
                 return ResourceManager.GetString("ForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get it on.
+        /// </summary>
+        public static string Getit {
+            get {
+                return ResourceManager.GetString("Getit", resourceCulture);
             }
         }
         
@@ -628,11 +655,29 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Symbol of Electronic Trust.
+        /// </summary>
+        public static string Namad {
+            get {
+                return ResourceManager.GetString("Namad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mehregan Building, Room 1112 - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811  - (+98) 71 - 363634709.
         /// </summary>
         public static string OfficeAddress {
             get {
                 return ResourceManager.GetString("OfficeAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mehregan Building, Room 1112 - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811.
+        /// </summary>
+        public static string officeaddress1 {
+            get {
+                return ResourceManager.GetString("officeaddress1", resourceCulture);
             }
         }
         
@@ -1521,6 +1566,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phone : (+98) 071 - 36364709.
+        /// </summary>
+        public static string phone {
+            get {
+                return ResourceManager.GetString("phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
         public static string PlaceholderConfirmPassword {
@@ -1611,7 +1665,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Privacy &amp;amp; Policy.
+        ///   Looks up a localized string similar to Privacy &amp; Policy.
         /// </summary>
         public static string PrivacyPolicy {
             get {
@@ -1968,6 +2022,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string signInSubHeader {
             get {
                 return ResourceManager.GetString("signInSubHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sina Zandi.
+        /// </summary>
+        public static string Sina {
+            get {
+                return ResourceManager.GetString("Sina", resourceCulture);
             }
         }
         

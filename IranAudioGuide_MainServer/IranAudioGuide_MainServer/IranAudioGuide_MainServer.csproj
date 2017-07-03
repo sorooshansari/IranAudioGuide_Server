@@ -342,6 +342,8 @@
     <Content Include="Content\admin\img\avatar7.jpg" />
     <Content Include="Content\admin\img\avatar8.jpg" />
     <Content Include="Content\admin\img\avatar9.jpg" />
+    <Content Include="Content\admin\img\devider.png" />
+    <Content Include="Content\admin\img\enamad-logo.png" />
     <Content Include="Content\admin\img\favicon.ico" />
     <Content Include="Content\admin\img\loading-spinner-blue.gif" />
     <Content Include="Content\admin\img\loading-spinner-default.gif" />
@@ -349,6 +351,7 @@
     <Content Include="Content\admin\img\loading.gif" />
     <Content Include="Content\admin\img\photo1.jpg" />
     <Content Include="Content\admin\img\photo2.jpg" />
+    <Content Include="Content\admin\img\samandehi-logo-y.png" />
     <Content Include="Content\admin\img\sidebar_inline_toggler_icon_blue.jpg" />
     <Content Include="Content\admin\img\sidebar_inline_toggler_icon_darkblue.jpg" />
     <Content Include="Content\admin\img\sidebar_inline_toggler_icon_default.jpg" />

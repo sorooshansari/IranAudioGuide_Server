@@ -7,7 +7,7 @@
     footer {
         background-color: #0c1a1e;
         min-height: 350px;
-        font-family: 'Open Sans', sans-serif;
+        /*font-family: 'Open Sans', sans-serif;*/
     }
 
     .footerleft {
@@ -18,19 +18,20 @@
     .logofooter {
         margin-bottom: 10px;
         color: #fff;
-        width:inherit;
+        width:70px !important;
     }
 
     .footerleft p {
         color: #fff;
         font-size: 12px !important;
-        font-family: 'Open Sans', sans-serif;
-        margin-bottom: 15px;
+        /*font-family: 'Open Sans', sans-serif;*/
+        margin-bottom: 10px;
     }
 
         .footerleft p i {
-            width: 20px;
-            color: #999;
+            width: 25px;
+            /*color: #999;*/
+            font-size:16px;
         }
 
 
@@ -89,6 +90,8 @@
     .copyright {
         min-height: 40px;
         background-color: #000000;
+        list-style-type:none;
+        
     }
 
         .copyright p {
@@ -99,7 +102,7 @@
         }
 
     .heading7 {
-        font-size: 21px;
+        font-size: 14px;
         font-weight: 700;
         color: #d9d6d6;
         margin-bottom: 22px;
@@ -121,6 +124,7 @@
         list-style-type: none;
         float: right;
         margin-bottom: 0px;
+        border-bottom:0;
     }
 
         .bottom_ul li {
@@ -129,7 +133,6 @@
         }
 
             .bottom_ul li:after {
-                content: "/";
                 color: #FFF;
                 margin-right: 8px;
                 margin-left: 8px;
@@ -138,7 +141,137 @@
             .bottom_ul li a {
                 color: #FFF;
                 font-size: 12px;
+                border:0;
             }
+    .devider {
+        background: url('/Content/admin/img/devider.png') repeat-x center;
+        height: 20px;
+        position: relative;
+        display: block;
+        margin-top:193px;
+    }
+    .logo1 {
+        float: left;
+        width: 130px
+    }
+    .logo2 {
+        float: right;
+        width: 130px
+    }
+    .logo3 {
+        float: left;
+        width: 110px;
+        margin: 0px 5px 5px 5px;
+    }
+    .logo4 {
+        float: right;
+        width: 110px;
+        margin: 0px 5px 5px 5px;
+    }
+    .getit {
+        margin-top: 30px;
+        text-align: center
+    }
+    @@media screen and (min-width:991px) and (max-width:1200px) {
+        .logo1 {
+            margin-left: -43px;
+        }
+        .logo3 {
+            margin-left: -23px;
+        }
+    }
+    @@media screen and (min-width:426px) and (max-width:575px) {
+        .bottom_ul {           
+            float: left;
+            margin-left: 95px;
+        }
+        .copyright {
+            text-align: center !important;
+        }
+
+    }
+    @@media screen and (min-width:576px) and (max-width:985px){
+        .bottom_ul {
+            margin-top: -60px;
+        } 
+     }
+    @@media screen and (min-width:768px) and (max-width:990px) {
+        .logo1 {
+            margin-left:225px;
+        }
+
+        .logo2 {
+            margin-right: 225px;
+        }
+
+        .logo3 {
+            margin-left: 225px;
+        }
+
+        .logo4 {
+            margin-right: 225px;
+        }
+    }
+    
+    @@media only screen and (max-width: 490px) {
+        .copyright {
+            text-align:center !important;
+        }
+        .bottom_ul li a {
+        font-size:10px;
+
+    }
+    }
+    @@media only screen and (width: 425px) {
+        .bottom_ul {
+            margin-left: 70px;
+            float: left;
+        }
+
+            .bottom_ul li a {
+                font-size: 10px;
+            }
+    }
+    @@media only screen and (max-width: 424px) {
+        .bottom_ul {
+            margin-left: 45px;
+            float: left;
+        }
+        .bottom_ul li a {
+            font-size: 10px;
+        }
+    }
+    @@media only screen and (max-width: 370px) {
+        .bottom_ul {
+          margin-left: 15px;
+           margin-bottom:-6px;
+           float:left;
+        }
+        .bottom_ul li a {
+            font-size: 10px;
+        }
+    }
+
+
+
+    @@media only screen and (width: 1024px){
+        .logo1 {
+            margin-left: -53px;
+        }
+
+        .logo2 {
+            margin-right: 0px;
+        }
+
+        .logo3 {
+            margin-left: -35px;
+        }
+
+        .logo4 {
+            margin-right: -2px;
+        }
+    }
+
 </style>
 
 @*<head>
@@ -154,16 +287,16 @@
 @*<link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">*@
 <!--footer start from here-->
 <footer>
-    <div class="container">
+    <div class="container container1">
         <div class="row">
-            <div class="col-md-4 col-sm-6 footerleft ">
+            <div class="col-xs-12 col-md-4 footerleft ">
                 <div class="logofooter">
                 <img src="~/images/IAGSmallWhiteLogo.png" />
                 </div>
-                <p>Iran audio guide application will enrich your Iran Travel and allow you to freely have access to step by step guides and stories of Persia</p>
-                <p><i class="fa fa-map-pin"></i> 210, Aggarwal Tower, Rohini sec 9, New Delhi -        110085, INDIA</p>
-                <p><i class="fa fa-phone"></i> Phone (India) : +91 9999 878 398</p>
-                <p><i class="fa fa-envelope"></i> E-mail : info@webenlance.com</p>
+                <p>@Global.footer</p>
+                <p><i class="icon fa fa-map-pin icon1" style="margin-top:1px"></i>@Global.officeaddress1</p>
+                <p><i class="icon fa fa-phone icon1" style="margin-top:3px"></i><a href="callto:+9807136364709">@Global.phone</a> </p>
+                <p><i class="icon fa-envelope-o icon1" style="margin-top:-3px"></i><a href="mailto:info@iranaudioguide.com">@Global.email1</a></p>
                 <ul class="icons">
                     <li>
                         <a target="_blank" href="https://www.twitter.com/iranaudioguide"
@@ -181,14 +314,13 @@
                         <a target="_blank" href="https://www.telegram.me/iranaudioguide"
                            class="icon fa-telegram tooltips"><span>@Global.Telegram</span></a>
                     </li>
-                    <li>
+                    @*<li>
                         <a href="mailto:info@iranaudioguide.com"
                            class="icon fa-envelope-o tooltips"><span>@Global.Email</span></a>
-                    </li>
+                    </li>*@
                 </ul>
-
             </div>
-            <div class="col-md-6 col-sm-6 paddingtop-bottom">
+            <div class="col-xs-12 col-md-5 paddingtop-bottom">
                 <h6 class="heading7">@Global.Parameter29</h6>
                 <div id="contact" class="form-container">
                     <form id="contactForm" name="contactForm" class="form-horizontal" ng-submit="ContactUs(ContactFormModel, contactForm)">
@@ -250,10 +382,31 @@
                     <p>facebook crack the movie advertisment code:what it means for you <span>August 3,2015</span></p>
                 </div>
             </div>*@
-            <div class="col-md-2 col-sm-6 paddingtop-bottom">
+            <div class="col-xs-12 col-md-3 paddingtop-bottom">
                 <div class="fb-page" data-href="https://www.facebook.com/facebook" data-tabs="timeline" data-height="300" data-small-header="false" style="margin-bottom:15px;" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
                     <div class="fb-xfbml-parse-ignore">
-                        <blockquote cite="https://www.facebook.com/facebook"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote>
+                        <h4 style="text-align:center;font-size:14px">@Global.Namad</h4>
+                        @*<div  class="logo1">
+                            <img src="~/Content/admin/img/samandehi-logo-y.png" />
+                        </div>
+                        <div  class="logo2">
+                            <img src="~/Content/admin/img/enamad-logo.png" />
+                        </div>*@
+
+                        <div class="devider"></div>
+                        <h4  class="getit">@Global.Getit</h4>
+                        <div style="" class="logo3">
+                            <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8">
+                                <img style="height:40px;" alt="@Global.alt" src="@GlobalPath.ImagePath/Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
+                                @*<span class="csspan">App Store</span>*@
+                            </a>
+                        </div>
+                        <div  class="logo4">
+                            <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android">
+                                <img style="height:40px;" alt=@Global.alt1 src="@GlobalPath.ImagePath/Get_it_on_Google_play.svg" />
+                                @*<span class="csspan">Google Play</span>*@
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -270,8 +423,9 @@
         </div>
         <div class="col-md-6">
             <ul class="bottom_ul">
-                <li><a href="/@Global.Lang/home/TermsConditions" style="font-weight:bold;"> @Html.Raw(Global.TermsConditions)</a></li>
-                <li><a href="/@Global.Lang/home/PrivacyPolicy" style="font-weight:bold;">@Html.Raw(Global.PrivacyPolicy)</a></li>
+                <li><a href="/@Global.Lang/home/TermsConditions" > @Global.TermsConditions</a></li>
+                <li>-</li>
+                <li><a href="/@Global.Lang/home/PrivacyPolicy" >@Global.PrivacyPolicy</a></li>
             </ul>
         </div>
     </div>

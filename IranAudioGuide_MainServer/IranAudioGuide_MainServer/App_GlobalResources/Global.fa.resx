@@ -589,7 +589,7 @@
     <value>دفتر راهنمای صوتی ایران</value>
   </data>
   <data name="OfficeAddress" xml:space="preserve">
-    <value>شیراز-  شهرک آرین- خیابان علم و فناوری - ساختمان مهرگان-اتاق 1112 -  کد پستی 7197687811  - تلفن 071363634709</value>
+    <value>شیراز-  شهرک آرین- خیابان علم و فناوری - ساختمان مهرگان-اتاق 1112 -  کد پستی 7197687811  - تلفن 07136364709</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>ارسال</value>
@@ -891,5 +891,26 @@
   </data>
   <data name="PriceSign" xml:space="preserve">
     <value>ریال</value>
+  </data>
+  <data name="email1" xml:space="preserve">
+    <value>ایمیل : info@iranaudioguide.com</value>
+  </data>
+  <data name="footer" xml:space="preserve">
+    <value>راهنمای کامل گردشگری در گوشی همراه خود داشته باشید و همیشه به قصه های تاریخی و اساطیری، دانستنی های تاریخی ، معماری و فرهنگی دسترسی داشته باشید</value>
+  </data>
+  <data name="officeaddress1" xml:space="preserve">
+    <value>شیراز-  شهرک آرین- خیابان علم و فناوری - ساختمان مهرگان-اتاق 1112 -  کد پستی 7197687811  </value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value>تلفن : 07136364709</value>
+  </data>
+  <data name="Getit" xml:space="preserve">
+    <value>دریافت اپلیکیشن</value>
+  </data>
+  <data name="Namad" xml:space="preserve">
+    <value>نماد اعتماد الکترونیک</value>
+  </data>
+  <data name="Sina" xml:space="preserve">
+    <value>سینا زندی</value>
   </data>
 </root>
