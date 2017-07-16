@@ -387,7 +387,7 @@
                   $rootScope.EditOverlay = false;
                   switch (response.data.status) {
                       case 0:
-                          $rootScope.$broadcast('UpdatePlaceTumbImage', {});
+                          $rootScope.$broadcast('UpdatePlaceTumbImage', response.data.content);
                           break;
                       case 1:
                           $rootScope.$broadcast('UpdateImageValidationSummery', {

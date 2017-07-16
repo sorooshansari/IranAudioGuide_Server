@@ -54,20 +54,27 @@
 </style>
 <div class="container-fluid">
     <!-- Image and text -->
+    <nav class="navbar navbar-ligth pt-0">
+        <div class="navbar-brand pt-0">
+            <img src="~/images/IAGSITELOGO.png" class="d-inline-block navImg" alt="@Global.IranAudioGuide" />
+            <span class="align-middle navHeader">@Global.IranAudioGuide</span>
+        </div>
+    </nav>
+
     <div class="jumbotron my-3 ">
 
         <div class="content-jumbotron">
             @if (ViewBag.Succeeded == true)
             {
-            <div class="fa-box successPayment">
-                <i class="fa fa-thumbs-o-up"></i>
-            </div>
+                <div class="fa-box successPayment">
+                    <i class="fa fa-thumbs-o-up"></i>
+                </div>
             }
             else
             {
-            <div class="fa-box failePayment">
-                <i class="fa fa-thumbs-o-down"></i>
-            </div>
+                <div class="fa-box failePayment">
+                    <i class="fa fa-thumbs-o-down"></i>
+                </div>
             }
             <p class="title"> @ViewBag.Message</p>
             <p>@ViewBag.ErrDesc</p>
@@ -76,26 +83,23 @@
                 <p><i class="fa fa-key"></i> @ViewBag.SaleReferenceId <p>
                     @if (ViewBag.Succeeded == true)
                     {
-            <p class="packInfo">@Global.PaymentPage27</p>
-                <p><i class="fa fa-briefcase"></i> @ViewBag.Packname  </p>
-                <p class="packInfo">@Global.Price</p>
-                <p><i class="fa fa-briefcase"></i> @ViewBag.Price  </p>
+                    <p class="packInfo">@Global.PaymentPage27</p>
+                    <p><i class="fa fa-briefcase"></i> @ViewBag.Packname  </p>
+                    <p class="packInfo">@Global.Price</p>
+                    <p><i class="fa fa-briefcase"></i> @ViewBag.Price  </p>
                     }
                 </div>
                 <div>
                     @if (ViewBag.Succeeded)
                     {
-                    <a class="btn btn-primary btn-block float-right" href="mobile/purchased" style="width:100px; font-size:small;">@Global.btnContinue</a>
+                        <a class="btn btn-primary btn-block float-right" href="mobile/purchased" style="width:100px; font-size:small;">@Global.btnContinue</a>
                     }
                     else
                     {
-                    <a class="btn btn-primary btn-block float-right" href="mobile/close" style="width:100px; font-size:small;">@Global.btnContinue</a>
+                        <a class="btn btn-primary btn-block float-right" href="mobile/close" style="width:100px; font-size:small;">@Global.btnContinue</a>
                     }
                 </div>
                 <div class="clearfix"></div>
             </div>
         </div>
     </div>
-
-
-<div ui-view></div>

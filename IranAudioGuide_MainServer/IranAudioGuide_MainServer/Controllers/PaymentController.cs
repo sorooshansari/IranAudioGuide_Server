@@ -63,17 +63,17 @@ namespace IranAudioGuide_MainServer.Controllers
                     dt1.Load(reader);
                     var Packege = dt1.AsEnumerable().Select(p => new PackagePymentVM()
                     {
-                        PackageId = p["PackageId"].convertToGuid(),
-                        PackageName = p["PackageName"].convertToString(),
-                        PackagePrice = p["PackagePrice"].convertToString(),
-                        PackagePriceDollar = p["PackagePriceDollar"].convertToString(),
+                        PackageId = p["PackageId"].ConvertToGuid(),
+                        PackageName = p["PackageName"].ConvertToString(),
+                        PackagePrice = p["PackagePrice"].ConvertToString(),
+                        PackagePriceDollar = p["PackagePriceDollar"].ConvertToString(),
                         PackageCities = dt1.AsEnumerable().Select(c => new CityPymentVM()
                         {
-                            CityID = c["CityId"].convertToInt(),
-                            CityName = c["CityName"].convertToString(),
-                            CityDesc = c["CityDescription"].convertToString(),
-                            TrackCount = c["TrackCount"].convertToInt(),
-                            PlaceCount = c["PlaceCount"].convertToInt()
+                            CityID = c["CityId"].ConvertToInt(),
+                            CityName = c["CityName"].ConvertToString(),
+                            CityDesc = c["CityDescription"].ConvertToString(),
+                            TrackCount = c["TrackCount"].ConvertToInt(),
+                            PlaceCount = c["PlaceCount"].ConvertToInt()
                         }).ToList()
                     }).FirstOrDefault();
                     return Packege;
@@ -386,7 +386,6 @@ namespace IranAudioGuide_MainServer.Controllers
 
             try
             {
-
                 if (IsZarinpal && ExtensionMethods.IsForeign)
                     ViewBag.IsChooesZarinpal = false;
                 else
@@ -403,26 +402,18 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         Subject = Global.ErrorEmailNotConfirmed,
                         Message = Global.ErrorEmailNotConfirmedMessage,
-                    });
+                    }); ;
 
-                PackageVM package = (from p in db.Packages
-                                     where p.Pac_Id == info.packageId
-                                     select new PackageVM()
-                                     {
-                                         PackageId = p.Pac_Id,
-                                         PackageName = p.Pac_Name,
-                                         PackagePrice = p.Pac_Price,
-                                         PackagePriceDollar = p.Pac_Price_Dollar,
-                                         PackageCities = (from c in db.Cities
-                                                          where (from pc in p.Pac_Cities select pc.Cit_Id).Contains(c.Cit_Id)
-                                                          select new CityVM()
-                                                          {
-                                                              CityDesc = c.Cit_Description,
-                                                              CityID = c.Cit_Id,
-                                                              CityName = c.Cit_Name
-                                                          }).ToList()
-                                     }).FirstOrDefault();
+                Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                var package = getPackageById(info.packageId);
+                if (package == null)
+                    return View("ErrorPageProfile", new vmessageVM()
+                    {
+                        Subject = Global.Error,
+                        Message = Global.ErrorNotFoundPackage,
+                    });
                 packname = package.PackageName;
+                await t;
                 ViewBag.Error = info.ErrorMessage;
                 return View(package);
             }
@@ -435,6 +426,8 @@ namespace IranAudioGuide_MainServer.Controllers
                     Message = Global.PleaseTryAgain,
                 });
             }
+
+       
         }
 
         #region zarinpal tools
@@ -576,14 +569,14 @@ namespace IranAudioGuide_MainServer.Controllers
                 ViewBag.ErrDesc = Global.PaymentAutomaticallyReturnMoney;
                 ViewBag.Succeeded = false;
 
-                int paymentId = Request.QueryString["PaymentId"].convertToInt();
+                int paymentId = Request.QueryString["PaymentId"].ConvertToInt();
                 if (paymentId == 0)
                     return;
-                var Authority = Request.QueryString["Authority"].convertToString();
+                var Authority = Request.QueryString["Authority"].ConvertToString();
                 if (string.IsNullOrEmpty(Authority))
                     return;
 
-                var Status = Request.QueryString["Status"].convertToString();
+                var Status = Request.QueryString["Status"].ConvertToString();
                 if (!Status.Equals("OK"))
                 {
                     UpdatePayment(paymentId, Status, 0, Authority, false);
@@ -619,10 +612,10 @@ namespace IranAudioGuide_MainServer.Controllers
                     System.Net.ServicePointManager.Expect100Continue = false;
                     var zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
                     string merchantCode = "2beca824-a5a6-11e6-8157-005056a205be";
-                    int status = zp.PaymentVerification(merchantCode, Authority, returnResults.Price.convertToInt(), out refId);
+                    int status = zp.PaymentVerification(merchantCode, Authority, returnResults.Price.ConvertToInt(), out refId);
                     if (status == 100 || status == 101)
                     {
-                        UpdatePayment(paymentId, status.convertToString(), refId, Authority, true);
+                        UpdatePayment(paymentId, status.ConvertToString(), refId, Authority, true);
                         ViewBag.SaleReferenceId = refId;
                         returnResults.ReferenceID = refId.ToString();
                         //"Payment completed successfully.";
@@ -634,7 +627,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     else
                     {
-                        UpdatePayment(paymentId, status.convertToString(), 0, Authority, false);
+                        UpdatePayment(paymentId, status.ConvertToString(), 0, Authority, false);
                         ViewBag.Message = PaymentResult.ZarinPal(Convert.ToString(status));
                         if (refId > 0)
                             ViewBag.SaleReferenceId = refId;

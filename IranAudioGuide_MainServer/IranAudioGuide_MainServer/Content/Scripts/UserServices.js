@@ -56,7 +56,7 @@ userApp.service('userServices', ['dataServices', function (dataServices) {
     }
     this.packages = [];
     this.sendEmailConfirmedAgain = function () {
-        return dataServices.post('/Account/SendEmailConfirmedAgain');
+        return dataServices.post('/en/Account/SendEmailConfirmedAgain');
     }
     this.getUser = function () {
         return dataServices.post('/api/userApi/GetCurrentUserInfo');
@@ -75,13 +75,13 @@ userApp.service('userServices', ['dataServices', function (dataServices) {
     }
     this.buyPakages = function (pak) {
 
-        return dataServices.get('/Payment/PaymentWeb', pak);
+        return dataServices.get('/en/Payment/PaymentWeb', pak);
     }
 }]);
 userApp.service('notificService', [function () {
     //jquery-notific8
     var optionsDefault = {
-        positionClass: 'toast-bottom-full-width', //'toast-bottom-full-width ',// 'toast-top-center',
+        positionClass: 'toast-top-center', // 'toast-bottom-full-width', //'toast-bottom-full-width ',// 'toast-top-center',
         life: 5000,
     };
     toastr.options = optionsDefault;

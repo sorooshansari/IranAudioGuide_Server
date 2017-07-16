@@ -2,11 +2,38 @@
     Layout = "~/Views/Shared/_LayouProfile.cshtml";
 }
 @using IranAudioGuide_MainServer.App_GlobalResources
-<div class="col-xs-12" ng-show="!user.IsEmailConfirmed">
-    <div class="alert alert-warning">
-        <strong> @Global.PageProfile20  </strong>@Global.PageProfile21 
-        <br />
-        @Global.PageProfile22 <a ng-click="sendEmailConfirmedAgain()">here</a>  to send you another Email
+<style>
+    .infoSendEmailAgain a{
+        font-weight:900;
+        color:#000;
+    }
+</style>
+@**@
+<div id="card-alert" class="card light-blue lighten-5" ng-show="!user.IsEmailConfirmed">
+    <div class="card-content light-blue-text" >        
+
+        <div class="preloader-box" ng-show="sendEmailConfirmed">
+            <div class="preloader-wrapper  active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="infoSendEmailAgain">
+            <strong> @Global.PageProfile20  </strong>@Global.PageProfile21
+            <br />
+            @Html.Raw(@Global.PageProfileSendEmailAgain);
+        </p>
     </div>
 </div>
+
+
+
 <div ui-view></div>

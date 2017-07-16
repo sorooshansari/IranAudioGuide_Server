@@ -207,40 +207,40 @@
   <data name="PageProfile" xml:space="preserve">
     <value>صفحه اصلی</value>
   </data>
-  <data name="PageProfile1" xml:space="preserve">
+  <data name="Packages" xml:space="preserve">
     <value>بسته ها</value>
   </data>
-  <data name="PageProfile10" xml:space="preserve">
+  <data name="MenuPurchased" xml:space="preserve">
     <value>خریداری شده</value>
   </data>
-  <data name="PageProfile11" xml:space="preserve">
+  <data name="MenuDevices" xml:space="preserve">
     <value>دستگاه ها</value>
   </data>
-  <data name="PageProfile12" xml:space="preserve">
+  <data name="LogOff" xml:space="preserve">
     <value>خروج</value>
   </data>
   <data name="PageProfile13" xml:space="preserve">
     <value>با فشار دادن</value>
   </data>
-  <data name="PageProfile14" xml:space="preserve">
+  <data name="PageProfileDeactive" xml:space="preserve">
     <value>غیر فعال کردن دستگاه های قبلی</value>
   </data>
-  <data name="PageProfile15" xml:space="preserve">
+  <data name="PageProfileDeactiveMsg" xml:space="preserve">
     <value>دکمه ای که با آن میتوانید دستگاه قدیمی خود را غیر فعال کنید (تلفن هوشمند و یا تبلت شما)</value>
   </data>
-  <data name="PageProfile16" xml:space="preserve">
+  <data name="PageProfileDeactiveMsg2" xml:space="preserve">
     <value>سپس با دستگاهی که میخواهید استفاده کنید وارد پنل کاربری شوید تا به بسته های خود دسترسی داشته باشید</value>
   </data>
-  <data name="PageProfile17" xml:space="preserve">
+  <data name="Remmember" xml:space="preserve">
     <value>مرا به خاطر داشته باش!</value>
   </data>
-  <data name="PageProfile18" xml:space="preserve">
+  <data name="PageProfileDeactiveMsg3" xml:space="preserve">
     <value>فقط هر 6 ماه یکبار قابل دسترسی است</value>
   </data>
-  <data name="PageProfile19" xml:space="preserve">
+  <data name="DeactivateOldDevice" xml:space="preserve">
     <value>غیر فعال کردن دستگاه قدیمی</value>
   </data>
-  <data name="PageProfile2" xml:space="preserve">
+  <data name="PageProfileDeactiveYouHaveNotSet" xml:space="preserve">
     <value>شما هنوز هیچ دستگاهی را به حساب خود متصل نکرده اید</value>
   </data>
   <data name="PageProfile20" xml:space="preserve">
@@ -249,8 +249,8 @@
   <data name="PageProfile21" xml:space="preserve">
     <value>لطفاً ایمیل خود را چک کنید</value>
   </data>
-  <data name="PageProfile22" xml:space="preserve">
-    <value>اگر همچنان ایمیل تأییدیه را دریافت نکرده اید کلیک کنید</value>
+  <data name="PageProfileSendEmailAgain" xml:space="preserve">
+    <value>اگر همچنان ایمیل تأییدیه را دریافت نکرده اید &lt;a ng-click="sendEmailConfirmedAgain()"&gt; اینجا&lt;/a&gt; را کلیک کنید. تا دوباره برای شما ارسال شود  </value>
   </data>
   <data name="PageProfile23" xml:space="preserve">
     <value>پرداخت با کارت های بین المللی</value>
@@ -417,7 +417,7 @@
   <data name="PaymentPage21" xml:space="preserve">
     <value>شرح</value>
   </data>
-  <data name="PaymentPage22" xml:space="preserve">
+  <data name="PaymentGateway" xml:space="preserve">
     <value>دروازه ی پرداخت</value>
   </data>
   <data name="PaymentPage23" xml:space="preserve">
@@ -457,7 +457,7 @@
     <value>عنوان</value>
   </data>
   <data name="SectionOneH2" xml:space="preserve">
-    <value>فقط به گردش در ایران بسنده نکنید&lt;br/&gt;تاریخش را بیاموزید، قصه هایش را بشنوید و فرهنگش را لمس کنید</value>
+    <value>فقط به گردش در ایران بسنده نکنید؛ &lt;br/&gt;تاریخش را بیاموزید، قصه هایش را بشنوید و فرهنگش را لمس کنید</value>
   </data>
   <data name="SectionOneMessage" xml:space="preserve">
     <value>به زودی عرضه خواهد شد. &lt;br /&gt; زمان عرضه را به شما اطلاع خواهیم داد</value>
@@ -589,7 +589,7 @@
     <value>دفتر راهنمای صوتی ایران</value>
   </data>
   <data name="OfficeAddress" xml:space="preserve">
-    <value>شیراز-  شهرک آرین- خیابان علم و فناوری - ساختمان مهرگان-اتاق 1112 -  کد پستی 7197687811  - تلفن 07136364709</value>
+    <value>شیراز-  شهرک آرین- پارک علم و فناوری - شرکت دوراندیش  -  کد پستی 7197687811</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>ارسال</value>
@@ -760,7 +760,7 @@
   <data name="PaymentEmailInfo" xml:space="preserve">
     <value>اگر سوال یا هر مشکلی  داشتید، لطفا یک ایمیل به &lt;a href="mailto:info@iranaudioguide.com" &gt; Info@iranaudioguide.com&lt;/a&gt; ارسال کنید</value>
   </data>
-  <data name="PageProfile133" xml:space="preserve">
+  <data name="PageProfileDevicesWantTo" xml:space="preserve">
     <value>Want to change your device?</value>
   </data>
   <data name="ImagePath" xml:space="preserve">
@@ -899,7 +899,7 @@
     <value>راهنمای کامل گردشگری در گوشی همراه خود داشته باشید و همیشه به قصه های تاریخی و اساطیری، دانستنی های تاریخی ، معماری و فرهنگی دسترسی داشته باشید</value>
   </data>
   <data name="officeaddress1" xml:space="preserve">
-    <value>شیراز-  شهرک آرین- خیابان علم و فناوری - ساختمان مهرگان-اتاق 1112 -  کد پستی 7197687811  </value>
+    <value>شیراز-  شهرک آرین- پارک علم و فناوری - شرکت دوراندیش  -  کد پستی 7197687811  </value>
   </data>
   <data name="phone" xml:space="preserve">
     <value>تلفن : 07136364709</value>
@@ -912,5 +912,38 @@
   </data>
   <data name="Sina" xml:space="preserve">
     <value>سینا زندی</value>
+  </data>
+  <data name="Callto" xml:space="preserve">
+    <value>+9807136364709</value>
+  </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>تغییر زبان</value>
+  </data>
+  <data name="MenuHome" xml:space="preserve">
+    <value>صفحه اصلی</value>
+  </data>
+  <data name="NumberPhone" xml:space="preserve">
+    <value>07136364709</value>
+  </data>
+  <data name="NumberPhone1" xml:space="preserve">
+    <value>(+98) 71-36364709</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="PaymentGatewayInfo" xml:space="preserve">
+    <value>Choose your payment gateways for purchasing </value>
+  </data>
+  <data name="WebMoney" xml:space="preserve">
+    <value>Web Money</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="LangOtherTitle" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Shetab" xml:space="preserve">
+    <value>شتاب</value>
   </data>
 </root>

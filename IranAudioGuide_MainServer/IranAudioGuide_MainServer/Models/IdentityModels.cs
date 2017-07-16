@@ -405,9 +405,8 @@ namespace IranAudioGuide_MainServer.Models
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public System.Guid Dow_Id { get; set; }
-        public string FileName { get; set; }
-
+        public Guid Dow_Id { get; set; }
+        public string Track_Id { get; set; }
         public string Path { get; set; }
         public DateTime TimeToVisit { get; set; }
         public bool IsDisable { get; internal set; }

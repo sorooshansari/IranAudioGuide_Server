@@ -639,12 +639,26 @@ angular.module('AdminPage.controllers', [])
             //$('#ForignKeyErrorModal').modal('show');
 
         });
-        $scope.$on('UpdatePlaceImage', function (event) {
-            $scope.selectedPlace.Img = $scope.selectedPlace.Img + "?" + new Date().getMilliseconds();
-            $rootScope.placeimage = $scope.selectedPlace.Img;
+        $scope.$on('UpdatePlaceImage', function (event, data) {
+             try {
+                 $scope.selectedPlace.Img = data + "?" + new Date().getMilliseconds();
+                 $rootScope.placeimage = url;
+
+
+            }
+            catch (error) {
+                console.log(error);
+            }
+
         });
-        $scope.$on('UpdatePlaceTumbImage', function (event) {
-            $scope.selectedPlace.TumbImgUrl = $scope.selectedPlace.TumbImgUrl + "?" + new Date().getMilliseconds();
+        $scope.$on('UpdatePlaceTumbImage', function (event, data) {
+            try {
+                $scope.selectedPlace.TumbImgUrl = data.url + "?" + new Date().getMilliseconds();
+
+            }
+            catch (error) {
+                console.log(error);
+            }
         });
         $scope.$on('UpdateImageValidationSummery', function (event, data) {
             console.log(data);

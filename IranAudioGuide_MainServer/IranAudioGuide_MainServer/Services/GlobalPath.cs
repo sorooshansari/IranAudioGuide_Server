@@ -4,7 +4,7 @@ namespace IranAudioGuide_MainServer
     public static class GlobalPath
     {
         //pourmand
-        //public static readonly string ConnectionString = @"Data Source=DESKTOP-KUDE22P\POURMANDDB;Initial Catalog=iranaud1_admin;Integrated Security=True";
+        //   public static readonly string ConnectionString = @"Data Source=DESKTOP-KUDE22P\POURMANDDB;Initial Catalog=iranaud1_admin;Integrated Security=True";
         //sina Connection
         //public static readonly string ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = IranAudTest; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         //Danial Connection

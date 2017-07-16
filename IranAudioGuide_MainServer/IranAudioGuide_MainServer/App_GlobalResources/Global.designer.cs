@@ -196,6 +196,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to +9807136364709.
+        /// </summary>
+        public static string Callto {
+            get {
+                return ResourceManager.GetString("Callto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ChangeLanguage.
+        /// </summary>
+        public static string ChangeLanguage {
+            get {
+                return ResourceManager.GetString("ChangeLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose your payment gateway.
         /// </summary>
         public static string ChooseYourPaymentGateway {
@@ -259,11 +277,29 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deactivate Old Device.
+        /// </summary>
+        public static string DeactivateOldDevice {
+            get {
+                return ResourceManager.GetString("DeactivateOldDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code.
         /// </summary>
         public static string DispalyCode {
             get {
                 return ResourceManager.GetString("DispalyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have access to the package below. Thank you for your purchase!.
+        /// </summary>
+        public static string E {
+            get {
+                return ResourceManager.GetString("E", resourceCulture);
             }
         }
         
@@ -565,6 +601,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to فارسی.
+        /// </summary>
+        public static string LangOtherTitle {
+            get {
+                return ResourceManager.GetString("LangOtherTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         public static string LangTitle {
@@ -583,6 +628,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log Off.
+        /// </summary>
+        public static string LogOff {
+            get {
+                return ResourceManager.GetString("LogOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  پرداخت.
         /// </summary>
         public static string MailSubjectForPayment {
@@ -597,6 +651,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string MenuContactUs {
             get {
                 return ResourceManager.GetString("MenuContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devices.
+        /// </summary>
+        public static string MenuDevices {
+            get {
+                return ResourceManager.GetString("MenuDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string MenuHome {
+            get {
+                return ResourceManager.GetString("MenuHome", resourceCulture);
             }
         }
         
@@ -637,6 +709,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Purchased.
+        /// </summary>
+        public static string MenuPurchased {
+            get {
+                return ResourceManager.GetString("MenuPurchased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string MenuRegister {
@@ -655,7 +736,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Symbol of Electronic Trust.
+        ///   Looks up a localized string similar to logo of site trustability issued by Iranian Authority.
         /// </summary>
         public static string Namad {
             get {
@@ -664,7 +745,16 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mehregan Building, Room 1112 - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811  - (+98) 71 - 363634709.
+        ///   Looks up a localized string similar to (+98) 71-36364709.
+        /// </summary>
+        public static string NumberPhone {
+            get {
+                return ResourceManager.GetString("NumberPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shiraz Durandish Programmers - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811  - (+98) 71 - 363634709.
         /// </summary>
         public static string OfficeAddress {
             get {
@@ -673,7 +763,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mehregan Building, Room 1112 - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811.
+        ///   Looks up a localized string similar to Shiraz Durandish Programmers - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811.
         /// </summary>
         public static string officeaddress1 {
             get {
@@ -687,6 +777,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string PackageInfo {
             get {
                 return ResourceManager.GetString("PackageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packages.
+        /// </summary>
+        public static string Packages {
+            get {
+                return ResourceManager.GetString("Packages", resourceCulture);
             }
         }
         
@@ -736,123 +835,6 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Packages.
-        /// </summary>
-        public static string PageProfile1 {
-            get {
-                return ResourceManager.GetString("PageProfile1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Purchased.
-        /// </summary>
-        public static string PageProfile10 {
-            get {
-                return ResourceManager.GetString("PageProfile10", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Device.
-        /// </summary>
-        public static string PageProfile11 {
-            get {
-                return ResourceManager.GetString("PageProfile11", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Log Off.
-        /// </summary>
-        public static string PageProfile12 {
-            get {
-                return ResourceManager.GetString("PageProfile12", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to By pressing the.
-        /// </summary>
-        public static string PageProfile13 {
-            get {
-                return ResourceManager.GetString("PageProfile13", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Want to change your device?.
-        /// </summary>
-        public static string PageProfile133 {
-            get {
-                return ResourceManager.GetString("PageProfile133", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DEACTIVATE OLD DEVICE.
-        /// </summary>
-        public static string PageProfile14 {
-            get {
-                return ResourceManager.GetString("PageProfile14", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to button you can deactivate your old device (your smart phone or tablet)..
-        /// </summary>
-        public static string PageProfile15 {
-            get {
-                return ResourceManager.GetString("PageProfile15", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Then sign in with the device you intend to use to set the device and gain access to your packages..
-        /// </summary>
-        public static string PageProfile16 {
-            get {
-                return ResourceManager.GetString("PageProfile16", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remmember!.
-        /// </summary>
-        public static string PageProfile17 {
-            get {
-                return ResourceManager.GetString("PageProfile17", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This is only possible every 6 months once..
-        /// </summary>
-        public static string PageProfile18 {
-            get {
-                return ResourceManager.GetString("PageProfile18", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deactivate Old Device.
-        /// </summary>
-        public static string PageProfile19 {
-            get {
-                return ResourceManager.GetString("PageProfile19", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You have not set any devices to your account yet..
-        /// </summary>
-        public static string PageProfile2 {
-            get {
-                return ResourceManager.GetString("PageProfile2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Not Confirmed yet!.
         /// </summary>
         public static string PageProfile20 {
@@ -867,15 +849,6 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string PageProfile21 {
             get {
                 return ResourceManager.GetString("PageProfile21", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to if you have not received the confirmation email yet, click.
-        /// </summary>
-        public static string PageProfile22 {
-            get {
-                return ResourceManager.GetString("PageProfile22", resourceCulture);
             }
         }
         
@@ -921,6 +894,78 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string PageProfile27 {
             get {
                 return ResourceManager.GetString("PageProfile27", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By pressing the.
+        /// </summary>
+        public static string PageProfileByPressingThe {
+            get {
+                return ResourceManager.GetString("PageProfileByPressingThe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEACTIVATE OLD DEVICE.
+        /// </summary>
+        public static string PageProfileDeactive {
+            get {
+                return ResourceManager.GetString("PageProfileDeactive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to button you can deactivate your old device (your smart phone or tablet)..
+        /// </summary>
+        public static string PageProfileDeactiveMsg {
+            get {
+                return ResourceManager.GetString("PageProfileDeactiveMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Then sign in with the device you intend to use to set the device and gain access to your packages..
+        /// </summary>
+        public static string PageProfileDeactiveMsg2 {
+            get {
+                return ResourceManager.GetString("PageProfileDeactiveMsg2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is only possible every 6 months once..
+        /// </summary>
+        public static string PageProfileDeactiveMsg3 {
+            get {
+                return ResourceManager.GetString("PageProfileDeactiveMsg3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have not set any devices to your account yet..
+        /// </summary>
+        public static string PageProfileDeactiveYouHaveNotSet {
+            get {
+                return ResourceManager.GetString("PageProfileDeactiveYouHaveNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Want to change your device?.
+        /// </summary>
+        public static string PageProfileDevicesWantTo {
+            get {
+                return ResourceManager.GetString("PageProfileDevicesWantTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if you have not received the confirmation email yet, click &lt;a ng-click=&quot;sendEmailConfirmedAgain()&quot;&gt;here&lt;/a&gt;  to send you another Email.
+        /// </summary>
+        public static string PageProfileSendEmailAgain {
+            get {
+                return ResourceManager.GetString("PageProfileSendEmailAgain", resourceCulture);
             }
         }
         
@@ -1376,6 +1421,24 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment Gateway.
+        /// </summary>
+        public static string PaymentGateway {
+            get {
+                return ResourceManager.GetString("PaymentGateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose your payment gateways for purchasing.
+        /// </summary>
+        public static string PaymentGatewayInfo {
+            get {
+                return ResourceManager.GetString("PaymentGatewayInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sorry, you cant buy this package!.
         /// </summary>
         public static string PaymentMsg {
@@ -1435,15 +1498,6 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string PaymentPage21 {
             get {
                 return ResourceManager.GetString("PaymentPage21", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Payment Gateway.
-        /// </summary>
-        public static string PaymentPage22 {
-            get {
-                return ResourceManager.GetString("PaymentPage22", resourceCulture);
             }
         }
         
@@ -1719,11 +1773,29 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remmember.
+        /// </summary>
+        public static string Remmember {
+            get {
+                return ResourceManager.GetString("Remmember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reference ID.
         /// </summary>
         public static string ReturnPaymentReferenceID {
             get {
                 return ResourceManager.GetString("ReturnPaymentReferenceID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
             }
         }
         
@@ -2017,6 +2089,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shetab.
+        /// </summary>
+        public static string Shetab {
+            get {
+                return ResourceManager.GetString("Shetab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage your Iran Audio Guide account easily through our website.
         /// </summary>
         public static string signInSubHeader {
@@ -2058,6 +2139,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string SpotlightContentP {
             get {
                 return ResourceManager.GetString("SpotlightContentP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support.
+        /// </summary>
+        public static string Support {
+            get {
+                return ResourceManager.GetString("Support", resourceCulture);
             }
         }
         
@@ -2175,6 +2265,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string UnauthorizedDevice {
             get {
                 return ResourceManager.GetString("UnauthorizedDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Web Money.
+        /// </summary>
+        public static string WebMoney {
+            get {
+                return ResourceManager.GetString("WebMoney", resourceCulture);
             }
         }
         

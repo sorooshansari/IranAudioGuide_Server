@@ -13,7 +13,7 @@ namespace dbUpdater
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            ServiceSqlServer.StoredProcedureExists();
+            ServiceSqlServer.Stored ProcedureExists();
             var job = new ScheduleDownloadLink();
             job.Run();
         }

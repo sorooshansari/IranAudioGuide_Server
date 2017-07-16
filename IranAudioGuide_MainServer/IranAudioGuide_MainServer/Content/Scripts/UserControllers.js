@@ -24,15 +24,99 @@ userApp.service('fileUpload', ['$http', function ($http) {
             transformRequest: angular.identity,
             headers: { 'Content-Type': undefined }
         })
-        .success(function () {
-        })
-        .error(function () {
-        });
+            .success(function () {
+            })
+            .error(function () {
+            });
     }
 }]);
-
 userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
     function ($window, $scope, userServices, $timeout, notific, $http, $state) {
+
+
+        //var timeoutID = window.setTimeout(function () {
+        //    $(".userPreloader.progress").addClass("hidden");
+        //}, [1000]);
+        //$('.button-collapse').sideNav({
+        //    menuWidth: 300, // Default is 300
+        //    edge: 'left', // Choose the horizontal origin
+        //    closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        //    draggable: true, // Choose whether you can drag to open on touch screens,
+        //    onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
+        //    onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+        //}
+        //);
+
+        $('.modal').modal({
+            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+            //opacity: .5, // Opacity of modal background
+            //inDuration: 300, // Transition in duration
+            //outDuration: 200, // Transition out duration
+            //startingTop: '4%', // Starting top style attribute
+            //endingTop: '10%', // Ending top style attribute
+            ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                console.log("modal Ready");
+                //console.log(modal, trigger);
+            },
+            complete: function () {
+                console.log('modal Closed');
+            } // Callback for Modal close
+        }
+        );
+        $scope.OpenModal = function (pack) {
+            $scope.itemPack = pack;
+            $('#modal1').modal('open');
+
+        };
+        $scope.closeModal = function () {
+            $('#modal1').modal('close');
+        }
+      
+        $scope.buyPakages = function (isChooesZarinpal) {
+            $('#modal1').modal('close');
+            $scope.profile.isCompletedLoading = true;
+            $state.go('Payment', {
+                PackageId: $scope.itemPack.PackageId,
+                IsChooesZarinpal: isChooesZarinpal
+            });
+        }
+     
+
+        //end modal
+
+
+        $scope.isloadImage = true;
+        $('.collapsible').collapsible({
+            accordion: false, // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            onOpen: function (el) {
+                var that = el;
+                $timeout(function () {
+                    that.city.IsloadImage = false;
+                }, 100000);
+
+
+            }, // Callback for Collapsible open
+            onClose: function (el) { console.log(el, 'Closed'); } // Callback for Collapsible close
+        });
+
+
+        $scope.OpenCollapsibleBody = function (city) {
+            console.log("click", city);
+            $scope.city
+        }
+        var refreshPack = function () {
+            $timeout(function () {
+                $('.collapsible').collapsible();
+                $scope.profile.isCompletedLoading = false;
+
+            }, 1000);
+
+            $timeout(function () {
+                $scope.isloadImage = false;
+            }, 100000);
+
+            $scope.listPakages = angular.copy($scope.profile.packages)
+        }
 
 
         $scope.profile = {
@@ -41,7 +125,24 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             packagesPurchased: [],
             isCompletedLoading: true
         };
+        if ($scope.profile.packages.length === 0) {
+            userServices.getPackages().then(function (data) {
+                console.log("getpackfrom service", data)
+                $scope.profile.packages = data;
+                angular.forEach(data, function (item, index) {
+                    if (item.isPackagesPurchased === true) {
+                        $scope.profile.packagesPurchased.push(item);
+                    }
+                });
+                refreshPack();
+            }, function () {
+                $scope.profile.isCompletedLoading = false;
 
+            });
+        }
+        else {
+            refreshPack();
+        }
         $scope.uploadFile = function (files) {
             var fd = new FormData();
             //Take the first selected file
@@ -62,21 +163,49 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             isAutintication: false,
             IsEmailConfirmed: true,
         }
-        $scope.LogOff = function () {
-            userServices.LogOff();
-            $window.location.href = 'http://iranaudioguide.com';
-        }
+        //$scope.LogOff = function () {
+        //    userServices.LogOff();
+        //    $window.location.href = 'http://iranaudioguide.com';
+        //}
         userServices.getUser().then(function (data) {
+            try {
+                if (typeof data.FullName != undefined || data.FullName != null)
+                    $scope.user.FullName = data.FullName;
 
-            $scope.user = data;
-            $scope.user.FullName = data.Email;
-            if (data.imgUrl == null) {
-                data.imgUrl = "../images/default_avatar.png";
+                if (typeof data.Email != undefined)
+                    $scope.user.Email = data.Email;
+
+                if (typeof data.imgUrl != undefined || data.imgUrl === null)
+                    $scope.user.imgUrl = data.imgUrl;
+                else
+                    data.imgUrl = "../images/default_avatar.png";
+
+                if (typeof data.IsEmailConfirmed != undefined)
+                    $scope.user.IsEmailConfirmed = data.IsEmailConfirmed;
+
+                if (typeof data.IsSetuuid != undefined)
+                    $scope.user.IsSetuuid = data.IsSetuuid;
+
+                if (typeof data.IsAccessChangeUuid != undefined)
+                    $scope.user.IsAccessChangeUuid = data.IsAccessChangeUuid;
+
+                if (typeof data.TimeSetUuid != undefined)
+                    $scope.user.TimeSetUuid = data.TimeSetUuid;
+
+                if (typeof data.IsForeign != undefined)
+                    $scope.user.IsForeign = data.IsForeign;
+
+                $scope.user.isAutintication = true;
             }
-            $scope.user.uImageUrl = data.imgUrl;
-            if (data.FullName !== null)
-                $scope.user.FullName = data.FullName
-            $scope.user.isAutintication = true;
+            catch (error) {
+                $scope.user.FullName = data.FullName;
+                $scope.user.Email = data.Email;
+                $scope.user.IsSetuuid = false;
+                $scope.user.IsAccessChangeUuid = false;
+                $scope.user.IsForeign = data.IsForeign;
+            }
+
+            //   $scope.profile.isCompletedLoading = false;
         });
 
         $scope.deactivateMobile = function () {
@@ -91,268 +220,294 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
                     notific.error("ERROR", error.Message);
                 });
         }
-        $scope.getPackages = function (event) {
 
-            if ($scope.profile.packages.length == 0) {
-                userServices.getPackages().then(function (data) {
-                    //console.log("getpackfrom service", data)
-                    $scope.profile.packages = data;
-                    angular.forEach(data, function (item, index) {
-                        if (item.isPackagesPurchased == true) {
-                            $scope.profile.packagesPurchased.push(item);
-                        }
-                    });
-                  //  $scope.profile.isCompletedLoading = false;
-                }, function () {
-                  //  $scope.profile.isCompletedLoading = false;
 
-                });
-            }
+        //$timeout(function () {
+        //    angular.element('#btnGetPakage').triggerHandler('click');
+        //}, 0);
 
-        }
-
-        $timeout(function () {
-            angular.element('#btnGetPakage').triggerHandler('click');
-        }, 0);
-
+        $scope.sendEmailConfirmed = false;
 
         $scope.sendEmailConfirmedAgain = function () {
+
+            $scope.sendEmailConfirmed = true;
             userServices.sendEmailConfirmedAgain().then(function (data) {
-                //console.log(data);
-                if (data.status == 0)
+                $scope.sendEmailConfirmed = false;
+                if (data.status === 0)
                     notific.success("", data.content);
 
             }, function (error) {
+
+                $scope.sendEmailConfirmed = false;
+
             });
         }
 
-    }]);
-userApp.controller('PackagesCtrl', ['$state', '$scope', 'userServices', '$timeout', function ($state, $scope, userServices, $timeout) {
-    $timeout(function () {
-        $scope.profile.isCompletedLoading = false;
-    }, 1000);
-   
-    $scope.pak = {};
-    $scope.showModal = function (pak) {
-        //console.log(pak);
-        $scope.pak = pak;
-        $('#myModal').modal('show');
-    }
-    $scope.buyPakages = function (isChooesZarinpal) {
-        $('#myModal').modal('hide');
-        $scope.profile.isCompletedLoading = true;
-        $scope.isChooesZarinpal = isChooesZarinpal;
-    }
-    $('#myModal').on('hidden.bs.modal', function (e) {
-        $state.go('Payment', {
-            PackageId: $scope.pak.PackageId,
-            IsChooesZarinpal: $scope.isChooesZarinpal
-        });
-    })
 
-    $scope.typeEachItemFoSelection = [
-        { type: 0, name: 'City', icon: "fa fa-map-marker", className: "itemSelcted box-city" },
-        { type: 1, name: 'Place', icon: "fa fa-map-pin", className: "itemSelcted box-place" }
-    ];
-    $scope.searhPakage = {
-        item: []
-    };
+        //var initPakage = function () {
+
+        //    $scope.pakageForSelected = [];
+        //    $scope.selectId = 0;
+        //    $scope.pakageForSelected = [];
+        //    _.each($scope.profile.packages, function (pak) {
+        //        _.each(pak.PackageCities, function (city) {
+        //            var findItem = false;
+        //            for (var i = 0; i < $scope.pakageForSelected.length; i++) {
+        //                var itemEntry = $scope.pakageForSelected[i];
+        //                if (itemEntry.idItem == city.CityID) {
+        //                    itemEntry.packages.push(pak)
+        //                    findItem = true;
+        //                    break;
+        //                }
+        //            }
+        //            if (!findItem)
+        //                $scope.pakageForSelected.push({
+        //                    id: $scope.selectId++,
+        //                    idItem: city.CityID,
+        //                    // این گزینه برای این است که در جستجو  پکبج ها مشکلی پیش نیاد
+        //                    CityID: city.CityID,// 
+        //                    type: $scope.typeEachItemFoSelection[0].type,
+        //                    title: city.CityName,
+        //                    description: "There are " + city.Places.length + " locations for this city",
+        //                    packages: [pak]
+        //                })
+        //            _.each(city.Places, function (plc) {
+        //                var findItem = false;
+        //                for (var i = 0; i < $scope.pakageForSelected.length; i++) {
+        //                    var itemEntry = $scope.pakageForSelected[i];
+        //                    if (itemEntry.idItem == plc.PlaceId) {
+        //                        itemEntry.packages.push(pak)
+        //                        findItem = true;
+        //                        break;
+        //                    }
+        //                }
+        //                if (!findItem)
+        //                    $scope.pakageForSelected.push({
+        //                        id: $scope.selectId++,
+        //                        idItem: plc.PlaceId,
+        //                        CityID: city.CityID,
+        //                        type: $scope.typeEachItemFoSelection[1].type,
+        //                        title: plc.PlaceName,
+        //                        description: "There is this place in " + city.CityName,
+        //                        packages: [pak]
+        //                    })
+        //            });//end each place
+        //        });//end each pack.PackageCities
+
+        //    })//end each $scope.profile.package
+
+        //    $scope.listPakages = angular.copy($scope.profile.packages);
+        //    refreshPackCss();
+        //    //console.log($scope.listPakages);
+        //}
 
 
+        // ******************************** end getPackages
 
-    $scope.$watch("profile.packages", function (newval, oldval) {
-        if (typeof newval != undefined) {
-            initPakage();
-        }
-    });
-
-    var intersection = function (searchItem) {
-
-        for (var i = 0; i < $scope.listPakages.length; i++) {
-            var pak = $scope.listPakages[i];
-            var findPak = false;
-            for (var inewp = 0; inewp < searchItem.packages.length  ; inewp++)//&& $scope.listPakages.length != 0
+        $scope.allContacts = [
             {
-                var newPak = searchItem.packages[inewp];
-                if (pak.PackageId == newPak.PackageId) {
-                    findPak = true;
-                    break;
-                }
-            }//end search 2
-            if (!findPak)
-                $scope.listPakages.pop(pak);
-        }
-
-        if ($scope.listPakages.length == 0)
-            $scope.listPakages = searchItem.packages;
-    }
-
-    var setPakages = function (searchItem) {
-
-        var isFindCity = false;
-        //چک می کنیم که این شهر قبلا انتخاب شده یا نه
-        for (var i = 0; i < arrayCity.length; i++) {
-            if (arrayCity[i].CityID == searchItem.CityID) {
-                isFindCity = true;
-                break;
+                name: 'Marina Augustine',
+            }, {
+                name: 'Oddr Sarno',
+            }, {
+                name: 'Nick Giannopoulos',
+            }, {
+                name: 'Narayana Garner',
+            }, {
+                name: 'Anita Gros',
+            }, {
+                name: 'Megan Smith',
+            }, {
+                name: 'Tsvetko Metzger',
+            }, {
+                name: 'Hector Simek',
+            }, {
+                name: 'Some-guy withalongalastaname'
             }
-        }
-        if (arrayCity.length == 0) {
-            arrayCity.push({ CityID: searchItem.CityID, packages: searchItem.packages });
-            $scope.listPakages = searchItem.packages;
-        }
-        else if (!isFindCity) {
-            arrayCity.push({ CityID: searchItem.CityID, packages: searchItem.packages });
-            intersection(searchItem);
-        }
-    }
-    var arrayCity = [];
-    $scope.listPakages = [];
+        ];
 
-    $scope.$watch("searhPakage.item", function (listSelected, oldval) {
 
-        if (typeof listSelected == undefined || listSelected.length == 0) {
-            arrayCity = [];
-            $scope.listPakages = angular.copy($scope.profile.packages);
-            return;
+        //var pendingSearch, cancelSearch = angular.noop;
+        //var lastSearch;
+
+
+        // $scope.contacts = [$scope.allContacts[0]];
+        //$scope.asyncContacts = [];
+        $scope.filterSelected = true;
+
+        //    $scope.querySearch = querySearch;
+        //    $scope.delayedQuerySearch = delayedQuerySearch;
+
+        /**
+         * Search for contacts; use a random delay to simulate a remote call
+         */
+        $scope.querySearch = function (criteria) {
+            var list = criteria ? $scope.allContacts.filter(createFilterFor(criteria)) : [];
+            return list;
         }
 
-        // delete city of search
-        if (listSelected.length < oldval.length) {
-            var findItem = false;
-            var searchItem = _.difference(listSelected, oldval);
+
+        function createFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+            return function filterFn(contact) {
+                return (angular.lowercase(contact.name).indexOf(lowercaseQuery) != -1);
+            };
+        }
+        // ******************************************************end search
+
+
+
+   
+        $scope.typeEachItemFoSelection = [
+            { type: 0, name: 'City', icon: "fa fa-map-marker", className: "itemSelcted box-city" },
+            { type: 1, name: 'Place', icon: "fa fa-map-pin", className: "itemSelcted box-place" }
+        ];
+        $scope.searhPakage = {
+            item: []
+        };
+
+
+
+        //$scope.$watch("profile.packages", function (newval, oldval) {
+        //    console.log("$scope.profile.packages", $scope.profile.packages);
+        //    if (typeof newval != undefined) {
+        //        initPakage();
+        //    }
+        //});
+
+        var intersection = function (searchItem) {
+
+            for (var i = 0; i < $scope.listPakages.length; i++) {
+                var pak = $scope.listPakages[i];
+                var findPak = false;
+                for (var inewp = 0; inewp < searchItem.packages.length; inewp++)//&& $scope.listPakages.length != 0
+                {
+                    var newPak = searchItem.packages[inewp];
+                    if (pak.PackageId === newPak.PackageId) {
+                        findPak = true;
+                        break;
+                    }
+                }//end search 2
+                if (!findPak)
+                    $scope.listPakages.pop(pak);
+            }
+
+            if ($scope.listPakages.length == 0)
+                $scope.listPakages = searchItem.packages;
+        }
+
+        var setPakages = function (searchItem) {
+
+            var isFindCity = false;
             //چک می کنیم که این شهر قبلا انتخاب شده یا نه
-            for (var i = 0; i < listSelected.length; i++) {
-                if (searchItem.CityID == listSelected[i].CityID) {
-                    findItem = true;
+            for (var i = 0; i < arrayCity.length; i++) {
+                if (arrayCity[i].CityID == searchItem.CityID) {
+                    isFindCity = true;
                     break;
                 }
             }
-            if (findItem)
-                return;
-            arrayCity = [];
-            $scope.listPakages = [];
-            for (var i = 0; i < listSelected.length; i++) {
-                var searchItem = angular.copy(listSelected[i]);
-                setPakages(searchItem);
+            if (arrayCity.length === 0) {
+                arrayCity.push({ CityID: searchItem.CityID, packages: searchItem.packages });
+                $scope.listPakages = searchItem.packages;
             }
-        } // end delete city of search
-
-        else {
-            //add search
-            var searchItem = angular.copy(listSelected[listSelected.length - 1]);
-            setPakages(searchItem);
+            else if (!isFindCity) {
+                arrayCity.push({ CityID: searchItem.CityID, packages: searchItem.packages });
+                intersection(searchItem);
+            }
         }
-    });
-    var initPakage = function () {
+        var arrayCity = [];
+        $scope.listPakages = [];
 
-        $scope.pakageForSelected = [];
-        $scope.selectId = 0;
-        $scope.pakageForSelected = [];
-        _.each($scope.profile.packages, function (pak) {
-            _.each(pak.PackageCities, function (city) {
+        $scope.$watch("searhPakage.item", function (listSelected, oldval) {
+
+            if (typeof listSelected === undefined || listSelected.length === 0) {
+                arrayCity = [];
+                $scope.listPakages = angular.copy($scope.profile.packages);
+                return;
+            }
+
+            // delete city of search
+            if (listSelected.length < oldval.length) {
                 var findItem = false;
-                for (var i = 0; i < $scope.pakageForSelected.length; i++) {
-                    var itemEntry = $scope.pakageForSelected[i];
-                    if (itemEntry.idItem == city.CityID) {
-                        itemEntry.packages.push(pak)
+                var searchItem = _.difference(listSelected, oldval);
+                //چک می کنیم که این شهر قبلا انتخاب شده یا نه
+                for (var i = 0; i < listSelected.length; i++) {
+                    if (searchItem.CityID == listSelected[i].CityID) {
                         findItem = true;
                         break;
                     }
                 }
-                if (!findItem)
-                    $scope.pakageForSelected.push({
-                        id: $scope.selectId++,
-                        idItem: city.CityID,
-                        // این گزینه برای این است که در جستجو  پکبج ها مشکلی پیش نیاد
-                        CityID: city.CityID,// 
-                        type: $scope.typeEachItemFoSelection[0].type,
-                        title: city.CityName,
-                        description: "There are " + city.Places.length + " locations for this city",
-                        packages: [pak]
-                    })
-                _.each(city.Places, function (plc) {
-                    var findItem = false;
-                    for (var i = 0; i < $scope.pakageForSelected.length; i++) {
-                        var itemEntry = $scope.pakageForSelected[i];
-                        if (itemEntry.idItem == plc.PlaceId) {
-                            itemEntry.packages.push(pak)
-                            findItem = true;
-                            break;
-                        }
-                    }
-                    if (!findItem)
-                        $scope.pakageForSelected.push({
-                            id: $scope.selectId++,
-                            idItem: plc.PlaceId,
-                            CityID: city.CityID,
-                            type: $scope.typeEachItemFoSelection[1].type,
-                            title: plc.PlaceName,
-                            description: "There is this place in " + city.CityName,
-                            packages: [pak]
-                        })
-                });//end each place
-            });//end each pack.PackageCities
+                if (findItem)
+                    return;
+                arrayCity = [];
+                $scope.listPakages = [];
+                for (var i = 0; i < listSelected.length; i++) {
+                    var searchItem = angular.copy(listSelected[i]);
+                    setPakages(searchItem);
+                }
+            } // end delete city of search
 
-        })//end each $scope.profile.package
+            else {
+                //add search
+                var searchItem = angular.copy(listSelected[listSelected.length - 1]);
+                setPakages(searchItem);
+            }
+        });
 
-        $scope.listPakages = angular.copy($scope.profile.packages);
-        //console.log($scope.listPakages);
-    }
-    //_
-    //$scope.profile.city = data[0].PackageCities[0];
-    //    console.log("item"item)
+        //_
+        //$scope.profile.city = data[0].PackageCities[0];
+        //    console.log("item"item)
 
 
-    //    return num * 3;
-    //}); 
+        //    return num * 3;
+        //}); 
 
-    //$scope.pakageForSelected = [{
-    //    id: 1,
-    //    idItem: 0,
-    //    type: typeEachItemFoSelection[0],
-    //    title: "Siraz",
-    //    description: "There are 3 locations for this city",
+        //$scope.pakageForSelected = [{
+        //    id: 1,
+        //    idItem: 0,
+        //    type: typeEachItemFoSelection[0],
+        //    title: "Siraz",
+        //    description: "There are 3 locations for this city",
 
 
-    //}, {
-    //    id: 2,
-    //    idItem: 0,
-    //    type: typeEachItemFoSelection[1],
-    //    title: "Jundishapur",
-    //    description: "There is this place in Shiraz",
-    //    // iconClass: ,
+        //}, {
+        //    id: 2,
+        //    idItem: 0,
+        //    type: typeEachItemFoSelection[1],
+        //    title: "Jundishapur",
+        //    description: "There is this place in Shiraz",
+        //    // iconClass: ,
 
-    //}, {
-    //    id: 3,
-    //    idItem: 0,
-    //    type: typeEachItemFoSelection[1],
-    //    title: "hafezieh",
-    //    description: "There is this place in Shiraz",
-    //    iconClass: "fa fa-leaf",
+        //}, {
+        //    id: 3,
+        //    idItem: 0,
+        //    type: typeEachItemFoSelection[1],
+        //    title: "hafezieh",
+        //    description: "There is this place in Shiraz",
+        //    iconClass: "fa fa-leaf",
 
-    //}]
-    //$scope.productStatuce = $scope.productStatuse;
-    //$scope.modelItem = {
-    //    StatusType: $scope.pakageForSelected[0]
-    //};
-    //$scope.getProductStatus = function () {
-    //    var deferred = $q.defer();
-    //    deferred.resolve($scope.productStatuce);
-    //    return deferred;
-    //};
+        //}]
+        //$scope.productStatuce = $scope.productStatuse;
+        //$scope.modelItem = {
+        //    StatusType: $scope.pakageForSelected[0]
+        //};
+        //$scope.getProductStatus = function () {
+        //    var deferred = $q.defer();
+        //    deferred.resolve($scope.productStatuce);
+        //    return deferred;
+        //};
 
 
 
 
-}]);
+    }]);
 
 userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', function ($scope, userServices) {
 
     $scope.$watch("profile.packagesPurchased", function (newval, oldval) {
         if (typeof newval != undefined) {
             $scope.packagesPurchased = angular.copy($scope.profile.packagesPurchased);
-            if ($scope.packagesPurchased.length == 0)
+            if ($scope.packagesPurchased.length === 0)
                 $scope.isShowMessage = true;
             else
                 $scope.isShowMessage = false;

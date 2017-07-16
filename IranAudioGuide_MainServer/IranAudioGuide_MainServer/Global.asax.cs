@@ -1,4 +1,5 @@
-﻿using IranAudioGuide_MainServer.Services;
+﻿using DbUpdate;
+using IranAudioGuide_MainServer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,8 @@ namespace IranAudioGuide_MainServer
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //var job =  new ScheduleDownloadLink();
+            //ServiceSqlServer.StoredProcedureExists();
+            //var job = new ScheduleDownloadLink();
             //job.Run();
         }
 
