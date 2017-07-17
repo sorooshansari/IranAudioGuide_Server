@@ -74,6 +74,10 @@ body._fa{
         padding-right: 0;
         padding-left: initial;
     }
+    ._fa nav .brand-logo{
+        right:50%;
+        left:initial;
+    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -101,5 +105,8 @@ body._fa{
         margin-right: 20px;
         margin-left:initial;
     }
+}
+._fa nav .button-collapse{
+    float:right;
 }
 
