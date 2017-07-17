@@ -270,14 +270,6 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707161250091_s.cs" />
-    <Compile Include="Migrations\201707161250091_s.Designer.cs">
-      <DependentUpon>201707161250091_s.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707161256067_sa.cs" />
-    <Compile Include="Migrations\201707161256067_sa.Designer.cs">
-      <DependentUpon>201707161256067_sa.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
