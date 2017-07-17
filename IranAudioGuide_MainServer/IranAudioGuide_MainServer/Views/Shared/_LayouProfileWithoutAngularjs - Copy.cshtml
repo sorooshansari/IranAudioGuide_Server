@@ -21,11 +21,10 @@
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
     <link href="~/Content/css/profile.css" rel="stylesheet" />
-    <link href="~/Content/css/profile_fa.css" rel="stylesheet" />
     @*  @Styles.Render("~/ProfileCss")*@
 
 </head>
-<body class="_@Global.Lang">
+<body class="_@Global.Lang" ng-app="userApp" >
     @*<div id="FullPageLoading" class="load" ng-class="{'unload': profile.isCompletedLoading == false}">
         <div id="fpcontainer">
             <img id="IAGLogo" src="@GlobalPath.ImagePath/IAGSITELOGO.png" />
@@ -80,8 +79,14 @@
             </li>
         </ul>
     </header>
+    <main>        
+        <div>
 
-    @RenderBody()
+                        @RenderBody()
+                        <div ui-view></div>
+        </div>
+
+    </main>
     <footer class="page-footer">
         <div class="container">
             <div class="row">
