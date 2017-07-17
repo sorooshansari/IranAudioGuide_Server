@@ -20,6 +20,16 @@ namespace IranAudioGuide_MainServer.Models
         public int quantity { get; set; }
         public List<SelectListItem> prices { get; set; }
     }
+    public class Pageing {
+
+
+        [Required]
+        public int PriceId { get; set; }
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public List<SelectListItem> prices { get; set; }
+    }
+
     /// <summary>
     /// price for seller
     /// </summary>

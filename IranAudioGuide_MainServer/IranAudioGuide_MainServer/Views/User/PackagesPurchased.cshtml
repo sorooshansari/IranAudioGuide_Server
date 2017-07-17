@@ -23,33 +23,63 @@
     </div>
 
 </div>
+<div class="row">
 
-<div class="PlanPricing template4" ng-repeat="pak in packagesPurchased" ng-class="{'col-flex-1':pak.PackageCities.length == 1, 'col-flex-2':pak.PackageCities.length > 1}">
-    <!-- Price template4 Starts -->
-    <div class="planName">
-        @*<span class="price">{{pak.PackagePrice}}IRR </span>*@
-        <h3>{{pak.PackageName}}</h3>
-        @*<p>{{pak.PackageName}}</p>*@
-    </div>
-    <div class="planFeatures">
-        <!-- Slideshow 4 -->
-        <div class="callbacks_container">
-            <ul class="slider6 rslides">
-                <li ng-repeat="city in pak.PackageCities">
+    <div class="col s12">
+        <div class="card darken-1 pakage" ng-repeat="pack in profile.packagesPurchased">
+            <div class="card-content">
+                <span class="card-title"><i class="fa fa-cart-plus"></i> {{pack.PackageName}}</span>
+                @*<blockquote>
+                        {{pack.PackDescription}}
+                    </blockquote>*@
 
-                    <img ng-src="{{city.CityImageUrl}}" />
-                    <p class="cityName">{{city.CityName}}</p>
-                    <p class="caption">{{city.CityDesc}}</p>
-                    <ul>
-                        <li ng-repeat="plc in city.Places">{{plc.PlaceName}}</li>
-                    </ul>
-                </li>
-            </ul>
+                <ul class="collapsible popout" data-collapsible="accordion" watch>
+                    <li ng-repeat="city in pack.PackageCities">
+                        <div class="collapsible-header">
+                            <ul class="collection">
+                                <li class="collection-item avatar" ng-click="OpenCollapsibleBody(city)">
+                                    <p ng-show="isloadImage" class="loading">
+
+                                        <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                        <span class="sr-only">Loading...</span>
+                                    </p>
+                                    <img ng-src="{{city.CityImageUrl}}" alt="" class="circle">
+
+                                    <blockquote>
+                                        <span class="title">{{city.CityName}}</span>
+                                        <p>
+                                            {{city.CityDesc}}<br />
+                                            <span class="badge"><span class="fa fa-map-marker"></span> {{city.TotalAudiosCount.length}}</span>
+                                            <span class="badge"><span class="fa fa-microphone"></span> {{city.TotalStoriesCount.length}}</span>
+                                        </p>
+                                    </blockquote>
+                                    <a href="#!" class="secondary-content hide-on-small-and-down"><i class="fa fa-ellipsis-v"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapsible-body">
+                            <ul class="collection">
+                                <li class="collection-item avatar" ng-repeat="place in city.Places">
+                                    <p ng-show="city.IsloadImage " class="loading">
+                                        <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                        <span class="sr-only">Loading...</span>
+                                    </p>
+                                    <img ng-src="{{place.ImgUrl}}" alt="" class="circle">
+                                    <span class="title">{{place.PlaceName}}</span>
+                                    <p>
+                                        <span class="badge"><span class="fa fa-microphone"></span> {{place.AudiosCount}}</span>
+                                        <span class="badge"><span class="fa fa-map-marker"></span> {{place.StoriesCount}}</span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>         
         </div>
-
     </div>
-   
-    @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
 </div>
+
 
 

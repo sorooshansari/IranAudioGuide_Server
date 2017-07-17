@@ -270,6 +270,14 @@
     <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707161250091_s.cs" />
+    <Compile Include="Migrations\201707161250091_s.Designer.cs">
+      <DependentUpon>201707161250091_s.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707161256067_sa.cs" />
+    <Compile Include="Migrations\201707161256067_sa.Designer.cs">
+      <DependentUpon>201707161256067_sa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1820,7 +1828,6 @@
     <Content Include="Views\User\DeactivateMobile.cshtml" />
     <Content Include="Views\User\Packages.cshtml" />
     <Content Include="Views\User\PackagesPurchased.cshtml" />
-    <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\Shared\customError.cshtml" />
     <Content Include="Views\Account\vmessage.cshtml" />
     <Content Include="Views\Payment\PaymentWeb.cshtml" />
@@ -1846,7 +1853,8 @@
     <Content Include="Views\User\Packages.cshtml" />
     <Content Include="Views\Payment\PaymentWeb - Copy.cshtml" />
     <Content Include="Views\User\Return.cshtml" />
-    <Content Include="Views\Shared\_LayouProfile-without.cshtml" />
+    <Content Include="Views\Shared\_LayouProfileWithoutAngularjs.cshtml" />
+    <Content Include="Views\Seller\DownloadPDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1881,6 +1889,9 @@
       <LastGenOutput>Global.fa.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
+      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

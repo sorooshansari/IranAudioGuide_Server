@@ -21,20 +21,19 @@
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-    <link href="~/Content/global/plugins/toastr/toastr.css" rel="stylesheet" />
     <link href="~/Content/css/profile.css" rel="stylesheet" />
     @*  @Styles.Render("~/ProfileCss")*@
 
 </head>
-<body class="_@Global.Lang" onresize="onResizeBody()" ng-app="userApp" ng-controller="userCtrl">
-    <div id="FullPageLoading" class="load" ng-class="{'unload': profile.isCompletedLoading == false}">
+<body class="_@Global.Lang" ng-app="userApp" >
+    @*<div id="FullPageLoading" class="load" ng-class="{'unload': profile.isCompletedLoading == false}">
         <div id="fpcontainer">
             <img id="IAGLogo" src="@GlobalPath.ImagePath/IAGSITELOGO.png" />
             <div style="text-align:center;">
                 <span>@Global.loadingtxt </span>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <header>
         <div class="navbar-fixed z-depth-2">
@@ -61,9 +60,9 @@
                 </div>
             </li>
             @*<li><a class="waves-effect waves-teal" href="#!"><i class="fa fa-home"></i> @Global.MenuHome</a></li>*@
-            <li><a class="waves-effect waves-teal active" ui-sref="Packages"><i class="fa fa-shopping-cart"></i>@Global.Packages</a></li>
-            <li><a class="waves-effect waves-teal" ui-sref="PackagesPurchased"><i class="fa fa-cart-arrow-down"></i>@Global.MenuPurchased</a></li>
-            <li><a class="waves-effect waves-teal" ui-sref="deactivateMobile"><i class="fa fa-mobile"></i>@Global.MenuDevices</a></li>
+            <li><a class="waves-effect waves-teal active" href="/@Global.Lang/User#/pakages"><i class="fa fa-shopping-cart"></i>@Global.Packages</a></li>
+            <li><a class="waves-effect waves-teal" href="/@Global.Lang/User#/pakagePurchased"><i class="fa fa-cart-arrow-down"></i>@Global.MenuPurchased</a></li>
+            <li><a class="waves-effect waves-teal" href="/@Global.Lang/User#/deactivateMobile"><i class="fa fa-mobile"></i>@Global.MenuDevices</a></li>
             <li><a class="waves-effect waves-teal" href="@Url.Action("LogOff", "User")"> <i class="fa fa-sign-out"></i>@Global.LogOff</a></li>
             <li><div class="divider"></div></li>
             <li><a class="subheader">@Global.ChangeLanguage</a></li>
@@ -82,12 +81,9 @@
             </li>
         </ul>
     </header>
-    <main>
-
-
-
+    <main>        
         @RenderBody()
-
+        <div ui-view></div>
 
     </main>
     <footer class="page-footer">
@@ -175,77 +171,22 @@
         </div>
     </footer>
 
-    <script src="~/Content/Scripts/Underscore.js"></script>
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>t>
 
     <!-- Angular Material Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
-    <script src="~/Content/global/plugins/angularjs/angular-ui-router.min.js"></script>
-    <script src="~/Content/global/plugins/toastr/toastr.min.js"></script>
+
     @*@Scripts.Render("~/Profile/minJs")*@
 
     <script>
         //, 'ui.select'
-        var userApp = angular.module('userApp', ["ui.router", 'ngMaterial'])
-            .config(['$urlRouterProvider', '$stateProvider', '$sceProvider', function ($urlRouterProvider, $stateProvider, $sceProvider) {
-
-                $sceProvider.enabled(false);
-                //
-                // For any unmatched url, redirect to /state1
-                $urlRouterProvider.otherwise("/pakages");
-                $stateProvider.state('Packages', {
-                        url: "/pakages",
-                        templateUrl: "/@Global.Lang/user/Packages",
-                      //  controller: "userCtrl"
-                })
-                    .state('PackagesPurchased', {
-                      url: "/pakagePurchased",
-                      templateUrl: "/@Global.Lang/user/PackagesPurchased",
-                      controller: "pakagePurchasedCtrl"
-                    })
-                    .state('Payment', {
-                         url: "/payment?PackageId&IsChooesZarinpal",
-                         templateUrl: function ($stateParams) {
-                             try {
-                                 var model = "?pacId=" + $stateParams.PackageId + "&IsZarinpal=" + $stateParams.IsChooesZarinpal;
-                                 console.log(model)
-                                 return "/@Global.Lang/Payment/PaymentWeb" + model;
-                             }
-                             catch (error) {
-
-                             }
-                         },
-                         controller: "paymentCtrl"
-                    })
-                    .state('deactivateMobile', {
-                     url: "/deactivateMobile",
-                     templateUrl: "/@Global.Lang/user/deactivateMobile",
-                     controller: "PackagesCtrl"
-                    })
-                //
-                // Now set up the states
-                @*
-                  .state('user', {
-                        url: "/profile",
-                        //abstract: true,
-                        templateUrl: "/@Global.Lang/user/UserProfile",
-                        controller: "userCtrl",
-                    }) *@
-
-            }])
-
-
-        ;
+        var userApp = angular.module('userApp', []);        
+        
     </script>
 
 
-    @Scripts.Render("~/Profile/ang")
 </body>
 </html>
