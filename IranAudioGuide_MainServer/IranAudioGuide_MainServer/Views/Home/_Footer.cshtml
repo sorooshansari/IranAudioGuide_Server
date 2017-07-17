@@ -168,6 +168,10 @@
         width: 110px;
         margin: 0px 5px 5px 5px;
     }
+    .logo5{
+        margin-left:80px;
+        width:110px;
+    }
     .getit {
         margin-top: 30px;
         text-align: center
@@ -189,6 +193,32 @@
             text-align: center !important;
         }
 
+    }
+    @@media screen and (min-width:377px) and (max-width:766px) {
+        .logo5 {
+            margin-left: 37%;
+            margin-top:15px;
+        }
+    }
+    @@media screen and (min-width:320px) and (max-width:370px) {
+        .logo5{
+            margin-left:90px;
+        }
+    }
+    @@media screen and (min-width:768px) and (max-width:991px) {
+        .logo5 {
+            margin-left: 43%;
+        }
+    }
+    @@media screen and (min-width:992px) and (max-width:1199px) {
+        .logo5 {
+            margin-left: 20%;
+        }
+    }
+    @@media screen and (min-width:371px) and (max-width:376px) {
+        .logo5 {
+            margin-left: 120px;
+        }
     }
     @@media screen and (min-width:576px) and (max-width:985px){
         .bottom_ul {
@@ -278,7 +308,7 @@
         <title>Bootstrap Example</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link reas/5263++////l="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
@@ -398,15 +428,23 @@
                         <div style="" class="logo3">
                             <a href="https://itunes.apple.com/us/app/iran-audio-guide/id1214729999?mt=8">
                                 <img style="height:40px;" alt="@Global.alt" src="@GlobalPath.ImagePath/Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
-                                @*<span class="csspan">App Store</span>*@
                             </a>
                         </div>
                         <div  class="logo4">
                             <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android">
                                 <img style="height:40px;" alt=@Global.alt1 src="@GlobalPath.ImagePath/Get_it_on_Google_play.svg" />
-                                @*<span class="csspan">Google Play</span>*@
                             </a>
                         </div>
+                        <div class="logo5">
+                            <a href="https://cafebazaar.ir/app/com.IranAudioGuide.android/?l=fa">
+                                <img style="height:35px;border:1px solid;border-radius: 4px;" alt="@Global.alt" src="~/Content/admin/img/bazar-badge.png" />
+                            </a>
+                        </div>
+                        @*<div class="logo4">
+                            <a href="https://cafebazaar.ir/app/com.IranAudioGuide.android/?l=fa">
+                                <img style="width:auto;height:40px;border:1px solid;border-radius: 4px;" alt="@Global.alt" src="~/Content/admin/img/bazar-badge.png" />
+                            </a>
+                        </div>*@
                     </div>
                 </div>
             </div>

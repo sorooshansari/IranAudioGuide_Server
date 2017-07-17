@@ -342,6 +342,11 @@
     <Content Include="Content\admin\img\avatar7.jpg" />
     <Content Include="Content\admin\img\avatar8.jpg" />
     <Content Include="Content\admin\img\avatar9.jpg" />
+    <Content Include="Content\admin\img\badge-l-fullsize.png" />
+    <Content Include="Content\admin\img\badge-l.png" />
+    <Content Include="Content\admin\img\bazaar-logo-and-logotype.png" />
+    <Content Include="Content\admin\img\bazar-badge.png" />
+    <Content Include="Content\admin\img\cafebazar-iranaudiguide.jpg" />
     <Content Include="Content\admin\img\devider.png" />
     <Content Include="Content\admin\img\enamad-logo.png" />
     <Content Include="Content\admin\img\favicon.ico" />
