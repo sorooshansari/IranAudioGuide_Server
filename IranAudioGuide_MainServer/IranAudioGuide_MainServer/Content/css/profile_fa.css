@@ -1,0 +1,105 @@
+﻿@font-face {
+    font-family: 'SDDT-Light-web';
+    src: url('../../fonts/SDDT-Light-web.woff') format('woff');
+}
+
+._fa * {
+    font-family: 'SDDT-Light-web';
+    letter-spacing: 0px !important;
+}
+
+._fa .fa {
+    font-family: FontAwesome;
+}
+body._fa{
+    direction: rtl;
+}
+._fa .side-nav.fixed {
+    right: 0 ;
+    left: initial;
+
+}
+._fa header, ._fa main, ._fa footer {
+    padding-right: 300px;
+    padding-left: initial
+}
+._fa .brand-logo.secondLogo{
+    padding-right:60px;
+}
+._fa ul:not(.browser-default) {
+    padding-right:0;
+    padding-left:initial;
+}
+._fa .side-nav li > a > i, .side-nav li > a > [class^="mdi-"], .side-nav li > a li > a > [class*="mdi-"], .side-nav li > a > i.material-icons{
+    float:right;
+}
+._fa p.loading{
+    right:3%;
+    left:initial;
+}
+._fa .collection .collection-item.avatar .circle {
+    right:15px;
+    left:initial;
+}
+._fa .pakage .collapsible-header .collection .collection-item.avatar, .modal.bottom-sheet.PaymentModal .collection .collection-item.avatar{
+    padding-right:90px;
+    padding-left:initial;
+}
+._fa .collection .collection-item.avatar .secondary-content{
+    left:16px;
+    right:initial;
+}
+._fa .secondary-content{
+    float:left;
+}
+._fa .pakage .collapsible blockquote {
+    border-right: 5px solid #26a69a;
+    border-left:initial;
+}
+
+._fa blockquote {
+    padding-right: 1.5rem;
+    padding-left:initial;
+}
+._fa .collection .collection-item.avatar{
+    padding-right:72px;
+    padding-left:initial;
+}
+._fa .collapsible-body p.loading {
+    right:10px;
+    left:initial;
+}
+@media only screen and (max-width: 992px) {
+    ._fa header, ._fa main, ._fa footer {
+        padding-right: 0;
+        padding-left: initial;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    ._fa p.loading {
+        position: absolute;
+        top: 15%;
+        right: 41%;
+        left: initial;
+    }
+
+    ._fa .pakage .collapsible-header .collection .collection-item.avatar {
+        padding-right: 0;
+        padding-left: initial;
+    }
+
+        ._fa .pakage .collapsible-header .collection .collection-item.avatar .circle {
+
+            right: 50%;
+            left: initial;
+            margin-right: -50px;
+            margin-left:initial;
+        }
+
+    ._fa .Tooltips {
+        margin-right: 20px;
+        margin-left:initial;
+    }
+}
+

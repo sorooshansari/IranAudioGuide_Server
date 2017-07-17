@@ -609,6 +609,7 @@
     <Content Include="Content\css\PakageTemplate.css" />
     <Content Include="Content\css\PaymentIndex.css" />
     <Content Include="Content\css\profile.css" />
+    <Content Include="Content\css\profile_fa.css" />
     <Content Include="Content\css\responsiveslides.css" />
     <Content Include="Content\css\select.css" />
     <Content Include="Content\css\select.min.css" />
