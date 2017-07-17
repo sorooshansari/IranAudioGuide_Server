@@ -354,10 +354,6 @@
     <Content Include="Content\admin\img\avatar7.jpg" />
     <Content Include="Content\admin\img\avatar8.jpg" />
     <Content Include="Content\admin\img\avatar9.jpg" />
-    <Content Include="Content\admin\img\badge-l-fullsize.png" />
-    <Content Include="Content\admin\img\badge-l.png" />
-    <Content Include="Content\admin\img\bazaar-logo-and-logotype.png" />
-    <Content Include="Content\admin\img\bazar-badge.png" />
     <Content Include="Content\admin\img\cafebazar-iranaudiguide.jpg" />
     <Content Include="Content\admin\img\devider.png" />
     <Content Include="Content\admin\img\enamad-logo.png" />
@@ -608,6 +604,7 @@
     <Content Include="Content\css\notify-metro.css" />
     <Content Include="Content\css\PakageTemplate.css" />
     <Content Include="Content\css\PaymentIndex.css" />
+    <Content Include="Content\css\profile - Copy.css" />
     <Content Include="Content\css\profile.css" />
     <Content Include="Content\css\responsiveslides.css" />
     <Content Include="Content\css\select.css" />
@@ -1841,12 +1838,11 @@
     <Content Include="Views\Home\_Footer.cshtml" />
     <Content Include="Views\Shared\_LayouProfile.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\Packages-old2.cshtml" />
     <Content Include="Views\User\Packages.cshtml" />
     <Content Include="Views\Payment\PaymentWeb - Copy.cshtml" />
-    <Content Include="Views\User\Return.cshtml" />
     <Content Include="Views\Shared\_LayouProfileWithoutAngularjs.cshtml" />
     <Content Include="Views\Seller\DownloadPDF.cshtml" />
+    <Content Include="Views\Shared\_LayouProfileWithoutAngularjs - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

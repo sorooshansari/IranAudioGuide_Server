@@ -32,7 +32,18 @@ userApp.service('fileUpload', ['$http', function ($http) {
 }]);
 userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
     function ($window, $scope, userServices, $timeout, notific, $http, $state) {
-        
+        var timeoutID = window.setTimeout(function () {
+            $(".userPreloader.progress").addClass("hidden");
+        }, [1000]);
+        $('.button-collapse').sideNav({
+            menuWidth: 300, // Default is 300
+            edge: 'left', // Choose the horizontal origin
+            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            draggable: true, // Choose whether you can drag to open on touch screens,
+            onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
+            onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+        }        );
+        // end menu 
         $('.modal').modal({
             dismissible: true, // Modal can be dismissed by clicking outside of the modal
             //opacity: .5, // Opacity of modal background
