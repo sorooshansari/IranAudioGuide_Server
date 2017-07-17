@@ -18,6 +18,12 @@ namespace IranAudioGuide_MainServer.Controllers
     public class UserApiController : ApiController
     {
 
+        [HttpGet]
+        public IHttpActionResult GetLang (){
+            var lang = ServiceCulture.GeLangFromCookieAsString();
+            return Ok(lang);
+        }
+
         [HttpPost]
         public IHttpActionResult GetCurrentUserInfo()
         {
@@ -81,9 +87,10 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public IHttpActionResult GetPackages()
         {
+            var lang = ServiceCulture.GeLangFromCookie();
             var pro_list = GetPackagesProcurements();
             //  var lang = ServiceCulture.GeLangFromCookie();          
-            var resualt = GetPackagesByLangId(1);
+            var resualt = GetPackagesByLangId(lang);
             //  var resualt2 = GetPackagesByLangId(2);
             //   resualt.AddRange(resualt2);
 

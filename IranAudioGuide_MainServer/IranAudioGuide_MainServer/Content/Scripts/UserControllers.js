@@ -32,6 +32,39 @@ userApp.service('fileUpload', ['$http', function ($http) {
 }]);
 userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
     function ($window, $scope, userServices, $timeout, notific, $http, $state) {
+        var stopeLoading = function () {
+
+        };
+
+        userServices.getLang().then(function (lang) {
+            userServices.baseUrl = "/" + lang;
+            console.log(lang);
+            var side = 'left';
+            if (lang == "fa")
+                side = 'right';
+            $('.button-collapse').sideNav({
+                menuWidth: 300, // Default is 300
+                edge: side, // Choose the horizontal origin
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                draggable: true, // Choose whether you can drag to open on touch screens,
+                onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
+                onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+            });
+            stopeLoading(1);
+        }, function (lang) {
+            userServices.baseUrl = "/en";
+            $('.button-collapse').sideNav({
+                menuWidth: 300, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                draggable: true, // Choose whether you can drag to open on touch screens,
+                onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
+                onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
+            });
+            stopeLoading(1);
+
+        });
+
         var timeoutID = window.setTimeout(function () {
             $(".userPreloader.progress").addClass("hidden");
         }, [1000]);
@@ -42,7 +75,7 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             draggable: true, // Choose whether you can drag to open on touch screens,
             onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
             onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
-        }        );
+        });
         // end menu 
         $('.modal').modal({
             dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -68,7 +101,7 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
         $scope.closeModal = function () {
             $('#modal1').modal('close');
         }
-      
+
         $scope.buyPakages = function (isChooesZarinpal) {
             $('#modal1').modal('close');
             $scope.profile.isCompletedLoading = true;
@@ -77,7 +110,7 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
                 IsChooesZarinpal: isChooesZarinpal
             });
         }
-     
+
 
         //end modal
 
@@ -348,7 +381,7 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
 
 
 
-   
+
         $scope.typeEachItemFoSelection = [
             { type: 0, name: 'City', icon: "fa fa-map-marker", className: "itemSelcted box-city" },
             { type: 1, name: 'Place', icon: "fa fa-map-pin", className: "itemSelcted box-place" }

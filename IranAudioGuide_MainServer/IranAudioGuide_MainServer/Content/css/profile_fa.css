@@ -8,6 +8,9 @@
     letter-spacing: 0px !important;
 }
 
+._fa .material-icons {
+    font-family: 'Material Icons' !important;
+}
 ._fa .fa {
     font-family: FontAwesome;
 }

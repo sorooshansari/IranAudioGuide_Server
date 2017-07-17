@@ -131,10 +131,16 @@ namespace IranAudioGuide_MainServer
             }
             return (int)EnumLang.en;
         }
-
-        internal static object FindGetSting(object lang)
+        public static string GeLangFromCookieAsString()
         {
-            throw new NotImplementedException();
+            // load the culture info from the cookie
+            var cookie = HttpContext.Current.Request.Cookies.Get("IranAudioGuide.CurrentUICulture");
+            if (cookie != null)
+            {
+                // set the culture by the cookie content
+                return FindGetSting(cookie.Value.ToString());
+            }
+            return EnumLang.en.ToString();
         }
     }
 }

@@ -48,6 +48,9 @@
 }]);
 userApp.service('userServices', ['dataServices', function (dataServices) {
     this.baseUrl = "/en"
+    this.getLang = function () {
+        return dataServices.get('/api/userApi/GetLang');
+    }
     this.LogOff = function () {
         dataServices.get(this.baseUrl+'/User/LogOff');
     }
