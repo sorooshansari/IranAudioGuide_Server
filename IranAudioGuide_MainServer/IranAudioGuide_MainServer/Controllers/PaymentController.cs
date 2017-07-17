@@ -363,7 +363,7 @@ namespace IranAudioGuide_MainServer.Controllers
             ViewBag.Packname = packname;
             try
             {
-                //  ViewBag.BankName = "ZarinPal Payment Gateway";
+               
                 ZarinpalReturn();
             }
             catch (Exception ex)

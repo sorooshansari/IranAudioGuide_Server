@@ -1,101 +1,70 @@
 ﻿@using IranAudioGuide_MainServer.App_GlobalResources
 @{
-    ViewBag.Title = "Return";
-    Layout = "~/Views/Shared/_LayouProfile.cshtml";
+    Layout = "~/Views/Shared/_LayouProfileWithoutAngularjs.cshtml";
 }
 <style>
-    .jumbotron {
-        text-align: center;
-        /*display: inline-block;
-        display: -webkit-inline-box;*/
+    .subheader h5 {
+        display: inline-block;
+        margin: .82rem 1rem .656rem 1rem;
     }
-
-    .content-jumbotron {
-        text-align: center;
-        max-width: 483px;
-        margin: 0 auto;
-        /*border: 1px solid red;*/
-    }
-
-    .failePayment {
-        background-color: #fddd02;
-        padding: 2px 0px 0 0;
-    }
-
-    .successPayment {
-        background-color: #8fc140;
-    }
-
-    .fa-box {
-        color: rgb(255, 255, 255);
-        text-shadow: 0px 0px 1px #000;
-        font-size: 45px;
-        text-align: center;
-        border-radius: 50%;
-        margin: 0 auto;
-        width: 75px;
-        height: 75px;
-    }
-
-    p.title {
-        font-weight: 700;
-        font-size: 23px;
-    }
-
-    .box-info {
-        line-height: 15px;
-        padding-top: 16px;
-        color: #000;
-    }
-
-    p.packInfo {
-        font-weight: 500;
+    h3.tile {
+        font-size: 2.92rem;
+        line-height: 110%;
+        margin: 1.46rem 0 1.168rem 0;
+        color: #F7D65D;
+        text-shadow: 1px 1px 1px black;
     }
 </style>
-<div class="container-fluid">
-    <!-- Image and text -->
-    <div class="jumbotron my-3 ">
+<nav class="subheader">
+    <div class="nav-wrapper subheader black-text">
+        <div class="col s12">
+            <h5> @Global.ReceiptForInvoice</h5>
+        </div>
+    </div>
+</nav>
+<div class="card IAGblueBack darken-1">
+    <div class="row">
+        <div class="col s12 m3 ">
 
-        <div class="content-jumbotron">
             @if (ViewBag.Succeeded == true)
             {
-            <div class="fa-box successPayment">
-                <i class="fa fa-thumbs-o-up"></i>
-            </div>
+                <div class="fa-box successPayment">
+                    <i class="fa fa-thumbs-o-up"></i>
+                </div>
             }
             else
             {
-            <div class="fa-box failePayment">
-                <i class="fa fa-thumbs-o-down"></i>
-            </div>
+                <div class="fa-box failePayment">
+                    <i class="fa fa-thumbs-o-down"></i>
+                </div>
             }
-            <p class="title"> @ViewBag.Message</p>
-            <p>@ViewBag.ErrDesc</p>
-            <div class="box-info">
-                <p class="packInfo">@Global.ReturnPaymentReferenceID</p>
-                <p><i class="fa fa-key"></i> @ViewBag.SaleReferenceId <p>
-                    @if (ViewBag.Succeeded == true)
-                    {
-            <p class="packInfo">@Global.PaymentPage27</p>
-                <p><i class="fa fa-briefcase"></i> @ViewBag.Packname  </p>
-                <p class="packInfo">@Global.Price</p>
-                <p><i class="fa fa-briefcase"></i> @ViewBag.Price  </p>
-                    }
-                </div>
-                <div>
-                    @if (ViewBag.Succeeded)
-                    {
-                    <a class="btn btn-primary btn-block float-right" href="mobile/purchased" style="width:100px; font-size:small;">@Global.btnContinue</a>
-                    }
-                    else
-                    {
-                    <a class="btn btn-primary btn-block float-right" href="mobile/close" style="width:100px; font-size:small;">@Global.btnContinue</a>
-                    }
-                </div>
-                <div class="clearfix"></div>
-            </div>
+
         </div>
+
+        <div class="col s12 m9 ">
+            <div class="card-content  white-text">
+                <ul>
+                    <li> <h3  class="tile">@ViewBag.Message </h3> </li>
+                    <li><h5> @ViewBag.ErrDesc</h5> </li>
+                    <li>
+                        @Global.ReturnPaymentReferenceID
+                        <i class="fa fa-key"></i> @ViewBag.SaleReferenceId
+                    </li>
+                    @if (ViewBag.Succeeded == true)
+            {
+                    <li> <b>@Global.PaymentPage27 </b></li>
+                    <li><i class="fa fa-briefcase"></i> @ViewBag.Packname  </li>
+                    <li> <b>@Global.Price</b> </li>
+                    <li><i class="fa fa-briefcase"></i>  @string.Format("{0:#,##0.##}0", ViewBag.Price) @Global.PriceSign  </li>
+                    }
+                </ul>
+
+            </div>
+
+
+        </div>
+
+
     </div>
 
-
-<div ui-view></div>
+</div>

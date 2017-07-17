@@ -2,10 +2,6 @@
     Layout = null;
 }
 @using IranAudioGuide_MainServer.App_GlobalResources
-<div class="alert  alert-success" ng-show="m.isShowMessage">
-    <strong> Success!</strong> {{m.msg}}
-</div>
-
 
 
 <div class="row">
@@ -20,13 +16,18 @@
 
 
     <div class="col s12">
+
+        <div class="alert  alert-success" ng-show="m.isShowMessage">
+            <strong> Success!</strong> {{m.msg}}
+        </div>
+
         <div class="card IAGblueBack darken-1">
             <div class="card-content white-text">
                 <span class="card-title">@Global.PageProfileDevicesWantTo</span>
                 <ul>
-                    <li>@Global.PageProfileByPressingThe <b>@Global.PageProfileDeactive</b> @Global.PageProfileDeactiveMsg</li>
-                    <li>@Global.PageProfileDeactiveMsg2</li>
-                    <li><b>@Global.Remmember !</b> @Global.PageProfileDeactiveMsg3</li>
+                    <li> @Global.PageProfileByPressingThe <b> @Global.PageProfileDeactive</b> @Global.PageProfileDeactiveMsg</li>
+                    <li> @Global.PageProfileDeactiveMsg2</li>
+                    <li> <b>@Global.Remmember !</b> @Global.PageProfileDeactiveMsg3</li>
                 </ul>
             </div>
             <div class="card-action">

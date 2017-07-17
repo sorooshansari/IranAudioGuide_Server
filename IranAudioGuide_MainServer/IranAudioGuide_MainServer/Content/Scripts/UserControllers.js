@@ -32,21 +32,7 @@ userApp.service('fileUpload', ['$http', function ($http) {
 }]);
 userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
     function ($window, $scope, userServices, $timeout, notific, $http, $state) {
-
-
-        //var timeoutID = window.setTimeout(function () {
-        //    $(".userPreloader.progress").addClass("hidden");
-        //}, [1000]);
-        //$('.button-collapse').sideNav({
-        //    menuWidth: 300, // Default is 300
-        //    edge: 'left', // Choose the horizontal origin
-        //    closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-        //    draggable: true, // Choose whether you can drag to open on touch screens,
-        //    onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
-        //    onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
-        //}
-        //);
-
+        
         $('.modal').modal({
             dismissible: true, // Modal can be dismissed by clicking outside of the modal
             //opacity: .5, // Opacity of modal background
@@ -92,14 +78,12 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
                 var that = el;
                 $timeout(function () {
                     that.city.IsloadImage = false;
-                }, 100000);
+                }, 10000);
 
 
             }, // Callback for Collapsible open
             onClose: function (el) { console.log(el, 'Closed'); } // Callback for Collapsible close
         });
-
-
         $scope.OpenCollapsibleBody = function (city) {
             console.log("click", city);
             $scope.city
@@ -108,13 +92,10 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             $timeout(function () {
                 $('.collapsible').collapsible();
                 $scope.profile.isCompletedLoading = false;
-
             }, 1000);
-
             $timeout(function () {
                 $scope.isloadImage = false;
             }, 100000);
-
             $scope.listPakages = angular.copy($scope.profile.packages)
         }
 
@@ -127,7 +108,6 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
         };
         if ($scope.profile.packages.length === 0) {
             userServices.getPackages().then(function (data) {
-                console.log("getpackfrom service", data)
                 $scope.profile.packages = data;
                 angular.forEach(data, function (item, index) {
                     if (item.isPackagesPurchased === true) {

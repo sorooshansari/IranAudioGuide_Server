@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@using IranAudioGuide_MainServer.Models
+@using IranAudioGuide_MainServer.App_GlobalResources
+
+@model Pageing
+
+@section Styles{
+    <style>
+        #rc-imageselect, .g-recaptcha {
+            transform: scale(0.86);
+            -webkit-transform: scale(0.86);
+            transform-origin: 0 0;
+            -webkit-transform-origin: 0 0;
+        }
+
+        @@media screen and (min-width: 992px) {
+            #rc-imageselect, .g-recaptcha {
+                transform: scale(0.92);
+                -webkit-transform: scale(0.92);
+                transform-origin: 0 0;
+                -webkit-transform-origin: 0 0;
+            }
+        }
+    </style>
+}
+
+
+<section id="promo" class="content-block min-height-600px">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-5">
+                @*  Please don't remove item  *@
+                <span id="chechLogin"></span>
+                <h2>@Global.Parameter42</h2>
+                <p id="regdet">
+                    @Global.signInSubHeader
+                </p>
+                @using (Html.BeginForm("GetPDF", "Seller", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
+
+
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                @Html.DropDownListFor(x => x.PriceId, Model.prices, "--select price--", new { @class = "form-control", })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                                @Html.TextBoxFor(m => m.Skip, new { @class = "form-control ", placeholder = "Start Index" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                                @Html.TextBoxFor(m => m.Take, new { @class = "form-control ", placeholder = "Count" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <button id="signbtn" type="submit" class="btn btn-inverse"><i class="fa fa-plus"></i>Download PDF</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+</section>
+
+@section scripts{
+    @if (Global.Lang != "en")
+    {
+        <script src='https://www.google.com/recaptcha/api.js?hl= @Global.Lang'></script>
+    }
+    else
+    {
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    }
+}
+

@@ -187,53 +187,53 @@ namespace IranAudioGuide_MainServer.Services
         /// <param name="CBS_id_bar">ConvertBarcodetoString id</param>
         /// <param name="userid">userid</param>
         /// <param name="packid">packageid</param>
-        public void saved(int CBS_id_bar,string userid,Guid packid)
-        {           
+        public void saved(int CBS_id_bar, string userid, Guid packid)
+        {
             var bars = db.Barcodes.Where(s => s.Bar_Id == CBS_id_bar).FirstOrDefault();
-            bars.Bar_IsUsed = true;          
+            bars.Bar_IsUsed = true;
             var t = new Procurement { Bar_Id = CBS_id_bar, Pro_PaymentFinished = true, Id = userid, Pac_Id = packid };
             db.Procurements.Add(t);
             db.SaveChanges();
         }
-        public GeneratePDFModel DownloadPDF1()
+        public GeneratePDFModel DownloadPDF1(Pageing page)
         {
             try
             {
                 //get the information to display in pdf from database
                 //for the time
                 //Hard coding values are here, these are the content to display in pdf 
-                var content = "راهنمای صوتی ایران";;
+                var content = "راهنمای صوتی ایران"; ;
                 //var logoFile = GlobalPath.ImagePath + "/IAGappHeaderLOGO.png";
                 string barImgPath = GlobalPath.PathQRCode;
 
                 var userName = HttpContext.Current.User.Identity.Name;
 
-                List<BarImageInfo> ImgInfo = db.Barcodes
-                    .Where(x => x.Bar_IsUsed == false && x.Bar_SellerName == userName)
-                    .Select(t => new BarImageInfo()
-                    {
-                        ImageUrl = barImgPath + t.Bar_Image_Url,
-                        Price = t.Bar_Price.Pri_Value,
-                        Id_imginfo = t.Bar_Id
-                    }).ToList();
+                var query = db.Barcodes
+                    .Where(x => x.Bar_IsUsed == false && x.Bar_SellerName == userName );
+                if (page.PriceId != 0)
+                    query = query.Where(x => page.PriceId == x.Pri_Id);
+
+
+                if (page.Take != 0)
+                    query = query.OrderBy(x => x.Bar_Id).Skip(page.Skip).Take(page.Take);
+
+                var list = query.Select(t => new BarImageInfo()
+                {
+                    ImageUrl = barImgPath + t.Bar_Image_Url,
+                    Price = t.Bar_Price.Pri_Value,
+                    Id_imginfo = t.Bar_Id
+                }).ToList();
                 var result = new GeneratePDFModel()
                 {
                     PDFContent = content,
-                  //  PDFLogo = HttpContext.Current.Server.MapPath(logoFile),
-                    ImageInfoes = ImgInfo
+                    ImageInfoes = list
                 };
-                
-                
                 return (result);
-
-                //Use ViewAsPdf Class to generate pdf using GeneratePDF.cshtml view
-
             }
 
             catch (Exception ex)
             {
-
-                throw;
+                return null;
             }
         }
         #endregion
