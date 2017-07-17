@@ -30,8 +30,6 @@ namespace IranAudioGuide_MainServer.Services
             {
                 try
                 {
-
-
                     SqlCommand cmd = new SqlCommand("Download_Link_GetURL", sqlConnection);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@IsAudio", model.isAudio));
@@ -57,18 +55,21 @@ namespace IranAudioGuide_MainServer.Services
 
                     if (links.IsAccess == "0")
                         return null;
+
                     var returnUrl = GlobalPath.host + links.pathDestination;
                     if (links.IsUpdate == "False")
                         return returnUrl;
+
                     var ftp = new ServiceFtp();
-                    var result = ftp.Copy(GlobalPath.hostFtp + FullSource + links.FileName, GlobalPath.hostFtp + links.pathDestination);
+
+                    var result = ftp.Copy("ftp://lnx1.morvahost.com" + FullSource + links.FileName, GlobalPath.hostFtp + links.pathDestination);
 
                     if (result)
                         return returnUrl;
 
 
                     // if Create Link download eror   DownloadLink  shoud be remove anf return source file
-                    SqlCommand cmdRemove = new SqlCommand("Download_LinkDelete", sqlConnection);
+                    SqlCommand cmdRemove = new SqlCommand("Download_Link_Delete", sqlConnection);
                     cmdRemove.CommandType = CommandType.StoredProcedure;
                     cmdRemove.Parameters.Add(new SqlParameter("@id", links.IdDownload));
                     cmdRemove.ExecuteReader();

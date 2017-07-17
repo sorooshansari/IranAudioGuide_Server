@@ -212,12 +212,12 @@ namespace IranAudioGuide_MainServer.Models_v2
             {
                 return dataTable.AsEnumerable().Select(dr => new TipsVm()
                 {
-                    PlaceId = dr["PlaceId"].convertToGuid(),
-                    ID = dr["Id"].convertToGuid(),
-                    CategoryId = dr["CategoryId"].convertToGuid(),
-                    Content = dr["Content"].convertToString(),
-                    OrderItem = dr["OrderItem"].convertToInt(),
-                    LangId = dr["LangId"].convertToInt(),
+                    PlaceId = dr["PlaceId"].ConvertToGuid(),
+                    ID = dr["Id"].ConvertToGuid(),
+                    CategoryId = dr["CategoryId"].ConvertToGuid(),
+                    Content = dr["Content"].ConvertToString(),
+                    OrderItem = dr["OrderItem"].ConvertToInt(),
+                    LangId = dr["LangId"].ConvertToInt(),
                 }).ToList();
             }
             catch
@@ -231,11 +231,11 @@ namespace IranAudioGuide_MainServer.Models_v2
             {
                 return dataTable.AsEnumerable().Select(dr => new TipCategoriesVm()
                 {
-                    ID = dr["Id"].convertToGuid(),
-                    Class = dr["Class"].convertToString(),
-                    Name = dr["Name"].convertToString(),
-                    Unicode = dr["TipUnicode"].convertToString(),
-                    Priority = dr["TipPriority"].convertToInt(10)
+                    ID = dr["Id"].ConvertToGuid(),
+                    Class = dr["Class"].ConvertToString(),
+                    Name = dr["Name"].ConvertToString(),
+                    Unicode = dr["TipUnicode"].ConvertToString(),
+                    Priority = dr["TipPriority"].ConvertToInt(10)
                 }).ToList();
             }
             catch
@@ -250,11 +250,11 @@ namespace IranAudioGuide_MainServer.Models_v2
             {
                 return dataTable.AsEnumerable().Select(dr => new ImagesVm()
                 {
-                    ID = dr["Id"].convertToGuid(),
-                    Name = dr["Name"].convertToString(),
+                    ID = dr["Id"].ConvertToGuid(),
+                    Name = dr["Name"].ConvertToString(),
                     //Desc = dr["Descript"].convertToString(),
-                    PlaceId = dr["PlaceId"].convertToGuid(),
-                    OrderItem = dr["OrderItem"].convertToInt(),
+                    PlaceId = dr["PlaceId"].ConvertToGuid(),
+                    OrderItem = dr["OrderItem"].ConvertToInt(),
                 }).ToList();
             }
             catch
@@ -268,11 +268,11 @@ namespace IranAudioGuide_MainServer.Models_v2
             {
                 return dataTable.AsEnumerable().Select(dr => new CitiesVm()
                 {
-                    Id = dr["Id"].convertToInt(),
+                    Id = dr["Id"].ConvertToInt(),
                     //Name =dr["Name"].convertToString(),
                     // Desc = dr["Descript"].convertToString(),
-                    ImageUrl = dr["ImageUrl"].convertToString(),
-                    OrderItem = dr["OrderItem"].convertToInt(),
+                    ImageUrl = dr["ImageUrl"].ConvertToString(),
+                    OrderItem = dr["OrderItem"].ConvertToInt(),
                     //   LangId = dr["LangId"].convertToInt(),
                 }).ToList();
             }
@@ -289,13 +289,13 @@ namespace IranAudioGuide_MainServer.Models_v2
             {
                 return dataTable.AsEnumerable().Select(dr => new AudioVm
                 {
-                    PlaceId = dr["PlaceId"].convertToGuid(),
-                    ID = dr["Id"].convertToGuid(),
-                    Name = dr["Name"].convertToString(),
-                    Desc = dr["Descript"].convertToString(),
+                    PlaceId = dr["PlaceId"].ConvertToGuid(),
+                    ID = dr["Id"].ConvertToGuid(),
+                    Name = dr["Name"].ConvertToString(),
+                    Desc = dr["Descript"].ConvertToString(),
                     //Url = dr["Url"].convertToString(),
-                    OrderItem = dr["OrderItem"].convertToInt(),
-                    LangId = dr["LangId"].convertToInt(),
+                    OrderItem = dr["OrderItem"].ConvertToInt(),
+                    LangId = dr["LangId"].ConvertToInt(),
                 }).ToList();
             }
             catch
@@ -310,17 +310,17 @@ namespace IranAudioGuide_MainServer.Models_v2
             {
                 return dataTable.AsEnumerable().Select(dr => new PlaceVm
                 {
-                    Id = dr["Id"].convertToGuid(),
-                    Name = dr["Name"].convertToString(),
-                    ImgUrl = dr["ImgUrl"].convertToString(),
-                    TNImgUrl = dr["TNImgUrl"].convertToString(),
-                    Desc = dr["Descript"].convertToString(),
+                    Id = dr["Id"].ConvertToGuid(),
+                    Name = dr["Name"].ConvertToString(),
+                    ImgUrl = dr["ImgUrl"].ConvertToString(),
+                    TNImgUrl = dr["TNImgUrl"].ConvertToString(),
+                    Desc = dr["Descript"].ConvertToString(),
                     CX = (double)dr["CX"],
                     CY = (double)dr["CY"],
-                    Address = dr["Adr"].convertToString(),
-                    CityId = dr["CityId"].convertToInt(),
+                    Address = dr["Adr"].ConvertToString(),
+                    CityId = dr["CityId"].ConvertToInt(),
                     isPrimary = (bool)dr["isPrimary"],
-                    OrderItem = dr["OrderItem"].convertToInt()
+                    OrderItem = dr["OrderItem"].ConvertToInt()
                 }).ToList();
             }
             catch
@@ -335,11 +335,11 @@ namespace IranAudioGuide_MainServer.Models_v2
             {
                 return dataTable.AsEnumerable().Select(x => new TranslateCityVm
                 {
-                    Description = x["Description"].convertToString(),
-                    LangId = x["langId"].convertToInt(),
-                    Id = x["Id"].convertToGuid(),
-                    CityId = x["CityId"].convertToInt(),
-                    Name = x["Name"].convertToString()
+                    Description = x["Description"].ConvertToString(),
+                    LangId = x["langId"].ConvertToInt(),
+                    Id = x["Id"].ConvertToGuid(),
+                    CityId = x["CityId"].ConvertToInt(),
+                    Name = x["Name"].ConvertToString()
                 }).ToList();
             }
             catch
@@ -353,10 +353,10 @@ namespace IranAudioGuide_MainServer.Models_v2
             {
                 return dataTable.AsEnumerable().Select(x => new TranslateImageVm
                 {
-                    Description = x["Description"].convertToString(),
-                    LangId = x["langId"].convertToInt(),
-                    Id = x["Id"].convertToGuid(),
-                    ImageId = x["ImageId"].convertToGuid(),
+                    Description = x["Description"].ConvertToString(),
+                    LangId = x["langId"].ConvertToInt(),
+                    Id = x["Id"].ConvertToGuid(),
+                    ImageId = x["ImageId"].ConvertToGuid(),
                     //  Name = x["Name"].convertToString(),
                 }).ToList();
             }
@@ -371,12 +371,12 @@ namespace IranAudioGuide_MainServer.Models_v2
             {
                 return dataTable.AsEnumerable().Select(x => new TranslatePlacesVm
                 {
-                    Description = x["Description"].convertToString(),
-                    LangId = x["langId"].convertToInt(),
-                    Id = x["Id"].convertToGuid(),
-                    PlaceId = x["PlaceId"].convertToGuid(),
-                    Name = x["Name"].convertToString(),
-                    Adr = x["Adr"].convertToString(),
+                    Description = x["Description"].ConvertToString(),
+                    LangId = x["langId"].ConvertToInt(),
+                    Id = x["Id"].ConvertToGuid(),
+                    PlaceId = x["PlaceId"].ConvertToGuid(),
+                    Name = x["Name"].ConvertToString(),
+                    Adr = x["Adr"].ConvertToString(),
                 }).ToList();
             }
             catch

@@ -98,17 +98,15 @@ namespace IranAudioGuide_MainServer
                  "~/Content/css/styles.min.css",
                  "~/Content/css/HomeStyles.css",
                  "~/Content/css/Home_fa.css"));
+
+
             bundles.Add(new ScriptBundle("~/Profile/minJs")
                 .Include(
-                   // "~/Content/Scripts/jquery-2.2.3.js",
-                   // "~/Content/Scripts/bootstrap.min.js",
-                  //  "~/Content/global/plugins/angularjs/angular.min.js",
                     "~/Content/global/plugins/angularjs/angular-ui-router.min.js",
-                    "~/Content/Scripts/toastr.min.js",
+                    "~/Content/global/plugins/toastr/toastr.min.js",
                     "~/Content/Scripts/select.min.js",
                     "~/Content/Scripts/Underscore.js"
-                    // "~/Content/Scripts/UserCustom.js"
-                    ));
+                   ));
 
             bundles.Add(new ScriptBundle("~/Profile/ang")
                 .Include(

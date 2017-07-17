@@ -1,16 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Reflection;
 
 namespace IranAudioGuide_MainServer.Services
 {
     public static class ExtensionMethod
     {
 
+        //public static IEnumerable<TSource> DistinctBy<TSource, TKey>
+        //    (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        //{
+        //    HashSet<TKey> seenKeys = new HashSet<TKey>();
+        //    foreach (TSource element in source)
+        //    {
+        //        if (seenKeys.Add(keySelector(element)))
+        //        {
+        //            yield return element;
+        //        }
+        //    }
+        //}
+
+
         //convertToGuid
-        public static Guid convertToGuid(this object obj)
+        public static Guid ConvertToGuid(this object obj)
         {
             try
             {
@@ -21,7 +31,7 @@ namespace IranAudioGuide_MainServer.Services
                 return Guid.Empty;
             }
         }
-        public static string convertToString(this long obj)
+        public static string ConvertToString(this long obj)
         {
             try
             {
@@ -33,7 +43,7 @@ namespace IranAudioGuide_MainServer.Services
                 return "0";
             }
         }
-        public static string convertToString(this object obj)
+        public static string ConvertToString(this object obj)
         {
             try
             {
@@ -44,7 +54,7 @@ namespace IranAudioGuide_MainServer.Services
                 return string.Empty;
             }
         }
-        public static int convertToInt(this object obj, int d = 0)
+        public static int ConvertToInt(this object obj, int d = 0)
         {
             try
             {
@@ -55,7 +65,7 @@ namespace IranAudioGuide_MainServer.Services
                 return 0;
             }
         }
-        public static int convertToInt(this string str)
+        public static int ConvertToInt(this string str)
         {
             try
             {

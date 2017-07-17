@@ -8,8 +8,8 @@ namespace IranAudioGuide_MainServer.Controllers
     [Authorize]
     //[Localization]
 
-    //public class UserController: BaseController
-    public class UserController: Controller    {
+    //public class UserController: Controller
+    public class UserController:  BaseController   {
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -53,6 +53,12 @@ namespace IranAudioGuide_MainServer.Controllers
            // AuthenticationManager.SignOut();
            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+        }
+        [AllowAnonymous]
+        public ActionResult Return(string paymentId)
+        {
+          
+            return View();
         }
     }
 }

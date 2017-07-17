@@ -10,6 +10,7 @@ using System.Data.Entity;
 using IranAudioGuide_MainServer.Models_v2;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.Ajax.Utilities;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -80,11 +81,11 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public IHttpActionResult GetPackages()
         {
-            var pro_list= GetPackagesProcurements();
-          //  var lang = ServiceCulture.GeLangFromCookie();          
+            var pro_list = GetPackagesProcurements();
+            //  var lang = ServiceCulture.GeLangFromCookie();          
             var resualt = GetPackagesByLangId(1);
-            var resualt2 = GetPackagesByLangId(2);
-            resualt.AddRange(resualt2);
+            //  var resualt2 = GetPackagesByLangId(2);
+            //   resualt.AddRange(resualt2);
 
             foreach (var item in resualt)
             {
@@ -95,7 +96,7 @@ namespace IranAudioGuide_MainServer.Controllers
             return Ok(resualt);
         }
 
-        private List<PackageUserVM> GetPackagesByLangId(int lang)
+        private List<GetPackageVM> GetPackagesByLangId(int lang)
         {
             var d = new dbManagerV2();
             var parameter = new SqlParameter("@langId", lang);
@@ -106,16 +107,16 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 getModel.Add(new PackageUserVM
                 {
-                    PackageId = c["PackageId"].convertToGuid(),
-                    PackageName = c["PackageName"].convertToString(),
-                    PackagePrice = c["PackagePrice"].convertToString(),
-                    PackagePriceDollar = c["PackagePriceDollar"].convertToString(),
-                    PackageOrder = c["PackageOrder"].convertToInt(),
-                    CityId = c["CityId"].convertToInt(),
-                    CityName = c["CityName"].convertToString(),
-                    CityOrder = c["CityOrder"].convertToString(),
-                    CityImageUrl = c["CityImgUrl"].convertToString(),
-                    CityDescription = c["CityDescription"].convertToString(),
+                    PackageId = c["PackageId"].ConvertToGuid(),
+                    PackageName = c["PackageName"].ConvertToString(),
+                    PackagePrice = c["PackagePrice"].ConvertToString(),
+                    PackagePriceDollar = c["PackagePriceDollar"].ConvertToString(),
+                    PackageOrder = c["PackageOrder"].ConvertToInt(),
+                    CityId = c["CityId"].ConvertToInt(),
+                    CityName = c["CityName"].ConvertToString(),
+                    CityOrder = c["CityOrder"].ConvertToString(),
+                    CityImageUrl = c["CityImgUrl"].ConvertToString(),
+                    CityDescription = c["CityDescription"].ConvertToString(),
 
                 });
             };
@@ -125,40 +126,43 @@ namespace IranAudioGuide_MainServer.Controllers
 
                 listPlaces.Add(new PlaceUserVM
                 {
-                    PlaceId = c["Pla_Id"].convertToGuid(),
-                    PlaceName = c["Name"].convertToString(),
-                    PlaceDesc = c["Discription"].convertToString(),
-                    PlaceAddress = c["Address"].convertToString(),
-                    ImgUrl = c["ImgUrl"].convertToString(),
-                    TumbImgUrl = c["TumbImgUrl"].convertToString(),
-                    AudiosCount = c["AudiosCount"].convertToInt(),
-                    StoriesCount = c["StoriesCount"].convertToInt(),
-                    Cit_Id = c["Cit_Id"].convertToInt(),
-                    OrderItem = c["OrderItem"].convertToInt()
+                    PlaceId = c["Pla_Id"].ConvertToGuid(),
+                    PlaceName = c["Name"].ConvertToString(),
+                    PlaceDesc = c["Discription"].ConvertToString(),
+                    PlaceAddress = c["Address"].ConvertToString(),
+                    ImgUrl = c["ImgUrl"].ConvertToString(),
+                    TumbImgUrl = c["TumbImgUrl"].ConvertToString(),
+                    AudiosCount = c["AudiosCount"].ConvertToInt(),
+                    StoriesCount = c["StoriesCount"].ConvertToInt(),
+                    Cit_Id = c["Cit_Id"].ConvertToInt(),
+                    OrderItem = c["OrderItem"].ConvertToInt()
                 });
             }
-           return getModel.OrderBy(x => x.PackageOrder).Select(p => new PackageUserVM()
+            return getModel.OrderBy(x => x.PackageOrder).Select(p => new GetPackageVM()
             {
-                PackagePrice = p.PackagePrice,
+                // convert toman to rial
+                PackagePrice = p.PackagePrice + "0",
                 PackagePriceDollar = p.PackagePriceDollar,
                 PackageId = p.PackageId,
                 PackageName = p.PackageName,
                 //isPackagesPurchased = pro_list.Any(pr => pr == p.PackageId),
-                PackageCities = getModel.Where(pc => pc.CityId == p.CityId).OrderBy(x => x.CityOrder).Select(c => new CityUserVM()
+                PackageCities = getModel.Where(pc => pc.PackageId == p.PackageId).OrderBy(x => x.CityOrder).Select(c => new CityUserVM()
                 {
                     CityName = c.CityName,
                     CityID = c.CityId,
                     CityImageUrl = c.CityImageUrl,
                     CityDesc = c.CityDescription,
+                    IsloadImage = true,
                     TotalTrackCount = listPlaces.Where(lp => lp.Cit_Id == c.CityId).Sum(pl => pl.AudiosCount + pl.StoriesCount),
                     Places = listPlaces.Where(lp => lp.Cit_Id == c.CityId).OrderBy(x => x.OrderItem)
                                    .Select(pl => new PlaceUserVM()
                                    {
                                        PlaceName = pl.PlaceName,
-                                       PlaceId = pl.PlaceId
+                                       PlaceId = pl.PlaceId,
+                                       ImgUrl = GlobalPath.FullPathImageTumbnail + pl.TumbImgUrl
                                    }).ToList()
                 }).ToList()
-            }).ToList();
+            }).DistinctBy(x => x.PackageId).ToList();
 
         }
 
@@ -168,7 +172,6 @@ namespace IranAudioGuide_MainServer.Controllers
             var dt1 = new DataTable();
             using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
             {
-
                 SqlCommand cmd = new SqlCommand("GetPackagesProcurements_website", sqlConnection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@Username", User.Identity.Name));
@@ -176,7 +179,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 var reader = cmd.ExecuteReader();
                 dt1.Load(reader);
             }
-            var result = dt1.AsEnumerable().Select(x => x["Pac_Id"].convertToGuid()).ToList();
+            var result = dt1.AsEnumerable().Select(x => x["Pac_Id"].ConvertToGuid()).ToList();
             return result;
         }
 
@@ -220,16 +223,6 @@ namespace IranAudioGuide_MainServer.Controllers
                                 }).ToList()
                             }).ToList()
                         }).ToList();
-
-                    //  var packagesPurchased = GetPackagesPurchased();
-                    //foreach (var item in list)
-                    //{
-                    //    item.isPackagesPurchased = packagesPurchased.Any(x => x == item.PackageId);
-                    //}
-                    //foreach (var item in list)
-                    //{
-                    //    item.isPackagesPurchased = item.procurements.Any(p => p.Pro_User.UserName == User.Identity.Name);
-                    //}
 
                     return Ok(list);
                 }
@@ -321,6 +314,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Ok(Global.ServerDeactivateMobile);
             }
         }
+
 
         [HttpPost]
         [Authorize(Roles = "Admin")]

@@ -39,7 +39,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     dt1.Load(reader);
                     var list = dt1.AsEnumerable().Select(x => new
                     {
-                        ErrorId = x["ErrorId"].convertToGuid(),
+                        ErrorId = x["ErrorId"].ConvertToGuid(),
                         Application = x["Application"].ToString(),
                         Host = x["Host"].ToString(),
                         Type = x["Type"].ToString(),
@@ -47,7 +47,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         Message = x["Message"].ToString(),
                         User = x["User"].ToString(),
                         StatusCode = x["StatusCode"].ToString(),
-                        TimeUtc = x["TimeUtc"].convertToString(),
+                        TimeUtc = x["TimeUtc"].ConvertToString(),
                         Sequence = x["Sequence"].ToString(),
                     //    AllXml = x["AllXml"].ToString()
                     }).ToList();

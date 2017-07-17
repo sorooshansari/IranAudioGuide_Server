@@ -1,7 +1,6 @@
 ﻿@using IranAudioGuide_MainServer.Models
 @using IranAudioGuide_MainServer.App_GlobalResources
 @model UserInfo
-
 @{
     string hrefPrefix = (ViewBag.View == null || (Views)ViewBag.View != Views.AdminIndex) ? Url.Action("Index", "Admin") : "";
 }
@@ -149,9 +148,7 @@
     <script>
 
 
-        angular.module('AdminPage.services', [])
-
-.service('notificService', [function () {
+        angular.module('AdminPage.services', []).service('notificService', [function () {
     //jquery-notific8
     var optionsDefault = {
         positionClass: 'toast-top-center', //'toast-bottom-full-width ',// 'toast-top-center',
@@ -494,7 +491,9 @@
                   $rootScope.EditOverlay = false;
                   switch (response.data.status) {
                       case 0:
-                          $rootScope.$broadcast('UpdatePlaceImage', {});
+                          $rootScope.$broadcast('UpdatePlaceImage', {
+                              data: response.data.content
+                          });
                           break;
                       case 1:
                           $rootScope.$broadcast('UpdateImageValidationSummery', {
@@ -537,11 +536,13 @@
                   $rootScope.EditOverlay = false;
                   switch (response.data.status) {
                       case 0:
-                          $rootScope.$broadcast('UpdatePlaceTumbImage', {});
+                          $rootScope.$broadcast('UpdatePlaceTumbImage', {
+                              url: response.data.content
+                          });
                           break;
                       case 1:
                           $rootScope.$broadcast('UpdateImageValidationSummery', {
-                              data: response.data.content
+                              url: response.data.content
                           });
                           break;
                       case 3:
@@ -591,7 +592,7 @@
                   }
                   else {
                       $rootScope.$broadcast('ExtraImgUnknownError', {
-                          data: response.data.content
+                          url: response.data.content
                       });
                       notific.error("ERROR", "Request failed");
 

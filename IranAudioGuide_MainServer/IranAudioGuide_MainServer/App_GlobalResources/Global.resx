@@ -171,40 +171,40 @@
   <data name="PageProfile" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="PageProfile1" xml:space="preserve">
+  <data name="Packages" xml:space="preserve">
     <value>Packages</value>
   </data>
-  <data name="PageProfile10" xml:space="preserve">
+  <data name="MenuPurchased" xml:space="preserve">
     <value>Purchased</value>
   </data>
-  <data name="PageProfile11" xml:space="preserve">
-    <value>Device</value>
+  <data name="MenuDevices" xml:space="preserve">
+    <value>Devices</value>
   </data>
-  <data name="PageProfile12" xml:space="preserve">
+  <data name="LogOff" xml:space="preserve">
     <value>Log Off</value>
   </data>
-  <data name="PageProfile13" xml:space="preserve">
+  <data name="PageProfileByPressingThe" xml:space="preserve">
     <value>By pressing the</value>
   </data>
-  <data name="PageProfile14" xml:space="preserve">
+  <data name="PageProfileDeactive" xml:space="preserve">
     <value>DEACTIVATE OLD DEVICE</value>
   </data>
-  <data name="PageProfile15" xml:space="preserve">
+  <data name="PageProfileDeactiveMsg" xml:space="preserve">
     <value>button you can deactivate your old device (your smart phone or tablet).</value>
   </data>
-  <data name="PageProfile16" xml:space="preserve">
+  <data name="PageProfileDeactiveMsg2" xml:space="preserve">
     <value>Then sign in with the device you intend to use to set the device and gain access to your packages.</value>
   </data>
-  <data name="PageProfile17" xml:space="preserve">
-    <value>Remmember!</value>
+  <data name="Remmember" xml:space="preserve">
+    <value>Remmember</value>
   </data>
-  <data name="PageProfile18" xml:space="preserve">
+  <data name="PageProfileDeactiveMsg3" xml:space="preserve">
     <value>This is only possible every 6 months once.</value>
   </data>
-  <data name="PageProfile19" xml:space="preserve">
+  <data name="DeactivateOldDevice" xml:space="preserve">
     <value>Deactivate Old Device</value>
   </data>
-  <data name="PageProfile2" xml:space="preserve">
+  <data name="PageProfileDeactiveYouHaveNotSet" xml:space="preserve">
     <value>You have not set any devices to your account yet.</value>
   </data>
   <data name="PageProfile20" xml:space="preserve">
@@ -213,8 +213,8 @@
   <data name="PageProfile21" xml:space="preserve">
     <value>Please check your Email.</value>
   </data>
-  <data name="PageProfile22" xml:space="preserve">
-    <value>if you have not received the confirmation email yet, click</value>
+  <data name="PageProfileSendEmailAgain" xml:space="preserve">
+    <value>if you have not received the confirmation email yet, click &lt;a ng-click="sendEmailConfirmedAgain()"&gt;here&lt;/a&gt;  to send you another Email</value>
   </data>
   <data name="PageProfile23" xml:space="preserve">
     <value>Pay with international cards</value>
@@ -557,7 +557,7 @@
   <data name="PaymentPage21" xml:space="preserve">
     <value>Cities Included</value>
   </data>
-  <data name="PaymentPage22" xml:space="preserve">
+  <data name="PaymentGateway" xml:space="preserve">
     <value>Payment Gateway</value>
   </data>
   <data name="PaymentPage23" xml:space="preserve">
@@ -591,7 +591,7 @@
     <value>Iran Audio Guide Office</value>
   </data>
   <data name="OfficeAddress" xml:space="preserve">
-    <value>Mehregan Building, Room 1112 - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811  - (+98) 71 - 363634709</value>
+    <value>Shiraz Durandish Programmers - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811  - (+98) 71 - 363634709</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Send</value>
@@ -765,7 +765,7 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="PaymentEmailInfo" xml:space="preserve">
     <value>Incase you encounter any problems, please send an email to &lt;a href="mailto:info@iranaudioguide.com" &gt; Info@iranaudioguide.com&lt;/a&gt;</value>
   </data>
-  <data name="PageProfile133" xml:space="preserve">
+  <data name="PageProfileDevicesWantTo" xml:space="preserve">
     <value>Want to change your device?</value>
   </data>
   <data name="ImagePath" xml:space="preserve">
@@ -864,7 +864,7 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="ZarinpalPaymentMsg8" xml:space="preserve">
     <value>Payment was canceld</value>
   </data>
-  <data name="AccessPackage" xml:space="preserve">
+  <data name="E" xml:space="preserve">
     <value>You have access to the package below. Thank you for your purchase!</value>
   </data>
   <data name="InvalidUserName" xml:space="preserve">
@@ -901,7 +901,7 @@ Your purchased packages will be set on and accessible through your current user 
     <value>Iran audio guide application will enrich your Iran Travel and allow you to freely have access to step by step guides and stories of Persia</value>
   </data>
   <data name="officeaddress1" xml:space="preserve">
-    <value>Mehregan Building, Room 1112 - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811</value>
+    <value>Shiraz Durandish Programmers - Fars Science and Technology Park - Aryan town, Dr Hesabi Blv -Shiraz,Fars province, Iran - Postal Code: 7197687811</value>
   </data>
   <data name="phone" xml:space="preserve">
     <value>Phone : (+98) 071 - 36364709</value>
@@ -910,9 +910,42 @@ Your purchased packages will be set on and accessible through your current user 
     <value>Get it on</value>
   </data>
   <data name="Namad" xml:space="preserve">
-    <value>Symbol of Electronic Trust</value>
+    <value>logo of site trustability issued by Iranian Authority</value>
   </data>
   <data name="Sina" xml:space="preserve">
     <value>Sina Zandi</value>
+  </data>
+  <data name="Callto" xml:space="preserve">
+    <value>+9807136364709</value>
+  </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>ChangeLanguage</value>
+  </data>
+  <data name="MenuHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="NumberPhone" xml:space="preserve">
+    <value>(+98) 71-36364709</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="PaymentGatewayInfo" xml:space="preserve">
+    <value>Choose your payment gateways for purchasing</value>
+  </data>
+  <data name="WebMoney" xml:space="preserve">
+    <value>Web Money</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="LangOtherTitle" xml:space="preserve">
+    <value>فارسی</value>
+  </data>
+  <data name="AccessPackage" xml:space="preserve">
+    <value>You have access to the package below. Thank you for your purchase!</value>
+  </data>
+  <data name="Shetab" xml:space="preserve">
+    <value>Shetab</value>
   </data>
 </root>

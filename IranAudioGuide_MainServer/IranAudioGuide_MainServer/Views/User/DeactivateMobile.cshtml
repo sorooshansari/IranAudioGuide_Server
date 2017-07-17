@@ -5,32 +5,45 @@
 <div class="alert  alert-success" ng-show="m.isShowMessage">
     <strong> Success!</strong> {{m.msg}}
 </div>
-<div class="deactivatedDevice">      
-        <div class="caption caption-md">
-            <span class="caption-subject font-blue-madison bold uppercase deactivationHeader">@Global.PageProfile133</span>
 
+
+
+<div class="row">
+
+    <nav class="subheader">
+        <div class="nav-wrapper subheader black-text">
+            <div class="col s12">
+                <h4 style="display:inline-block"> @Global.MenuDevices</h4>
+            </div>
         </div>
-        <div>
-            <ul>
-                <li>
-                    @Global.PageProfile13 <strong> @Global.PageProfile14</strong> @Global.PageProfile15 
-                </li>
-                <li>
-                    @Global.PageProfile16
-                </li>
-                <li>
-                    <strong>@Global.PageProfile17</strong> @Global.PageProfile18 
-                </li>
-            </ul>
+    </nav>
 
-            <button type="button" ng-disabled="!user.IsAccessChangeUuid"
-                    ng-show="user.IsSetuuid"
-                    class="btn btn-circle orange-haze btn-sm"
-                    ng-click="deactivateMobile()">
-               @Global.PageProfile19
-            </button>
-            <div class="alert alert-info" ng-show="!user.IsSetuuid">
-                @Global.PageProfile2
+
+    <div class="col s12">
+        <div class="card IAGblueBack darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">@Global.PageProfileDevicesWantTo</span>
+                <ul>
+                    <li>@Global.PageProfileByPressingThe <b>@Global.PageProfileDeactive</b> @Global.PageProfileDeactiveMsg</li>
+                    <li>@Global.PageProfileDeactiveMsg2</li>
+                    <li><b>@Global.Remmember !</b> @Global.PageProfileDeactiveMsg3</li>
+                </ul>
+            </div>
+            <div class="card-action">
+                <p class="notSetDevice"> @Global.PageProfileDeactiveYouHaveNotSet </p>
+                <button type="button" ng-disabled="!user.IsAccessChangeUuid"
+                        ng-show="user.IsSetuuid"
+                        class="waves-effect waves-light btn z-depth-1"
+                        ng-click="deactivateMobile()">
+                    @Global.DeactivateOldDevice
+                </button>
+                
             </div>
         </div>
     </div>
+
+</div>
+
+
+
+

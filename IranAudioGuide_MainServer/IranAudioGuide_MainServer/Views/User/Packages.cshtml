@@ -1,114 +1,100 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-<script type="text/javascript">
-    function OpenList(pkgID) {
-        $('#ul' + pkgID).toggleClass('ulclosed');
-        $('#' + pkgID).toggleClass('ultoggled');
-        console.log('OK');
-    }
-
-</script>
 @using IranAudioGuide_MainServer.App_GlobalResources
-<div class="input-group  searchPackage">
-    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-    <ui-select class="SearchSelect" multiple ng-model="searhPakage.item" theme="bootstrap">
-        <ui-select-match placeholder="@Global.PlaceholderSearchPackage">
-            <i ng-class="typeEachItemFoSelection[$item.type].icon"></i>
-            <span> {{$item.title}} </span>
-        </ui-select-match>
-        <ui-select-choices repeat="item in pakageForSelected | filter: {title: $select.search}">
 
-            <div ng-class="typeEachItemFoSelection[item.type].className">
-                <h6>
-                    <i ng-class="typeEachItemFoSelection[item.type].icon"></i>
-                    <span class="_stitle"> {{item.title}} </span>
-                </h6>
-                <p> {{item.description}}</p>
-            </div>
-        </ui-select-choices>
-    </ui-select>
+<style>
+  
+</style>
+<div class="row">
 
-</div>
-@*<div class="col-xs-12">
-        <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" />
+    <div class="col s12">
+        <div class="card darken-1 pakage" ng-repeat="pack in profile.packages">
+            <div class="card-content">
+                <span class="card-title"><i class="fa fa-cart-plus"></i> {{pack.PackageName}}</span>
+                @*<blockquote>
+                        {{pack.PackDescription}}
+                    </blockquote>*@
 
+                <ul class="collapsible popout" data-collapsible="accordion" watch>
+                    <li ng-repeat="city in pack.PackageCities">
+                        <div class="collapsible-header">
+                            <ul class="collection">
+                                <li class="collection-item avatar" ng-click="OpenCollapsibleBody(city)">
+                                    <p ng-show="isloadImage" class="loading">
 
-    </div>*@
-<form id="PurchaseForm" name="PurchaseForm" action="/Payment/PaymentWeb">
+                                        <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                        <span class="sr-only">Loading...</span>
+                                    </p>
+                                    <img ng-src="{{city.CityImageUrl}}" alt="" class="circle">
 
+                                    <blockquote>
+                                        <span class="title">{{city.CityName}}</span>
+                                        <p>
+                                            {{city.CityDesc}}<br />
+                                            <span class="badge"><span class="fa fa-map-marker"></span> {{city.TotalAudiosCount.length}}</span>
+                                            <span class="badge"><span class="fa fa-microphone"></span> {{city.TotalStoriesCount.length}}</span>
+                                        </p>
+                                    </blockquote>
+                                    <a href="#!" class="secondary-content hide-on-small-and-down"><i class="fa fa-ellipsis-v"></i></a>
+                                </li>
+                            </ul>
 
-    <div class="PlanPricing template4" ng-repeat="pak in listPakages" ng-class="{'col-flex-1':pak.PackageCities.length == 1, 'col-flex-2':pak.PackageCities.length > 1}">
-        <!-- Price template4 Starts -->
-        <div class="planFeatures">
-            <!-- Slideshow 4 -->
-            <div class="callbacks_container">
-                <h4 class="PkgTitle">{{pak.PackageName}}</h4>
-                <ul class="slider6 rslides">
-                    <li ng-repeat="city in pak.PackageCities">
-                        <img ng-src="{{city.CityImageUrl}}" />
-                        <p class="cityName">{{city.CityName}}</p>
-                        <p class="caption">{{city.CityDesc}}</p>
-                        <div id="pkg{{city.CityID}}" onclick="OpenList(this.id)" class="ultoggle">
-                            <i class="fa fa-plus-square"></i>
-                            &nbsp; @Global.PaymentPage21
-                            &emsp;&emsp;<span id="ulPlaceQty"><i class="fa fa-map-marker"></i> {{city.Places.length}}</span>
-                            &emsp;<span id="ulAudioLength"><i class="fa fa-microphone"></i> {{ city.TotalTrackCount}}</span>
                         </div>
-                        <ul id="ulpkg{{city.CityID}}" class="pkgcityul ulclosed">
-                            <li ng-repeat="plc in city.Places">&bull; {{plc.PlaceName}}</li>
-                        </ul>
+                        <div class="collapsible-body">
+                            <ul class="collection">
+                                <li class="collection-item avatar" ng-repeat="place in city.Places">
+                                    <p ng-show="city.IsloadImage " class="loading">
+                                        <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                        <span class="sr-only">Loading...</span>
+                                    </p>
+                                    <img  ng-src="{{place.ImgUrl}}" alt="" class="circle">
+                                    <span class="title">{{place.PlaceName}}</span>
+                                    <p>
+                                        <span class="badge"><span class="fa fa-microphone"></span> {{place.AudiosCount}}</span>
+                                        <span class="badge"><span class="fa fa-map-marker"></span> {{place.StoriesCount}}</span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
+                
             </div>
-
+            <div class="card-action">
+                <a href="#!" ng-click="OpenModal(pack)" class="waves-effect waves-light btn-large z-depth-3"><i class="material-icons right">add</i>@Global.Getit</a>
+            </div>
         </div>
-        <p>
-            <a ng-show="pak.isPackagesPurchased == false" ng-click="showModal(pak)" class="btn btn-success btn-large">@Global.btnBuy </a>
-            <a ng-show="pak.isPackagesPurchased == true" class="btn btn-green btn-large"> @Global.btnPurchased </a>
-        </p>
-        @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
     </div>
-</form>
+</div>
 
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
 
-            <div id="PaymentModalPanel" class="modal-body">
-                <div class="row">
-                    <div id="paymentmodalhead" class="col-xs-12">
-                        <p><i class="fa fa-info-circle"></i>@Global.ChooseYourPaymentGateway</p>
-                    </div>
-                </div>
-                <div class="row chooesPanel">
-                    @*ng-hide="user.IsForeign"*@
-                    <div class="col-xs-12">
-
-                        <a class="ShetabIcon" ng-click="buyPakages(true)">
-                            <img class="hoverable" src="~/images/icon-128x128.png" />
-                            <br />@Global.PageProfile24
-                        </a>
-                        <p class="ModalPrice">{{pak.PackagePrice}}T</p>
-                    </div>
-                    <div class="col-xs-12">
-                        @*ng-hide="user.IsForeign"*@
-
-                        <a class="IntmoneyIcon" ng-click="buyPakages(false)">
-                            <img class="hoverable" src="~/images/wmlogo_vector_blue.png" />
-                            <br />@Global.PageProfile23
-
-                        </a>
-                        <p class="ModalPrice">{{pak.PackagePriceDollar}}$</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
+  <!-- Modal Structure -->
+<div id="modal1" class="modal bottom-sheet PaymentModal">
+    <div class="modal-content">
+        <h4>@Global.PaymentGateway</h4>
+        <p>@Global.PaymentGatewayInfo <b class="IAGgreenColor">{{itemPack.PackageName}}</b> @Global.Packages </p>
+        <ul class="collection">
+            <li class="collection-item avatar">
+                <a href="#!" ng-click="buyPakages(false)">
+                    <img src="http://iranaudioguide.net/Images/WebMoneyLogo.png" alt="" class="circle">
+                    <span class="title webmoneyColor">@Global.WebMoney</span><br />
+                    <div class="btn"> {{itemPack.PackagePriceDollar}}</div>
+                    <i class="secondary-content fa fa-chevron-right fa-2x"></i>
+                </a>
+            </li>
+            <li class="collection-item avatar">
+                <a href="#!"  ng-click="buyPakages(true)">
+                    <img src="http://iranaudioguide.net/Images/ShetabLogo.jpg" alt="" class="circle">
+                    <span class="title shetabColor">@Global.Shetab</span><br />
+                    <div class="btn">{{itemPack.PackagePrice}} @Global.PriceSign</div>
+                    <i class="secondary-content fa fa-chevron-right fa-2x"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" onclick="closeModal()" class="modal-action modal-close waves-effect waves-green btn-flat">@Global.btnCancel</a>
     </div>
 </div>

@@ -399,7 +399,7 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 var place = new Place();
 
-             
+
                 place.Pla_Name = model.PlaceName;
                 place.Pla_Discription = model.PlaceDesc;
                 place.Pla_Address = model.PlaceAddress;
@@ -808,7 +808,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         if (Path.GetFileNameWithoutExtension(place.Pla_ImgUrl) != Path.GetFileNameWithoutExtension(model.NewImage.FileName))
                         {
                             request.delete(place.Pla_ImgUrl, GlobalPath.FullPathImageTumbnail);
-                            place.Pla_ImgUrl = fileName;
+                            place.Pla_TumbImgUrl = fileName;
                         }
                         UpdateLog(updatedTable.Place, place.Pla_Id);
                         db.SaveChanges();
@@ -820,13 +820,15 @@ namespace IranAudioGuide_MainServer.Controllers
                         dbTran.Rollback();
                         return Json(new Respond(ex.Message, status.unknownError));
                     }
-                    var fullpaht = GlobalPath.FullPathImageTumbnail + fileName;
+                    var fullpaht = GlobalPath.FtpPathImageTumbnail + fileName;
                     var isSuccess = request.Upload(model.NewImage, fullpaht);
                     if (!isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
 
+                    return Json(new Respond(GlobalPath.FullPathImageTumbnail + fileName));
+
                 }
-                return Json(new Respond());
+
             }
             catch (Exception ex)
             {
@@ -865,7 +867,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         if (Path.GetFileNameWithoutExtension(place.Pla_TumbImgUrl) != Path.GetFileNameWithoutExtension(model.NewImage.FileName))
                         {
                             request.delete(place.Pla_TumbImgUrl, GlobalPath.FtpPathImagePlace);
-                            place.Pla_TumbImgUrl = fileName;
+                            place.Pla_ImgUrl = fileName;
                         }
                         UpdateLog(updatedTable.Place, place.Pla_Id);
                         db.SaveChanges();
@@ -879,12 +881,12 @@ namespace IranAudioGuide_MainServer.Controllers
                     }
                     var fullpath = GlobalPath.FtpPathImagePlace + fileName;
                     var isSuccess = request.Upload(model.NewImage, fullpath);
-                    if (isSuccess)
+                    if (!isSuccess)
                         throw new ArgumentException("Dont save image in Server", "original");
 
+                    return Json(new Respond(GlobalPath.FullPathImagePlace + fileName));
                 }
 
-                return Json(new Respond());
             }
             catch (Exception ex)
             {

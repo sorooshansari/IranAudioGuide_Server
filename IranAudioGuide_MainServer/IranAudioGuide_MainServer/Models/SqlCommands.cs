@@ -654,67 +654,59 @@ END"
         public static readonly List<string> Commands_Download = new List<string>()
 
         {
-           @"CREATE PROCEDURE Download_LinkDelete  
-                @id uniqueidentifier
-            AS
+           @"CREATE PROCEDURE [dbo].[Download_GetPathForDelete]
+            AS          
             BEGIN
-                DELETE FROM DownloadLinks where Dow_Id = @id
-            END",
-            @"CREATE PROCEDURE [dbo].[Download_GetPathForDelete]
-            AS		
-            BEGIN
-	            SELECT DownloadLinks.Path		
-	            FROM DownloadLinks		WHERE (IsDisable = 1) AND (TimeToVisit <= DATEADD (mi , 20 , TimeToVisit))
-            END",
-            @"CREATE PROCEDURE [dbo].[Download_LinkCreate]
-	            @FileName nvarchar(max),
-	            @IsAudio bit,
-	            @Path nvarchar(max) output, 
-	            @IsUpdate bit output,
-	            @IdDownload uniqueidentifier OUTPUT
+                  SELECT DownloadLinks.Path  as Path , DownloadLinks.Dow_Id   as DowId      
+                  FROM DownloadLinks            WHERE (IsDisable = 1) AND (TimeToVisit <= DATEADD (mi , 20 , TimeToVisit))
+            END
+
+",
+            @"
+CREATE PROCEDURE [dbo].[Download_Link_Create]
+                  @TrackId uniqueidentifier,
+				  @FileName nvarchar(max),
+                  @IsAudio bit,
+                  @Path nvarchar(max) output, 
+                  @IsUpdate bit output,
+                  @IdDownload uniqueidentifier OUTPUT
 
             AS
             BEGIN
-	            DECLARE @downloadTable TABLE
-	            (
-		            [Dow_Id] [uniqueidentifier] NULL  DEFAULT (newsequentialid())
-	            )
-	            SELECT @IdDownload = Dow_Id , @Path = Path  from DownloadLinks where FileName = @FileName and IsDisable = 0 and IsAudio = @IsAudio
-	
-	            if @IdDownload IS NULL
-		            BEGIN			
-			            INSERT INTO DownloadLinks (FileName,  TimeToVisit, IsDisable, IsAudio)	OUTPUT inserted.Dow_Id INTO @downloadTable
-			            VALUES (@FileName, GETDATE(), 0, @IsAudio)						
-			            select  @IdDownload= Dow_Id  from @downloadTable			
-			            select @Path = @Path + N'/' + CAST( @IdDownload AS VARCHAR(max)) + N'.' +  (RIGHT(@FileName, Len(@FileName)- Charindex('.', @FileName)))--  REPLACE(@Path, @FileName, @id)			
-			            UPDATE   DownloadLinks SET  Path = @Path WHERE  (Dow_Id = @IdDownload)
-				            Set @IsUpdate = 1
+                  DECLARE @downloadTable TABLE
+                  (
+                        [Dow_Id] [uniqueidentifier] NULL  DEFAULT (newsequentialid())
+                  )
+                  SELECT @IdDownload = Dow_Id , @Path = Path  from DownloadLinks where Track_Id = @TrackId and IsDisable = 0 and IsAudio = @IsAudio
+      
+                  if @IdDownload IS NULL
+                        BEGIN             
+                              INSERT INTO DownloadLinks (Track_Id,  TimeToVisit, IsDisable, IsAudio)  OUTPUT inserted.Dow_Id INTO @downloadTable
+                              VALUES (@TrackId, GETDATE(), 0, @IsAudio)                                    
+                              select  @IdDownload= Dow_Id  from @downloadTable                  
+                              select @Path = @Path +  CAST( @IdDownload AS VARCHAR(max)) + N'.' +  (RIGHT(@FileName, Len(@FileName)- Charindex('.', @FileName)))--  REPLACE(@Path, @TrackId, @id)                
+                              UPDATE   DownloadLinks SET  Path = @Path WHERE  (Dow_Id = @IdDownload)
+                                    Set @IsUpdate = 1
     
-		            END
-		            else
-			            BEGIN
-			            Set @IsUpdate = 0
-			            UPDATE   DownloadLinks SET  TimeToVisit = GETDATE() WHERE  (Dow_Id = @IdDownload)
-			            END
+                        END
+                        else
+                              BEGIN
+                              Set @IsUpdate = 0
+                              UPDATE   DownloadLinks SET  TimeToVisit = GETDATE() WHERE  (Dow_Id = @IdDownload)
+                              END
 
             END",
-
-            @"CREATE PROCEDURE [dbo].[Download_LinkDisable] AS	
-	            BEGIN	
-		            UPDATE  DownloadLinks SET    IsDisable = 'True'	
-			            where TimeToVisit <=  DATEADD (mi , 10 , TimeToVisit)	
-	            END",
-            @"CREATE PROCEDURE [dbo].[Download_LinkRemove] 
-	            AS	
-	            BEGIN		
-		            DELETE FROM DownloadLinks		
-			            WHERE (IsDisable = 1) AND (TimeToVisit <=  DATEADD (mi , 20 , TimeToVisit))	
-	            END
-            ",
-
-
-                @"CREATE PROCEDURE [dbo].[Download_Link_GetURL] 
-                    @IsAudio bit,
+            @"
+CREATE  PROCEDURE [dbo].[Download_Link_Delete] 
+	@Id uniqueidentifier
+AS    
+BEGIN       
+	DELETE FROM DownloadLinks    
+		WHERE  (Dow_Id = @Id)
+END
+",
+            @"CREATE PROCEDURE [dbo].[Download_Link_GetURL] 
+                @IsAudio bit,
                 @IsAdmin bit,
                 @FileId uniqueidentifier,
                 @UserName nvarchar(max),
@@ -723,70 +715,83 @@ END"
 
             AS
             BEGIN
-		
+            
                 DECLARE @isAccess bit
                 DECLARE @FileName nvarchar(max)
                 DECLARE @PackagesId uniqueidentifier 
                 DECLARE @IsUpdate bit
-                DECLARE	@langId int
+                DECLARE @langId int
                 DECLARE @IdDownload uniqueidentifier 
                 DECLARE @IdTrack uniqueidentifier 
 
-			
+                  
 
                 IF @IsAudio = 1
-		            BEGIN
-					
-			              SELECT @IdTrack = Aud_Id,  @FileName = Audios.Aud_Url, @langId = Audios.langId,  @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
-				            FROM   Audios 
-					            INNER JOIN Places ON Audios.Place_Pla_Id = Places.Pla_Id 
-					            INNER JOIN	cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
-					            INNER JOIN	Packagecities ON cities.Cit_Id = Packagecities.city_Cit_Id 
-					            INNER JOIN	Packages ON Packagecities.Package_Pac_Id = Packages.Pac_Id
-						            WHERE  (Audios.Aud_Id = @FileId) 
-		            END
+                        BEGIN
+                              
+                                SELECT @IdTrack = Aud_Id,  @FileName = Audios.Aud_Url, @langId = Audios.langId,  @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
+                                    FROM   Audios 
+                                          INNER JOIN Places ON Audios.Place_Pla_Id = Places.Pla_Id 
+                                          INNER JOIN  cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
+                                          INNER JOIN  Packagecities ON cities.Cit_Id = Packagecities.city_Cit_Id 
+                                          INNER JOIN  Packages ON Packagecities.Package_Pac_Id = Packages.Pac_Id
+                                                WHERE  (Audios.Aud_Id = @FileId) 
+                        END
                 ELSE 
-		            BEGIN
-			            SELECT @IdTrack = Sto_Id,  @FileName = Stories.Sto_Url,@langId = Stories.langId, @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
-				            FROM   Stories 
-					            INNER JOIN Places ON Stories.Place_Pla_Id = Places.Pla_Id 
-					            INNER JOIN	cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
-					            INNER JOIN	Packagecities ON cities.Cit_Id = Packagecities.city_Cit_Id 
-					            INNER JOIN	Packages ON Packagecities.Package_Pac_Id = Packages.Pac_Id
-						            WHERE  (Stories.Sto_Id = @FileId) 
-		            END
-						
-			
+                        BEGIN
+                              SELECT @IdTrack = Sto_Id,  @FileName = Stories.Sto_Url,@langId = Stories.langId, @PackagesId = Packages.Pac_Id , @isAccess = Places.Pla_isPrimary
+                                    FROM   Stories 
+                                          INNER JOIN Places ON Stories.Place_Pla_Id = Places.Pla_Id 
+                                          INNER JOIN  cities ON Places.Pla_city_Cit_Id = cities.Cit_Id 
+                                          INNER JOIN  Packagecities ON cities.Cit_Id = Packagecities.city_Cit_Id 
+                                          INNER JOIN  Packages ON Packagecities.Package_Pac_Id = Packages.Pac_Id
+                                                WHERE  (Stories.Sto_Id = @FileId) 
+                        END
+                                    
+                  
                 IF (@IsAdmin= 0  and  @isAccess = 0)
-	                BEGIN
-					
-		                SELECT @isAccess = COUNT(DISTINCT Procurements.Id)  FROM Procurements INNER JOIN Packages 
-			                ON Procurements.Pac_Id = Packages.Pac_Id
-			                INNER JOIN AspNetUsers ON AspNetUsers.Id = Procurements.Id
-			                where (AspNetUsers.UserName = @UserName and AspNetUsers.uuid = @UserUUID and Packages.Pac_Id = @PackagesId) 
-	                END
-				
-	            IF( @IsAdmin= 1  or  @isAccess != 0)
-	                Begin
-		                EXEC	[dbo].[Download_LinkCreate]
-				                @FileName = @FileName,
-				                @IsAudio = @IsAudio,
-				                @Path = @Path OUTPUT,
-				                @IsUpdate = @IsUpdate OUTPUT,
-								@IdDownload = @IdDownload OUTPUT
+                      BEGIN
+                              
+                            SELECT @isAccess = COUNT(DISTINCT Procurements.Id)  FROM Procurements INNER JOIN Packages 
+                                  ON Procurements.Pac_Id = Packages.Pac_Id
+                                  INNER JOIN AspNetUsers ON AspNetUsers.Id = Procurements.Id
+                                  where (AspNetUsers.UserName = @UserName and AspNetUsers.uuid = @UserUUID and Packages.Pac_Id = @PackagesId) 
+                      END
+                        
+                  IF( @IsAdmin= 1  or  @isAccess != 0)
+                      Begin
+                            EXEC    [dbo].[Download_Link_Create]
+                                        @TrackId  = @FileId,
+										@FileName = @FileName,
+                                        @IsAudio = @IsAudio,
+                                        @Path = @Path OUTPUT,
+                                        @IsUpdate = @IsUpdate OUTPUT,
+                                                @IdDownload = @IdDownload OUTPUT
 
-		                SELECT	@Path as PathFile , @FileName as FileName , @IsUpdate as IsUpdate , 1 as isAccess, @langId as  langId,@IdDownload as IdDownload
-	              
-				  INSERT INTO TrafficDownloadLogs
-                               (Tra_Username, Tra_DateTime,Tra_IsAudio ,Tra_IdTrack)
-						 VALUES (@UserName, GETDATE(),@IsAudio,@IdTrack)
-				  
-				    END
+                            SELECT  @Path as PathFile , @FileName as FileName , @IsUpdate as IsUpdate , 1 as isAccess, @langId as  langId,@IdDownload as IdDownload
+                    IF( @IsAdmin != 1)
+                          INSERT INTO TrafficDownloadLogs
+                               (Tra_Uuid, Tra_DateTime,Tra_IsAudio ,Tra_IdTrack)
+                                     VALUES (@UserUUID, GETDATE(),@IsAudio,@IdTrack)
+                          
+                            END
                 ELSE 
-		            BEGIN
-		                SELECT	null as PathFile , null as FileName , null as IsUpdate , 0 as isAccess , @langId as  langId,@IdDownload as IdDownload
-		            END
-	            END"};
+                        BEGIN
+                            SELECT  null as PathFile , null as FileName , null as IsUpdate , 0 as isAccess , @langId as  langId,@IdDownload as IdDownload
+                        END
+                  END",
+            @"CREATE PROCEDURE [dbo].[Download_LinkDisable] AS      
+BEGIN 
+	UPDATE	DownloadLinks 
+		SET  IsDisable = 'True'
+			WHERE (GETDATE() > DATEADD(mi, 10, TimeToVisit))
+END",
+            @"CREATE PROCEDURE [dbo].[Download_LinkRemove] 
+                  AS    
+                  BEGIN       
+                        DELETE FROM DownloadLinks           
+                              WHERE (IsDisable = 1) AND (TimeToVisit <=  DATEADD (mi , 20 , TimeToVisit))   
+                  END"};
         public static readonly List<string> Commands_v2 = new List<string>()
         {
             @" CREATE PROCEDURE [dbo].[GetPackages_website]
