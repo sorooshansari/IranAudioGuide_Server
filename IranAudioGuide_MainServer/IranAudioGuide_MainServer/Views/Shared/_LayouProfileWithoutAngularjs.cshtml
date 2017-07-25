@@ -1,10 +1,8 @@
 ﻿@using IranAudioGuide_MainServer.App_GlobalResources
+@using IranAudioGuide_MainServer.Models
 @{
     Layout = null;
-    //var controller = Url.RequestContext.RouteData.Values["controller"].ToString();
-    //var action = Url.RequestContext.RouteData.Values["action"].ToString();
-    //var id = Url.RequestContext.RouteData.Values["id"];
-    //var lang = Request["lang"] == null ? "en" : Request["lang"].ToString();
+    var locales = new langsVM();
 }
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
@@ -25,22 +23,22 @@
     @*  @Styles.Render("~/ProfileCss")*@
 
 </head>
-<body class="_@Global.Lang">
+<body class="_@Global.Lang" onresize="onResizeBody()">
     @*<div id="FullPageLoading" class="load" ng-class="{'unload': profile.isCompletedLoading == false}">
-        <div id="fpcontainer">
-            <img id="IAGLogo" src="@GlobalPath.ImagePath/IAGSITELOGO.png" />
-            <div style="text-align:center;">
-                <span>@Global.loadingtxt </span>
+            <div id="fpcontainer">
+                <img id="IAGLogo" src="@GlobalPath.ImagePath/IAGSITELOGO.png" />
+                <div style="text-align:center;">
+                    <span>@Global.loadingtxt </span>
+                </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
 
     <header>
         <div class="navbar-fixed z-depth-2">
             <nav class="navbar-material">
                 <a href="#!" class="brand-logo">
                     <img src="@GlobalPath.ImagePath/IAGSITELOGO.png">
-                </a>  
+                </a>
                 <a href="#!" class="brand-logo secondLogo">@Global.IranAudioGuide</a>
                 <a href="#" data-activates="slide-out" class="button-collapse">
                     <i class="material-icons dp48">view_headline</i>
@@ -53,19 +51,30 @@
                 <div class="user-view z-depth-1">
                     <div class="background">
                     </div>
-                    <a href="#!user"><img class="circle" ng-src="{{user.imgUrl}}"></a>
-                    <a href="#!name"><span class="white-text name">{{user.FullName}}</span></a>
-                    <a href="#!email"><span class="white-text email">{{user.Email}}</span></a>
+                    <a href="#!user"><img class="circle" src="@GlobalPath.ImagePath/IAGSITELOGO.png"></a>
+                    @if (User.Identity.IsAuthenticated == true)
+                    {
+                        <a href="#!name"><span class="white-text name"> @User.Identity.Name</span></a>
+                    }
                 </div>
             </li>
             @*<li><a class="waves-effect waves-teal" href="#!"><i class="fa fa-home"></i> @Global.MenuHome</a></li>*@
-            <li><a class="waves-effect waves-teal active" href="/@Global.Lang/User#/pakages"><i class="fa fa-shopping-cart"></i>@Global.Packages</a></li>
+            <li><a class="waves-effect waves-teal" href="/@Global.Lang/User#/pakages"><i class="fa fa-shopping-cart"></i>@Global.Packages</a></li>
             <li><a class="waves-effect waves-teal" href="/@Global.Lang/User#/pakagePurchased"><i class="fa fa-cart-arrow-down"></i>@Global.MenuPurchased</a></li>
             <li><a class="waves-effect waves-teal" href="/@Global.Lang/User#/deactivateMobile"><i class="fa fa-mobile"></i>@Global.MenuDevices</a></li>
             <li><a class="waves-effect waves-teal" href="@Url.Action("LogOff", "User")"> <i class="fa fa-sign-out"></i>@Global.LogOff</a></li>
             <li><div class="divider"></div></li>
-            <li><a class="subheader">@Global.ChangeLanguage</a></li>
-            <li><a class="waves-effect waves-Blue" href="#!">@Global.LangOtherTitle</a></li>
+            <li><a class="subheader">@Global.CurrentLanguage</a></li>
+            <li>
+
+                @Html.Partial("_SelectLangBtnUser", new SelectLangVM()
+           {
+               action = "Index",
+               controller = "User",
+               currentLang = Global.Lang,
+               langs = locales.Get
+           })
+            </li>
             <li><div class="divider"></div></li>
             <li><a class="subheader">@Global.Support</a></li>
             <li>
@@ -175,9 +184,12 @@
 
     <script>
         $(document).ready(function () {
+            var side = "right";
+            if ($("body").hasClass("_en"))
+                side = "left";
             $('.button-collapse').sideNav({
                 menuWidth: 300, // Default is 300
-                edge: 'left', // Choose the horizontal origin
+                edge: side, // Choose the horizontal origin
                 closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
                 draggable: true, // Choose whether you can drag to open on touch screens,
                 onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened

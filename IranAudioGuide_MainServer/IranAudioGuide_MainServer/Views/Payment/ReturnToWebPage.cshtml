@@ -1,46 +1,45 @@
 ﻿@using IranAudioGuide_MainServer.App_GlobalResources
 @{
     Layout = "~/Views/Shared/_LayouProfileWithoutAngularjs.cshtml";
+    //Layout = "~/Views/Shared/_LayouProfile.cshtml";
 }
-
-
-<main>
     <div class="paymentPage">
         <div class="row">
 
             <nav class="subheader">
                 <div class="nav-wrapper subheader black-text">
                     <div class="col s12">
-                        <h4 style="display:inline-block"> Devices</h4>
+                        <h4 style="display:inline-block"> @Global.ReceiptForInvoice</h4>
                     </div>
                 </div>
             </nav>
 
 
             <div class="col s12">
-                <div class="card IAGblueBack darken-1 ">
-                    <ul>
+                <div class="card IAGblueBack darken-1">
+                    <ul class="@( ViewBag.Succeeded == true ? "successPayment" : "failePayment")">
                         <li>
                             @if (ViewBag.Succeeded == true)
                             {
-                                <i class="fa fa-thumbs-o-up fa-box successPayment"></i>
+                                <i class="fa fa-thumbs-o-up fa-box"></i>
                             }
                             else
                             {
-                                <i class="fa fa-thumbs-o-down fa-box failePayment"></i>
+                                <i class="fa fa-thumbs-o-down fa-box"></i>
                             }
 
                         </li>
-                        <li> <h3 class="tile">@Html.Raw(ViewBag.Message)</h3> </li>
-                        <li><h5 class="content"> @Html.Raw(ViewBag.ErrDesc)</h5> </li>
-                        <li>
-                            <b> @Global.ReturnPaymentReferenceID</b>
-                            <i class="fa fa-key"></i> @ViewBag.SaleReferenceId
-                        </li>
+                        <li> <h5 class="tile-msg">@Html.Raw(ViewBag.Message)</h5> </li>
+                        <li><h6 class="content white-text "> @Html.Raw(ViewBag.ErrDesc)</h6> </li>
+
                         @if (ViewBag.Succeeded == true)
                         {
-                            <li> <b>@Global.PaymentPage27 </b> <i class="fa fa-briefcase"></i> @ViewBag.Packname  </li>
-                            <li> <b>@Global.Price</b> <i class="fa fa-briefcase"></i>  @string.Format("{0:#,##0.##}0", ViewBag.Price) @Global.PriceSign  </li>
+                            <li>
+                                <i class="fa fa-key"></i>   @Global.ReturnPaymentReferenceID
+                                <b>  @ViewBag.SaleReferenceId</b>
+</li>
+                            <li><i class="fa fa-briefcase"></i> @Global.PaymentPage27 <b> @ViewBag.Packname  </b></li>
+                            <li><i class="fa fa-briefcase"></i> @Global.Price <b> @string.Format("{0:#,##0.##}0", ViewBag.Price) @Global.PriceSign </b> </li>
                         }
                     </ul>
                 </div>
@@ -48,54 +47,3 @@
 
         </div>
     </div>
-
-</main>
-
-@*<nav class="subheader">
-        <div class="nav-wrapper subheader black-text">
-            <div class="col s12">
-                <h5> @Global.ReceiptForInvoice</h5>
-            </div>
-        </div>
-    </nav>
-    <div class="card IAGblueBack darken-1">
-        <div class="row">
-            <div class="col s12 ">
-
-
-                <div class="card-content  white-text">
-
-                    <ul>
-                        <li>
-                            @if (ViewBag.Succeeded == true)
-                {
-                                <i class="fa fa-thumbs-o-up fa-box successPayment"></i>
-                            }
-                            else
-                            {
-                                <i class="fa fa-thumbs-o-down fa-box failePayment"></i>
-                            }
-
-                        </li>
-                        <li> <h3 class="tile">@Html.Raw(ViewBag.Message)</h3> </li>
-                        <li><h5 class="content"> @Html.Raw(ViewBag.ErrDesc)</h5> </li>
-                        <li>
-                            <b> @Global.ReturnPaymentReferenceID</b>
-                            <i class="fa fa-key"></i> @ViewBag.SaleReferenceId
-                        </li>
-                        @if (ViewBag.Succeeded == true)
-                {
-                            <li> <b>@Global.PaymentPage27 </b> <i class="fa fa-briefcase"></i> @ViewBag.Packname  </li>
-                            <li> <b>@Global.Price</b> <i class="fa fa-briefcase"></i>  @string.Format("{0:#,##0.##}0", ViewBag.Price) @Global.PriceSign  </li>
-                        }
-                    </ul>
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-    </div>*@

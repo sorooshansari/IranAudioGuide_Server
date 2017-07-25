@@ -948,4 +948,13 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="Shetab" xml:space="preserve">
     <value>Shetab</value>
   </data>
+  <data name="CurrentLanguage" xml:space="preserve">
+    <value>Current Language</value>
+  </data>
+  <data name="btnReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="ResetYourPassword" xml:space="preserve">
+    <value>Reset your password.</value>
+  </data>
 </root>

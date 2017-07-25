@@ -14,12 +14,13 @@ using Microsoft.Ajax.Utilities;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "AppUser")]
     public class UserApiController : ApiController
     {
 
         [HttpGet]
-        public IHttpActionResult GetLang (){
+        public IHttpActionResult GetLang()
+        {
             var lang = ServiceCulture.GeLangFromCookieAsString();
             return Ok(lang);
         }
@@ -88,26 +89,22 @@ namespace IranAudioGuide_MainServer.Controllers
         public IHttpActionResult GetPackages()
         {
             var lang = ServiceCulture.GeLangFromCookie();
-            var pro_list = GetPackagesProcurements();
+            //var pro_list = GetPackagesProcurements();
             //  var lang = ServiceCulture.GeLangFromCookie();          
             var resualt = GetPackagesByLangId(lang);
             //  var resualt2 = GetPackagesByLangId(2);
             //   resualt.AddRange(resualt2);
 
-            foreach (var item in resualt)
-            {
-                item.isPackagesPurchased = pro_list.Any(pr => pr == item.PackageId);
-            }
+            //foreach (var item in resualt)
+            //{
+            //    item.isPackagesPurchased = pro_list.Any(pr => pr == item.PackageId);
+            //}
 
 
             return Ok(resualt);
         }
-
-        private List<GetPackageVM> GetPackagesByLangId(int lang)
+        public List<GetPackageVM> ConvertToList(List<DataTable> listdata)
         {
-            var d = new dbManagerV2();
-            var parameter = new SqlParameter("@langId", lang);
-            var listdata = d.MultiTableResultSP("GetPackages_website", parameter);
             var getModel = new List<PackageUserVM>();
 
             foreach (DataRow c in listdata[1].Rows)
@@ -152,7 +149,6 @@ namespace IranAudioGuide_MainServer.Controllers
                 PackagePriceDollar = p.PackagePriceDollar,
                 PackageId = p.PackageId,
                 PackageName = p.PackageName,
-                //isPackagesPurchased = pro_list.Any(pr => pr == p.PackageId),
                 PackageCities = getModel.Where(pc => pc.PackageId == p.PackageId).OrderBy(x => x.CityOrder).Select(c => new CityUserVM()
                 {
                     CityName = c.CityName,
@@ -161,105 +157,39 @@ namespace IranAudioGuide_MainServer.Controllers
                     CityDesc = c.CityDescription,
                     IsloadImage = true,
                     TotalTrackCount = listPlaces.Where(lp => lp.Cit_Id == c.CityId).Sum(pl => pl.AudiosCount + pl.StoriesCount),
+                    TotalCountPlace = listPlaces.Where(lp => lp.Cit_Id == c.CityId).Count(),
                     Places = listPlaces.Where(lp => lp.Cit_Id == c.CityId).OrderBy(x => x.OrderItem)
                                    .Select(pl => new PlaceUserVM()
                                    {
                                        PlaceName = pl.PlaceName,
                                        PlaceId = pl.PlaceId,
-                                       ImgUrl = GlobalPath.FullPathImageTumbnail + pl.TumbImgUrl
+                                       ImgUrl = GlobalPath.FullPathImageTumbnail + pl.TumbImgUrl,
+                                       StoriesCount = pl.StoriesCount,
+                                       AudiosCount = pl.AudiosCount
                                    }).ToList()
                 }).ToList()
             }).DistinctBy(x => x.PackageId).ToList();
-
         }
 
-        [HttpPost]
-        public List<Guid> GetPackagesProcurements()
+        private List<GetPackageVM> GetPackagesByLangId(int lang)
         {
-            var dt1 = new DataTable();
-            using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
-            {
-                SqlCommand cmd = new SqlCommand("GetPackagesProcurements_website", sqlConnection);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@Username", User.Identity.Name));
-                sqlConnection.Open();
-                var reader = cmd.ExecuteReader();
-                dt1.Load(reader);
-            }
-            var result = dt1.AsEnumerable().Select(x => x["Pac_Id"].ConvertToGuid()).ToList();
-            return result;
+            var d = new dbManagerV2();
+            var parameter = new SqlParameter("@langId", lang);
+            return ConvertToList(d.MultiTableResultSP("GetPackages_website", parameter));
+
         }
 
         [HttpPost]
         [Authorize(Roles = "AppUser")]
 
-        public IHttpActionResult GetPackages1()
-        {
-
-            try
-            {
-                using (var db = new ApplicationDbContext())
-                {
-                    string userName = User.Identity.Name;
-                    var list = db.Packages.Include("procurements.Pro_User").Include("Package.Pac_Cities")
-                        .Select(p => new PackageVM()
-                        {
-                            PackagePrice = p.Pac_Price,
-                            PackagePriceDollar = p.Pac_Price_Dollar,
-                            PackageId = p.Pac_Id,
-                            PackageName = p.Pac_Name,
-                            isPackagesPurchased = p.procurements.Any(t => t.Pro_User.UserName == User.Identity.Name && t.Pro_PaymentFinished),
-
-                            PackageCities = p.Pac_Cities.Select(c => new CityVM()
-                            {
-                                CityName = c.Cit_Name,
-                                CityDesc = c.Cit_Description,
-                                CityID = c.Cit_Id,
-                                CityImageUrl = c.Cit_ImageUrl,
-                                Places = db.Places
-                                .Where(pl => pl.Pla_city.Cit_Id == c.Cit_Id && pl.Pla_isOnline == true)
-                                .Select(pl => new PlaceVM()
-                                {
-                                    PlaceName = pl.Pla_Name,
-                                    PlaceId = pl.Pla_Id,
-                                    CityName = pl.Pla_Name,
-                                    PlaceAddress = pl.Pla_Address,
-                                    PlaceDesc = pl.Pla_Discription,
-                                    ImgUrl = pl.Pla_ImgUrl,
-                                    isOnline = pl.Pla_isOnline,
-                                }).ToList()
-                            }).ToList()
-                        }).ToList();
-
-                    return Ok(list);
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorSignal.FromCurrentContext().Raise(ex);
-                throw ex;
-            }
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "AppUser")]
-
-        public IList<Guid> GetPackagesPurchased()
+        public IList<GetPackageVM> GetPackagesPurchased()
         {
             try
             {
-                using (var db = new ApplicationDbContext())
-                {
-                    //var s = db.Procurements.Include(x => x.Pro_Package).Include(x => x.Pro_Payment).Include(x => x.Pro_WMPayment).Include(x => x.Pro_User).ToList();
-                    //return s;
-                    string userName = User.Identity.Name;
-                    var list = db.Procurements
-                        .Include(x => x.Pro_User)
-                        .Where(x => x.Pro_User.UserName == userName && x.Pro_PaymentFinished)
-                        .Select(p => p.Pac_Id).ToList();
-                    return list;
-                }
-
+                var d = new dbManagerV2();
+                var parameter = new SqlParameter("@Username", User.Identity.Name);
+                var dt = d.MultiTableResultSP("GetPackagesProcurements_website", parameter);
+                return ConvertToList(dt);
             }
             catch (Exception ex)
             {
@@ -291,6 +221,8 @@ namespace IranAudioGuide_MainServer.Controllers
 
         public IHttpActionResult DeactivateMobile()
         {
+            ServiceCulture.SetCultureFromCookie();
+
             using (var db = new ApplicationDbContext())
             {
                 string userName = User.Identity.Name;
@@ -303,19 +235,20 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 else
                 {
-                    var startDay = user.TimeSetUuid.Value;
-                    var endDay = DateTime.Now;
-                    var day = endDay.Day - startDay.Day;
-                    var month = endDay.Month - startDay.Month;
-                    var year = endDay.Year - startDay.Year;
-                    var daywating = ((year * 365) + (month * 31) + day) / 30;
-                    if (daywating > 6)
+
+
+                    var TimeSetUuid = user.TimeSetUuid.Value.AddMonths(6);
+                    if (user.TimeSetUuid.Value.AddMonths(6) <= DateTime.Now)
                     {
                         user.TimeSetUuid = DateTime.Now;
                         user.uuid = null;
                     }
                     else
+                    {
+                        var daywating = user.TimeSetUuid.Value.AddMonths(6).Month - DateTime.Now.Month;
                         return BadRequest(string.Format(Global.ServerDeactivateMobileInavlid, (30 * 6) + daywating));
+                    }
+
                 }
                 db.SaveChanges();
                 return Ok(Global.ServerDeactivateMobile);

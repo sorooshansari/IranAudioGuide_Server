@@ -32,16 +32,39 @@ userApp.service('fileUpload', ['$http', function ($http) {
 }]);
 userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout', 'notificService', '$http', '$state',
     function ($window, $scope, userServices, $timeout, notific, $http, $state) {
-        var stopeLoading = function () {
 
+        $scope.profile = {
+            istest: true,
+            packages: [],
+            packagesPurchased: [],
+            isCompletedLoading: true,
+            waiting: 0,
+            page: 1
         };
+        $(".dropdown-button").dropdown();
 
-        userServices.getLang().then(function (lang) {
-            userServices.baseUrl = "/" + lang;
-            console.log(lang);
-            var side = 'left';
-            if (lang == "fa")
-                side = 'right';
+        var stopeLoading = function () {
+            $scope.profile.waiting++;
+            console.log(" $scope.profile.waiting", $scope.profile.waiting);
+
+            //end get packages and packagesPurchased and curentUser and init menu
+            if ($scope.profile.waiting >= 4) {
+
+                // Which packs have been purchased
+                angular.forEach($scope.profile.packagesPurchased, function (packBuy, index) {
+                    angular.forEach($scope.profile.packages, function (pack, index) {
+                        if (packBuy.PackageId === pack.PackageId) {
+                            pack.isPackagesPurchased = true;
+                            return true;
+                        }
+                    });
+                });
+                refreshPack();
+                $scope.profile.isCompletedLoading = false;
+
+            }
+        };
+        var initMenu = function (side) {
             $('.button-collapse').sideNav({
                 menuWidth: 300, // Default is 300
                 edge: side, // Choose the horizontal origin
@@ -50,19 +73,19 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
                 onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
                 onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
             });
-            stopeLoading(1);
+        };
+
+        userServices.getLang().then(function (lang) {
+            userServices.baseUrl = "/" + lang;
+            var side = 'left';
+            if (lang == "fa")
+                side = 'right';
+            initMenu(side);
+            stopeLoading();
         }, function (lang) {
             userServices.baseUrl = "/en";
-            $('.button-collapse').sideNav({
-                menuWidth: 300, // Default is 300
-                edge: 'left', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                draggable: true, // Choose whether you can drag to open on touch screens,
-                onOpen: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is opened
-                onClose: function (el) { /* Do Stuff*/ }, // A function to be called when sideNav is closed
-            });
-            stopeLoading(1);
-
+            initMenu('left');
+            stopeLoading();
         });
 
         var timeoutID = window.setTimeout(function () {
@@ -104,7 +127,7 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
 
         $scope.buyPakages = function (isChooesZarinpal) {
             $('#modal1').modal('close');
-            $scope.profile.isCompletedLoading = true;
+            //stopeLoading();
             $state.go('Payment', {
                 PackageId: $scope.itemPack.PackageId,
                 IsChooesZarinpal: isChooesZarinpal
@@ -135,33 +158,28 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
         var refreshPack = function () {
             $timeout(function () {
                 $('.collapsible').collapsible();
-                $scope.profile.isCompletedLoading = false;
             }, 1000);
             $timeout(function () {
                 $scope.isloadImage = false;
             }, 100000);
+
             $scope.listPakages = angular.copy($scope.profile.packages)
         }
+        if ($scope.profile.packagesPurchased.length === 0) {
+            userServices.getPackagesPurchased().then(function (data) {
+                $scope.profile.packagesPurchased = data;
+                stopeLoading();
 
-
-        $scope.profile = {
-            istest: true,
-            packages: [],
-            packagesPurchased: [],
-            isCompletedLoading: true
-        };
+            }, function () {
+                stopeLoading();
+            });
+        }
         if ($scope.profile.packages.length === 0) {
             userServices.getPackages().then(function (data) {
                 $scope.profile.packages = data;
-                angular.forEach(data, function (item, index) {
-                    if (item.isPackagesPurchased === true) {
-                        $scope.profile.packagesPurchased.push(item);
-                    }
-                });
-                refreshPack();
+                stopeLoading();
             }, function () {
-                $scope.profile.isCompletedLoading = false;
-
+                stopeLoading();
             });
         }
         else {
@@ -191,6 +209,8 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
         //    userServices.LogOff();
         //    $window.location.href = 'http://iranaudioguide.com';
         //}
+        $scope.notImage = true;
+
         userServices.getUser().then(function (data) {
             try {
                 if (typeof data.FullName != undefined || data.FullName != null)
@@ -199,10 +219,11 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
                 if (typeof data.Email != undefined)
                     $scope.user.Email = data.Email;
 
-                if (typeof data.imgUrl != undefined || data.imgUrl === null)
+                if (typeof data.imgUrl != undefined || data.imgUrl === null) {
                     $scope.user.imgUrl = data.imgUrl;
-                else
-                    data.imgUrl = "../images/default_avatar.png";
+                    $scope.notImage = false;
+
+                }
 
                 if (typeof data.IsEmailConfirmed != undefined)
                     $scope.user.IsEmailConfirmed = data.IsEmailConfirmed;
@@ -220,6 +241,8 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
                     $scope.user.IsForeign = data.IsForeign;
 
                 $scope.user.isAutintication = true;
+                stopeLoading();
+
             }
             catch (error) {
                 $scope.user.FullName = data.FullName;
@@ -227,23 +250,13 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
                 $scope.user.IsSetuuid = false;
                 $scope.user.IsAccessChangeUuid = false;
                 $scope.user.IsForeign = data.IsForeign;
+                stopeLoading();
+
             }
 
             //   $scope.profile.isCompletedLoading = false;
         });
 
-        $scope.deactivateMobile = function () {
-            userServices.deactivateMobile()
-                .then(function (data) {
-                    notific.success("", data)
-                    $scope.user.IsAccessChangeUuid = false;
-                    $scope.m.isShowMessage = false;
-                    // notific.success(successMsg);
-                    $state.go("Packages");
-                }, function (error) {
-                    notific.error("ERROR", error.Message);
-                });
-        }
 
 
         //$timeout(function () {
@@ -328,27 +341,27 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
 
         // ******************************** end getPackages
 
-        $scope.allContacts = [
-            {
-                name: 'Marina Augustine',
-            }, {
-                name: 'Oddr Sarno',
-            }, {
-                name: 'Nick Giannopoulos',
-            }, {
-                name: 'Narayana Garner',
-            }, {
-                name: 'Anita Gros',
-            }, {
-                name: 'Megan Smith',
-            }, {
-                name: 'Tsvetko Metzger',
-            }, {
-                name: 'Hector Simek',
-            }, {
-                name: 'Some-guy withalongalastaname'
-            }
-        ];
+        //$scope.allContacts = [
+        //    {
+        //        name: 'Marina Augustine',
+        //    }, {
+        //        name: 'Oddr Sarno',
+        //    }, {
+        //        name: 'Nick Giannopoulos',
+        //    }, {
+        //        name: 'Narayana Garner',
+        //    }, {
+        //        name: 'Anita Gros',
+        //    }, {
+        //        name: 'Megan Smith',
+        //    }, {
+        //        name: 'Tsvetko Metzger',
+        //    }, {
+        //        name: 'Hector Simek',
+        //    }, {
+        //        name: 'Some-guy withalongalastaname'
+        //    }
+        //];
 
 
         //var pendingSearch, cancelSearch = angular.noop;
@@ -526,19 +539,48 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
 
     }]);
 
-userApp.controller('pakagePurchasedCtrl', ['$scope', 'userServices', function ($scope, userServices) {
+userApp.controller('pakagePurchasedCtrl', ['$scope', '$timeout', 'userServices', function ($scope, $timeout, userServices) {
 
-    $scope.$watch("profile.packagesPurchased", function (newval, oldval) {
-        if (typeof newval != undefined) {
-            $scope.packagesPurchased = angular.copy($scope.profile.packagesPurchased);
-            if ($scope.packagesPurchased.length === 0)
-                $scope.isShowMessage = true;
-            else
-                $scope.isShowMessage = false;
+    $timeout(function () {
+        $('.collapsible').collapsible();
+    }, 1000);
 
-        }
-    });
+    $timeout(function () {
+        $scope.isloadImage = false;
+    }, 100000);
+
+
+    $scope.profile.page = 2;
+
+    if (typeof $scope.profile.packagesPurchased != undefined || $scope.profile.packagesPurchased.length != 0) {
+        $scope.packagesPurchased = angular.copy($scope.profile.packagesPurchased);
+        $scope.isShowMessage = false;
+    }
+    else
+        $scope.isShowMessage = true;
+
 }]);
-userApp.controller('paymentCtrl', ['$scope', function ($scope) {
+userApp.controller('pakageCtrl', ['$scope', function ($scope) {
     $scope.profile.isCompletedLoading = false;
+    $scope.profile.page = 1;
+
+}]);
+
+userApp.controller('deactivateCtrl', ['$scope', 'userServices', 'notificService', function ($scope, userServices, notific) {
+    $scope.profile.isCompletedLoading = false;
+    $scope.profile.page = 3;
+
+    $scope.deactivateMobile = function () {
+        userServices.deactivateMobile()
+            .then(function (data) {
+                notific.success("", data)
+                $scope.user.IsAccessChangeUuid = false;
+                $scope.m.isShowMessage = false;
+                // notific.success(successMsg);
+                // $state.go("Packages");
+            }, function (error) {
+                if (typeof error != undefined && error.Message != null)
+                    notific.error("", error.Message);
+            });
+    }
 }]);

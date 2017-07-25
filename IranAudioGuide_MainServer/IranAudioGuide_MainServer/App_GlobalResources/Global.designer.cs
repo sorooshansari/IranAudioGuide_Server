@@ -187,6 +187,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string btnReset {
+            get {
+                return ResourceManager.GetString("btnReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string btnSubmit {
@@ -246,6 +255,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string copyright23 {
             get {
                 return ResourceManager.GetString("copyright23", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Language.
+        /// </summary>
+        public static string CurrentLanguage {
+            get {
+                return ResourceManager.GetString("CurrentLanguage", resourceCulture);
             }
         }
         
@@ -1778,6 +1796,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string Remmember {
             get {
                 return ResourceManager.GetString("Remmember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset your password..
+        /// </summary>
+        public static string ResetYourPassword {
+            get {
+                return ResourceManager.GetString("ResetYourPassword", resourceCulture);
             }
         }
         

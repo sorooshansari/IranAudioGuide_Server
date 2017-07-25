@@ -4,7 +4,21 @@
 @using IranAudioGuide_MainServer.App_GlobalResources
 
 <style>
-  
+    /*@* .btn-large[disabled] {
+        background-color: #94afac !important;
+        color: #fffefe !important;
+    }
+
+    *@*/
+
+
+    .btn-large[disabled] {
+        line-height: 35px;
+    }
+    .pakage .card-action i.material-icons.dp48 {
+        position: relative;
+        top: 6px;
+    }
 </style>
 <div class="row">
 
@@ -32,8 +46,8 @@
                                         <span class="title">{{city.CityName}}</span>
                                         <p>
                                             {{city.CityDesc}}<br />
-                                            <span class="badge"><span class="fa fa-map-marker"></span> {{city.TotalAudiosCount.length}}</span>
-                                            <span class="badge"><span class="fa fa-microphone"></span> {{city.TotalStoriesCount.length}}</span>
+                                            <span class="badge"><span class="fa fa-map-marker"></span> {{city.TotalCountPlace}}</span>
+                                            <span class="badge"><span class="fa fa-headphones"></span> {{city.TotalTrackCount}}</span>
                                         </p>
                                     </blockquote>
                                     <a href="#!" class="secondary-content hide-on-small-and-down"><i class="fa fa-ellipsis-v"></i></a>
@@ -48,21 +62,29 @@
                                         <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
                                         <span class="sr-only">Loading...</span>
                                     </p>
-                                    <img  ng-src="{{place.ImgUrl}}" alt="" class="circle">
+                                    <img ng-src="{{place.ImgUrl}}" alt="" class="circle">
                                     <span class="title">{{place.PlaceName}}</span>
                                     <p>
-                                        <span class="badge"><span class="fa fa-microphone"></span> {{place.AudiosCount}}</span>
-                                        <span class="badge"><span class="fa fa-map-marker"></span> {{place.StoriesCount}}</span>
+                                        <span class="badge"><span class="fa fa-headphones"></span> {{place.StoriesCount + place.AudiosCount}} </span>
+
                                     </p>
                                 </li>
                             </ul>
                         </div>
                     </li>
                 </ul>
-                
+
             </div>
             <div class="card-action">
-                <a href="#!" ng-click="OpenModal(pack)" class="waves-effect waves-light btn-large z-depth-3"><i class="material-icons right">add</i>@Global.btnBuy</a>
+                <a href="#!" ng-show="pack.isPackagesPurchased == false" ng-click="OpenModal(pack)" class="waves-effect waves-light btn-large z-depth-3">
+                    <i class="material-icons right">add</i>@Global.btnBuy
+                </a>
+                <a href="#!" ng-disabled="true" ng-show="pack.isPackagesPurchased == true" class="waves-effect waves-light btn-large z-depth-3">
+                    <i class="material-icons dp48">check</i> @Global.btnPurchased
+                </a>
+
+
+
             </div>
         </div>
     </div>
@@ -70,7 +92,7 @@
 
 
 
-  <!-- Modal Structure -->
+<!-- Modal Structure -->
 <div id="modal1" class="modal bottom-sheet PaymentModal">
     <div class="modal-content">
         <h4>@Global.PaymentGateway</h4>
@@ -85,7 +107,7 @@
                 </a>
             </li>
             <li class="collection-item avatar">
-                <a href="#!"  ng-click="buyPakages(true)">
+                <a href="#!" ng-click="buyPakages(true)">
                     <img src="http://iranaudioguide.net/Images/ShetabLogo.jpg" alt="" class="circle">
                     <span class="title shetabColor">@Global.Shetab</span><br />
                     <div class="btn">{{itemPack.PackagePrice}} @Global.PriceSign</div>

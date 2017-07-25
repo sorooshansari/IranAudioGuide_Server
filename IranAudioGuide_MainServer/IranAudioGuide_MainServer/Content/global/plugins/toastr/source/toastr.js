@@ -362,27 +362,27 @@
                 }
 
                 function hideToast(override) {
-                    var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
-                    var duration = override && options.closeDuration !== false ?
-                        options.closeDuration : options.hideDuration;
-                    var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
-                    if ($(':focus', $toastElement).length && !override) {
-                        return;
-                    }
-                    clearTimeout(progressBar.intervalId);
-                    return $toastElement[method]({
-                        duration: duration,
-                        easing: easing,
-                        complete: function () {
-                            removeToast($toastElement);
-                            if (options.onHidden && response.state !== 'hidden') {
-                                options.onHidden();
-                            }
-                            response.state = 'hidden';
-                            response.endTime = new Date();
-                            publish(response);
-                        }
-                    });
+                    //var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
+                    //var duration = override && options.closeDuration !== false ?
+                    //    options.closeDuration : options.hideDuration;
+                    //var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
+                    //if ($(':focus', $toastElement).length && !override) {
+                    //    return;
+                    //}
+                    //clearTimeout(progressBar.intervalId);
+                    //return $toastElement[method]({
+                    //    duration: duration,
+                    //    easing: easing,
+                    //    complete: function () {
+                    //        removeToast($toastElement);
+                    //        if (options.onHidden && response.state !== 'hidden') {
+                    //            options.onHidden();
+                    //        }
+                    //        response.state = 'hidden';
+                    //        response.endTime = new Date();
+                    //        publish(response);
+                    //    }
+                    //});
                 }
 
                 function delayedHideToast() {

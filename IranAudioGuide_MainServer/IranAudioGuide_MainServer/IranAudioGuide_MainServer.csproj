@@ -1843,7 +1843,8 @@
     <Content Include="Views\Payment\PaymentWeb - Copy.cshtml" />
     <Content Include="Views\Shared\_LayouProfileWithoutAngularjs.cshtml" />
     <Content Include="Views\Seller\DownloadPDF.cshtml" />
-    <Content Include="Views\Shared\_LayouProfileWithoutAngularjs - Copy.cshtml" />
+    <Content Include="Views\Shared\_SelectLangBtnUser.cshtml" />
+    <Content Include="Views\Payment\PaymentWeb - Copy %282%29.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

@@ -219,7 +219,7 @@
   <data name="LogOff" xml:space="preserve">
     <value>خروج</value>
   </data>
-  <data name="PageProfile13" xml:space="preserve">
+  <data name="PageProfileByPressingThe" xml:space="preserve">
     <value>با فشار دادن</value>
   </data>
   <data name="PageProfileDeactive" xml:space="preserve">
@@ -232,7 +232,7 @@
     <value>سپس با دستگاهی که میخواهید استفاده کنید وارد پنل کاربری شوید تا به بسته های خود دسترسی داشته باشید</value>
   </data>
   <data name="Remmember" xml:space="preserve">
-    <value>مرا به خاطر داشته باش!</value>
+    <value>به خاطر داشته باش</value>
   </data>
   <data name="PageProfileDeactiveMsg3" xml:space="preserve">
     <value>فقط هر 6 ماه یکبار قابل دسترسی است</value>
@@ -761,7 +761,7 @@
     <value>اگر سوال یا هر مشکلی  داشتید، لطفا یک ایمیل به &lt;a href="mailto:info@iranaudioguide.com" &gt; Info@iranaudioguide.com&lt;/a&gt; ارسال کنید</value>
   </data>
   <data name="PageProfileDevicesWantTo" xml:space="preserve">
-    <value>Want to change your device?</value>
+    <value>می خواهید دستگاه تون عوض کنید ؟</value>
   </data>
   <data name="ImagePath" xml:space="preserve">
     <value>http://iranaudioguide.net/Images</value>
@@ -945,5 +945,14 @@
   </data>
   <data name="Shetab" xml:space="preserve">
     <value>شتاب</value>
+  </data>
+  <data name="CurrentLanguage" xml:space="preserve">
+    <value>زبان جاری</value>
+  </data>
+  <data name="btnReset" xml:space="preserve">
+    <value>تایید</value>
+  </data>
+  <data name="ResetYourPassword" xml:space="preserve">
+    <value>بازیابی رمز عبور</value>
   </data>
 </root>

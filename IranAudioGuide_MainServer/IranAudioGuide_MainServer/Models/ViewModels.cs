@@ -206,6 +206,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PackagePriceDollar { get; set; }
         public bool isPackagesPurchased { get; set; }
         public List<CityUserVM> PackageCities { get; set; }
+       
     }
     public class PackageUserVM
     {
@@ -472,26 +473,8 @@ namespace IranAudioGuide_MainServer.Models
 
         public IList<PlaceUserVM> Places { get; set; }
         public int TotalTrackCount { get; internal set; }
-        public string CityDesc { get; internal set; }
-        public int TotalAudiosCount
-        {
-            get
-            {
-                if (Places != null || Places.Count != 0)
-                    return Places.Sum(x => x.AudiosCount);
-                return 0;
-            }
-        }
-        public int TotalStoriesCount
-        {
-            get
-            {
-                if (Places != null || Places.Count != 0)
-                    return Places.Sum(x => x.StoriesCount);
-                return 0;
-            }
-        }
-
+        public int TotalCountPlace { get; internal set; }
+        public string CityDesc { get; internal set; }   
         public bool IsloadImage { get; internal set; }
     }
 
