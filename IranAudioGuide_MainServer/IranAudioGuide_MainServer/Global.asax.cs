@@ -22,9 +22,9 @@ namespace IranAudioGuide_MainServer
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            ServiceSqlServer.StoredProcedureExists();
-            var job = new ScheduleDownloadLink();
-            job.Run();
+            //ServiceSqlServer.StoredProcedureExists();
+            //var job = new ScheduleDownloadLink();
+            //job.Run();
         }
 
     }
