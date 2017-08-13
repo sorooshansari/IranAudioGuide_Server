@@ -100,6 +100,30 @@ namespace IranAudioGuide_MainServer.Models_v2
         public long Price { get; set; }
         public float PriceD { get; set; }
     }
+    public class GetAllPackagesVM
+    {
+        public GetAllPackagesVM()
+        {
+            errorMessage = null;
+        }
+        public List<AllPackageVM> packages { get; set; }
+        public List<AllCityVM> packageCities { get; set; }
+        public string errorMessage { get; set; }
+    }
+    public class AllPackageVM
+    {
+        public Guid PackageId { get; set; }
+        public string Name { get; set; }
+        public long Price { get; set; }
+        public float PriceD { get; set; }
+        public int langId { get; set; }
+        public int OrderItem { get; set; }
+    }
+    public class AllCityVM
+    {
+        public Guid PackageId { get; set; }
+        public int CityId { get; set; }
+    }
     public class ApiCitInfoVM
     {
         public Guid PackageId { get; set; }
@@ -111,7 +135,7 @@ namespace IranAudioGuide_MainServer.Models_v2
     }
     public class ApiCityVM
     {
-        public System.Guid Id { get; set; }
+        public Guid Id { get; set; }
         public string CityName { get; set; }
         public int PlacesCount { get; set; }
         public int AudiosCount { get; set; }

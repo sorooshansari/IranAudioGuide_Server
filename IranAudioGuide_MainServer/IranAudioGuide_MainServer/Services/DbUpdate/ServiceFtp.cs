@@ -43,7 +43,7 @@ namespace DbUpdate
             }
             catch (Exception ex)
             {
-                EmailServiceForJob.SendEmail(ex.Message + " **** ftp can't delete this path:::" + path);
+                EmailServiceForJob.SendEmail(ex.Message + " **** ftp can't delete this path:::" + path + " /  date::::" + DateTime.Now);
                 Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
                 return false;
 

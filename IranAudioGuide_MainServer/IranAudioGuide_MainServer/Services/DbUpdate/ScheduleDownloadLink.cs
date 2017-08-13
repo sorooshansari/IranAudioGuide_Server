@@ -21,7 +21,7 @@ namespace DbUpdate
             }
             catch (Exception ex)
             {
-                EmailServiceForJob.SendEmail(ex.Message);
+                EmailServiceForJob.SendEmail(ex.Message + "can not run Download_LinkDisable " );
                 Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
             }
         }
@@ -32,14 +32,14 @@ namespace DbUpdate
         {
             //System.Diagnostics.Debug.WriteLine("job Remove:" + DateTime.Now.ToString());
             var serviceftp = new ServiceFtpForJob();
+            var dt = ServiceSqlServer.RunStoredProc("Download_GetPathForDelete", true);
+            var links = dt.AsEnumerable().Select(x => new
+            {
+                Path = x["Path"].ConvertToString(),
+                DowId = x["DowId"].ConvertToGuid(),
+            }).ToList();
             try
             {
-                var dt = ServiceSqlServer.RunStoredProc("Download_GetPathForDelete", true);
-                var links = dt.AsEnumerable().Select(x => new
-                {
-                    Path = x["Path"].ConvertToString(),
-                    DowId = x["DowId"].ConvertToGuid(),
-                }).ToList();
                 foreach (var item in links)
                 {
                     var isremove = serviceftp.delete(item.Path);
@@ -53,7 +53,7 @@ namespace DbUpdate
             }
             catch (Exception ex)
             {
-                EmailServiceForJob.SendEmail(ex.Message);
+                EmailServiceForJob.SendEmail(ex.Message + " when remove file" + links );
                 Elmah.ErrorLog.GetDefault(System.Web.HttpContext.Current).Log(new Elmah.Error(ex));
             }
         }

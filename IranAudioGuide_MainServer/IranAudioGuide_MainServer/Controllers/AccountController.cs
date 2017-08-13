@@ -64,7 +64,7 @@ namespace IranAudioGuide_MainServer.Controllers
             // IsTheFirstLogin check by Angularjs 
             //var serviceIpAdress = new ServiceIpAdress();
             //ViewBag.IsTheFirstLogin = serviceIpAdress.IsTheFirstLogin();
-            ViewBag.View = Views.Login;
+           // ViewBag.View = Views.Login;
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

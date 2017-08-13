@@ -67,6 +67,27 @@ namespace IranAudioGuide_MainServer.Models_v2
             return res;
         }
 
+
+        public GetAllPackagesVM GetAllPackages()
+        {
+            GetAllPackagesVM res;
+            try
+            {
+
+                var dt = dbManager.MultiTableResultSP("GetAllPackages_v2");
+                res = new GetAllPackagesVM()
+                {
+                    packages = FillAllPackageVM(dt[0]),
+                    packageCities = FillAllCityVM(dt[1]),
+                };
+            }
+            catch (Exception ex)
+            {
+                res = new GetAllPackagesVM() { errorMessage = ex.Message };
+            }
+            return res;
+        }
+
         public List<citiesLng> GetAutorizedCities(string userId)
         {
             var SP = new SqlParameter("@UserID", userId);
@@ -77,7 +98,7 @@ namespace IranAudioGuide_MainServer.Models_v2
                 LangId = CnvertToInt(x["langId"].ToString()),
 
             }).ToList();
-            
+
 
         }
 
@@ -88,7 +109,7 @@ namespace IranAudioGuide_MainServer.Models_v2
             SP1.SqlDbType = SqlDbType.Int;
             SP1.SqlDbType = SqlDbType.NVarChar;
             var dt = dbManager.MultiTableResultSP("GetUpdates_v2", SP1, SP2);
-           return new GetUpdateVM()
+            return new GetUpdateVM()
             {
                 UpdateNumber = GetNumFromdataTable(dt[0], "LastUpdate"),
                 Places = FillPlaceVM(dt[1]),
@@ -112,7 +133,7 @@ namespace IranAudioGuide_MainServer.Models_v2
                     TCity = GetTableIds(dt[17]),
                     TImage = GetTableIds(dt[18]),
                 }
-            };           
+            };
         }
 
         public RemovedEntries GetAllEntitiesRemoved()
@@ -385,6 +406,34 @@ namespace IranAudioGuide_MainServer.Models_v2
             }
         }
         #region PackageInfoFiller
+        private List<AllPackageVM> FillAllPackageVM(DataTable dataTable)
+        {
+            var res = new List<AllPackageVM>();
+            foreach (DataRow dr in dataTable.Rows)
+                res.Add(new AllPackageVM()
+                {
+                    PackageId = (Guid)dr["PackageId"],
+                    Name = dr["Name"].ConvertToString(),
+                    Price = (long)dr["Price"],
+                    PriceD = float.Parse(dr["PriceD"].ToString()),
+                    langId = dr["langId"].ConvertToInt(),
+                    OrderItem = dr["OrderItem"].ConvertToInt()
+
+
+                });
+            return res;
+        }
+        private List<AllCityVM> FillAllCityVM(DataTable dataTable)
+        {
+            var res = new List<AllCityVM>();
+            foreach (DataRow dr in dataTable.Rows)
+                res.Add(new AllCityVM()
+                {
+                    PackageId = dr["PackageId"].ConvertToGuid(),
+                    CityId = dr["CityId"].ConvertToInt()
+                });
+            return res;
+        }
 
         private List<ApiPackageVM> FillApiPackageVM(DataTable dataTable)
         {

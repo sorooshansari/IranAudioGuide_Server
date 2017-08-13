@@ -115,6 +115,25 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
+
+
+        [HttpPost]
+        // POST: api/AppManagerV2/GetAllPackages
+        public IHttpActionResult GetAllPackages()
+        {
+            try
+            {
+                var s = dbTools.GetAllPackages();
+                if (!string.IsNullOrEmpty(s.errorMessage))
+                    return BadRequest(s.errorMessage);
+                return Ok(s);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("ex", ex);
+                return BadRequest(ModelState);
+            }
+        }
         [HttpPost]
         // [Route("GetUpdates")]
         // POST: api/AppManager/GetUpdates/5

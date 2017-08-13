@@ -18,12 +18,12 @@ namespace IranAudioGuide_MainServer.Services
             {
 
                 FullSource = GlobalPath.PrimaryPathAudios;
-                pathDestination = GlobalPath.DownloadPathAudios;
+                //pathDestination = GlobalPath.DownloadPathAudios;
             }
             else
             {
                 FullSource = GlobalPath.PrimaryPathStory;
-                pathDestination = GlobalPath.DownloadPathStory;
+                //pathDestination = GlobalPath.DownloadPathStory;
 
             }
             using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
@@ -36,7 +36,7 @@ namespace IranAudioGuide_MainServer.Services
                     cmd.Parameters.Add(new SqlParameter("@IsAdmin", isAdmin));
                     cmd.Parameters.Add(new SqlParameter("@FileId", model.trackId));
                     cmd.Parameters.Add(new SqlParameter("@UserName", model.email));
-                    cmd.Parameters.Add(new SqlParameter("@Path", pathDestination)); ;
+                    cmd.Parameters.Add(new SqlParameter("@Path", FullSource)); ;
                     cmd.Parameters.Add(new SqlParameter("@UserUUID", model.uuid));
 
                     sqlConnection.Open();
@@ -56,24 +56,24 @@ namespace IranAudioGuide_MainServer.Services
                     if (links.IsAccess == "0")
                         return null;
 
-                    var returnUrl = GlobalPath.host + links.pathDestination;
-                    if (links.IsUpdate == "False")
-                        return returnUrl;
+                    //var returnUrl = GlobalPath.host + links.pathDestination;
+                    //if (links.IsUpdate == "False")
+                    //    return returnUrl;
 
-                    var ftp = new ServiceFtp();
+                    //var ftp = new ServiceFtp();
 
-                    var result = ftp.Copy("ftp://lnx1.morvahost.com" + FullSource + links.FileName, GlobalPath.hostFtp + links.pathDestination);
+                    //var result = ftp.Copy("ftp://lnx1.morvahost.com" + FullSource + links.FileName, GlobalPath.hostFtp + links.pathDestination);
 
-                    if (result)
-                        return returnUrl;
+                    //if (result)
+                    //    return returnUrl;
 
-
-                    // if Create Link download eror   DownloadLink  shoud be remove anf return source file
-                    SqlCommand cmdRemove = new SqlCommand("Download_Link_Delete", sqlConnection);
-                    cmdRemove.CommandType = CommandType.StoredProcedure;
-                    cmdRemove.Parameters.Add(new SqlParameter("@id", links.IdDownload));
-                    cmdRemove.ExecuteReader();
                     return GlobalPath.host + FullSource + links.FileName;
+                    //// if Create Link download eror   DownloadLink  shoud be remove anf return source file
+                    //var cmdRemove = new SqlCommand("Download_Link_Delete", sqlConnection);
+                    //cmdRemove.CommandType = CommandType.StoredProcedure;
+                    //cmdRemove.Parameters.Add(new SqlParameter("@id", links.IdDownload));
+                    //cmdRemove.ExecuteReader();
+                    //return GlobalPath.host + FullSource + links.FileName;
 
 
                 }
