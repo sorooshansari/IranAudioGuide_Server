@@ -16,60 +16,98 @@
 }
 
 <!DOCTYPE html>
-<html lang="@Global.Lang" xmlns:fb="http://ogp.me/ns/fb#">
-<head prefix="og: http://ogp.me/ns# object: http://ogp.me/ns/object#">
+<html lang="@Global.Lang" xmlns:fb="https://ogp.me/ns/fb#">
+<head prefix="og: https://ogp.me/ns# object: https://ogp.me/ns/object#">
     <meta charset="utf-8" />
-    <meta name="title" content="@Global.IndexTitle" />
+    <meta name="title" content="@Global.OnlyGuide" />
     <meta name="Description"
           content="@Global.IranAudioGuide - @Global.SEOdesc" />
-
-    @*mp3 download,download mp3,audible,audio,audio books,mp3 free download,short stories,free download mp3,download apps,stories for kids,free audio books,youtube music downloader,audiobook,short stories for kids,audio speakers,kids story,children stories,audio books free,english story,story book,storiesonline,audio songs download,audio downloader,audible app,stories for children,best audiobooks,books for free,download converter,mp3 downloader online,english short stories,english story for kids,english story book,kids story books,short story english,email domain,free books for kids,free audio books online,stories to read,story books in english,short stories for children,nline stories,download audio books,audiobooks for free,audio books
-        free download,audio books online,audio stories,small stories for kids,mp3 audio,kids short stories,apps download free,free audiobook,download free apps,download audio,download video mp3,audiobook free,talking books,children short stories,story for kids in english,free audio books apphildren story books,free audible books,audio books for kids,audio books download,story english,free audio,music audio,audio app,translate farsi to english,free youtube music downloader,kindle audio books,audio software,audiobook download,free stories,audiobook app,audio books app,reading stories,audible free books,online books for kids,video to mp3 downloader,free audio books download,mp3 sound,good audio books,mp3 player downloader free,dictionary farsi to english,
-        download free audio books,short stories for kids in english,,audio guide,audio book reader,audible books free,mp3 software,farsi to english translation,free mp3 download online,listening books,audio books free online listen,,kids audio books,audioguide,book story,audio hifi,mp3 player software,story kids,best free audio books,short stories in english for students,video mp3 download,kids story in english,audio books online free,audiobook english,mp3 converter download free,free story books,free audio books mp3,star wars audio books,farsi to english dictionary,audio recorders,english audio books,children's stories online,cheap audio books,online stories for kids,children's audio books,free audio books for kids,converter mp3 free download,
-        free online audiobooks,online audio books,free mp3 converter download,books on tape free,story reading,free download audio songs,stories for toddlers,stories for childrens in english,read stories online,kids story online,free audiobook download,free audiobook app,sound book,mp3 download free online,mp3 free download online,mp3 audio download,audio textbooks,english short stories for kids,online short stories,audio stories for kids,stories for kids online,short stories for kindergarten,book audio,free audio download,shop audible,free books on tape,download audio books free,audio books free online listen without downloading,free audio books streaming,free download converter,audio books free online,music converter download,audio books free download mp3,
-        stories to read online,free stories for kids,short stories to read,buy audio books,short story for kid,free download audio books,listen to books,translate farsi,audio books for children,streaming audiobooks,convert to mp3 free download,talking books free,free audio files,audiobook free download,download audiobook,reading story books,good stories for kids,free english books,bedtime stories audio,english audiobooks,free kids stories,free children's stories,free audible,apps download apps download,download music to mp3,child story in english,audiobooks in english,download music free online mp3,english books free download,motivational audio books,story of kids,simple stories for kids,stories read online,mp3 books,audible free,music converter free download,
-        books on audio,download audio converter,popular audiobooks,reading stories for kids,listen to books online,free books on audible,free talking books,free stories online,the best audio books,books on tape app,download audible books,listening english stories,free bedtime stories for kids,story book english,free kids audio books,english short stories for beginners,audio bedtime stories,classic audio books,free books for children,audiobook download free,english audio stories,audio books mp3,short stories for childrens in english,library audio books,free children's audio books,a short story for kids,english story audio,audiobook library,audiobook streaming,mp3 audiobooks,audio novels,listen to books for free,free online stories,listen to audiobooks,
-        english short stories for students,listen to books online free,books on audio free,where to buy audio books,converter to mp3 free download,audio books library,download audiobooks for free,listen to stories,audio player software,download story books,free audio tracks,listen to audiobooks free,audio books kids,audiobook mp3,audio books with text,story audio,free audio books android,free short stories for kids,audio short stories,english talking book,listening stories,listen to free audio books,significant,soon,love,millenniums,poets,email,story,log,images,download,team,achievements,attraction,soroosh,step,tails,address,thorough,allows,accurate,open,content,send,see,history,scientist,great,attractions,details,late,art,liberating,scandals,persian,
-        victories,enter,feel,need,people,advising,interested,narrate,explain,techniques,ansari,please,close,walk,learn,release,kings,tracks,visiting,visit,tell,myth,iran,facebook,stories,convenient,methods,developer,choose,just,menu,crafts,gossips,instagram,pace,discovery,hear,culture,listen,mehr,twitter,wars,application,profile,worries,coming,persia,accept,look,correct,guide,providing,iranian,webmoney,audio,telegram,historic,famous,notify,contact,figures,available,tips,architecture,unique"*@
-
     <meta name="keywords" content="Iran Audio Guide,Iran Traveling,Travel,Turism,audio guide,tour,guide,application,android,ios,iphone,ipad" />
     <meta name="author" content="@Global.Parameter27, @Global.Parameter25">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-    <link rel="canonical" href="@("http://iranaudioguide.com"+Url.Action(action, controller, new { lang = lang }))">
+    <meta property="og:title" content="@Global.OnlyGuide" />
+    @*<meta property="og:site_name" content="Iran Audio Guide" />*@
+    <meta property="og:type" content="Website" />
+    <meta property="og:url" content="https://iranaudioguide.com" />
+    <meta property="og:description" content="@Global.IranAudioGuide - @Global.SEOdesc" />
+    @*<meta property="fb:admins" content="iranaudioguide" />*@
+    @*<meta property="og:app_id" content="1519550688065479" />*@
+    <meta property="og:image" content="http://iranaudioguide.com/logo.png" />
+    <meta property="og:image:secure_url" content="https://iranaudioguide.com/logo.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="256" />
+    <meta property="og:image:height" content="256" />
+    <meta property="og:image:alt" content="Iran Audio Guide Logo" />
+
+    <meta name="twitter:card" content="app">
+    <meta name="twitter:title" content="@Global.OnlyGuide">
+    <meta name="twitter:site" content="@("@iranaudioguide")">
+    <meta name="twitter:description" content="@Global.IranAudioGuide - @Global.SEOdesc">
+    <meta name="twitter:app:country" content="US">
+    <meta name="twitter:app:name:iphone" content="IRAN Audio Guide">
+    <meta name="twitter:app:id:iphone" content="1214729999">
+    <meta name="twitter:app:name:ipad" content="IRAN Audio Guide">
+    <meta name="twitter:app:id:ipad" content="1214729999">
+    <meta name="twitter:app:name:googleplay" content="IRAN Audio Guide">
+    <meta name="twitter:app:id:googleplay" content="com.IranAudioGuide.android">
+    @*<meta name="twitter:app:url:iphone" content="cannonball://poem/5149e249222f9e600a7540ef">*@
+
+    @*<meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@("@iranaudioguide")" />
+        <meta name="twitter:title" content="Iran Audio Guide" />
+        <meta name="twitter:description" content="Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
+        <meta name="twitter:image" content="https://iranaudioguide.com/logo.png" />*@
+
+    <link rel="canonical" href="@("https://iranaudioguide.com"+Url.Action(action, controller, new { lang = lang }))">
     @foreach (var item in locales.Get)
     {
         <link rel="alternate"
-              href="@("http://iranaudioguide.com"+Url.Action(action, controller, new { lang = item.Id }))"
+              href="@("https://iranaudioguide.com"+Url.Action(action, controller, new { lang = item.Id }))"
               hreflang="@item.Id" />
     }
-    <link rel="alternate" href="@("http://iranaudioguide.com"+Url.Action(action, controller, new { lang = "en" }))"
+    <link rel="alternate" href="@("https://iranaudioguide.com"+Url.Action(action, controller, new { lang = "en" }))"
           hreflang="x-default" />
     <script type="application/ld+json">
         {
         "@@context": "http://schema.org",
-        "@@type": "Organization",
-        "name": "Iran Audio Guide",
-        "legalName" : "Shiraz Durandish Programers Co.",
-        "url": "http://iranaudioguide.com",
-        "logo": "http://iranaudioguide.com/images/logo.png",
-        "foundingDate": "2016",
-        "founders": [
+        "@@type": "MobileApplication",
+        "applicationCategory": "Travel",
+        "softwareVersion": "1.3.7",
+        "operatingSystem": ["Android" , "iOS"],
+        "name": "@Global.IranAudioGuide",
+        "alternativeHeadline": "@Global.OnlyGuide",
+        "about": "@Global.SEOdesc",
+        "image": "https://iranaudioguide.com/logo.png",
+        "inLanguage": ["English", "Farsi"],
+        "isAccessibleForFree": "true",
+        "contentLocation": "Iran",
+        "aggregateRating": {
+        "@@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "reviewCount": "30"
+        },
+        "offers": {
+        "@@type" : "Offer",
+        "name" : "English Packages",
+        "price" : "7.98",
+        "priceCurrency": "USD"
+        },
+        "funder":
         {
         "@@type": "Person",
         "name": "Soroosh Ansari Mehr",
-        "image": "http://iranaudioguide.com/content/images/Members/Soroosh.jpg",
-        "jobTitle": "CTO",
-        "email": "mailto:soroosh@iranaudioguide.com"
-        },
+        "image": "https://iranaudioguide.com/content/images/Members/Soroosh.jpg",
+        "email": "soroosh@iranaudioguide.com"
+        }
+        }
+    </script>
+    <script type="application/ld+json">
         {
-        "@@type": "Person",
-        "name": "Mona Akhlaghi",
-        "image": "http://iranaudioguide.com/content/images/Members/Mona.jpg",
-        "jobTitle": "CEO",
-        "email": "mailto:mona@iranaudioguide.com"
-        } ],
+        "@@context": "http://schema.org",
+        "@@type": "Organization",
+        "name": "Iran Audio Guide Office",
+        "url":"https://iranaudioguide.com/",
+        "logo": "https://iranaudioguide.com/logo.png",
         "address": {
         "@@type": "PostalAddress",
         "streetAddress": "Fars Science and Technology Park, Aryan town, Dr Hesabi Boulevard",
@@ -79,49 +117,43 @@
         },
         "contactPoint": [{
         "@@type": "ContactPoint",
-        "telephone": "+98-71-3636-4709",
+        "telephone": "(+98) 71 3636 4709",
         "email": "info@iranaudioguide.com",
         "contactType": "customer service",
-        "availableLanguage": ["Farsi","English"]
+        "availableLanguage": ["English", "Farsi"]
         }],
+        "funder": [
+        {
+        "@@type": "Person",
+        "name": "Soroosh Ansari Mehr",
+        "image": "https://iranaudioguide.com/content/images/Members/Soroosh.jpg",
+        "jobTitle": "CTO",
+        "email": "soroosh@iranaudioguide.com"
+        },
+        {
+        "@@type": "Person",
+        "name": "Mona Akhlaghi",
+        "image": "https://iranaudioguide.com/content/images/Members/Mona.jpg",
+        "jobTitle": "CEO",
+        "email": "mona@iranaudioguide.com"
+        } ],
         "sameAs": [
         "https://www.telegram.me/iranaudioguide",
         "https://www.twitter.com/iranaudioguide",
         "https://www.facebook.com/iranaudioguide",
         "https://www.instagram.com/iran.audio.guide"
-        ]}
+        ]
+        }
     </script>
-    <meta property="og:title" content="The only guide you will need in Iran" />
-    <meta property="og:site_name" content="Iran Audio Guide" />
-    <meta property="og:type" content="Audio Guide" />
-    <meta property="og:image" content="http://iranaudioguide.com/images/logo.png" />
-    <meta property="og:url" content="http://iranaudioguide.com" />
-    <meta property="og:description" content="Iran audio Guide - The only guide you will need in Iran" />
-    <meta property="fb:admins" content="iranaudioguide" />
 
-    <meta name="twitter:card" content="app">
-    <meta name="twitter:site" content="@("@iranaudioguide")">
-    <meta name="twitter:description" content="Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions.">
-    <meta name="twitter:app:country" content="US">
-    <meta name="twitter:app:name:iphone" content="IRAN Audio Guide">
-    <meta name="twitter:app:id:iphone" content="1214729999">
-    <meta name="twitter:app:name:googleplay" content="IRAN Audio Guide">
-    <meta name="twitter:app:id:googleplay" content="com.IranAudioGuide.android">
-    @*<meta name="twitter:app:url:iphone" content="cannonball://poem/5149e249222f9e600a7540ef">*@
-    @*<meta name="twitter:app:name:ipad" content="Cannonball">
-        <meta name="twitter:app:id:ipad" content="929750075">
-        <meta name="twitter:app:url:ipad" content="cannonball://poem/5149e249222f9e600a7540ef">*@
-    @*<meta name="twitter:app:url:googleplay" content="http://cannonball.fabric.io/poem/5149e249222f9e600a7540ef">*@
 
-    @*<meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@("@iranaudioguide")" />
-        <meta name="twitter:title" content="Iran Audio Guide" />
-        <meta name="twitter:description" content="Discover iran while listening to facts and stories about modern Iran, ancient history, the arts, persian mythology and above all a step by step guide through notable attractions." />
-        <meta name="twitter:image" content="http://iranaudioguide.com/images/logo.png" />*@
-
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@Global.IranAudioGuide</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="preload" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous" as="style" onload="this.rel='stylesheet'">
     @Styles.Render("~/HomeCss")
+    @*@Styles.RenderFormat("<link rel=\"preload\" href=\"{0}\" as=\"style\" onload=\"this.rel = 'stylesheet'\">", "~/HomeCss")*@
     @RenderSection("Styles", required: false)
 
     <!--[if lte IE 8]><script src="~/Content/Scripts/ie/html5shiv.js"></script><![endif]-->
@@ -149,7 +181,8 @@
         <!-- Header -->
         <header id="header" class="alt">
             <h1>
-                <img id="toplogo" src="@GlobalPath.ImagePath/IAGSmallWhiteLogo.png" alt="mallWhiteLogo" /><a href="@Url.Action("Index", "Home", new { lang = lang})">@Global.IranAudioGuide</a>
+                <img id="toplogo" src="@GlobalPath.ImagePath/IAGSmallWhiteLogo.png" alt="mallWhiteLogo" />
+                <a href="@Url.Action("Index", "Home", new { lang = lang})">@Global.IranAudioGuide</a>
             </h1>
 
 
@@ -204,8 +237,9 @@
 
 
     </div>
+    <noscript><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></noscript>
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js" integrity="sha256-6Sr0HqNgUf/p88g6vsl87CrAnNqiOWhjlY6LS8jeWHA=" crossorigin="anonymous"></script>

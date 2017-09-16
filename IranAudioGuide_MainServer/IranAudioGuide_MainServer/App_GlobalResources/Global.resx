@@ -957,4 +957,7 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="ResetYourPassword" xml:space="preserve">
     <value>Reset your password.</value>
   </data>
+  <data name="OnlyGuide" xml:space="preserve">
+    <value>The only guide you will need in Iran.</value>
+  </data>
 </root>

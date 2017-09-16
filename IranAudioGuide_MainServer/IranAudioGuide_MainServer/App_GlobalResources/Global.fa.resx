@@ -955,4 +955,7 @@
   <data name="ResetYourPassword" xml:space="preserve">
     <value>بازیابی رمز عبور</value>
   </data>
+  <data name="OnlyGuide" xml:space="preserve">
+    <value>تنها راهنمای مورد نیاز در ایران</value>
+  </data>
 </root>

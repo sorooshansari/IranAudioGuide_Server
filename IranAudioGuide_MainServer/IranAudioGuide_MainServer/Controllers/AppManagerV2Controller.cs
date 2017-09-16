@@ -36,28 +36,48 @@ namespace IranAudioGuide_MainServer.Controllers
         [HttpPost]
         public IHttpActionResult GetAudioUrl(GetAudioUrlVM model)
         {
-            try
+
+            string FullSource;
+            if (model.isAudio)
             {
-                if (string.IsNullOrEmpty(model.uuid))
-                {
-                    return BadRequest(((int)GetAudioUrlStatus.unauthorizedUser).ToString());
-                }
 
-                if (string.IsNullOrEmpty(model.email))
-                    model.email = string.Empty;
-
-                var isAdmin = User.IsInRole("Admin");
-                var url = ServiceDownload.GetUrl(model, isAdmin);
-                //var result= new GetAudioUrlRes(url);
-
-                return Ok(url);
+                FullSource = GlobalPath.PrimaryPathAudios;
+                //pathDestination = GlobalPath.DownloadPathAudios;
             }
-            catch (Exception ex)
+            else
             {
-                ErrorSignal.FromCurrentContext().Raise(ex);
-                return BadRequest(((int)GetAudioUrlStatus.unknownError).ToString());
+                FullSource = GlobalPath.PrimaryPathStory;
+                //pathDestination = GlobalPath.DownloadPathStory;
+
             }
+            var url = string.Format("{0}{1}{2}.mp3", GlobalPath.host, FullSource, model.trackId);
+            return Ok(url);
         }
+        //[HttpPost]
+        //        public IHttpActionResult GetAudioUrl(GetAudioUrlVM model)
+        //        {
+        //            try
+        //            {
+        //                if (string.IsNullOrEmpty(model.uuid))
+        //                {
+        //                    return BadRequest(((int)GetAudioUrlStatus.unauthorizedUser).ToString());
+        //                }
+
+        //                if (string.IsNullOrEmpty(model.email))
+        //                    model.email = string.Empty;
+
+        //                var isAdmin = User.IsInRole("Admin");
+        //                var url = ServiceDownload.GetUrl(model, isAdmin);
+        //                //var result= new GetAudioUrlRes(url);
+
+        //                return Ok(url);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                ErrorSignal.FromCurrentContext().Raise(ex);
+        //                return BadRequest(((int)GetAudioUrlStatus.unknownError).ToString());
+        //            }
+        //        }
         [HttpPost]
         public IHttpActionResult GetAutorizedCities(GetAutorizedCitiesVM model)
 
@@ -95,6 +115,13 @@ namespace IranAudioGuide_MainServer.Controllers
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest(ModelState);
             }
+        }
+
+        [HttpGet]
+        public IHttpActionResult IsForign()
+        {
+            var res = ExtensionMethods.IsForeign;
+            return Ok(res);
         }
 
         [HttpPost]
@@ -208,10 +235,11 @@ namespace IranAudioGuide_MainServer.Controllers
                 dbTools.CreateComment(newComment);
                 var email = new EmailService();
 
-                var msg = new Microsoft.AspNet.Identity.IdentityMessage() {
-                    Body = "Comment From :: " + comment.email + "<br />" + comment.Message ,
+                var msg = new Microsoft.AspNet.Identity.IdentityMessage()
+                {
+                    Body = "Comment From :: " + comment.email + "<br />" + comment.Message,
                     Destination = "iranaudioguide@gmail.com",
-                    Subject = "Comment From"+ comment.email
+                    Subject = "Comment From" + comment.email
                 };
                 email.SendWithoutTemplateAsync(msg);
                 return "";

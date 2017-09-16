@@ -173,10 +173,12 @@
         width: 110px;
         margin: 0px 5px 5px 5px;
     }
-    .logo5{
-        margin-left:80px;
-        width:110px;
+
+    .logo5 {
+        margin-left: 80px;
+        width: 110px;
     }
+
     .getit {
         margin-top: 30px;
         text-align: center
@@ -202,33 +204,39 @@
             text-align: center !important;
         }
     }
+
     @@media screen and (min-width:377px) and (max-width:766px) {
         .logo5 {
             margin-left: 37%;
-            margin-top:15px;
+            margin-top: 15px;
         }
     }
+
     @@media screen and (min-width:320px) and (max-width:370px) {
-        .logo5{
-            margin-left:90px;
+        .logo5 {
+            margin-left: 90px;
         }
     }
+
     @@media screen and (min-width:768px) and (max-width:991px) {
         .logo5 {
             margin-left: 43%;
         }
     }
+
     @@media screen and (min-width:992px) and (max-width:1199px) {
         .logo5 {
             margin-left: 20%;
         }
     }
+
     @@media screen and (min-width:371px) and (max-width:376px) {
         .logo5 {
             margin-left: 120px;
         }
     }
-    @@media screen and (min-width:576px) and (max-width:985px){
+
+    @@media screen and (min-width:576px) and (max-width:985px) {
         .bottom_ul {
             margin-top: -60px;
         }
@@ -332,29 +340,37 @@
 <footer>
     <div class="container container1">
         <div class="row">
-            <div class="col-xs-12 col-md-4 footerleft ">
+            <div class="col-xs-12 col-md-4 footerleft" itemscope itemtype="http://schema.org/Organization">
+                <link itemprop="name" href="Iran Audio Guide Office" />
+                <link itemprop="url" href="https://iranaudioguide.com/" />
                 <div class="logofooter">
-                    <img src="~/images/IAGSmallWhiteLogo.png" />
+                    <img itemprop="logo" src="~/logo.png" alt="Iran Audio Guide logo" />
                 </div>
                 <p>@Global.footer</p>
-                <p><i class="icon fa fa-map-pin icon1" style="margin-top:1px"></i>@Global.officeaddress1</p>
-                <p><i class="icon fa fa-phone icon1" style="margin-top:3px"></i><a href="callto:+9807136364709">@Global.phone</a> </p>
-                <p><i class="icon fa-envelope-o icon1" style="margin-top:-3px"></i><a href="mailto:info@iranaudioguide.com">@Global.email1</a></p>
+                <p itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                    <i class="icon fa fa-map-pin icon1" style="margin-top:1px"></i>
+                    <span itemprop="streetAddress">@Global.officeaddress1</span>
+                </p>
+                <p><i class="icon fa fa-phone icon1" style="margin-top:3px"></i>
+                <a itemprop="telephone" href="callto:+9807136364709">
+                    @Global.phone</a> </p>
+                <p><i class="icon fa-envelope-o icon1" style="margin-top:-3px"></i>
+                <a itemprop="email" href="mailto:info@iranaudioguide.com">@Global.email1</a></p>
                 <ul class="icons">
                     <li>
-                        <a target="_blank" href="https://www.twitter.com/iranaudioguide"
+                        <a itemprop="sameAs" target="_blank" href="https://www.twitter.com/iranaudioguide"
                            class="icon fa-twitter tooltips"><span>@Global.Twitter</span></a>
                     </li>
                     <li>
-                        <a target="_blank" href="https://www.facebook.com/iranaudioguide"
+                        <a itemprop="sameAs" target="_blank" href="https://www.facebook.com/iranaudioguide"
                            class="icon fa-facebook tooltips"><span>@Global.Facebook</span></a>
                     </li>
                     <li>
-                        <a target="_blank" href="https://www.instagram.com/iran.audio.guide/"
+                        <a itemprop="sameAs" target="_blank" href="https://www.instagram.com/iran.audio.guide/"
                            class="icon fa-instagram tooltips"><span>@Global.Instagram</span></a>
                     </li>
                     <li>
-                        <a target="_blank" href="https://www.telegram.me/iranaudioguide"
+                        <a itemprop="sameAs" target="_blank" href="https://www.telegram.me/iranaudioguide"
                            class="icon fa-telegram tooltips"><span>@Global.Telegram</span></a>
                     </li>
                     @*<li>
@@ -417,24 +433,16 @@
                     <!--</Contact overlay> -->
                 </div>
             </div>
-            @*<div class="col-md-3 col-sm-6 paddingtop-bottom">
-                    <h6 class="heading7">LATEST POST</h6>
-                    <div class="post">
-                        <p>facebook crack the movie advertisment code:what it means for you <span>August 3,2015</span></p>
-                        <p>facebook crack the movie advertisment code:what it means for you <span>August 3,2015</span></p>
-                        <p>facebook crack the movie advertisment code:what it means for you <span>August 3,2015</span></p>
-                    </div>
-                </div>*@
             <div class="col-xs-12 col-md-3 paddingtop-bottom">
-                <div class="fb-page" data-href="https://www.facebook.com/facebook" data-tabs="timeline" data-height="300" data-small-header="false" style="margin-bottom:15px;" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                <div class="fb-page" style="margin-bottom:15px;">
                     <div class="fb-xfbml-parse-ignore">
                         <h4 style="text-align:center;font-size:14px">@Global.Namad</h4>
                         <div class="logo1">
                             <img id='jzpesizpnbqergvjesgt' style='cursor:pointer' onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=79230&p=jyoepfvluiwkxlaoobpd", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=79230&p=yndtbsiyodrfqftilyma' />
                         </div>
-                        @*  <div  class="logo2">
-                                <img src="~/Content/admin/img/enamad-logo.png" />
-                            </div>*@
+                        <div class="logo2">
+                            <img id='rgvlhwlaxlapsguilbrh' style='cursor:pointer' onclick='window.open("https://trustseal.enamad.ir/Verify.aspx?id=54307&p=yncrodshfuixdrfsqgwl", "Popup","toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30")' alt='' src='https://trustseal.enamad.ir/logo.aspx?id=54307&p=fujyaodsvjymgthvpeuk' />
+                        </div>
 
                         <div class="devider"></div>
                         <h4 class="getit">@Global.Getit</h4>
@@ -444,20 +452,20 @@
                             </a>
                         </div>
                         <div class="logo4">
-                            <a href="http://play.google.com/store/apps/details?id=com.IranAudioGuide.android">
+                            <a href="https://play.google.com/store/apps/details?id=com.IranAudioGuide.android">
                                 <img style="height:40px;" alt=@Global.alt1 src="@GlobalPath.ImagePath/Get_it_on_Google_play.svg" />
                             </a>
                         </div>
-                        <div class="logo5">
-                            <a href="https://cafebazaar.ir/app/com.IranAudioGuide.android/?l=fa">
-                                <img style="height:35px;border:1px solid;border-radius: 4px;" alt="@Global.alt" src="@GlobalPath.ImagePath/bazar-badge.png" />
-                            </a>
-                        </div>
+                        @*<div class="logo5">
+                                <a href="https://cafebazaar.ir/app/com.IranAudioGuide.android/?l=fa">
+                                    <img style="height:35px;border:1px solid;border-radius: 4px;" alt="@Global.alt" src="@GlobalPath.ImagePath/bazar-badge.png" />
+                                </a>
+                            </div>*@
                         @*<div class="logo4">
-                            <a href="https://cafebazaar.ir/app/com.IranAudioGuide.android/?l=fa">
-                                <img style="width:auto;height:40px;border:1px solid;border-radius: 4px;" alt="@Global.alt" src="~/Content/admin/img/bazar-badge.png" />
-                            </a>
-                        </div>*@
+                                <a href="https://cafebazaar.ir/app/com.IranAudioGuide.android/?l=fa">
+                                    <img style="width:auto;height:40px;border:1px solid;border-radius: 4px;" alt="@Global.alt" src="~/Content/admin/img/bazar-badge.png" />
+                                </a>
+                            </div>*@
                     </div>
                 </div>
             </div>

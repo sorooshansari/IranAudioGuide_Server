@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1582,12 +1583,11 @@
     <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="google60352dff0d3dbd69.html" />
     <Content Include="images\WebMoney-logo-white_8.png" />
+    <Content Include="logo.png" />
     <Content Include="robots.txt" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="sitemap.xml" />
-    <Content Include="Views\Shared\IAGSITELOGO.png" />
     <Content Include="Views\Shared\UserEmailTemplate.html" />
-    <Content Include="Views\Shared\UserEmailTemplatePayment.html" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.woff" />
