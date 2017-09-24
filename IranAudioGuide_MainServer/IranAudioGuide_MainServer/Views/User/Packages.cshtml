@@ -99,7 +99,7 @@
         <p>@Global.PaymentGatewayInfo <b class="IAGgreenColor">{{itemPack.PackageName}}</b> @Global.Packages </p>
         <ul class="collection">
             <li class="collection-item avatar">
-                <a href="#!" ng-click="buyPakages(false)">
+                <a href="#!" ng-click="buyPakages(2)">
                     <img src="http://iranaudioguide.net/Images/WebMoneyLogo.png" alt="" class="circle">
                     <span class="title webmoneyColor">@Global.WebMoney</span><br />
                     <div class="btn"> {{itemPack.PackagePriceDollar}}</div>
@@ -107,9 +107,18 @@
                 </a>
             </li>
             <li class="collection-item avatar">
-                <a href="#!" ng-click="buyPakages(true)">
+                <a href="#!" ng-click="buyPakages(1)">
                     <img src="http://iranaudioguide.net/Images/ShetabLogo.jpg" alt="" class="circle">
                     <span class="title shetabColor">@Global.Shetab</span><br />
+                    <div class="btn">{{itemPack.PackagePrice}} @Global.PriceSign</div>
+                    <i class="secondary-content fa fa-chevron-right fa-2x"></i>
+                </a>
+            </li>
+
+            <li class="collection-item avatar">
+                <a href="#!" ng-click="buyPakages(0)">
+                    <img src="http://iranaudioguide.net/Images/Mellat-Bank-logo.png" alt="" class="circle">
+                    <span class="title shetabColor">@Global.MellatBank</span><br />
                     <div class="btn">{{itemPack.PackagePrice}} @Global.PriceSign</div>
                     <i class="secondary-content fa fa-chevron-right fa-2x"></i>
                 </a>

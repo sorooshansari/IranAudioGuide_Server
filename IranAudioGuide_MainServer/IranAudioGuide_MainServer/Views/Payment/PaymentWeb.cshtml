@@ -1,5 +1,6 @@
 ﻿@model IranAudioGuide_MainServer.Models.PackagePymentVM
 @using IranAudioGuide_MainServer.App_GlobalResources
+@using IranAudioGuide_MainServer.Models
 @{
     Layout = null;
 }
@@ -9,10 +10,10 @@
     .invoice-payment-info {
         margin: 0 0 0 5%;
     }
+
     ._fa .invoice-payment-info {
         margin: 0 5% 0 0;
     }
-    
 </style>
 
 <div class="row">
@@ -63,53 +64,63 @@
                 </h2>
 
                 <div class="image-gateway invoice-payment-info">
-                    @if (ViewBag.IsChooesZarinpal)
+                    @if (ViewBag.ChooesBank == EnumBankName.Zarinpal)
                     {
-
                         <img src="~/Content/images/zarinpal.png" class="responsive-img" />}
-                    else
+                    else if (ViewBag.ChooesBank == EnumBankName.Webmoney)
                     {
-                        <img src="~/images/WebMoney-logo-white_8.png" class="responsive-img">}
+                        <img src="~/images/WebMoney-logo-white_8.png" class="responsive-img">
+                    }
+                    else if (ViewBag.ChooesBank == EnumBankName.Mellat)
+                    {
+                        <img style="width: 78%;background-color: #fff;padding: 6%;margin-left: 109PX;" src="http://iranaudioguide.net/Images/Mellat-Bank-logo.png" alt="" class="circle">
+                    }
 
                 </div>
                 <h2>
                     <span class="card-title ">
                         <i class="material-icons dp48">payment</i>  @Global.PaymentPage25
 
-                        @if (ViewBag.IsChooesZarinpal)
-                        { <span> @string.Format("{0:#,##0.##}0", Model.PackagePrice) @Global.PriceSign</span> }
-                        else
+                        @if (ViewBag.ChooesBank == EnumBankName.Webmoney)
                         {
                             <span> @string.Format("{0:#,##0.##}", Model.PackagePriceDollar) <i class="material-icons dp48 iconprice">attach_money</i></span>
                         }
+                        else
+                        { <span> @string.Format("{0:#,##0.##}0", Model.PackagePrice) @Global.PriceSign</span> }
+
                     </span>
                 </h2>
 
                 <div class="invoice-payment-info">
-                    <h5>
-
-                       
-                    </h5>
+                    <h5></h5>
 
 
                 </div>
                 <div class="card-action">
-                    @if (ViewBag.IsChooesZarinpal)
-            {
+                     @if (ViewBag.ChooesBank == EnumBankName.Zarinpal)
+                    {
                         <a class="waves-effect waves-light btn z-depth-1 "
                            role="button"
-                           href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = "zarinpal", isFromWeb = true })">
+                           href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = EnumBankName.Zarinpal, isFromWeb = true })">
                             <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
                         </a>
-                    }
-                    else
-                    {
+                     }
+                     else if (ViewBag.ChooesBank == EnumBankName.Webmoney)
+                     {
                         <a class="waves-effect waves-light btn z-depth-1 "
                            role="button"
                            href="@Url.Action("WMPurchase", "Payment",new { packageId = Model.PackageId, isFromApp = false })">
                             <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
                         </a>
-                    }
+                     }
+                     else if (ViewBag.ChooesBank == EnumBankName.Mellat)
+                     {
+                        <a class="waves-effect waves-light btn z-depth-1 "
+                           role="button"
+                           href="@Url.Action("Purchase", "PaymentBankMelat",new { packageId = Model.PackageId, isFromApp = true })">
+                            <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
+                        </a>
+                     }
 
                     <a class="waves-effect waves-light btn z-depth-1 "
                        ui-sref="Packages" role="button">

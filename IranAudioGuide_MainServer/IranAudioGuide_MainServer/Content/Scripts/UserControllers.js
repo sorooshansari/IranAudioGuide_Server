@@ -125,12 +125,13 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             $('#modal1').modal('close');
         }
 
-        $scope.buyPakages = function (isChooesZarinpal) {
+        $scope.buyPakages = function (bank) {
             $('#modal1').modal('close');
+            console.log(bank);
             //stopeLoading();
             $state.go('Payment', {
                 PackageId: $scope.itemPack.PackageId,
-                IsChooesZarinpal: isChooesZarinpal
+                ChooesBank: bank
             });
         }
 

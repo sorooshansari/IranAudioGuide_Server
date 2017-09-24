@@ -263,6 +263,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PaymentBankMelatController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Models\CompressAttribute.cs" />
     <Compile Include="Models\dbManager.cs" />
     <Compile Include="Models\dbTools.cs" />
+    <Compile Include="Models\Enum.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lang.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -319,6 +321,7 @@
     <Compile Include="Services\ServiceFtp.cs" />
     <Compile Include="Services\ServiceIPAdress.cs" />
     <Compile Include="Services\ServiceJob.cs" />
+    <Compile Include="Services\ServicePayment.cs" />
     <Compile Include="Services\ServiceRecaptcha.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1845,6 +1848,7 @@
     <Content Include="Views\Seller\DownloadPDF.cshtml" />
     <Content Include="Views\Shared\_SelectLangBtnUser.cshtml" />
     <Content Include="Views\Payment\PaymentWeb - Copy %282%29.cshtml" />
+    <Content Include="Views\PaymentBankMelat\ReturnToWebPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -1883,6 +1887,12 @@
     <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
       <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BankMellatLibrary\BankMellatLibrary.csproj">
+      <Project>{48809730-4bc9-4d32-872a-961b6bf967d5}</Project>
+      <Name>BankMellatLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

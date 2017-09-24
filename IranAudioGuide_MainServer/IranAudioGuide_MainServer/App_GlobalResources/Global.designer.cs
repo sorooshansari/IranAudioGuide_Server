@@ -133,6 +133,438 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transaction Succeeseful.
+        /// </summary>
+        public static string BankMelatcode0 {
+            get {
+                return ResourceManager.GetString("BankMelatcode0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ﺗﺮاﻛﻨﺶ ﺑﺎ ﻣﻮﻓﻘﻴﺖ اﻧﺠﺎم ﺷﺪ.
+        /// </summary>
+        public static string BankMelatcode01 {
+            get {
+                return ResourceManager.GetString("BankMelatcode01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid card number.
+        /// </summary>
+        public static string BankMelatcode11 {
+            get {
+                return ResourceManager.GetString("BankMelatcode11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ﺷﻤﺎره ﻛﺎرت ﻧﺎﻣﻌﺘﺒﺮ اﺳﺖ.
+        /// </summary>
+        public static string BankMelatcode111 {
+            get {
+                return ResourceManager.GetString("BankMelatcode111", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to صادر كننده كارت نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode1111 {
+            get {
+                return ResourceManager.GetString("BankMelatcode1111", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطاي سوييچ صادر كننده كارت.
+        /// </summary>
+        public static string BankMelatcode112 {
+            get {
+                return ResourceManager.GetString("BankMelatcode112", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ﭘﺎﺳﺨﻲ از ﺻﺎدرﻛﻨﻨﺪه ﻛﺎرت درﻳﺎﻓﺖ ﻧﺸﺪ.
+        /// </summary>
+        public static string BankMelatcode113 {
+            get {
+                return ResourceManager.GetString("BankMelatcode113", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to دارنده كارت مجاز به انجام اين تراكنش نيست.
+        /// </summary>
+        public static string BankMelatcode114 {
+            get {
+                return ResourceManager.GetString("BankMelatcode114", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ﻣﻮﺟﻮدی ﻛﺎﻓﻲ ﻧﻴﺴﺖ.
+        /// </summary>
+        public static string BankMelatcode12 {
+            get {
+                return ResourceManager.GetString("BankMelatcode12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رﻣﺰ ﻧﺎدرﺳﺖ اﺳﺖ.
+        /// </summary>
+        public static string BankMelatcode13 {
+            get {
+                return ResourceManager.GetString("BankMelatcode13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تعداد دفعات وارد كردن رمز بيش از حد مجاز است.
+        /// </summary>
+        public static string BankMelatcode14 {
+            get {
+                return ResourceManager.GetString("BankMelatcode14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to كارت نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode15 {
+            get {
+                return ResourceManager.GetString("BankMelatcode15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to دفعات برداشت وجه بيش از حد مجاز است.
+        /// </summary>
+        public static string BankMelatcode16 {
+            get {
+                return ResourceManager.GetString("BankMelatcode16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to كاربر از انجام تراكنش منصرف شده است.
+        /// </summary>
+        public static string BankMelatcode17 {
+            get {
+                return ResourceManager.GetString("BankMelatcode17", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تاريخ انقضاي كارت گذشته است.
+        /// </summary>
+        public static string BankMelatcode18 {
+            get {
+                return ResourceManager.GetString("BankMelatcode18", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مبلغ برداشت وجه بيش از حد مجاز است.
+        /// </summary>
+        public static string BankMelatcode19 {
+            get {
+                return ResourceManager.GetString("BankMelatcode19", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پذيرنده نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode21 {
+            get {
+                return ResourceManager.GetString("BankMelatcode21", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطاي امنيتي رخ داده است.
+        /// </summary>
+        public static string BankMelatcode23 {
+            get {
+                return ResourceManager.GetString("BankMelatcode23", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اطلاعات كاربري پذيرنده نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode24 {
+            get {
+                return ResourceManager.GetString("BankMelatcode24", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مبلغ نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode25 {
+            get {
+                return ResourceManager.GetString("BankMelatcode25", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پاسخ نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode31 {
+            get {
+                return ResourceManager.GetString("BankMelatcode31", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فرمت اطلاعات وارد شده صحيح نمي باشد.
+        /// </summary>
+        public static string BankMelatcode32 {
+            get {
+                return ResourceManager.GetString("BankMelatcode32", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حساب نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode33 {
+            get {
+                return ResourceManager.GetString("BankMelatcode33", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطاي سيستمي.
+        /// </summary>
+        public static string BankMelatcode34 {
+            get {
+                return ResourceManager.GetString("BankMelatcode34", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تاريخ نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode35 {
+            get {
+                return ResourceManager.GetString("BankMelatcode35", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره درخواست تكراري است.
+        /// </summary>
+        public static string BankMelatcode41 {
+            get {
+                return ResourceManager.GetString("BankMelatcode41", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شناسه قبض نادرست است.
+        /// </summary>
+        public static string BankMelatcode412 {
+            get {
+                return ResourceManager.GetString("BankMelatcode412", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment ID is incorrect.
+        /// </summary>
+        public static string BankMelatcode413 {
+            get {
+                return ResourceManager.GetString("BankMelatcode413", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ﺷﻨﺎﺳﻪ ﭘﺮداﺧﺖ ﻧﺎدرﺳﺖ اﺳﺖ.
+        /// </summary>
+        public static string BankMelatcode4131 {
+            get {
+                return ResourceManager.GetString("BankMelatcode4131", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سازمان صادر كننده قبض نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode414 {
+            get {
+                return ResourceManager.GetString("BankMelatcode414", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to زمان جلسه كاري به پايان رسيده است.
+        /// </summary>
+        public static string BankMelatcode415 {
+            get {
+                return ResourceManager.GetString("BankMelatcode415", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطا در ثبت اطلاعات.
+        /// </summary>
+        public static string BankMelatcode416 {
+            get {
+                return ResourceManager.GetString("BankMelatcode416", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شناسه پرداخت كننده نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode417 {
+            get {
+                return ResourceManager.GetString("BankMelatcode417", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اشكال در تعريف اطلاعات مشتري.
+        /// </summary>
+        public static string BankMelatcode418 {
+            get {
+                return ResourceManager.GetString("BankMelatcode418", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تعداد دفعات ورود اطلاعات از حد مجاز گذشته است.
+        /// </summary>
+        public static string BankMelatcode419 {
+            get {
+                return ResourceManager.GetString("BankMelatcode419", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يافت نشد Sale تراكنش.
+        /// </summary>
+        public static string BankMelatcode42 {
+            get {
+                return ResourceManager.GetString("BankMelatcode42", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP نامعتبر_است.
+        /// </summary>
+        public static string BankMelatcode421 {
+            get {
+                return ResourceManager.GetString("BankMelatcode421", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to داده شده است  Verify قبلا درخواست.
+        /// </summary>
+        public static string BankMelatcode43 {
+            get {
+                return ResourceManager.GetString("BankMelatcode43", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يافت نشد  Verfiy درخواست.
+        /// </summary>
+        public static string BankMelatcode44 {
+            get {
+                return ResourceManager.GetString("BankMelatcode44", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ﺗﺮاﻛﻨﺶ Settle ﺷﺪه اﺳﺖ.
+        /// </summary>
+        public static string BankMelatcode45 {
+            get {
+                return ResourceManager.GetString("BankMelatcode45", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ﺗﺮاﻛﻨﺶ Settle نشده اﺳﺖ.
+        /// </summary>
+        public static string BankMelatcode46 {
+            get {
+                return ResourceManager.GetString("BankMelatcode46", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ﺗﺮاﻛﻨﺶ Settle یافت نشده اﺳﺖ.
+        /// </summary>
+        public static string BankMelatcode47 {
+            get {
+                return ResourceManager.GetString("BankMelatcode47", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شده است  Reverse تراكنش.
+        /// </summary>
+        public static string BankMelatcode48 {
+            get {
+                return ResourceManager.GetString("BankMelatcode48", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يافت نشد  Refund تراكنش.
+        /// </summary>
+        public static string BankMelatcode49 {
+            get {
+                return ResourceManager.GetString("BankMelatcode49", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تراكنش تكراري است.
+        /// </summary>
+        public static string BankMelatcode51 {
+            get {
+                return ResourceManager.GetString("BankMelatcode51", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تراكنش مرجع موجود نيست.
+        /// </summary>
+        public static string BankMelatcode54 {
+            get {
+                return ResourceManager.GetString("BankMelatcode54", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تراكنش نامعتبر است.
+        /// </summary>
+        public static string BankMelatcode55 {
+            get {
+                return ResourceManager.GetString("BankMelatcode55", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطا در واريز.
+        /// </summary>
+        public static string BankMelatcode61 {
+            get {
+                return ResourceManager.GetString("BankMelatcode61", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Get.
         /// </summary>
         public static string btnBuy {
@@ -660,6 +1092,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         public static string MailSubjectForPayment {
             get {
                 return ResourceManager.GetString("MailSubjectForPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mellat Bank.
+        /// </summary>
+        public static string MellatBank {
+            get {
+                return ResourceManager.GetString("MellatBank", resourceCulture);
             }
         }
         

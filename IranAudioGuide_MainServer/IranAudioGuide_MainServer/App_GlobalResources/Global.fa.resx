@@ -958,4 +958,142 @@
   <data name="OnlyGuide" xml:space="preserve">
     <value>تنها راهنمای مورد نیاز در ایران</value>
   </data>
+  <data name="MellatBank" xml:space="preserve">
+    <value>بانک ملت</value>
+  </data>
+  <data name="BankMelatcode0" xml:space="preserve">
+    <value>ﺗﺮاﻛﻨﺶ ﺑﺎ ﻣﻮﻓﻘﻴﺖ اﻧﺠﺎم ﺷﺪ</value>
+  </data>
+  <data name="BankMelatcode11" xml:space="preserve">
+    <value>ﺷﻤﺎره ﻛﺎرت ﻧﺎﻣﻌﺘﺒﺮ اﺳﺖ</value>
+  </data>
+  <data name="BankMelatcode111" xml:space="preserve">
+    <value>صادر كننده كارت نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode112" xml:space="preserve">
+    <value>خطاي سوييچ صادر كننده كارت</value>
+  </data>
+  <data name="BankMelatcode113" xml:space="preserve">
+    <value>ﭘﺎﺳﺨﻲ از ﺻﺎدرﻛﻨﻨﺪه ﻛﺎرت درﻳﺎﻓﺖ ﻧﺸﺪ</value>
+  </data>
+  <data name="BankMelatcode114" xml:space="preserve">
+    <value>دارنده كارت مجاز به انجام اين تراكنش نيست</value>
+  </data>
+  <data name="BankMelatcode12" xml:space="preserve">
+    <value>ﻣﻮﺟﻮدی ﻛﺎﻓﻲ ﻧﻴﺴﺖ</value>
+  </data>
+  <data name="BankMelatcode13" xml:space="preserve">
+    <value>رﻣﺰ ﻧﺎدرﺳﺖ اﺳﺖ</value>
+  </data>
+  <data name="BankMelatcode14" xml:space="preserve">
+    <value>تعداد دفعات وارد كردن رمز بيش از حد مجاز است</value>
+  </data>
+  <data name="BankMelatcode15" xml:space="preserve">
+    <value>كارت نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode16" xml:space="preserve">
+    <value>دفعات برداشت وجه بيش از حد مجاز است</value>
+  </data>
+  <data name="BankMelatcode17" xml:space="preserve">
+    <value>كاربر از انجام تراكنش منصرف شده است</value>
+  </data>
+  <data name="BankMelatcode18" xml:space="preserve">
+    <value>تاريخ انقضاي كارت گذشته است</value>
+  </data>
+  <data name="BankMelatcode19" xml:space="preserve">
+    <value>مبلغ برداشت وجه بيش از حد مجاز است</value>
+  </data>
+  <data name="BankMelatcode21" xml:space="preserve">
+    <value>پذيرنده نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode23" xml:space="preserve">
+    <value>خطاي امنيتي رخ داده است</value>
+  </data>
+  <data name="BankMelatcode24" xml:space="preserve">
+    <value>اطلاعات كاربري پذيرنده نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode25" xml:space="preserve">
+    <value>مبلغ نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode31" xml:space="preserve">
+    <value>پاسخ نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode32" xml:space="preserve">
+    <value>فرمت اطلاعات وارد شده صحيح نمي باشد</value>
+  </data>
+  <data name="BankMelatcode33" xml:space="preserve">
+    <value>حساب نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode34" xml:space="preserve">
+    <value>خطاي سيستمي</value>
+  </data>
+  <data name="BankMelatcode35" xml:space="preserve">
+    <value>تاريخ نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode41" xml:space="preserve">
+    <value>شماره درخواست تكراري است</value>
+  </data>
+  <data name="BankMelatcode412" xml:space="preserve">
+    <value>شناسه قبض نادرست است</value>
+  </data>
+  <data name="BankMelatcode413" xml:space="preserve">
+    <value>ﺷﻨﺎﺳﻪ ﭘﺮداﺧﺖ ﻧﺎدرﺳﺖ اﺳﺖ</value>
+  </data>
+  <data name="BankMelatcode414" xml:space="preserve">
+    <value>سازمان صادر كننده قبض نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode415" xml:space="preserve">
+    <value>زمان جلسه كاري به پايان رسيده است</value>
+  </data>
+  <data name="BankMelatcode416" xml:space="preserve">
+    <value>خطا در ثبت اطلاعات</value>
+  </data>
+  <data name="BankMelatcode417" xml:space="preserve">
+    <value>شناسه پرداخت كننده نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode418" xml:space="preserve">
+    <value>اشكال در تعريف اطلاعات مشتري</value>
+  </data>
+  <data name="BankMelatcode419" xml:space="preserve">
+    <value>تعداد دفعات ورود اطلاعات از حد مجاز گذشته است</value>
+  </data>
+  <data name="BankMelatcode42" xml:space="preserve">
+    <value>يافت نشد Sale تراكنش</value>
+  </data>
+  <data name="BankMelatcode421" xml:space="preserve">
+    <value> نامعتبر است IP</value>
+  </data>
+  <data name="BankMelatcode43" xml:space="preserve">
+    <value>داده شده است  Verify قبلا درخواست</value>
+  </data>
+  <data name="BankMelatcode44" xml:space="preserve">
+    <value>يافت نشد  Verfiy درخواست</value>
+  </data>
+  <data name="BankMelatcode45" xml:space="preserve">
+    <value>ﺗﺮاﻛﻨﺶ Settle ﺷﺪه اﺳﺖ</value>
+  </data>
+  <data name="BankMelatcode46" xml:space="preserve">
+    <value>ﺗﺮاﻛﻨﺶ Settle نشده اﺳﺖ</value>
+  </data>
+  <data name="BankMelatcode47" xml:space="preserve">
+    <value>ﺗﺮاﻛﻨﺶ Settle یافت نشده اﺳﺖ</value>
+  </data>
+  <data name="BankMelatcode48" xml:space="preserve">
+    <value>شده است  Reverse تراكنش</value>
+  </data>
+  <data name="BankMelatcode49" xml:space="preserve">
+    <value>يافت نشد  Refund تراكنش</value>
+  </data>
+  <data name="BankMelatcode51" xml:space="preserve">
+    <value>تراكنش تكراري است</value>
+  </data>
+  <data name="BankMelatcode54" xml:space="preserve">
+    <value>تراكنش مرجع موجود نيست</value>
+  </data>
+  <data name="BankMelatcode55" xml:space="preserve">
+    <value>تراكنش نامعتبر است</value>
+  </data>
+  <data name="BankMelatcode61" xml:space="preserve">
+    <value>خطا در واريز</value>
+  </data>
 </root>

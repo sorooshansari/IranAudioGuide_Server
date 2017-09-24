@@ -56,7 +56,7 @@
                     <div class="background">
                     </div>
                     <a href="#!user">
-                        <img class="circle" ng-show="notImage === true "  ng-src="{{user.imgUrl}}">
+                        <img class="circle" ng-show="notImage === true " ng-src="{{user.imgUrl}}">
                         <img class="circle avatarUser " ng-show="notImage === false" src="@Global.ImagePath/default_avatar.png">
                     </a>
                     <a href="#!name"><span class="white-text name">{{user.FullName}}</span></a>
@@ -95,12 +95,7 @@
         </ul>
     </header>
     <main>
-
-
-
         @RenderBody()
-
-
     </main>
     <footer class="page-footer">
         <div class="container">
@@ -223,18 +218,18 @@
                       controller: "pakagePurchasedCtrl"
                     })
                     .state('Payment', {
-                         url: "/payment?PackageId&IsChooesZarinpal",
+                         url: "/payment?PackageId&ChooesBank",
                          templateUrl: function ($stateParams) {
                              try {
-                                 var model = "?pacId=" + $stateParams.PackageId + "&IsZarinpal=" + $stateParams.IsChooesZarinpal;
+                                 var model = "?pacId=" + $stateParams.PackageId + "&ChooesBank=" + $stateParams.ChooesBank;
                                  console.log(model)
                                  return "/@Global.Lang/Payment/PaymentWeb" + model;
                              }
                              catch (error) {
 
                              }
-                         },
-                         controller: "paymentCtrl"
+                         }
+                       // ,                         controller: "paymentCtrl"
                     })
                     .state('deactivateMobile', {
                      url: "/deactivateMobile",

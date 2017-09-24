@@ -98,13 +98,20 @@ namespace IranAudioGuide_MainServer.Models
         public int Pay_Id { get; set; }
         public Procurement Pay_Procurement { get; set; }
 
+        /// <summary>
+        ///  ﺷﻤﺎره درﺧﻮاﺳﺖ ﭘﺮداﺧﺖ
+        /// </summary>
         [Display(Name = "Reference Number")]
         [MaxLength(100)]
         public string Pay_ReferenceNumber { get; set; }
-
+        /// <summary>
+        /// refId
+        /// </summary>
         [Display(Name = "Sale Reference Id")]
         public long Pay_SaleReferenceId { get; set; }
-
+        /// <summary>
+        /// وضیعت خرید
+        /// </summary>
         [Display(Name = "Status Payment")]
         [MaxLength(100)]
         public string Pay_StatusPayment { get; set; }
