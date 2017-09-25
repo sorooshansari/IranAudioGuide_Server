@@ -8,7 +8,7 @@ namespace BankMellatLibrary
 
         #region Base Variable Definition
 
-        public static readonly string PgwSite = "https://bpm.shaparak.ir/pgwchannel/startpay.mellat";
+        public readonly string PgwSite = "https://bpm.shaparak.ir/pgwchannel/startpay.mellat";
         static readonly string callBackUrl = "https://iranaudioguide.com/PaymentBankMelat/BankMelatCallback";
         //ﺷﻤﺎره ﭘﺎﻳﺎﻧﻪ ﭘﺬﻳﺮﻧﺪه 
         static readonly long terminalId = 2789695;

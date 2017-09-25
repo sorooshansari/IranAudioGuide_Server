@@ -610,7 +610,7 @@
     <value>ثبت کاربر جدید؟</value>
   </data>
   <data name="SEOdesc" xml:space="preserve">
-    <value>ا  اپلیکشن  راهنمای صوتی ایران نه تنها راهنمای قدم به قدم  اماکن دیدنی را در دسترس خواهید داشت بلکه قصه های تاریخی واساطیر و باستانی و دانستنی های جالب را نیز  می توانید بشنوید. بیاید پربارتر از قبل در  ایران  سفر کنیم و ایران را می بشناسیم.</value>
+    <value>ا  اپلیکشن  راهنمای صوتی ایران نه تنها راهنمای قدم به قدم  اماکن دیدنی را در دسترس خواهید داشت بلکه قصه های تاریخی واساطیری و باستانی و دانستنی های جالب را نیز  می توانید بشنوید. بیاید پربارتر از قبل در  ایران  سفر کنیم و ایران را می بشناسیم.</value>
   </data>
   <data name="forgotEnterEmail" xml:space="preserve">
     <value>ایمیل خود را برای دریافت لینک بازیابی کلمه عبور وارد کنید</value>
@@ -863,13 +863,13 @@
     <value>رسید خرید </value>
   </data>
   <data name="PaymentMsg" xml:space="preserve">
-    <value>Sorry, you cant buy this package!</value>
+    <value>متآسفانه نمی توانید این بسته را خریداری کنید!</value>
   </data>
   <data name="PaymentMsg1" xml:space="preserve">
-    <value>You are already purchased this package.</value>
+    <value>شما قبلاً این بسته را خریداری کرده اید</value>
   </data>
   <data name="PaymentMsg2" xml:space="preserve">
-    <value>At the moment there is no possibility of connecting to this port.</value>
+    <value>در حال حاضر امکان اتصال به پورت مربوطه وجود ندارد</value>
   </data>
   <data name="Paymentsuccessfully" xml:space="preserve">
     <value>پرداخت با موفقیت انجام شد.</value>
@@ -929,16 +929,16 @@
     <value>(+98) 71-36364709</value>
   </data>
   <data name="Support" xml:space="preserve">
-    <value>Support</value>
+    <value>پشتیبانی</value>
   </data>
   <data name="PaymentGatewayInfo" xml:space="preserve">
-    <value>Choose your payment gateways for purchasing </value>
+    <value>درگاه پرداخت خود را انتخاب کنید</value>
   </data>
   <data name="WebMoney" xml:space="preserve">
     <value>Web Money</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Search</value>
+    <value>جست و جو</value>
   </data>
   <data name="LangOtherTitle" xml:space="preserve">
     <value>English</value>

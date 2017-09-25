@@ -160,7 +160,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ﺷﻤﺎره ﻛﺎرت ﻧﺎﻣﻌﺘﺒﺮ اﺳﺖ.
+        ///   Looks up a localized string similar to Invalid card number.
         /// </summary>
         public static string BankMelatcode111 {
             get {
@@ -169,7 +169,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to صادر كننده كارت نامعتبر است.
+        ///   Looks up a localized string similar to Invalid card provider.
         /// </summary>
         public static string BankMelatcode1111 {
             get {
@@ -205,7 +205,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ﻣﻮﺟﻮدی ﻛﺎﻓﻲ ﻧﻴﺴﺖ.
+        ///   Looks up a localized string similar to Out of credit.
         /// </summary>
         public static string BankMelatcode12 {
             get {
@@ -214,7 +214,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to رﻣﺰ ﻧﺎدرﺳﺖ اﺳﺖ.
+        ///   Looks up a localized string similar to Invalid password.
         /// </summary>
         public static string BankMelatcode13 {
             get {
@@ -232,7 +232,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to كارت نامعتبر است.
+        ///   Looks up a localized string similar to Invalid card.
         /// </summary>
         public static string BankMelatcode15 {
             get {
@@ -250,7 +250,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to كاربر از انجام تراكنش منصرف شده است.
+        ///   Looks up a localized string similar to The user has cancelled the transaction.
         /// </summary>
         public static string BankMelatcode17 {
             get {
@@ -268,7 +268,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to مبلغ برداشت وجه بيش از حد مجاز است.
+        ///   Looks up a localized string similar to Excessive withdrawal amount.
         /// </summary>
         public static string BankMelatcode19 {
             get {
@@ -304,7 +304,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to مبلغ نامعتبر است.
+        ///   Looks up a localized string similar to Invalid price.
         /// </summary>
         public static string BankMelatcode25 {
             get {
@@ -322,7 +322,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to فرمت اطلاعات وارد شده صحيح نمي باشد.
+        ///   Looks up a localized string similar to The entered information is not in correct format.
         /// </summary>
         public static string BankMelatcode32 {
             get {
@@ -340,7 +340,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to خطاي سيستمي.
+        ///   Looks up a localized string similar to System error.
         /// </summary>
         public static string BankMelatcode34 {
             get {
@@ -358,7 +358,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to شماره درخواست تكراري است.
+        ///   Looks up a localized string similar to Duplicate card number.
         /// </summary>
         public static string BankMelatcode41 {
             get {
@@ -367,7 +367,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to شناسه قبض نادرست است.
+        ///   Looks up a localized string similar to Billing ID is incorrect.
         /// </summary>
         public static string BankMelatcode412 {
             get {
@@ -385,7 +385,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ﺷﻨﺎﺳﻪ ﭘﺮداﺧﺖ ﻧﺎدرﺳﺖ اﺳﺖ.
+        ///   Looks up a localized string similar to Payment ID is incorrect.
         /// </summary>
         public static string BankMelatcode4131 {
             get {
@@ -394,7 +394,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to سازمان صادر كننده قبض نامعتبر است.
+        ///   Looks up a localized string similar to Bill provider organization is invalid.
         /// </summary>
         public static string BankMelatcode414 {
             get {
@@ -403,7 +403,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to زمان جلسه كاري به پايان رسيده است.
+        ///   Looks up a localized string similar to Session timeout.
         /// </summary>
         public static string BankMelatcode415 {
             get {
@@ -421,7 +421,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to شناسه پرداخت كننده نامعتبر است.
+        ///   Looks up a localized string similar to Invalid payee ID.
         /// </summary>
         public static string BankMelatcode417 {
             get {
@@ -448,7 +448,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to يافت نشد Sale تراكنش.
+        ///   Looks up a localized string similar to Sale transaction not found.
         /// </summary>
         public static string BankMelatcode42 {
             get {
@@ -475,7 +475,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to يافت نشد  Verfiy درخواست.
+        ///   Looks up a localized string similar to Verfiy request not found.
         /// </summary>
         public static string BankMelatcode44 {
             get {
@@ -511,7 +511,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to شده است  Reverse تراكنش.
+        ///   Looks up a localized string similar to Transaction has been reversed.
         /// </summary>
         public static string BankMelatcode48 {
             get {
@@ -520,7 +520,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to يافت نشد  Refund تراكنش.
+        ///   Looks up a localized string similar to Refund transaction not found.
         /// </summary>
         public static string BankMelatcode49 {
             get {
@@ -1916,7 +1916,7 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are already purchased this package..
+        ///   Looks up a localized string similar to You have already purchased this package..
         /// </summary>
         public static string PaymentMsg1 {
             get {

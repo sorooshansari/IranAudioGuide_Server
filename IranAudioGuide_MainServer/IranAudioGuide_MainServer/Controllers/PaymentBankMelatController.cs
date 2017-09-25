@@ -14,31 +14,15 @@ namespace IranAudioGuide_MainServer.Controllers
 {
     public class PaymentBankMelatController : BaseController
     {
-        //private int GetNumberForStatusCode(ReturnCodeForBpPayRequest msg)
-        //{
-        //    return (int)msg;
-        //}
+
         private string GetStringEnum(ReturnCodeForBpPayRequest msg)
         {
             return msg.GetDisplayName();
-            //  return msg.GetDisplay();
         }
-        //private ReturnCodeForBpPayRequest GetMessageForStatusCode(string statusCode)
-        //{
 
-        //    var id = 413;
-        //    try
-        //    {
-        //        id = int.Parse(statusCode);
-        //    }
-        //    catch
-        //    {
-        //        id = 413;
-        //    }
-        //   return (ReturnCodeForBpPayRequest)id;
-        //}
         public ActionResult Purchase(Guid packageId, bool isFromWeb = false)
         {
+            var ServiceBankMellat = new BankMellatIService();
             using (var db = new ApplicationDbContext())
             {
                 using (var dbTran = db.Database.BeginTransaction())
@@ -53,8 +37,8 @@ namespace IranAudioGuide_MainServer.Controllers
 
 
                         var resultPayment = ServicePayment.Insert(UserName, packageId, EnumBankName.Mellat, db);
-                        var bankMellatService = new BankMellatIService();
-                        var resultBank = bankMellatService.BpPayRequest(resultPayment.Pay_Id, resultPayment.Pay_Amount, "test");
+
+                        var resultBank = ServiceBankMellat.BpPayRequest(resultPayment.Pay_Id, resultPayment.Pay_Amount, "test");
 
                         string[] StatusSendRequest = resultBank.Split(',');
 
@@ -77,7 +61,7 @@ namespace IranAudioGuide_MainServer.Controllers
                         var sb = new System.Text.StringBuilder();
                         sb.Append("<html>");
                         sb.AppendFormat("<body onload='document.forms[0].submit()'>");
-                        sb.AppendFormat("<form action='{0}' method='post'>", BankMellatLibrary.BankMellatIService.PgwSite);
+                        sb.AppendFormat("<form action='{0}' method='post'>", ServiceBankMellat.PgwSite);
                         sb.AppendFormat("<input type='hidden' name='RefId' value='{0}'>", resultPayment.Pay_SaleReferenceId);
                         sb.Append("</form>");
                         sb.Append("</body>");
@@ -116,55 +100,11 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             return View();
         }
-        //public ActionResult Index()
-        //{
-
-        //    long orderID = 0; //شماره تراکنش که باید منحصر به فرد باشد
-        //    long priceAmount = 20000; // هزینه ایی که کاربر در صفحه پرداخت باید آن را بپردازد
-        //    string additionalText = "خرید یک محصول "; // توضیحات شما برای این تراکنش
-        //    var bankMellatService = new BankMellatIService();
-        //    string resultRequest = bankMellatService.BpPayRequest(orderID, priceAmount, additionalText);
-        //    string[] StatusSendRequest = resultRequest.Split(',');
-        //    //در صورتی که مقدار خانه اول این آریه برابر صفر در نتیجه می بایست کاربر را به صفحه پرداخت هدایت کنیم
-        //    if (StatusSendRequest[0] == "0")
-        //    {
-        //        return RedirectToAction("PayWithMellat", "Payment", new { id = StatusSendRequest[1] });
-        //    }
-
-        //    TempData["Message"] = GetMessageForStatusCode(StatusSendRequest[0]);
-        //    return RedirectToAction("ShowError", "Payment");
-
-
-        //}
-        //public ActionResult PayWithMellat(string id)
-        //{
-        //    try
-        //    {
-        //        if (id == null)
-        //        {
-        //            TempData["Message"] = "هیچ شماره پیگیری برای پرداخت از سمت بانک ارسال نشده است!";
-
-        //            return RedirectToAction("ShowError", "Payment");
-        //        }
-        //        else
-        //        {
-        //            ViewBag.id = id;
-        //            return View();
-        //        }
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        TempData["Message"] = error + "متاسفانه خطایی رخ داده است، لطفا مجددا عملیات خود را انجام دهید در صورت تکرار این مشکل را به بخش پشتیبانی اطلاع دهید";
-
-        //        return RedirectToAction("ShowError", "Payment");
-        //    }
-
-        //}
 
         [HttpPost]
         public ActionResult BankMelatCallback()
         {
-            //bool Run_bpReversalRequest = false;
+            bool Run_bpReversalRequest = true;
 
             //ﻛﺪ ﻣﺮﺟﻊ ﺗﺮاﻛﻨﺶ ﺧﺮﻳﺪ ﻛﻪ از ﺳﺎﻳﺖ ﺑﺎﻧﻚ ﺑﻪ ﭘﺬﻳﺮﻧﺪه داده ﻣﻲ ﺷﻮد
             long saleReferenceId = -999;
@@ -172,14 +112,11 @@ namespace IranAudioGuide_MainServer.Controllers
             //ﺷﻤﺎره درﺧﻮاﺳﺖ ﭘﺮداﺧﺖ
             long saleOrderId = -999;
 
+            var bankMellatImplement = new BankMellatIService();
 
             try
             {
-                //string ResCode_bpPayRequest
-                // ﻛﺪ ﻣﺮﺟﻊ درﺧﻮاﺳﺖ ﭘﺮداﺧﺖ ﻛﻪ ﻫﻤﺮاه ﺑﺎ درﺧﻮاﺳﺖ bpPayRequest ﺗﻮﻟﻴد ﺷﺪه اﺳﺖ 
-                //و به پذیرنده اختصاص یافته است.
-                // var refId = Request.Params["RefId"].ToString();
-                var bankMellatImplement = new BankMellatIService();
+
                 saleReferenceId = Request.Params["SaleReferenceId"].ToString().ConvertToLong();
                 saleOrderId = Request.Params["SaleOrderId"].ToString().ConvertToLong();
                 ////وضیعت خرید
@@ -191,7 +128,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (ResCodeEnum != ReturnCodeForBpPayRequest.Success)
                     return PaymentFailed(Global.PaymentMsg, GetStringEnum(ResCodeEnum), true);
 
-                #region Success
+
                 // orderId می تونیم همان saleOrderId استفاده کنیم 
                 ResCode = bankMellatImplement.VerifyRequest(saleOrderId, saleOrderId, saleReferenceId);
 
@@ -204,10 +141,6 @@ namespace IranAudioGuide_MainServer.Controllers
                     if (ResCodeEnum != ReturnCodeForBpPayRequest.Success)
                         return PaymentFailed(Global.PaymentMsg, msg, true);
                 }
-
-
-
-                #region SettleRequest
 
                 ResCode = bankMellatImplement.SettleRequest(saleOrderId, saleOrderId, saleReferenceId);
                 ResCodeEnum = ResCode.ConvertToEnum<ReturnCodeForBpPayRequest>();
@@ -227,6 +160,12 @@ namespace IranAudioGuide_MainServer.Controllers
                     var result = ServicePayment.GetById(saleOrderId.ConvertToInt());
                     result.Pay_ReferenceNumber = saleOrderId.ToString();
                     result.Pay_Procurement.Pro_PaymentFinished = true;
+                    result.Pay_StatusPayment = ResCode;
+                    result.Pay_SaleReferenceId = saleReferenceId;                  
+                    ServicePayment.Update(result);
+
+                    Run_bpReversalRequest = true;
+
                     var emailModel = new SendEmailForPaymentVM()
                     {
                         Price = result.Pay_Amount.ToString(),
@@ -244,33 +183,25 @@ namespace IranAudioGuide_MainServer.Controllers
 
                 }
 
-                // Save information to Database...
-
-                #endregion
-
-                #endregion
-
-
-
-
             }
-            catch (Exception Error)
+            catch (Exception ex)
             {
-                //TempData["Message"] = "متاسفانه خطایی رخ داده است، لطفا مجددا عملیات خود را انجام دهید در صورت تکرار این مشکل را به بخش پشتیبانی اطلاع دهید";
-                //// Save and send Error for admin user
-                //Run_bpReversalRequest = true;
-                //return RedirectToAction("ShowError", "Payment");
+                Run_bpReversalRequest = true;
+                ErrorSignal.FromCurrentContext().Raise(ex);
+
+                // "Problem occurred in payment process. ";
+                //"Sorry, please try again in a few minutes.";
+                return PaymentFailed(Global.ZarinpalPaymentMsg6, Global.ZarinpalPaymentMsg7, true);
             }
             finally
             {
-                //if (Run_bpReversalRequest) //ReversalRequest
-                //{
-                //    if (saleOrderId != -999 && saleReferenceId != -999)
-                //        bankMellatImplement.BpReversalRequest(saleOrderId, saleOrderId, saleReferenceId);
-                //    // Save information to Database...
-                //}
+                if (Run_bpReversalRequest) //ReversalRequest
+                {
+                    if (saleOrderId != -999 && saleReferenceId != -999)
+                        bankMellatImplement.BpReversalRequest(saleOrderId, saleOrderId, saleReferenceId);
+                    // Save information to Database...
+                }
             }
-            return PaymentFailed(Global.PaymentMsg, "", false);
 
         }
     }

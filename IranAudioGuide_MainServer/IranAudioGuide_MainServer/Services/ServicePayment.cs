@@ -62,11 +62,19 @@ namespace IranAudioGuide_MainServer.Services
 
         }
 
-        public static void Update(Payment item, ApplicationDbContext db)
+        public static void Update(Payment item, ApplicationDbContext db = null)
         {
+            var dispose = false;
+            if (db == null)
+            {
+                db = new ApplicationDbContext();
+                dispose = true;
+            }
 
             db.Entry(item).State = EntityState.Modified;
             db.SaveChanges();
+            if (dispose)
+                db.Dispose();
 
         }
 
@@ -78,7 +86,7 @@ namespace IranAudioGuide_MainServer.Services
                                    .FirstOrDefault(c => c.Pay_Id == paymentId);
 
             }
-            
+
         }
 
     }
