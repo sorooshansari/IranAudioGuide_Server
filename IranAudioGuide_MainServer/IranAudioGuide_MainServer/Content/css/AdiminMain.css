@@ -1800,12 +1800,10 @@ form textarea {
     -ms-transition: all 0.35s ease-in-out;
     transition: all 0.35s ease-in-out;
 }
-
-    form input[type="text"]:focus,
-    form input[type="email"]:focus,
-    form input[type="password"]:focus,
-    form select:focus,
-    form textarea:focus {
+.place-image input[type="text"] {
+    padding: 0 1em;
+}
+    form input[type="text"]:focus, form input[type="email"]:focus, form input[type="password"]:focus, form select:focus, form textarea:focus {
         box-shadow: 0 0 2px 1px #8ebebc;
         background: #fff;
     }

@@ -206,7 +206,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PackagePriceDollar { get; set; }
         public bool isPackagesPurchased { get; set; }
         public List<CityUserVM> PackageCities { get; set; }
-       
+
     }
     public class PackageUserVM
     {
@@ -474,7 +474,7 @@ namespace IranAudioGuide_MainServer.Models
         public IList<PlaceUserVM> Places { get; set; }
         public int TotalTrackCount { get; internal set; }
         public int TotalCountPlace { get; internal set; }
-        public string CityDesc { get; internal set; }   
+        public string CityDesc { get; internal set; }
         public bool IsloadImage { get; internal set; }
     }
 
@@ -566,6 +566,10 @@ namespace IranAudioGuide_MainServer.Models
         public string PlaceCordinates { get; set; }
         [Required]
         public int PlaceCityId { get; set; }
+
+
+        public long Price { get; set; }
+        public float PriceDollar { get; set; }
     }
     public class PlaceUserVM
     {
@@ -574,7 +578,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PlaceName { get; set; }
         public string PlaceDesc { get; set; }
         public string CityName { get; set; }
-        public int PlaceCityId { get; set; }      
+        public int PlaceCityId { get; set; }
         public string ImgUrl { get; set; }
         public string TumbImgUrl { get; set; }
         public string PlaceAddress { get; set; }
@@ -594,6 +598,12 @@ namespace IranAudioGuide_MainServer.Models
         public string PlaceDesc { get; set; }
         public string CityName { get; set; }
         public int PlaceCityId { get; set; }
+
+
+        public long Price { get; set; }
+        public float PriceDollar { get; set; }
+
+
         public string _imageUrl { get; set; }
         public string ImgUrl
         {
@@ -611,19 +621,60 @@ namespace IranAudioGuide_MainServer.Models
         public bool isOnline { get; set; }
         public bool isPrimary { get; set; }
     }
+
+    public class GetImagesByPlaceIdVm
+    {
+        public Guid PlaceId { get; set; }
+        public int Type { get; set; }
+    }
+
+    public class ImageSaveOrderVM
+    {
+        [Required]
+        public int Type { get; set; }
+        [Required]
+        public Guid ImageId { get; set; }
+        [Required]
+
+        public string PlaceId { get; set; }
+        [Required]
+
+        public int Index { get; set; }
+    }
     public class ImageVM
     {
         public string _imageUrl { get; set; }
+
+        public int Type { get; set; }
         public string ImageName
         {
             get { return _imageUrl; }
-            set { _imageUrl = GlobalPath.FullPathImageExtras + value; }
+            set
+            {
+                if (Type == (int)EnumImageType.Extra)
+                    _imageUrl = GlobalPath.FullPathImageExtras + value;
+                else
+                    _imageUrl = GlobalPath.FullPathImageGallery + value;
+            }
         }
         public Guid ImageId { get; set; }
         public int Index { get; set; }
         public string ImageDesc { get; set; }
-
+        public Guid PlaceId { get; internal set; }
     }
+    //public class ImageGalleryVM
+    //{
+    //    public string _imageUrl { get; set; }
+    //    public string ImageName
+    //    {
+    //        get { return _imageUrl; }
+    //        set { _imageUrl = GlobalPath.FullPathImageGallery + value; }
+    //    }
+    //    public Guid ImageId { get; set; }
+    //    public int Index { get; set; }
+    //    public string ImageDesc { get; set; }
+
+    //}
     public class EditEIDescVM
     {
         [Required]

@@ -6,7 +6,6 @@ using System.Web;
 
 namespace IranAudioGuide_MainServer.Models
 {
-
     public enum EnumBankName
     {
         Mellat = 0,

@@ -419,8 +419,9 @@
               });
             return ExtraImages;
         },
+    
         editeOrder: function (models) {
-            return $http.post("/api/UserApi/SaveOrderExtraImg", models);
+            return $http.post("/Admin/SaveOrderExtraImg", models);
         },
         AddExtraImage: function (image, placeId) {
             method = 'POST';
@@ -453,6 +454,37 @@
               });
             return;
         },
+        AddGalleryImage: function (image, placeId) {
+            method = 'POST';
+            url = '/Admin/AddPlaceGalleryImage';
+            var fd = new FormData();
+            fd.append('NewImage', image);
+            fd.append('PlaceId', placeId);
+            $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).
+                then(function (response) {
+                    if (response.data.status == 0) {
+                        $rootScope.$broadcast('UpdateGalleryImg', {});
+                    }
+                    else {
+                        $rootScope.$broadcast('ExtraImgUnknownError', {
+                            data: response.data.content
+                        });
+                        notific.error("ERROR", "Request failed");
+
+                        //console.log("Server failed to add Place.");
+                    }
+                }, function (response) {
+                    console.log("Request failed");
+                    notific.error("ERROR", "status:" + response.status);
+                });
+            return;
+        },
         DelExtraImage: function (imgId) {
             method = 'POST';
             url = '/Admin/DelPlaceExtraImage';
@@ -462,6 +494,8 @@
                   switch (response.data.status) {
                       case 0:
                           $rootScope.$broadcast('UpdateExtraImg', {});
+                          $rootScope.$broadcast('UpdateGalleryImg', {});
+
                           break;
                       case 2:
                           $rootScope.$broadcast('Invalid Id', {});
@@ -489,6 +523,7 @@
                       case 0:
                           $('#EditEIDescModal').modal('hide');
                           $rootScope.$broadcast('UpdateExtraImg', {});
+                          $rootScope.$broadcast('UpdateGalleryImg', {});
                           break;
                       case 2:
                           $rootScope.$broadcast('InvalidId', {});

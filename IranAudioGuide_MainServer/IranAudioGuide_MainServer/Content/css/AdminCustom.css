@@ -542,7 +542,7 @@ form textarea {
 #EditPlaceModal .modal-body,
 #OnlineEditPlaceModal .modal-body {
     overflow-y: scroll;
-    max-height: 450px;
+    /*max-height: 450px;*/
 }
 
 /*.ImgHoverable img {
@@ -646,7 +646,8 @@ form textarea {
 
 @media screen and (min-width: 961px) {
     .modal-dialog {
-        width: 900px;
+        /*width: 900px;*/
+        width:80%;
     }
 }
 

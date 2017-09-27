@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System;
-using IranAudioGuide_MainServer.Services;
 
 namespace IranAudioGuide_MainServer.Models
 {// You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
@@ -75,8 +74,8 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Tra_Id { get; set; }   
-        public DateTime Tra_DateTime { get; set; }   
+        public int Tra_Id { get; set; }
+        public DateTime Tra_DateTime { get; set; }
         public string Tra_Uuid { get; set; }
         public Guid Tra_IdTrack { get; set; }
         public bool Tra_IsAudio { get; set; }
@@ -173,8 +172,13 @@ namespace IranAudioGuide_MainServer.Models
         public string TrP_Name { get; set; }
         public string TrP_Description { get; set; }
         public string TrP_Address { get; set; }
+        public long TrP_Price { get; set; }
+        public float TrP_PriceDollar { get; set; }
+
+
         public Guid Pla_Id { get; set; }
         public Place Place { get; set; }
+
         public int langId { get; set; }
 
 
@@ -194,13 +198,13 @@ namespace IranAudioGuide_MainServer.Models
         public string Pla_Address { get; set; }
         public bool Pla_Deactive { get; set; }
         public int Pla_Order { get; set; }
-
         public bool Pla_isOnline { get; set; }
         public bool Pla_isPrimary { get; set; }
         #region Relation property
         public List<Audio> Pla_Audios { get; set; }
         public List<Story> Pla_Stories { get; set; }
         public List<Image> Pla_ExtraImages { get; set; }
+        public List<Image> Pla_GalleryImages { get; set; }
         public List<Tip> Pla_Tips { get; set; }
         public List<TranslatePlace> TranslatePlaces { get; set; }
 
@@ -212,18 +216,21 @@ namespace IranAudioGuide_MainServer.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid TrI_Id { get; set; }
-
-       // public string TrI_Name { get; set; }
+        // public string TrI_Name { get; set; }
         public string TrI_Description { get; set; }
-
         public Guid Img_Id { get; set; }
         public Image Image { get; set; }
-
-
         public int langId { get; set; }
 
 
     }
+
+
+    public enum EnumImageType
+    {
+        Extra = 0,
+        Gallery = 1,
+    };
     public class Image
     {
         [Key]
@@ -233,6 +240,10 @@ namespace IranAudioGuide_MainServer.Models
         public string Img_Name { get; set; }
         public string Img_Description { get; set; }
         public int Tmg_Order { get; set; }
+        /// <summary>
+        /// EnumImageType
+        /// </summary>
+        public int Tmg_Type { get; set; }
         #region Relation property
         public Place Place { get; set; }
         public List<TranslateImage> TranslateImages { get; set; }
@@ -373,9 +384,12 @@ namespace IranAudioGuide_MainServer.Models
         public ApplicationUser Pro_User { get; set; }
 
 
-        public Guid Pac_Id { get; set; }
+        public Guid? Pac_Id { get; set; }
         public Package Pro_Package { get; set; }
 
+
+        public Guid? Pro_TrcPlaceId { get; set; }
+        public TranslatePlace Pro_TrcPlace { get; set; }
 
         //public Guid? PaymentId { get; set; }
         public Payment Pro_Payment { get; set; }
@@ -507,7 +521,7 @@ namespace IranAudioGuide_MainServer.Models
     {
         public Price()
         {
-           
+
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

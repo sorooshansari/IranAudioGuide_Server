@@ -12,7 +12,7 @@ namespace IranAudioGuide_MainServer.Services
             var type = value.GetType();
             if (!type.IsEnum)
                 return "";
-                //throw new ArgumentException(String.Format("Type '{0}' is not Enum", type));
+            //throw new ArgumentException(String.Format("Type '{0}' is not Enum", type));
 
             var members = type.GetMember(value.ToString());
             if (members.Length == 0)
@@ -53,7 +53,7 @@ namespace IranAudioGuide_MainServer.Services
                 return default(T);
             }
         }
-      
+
     }
     public class DisplayTextAttribute : Attribute
     {
@@ -87,14 +87,13 @@ namespace IranAudioGuide_MainServer.Services
         //convertToGuid
         public static Guid ConvertToGuid(this object obj)
         {
-            try
-            {
-                return (obj == DBNull.Value) ? Guid.Empty : (Guid)obj;
-            }
-            catch
-            {
-                return Guid.Empty;
-            }
+
+            var myGuid = new Guid();
+            if (Guid.TryParse(obj.ToString(), out myGuid))
+                return myGuid;
+
+            return Guid.Empty;
+
         }
         public static string ConvertToString(this long obj)
         {

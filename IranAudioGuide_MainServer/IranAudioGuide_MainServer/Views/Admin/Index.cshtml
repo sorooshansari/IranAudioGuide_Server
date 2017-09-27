@@ -312,7 +312,7 @@
                     color: #de0000 !important;
                     display: inline-block !important;
                     width: 100%;
-                    text-align:left;
+                    text-align: left;
                 }
             </style>
             <form name="PackageForm" role="form" ng-submit="AddPackage(NewPackage, PackageForm, cities)" novalidate>
@@ -596,54 +596,6 @@
         </div>
     </div>
 
-    <!-- Edit Online Place Modal -->
-    <div class="modal fade" id="OnlineEditPlaceModal" tabindex="-2" role="dialog" aria-labelledby="OnlineEditPlaceModalLabel">
-        <div class="modal-dialog" style="width: 900px;" role="document">
-            <form>
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="text-primary">Edit Place Informations</h3>
-                        <a href="" ng-click="hide('#OnlineEditPlaceModal')">
-                            <i class="fa fa-2x fa-times ModalDismissIco"></i>
-                        </a>
-                    </div>
-                    <div class="modal-body" style="padding: 15px;">
-                        <div class="row">
-                            <div class="place-image 3u 6u(mobile) ImgHoverable">
-                                <img class="PImg" src="{{OnlineSelectedPlace.Img}}" />
-                            </div>
-                            <div ng-show="OnlineSelectedPlace.ExtraImages.length" class="12u$ PlaceExtraImage">
-                                <div class="row">
-                                    <div name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in OnlineSelectedPlace.ExtraImages">
-                                        <img src="{{img.ImageName}}" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="6u$ 12u$(mobile)">
-                                <input disabled type="text" ng-model="OnlineEditPlaceVM.PlaceName" name="PlaceName" placeholder="Place name*" />
-                            </div>
-                            <div class="6u 12u$(mobile)">
-                                <input disabled type="text" ng-model="OnlineEditPlaceVM.CityName" name="CityName" placeholder="City name*" />
-                            </div>
-                            <div class="6u$ 12u$(mobile)">
-                                <input disabled type="text" ng-model="OnlineEditPlaceVM.PlaceCordinates" name="PlaceCordinates" placeholder="Place Cordinates" />
-                            </div>
-                            <div class="12u$">
-                                <textarea disabled ng-model="OnlineEditPlaceVM.PlaceDesc" name="PlaceDesc" rows="3" placeholder="Place description"></textarea>
-                            </div>
-                            <div class="12u$">
-                                <textarea disabled ng-model="OnlineEditPlaceVM.PlaceAddress" name="PlaceAddress" rows="1" placeholder="Place Address"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" id="EditPlaceModal_close" class="ModalDismissBtn" data-dismiss="modal" value="Close" />
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Edit City Modal -->
     <div class="modal fade" id="EditCityModal" tabindex="-2" role="dialog" aria-labelledby="EditCityModalLabel">
         @*<div ng-show="EditOverlay" style="position: absolute;top:0px;left:0px;width: 100%; height: 100%; z-index:1000000; background-color: rgba(255,255,255,0.3);">
@@ -727,34 +679,97 @@
                                 <img class="PImg" ng-click="ClickPlaceImg('#PlaceTumbImage')" src="{{selectedPlace.TumbImgUrl}}" />
                                 <i ng-click="ClickPlaceImg('#PlaceTumbImage')" ng-show="selectedPlace.rmvTumbShow" class="btn fa fa-2x fa-pencil-square-o text-blue addImgBtn"></i>
                             </div>
-                            <div class="place-image 1u$" style="float: right;">
+                            @*
+
+                                <div class="place-image 1u$" style="float: left;">
+                                    <input id="PlaceExtraImage" name="PlaceExtraImage" type="file" file-model="PlaceExtraImage" class="hidden"
+                                           onchange="angular.element(this).scope().AddExtraImage(this)" />
+                                    <img ng-click="ClickPlaceImg('#PlaceExtraImage')" src="@GlobalPath.ImagePath/file_add.png" />
+                                </div>*@
+
+                            <div>
                                 <input id="PlaceExtraImage" name="PlaceExtraImage" type="file" file-model="PlaceExtraImage" class="hidden"
                                        onchange="angular.element(this).scope().AddExtraImage(this)" />
-                                <img ng-click="ClickPlaceImg('#PlaceExtraImage')" src="@GlobalPath.ImagePath/file_add.png" />
+
+                                <button type="button" class="btn btn-info" ng-click="ClickPlaceImg('#PlaceExtraImage')">
+                                    <span class="fa " ng-class="finishSaveImageExtra  ? 'fa-plus':'fa-spinner fa-spin' "></span> Add Extra Image
+                                </button>
+
+                            </div>
+                            <div>
+                                <input id="PlaceGalleryImage" name="PlaceGalleryImage" type="file" file-model="PlaceGalleryImage" class="hidden"
+                                       onchange="angular.element(this).scope().AddGalleryImage(this)" />
+
+                                <button type="button" class="btn btn-success" ng-click="ClickPlaceImg('#PlaceGalleryImage')">
+                                    <span class="fa " ng-class="finishSaveImageGallery ? 'fa-plus':'fa-spinner fa-spin'"></span> Add Gallery Image
+                                </button>
+
                             </div>
                             <div ng-show="selectedPlace.ExtraImages.length" class="12u$ PlaceExtraImage">
                                 <div class="12u$ row header">
                                     <hr class="4u fourPointFiveU" />
                                     <span class="3u">
-                                        Extra Images
+                                        Extra Images  </span>
+                                    <hr class="4u$ fourPointFiveU" />
+                                </div>
+                                <div class="row">
+                                    <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true" 
+                                         name="ExtraImgs" class="place-image 2u 3u(mobile)" 
+                                         ng-repeat="img in selectedPlace.ExtraImages | orderBy : 'Index'">
+                                      <span>
+                                          <i class="fa " ng-class="img.isLoading  ? 'fa-spinner fa-spin': '' "></i>
+
+                                          </span>
+                                        <input type="text" ng-model="img.Index" size="4"  my-enter="saveOrderExtraImg(img)"/>
+                                        <img src="{{img.ImageName}}" />
+                                        <i ng-click="EditEIDescModal(img)"
+                                           ng-show="img.rmvShow"
+                                           class="btn fa  text-blue EditDescBtn"
+                                           ng-class="img.isLoadingEdit  ? 'fa-spinner fa-spin': 'fa-pencil' "></i>
+                                        <i ng-click="RemoveExtraImg(img, 0)" ng-show="img.rmvShow"
+                                           class="btn fa  text-red rmvBtn"
+                                           ng-class="img.isLoading  ? 'fa-spinner fa-spin': 'fa-trash-o' "></i>
+                                    </div>
+                                </div>
+                                @*<div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="addBtn" ladda="saveOrderBtn" ng-click="saveOrderExtraImg(img)">Save Order</button>
+                                    </div>
+                                </div>*@
+                            </div>
+                            <div ng-show="selectedPlace.GalleryImages.length" class="12u$ PlaceExtraImage">
+                                <div class="12u$ row header">
+                                    <hr class="4u fourPointFiveU" />
+                                    <span class="3u">
+                                        Gallery Images
                                     </span>
                                     <hr class="4u$ fourPointFiveU" />
                                 </div>
                                 <div class="row">
-                                    <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true" name="ExtraImgs" class="place-image 2u 3u(mobile)" ng-repeat="img in selectedPlace.ExtraImages | orderBy : 'Index'">
-                                        <input  type="text" ng-model="img.Index" size="4"/>
-                                        <img src="{{img.ImageName}}" />                                      
-                                        <i ng-click="EditEIDescModal(img)" ng-show="img.rmvShow" class="btn fa fa-pencil text-blue EditDescBtn"></i>
-                                        <i ng-click="RemoveExtraImg(img.ImageId)" ng-show="img.rmvShow" class="btn fa fa-trash-o text-red rmvBtn"></i>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <button class="addBtn" ladda="saveOrderBtn" ng-click="saveOrderExtraImg(selectedPlace.ExtraImages)" >Save Order</button>
-                                    </div>
-                                </div>
-                            </div>
+                                    <div ng-mouseleave="img.rmvShow = false" ng-mousemove="img.rmvShow = true"
+                                         name="ExtraImgs" class="place-image 2u 3u(mobile)"
+                                         ng-repeat="img in selectedPlace.GalleryImages | orderBy : 'Index'">
+                                        <span>
+                                            <i class="fa " ng-class="img.isLoading  ? 'fa-spinner fa-spin': '' "></i>
 
+                                        </span>
+                                        <input type="text" ng-model="img.Index" size="4" my-enter="saveOrderExtraImg(img)" />
+                                        <img src="{{img.ImageName}}" />
+                                        <i ng-click="EditEIDescModal(img)"
+                                           ng-show="img.rmvShow"
+                                           class="btn fa  text-blue EditDescBtn"
+                                           ng-class="img.isLoadingEdit  ? 'fa-spinner fa-spin': 'fa-pencil' "></i>
+                                        <i ng-click="RemoveExtraImg(img, 1)" ng-show="img.rmvShow"
+                                           class="btn fa  text-red rmvBtn"
+                                           ng-class="img.isLoading  ? 'fa-spinner fa-spin': 'fa-trash-o' "></i>
+                                    </div>
+                                </div>
+                                @*<div class="row">
+                <div class="col-xs-12">
+                    <button class="addBtn" ladda="saveOrderBtn" ng-click="saveOrderExtraImg(selectedPlace.ExtraImages)">Save Order</button>
+                </div>
+            </div>*@
+                            </div>
                             <!--tips-->
                             <div class="12u$ row header">
                                 <hr class="5u" />
@@ -803,6 +818,20 @@
                             <div class="6u$ 12u$(mobile)">
                                 <input type="text" ng-model="EditPlaceVM.PlaceName" name="PlaceName" required placeholder="Place name*" />
                             </div>
+
+
+
+                            <div class="6u 12u$(mobile)">
+                                <input type="text" ng-model="EditPlaceVM.Price" name="Price"  placeholder="Place Price" />
+                               
+                            </div>
+                            <div class="6u$ 12u$(mobile)">
+                                <input type="text" ng-model="EditPlaceVM.PriceDollar" value="" name="PriceDollar" placeholder="Place Price Dollar" />
+                            </div>
+
+
+
+
                             <div class="6u 12u$(mobile)">
                                 <select ng-options="city.CityID as city.CityName for city in AllCities"
                                         ng-model="EditPlaceVM.PlaceCityId"
@@ -846,7 +875,7 @@
                                 <div class="formError" ng-show="(EditEIDescForm.$submitted || EditEIDescForm.Desc.$touched) && EditEIDescForm.Desc.$error.required">
                                     <p class="text-danger">Image description must be fill.</p>
                                 </div>
-                                <textarea id="Desc" name="Desc" ng-model="EditEIDescVM.Desc" placeholder="Image Description" rows="3" required></textarea>
+                                <textarea id="Desc" name="Desc" ng-model="EditEIDescVM.ImageDesc" placeholder="Image Description" rows="3" required></textarea>
                             </div>
                         </div>
                     </div>

@@ -555,23 +555,28 @@
                   notific.error("ERROR", "status:" + response.status);
               });
         },
-        GetExtraImages: function (PlaceId) {
+        GetExtraImages: function (PlaceId, type) {
             method = 'POST';
-            url = '/@Global.Lang/Admin/GetExtraImages';
+            url = '/@Global.Lang/Admin/GetImages';
+            data = { placeId: PlaceId, type: type };
+            return $http({ method: method, url: url, data: data });
+        },
+        GetGalleryImages: function (PlaceId) {
+            method = 'POST';
+            url = '/@Global.Lang/Admin/GetGalleryImages';
             data = { placeId: PlaceId };
             $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  console.log(response);
-                  angular.copy(response.data, ExtraImages);
-              }, function (response) {
-                  notific.error("ERROR", "Request failed");
-
-                  //console.log("Request failed");
-              });
+                then(function (response) {
+                    console.log(response);
+                    angular.copy(response.data, ExtraImages);
+                }, function (response) {
+                    notific.error("ERROR", "Request failed");
+                    //console.log("Request failed");
+                });
             return ExtraImages;
         },
-        editeOrder: function (models) {
-            return $http.post("/api/UserApi/SaveOrderExtraImg", models);
+        SaveOrder: function (models) {
+            return $http.post('/@Global.Lang/Admin/SaveOrder', models);
         },
         AddExtraImage: function (image, placeId) {
             method = 'POST';
@@ -579,83 +584,40 @@
             var fd = new FormData();
             fd.append('NewImage', image);
             fd.append('PlaceId', placeId);
-            $http({
+            return $http({
                 method: method,
                 url: url,
                 data: fd,
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
-            }).
-              then(function (response) {
-                  if (response.data.status == 0) {
-                      $rootScope.$broadcast('UpdateExtraImg', {});
-                  }
-                  else {
-                      $rootScope.$broadcast('ExtraImgUnknownError', {
-                          url: response.data.content
-                      });
-                      notific.error("ERROR", "Request failed");
-
-                      //console.log("Server failed to add Place.");
-                  }
-              }, function (response) {
-                  console.log("Request failed");
-                  notific.error("ERROR", "status:" + response.status);
-              });
-            return;
+            })
+            ;
+        },
+        AddGalleryImage: function (image, placeId) {
+            method = 'POST';
+            url = '/@Global.Lang/Admin/AddPlaceGalleryImage';
+            var fd = new FormData();
+            fd.append('NewImage', image);
+            fd.append('PlaceId', placeId);
+            return $http({
+                method: method,
+                url: url,
+                data: fd,
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            });
         },
         DelExtraImage: function (imgId) {
             method = 'POST';
             url = '/@Global.Lang/Admin/DelPlaceExtraImage';
             data = { imgId: imgId };
-            $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  switch (response.data.status) {
-                      case 0:
-                          $rootScope.$broadcast('UpdateExtraImg', {});
-                          break;
-                      case 2:
-                          $rootScope.$broadcast('Invalid Id', {});
-                          console.log(response.data.content);
-                          break;
-                      case 3:
-                          $rootScope.$broadcast('PlaceUnknownError', {});
-                          console.log(response.data.content);
-                          break;
-                      default:
-
-                  }
-              }, function (response) {
-                  console.log("Request failed");
-                  notific.error("ERROR", "status:" + response.status);
-              });
+            return $http({ method: method, url: url, data: data });
         },
-        EditEIDesc: function (EditEIDescVM) {
+        EditEIDesc: function (data) {
             method = 'POST';
-            url = '/@Global.Lang/Admin/EditPlaceExtraImageDesc';
-            data = { ImageId: EditEIDescVM.ImageId, ImageDesc: EditEIDescVM.Desc };
-            $http({ method: method, url: url, data: data }).
-              then(function (response) {
-                  switch (response.data.status) {
-                      case 0:
-                          $('#EditEIDescModal').modal('hide');
-                          $rootScope.$broadcast('UpdateExtraImg', {});
-                          break;
-                      case 2:
-                          $rootScope.$broadcast('InvalidId', {});
-                          console.log(response.data.content);
-                          break;
-                      case 3:
-                          $rootScope.$broadcast('PlaceUnknownError', {});
-                          console.log(response.data.content);
-                          break;
-                      default:
-
-                  }
-              }, function (response) {
-                  console.log("Request failed");
-                  notific.error("ERROR", "status:" + response.status);
-              });
+            url = '/@Global.Lang/Admin/EditPlaceImageDesc';
+            //data = { ImageId: EditEIDescVM.ImageId, ImageDesc: EditEIDescVM.Desc };
+            return $http({ method: method, url: url, data: data });
         },
         GoOnline: function (PlaceId) {
             method = 'POST';

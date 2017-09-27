@@ -45,6 +45,66 @@ namespace IranAudioGuide_MainServer.Controllers
             return View(currentUser);
         }
 
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult SaveOrder(ImageSaveOrderVM model)
+        {
+            try
+            {
+                if (model == default(ImageSaveOrderVM) || !ModelState.IsValid)
+                    return null;
+
+                if (model.Type.ConvertToEnum<EnumImageType>() == default(EnumImageType))
+                    model.Type = (int)EnumImageType.Extra;
+
+                var order = model.Index.ConvertToInt();
+
+                if (order == 0)
+                    return null;
+                var id = model.PlaceId.ConvertToGuid();
+                //  var myGuid = new Guid(model.PlaceId);
+
+                using (var db = new ApplicationDbContext())
+                {
+                    var listImg = db.Images
+                        .Where(x => x.Tmg_Type == model.Type)
+                        .Where(x => x.Place.Pla_Id == id)
+                        .Where(x => x.Tmg_Order >= order || x.Img_Id == model.ImageId)
+                        .OrderBy(x => x.Tmg_Order)
+                        .ToList();
+
+                    var checkOrder = order + 1;
+                    foreach (var item in listImg)
+                    {
+                        if (item.Img_Id == model.ImageId)
+                        {
+                            item.Tmg_Order = order;
+                            continue;
+                        }
+                        if (item.Tmg_Order > checkOrder)
+                            continue;
+                        if (item.Tmg_Order <= checkOrder)
+                        {
+                            item.Tmg_Order = checkOrder;
+                            db.Entry(item).State = EntityState.Modified;
+                            db.UpdateLogs.RemoveRange(db.UpdateLogs.Where(x => x.Img_Id == item.Img_Id));
+                            db.UpdateLogs.Add(new UpdateLog() { Img_Id = item.Img_Id, isRemoved = false });
+                            checkOrder++;
+                        }
+
+                    };
+                    var d = db.SaveChanges();
+                    return Json(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(null);
+            }
+        }
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult AddTip(AddTipVM model)
@@ -636,6 +696,9 @@ namespace IranAudioGuide_MainServer.Controllers
             t.TrP_Name = model.PlaceName;
             t.TrP_Description = model.PlaceDesc;
             t.TrP_Address = model.PlaceAddress;
+            t.TrP_Price = model.Price;
+            t.TrP_PriceDollar = model.PriceDollar;
+           
 
             if (newLang)
                 place.TranslatePlaces.Add(t);
@@ -894,6 +957,64 @@ namespace IranAudioGuide_MainServer.Controllers
                 return Json(new Respond(ex.Message, status.unknownError));
             }
         }
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public JsonResult AddPlaceGalleryImage(NewImageVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new Respond("Check input fields", status.invalidInput));
+            }
+            if (!(model.NewImage != null && model.NewImage.ContentLength > 0 && IsImage(model.NewImage)))
+            {
+                return Json(new Respond("Only jpg, png, gif, and jpeg are allowed.", status.invalidFileFormat));
+            };
+            using (var dbTran = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var getPlace = db.Places.Include(p => p.Pla_GalleryImages).Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
+                    int o = 1;
+                    if (getPlace.Pla_GalleryImages.Count != 0)
+                        o = getPlace.Pla_GalleryImages.Max(x => x.Tmg_Order) + 1;
+                    else
+                        getPlace.Pla_GalleryImages = new List<Image>();
+
+                    var img = new Image()
+                    {
+                        Place = getPlace,
+                        Tmg_Order = o,
+                        Tmg_Type = (int)EnumImageType.Gallery
+                    };
+
+                    getPlace.Pla_GalleryImages.Add(img);
+                    db.SaveChanges();
+
+                    //uplaod file
+                    var request = new ServiceFtp();
+                    var fileName = Convert.ToString(img.Img_Id) + Path.GetExtension(model.NewImage.FileName);
+                    var fullpaht = GlobalPath.FtpPathImageGallery + fileName;
+                    var isSuccess = request.Upload(model.NewImage, fullpaht);
+                    //end upload file
+
+                    img.Img_Name = fileName;
+                    UpdateLog(updatedTable.ExtraImage, img.Img_Id);
+                    db.SaveChanges();
+                    dbTran.Commit();
+
+                    return Json(new Respond());
+                }
+                catch (Exception ex)
+                {
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+                    dbTran.Rollback();
+                    return Json(new Respond(ex.Message, status.unknownError));
+                }
+            }
+        }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult AddPlaceExtraImage(NewImageVM model)
@@ -910,26 +1031,26 @@ namespace IranAudioGuide_MainServer.Controllers
             {
                 try
                 {
-                    var getPlace = db.Places.Include(p => p.Pla_ExtraImages).Where(x => x.Pla_Id == model.PlaceId).FirstOrDefault();
+                    Place getPlace = db.Places
+                        .Include(p => p.Pla_ExtraImages)
+                        .FirstOrDefault(x => x.Pla_Id == model.PlaceId);
+                    if (getPlace == null)
+                        return Json(null);
                     int o = 1;
                     if (getPlace.Pla_ExtraImages.Count != 0)
-                        o = getPlace.Pla_ExtraImages.Max(x => x.Tmg_Order) + 1;
+                        o = getPlace.Pla_ExtraImages.Max(x => x.Tmg_Order) + 3;
+                    else
+                        getPlace.Pla_ExtraImages = new List<Image>();
+
+
                     var img = new Image()
                     {
                         Place = getPlace,
-                        Tmg_Order = o
-                        //todo do it
-                        //TranslateImages = new List<TranslateImage>()
+                        Tmg_Order = o,
+                        Tmg_Type = (int)EnumImageType.Extra
                     };
-                    //todo do it
-                    //var tImage = new TranslateImage() {
-                    //    langId = lang,
-                    //    TrI_Description = "",
-                    //    TrI_Name ="",
-                    //};
-
-                    db.Images.Add(img);
-                    db.SaveChanges();
+                    getPlace.Pla_ExtraImages.Add(img);
+                    var s = db.SaveChanges();
 
                     //uplaod file
                     var request = new ServiceFtp();
@@ -994,7 +1115,8 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult EditPlaceExtraImageDesc(EditEIDescVM model)
+        //public JsonResult EditPlaceGalleryImageDesc(EditEIDescVM model)
+        public JsonResult EditPlaceImageDesc(ImageVM model)
         {
 
             try
@@ -1022,7 +1144,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     UpdateLog(updatedTable.TImage, trImg.TrI_Id, false);
                 }
                 db.SaveChanges();
-                return Json(new Respond());
+                return Json(model);
             }
             catch (Exception ex)
             {
@@ -1032,14 +1154,19 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
 
+
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public JsonResult GetExtraImages(Guid placeId)
+        public JsonResult GetImages(GetImagesByPlaceIdVm model)
         {
             var img = db.Images.Include(x => x.TranslateImages).Include(x => x.Place)
-                .Where(x => x.Place.Pla_Id == placeId)
+                .Where(x => x.Place.Pla_Id == model.PlaceId)
+                .Where(x => x.Tmg_Type == model.Type)
                 .Select(i => new ImageVM()
                 {
+                    PlaceId = i.Place.Pla_Id,
+                    Type = i.Tmg_Type,
                     ImageId = i.Img_Id,
                     ImageName = i.Img_Name,
                     ImageDesc = i.TranslateImages.FirstOrDefault(tr => tr.langId == lang).TrI_Description,
@@ -1048,6 +1175,28 @@ namespace IranAudioGuide_MainServer.Controllers
 
             return Json(img);
         }
+
+
+
+        //[HttpPost]
+        //[Authorize(Roles = "Admin")]
+        //public JsonResult GetGalleryImages(Guid placeId)
+        //{
+        //    var img = db.Images.Include(x => x.TranslateImages).Include(x => x.Place)
+        //        .Where(x => x.Place.Pla_Id == placeId)
+        //        .Where(x => x.Tmg_Type == (int)EnumImageType.Gallery)
+        //        .Select(i => new ImageGalleryVM()
+        //        {
+        //            ImageId = i.Img_Id,
+        //            ImageName = i.Img_Name,
+        //            ImageDesc = i.TranslateImages.FirstOrDefault(tr => tr.langId == lang).TrI_Description,
+        //            Index = i.Tmg_Order
+        //        }).ToList();
+
+        //    return Json(img);
+        //}
+
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public JsonResult AddCity(NewCity model)
@@ -1333,7 +1482,9 @@ namespace IranAudioGuide_MainServer.Controllers
                         PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
                         PlaceCityId = place.Pla_city.Cit_Id,
                         isOnline = place.Pla_isOnline,
-                        isPrimary = place.Pla_isPrimary
+                        isPrimary = place.Pla_isPrimary,
+                        Price = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Price,
+                        PriceDollar = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_PriceDollar,
                     }).ToList();
 
                 //List<PlaceVM> Places =
