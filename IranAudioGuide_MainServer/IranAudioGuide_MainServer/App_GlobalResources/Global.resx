@@ -1107,4 +1107,7 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="BankMelatcode61" xml:space="preserve">
     <value>خطا در واريز</value>
   </data>
+  <data name="ErrorInvalidRequest" xml:space="preserve">
+    <value>Invalid  Request</value>
+  </data>
 </root>

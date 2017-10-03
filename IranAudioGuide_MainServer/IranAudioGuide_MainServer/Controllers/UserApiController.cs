@@ -139,7 +139,9 @@ namespace IranAudioGuide_MainServer.Controllers
                     AudiosCount = c["AudiosCount"].ConvertToInt(),
                     StoriesCount = c["StoriesCount"].ConvertToInt(),
                     Cit_Id = c["Cit_Id"].ConvertToInt(),
-                    OrderItem = c["OrderItem"].ConvertToInt()
+                    OrderItem = c["OrderItem"].ConvertToInt(),
+                    PriceDollar = c["PriceDollar"].ConvertToString(),
+                    Price = c["Price"].ConvertToString()
                 });
             }
             return getModel.OrderBy(x => x.PackageOrder).Select(p => new GetPackageVM()

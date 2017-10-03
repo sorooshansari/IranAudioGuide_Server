@@ -268,33 +268,13 @@
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.cs" />
-    <Compile Include="Migrations\201611170854594_AddSqlCommands.Designer.cs">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    <Compile Include="Migrations\201710020649098_d.cs" />
+    <Compile Include="Migrations\201710020649098_d.Designer.cs">
+      <DependentUpon>201710020649098_d.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709250946200_addGalleryPlacePrice.cs" />
-    <Compile Include="Migrations\201709250946200_addGalleryPlacePrice.Designer.cs">
-      <DependentUpon>201709250946200_addGalleryPlacePrice.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709251046473_addGalleryPlacePrice1.cs" />
-    <Compile Include="Migrations\201709251046473_addGalleryPlacePrice1.Designer.cs">
-      <DependentUpon>201709251046473_addGalleryPlacePrice1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709260629157_d.cs" />
-    <Compile Include="Migrations\201709260629157_d.Designer.cs">
-      <DependentUpon>201709260629157_d.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709270524477_addpriceToPlace.cs" />
-    <Compile Include="Migrations\201709270524477_addpriceToPlace.Designer.cs">
-      <DependentUpon>201709270524477_addpriceToPlace.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709270530564_addpriceToPlace1.cs" />
-    <Compile Include="Migrations\201709270530564_addpriceToPlace1.Designer.cs">
-      <DependentUpon>201709270530564_addpriceToPlace1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709270716498_fg.cs" />
-    <Compile Include="Migrations\201709270716498_fg.Designer.cs">
-      <DependentUpon>201709270716498_fg.cs</DependentUpon>
+    <Compile Include="Migrations\201710021358196_g.cs" />
+    <Compile Include="Migrations\201710021358196_g.Designer.cs">
+      <DependentUpon>201710021358196_g.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -1611,7 +1591,6 @@
     <Content Include="Content\css\FontAwesome.otf" />
     <Content Include="google60352dff0d3dbd69.html" />
     <Content Include="images\WebMoney-logo-white_8.png" />
-    <Content Include="logo.png" />
     <Content Include="robots.txt" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="sitemap.xml" />
@@ -1906,26 +1885,11 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611170854594_AddSqlCommands.resx">
-      <DependentUpon>201611170854594_AddSqlCommands.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710020649098_d.resx">
+      <DependentUpon>201710020649098_d.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709250946200_addGalleryPlacePrice.resx">
-      <DependentUpon>201709250946200_addGalleryPlacePrice.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709251046473_addGalleryPlacePrice1.resx">
-      <DependentUpon>201709251046473_addGalleryPlacePrice1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709260629157_d.resx">
-      <DependentUpon>201709260629157_d.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709270524477_addpriceToPlace.resx">
-      <DependentUpon>201709270524477_addpriceToPlace.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709270530564_addpriceToPlace1.resx">
-      <DependentUpon>201709270530564_addpriceToPlace1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709270716498_fg.resx">
-      <DependentUpon>201709270716498_fg.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710021358196_g.resx">
+      <DependentUpon>201710021358196_g.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

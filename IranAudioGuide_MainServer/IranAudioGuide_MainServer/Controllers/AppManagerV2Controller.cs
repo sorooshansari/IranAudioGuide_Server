@@ -79,7 +79,7 @@ namespace IranAudioGuide_MainServer.Controllers
         //            }
         //        }
         [HttpPost]
-        public IHttpActionResult GetAutorizedCities(GetAutorizedCitiesVM model)
+        public IHttpActionResult GetAutorizedCities(InfoUser model)
 
         {
             var res = new AutorizedCitiesVM();
@@ -117,6 +117,47 @@ namespace IranAudioGuide_MainServer.Controllers
             }
         }
 
+        [HttpPost]
+        public IHttpActionResult GetAutorizedPlaces(InfoUser model)
+
+        {
+            var res = new AutorizedPlacesVM();
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    res.status = getUserStatus.notUser;
+                    ModelState.AddModelError("error", ((int)res.status).ToString());
+                    return BadRequest(ModelState);
+                }
+
+                var user = acTools.getUser(model.username);
+                res.status =
+                    (user == null) ? getUserStatus.notUser :
+                    (user.uuid != model.uuid) ? getUserStatus.uuidMissMatch :
+                    (!user.EmailConfirmed) ? getUserStatus.notConfirmed :
+                    getUserStatus.confirmed;
+
+
+                if (res.status != getUserStatus.confirmed)
+                {
+                    ModelState.AddModelError("error", ((int)res.status).ToString());
+                    return BadRequest(ModelState);
+                }
+                res.places = dbTools.GetAutorizedPlaces(user.Id);
+                if (res.places == null)
+                    ModelState.AddModelError("error", ((int)getUserStatus.unknownError).ToString());
+
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("error", ((int)getUserStatus.unknownError).ToString());
+                ModelState.AddModelError("ex", ex);
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest(ModelState);
+            }
+        }
         [HttpGet]
         public IHttpActionResult IsForign()
         {

@@ -826,6 +826,15 @@ namespace IranAudioGuide_MainServer.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid  Request.
+        /// </summary>
+        public static string ErrorInvalidRequest {
+            get {
+                return ResourceManager.GetString("ErrorInvalidRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not Found Package.
         /// </summary>
         public static string ErrorNotFoundPackage {

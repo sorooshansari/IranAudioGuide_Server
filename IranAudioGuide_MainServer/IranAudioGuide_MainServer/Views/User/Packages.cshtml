@@ -4,17 +4,24 @@
 @using IranAudioGuide_MainServer.App_GlobalResources
 
 <style>
-    /*@* .btn-large[disabled] {
-        background-color: #94afac !important;
-        color: #fffefe !important;
+    .btn-get-pack a {
+        color: #26a69a;
+        border-color: #32c5d2;
+        background: 0 0;
+        padding: 0 14px;
     }
 
-    *@*/
+    .btn-get-pack a:hover {
+        border-color: #32c5d2;
+        color: #FFF;
+        background-color: #32c5d2;
+    }
 
 
     .btn-large[disabled] {
         line-height: 35px;
     }
+
     .pakage .card-action i.material-icons.dp48 {
         position: relative;
         top: 6px;
@@ -68,6 +75,14 @@
                                         <span class="badge"><span class="fa fa-headphones"></span> {{place.StoriesCount + place.AudiosCount}} </span>
 
                                     </p>
+
+
+                                    <span class="secondary-content hide-on-small-and-down btn-get-pack">
+
+                                        <a href="javascript:;"  ng-click="OpenModal(place, true)"  class="btn btn-icon-only">
+                                            <i class="material-icons right">add</i>Get
+                                        </a>
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -76,7 +91,7 @@
 
             </div>
             <div class="card-action">
-                <a href="#!" ng-show="pack.isPackagesPurchased == false" ng-click="OpenModal(pack)" class="waves-effect waves-light btn-large z-depth-3">
+                <a href="#!" ng-show="pack.isPackagesPurchased == false" ng-click="OpenModal(pack, false)" class="waves-effect waves-light btn-large z-depth-3">
                     <i class="material-icons right">add</i>@Global.btnBuy
                 </a>
                 <a href="#!" ng-disabled="true" ng-show="pack.isPackagesPurchased == true" class="waves-effect waves-light btn-large z-depth-3">

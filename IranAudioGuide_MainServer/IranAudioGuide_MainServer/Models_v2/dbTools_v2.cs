@@ -87,7 +87,38 @@ namespace IranAudioGuide_MainServer.Models_v2
             }
             return res;
         }
+        public List<AutorizedPlaceVm> GetAutorizedPlaces(string userId)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("GetAutorizedPlaces_v3", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@UserID", userId));
+                    sqlConnection.Open();
+                    var reader = cmd.ExecuteReader();
+                    var dt1 = new DataTable();
+                    dt1.Load(reader);
+                    var list = dt1.AsEnumerable().Select(x => new AutorizedPlaceVm()
+                    {
+                        PlaceId = x["PlaceId"].ConvertToGuid(),
+                        LangId = x["LangId"].ConvertToInt(),
+                    }).ToList();
+                    return list;
+                }
+                catch (Exception ex)
+                {
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                    return null;
+                }
+                finally
+                {
+                    sqlConnection.Close();
 
+                }
+            }
+        }
         public List<citiesLng> GetAutorizedCities(string userId)
         {
             var SP = new SqlParameter("@UserID", userId);

@@ -68,6 +68,11 @@ namespace IranAudioGuide_MainServer.Models
                 //.HasForeignKey(x=> x.UserId)
                 .WillCascadeOnDelete(false);
 
+            this.HasRequired(x => x.Pro_TrcPlace)
+               .WithMany(x => x.Procurements)
+               .HasForeignKey(x => x.Pro_TrcPlaceId)
+               .WillCascadeOnDelete(false);
+
         }
     }
 

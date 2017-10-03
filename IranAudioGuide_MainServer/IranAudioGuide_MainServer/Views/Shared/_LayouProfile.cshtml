@@ -218,11 +218,11 @@
                       controller: "pakagePurchasedCtrl"
                     })
                     .state('Payment', {
-                         url: "/payment?PackageId&ChooesBank",
+                        url: "/payment?PackageId&ChooesBank&isPlace",
                          templateUrl: function ($stateParams) {
                              try {
-                                 var model = "?pacId=" + $stateParams.PackageId + "&ChooesBank=" + $stateParams.ChooesBank;
-                                 console.log(model)
+                                 var model = "?pacId=" + $stateParams.PackageId + "&ChooesBank=" + $stateParams.ChooesBank + "&IsPlace=" + $stateParams.isPlace;
+                                console.log(model)
                                  return "/@Global.Lang/Payment/PaymentWeb" + model;
                              }
                              catch (error) {

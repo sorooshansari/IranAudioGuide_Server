@@ -116,8 +116,26 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             } // Callback for Modal close
         }
         );
-        $scope.OpenModal = function (pack) {
-            $scope.itemPack = pack;
+        $scope.OpenModal = function (item, isPalce) {
+
+            if (isPalce) {
+                $scope.itemPack = {
+                    PackageName: item.PlaceName,
+                    PackageId: item.PlaceId
+                };
+                if (item.isPrimary) {
+                    $scope.itemPack.PackagePriceDollar = 0;
+                    $scope.itemPack.PackagePrice = 0;
+                }
+                else {
+                    $scope.itemPack.PackagePriceDollar = item.PriceDollar;
+                    $scope.itemPack.PackagePrice = item.Price;
+                }
+
+            }
+            else
+                $scope.itemPack = item;
+            $scope.itemPack.isPalce = isPalce;
             $('#modal1').modal('open');
 
         };
@@ -129,9 +147,11 @@ userApp.controller('userCtrl', ['$window', '$scope', 'userServices', '$timeout',
             $('#modal1').modal('close');
             console.log(bank);
             //stopeLoading();
+
             $state.go('Payment', {
                 PackageId: $scope.itemPack.PackageId,
-                ChooesBank: bank
+                ChooesBank: bank,
+                isPlace: $scope.itemPack.isPalce
             });
         }
 

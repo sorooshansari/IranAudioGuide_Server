@@ -251,57 +251,57 @@ namespace IranAudioGuide_MainServer.Models
 
 
         }
-        public WMPaymentResult CreatePayment(string UserName, Guid packageId)
-        {
-            try
-            {
+        //public WMPaymentResult CreatePayment(string UserName, Guid packageId)
+        //{
+        //    try
+        //    {
 
-                using (var db = new ApplicationDbContext())
-                {
+        //        using (var db = new ApplicationDbContext())
+        //        {
 
-                    var user = db.Users.Include(x => x.procurements).FirstOrDefault(x => x.UserName == UserName);
-                    var isDuplicate = user.procurements.Any(x => x.Pac_Id == packageId && x.Pro_PaymentFinished);
-                    //var count = db.Procurements.Include(x => x.Pro_User)
-                    //    .Count(x => x.Pro_User.UserName == UserName && x.Pac_Id );
-                    if (isDuplicate == true)
-                    {
-                        return new WMPaymentResult() { isDuplicate = true };
-                    }
-                    if (user == null)
-                    {
-                        Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("this is Unknown user so he couldn't buy this packages"));
-                        return new WMPaymentResult() { isDuplicate = true };
+        //            var user = db.Users.Include(x => x.procurements).FirstOrDefault(x => x.UserName == UserName);
+        //            var isDuplicate = user.procurements.Any(x => x.Pac_Id == packageId && x.Pro_PaymentFinished);
+        //            //var count = db.Procurements.Include(x => x.Pro_User)
+        //            //    .Count(x => x.Pro_User.UserName == UserName && x.Pac_Id );
+        //            if (isDuplicate == true)
+        //            {
+        //                return new WMPaymentResult() { isDuplicate = true };
+        //            }
+        //            if (user == null)
+        //            {
+        //                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("this is Unknown user so he couldn't buy this packages"));
+        //                return new WMPaymentResult() { isDuplicate = true };
 
-                    }
-                    var package = db.Packages.FirstOrDefault(x => x.Pac_Id == packageId);
-                    if (package == null)
-                    {
-                        Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("this is Unknown user so he couldn't buy this packages "));
-                        return new WMPaymentResult() { isDuplicate = true };
-                    }
-                    var WMP_Procurement = new Procurement()
-                    {
-                        Pro_User = user,
-                        Pro_Package = package,
-                        Pro_WMPayment = new WMPayment()
-                    };
-                    db.Procurements.Add(WMP_Procurement);
-                    db.SaveChanges();
-                    return new WMPaymentResult()
-                    {
-                        PackageAmount = package.Pac_Price_Dollar,
-                        PackageName = package.Pac_Name,
-                        PaymentId = WMP_Procurement.Pro_WMPayment.WMP_Id
-                    };
+        //            }
+        //            var package = db.Packages.FirstOrDefault(x => x.Pac_Id == packageId);
+        //            if (package == null)
+        //            {
+        //                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("this is Unknown user so he couldn't buy this packages "));
+        //                return new WMPaymentResult() { isDuplicate = true };
+        //            }
+        //            var WMP_Procurement = new Procurement()
+        //            {
+        //                Pro_User = user,
+        //                Pro_Package = package,
+        //                Pro_WMPayment = new WMPayment()
+        //            };
+        //            db.Procurements.Add(WMP_Procurement);
+        //            db.SaveChanges();
+        //            return new WMPaymentResult()
+        //            {
+        //                PackageAmount = package.Pac_Price_Dollar,
+        //                PackageName = package.Pac_Name,
+        //                PaymentId = WMP_Procurement.Pro_WMPayment.WMP_Id
+        //            };
 
-                }
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return new WMPaymentResult() { PaymentId = 0 };
-            }
-        }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return new WMPaymentResult() { PaymentId = 0 };
+        //    }
+        //}
         public bool ControlSignature()
         {
             var sb = new StringBuilder();

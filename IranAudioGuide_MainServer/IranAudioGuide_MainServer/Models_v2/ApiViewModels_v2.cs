@@ -58,7 +58,9 @@ namespace IranAudioGuide_MainServer.Models_v2
         public string url { get; set; }
         public string errorMessage { get; set; }
     }
-    public class GetAutorizedCitiesVM
+
+
+    public class InfoUser
     {
         [Required]
         public string username { get; set; }
@@ -71,10 +73,23 @@ namespace IranAudioGuide_MainServer.Models_v2
         public int LangId { get; set; }
         //public string LangTitle { get; set; }
     }
+
+    public class AutorizedPlaceVm
+    {
+        public Guid PlaceId { get; set; }
+        public int LangId { get; set; }
+        //public string LangTitle { get; set; }
+    }
     public class AutorizedCitiesVM
     {
         public List<citiesLng> cities { get; set; }
         //public string errorMessage { get; set; }
+        public getUserStatus status { get; set; }
+    }
+    public class AutorizedPlacesVM
+    {
+        public List<AutorizedPlaceVm> places { get; set; }
+        public string errorMessage { get; set; }
         public getUserStatus status { get; set; }
     }
     public class GetPackagesByLangVM

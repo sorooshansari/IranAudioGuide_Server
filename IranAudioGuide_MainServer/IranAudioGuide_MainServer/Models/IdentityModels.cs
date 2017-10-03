@@ -179,6 +179,8 @@ namespace IranAudioGuide_MainServer.Models
         public Guid Pla_Id { get; set; }
         public Place Place { get; set; }
 
+        public IList<Procurement> Procurements { get; set; }
+
         public int langId { get; set; }
 
 

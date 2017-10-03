@@ -19,80 +19,17 @@ namespace IranAudioGuide_MainServer.Controllers
             return msg.GetDisplayName();
         }
 
-        public ActionResult Purchase(Guid packageId, bool isFromWeb = false)
+      
+        private ActionResult PaymentFailed(string Message, string Description, bool isFromWeb)
         {
-            var ServiceBankMellat = new BankMellatIService();
-            using (var db = new ApplicationDbContext())
-            {
-                using (var dbTran = db.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        string UserName = User.Identity.Name;
-                        var count = db.Procurements.Include(x => x.Pro_User)
-                                .Count(x => x.Pro_User.UserName == UserName && x.Pac_Id == packageId && x.Pro_PaymentFinished);
-                        if (count > 0)
-                            return PaymentFailed(Global.PaymentMsg, Global.PaymentMsg1, isFromWeb);
-
-
-                        var resultPayment = ServicePayment.Insert(UserName, packageId, EnumBankName.Mellat, db);
-
-                        var resultBank = ServiceBankMellat.BpPayRequest(resultPayment.Pay_Id, resultPayment.Pay_Amount, "test");
-
-                        string[] StatusSendRequest = resultBank.Split(',');
-
-                        resultPayment.Pay_StatusPayment = StatusSendRequest[0];
-
-                        if (StatusSendRequest.Length >= 2)
-                            resultPayment.Pay_SaleReferenceId = StatusSendRequest[1].ConvertToLong();
-
-                        ServicePayment.Update(resultPayment, db);
-
-                        //در صورتی که مقدار خانه اول این آریه برابر صفر در نتیجه می بایست کاربر را به صفحه پرداخت هدایت کنیم
-                        if (StatusSendRequest[0].StoI() != (int)ReturnCodeForBpPayRequest.Success)
-                        {
-                            dbTran.Commit();
-                            var msg = GetStringEnum(StatusSendRequest[0].ConvertToEnum<ReturnCodeForBpPayRequest>());
-                            return PaymentFailed(Global.PaymentMsg, msg, isFromWeb);
-
-                        }
-                        Response.Clear();
-                        var sb = new System.Text.StringBuilder();
-                        sb.Append("<html>");
-                        sb.AppendFormat("<body onload='document.forms[0].submit()'>");
-                        sb.AppendFormat("<form action='{0}' method='post'>", ServiceBankMellat.PgwSite);
-                        sb.AppendFormat("<input type='hidden' name='RefId' value='{0}'>", resultPayment.Pay_SaleReferenceId);
-                        sb.Append("</form>");
-                        sb.Append("</body>");
-                        sb.Append("</html>");
-                        Response.Write(sb.ToString());
-                        Response.End();
-                        return View();
-                    }
-
-
-                    catch (Exception ex)
-                    {
-                        dbTran.Rollback();
-                        ErrorSignal.FromCurrentContext().Raise(ex);
-                        // "Problem occurred in payment process. ";
-                        //"Sorry, please try again in a few minutes.";
-                        return PaymentFailed(Global.ZarinpalPaymentMsg6, Global.ZarinpalPaymentMsg7, isFromWeb);
-
-                    }
-                }
-            }
-        }
-
-        private ActionResult PaymentFailed(string Msg, string Description, bool isFromWeb)
-        {
-            ViewBag.Message = Msg;
+            ViewBag.SaleReferenceId = "**************";
+            ViewBag.Message = Message;
             ViewBag.ErrDesc = Description;
             ViewBag.Succeeded = false;
-            //if (isFromWeb)
-            return View("ReturnToWebPage");
-            //else
-            //    return View("Return");
+            if (isFromWeb)
+                return View("ReturnToWebPage");
+            else
+                return View("Return");
         }
 
         public ActionResult ReturnToWebPage()
@@ -160,7 +97,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     result.Pay_ReferenceNumber = saleOrderId.ToString();
                     result.Pay_Procurement.Pro_PaymentFinished = true;
                     result.Pay_StatusPayment = ResCode;
-                    result.Pay_SaleReferenceId = saleReferenceId;                  
+                    result.Pay_SaleReferenceId = saleReferenceId;
                     ServicePayment.Update(result);
 
                     Run_bpReversalRequest = true;

@@ -228,6 +228,7 @@ namespace IranAudioGuide_MainServer.Models
         public string CityOrder { get; set; }
         public string CityImageUrl { get; internal set; }
         public string CityDescription { get; internal set; }
+
     }
     public class AddTipVM
     {
@@ -589,6 +590,8 @@ namespace IranAudioGuide_MainServer.Models
         public int StoriesCount { get; internal set; }
         public int Cit_Id { get; internal set; }
         public int OrderItem { get; internal set; }
+        public string Price { get; set; }
+        public string PriceDollar { get; set; }
     }
     public class PlaceVM
     {

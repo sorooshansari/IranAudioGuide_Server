@@ -46,10 +46,10 @@
                     <div class="invoice-payment-info">
                         <h5>
                             <i class="material-icons dp48">map</i> @item.CityName
-
-
-                            <span class="badge"> <i class="material-icons dp48">place</i> @item.PlaceCount </span>
-
+                            @if (item.PlaceCount != 0)
+                            {
+                                <span class="badge"> <i class="material-icons dp48">place</i> @item.PlaceCount </span>
+                            }
                             <span class="badge"> <i class="material-icons dp48">headset</i> @item.TrackCount</span>
                         </h5>
                         <p>
@@ -57,6 +57,7 @@
                         </p>
                     </div>
                 }
+
                 <h2>
                     <span class="card-title">
                         <i class="material-icons dp48">payment</i>  @Global.PaymentGateway
@@ -97,30 +98,30 @@
 
                 </div>
                 <div class="card-action">
-                     @if (ViewBag.ChooesBank == EnumBankName.Zarinpal)
+                    @if (ViewBag.ChooesBank == EnumBankName.Zarinpal)
                     {
                         <a class="waves-effect waves-light btn z-depth-1 "
                            role="button"
-                           href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = EnumBankName.Zarinpal, isFromWeb = true })">
+                           href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId, bankName = (int)EnumBankName.Zarinpal, isPlace = ViewBag.IsPlace, isFromWeb = true })">
                             <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
                         </a>
-                     }
-                     else if (ViewBag.ChooesBank == EnumBankName.Webmoney)
-                     {
+                    }
+                    else if (ViewBag.ChooesBank == EnumBankName.Webmoney)
+                    {
                         <a class="waves-effect waves-light btn z-depth-1 "
                            role="button"
-                           href="@Url.Action("WMPurchase", "Payment",new { packageId = Model.PackageId, isFromApp = false })">
+                           href="@Url.Action("Purchase", "Payment",new { packageId = Model.PackageId,bankName= (int) EnumBankName.Webmoney, isPlace = ViewBag.IsPlace, isFromWeb = true })">
                             <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
                         </a>
-                     }
-                     else if (ViewBag.ChooesBank == EnumBankName.Mellat)
-                     {
+                    }
+                    else if (ViewBag.ChooesBank == EnumBankName.Mellat)
+                    {
                         <a class="waves-effect waves-light btn z-depth-1 "
                            role="button"
-                           href="@Url.Action("Purchase", "PaymentBankMelat",new { packageId = Model.PackageId, isFromApp = true })">
+                           href="@Url.Action("Purchase", "Payment", new { packageId = Model.PackageId,bankName= (int) EnumBankName.Mellat, isPlace = ViewBag.IsPlace, isFromWeb = true})">
                             <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
                         </a>
-                     }
+                    }
 
                     <a class="waves-effect waves-light btn z-depth-1 "
                        ui-sref="Packages" role="button">

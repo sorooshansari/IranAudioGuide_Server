@@ -9,6 +9,21 @@ namespace IranAudioGuide_MainServer.Services
     public static class ServicePayment
     {
 
+        public static bool IsDuplicatePayment(Guid id, string UserName, bool IsPlace)
+        {
+
+            using (var db = new ApplicationDbContext())
+            {
+                var getItem = db.Procurements.Include(x => x.Pro_User)
+                    .Where(x => x.Pro_User.UserName == UserName && x.Pro_PaymentFinished); ;
+                if (IsPlace)
+                    getItem = getItem.Where(x => x.Pro_TrcPlaceId == id);
+                else
+                    getItem = getItem.Where(x => x.Pac_Id == id);
+                return getItem.Count() != 0;
+
+            }
+        }
         public static Payment Insert(string UserName, Guid packageId, EnumBankName bankName, ApplicationDbContext db)
         {
 

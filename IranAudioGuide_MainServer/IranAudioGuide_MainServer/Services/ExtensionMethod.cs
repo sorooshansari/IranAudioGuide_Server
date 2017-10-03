@@ -11,19 +11,19 @@ namespace IranAudioGuide_MainServer.Services
         {
             var type = value.GetType();
             if (!type.IsEnum)
-                return "";
+                return string.Empty;
             //throw new ArgumentException(String.Format("Type '{0}' is not Enum", type));
 
             var members = type.GetMember(value.ToString());
             if (members.Length == 0)
-                return "";
+                return string.Empty;
             //throw new ArgumentException(String.Format("Member '{0}' not found in type '{1}'", value, type.Name));
 
             var member = members[0];
             var attributes = member.GetCustomAttributes(typeof(DisplayAttribute), false);
 
             if (attributes.Length == 0)
-                return "";
+                return string.Empty;
             //throw new ArgumentException(String.Format("'{0}.{1}' doesn't have DisplayAttribute", type.Name, value));
 
             var attribute = (DisplayAttribute)attributes[0];
@@ -91,8 +91,15 @@ namespace IranAudioGuide_MainServer.Services
             var myGuid = new Guid();
             if (Guid.TryParse(obj.ToString(), out myGuid))
                 return myGuid;
+            try
+            {
+                return new Guid(obj.ToString());
+            }
+            catch
+            {
+                return Guid.Empty;
 
-            return Guid.Empty;
+            }
 
         }
         public static string ConvertToString(this long obj)
@@ -104,7 +111,7 @@ namespace IranAudioGuide_MainServer.Services
             }
             catch
             {
-                return "0";
+                return string.Empty;
             }
         }
         public static string ConvertToString(this object obj)
@@ -170,7 +177,7 @@ namespace IranAudioGuide_MainServer.Services
             }
             catch
             {
-                return null;
+                return string.Empty;
             }
         }
 
