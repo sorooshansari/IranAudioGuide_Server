@@ -608,7 +608,7 @@ userApp.controller('deactivateCtrl', ['$scope', 'userServices', 'notificService'
     }
 }]);
 
-serApp.controller('paymentCtrl', ['$scope',  function ($scope, ) {
+userApp.controller('paymentCtrl', ['$scope',  function ($scope, ) {
     $scope.profile.isCompletedLoading = false;
    
 }]);

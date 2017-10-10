@@ -40,24 +40,25 @@
                     </span>
                 </h2>
 
-
-                @foreach (var item in Model.PackageCities)
-            {
-                    <div class="invoice-payment-info">
-                        <h5>
-                            <i class="material-icons dp48">map</i> @item.CityName
-                            @if (item.PlaceCount != 0)
-                            {
-                            <span class="badge"> <i class="material-icons dp48">place</i> @item.PlaceCount </span>
-                            }
-                            <span class="badge"> <i class="material-icons dp48">headset</i> @item.TrackCount</span>
-                        </h5>
-                        <p>
-                            @item.CityDesc
-                        </p>
-                    </div>
+                @if (Model.PackageCities != null)
+                {
+                    foreach (var item in Model.PackageCities)
+                    {
+                        <div class="invoice-payment-info">
+                            <h5>
+                                <i class="material-icons dp48">map</i> @item.CityName
+                                @if (item.PlaceCount != 0)
+                                {
+                                    <span class="badge"> <i class="material-icons dp48">place</i> @item.PlaceCount </span>
+                                }
+                                <span class="badge"> <i class="material-icons dp48">headset</i> @item.TrackCount</span>
+                            </h5>
+                            <p>
+                                @item.CityDesc
+                            </p>
+                        </div>
+                    }
                 }
-
                 <h2>
                     <span class="card-title">
                         <i class="material-icons dp48">payment</i>  @Global.PaymentGateway

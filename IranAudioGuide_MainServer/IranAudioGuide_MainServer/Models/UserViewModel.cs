@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace IranAudioGuide_MainServer.Models
 {
@@ -29,12 +30,24 @@ namespace IranAudioGuide_MainServer.Models
         {
             IsChooesIranianBC = true;
         }
+        [Required]
         public string email { get; set; }
+
+        [Required]
         public string uuid { get; set; }
+
+        [Required]
         public Guid Id { get; set; }
+
         public string ErrorMessage { get; set; }
+
+        [Required]
         public bool IsChooesIranianBC { get; set; }
+
+        [Required]
         public bool IsPlace { get; set; }
+
+        [Required]
         public int LangId { get; set; }
     }
 

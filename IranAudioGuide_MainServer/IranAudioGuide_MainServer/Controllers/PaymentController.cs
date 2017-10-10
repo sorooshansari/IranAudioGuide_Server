@@ -180,13 +180,17 @@ namespace IranAudioGuide_MainServer.Controllers
                 });
             }
         }
-        public async Task<ActionResult> Index(AppPaymentReqVM_v3 info)
+        public async Task<ActionResult> IndexV3(AppPaymentReqVM_v3 info)
         {
             try
             {
-                ViewBag.ChooesBank = 
-
-                ViewBag.IsChooesZarinpal = info.IsChooesIranianBC;
+                if (!ModelState.IsValid)
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = Global.Error,
+                        Message = Global.ErrorInvalidRequest,
+                    });
+                ViewBag.ChooesBank = ViewBag.IsChooesZarinpal = info.IsChooesIranianBC;
 
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user == default(ApplicationUser))
