@@ -105,13 +105,16 @@ namespace IranAudioGuide_MainServer.Controllers
         }
         public List<GetPackageVM> ConvertToList(List<DataTable> listdata)
         {
+
+            var listPurchase = GetPurchased();
             var getModel = new List<PackageUserVM>();
 
             foreach (DataRow c in listdata[1].Rows)
             {
-                getModel.Add(new PackageUserVM
+                var idPack = c["PackageId"].ConvertToGuid();
+                var itemPack = new PackageUserVM
                 {
-                    PackageId = c["PackageId"].ConvertToGuid(),
+                    PackageId = idPack,
                     PackageName = c["PackageName"].ConvertToString(),
                     PackagePrice = c["PackagePrice"].ConvertToString(),
                     PackagePriceDollar = c["PackagePriceDollar"].ConvertToString(),
@@ -122,15 +125,25 @@ namespace IranAudioGuide_MainServer.Controllers
                     CityImageUrl = c["CityImgUrl"].ConvertToString(),
                     CityDescription = c["CityDescription"].ConvertToString(),
 
-                });
+                };
+                foreach (var item in listPurchase)
+                {
+                    if (!item.IsPlace && item.PackageId == idPack)
+                    {
+                        itemPack.IsPurchased = true;
+                        break;
+                    }
+                };
+                getModel.Add(itemPack);
             };
             var listPlaces = new List<PlaceUserVM>();
             foreach (DataRow c in listdata[0].Rows)
             {
 
-                listPlaces.Add(new PlaceUserVM
+                var idPlace = c["Pla_Id"].ConvertToGuid();
+                var itemplace = new PlaceUserVM
                 {
-                    PlaceId = c["Pla_Id"].ConvertToGuid(),
+                    PlaceId =  idPlace,
                     PlaceName = c["Name"].ConvertToString(),
                     PlaceDesc = c["Discription"].ConvertToString(),
                     PlaceAddress = c["Address"].ConvertToString(),
@@ -141,8 +154,19 @@ namespace IranAudioGuide_MainServer.Controllers
                     Cit_Id = c["Cit_Id"].ConvertToInt(),
                     OrderItem = c["OrderItem"].ConvertToInt(),
                     PriceDollar = c["PriceDollar"].ConvertToString(),
-                    Price = c["Price"].ConvertToString()
-                });
+                    Price = c["Price"].ConvertToString(),
+                    IsFree = c["IsFree"].ConvertToString() == "1"? true :false
+                };
+
+                foreach (var item in listPurchase)
+                {
+                    if (item.IsPlace && item.PlaceId == idPlace)
+                    {
+                        itemplace.IsPurchased = true;
+                        break;
+                    }
+                };
+                listPlaces.Add(itemplace);
             }
             return getModel.OrderBy(x => x.PackageOrder).Select(p => new GetPackageVM()
             {
@@ -151,6 +175,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 PackagePriceDollar = p.PackagePriceDollar,
                 PackageId = p.PackageId,
                 PackageName = p.PackageName,
+                IsPurchased = p.IsPurchased,
                 PackageCities = getModel.Where(pc => pc.PackageId == p.PackageId).OrderBy(x => x.CityOrder).Select(c => new CityUserVM()
                 {
                     CityName = c.CityName,
@@ -167,7 +192,9 @@ namespace IranAudioGuide_MainServer.Controllers
                                        PlaceId = pl.PlaceId,
                                        ImgUrl = GlobalPath.FullPathImageTumbnail + pl.TumbImgUrl,
                                        StoriesCount = pl.StoriesCount,
-                                       AudiosCount = pl.AudiosCount
+                                       AudiosCount = pl.AudiosCount,
+                                       IsPurchased = pl.IsPurchased || p.IsPurchased || pl.IsFree,
+                                       IsFree = pl.IsFree
                                    }).ToList()
                 }).ToList()
             }).DistinctBy(x => x.PackageId).ToList();
@@ -177,21 +204,27 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             var d = new dbManagerV2();
             var parameter = new SqlParameter("@langId", lang);
-            return ConvertToList(d.MultiTableResultSP("GetPackages_website", parameter));
+            var dt = d.MultiTableResultSP("GetPackages_website", parameter);
+            return ConvertToList(dt);
 
         }
 
-        [HttpPost]
-        [Authorize(Roles = "AppUser")]
 
-        public IList<GetPackageVM> GetPackagesPurchased()
+        private   IList<GetPurchasedVM> GetPurchased()
         {
             try
             {
                 var d = new dbManagerV2();
                 var parameter = new SqlParameter("@Username", User.Identity.Name);
-                var dt = d.MultiTableResultSP("GetPackagesProcurements_website", parameter);
-                return ConvertToList(dt);
+                var dt = d.TableResultSP("GetPackagesProcurements_website", parameter);
+                var list = dt.AsEnumerable().Select(x => new GetPurchasedVM()
+                {
+                    PackageId = x["PackageId"] != null ? x["PackageId"].ConvertToGuid() : Guid.Empty,
+                    PlaceId = x["PlaceId"] != null ? x["PlaceId"].ConvertToGuid() : Guid.Empty,
+                    LangId = x["PlaceId"] != null ? x["LangId"].ConvertToInt() : 0,
+                    IsPlace = x["IsPlace"].ConvertToString() == "1" ? true : false,
+                }).ToList();
+                return list;
             }
             catch (Exception ex)
             {

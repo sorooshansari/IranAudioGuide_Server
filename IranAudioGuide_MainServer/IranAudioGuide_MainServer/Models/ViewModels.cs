@@ -157,8 +157,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PackageName { get; set; }
         public long PackagePrice { get; set; }
         public float PackagePriceDollar { get; set; }
-        public List<CityVM> PackageCities { get; set; }
-        public bool isPackagesPurchased { get; set; }
+        public List<CityVM> PackageCities { get; set; }  
 
     }
     public class CityPymentVM
@@ -180,19 +179,38 @@ namespace IranAudioGuide_MainServer.Models
         //   public int PlaceCount { get; set; }
     }
 
-    public class PackagePymentVM
+    public class PymentIndexAppVM
     {
-        public PackagePymentVM()
-        {
-            PackageCities = new List<CityPymentVM>();
-        }
-        public Guid PackageId { get; set; }
-        public string PackageName { get; set; }
-        public string PackagePrice { get; set; }
-        public string PackagePriceDollar { get; set; }
+        public bool IsPlace { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Price { get; set; }
+        public string PriceDollar { get; set; }
         public List<CityPymentVM> PackageCities { get; set; }
+        public int TrackCount { get; set; }
+        public string Desc { get; set; }
     }
 
+
+    //public class PackagePymentVM
+    //{
+    //    public PackagePymentVM()
+    //    {
+    //        PackageCities = new List<CityPymentVM>();
+    //    }
+    //    public Guid PackageId { get; set; }
+    //    public string PackageName { get; set; }
+    //    public string PackagePrice { get; set; }
+    //    public string PackagePriceDollar { get; set; }
+    //    public List<CityPymentVM> PackageCities { get; set; }
+    //}
+    public class GetPurchasedVM
+    {
+        public Guid PackageId { get; internal set; }
+        public Guid PlaceId { get; internal set; }
+        public int LangId { get; internal set; }
+        public bool IsPlace { get; internal set; }
+    }
     public class GetPackageVM
     {
         public GetPackageVM()
@@ -204,7 +222,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PackageName { get; set; }
         public string PackagePrice { get; set; }
         public string PackagePriceDollar { get; set; }
-        public bool isPackagesPurchased { get; set; }
+        public bool IsPurchased { get; set; }
         public List<CityUserVM> PackageCities { get; set; }
 
     }
@@ -219,7 +237,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PackageName { get; set; }
         public string PackagePrice { get; set; }
         public string PackagePriceDollar { get; set; }
-        public bool isPackagesPurchased { get; set; }
+        public bool IsPurchased { get; set; }
         public int PackageOrder { get; internal set; }
 
         public List<CityUserVM> PackageCities { get; set; }
@@ -574,6 +592,7 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class PlaceUserVM
     {
+        public bool IsPurchased { get; set; }
         public Guid PlaceId { get; set; }
         public int Index { get; set; }
         public string PlaceName { get; set; }
@@ -592,6 +611,8 @@ namespace IranAudioGuide_MainServer.Models
         public int OrderItem { get; internal set; }
         public string Price { get; set; }
         public string PriceDollar { get; set; }
+        public bool IsFree { get; set; }
+
     }
     public class PlaceVM
     {

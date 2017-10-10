@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 using IranAudioGuide_MainServer.Services;
-
+using System.Linq;
 
 namespace IranAudioGuide_MainServer.Controllers
 {
@@ -119,7 +119,6 @@ namespace IranAudioGuide_MainServer.Controllers
 
         [HttpPost]
         public IHttpActionResult GetAutorizedPlaces(InfoUser model)
-
         {
             var res = new AutorizedPlacesVM();
             try
@@ -128,6 +127,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     res.status = getUserStatus.notUser;
                     ModelState.AddModelError("error", ((int)res.status).ToString());
+                    res.errorMessage = res.status.ToString();
                     return BadRequest(ModelState);
                 }
 
@@ -137,6 +137,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     (user.uuid != model.uuid) ? getUserStatus.uuidMissMatch :
                     (!user.EmailConfirmed) ? getUserStatus.notConfirmed :
                     getUserStatus.confirmed;
+                res.errorMessage = res.status.ToString();
 
 
                 if (res.status != getUserStatus.confirmed)
@@ -146,13 +147,18 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 res.places = dbTools.GetAutorizedPlaces(user.Id);
                 if (res.places == null)
+                {
+                    res.errorMessage = getUserStatus.unknownError.ToString();
+
                     ModelState.AddModelError("error", ((int)getUserStatus.unknownError).ToString());
+                }
 
                 return Ok(res);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("error", ((int)getUserStatus.unknownError).ToString());
+                ModelState.AddModelError("errorMsg", (getUserStatus.unknownError.ToString()).ToString());
                 ModelState.AddModelError("ex", ex);
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest(ModelState);
@@ -184,7 +190,6 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
 
-
         [HttpPost]
         // POST: api/AppManagerV2/GetAllPackages
         public IHttpActionResult GetAllPackages()
@@ -201,6 +206,38 @@ namespace IranAudioGuide_MainServer.Controllers
                 ModelState.AddModelError("ex", ex);
                 return BadRequest(ModelState);
             }
+        }
+
+        //[HttpPost]
+        // POST: api/AppManagerV2/GetAllPlaces
+        //public IHttpActionResult GetAllPlaces()
+        //{
+        //    try
+        //    {
+        //        var list = db.TranslatePlaces.Select(x => new
+        //        {
+        //            LangId = x.langId,
+        //            PlaceId = x.Pla_Id,
+        //            Price = x.TrP_Price,
+        //            PriceDollar = x.TrP_PriceDollar
+        //        }).ToList();
+
+        //        return Ok(list);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ModelState.AddModelError("ex", ex);
+        //        return BadRequest(ModelState);
+        //    }
+        //}
+        [HttpPost]
+        // POST: api/AppManagerV2/GetAllPricePlaces
+        public IHttpActionResult GetAllPricePlaces()
+        {
+            var list = dbTools.GetAllPricePlaces();
+            if (list == null)
+                return BadRequest(App_GlobalResources.Global.ErrorUnknown);
+            return Ok(list);
         }
         [HttpPost]
         // [Route("GetUpdates")]

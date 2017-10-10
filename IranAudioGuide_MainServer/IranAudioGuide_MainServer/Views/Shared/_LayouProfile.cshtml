@@ -65,7 +65,7 @@
             </li>
             @*<li><a class="waves-effect waves-teal" href="#!"><i class="fa fa-home"></i> @Global.MenuHome</a></li>*@
             <li><a class="waves-effect waves-teal " ng-class="{'active': profile.page == 1}" ui-sref="Packages"><i class="fa fa-shopping-cart"></i>@Global.Packages</a></li>
-            <li><a class="waves-effect waves-teal" ng-class="{'active': profile.page == 2}" ui-sref="PackagesPurchased"><i class="fa fa-cart-arrow-down"></i>@Global.MenuPurchased</a></li>
+            <li>@*<a class="waves-effect waves-teal" ng-class="{'active': profile.page == 2}" ui-sref="PackagesPurchased"><i class="fa fa-cart-arrow-down"></i>@Global.MenuPurchased</a>*@</li>
             <li><a class="waves-effect waves-teal" ng-class="{'active': profile.page == 3}" ui-sref="deactivateMobile"><i class="fa fa-mobile"></i>@Global.MenuDevices</a></li>
             <li><a class="waves-effect waves-teal" href="@Url.Action("LogOff", "User")"> <i class="fa fa-sign-out"></i>@Global.LogOff</a></li>
             <li><div class="divider"></div></li>
@@ -228,8 +228,8 @@
                              catch (error) {
 
                              }
-                         }
-                       // ,                         controller: "paymentCtrl"
+                         },
+                       controller: "paymentCtrl"
                     })
                     .state('deactivateMobile', {
                      url: "/deactivateMobile",

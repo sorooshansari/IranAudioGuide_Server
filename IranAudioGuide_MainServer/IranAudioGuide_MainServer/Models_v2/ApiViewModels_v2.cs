@@ -80,6 +80,14 @@ namespace IranAudioGuide_MainServer.Models_v2
         public int LangId { get; set; }
         //public string LangTitle { get; set; }
     }
+
+    public class PlacesWithPriceVm
+    {
+        public Guid PlaceId { get; set; }
+        public int LangId { get; set; }
+        public string Price { get; set; }
+        public string PriceDollar { get; set; }
+    }
     public class AutorizedCitiesVM
     {
         public List<citiesLng> cities { get; set; }

@@ -51,7 +51,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
         //  public Payment Payment { get; private set; }
 
-        private PackagePymentVM getPackageById(Guid pacId)
+        private PymentIndexAppVM GetPackageById(Guid pacId)
         {
             try
             {
@@ -66,12 +66,13 @@ namespace IranAudioGuide_MainServer.Controllers
                     var reader = cmd.ExecuteReader();
                     var dt1 = new DataTable();
                     dt1.Load(reader);
-                    var Packege = dt1.AsEnumerable().Select(p => new PackagePymentVM()
+                    var Packege = dt1.AsEnumerable().Select(p => new PymentIndexAppVM()
                     {
-                        PackageId = p["PackageId"].ConvertToGuid(),
-                        PackageName = p["PackageName"].ConvertToString(),
-                        PackagePrice = p["PackagePrice"].ConvertToString(),
-                        PackagePriceDollar = p["PackagePriceDollar"].ConvertToString(),
+                        IsPlace = false,
+                        Id = p["PackageId"].ConvertToGuid(),
+                        Name = p["PackageName"].ConvertToString(),
+                        Price = p["PackagePrice"].ConvertToString(),
+                        PriceDollar = p["PackagePriceDollar"].ConvertToString(),
                         PackageCities = dt1.AsEnumerable().Select(c => new CityPymentVM()
                         {
                             CityID = c["CityId"].ConvertToInt(),
@@ -90,6 +91,41 @@ namespace IranAudioGuide_MainServer.Controllers
             }
 
         }
+
+
+        private PymentIndexAppVM GetTranclatePlaceById(Guid idplace, int langId)
+        {
+            try
+            {
+                var getItem = db.TranslatePlaces
+                        .Include(x => x.Place)
+                        .Include(x => x.Place.Pla_Audios)
+                        .Include(x => x.Place.Pla_Stories)
+                        .Where(x => x.Pla_Id == idplace)
+                        .Where(x =>
+                                    x.Place.Pla_Deactive == false &&
+                                    x.Place.Pla_isOnline == true)
+                        .FirstOrDefault(d => d.langId == langId);
+                if (getItem == null)
+                    return null;
+                return new PymentIndexAppVM()
+                {
+                    IsPlace = true,
+                    Id = getItem.Pla_Id,
+                    Name = getItem.TrP_Name,
+                    Desc = getItem.TrP_Description,
+                    TrackCount = getItem.Place.Pla_Audios.Count() + getItem.Place.Pla_Stories.Count(),
+                    Price = getItem.TrP_Price.ConvertToString(),
+                    PriceDollar = getItem.TrP_PriceDollar.ConvertToString(),
+                };
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
 
         // GET: Payment
         [AllowAnonymous]
@@ -123,7 +159,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 }
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                var package = getPackageById(info.packageId);
+                var package = GetPackageById(info.packageId);
                 if (package == null)
                     return View("vmessage", new vmessageVM()
                     {
@@ -133,6 +169,59 @@ namespace IranAudioGuide_MainServer.Controllers
                 await t;
                 ViewBag.Error = info.ErrorMessage;
                 return View(package);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return View("vmessage", new vmessageVM()
+                {
+                    Subject = Global.Error,
+                    Message = Global.PleaseTryAgain,
+                });
+            }
+        }
+        public async Task<ActionResult> Index(AppPaymentReqVM_v3 info)
+        {
+            try
+            {
+                ViewBag.ChooesBank = 
+
+                ViewBag.IsChooesZarinpal = info.IsChooesIranianBC;
+
+                ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
+                if (user == default(ApplicationUser))
+                {
+                    ViewBag.Error = Global.UnauthorizedDevice;
+                    return View("customError");
+                }
+                if (user.uuid != info.uuid)
+                {
+                    ViewBag.Error = Global.UnauthorizedDevice;
+                    return View("customError");
+                }
+                if (!user.EmailConfirmed)
+                {
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = Global.ErrorEmailNotConfirmed,
+                        Message = Global.ErrorEmailNotConfirmedMessageForMobile
+                    });
+                }
+                Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                var package = info.IsPlace == true ?
+                                    GetTranclatePlaceById(info.Id, info.LangId) :
+                                    GetPackageById(info.Id);
+                if (package == null)
+                    return View("vmessage", new vmessageVM()
+                    {
+                        Subject = Global.Error,
+                        Message = Global.ErrorNotFoundPackage,
+                    });
+                await t;
+                ViewBag.Error = info.ErrorMessage;
+                return View(package);
+
             }
             catch (Exception ex)
             {
@@ -205,7 +294,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
 
         [Authorize(Roles = "AppUser")]
-        public string WebMoneyPayment(PackagePymentVM res, bool isFromApp = false)
+        public string WebMoneyPayment(PymentIndexAppVM res, bool isFromApp = false)
         {
             var wmService = new WebmoneyServices();
 
@@ -219,9 +308,9 @@ namespace IranAudioGuide_MainServer.Controllers
             sb.Append("<html>");
             sb.AppendFormat("<body onload='document.forms[0].submit()'>");
             sb.AppendFormat("<form action='{0}' method='post'>", url);
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_NO' value='{0}'>", res.PackageId);
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_AMOUNT' value='{0}'>", res.PackagePrice);
-            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", res.PackageName);
+            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_NO' value='{0}'>", res.Id);
+            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_AMOUNT' value='{0}'>", res.Price);
+            sb.AppendFormat("<input type='hidden' name='LMI_PAYMENT_DESC' value='{0}'>", res.Name);
             sb.AppendFormat("<input type='hidden' name='LMI_PAYEE_PURSE' value='{0}'>", WebmoneyPurse.WMZ);
             //sb.AppendFormat("<input type='hidden' name='LMI_SIM_MODE' value='{0}'>", 0);
             sb.AppendFormat("<input type='hidden' name='isFromeApp' value='{0}'>", isFromApp);
@@ -332,7 +421,7 @@ namespace IranAudioGuide_MainServer.Controllers
         }
 
         [Authorize(Roles = "AppUser")]
-        public ActionResult Purchase(Guid packageId, int bankName, bool IsPlace, bool isFromWeb )
+        public ActionResult Purchase(Guid packageId, int bankName, bool IsPlace, bool isFromWeb)
         {
             try
             {
@@ -348,7 +437,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (isFromWeb)
                     redirectPage = baseUrl + "/" + Global.Lang + "/Payment/ReturnToWebPage";
 
-                PackagePymentVM ItemInfo = new PackagePymentVM();
+                PymentIndexAppVM ItemInfo = new PymentIndexAppVM();
 
                 var user = db.Users.FirstOrDefault(x => x.UserName == UserName);
 
@@ -358,23 +447,27 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     var langId = ServiceCulture.GeLangFromCookie();
                     getItem = db.TranslatePlaces
+                        .Include(x => x.Place)
                         .Where(x => x.Pla_Id == packageId)
-                        .FirstOrDefault(x=> x.langId == langId);
+                        .Where(x =>
+                                    x.Place.Pla_Deactive == false &&
+                                    x.Place.Pla_isOnline == true)
+                        .FirstOrDefault(x => x.langId == langId);
                     if (getItem == null)
                         return PaymentFailed(Global.PaymentMsg, Global.ErrorInvalidRequest, isFromWeb);
 
-                    ItemInfo.PackagePrice = getItem.TrP_Price.ConvertToString();
-                    ItemInfo.PackageName = getItem.TrP_Name;
-                    ItemInfo.PackageId = getItem.TrP_Id;
+                    ItemInfo.Price = getItem.TrP_Price.ConvertToString();
+                    ItemInfo.Name = getItem.TrP_Name;
+                    ItemInfo.Id = getItem.TrP_Id;
                 }
                 else
                 {
                     var package = db.Packages.FirstOrDefault(x => x.Pac_Id == packageId);
                     if (package == null)
                         return PaymentFailed(Global.PaymentMsg, Global.ErrorInvalidRequest, isFromWeb);
-                    ItemInfo.PackagePrice = package.Pac_Price.ConvertToString();
-                    ItemInfo.PackageName = package.Pac_Name;
-                    ItemInfo.PackageId = package.Pac_Id;
+                    ItemInfo.Price = package.Pac_Price.ConvertToString();
+                    ItemInfo.Name = package.Pac_Name;
+                    ItemInfo.Id = package.Pac_Id;
                 }
                 var newProcurement = new Procurement()
                 {
@@ -395,7 +488,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     {
                         Pay_SaleReferenceId = 0,
                         Pay_BankName = bankName.ConvertToEnum<EnumBankName>().ToString(),
-                        Pay_Amount = ItemInfo.PackagePrice.ConvertToLong()
+                        Pay_Amount = ItemInfo.Price.ConvertToLong()
                     };
                 }
 
@@ -409,7 +502,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     error = WebMoneyPayment(ItemInfo, !isFromWeb);
                 }
                 else if (bankName == (int)EnumBankName.Zarinpal)
-                    error = ZarinpalPayment(newProcurement.Pro_Payment.Pay_Amount, redirectPage, newProcurement.Pro_Payment.Pay_Id, ItemInfo.PackageName);
+                    error = ZarinpalPayment(newProcurement.Pro_Payment.Pay_Amount, redirectPage, newProcurement.Pro_Payment.Pay_Id, ItemInfo.Name);
                 else
                     error = MelatPayment(newProcurement.Pro_Payment);
 
@@ -491,14 +584,14 @@ namespace IranAudioGuide_MainServer.Controllers
 
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 var langId = ServiceCulture.GeLangFromCookie();
-                var package = IsPlace ? GetTranclatePlaceById(pacId, langId) : getPackageById(pacId);
+                var package = IsPlace ? GetTranclatePlaceById(pacId, langId) : GetPackageById(pacId);
                 if (package == null)
                     return View("ErrorPageProfile", new vmessageVM()
                     {
                         Subject = Global.Error,
                         Message = Global.ErrorNotFoundPackage,
                     });
-                packname = package.PackageName;
+                packname = package.Name;
                 await t;
                 return View(package);
             }
@@ -515,35 +608,35 @@ namespace IranAudioGuide_MainServer.Controllers
 
         }
 
-        private PackagePymentVM GetTranclatePlaceById(Guid itemId, int langId)
-        {
-            using (var db = new ApplicationDbContext())
-            {
-                var getPlace = db.Places
-                    .Include(t => t.Pla_Stories)
-                    .Include(t => t.Pla_Audios)
-                    .Include(t => t.TranslatePlaces)
-                    .Where(x => x.TranslatePlaces.Any(t => t.langId == langId))
-                    .FirstOrDefault(f => f.Pla_Id == itemId);
-                if (getPlace == null)
-                    return null;
-                var tranclate = getPlace.TranslatePlaces.FirstOrDefault();
+        //private PymentIndexAppVM GetTranclatePlaceById(Guid itemId, int langId)
+        //{
+        //    using (var db = new ApplicationDbContext())
+        //    {
+        //        var getPlace = db.Places
+        //            .Include(t => t.Pla_Stories)
+        //            .Include(t => t.Pla_Audios)
+        //            .Include(t => t.TranslatePlaces)
+        //            .Where(x => x.TranslatePlaces.Any(t => t.langId == langId))
+        //            .FirstOrDefault(f => f.Pla_Id == itemId);
+        //        if (getPlace == null)
+        //            return null;
+        //        var tranclate = getPlace.TranslatePlaces.FirstOrDefault();
 
-                return new PackagePymentVM()
-                {
-                    PackageId = getPlace.Pla_Id,
-                    PackageName = getPlace.Pla_Name,
-                    PackagePrice = tranclate.TrP_Price.ConvertToString(),
-                    PackagePriceDollar = tranclate.TrP_PriceDollar.ConvertToString(),
-                    PackageCities = new List<CityPymentVM>() {
-                                    new CityPymentVM(){
-                                        CityDesc= tranclate.TrP_Description,
-                                        CityName = tranclate.TrP_Name,
-                                        TrackCount = getCountForPlace(getPlace)}
-                    }
-                };
-            }
-        }
+        //        return new PymentIndexAppVM()
+        //        {
+        //            PackageId = getPlace.Pla_Id,
+        //            PackageName = getPlace.Pla_Name,
+        //            PackagePrice = tranclate.TrP_Price.ConvertToString(),
+        //            PackagePriceDollar = tranclate.TrP_PriceDollar.ConvertToString(),
+        //            PackageCities = new List<CityPymentVM>() {
+        //                            new CityPymentVM(){
+        //                                CityDesc= tranclate.TrP_Description,
+        //                                CityName = tranclate.TrP_Name,
+        //                                TrackCount = getCountForPlace(getPlace)}
+        //            }
+        //        };
+        //    }
+        //}
         private int getCountForPlace(Place getPlace)
         {
             var count = 0;

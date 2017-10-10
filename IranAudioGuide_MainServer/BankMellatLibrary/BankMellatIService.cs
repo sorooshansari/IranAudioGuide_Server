@@ -3,7 +3,7 @@ using System;
 
 namespace BankMellatLibrary
 {
-   public class BankMellatIService
+    public class BankMellatIService
     {
 
         #region Base Variable Definition
@@ -43,12 +43,12 @@ namespace BankMellatLibrary
         {
             try
             {
-                var WebService  = new PaymentGatewayImplService();
+                var WebService = new PaymentGatewayImplService();
                 //result = bpService.bpPayRequest
 
                 //if result == 0,RefID --> عملایت موفقیت آمیز بوده است 
-                var result = WebService.bpPayRequest(terminalId, userName, password, orderId, priceAmount, localDate, localTime,
-                                 additionalText, callBackUrl, 0);
+                var result = WebService.bpPayRequest(terminalId, userName, password, orderId, priceAmount,
+                    localDate, localTime, additionalText, callBackUrl,0);
 
                 return result;
                 // result.SelectMany(n => n.Split(',')).ToList();
@@ -103,7 +103,7 @@ namespace BankMellatLibrary
             }
         }
         /// <summary>
-       
+
         /// در اﻳﻦ ﺣﺎﻟﺖ ﺑﺮای آﮔﺎﻫﻲ از نتیجه ﺗﺮاﻛﻨﺶ می ﺗﻮاﻧید در هر زﻣﺎﻧﻲ، اﻳﻦ ﻣﺘﺪ را ﻓﺮاﺧﻮاﻧﻲ ﻧﻤﺎید
         /// (اﺳﺘﻌﻼم ﺗﺮاﻛﻨﺶ)
         /// </summary>
@@ -147,6 +147,6 @@ namespace BankMellatLibrary
                 throw new Exception(error.Message); ;
             }
         }
-      
+
     }
 }

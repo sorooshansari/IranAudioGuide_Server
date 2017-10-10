@@ -268,13 +268,9 @@
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201710020649098_d.cs" />
-    <Compile Include="Migrations\201710020649098_d.Designer.cs">
-      <DependentUpon>201710020649098_d.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710021358196_g.cs" />
-    <Compile Include="Migrations\201710021358196_g.Designer.cs">
-      <DependentUpon>201710021358196_g.cs</DependentUpon>
+    <Compile Include="Migrations\201710031149454_changeProcurements.cs" />
+    <Compile Include="Migrations\201710031149454_changeProcurements.Designer.cs">
+      <DependentUpon>201710031149454_changeProcurements.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -1885,11 +1881,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710020649098_d.resx">
-      <DependentUpon>201710020649098_d.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710021358196_g.resx">
-      <DependentUpon>201710021358196_g.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710031149454_changeProcurements.resx">
+      <DependentUpon>201710031149454_changeProcurements.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

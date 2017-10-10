@@ -1110,4 +1110,7 @@ Your purchased packages will be set on and accessible through your current user 
   <data name="ErrorInvalidRequest" xml:space="preserve">
     <value>Invalid  Request</value>
   </data>
+  <data name="Free" xml:space="preserve">
+    <value>Free</value>
+  </data>
 </root>

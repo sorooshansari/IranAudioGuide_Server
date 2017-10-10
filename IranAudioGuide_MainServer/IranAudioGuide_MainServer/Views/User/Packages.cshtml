@@ -11,11 +11,11 @@
         padding: 0 14px;
     }
 
-    .btn-get-pack a:hover {
-        border-color: #32c5d2;
-        color: #FFF;
-        background-color: #32c5d2;
-    }
+        .btn-get-pack a:hover {
+            border-color: #32c5d2;
+            color: #FFF;
+            background-color: #32c5d2;
+        }
 
 
     .btn-large[disabled] {
@@ -79,8 +79,15 @@
 
                                     <span class="secondary-content hide-on-small-and-down btn-get-pack">
 
-                                        <a href="javascript:;"  ng-click="OpenModal(place, true)"  class="btn btn-icon-only">
+                                        @*<a href="javascript:;" ng-click="OpenModal(place, true)" class="btn btn-icon-only">
                                             <i class="material-icons right">add</i>Get
+                                        </a>*@
+
+                                        <a href="javascript:;" ng-click="OpenModal(place, true)" ng-show="place.IsPurchased == false " class="btn btn-icon-only">
+                                            <i class="material-icons right">add</i>@Global.btnBuy
+                                        </a>
+                                        <a href="javascript:;" ng-disabled="true" ng-show="place.IsPurchased == true " class="btn btn-icon-only">
+                                            <i ng-show="place.IsFree != true" class="material-icons dp48">check</i> <span ng-show="place.IsFree == true"> @Global.Free </span>
                                         </a>
                                     </span>
                                 </li>
@@ -91,15 +98,12 @@
 
             </div>
             <div class="card-action">
-                <a href="#!" ng-show="pack.isPackagesPurchased == false" ng-click="OpenModal(pack, false)" class="waves-effect waves-light btn-large z-depth-3">
+                <a href="#!" ng-show="pack.IsPurchased == false" ng-click="OpenModal(pack, false)" class="waves-effect waves-light btn-large z-depth-3">
                     <i class="material-icons right">add</i>@Global.btnBuy
                 </a>
-                <a href="#!" ng-disabled="true" ng-show="pack.isPackagesPurchased == true" class="waves-effect waves-light btn-large z-depth-3">
+                <a href="#!" ng-disabled="true" ng-show="pack.IsPurchased == true" class="waves-effect waves-light btn-large z-depth-3">
                     <i class="material-icons dp48">check</i> @Global.btnPurchased
                 </a>
-
-
-
             </div>
         </div>
     </div>

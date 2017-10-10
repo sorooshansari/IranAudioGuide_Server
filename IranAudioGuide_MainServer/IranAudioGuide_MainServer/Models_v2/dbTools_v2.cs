@@ -68,6 +68,37 @@ namespace IranAudioGuide_MainServer.Models_v2
         }
 
 
+
+
+        public List<PlacesWithPriceVm> GetAllPricePlaces()
+        {
+          
+                using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
+                {
+                    try
+                    {
+                                               SqlCommand cmd = new SqlCommand("GetAllPricePlaces_v3", sqlConnection);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        sqlConnection.Open();
+                        var reader = cmd.ExecuteReader();
+                        var dt1 = new DataTable();
+                        dt1.Load(reader);
+                        var list = dt1.AsEnumerable().Select(x => new PlacesWithPriceVm
+                        {
+                            LangId = x["LangId"].ConvertToInt(),
+                            PlaceId = x["PlalaceId"].ConvertToGuid(),
+                            PriceDollar = x["PriceDollar"].ConvertToString(),
+                            Price = x["Price"].ConvertToString()
+                        }).ToList();
+                    return list;
+
+                    }
+                    catch (Exception ex)
+                    {                    
+                       return null;
+                    }
+                }
+        }
         public GetAllPackagesVM GetAllPackages()
         {
             GetAllPackagesVM res;
