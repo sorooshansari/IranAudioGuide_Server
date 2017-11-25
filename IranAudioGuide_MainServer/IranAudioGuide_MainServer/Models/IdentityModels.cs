@@ -103,11 +103,21 @@ namespace IranAudioGuide_MainServer.Models
         [Display(Name = "Reference Number")]
         [MaxLength(100)]
         public string Pay_ReferenceNumber { get; set; }
+
+
         /// <summary>
-        /// refId
+        ///کد رهگیری
         /// </summary>
         [Display(Name = "Sale Reference Id")]
-        public long Pay_SaleReferenceId { get; set; }
+        public string Pay_SaleReferenceId { get; set; }
+
+
+        /// <summary>
+        /// refId
+        /// توکنی که بانک برای انجام یک درخواست می دهد
+        /// </summary>
+        public string Pay_RefId { get; set; }
+
         /// <summary>
         /// وضیعت خرید
         /// </summary>
@@ -125,6 +135,10 @@ namespace IranAudioGuide_MainServer.Models
         [Display(Name = "Bank Name")]
         [MaxLength(50)]
         public string Pay_BankName { get; set; }
+
+        [Display(Name = "StatusRequest")]
+        
+        public string Pay_StatusRequest { get; set; }
 
     }
     public class Audio

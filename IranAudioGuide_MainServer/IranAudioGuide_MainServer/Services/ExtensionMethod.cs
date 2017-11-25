@@ -118,7 +118,8 @@ namespace IranAudioGuide_MainServer.Services
         {
             try
             {
-                return (obj == DBNull.Value) ? string.Empty : obj.ToString();
+                var d = (obj == DBNull.Value) ? string.Empty : obj.ToString();
+                return d;
             }
             catch
             {

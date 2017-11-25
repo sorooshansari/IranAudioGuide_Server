@@ -16,30 +16,49 @@
     </nav>
 
     <div class="jumbotron my-3">
-        <h3 class="titel-package mb-4">  @Model.Name </h3>
 
-        <h4><i class="fa fa-briefcase"></i> @Global.PackageInfo</h4>
         <!--<p class="lead">Cities Included</p>-->
         <div class="mt-4 ml-4">
-            @foreach (var item in Model.PackageCities)
+            @if (Model.PackageCities != null)
+            {
+                <h3 class="titel-package mb-4">  @Model.Name </h3>
+
+                <h4><i class="fa fa-briefcase"></i> @Global.PackageInfo</h4>
+                foreach (var item in Model.PackageCities)
+                {
+                    <div class="mt-2">
+                        <h5 class="d-inline-block">
+                            <i class="fa fa-map"></i> @item.CityName
+                        </h5>
+                        <br class="hidden-sm-up" />
+                        <h6 class="d-inline-block pl-3">
+                            <span class="fa fa-map-marker badge badge-default"> @item.PlaceCount </span>
+                        </h6>
+                        <h6 class="d-inline-block">
+                            <span class="fa fa-microphone badge badge-default"> @item.TrackCount</span>
+                        </h6>
+                        <p>
+                            @item.CityDesc
+                        </p>
+                    </div>
+                }
+            }
+            else if (Model.IsPlace)
             {
                 <div class="mt-2">
                     <h5 class="d-inline-block">
-                        <i class="fa fa-map"></i> @item.CityName
+                        <i class="fa fa-map"></i> @Model.Name
                     </h5>
                     <br class="hidden-sm-up" />
-                    <h6 class="d-inline-block pl-3">
-                        <span class="fa fa-map-marker badge badge-default"> @item.PlaceCount </span>
-                    </h6>
+
                     <h6 class="d-inline-block">
-                        <span class="fa fa-microphone badge badge-default"> @item.TrackCount</span>
+                        <span class="fa fa-microphone badge badge-default"> @Model.TrackCount</span>
                     </h6>
                     <p>
-                        @item.CityDesc
+                        @Model.Desc
                     </p>
                 </div>
             }
-
         </div>
 
         <hr class="my-4">
@@ -49,13 +68,14 @@
             <div class="row py-2">
                 <h5 class="d-inline-block col-12 col-sm-3">@Global.PaymentGateway</h5>
                 <div class="offset-2 col-8 col-sm-6">
-                    @if (ViewBag.IsChooesZarinpal)
+
+                    @if (ViewBag.ChooesBank == EnumBankName.Webmoney)
                     {
-                        <img src="~/Content/images/zarinpal.png" class="rounded w-100" />
+                        <img src="~/images/WebMoney-logo-white_8.png" class="rounded w-100" style="background-color:#006dae">
                     }
                     else
                     {
-                        <img src="~/images/WebMoney-logo-white_8.png" class="rounded w-100" style="background-color:#006dae">
+                        <img style="width: 48%; margin-right: 19%" src="http://iranaudioguide.net/Images/Mellat-Bank-logo.png" alt="" class="circle">
                     }
                 </div>
             </div>
@@ -82,15 +102,7 @@
         <p> @Html.Raw(Global.PaymentEmailInfo)</p>
         <p class="lead">
 
-            @if (ViewBag.ChooesBank == EnumBankName.Zarinpal)
-            {
-                <a class="waves-effect waves-light btn z-depth-1 "
-                   role="button"
-                   href="@Url.Action("Purchase", "Payment", new { packageId = Model.Id, bankName = (int)EnumBankName.Zarinpal, isPlace = ViewBag.IsPlace, isFromWeb = false })">
-                    <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
-                </a>
-            }
-            else if (ViewBag.ChooesBank == EnumBankName.Webmoney)
+            @if (ViewBag.ChooesBank == EnumBankName.Webmoney)
             {
                 <a class="waves-effect waves-light btn z-depth-1 "
                    role="button"
@@ -98,7 +110,7 @@
                     <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
                 </a>
             }
-            else if (ViewBag.ChooesBank == EnumBankName.Mellat)
+            else
             {
                 <a class="waves-effect waves-light btn z-depth-1 "
                    role="button"

@@ -67,37 +67,34 @@ namespace IranAudioGuide_MainServer.Models_v2
             return res;
         }
 
-
-
-
         public List<PlacesWithPriceVm> GetAllPricePlaces()
         {
-          
-                using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
+
+            using (SqlConnection sqlConnection = new SqlConnection(GlobalPath.ConnectionString))
+            {
+                try
                 {
-                    try
+                    SqlCommand cmd = new SqlCommand("GetAllPricePlaces_v3", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    sqlConnection.Open();
+                    var reader = cmd.ExecuteReader();
+                    var dt1 = new DataTable();
+                    dt1.Load(reader);
+                    var list = dt1.AsEnumerable().Select(x => new PlacesWithPriceVm
                     {
-                                               SqlCommand cmd = new SqlCommand("GetAllPricePlaces_v3", sqlConnection);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        sqlConnection.Open();
-                        var reader = cmd.ExecuteReader();
-                        var dt1 = new DataTable();
-                        dt1.Load(reader);
-                        var list = dt1.AsEnumerable().Select(x => new PlacesWithPriceVm
-                        {
-                            LangId = x["LangId"].ConvertToInt(),
-                            PlaceId = x["PlalaceId"].ConvertToGuid(),
-                            PriceDollar = x["PriceDollar"].ConvertToString(),
-                            Price = x["Price"].ConvertToString()
-                        }).ToList();
+                        LangId = x["LangId"].ConvertToInt(),
+                        PlaceId = x["PlalaceId"].ConvertToGuid(),
+                        PriceDollar = x["PriceDollar"].ConvertToString(),
+                        Price = x["Price"].ConvertToString()
+                    }).ToList();
                     return list;
 
-                    }
-                    catch (Exception ex)
-                    {                    
-                       return null;
-                    }
                 }
+                catch (Exception ex)
+                {
+                    return null;
+                }
+            }
         }
         public GetAllPackagesVM GetAllPackages()
         {
@@ -334,8 +331,8 @@ namespace IranAudioGuide_MainServer.Models_v2
                 return dataTable.AsEnumerable().Select(dr => new ImagesVm()
                 {
                     ID = dr["Id"].ConvertToGuid(),
-                    Name = dr["Name"].ConvertToString(),
-                    //Desc = dr["Descript"].convertToString(),
+                    Name = dr["Name"].ToString(),
+                    ImageType = dr["ImageType"].ConvertToInt(),
                     PlaceId = dr["PlaceId"].ConvertToGuid(),
                     OrderItem = dr["OrderItem"].ConvertToInt(),
                 }).ToList();

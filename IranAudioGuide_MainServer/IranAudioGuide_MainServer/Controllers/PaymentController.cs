@@ -24,7 +24,7 @@ namespace IranAudioGuide_MainServer.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private TranslatePlace getItem;
+        private TranslatePlace getTranslatePlaces;
 
         public ApplicationSignInManager SignInManager
         {
@@ -136,8 +136,8 @@ namespace IranAudioGuide_MainServer.Controllers
                 //if (info.IsChooesZarinpal && ExtensionMethods.IsForeign)
                 //    ViewBag.IsChooesZarinpal = false;
                 //else
-                ViewBag.IsChooesZarinpal = info.IsChooesZarinpal;
-
+                ViewBag.ChooesBank = info.IsChooesZarinpal ? EnumBankName.Mellat : EnumBankName.Webmoney;
+                ViewBag.IsPlace = false;
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user == default(ApplicationUser))
                 {
@@ -180,17 +180,21 @@ namespace IranAudioGuide_MainServer.Controllers
                 });
             }
         }
+        [AllowAnonymous]
+
         public async Task<ActionResult> IndexV3(AppPaymentReqVM_v3 info)
         {
             try
             {
+                int langId = ServiceCulture.GeLangFromCookie();
+                ViewBag.ChooesBank = info.IsChooesIranianBC ? EnumBankName.Mellat : EnumBankName.Webmoney;
+                ViewBag.IsPlace = info.IsPlace;
                 if (!ModelState.IsValid)
                     return View("vmessage", new vmessageVM()
                     {
                         Subject = Global.Error,
                         Message = Global.ErrorInvalidRequest,
                     });
-                ViewBag.ChooesBank = ViewBag.IsChooesZarinpal = info.IsChooesIranianBC;
 
                 ApplicationUser user = await UserManager.FindByEmailAsync(info.email);
                 if (user == default(ApplicationUser))
@@ -214,7 +218,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 Task t = SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                 var package = info.IsPlace == true ?
-                                    GetTranclatePlaceById(info.Id, info.LangId) :
+                                    GetTranclatePlaceById(info.Id, langId) :
                                     GetPackageById(info.Id);
                 if (package == null)
                     return View("vmessage", new vmessageVM()
@@ -224,7 +228,7 @@ namespace IranAudioGuide_MainServer.Controllers
                     });
                 await t;
                 ViewBag.Error = info.ErrorMessage;
-                return View(package);
+                return View("Index", package);
 
             }
             catch (Exception ex)
@@ -248,31 +252,30 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     try
                     {
-                        var resultBank = ServiceBankMellat.BpPayRequest(resultPayment.Pay_Id, resultPayment.Pay_Amount, "test");
-
-                        Response.Write(resultBank);
+                        var refId = "";
+                        var lang = ServiceCulture.GeLangFromCookieAsString();
+                        //  Response.Write("resultPayment.Pay_Id:::" + resultPayment.Pay_Id);
+                        var resultBank = ServiceBankMellat.BpPayRequest(resultPayment.Pay_Id, resultPayment.Pay_Amount, "test", lang, 0);
+                        //Response.Write("resultBank::::" + resultBank);
                         string[] StatusSendRequest = resultBank.Split(',');
-                        Payment item = new Payment();
-                        item.Pay_Id = resultPayment.Pay_Id;
-                        item.Pay_StatusPayment = StatusSendRequest[0];
-
+                       
                         if (StatusSendRequest.Length >= 2)
-                            item.Pay_SaleReferenceId = StatusSendRequest[1].ConvertToLong();
+                            refId = StatusSendRequest[1];
 
-                        ServicePayment.Update(item);
+                        ServicePayment.UpdatePayment(resultPayment.Pay_Id, refId , StatusSendRequest[0], "send request by BpPayRequest ");
 
-                        //در صورتی که مقدار خانه اول این آریه برابر صفر در نتیجه می بایست کاربر را به صفحه پرداخت هدایت کنیم
+                        // در صورتی که مقدار خانه اول این آریه برابر صفر در نتیجه می بایست کاربر را به صفحه پرداخت هدایت کنیم
                         if (StatusSendRequest[0].StoI() != (int)ReturnCodeForBpPayRequest.Success)
-                        {
-                            dbTran.Commit();
+                        {                            
                             return StatusSendRequest[0].ConvertToEnum<ReturnCodeForBpPayRequest>().GetDisplayName();
                         }
+                        //  return item.Pay_RefId;
                         Response.Clear();
                         var sb = new System.Text.StringBuilder();
                         sb.Append("<html>");
                         sb.AppendFormat("<body onload='document.forms[0].submit()'>");
                         sb.AppendFormat("<form action='{0}' method='post'>", ServiceBankMellat.PgwSite);
-                        sb.AppendFormat("<input type='hidden' name='RefId' value='{0}'>", resultPayment.Pay_SaleReferenceId);
+                        sb.AppendFormat("<input type='hidden' name='RefId' value='{0}'>", refId);
                         sb.Append("</form>");
                         sb.Append("</body>");
                         sb.Append("</html>");
@@ -441,37 +444,35 @@ namespace IranAudioGuide_MainServer.Controllers
                 if (isFromWeb)
                     redirectPage = baseUrl + "/" + Global.Lang + "/Payment/ReturnToWebPage";
 
-                PymentIndexAppVM ItemInfo = new PymentIndexAppVM();
+                var PymentVM = new PymentIndexAppVM();
 
                 var user = db.Users.FirstOrDefault(x => x.UserName == UserName);
-
-
 
                 if (IsPlace)
                 {
                     var langId = ServiceCulture.GeLangFromCookie();
-                    getItem = db.TranslatePlaces
+                    getTranslatePlaces = db.TranslatePlaces
                         .Include(x => x.Place)
                         .Where(x => x.Pla_Id == packageId)
-                        .Where(x =>
-                                    x.Place.Pla_Deactive == false &&
+                        .Where(x => x.Place.Pla_Deactive == false &&
                                     x.Place.Pla_isOnline == true)
                         .FirstOrDefault(x => x.langId == langId);
-                    if (getItem == null)
+
+                    if (getTranslatePlaces == null)
                         return PaymentFailed(Global.PaymentMsg, Global.ErrorInvalidRequest, isFromWeb);
 
-                    ItemInfo.Price = getItem.TrP_Price.ConvertToString();
-                    ItemInfo.Name = getItem.TrP_Name;
-                    ItemInfo.Id = getItem.TrP_Id;
+                    PymentVM.Price = getTranslatePlaces.TrP_Price.ConvertToString();
+                    PymentVM.Name = getTranslatePlaces.TrP_Name;
+                    PymentVM.Id = getTranslatePlaces.TrP_Id;
                 }
                 else
                 {
-                    var package = db.Packages.FirstOrDefault(x => x.Pac_Id == packageId);
-                    if (package == null)
+                    var getPackage = db.Packages.FirstOrDefault(x => x.Pac_Id == packageId);
+                    if (getPackage == null)
                         return PaymentFailed(Global.PaymentMsg, Global.ErrorInvalidRequest, isFromWeb);
-                    ItemInfo.Price = package.Pac_Price.ConvertToString();
-                    ItemInfo.Name = package.Pac_Name;
-                    ItemInfo.Id = package.Pac_Id;
+                    PymentVM.Price = getPackage.Pac_Price.ConvertToString();
+                    PymentVM.Name = getPackage.Pac_Name;
+                    PymentVM.Id = getPackage.Pac_Id;
                 }
                 var newProcurement = new Procurement()
                 {
@@ -479,7 +480,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 };
 
                 if (IsPlace)
-                    newProcurement.Pro_TrcPlace = getItem;
+                    newProcurement.Pro_TrcPlace = getTranslatePlaces;
 
                 else
                     newProcurement.Pac_Id = packageId;
@@ -490,23 +491,24 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     newProcurement.Pro_Payment = new Payment()
                     {
-                        Pay_SaleReferenceId = 0,
-                        Pay_BankName = bankName.ConvertToEnum<EnumBankName>().ToString(),
-                        Pay_Amount = ItemInfo.Price.ConvertToLong()
+
+                        Pay_StatusRequest = "step 0",
+                        Pay_BankName = (bankName == (int)EnumBankName.Zarinpal) ? EnumBankName.Zarinpal.ToString() : EnumBankName.Mellat.ToString(),
+                        Pay_Amount = PymentVM.Price.ConvertToLong(),
+
                     };
                 }
 
                 db.Procurements.Add(newProcurement);
                 db.SaveChanges();
-                //int paymentId = Payment.Pay_Id;
 
                 string error = string.Empty;
                 if (bankName == (int)EnumBankName.Webmoney)
                 {
-                    error = WebMoneyPayment(ItemInfo, !isFromWeb);
+                    error = WebMoneyPayment(PymentVM, !isFromWeb);
                 }
                 else if (bankName == (int)EnumBankName.Zarinpal)
-                    error = ZarinpalPayment(newProcurement.Pro_Payment.Pay_Amount, redirectPage, newProcurement.Pro_Payment.Pay_Id, ItemInfo.Name);
+                    error = ZarinpalPayment(newProcurement.Pro_Payment.Pay_Amount, redirectPage, newProcurement.Pro_Payment.Pay_Id, PymentVM.Name);
                 else
                     error = MelatPayment(newProcurement.Pro_Payment);
 
@@ -514,6 +516,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 {
                     var ex = new Exception(string.Format("ZarinpalError-->{0}", error));
                     Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                    ViewBag.refId = error;
                     return PaymentFailed(Global.PaymentMsg, error, isFromWeb);
 
                 }
@@ -663,13 +666,10 @@ namespace IranAudioGuide_MainServer.Controllers
             if (procurement != null)
             {
                 procurement.Pro_Payment.Pay_StatusPayment = vresult;
-                procurement.Pro_Payment.Pay_SaleReferenceId = saleReferenceId;
+                procurement.Pro_Payment.Pay_SaleReferenceId = saleReferenceId.ToString();
                 procurement.Pro_PaymentFinished = paymentFinished;
-
                 if (refId != null)
-                {
-                    procurement.Pro_Payment.Pay_ReferenceNumber = refId;
-                }
+                    procurement.Pro_Payment.Pay_RefId = refId;
 
                 db.Entry(procurement).State = EntityState.Modified;
                 db.SaveChanges();
@@ -686,60 +686,7 @@ namespace IranAudioGuide_MainServer.Controllers
                 // اطلاعاتی از دیتابیس پیدا نشد
             }
         }
-
-        //private void SendEmail(PaymentInfoForEmailVM returnResults)
-        //{
-
-        //    System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/UserEmailTemplatePayment.html"));
-        //    string body = sr.ReadToEnd();
-        //    sr.Close();
-        //    body = body.Replace("#ReturnPaymentReferenceID#", Global.ReturnPaymentReferenceID);
-        //    body = body.Replace("#PaymentPage27#", Global.PaymentPage27);
-        //    body = body.Replace("#PriceTite#", Global.Price);
-        //    body = body.Replace("#Cities#", Global.Cities);
-        //    body = body.Replace("#ReceiptForInvoice#", Global.ReceiptForInvoice);
-        //    body = body.Replace("#ThankYouForYourPurchase#", Global.ThankYouForYourPurchase);
-        //    body = body.Replace("#PaymentMsg#", Global.Paymentsuccessfully + Global.PaymentMsg5);
-        //    body = body.Replace("#DateTite#", Global.DateTite);
-        //    body = body.Replace("#ReferenceID#", "9382387437");
-        //    body = body.Replace("#PackageName#", returnResults.Name);
-        //    body = body.Replace("#Price#", returnResults.Price.ToString());
-        //    body = body.Replace("#PrivacyPolicy#", Global.PrivacyPolicy);
-        //    body = body.Replace("#TermsConditions#", Global.TermsConditions);
-        //    body = body.Replace("#lang#", Global.Lang);
-
-
-        //    if (Global.Lang.Contains("fa"))
-        //    {
-
-        //        var pCalendar = new System.Globalization.PersianCalendar();
-        //        DateTime a = DateTime.Now;
-        //        int year = pCalendar.GetYear(returnResults.Date);
-        //        int month = pCalendar.GetMonth(returnResults.Date);
-        //        int day = pCalendar.GetDayOfMonth(returnResults.Date);
-
-        //        body = body.Replace("#Date#", year + "/" + month + "/" + day);
-        //        body = body.Replace("#langStyle#", $"style=\"font-family: Tahoma;  direction:rtl\"");
-        //    }
-        //    else
-        //    {
-        //        body = body.Replace("#Date#", returnResults.Date.ToString());
-        //        body = body.Replace("#langStyle#", $"style=\"font-family:'Open Sans'\"");
-        //    }
-
-
-        //    var listCity = "";
-        //    foreach (var item in returnResults.Cities)
-        //    {
-        //        listCity = listCity + string.Format("<p style='font-size: 21px;background-color:#15437f;color:#ffffff;margin:3% auto;padding:4px 12px;box-shadow: 1px 1px 1px #15437f;font-weight:bold;display: table;min-width:201px;text-shadow: 1px 1px 2px #171514'>{0}<p>", item);
-        //    }
-        //    body = body.Replace("#CityItem#", listCity);
-
-        //    var msg = new Microsoft.AspNet.Identity.IdentityMessage() { Body = body, Destination = dest, Subject = Global.ReceiptForInvoice };
-        //    EmailService es = new EmailService();
-        //    es.SendAsync2(msg);
-        //}
-
+      
         private string ZarinpalPayment(long price, string redirectPage, int paymentId, string packageName)
         {
             try

@@ -35,7 +35,6 @@ namespace IranAudioGuide_MainServer.Services
             var Payment = new Payment()
             {
                 Pay_Amount = price,
-                Pay_SaleReferenceId = 0,
                 Pay_BankName = (bankName == EnumBankName.Mellat) ? EnumBankName.Mellat.ToString() : EnumBankName.Zarinpal.ToString(),
                 Pay_Procurement = new Procurement()
                 {
@@ -48,33 +47,58 @@ namespace IranAudioGuide_MainServer.Services
             return Payment;
 
         }
-        public static void UpdatePayment(int paymentId, string vresult, long saleReferenceId, string refId, bool paymentFinished = false)
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paymentId"></param>
+        /// <param name="refId"> token</param>
+        /// <param name="StatusPayment">کد وضعیت خرید</param>
+        /// <param name="StatusRequest"></param>
+        /// <returns></returns>
+        public static bool UpdatePayment(int paymentId,
+            string refId,
+            string StatusPayment,
+            string StatusRequest,
+            string saleReferenceId = null)
         {
             using (var db = new ApplicationDbContext())
             {
-                var procurement = db.Procurements
-              .Include(x => x.Pro_Payment)
-              .FirstOrDefault(x => x.Pro_Payment.Pay_Id == paymentId);
-
-                if (procurement != null)
+                try
                 {
-                    procurement.Pro_Payment.Pay_StatusPayment = vresult;
-                    procurement.Pro_Payment.Pay_SaleReferenceId = saleReferenceId;
-                    procurement.Pro_PaymentFinished = paymentFinished;
-                    if (refId != null)
-                        procurement.Pro_Payment.Pay_ReferenceNumber = refId;
+                    var getPayment = db.Payments.FirstOrDefault(x => x.Pay_Id == paymentId);
+                    if (getPayment == null)
+                    {
+                        var errorMsg = "Not found Payment::: paymentId=" + paymentId +
+                            "& refId=" + refId
+                            + "& StatusPayment=" + StatusPayment
+                            + "& StatusRequest=" + StatusRequest;
+                        Exception ex = new Exception(errorMsg);
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                        return false;
 
-                    db.Entry(procurement).State = EntityState.Modified;
+                    }
+                    getPayment.Pay_RefId = refId;
+                    getPayment.Pay_StatusPayment = StatusPayment;
+                    getPayment.Pay_StatusRequest = StatusRequest;
+                    if (!string.IsNullOrEmpty(saleReferenceId))
+                        getPayment.Pay_SaleReferenceId = saleReferenceId;
+                    db.Entry(getPayment).State = EntityState.Modified;
                     db.SaveChanges();
+                    return true;
+
                 }
-                else
+                catch (Exception ex)
                 {
-                    Exception ex = new Exception("UpdatePayment:  dont find procurement for IdPayment ");
                     Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                     // اطلاعاتی از دیتابیس پیدا نشد
+                    return false;
                 }
-            }
 
+
+            }
         }
 
         public static void Update(Payment item, ApplicationDbContext db = null)
@@ -100,6 +124,34 @@ namespace IranAudioGuide_MainServer.Services
                 return db.Payments.Include("Pay_Procurement.Pro_Package.Pac_Cities")
                                    .FirstOrDefault(c => c.Pay_Id == paymentId);
 
+            }
+
+        }
+
+        internal static Payment FinshPyment(int paymentId, string Status)
+        {
+            try
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    var getItem = db.Payments
+                        //.Include("Pay_Procurement")
+                        ////.Include("Pay_Procurement.Pro_Package")
+                        .Include(x=>x.Pay_Procurement.Pro_Package.Pac_Cities)
+                        .Include(x=> x.Pay_Procurement.Pro_TrcPlace)
+                        .FirstOrDefault(c => c.Pay_Id == paymentId);
+
+                    getItem.Pay_Procurement.Pro_PaymentFinished = true;
+                    getItem.Pay_StatusPayment = Status;
+                    getItem.Pay_StatusRequest = getItem.Pay_StatusRequest + "---finish";
+                    db.Entry(getItem).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return getItem;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
 
         }

@@ -1,0 +1,137 @@
+﻿@model IranAudioGuide_MainServer.Models.PymentIndexAppVM
+@using IranAudioGuide_MainServer.App_GlobalResources
+@using IranAudioGuide_MainServer.Models
+@{
+    Layout = null;
+}
+
+
+<style>
+    .invoice-payment-info {
+        margin: 0 0 0 5%;
+    }
+
+    ._fa .invoice-payment-info {
+        margin: 0 5% 0 0;
+    }
+</style>
+
+<div class="row">
+
+    <nav class="subheader">
+        <div class="nav-wrapper subheader black-text">
+            <div class="col s12">
+                <h4 style="display:inline-block"> @Global.ReceiptForInvoice</h4>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="col s12">
+
+
+        <div class="card IAGblueBack darken-1">
+            <div class="card-content white-text">
+
+                <h2>
+                    <span class="card-title">
+                        <i class="material-icons dp48">markunread_mailbox</i>
+                        @Global.PackageInfo
+                    </span>
+                </h2>
+
+                @if (Model.PackageCities != null)
+                {
+                    foreach (var item in Model.PackageCities)
+                    {
+                        <div class="invoice-payment-info">
+                            <h5>
+                                <i class="material-icons dp48">map</i> @item.CityName
+                                @if (item.PlaceCount != 0)
+                                {
+                                    <span class="badge"> <i class="material-icons dp48">place</i> @item.PlaceCount </span>
+                                }
+                                <span class="badge"> <i class="material-icons dp48">headset</i> @item.TrackCount</span>
+                            </h5>
+                            <p>
+                                @item.CityDesc
+                            </p>
+                        </div>
+                    }
+                }
+                <h2>
+                    <span class="card-title">
+                        <i class="material-icons dp48">payment</i>  @Global.PaymentGateway
+                    </span>
+                </h2>
+
+                <div class="image-gateway invoice-payment-info">
+                    @if (ViewBag.ChooesBank == EnumBankName.Zarinpal)
+                    {
+                        <img src="~/Content/images/zarinpal.png" class="responsive-img" />}
+                    else if (ViewBag.ChooesBank == EnumBankName.Webmoney)
+                    {
+                        <img src="~/images/WebMoney-logo-white_8.png" class="responsive-img">
+                    }
+                    else if (ViewBag.ChooesBank == EnumBankName.Mellat)
+                    {
+                        <img style="width: 78%;background-color: #fff;padding: 6%;margin-left: 109PX;" src="http://iranaudioguide.net/Images/Mellat-Bank-logo.png" alt="" class="circle">
+                    }
+
+                </div>
+                <h2>
+                    <span class="card-title ">
+                        <i class="material-icons dp48">payment</i>  @Global.PaymentPage25
+
+                        @if (ViewBag.ChooesBank == EnumBankName.Webmoney)
+                        {
+                            <span> @string.Format("{0:#,##0.##}", Model.PriceDollar) <i class="material-icons dp48 iconprice">attach_money</i></span>
+                        }
+                        else
+                        { <span> @string.Format("{0:#,##0.##}0", Model.Price) @Global.PriceSign</span> }
+
+                    </span>
+                </h2>
+
+                <div class="invoice-payment-info">
+                    <h5></h5>
+
+
+                </div>
+                <div class="card-action">
+                    @if (ViewBag.ChooesBank == EnumBankName.Zarinpal)
+            {
+                        <a class="waves-effect waves-light btn z-depth-1 "
+                           role="button"
+                           href="@Url.Action("Purchase", "Payment", new { packageId = Model.Id, bankName = (int)EnumBankName.Zarinpal, isPlace = ViewBag.IsPlace, isFromWeb = true })">
+                            <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
+                        </a>
+                    }
+                    else if (ViewBag.ChooesBank == EnumBankName.Webmoney)
+                    {
+                        <a class="waves-effect waves-light btn z-depth-1 "
+                           role="button"
+                           href="@Url.Action("Purchase", "Payment",new { packageId = Model.Id,bankName= (int) EnumBankName.Webmoney, isPlace = ViewBag.IsPlace, isFromWeb = true })">
+                            <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
+                        </a>
+                    }
+                    else if (ViewBag.ChooesBank == EnumBankName.Mellat)
+                    {
+                        <a class="waves-effect waves-light btn z-depth-1 "
+                           role="button"
+                           href="@Url.Action("Purchase", "Payment", new { packageId = Model.Id,bankName= (int) EnumBankName.Mellat, isPlace = ViewBag.IsPlace, isFromWeb = true})">
+                            <i class="fa fa-check-square-o"></i>&nbsp;@Global.btnPurchase
+                        </a>
+                    }
+                    <a class="waves-effect waves-light btn z-depth-1 "
+                       ui-sref="Packages" role="button">
+                        @Global.btnCancel
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

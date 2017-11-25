@@ -157,7 +157,7 @@ namespace IranAudioGuide_MainServer.Models
         public string PackageName { get; set; }
         public long PackagePrice { get; set; }
         public float PackagePriceDollar { get; set; }
-        public List<CityVM> PackageCities { get; set; }  
+        public List<CityVM> PackageCities { get; set; }
 
     }
     public class CityPymentVM
@@ -618,15 +618,8 @@ namespace IranAudioGuide_MainServer.Models
     {
         public Guid PlaceId { get; set; }
         public int Index { get; set; }
-        public string PlaceName { get; set; }
-        public string PlaceDesc { get; set; }
         public string CityName { get; set; }
         public int PlaceCityId { get; set; }
-
-
-        public long Price { get; set; }
-        public float PriceDollar { get; set; }
-
 
         public string _imageUrl { get; set; }
         public string ImgUrl
@@ -640,10 +633,62 @@ namespace IranAudioGuide_MainServer.Models
             get { return _tumbImgUrl; }
             set { _tumbImgUrl = GlobalPath.FullPathImageTumbnail + value; }
         }
-        public string PlaceAddress { get; set; }
+
         public string PlaceCordinates { get; set; }
         public bool isOnline { get; set; }
         public bool isPrimary { get; set; }
+        public TranslatePlace TranslatePlaces { get; internal set; }
+
+        public long Price
+        {
+            get
+            {
+                if (TranslatePlaces != null)
+                    return TranslatePlaces.TrP_Price;
+                return 0;
+            }
+        }
+        public float PriceDollar
+        {
+           
+            get
+            {
+
+                if (TranslatePlaces != null)
+                    return TranslatePlaces.TrP_PriceDollar;
+                return 0;
+            }
+          
+        }
+        public string PlaceAddress
+        {
+            get
+            {
+                if (TranslatePlaces != null)
+                    return TranslatePlaces.TrP_Address;
+                return "";
+            }
+        }
+        public string PlaceName
+        {
+            get
+            {
+
+                if (TranslatePlaces != null)
+                    return TranslatePlaces.TrP_Name;
+                return "";
+            }
+        }
+        public string PlaceDesc
+        {
+            get
+            {
+
+                if (TranslatePlaces != null)
+                    return TranslatePlaces.TrP_Description;
+                return "";
+            }
+        }
     }
 
     public class GetImagesByPlaceIdVm

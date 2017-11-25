@@ -246,6 +246,34 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ModelState.AddModelError("error", "Information received is not valid ");
+                    return BadRequest(ModelState);
+                }
+                var d = dbTools.GetUpdate(model);
+                if (d.Images != null)
+                    d.Images = d.Images.Where(x => x.ImageType == 0).ToList();
+                return Ok(d);
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                ModelState.AddModelError("ex", ex);
+                return BadRequest(ModelState);
+            }
+        }
+
+
+
+
+        [HttpPost]
+        // [Route("GetUpdates")]
+        // POST: api/AppManager/GetUpdates/5
+        public IHttpActionResult GetUpdates_v3(GetUpdateInfoVm model)
+        {
+            try
+            {
                 if (ModelState.IsValid)
                     return Ok(dbTools.GetUpdate(model));
                 ModelState.AddModelError("error", "Information received is not valid ");
@@ -275,11 +303,28 @@ namespace IranAudioGuide_MainServer.Controllers
         // POST: api/AppManager/GetAll
 
         [HttpPost]
-        public IHttpActionResult GetAll(GetUpdateInfoVm model)
+        public IHttpActionResult GetAll_v3(GetUpdateInfoVm model)
         {
             try
             {
                 return Ok(dbTools.GetAllEntries(model.uuid));
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                ModelState.AddModelError("ex", ex);
+                return Content(System.Net.HttpStatusCode.BadRequest, "Any object");
+            }
+        }
+        [HttpPost]
+        public IHttpActionResult GetAll(GetUpdateInfoVm model)
+        {
+            try
+            {
+                var d = dbTools.GetAllEntries(model.uuid);
+                if (d.Images != null)
+                    d.Images = d.Images.Where(x => x.ImageType == 0).ToList();
+                return Ok(d);
             }
             catch (Exception ex)
             {
@@ -392,51 +437,46 @@ namespace IranAudioGuide_MainServer.Controllers
                     (!user.EmailConfirmed) ? BuyWithBarcodeStatus.notConfirmed :
                     BuyWithBarcodeStatus.confirmed;
                 if (status != BuyWithBarcodeStatus.confirmed)
-                {
                     return status;
-                }
-                ConvertBarcodetoStringVM cbs = new ConvertBarcodetoStringVM();
+
+
+
+                var count = ServicePayment.IsDuplicatePayment(model.packId, User.Identity.Name, model.isplace);
+                if (count)
+                    return BuyWithBarcodeStatus.isDuplicatePayment;
+
+                ConvertBarcodetoStringVM ConvertBarcodetoString = new ConvertBarcodetoStringVM();
                 using (BarcodeServices brs = new BarcodeServices())
                 {
-                    try
-                    {
-                        cbs = brs.ConvertBarcodetoString(model.barcode);
-                    }
-                    catch (Exception)
-                    {
-                        var ex = new Exception(string.Format("invalid baicode-->{0}", model.barcode));
-                        ErrorSignal.FromCurrentContext().Raise(ex);
+
+                    ConvertBarcodetoString = brs.ConvertBarcodetoString(model.barcode);
+                    if (ConvertBarcodetoString == null)
                         return BuyWithBarcodeStatus.invalidBarcode;
-                    }
-                    long packPrice;
-                    BarcodeVM bav = new BarcodeVM();
-                    packPrice = brs.Getpackage(model.packId);
-                    bav = brs.GetBarcodes(cbs.CBS_id_bar);
-                    if (cbs.CBS_price_pri != bav.price)
-                    {
+
+
+
+                    var getBarcode = brs.GetBarcodes(ConvertBarcodetoString.CBS_id_bar);
+                    if (getBarcode == null)
+                        return BuyWithBarcodeStatus.invalidBarcode;
+
+                    if (ConvertBarcodetoString.CBS_price_pri != getBarcode.price)
                         return BuyWithBarcodeStatus.invalidprice;
-                    }
-                    if (cbs.CBS_sellername != bav.sellerName)
-                    {
+
+                    if (ConvertBarcodetoString.CBS_sellername != getBarcode.sellerName)
                         return BuyWithBarcodeStatus.invalidSellerName;
-                    }
-                    try
-                    {
-                        if (bav.price != packPrice)
-                        {
-                            return BuyWithBarcodeStatus.invalidpackprice;
-                        }
-                        if (bav.isUsed == true)
-                        {
-                            return BuyWithBarcodeStatus.isused_true;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                        return BuyWithBarcodeStatus.unknownError;
-                    }
-                    brs.saved(cbs.CBS_id_bar, user.Id, model.packId);
+
+
+                    var findModelItem = brs.GetPrice(model.packId, model.isplace, model.langId);
+                    if (findModelItem == null)
+                        return BuyWithBarcodeStatus.invalidBarcode;
+
+                    if (getBarcode.price != findModelItem.Price)
+                        return BuyWithBarcodeStatus.invalidpackprice;
+
+                    //if (getBarcode.isUsed == true)
+                    //    return BuyWithBarcodeStatus.isused_true;
+
+                    brs.saved(ConvertBarcodetoString.CBS_id_bar, user.Id, findModelItem.Id, model.isplace);
                     return BuyWithBarcodeStatus.success;
                 }
             }

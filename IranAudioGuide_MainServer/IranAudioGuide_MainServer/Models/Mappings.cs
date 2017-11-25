@@ -85,6 +85,8 @@ namespace IranAudioGuide_MainServer.Models
                 .WithOptional(x => x.Pro_Payment)
                 // .Map(m => m.MapKey("Pac_Id"))
                 .WillCascadeOnDelete();
+
+          
         }
     }
     public class WMPaymentConfig : EntityTypeConfiguration<WMPayment>

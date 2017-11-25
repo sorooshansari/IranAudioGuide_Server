@@ -47,8 +47,6 @@ namespace IranAudioGuide_MainServer.Models
         [Required]
         public bool IsPlace { get; set; }
 
-        [Required]
-        public int LangId { get; set; }
     }
 
 

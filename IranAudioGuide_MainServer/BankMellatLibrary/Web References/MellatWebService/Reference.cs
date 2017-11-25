@@ -55,6 +55,8 @@ namespace BankMellatLibrary.MellatWebService {
         
         private System.Threading.SendOrPostCallback bpPosRefundRequestOperationCompleted;
         
+        private System.Threading.SendOrPostCallback bpRefundToPANRequestOperationCompleted;
+        
         private System.Threading.SendOrPostCallback bpRefundRequestOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
@@ -133,6 +135,9 @@ namespace BankMellatLibrary.MellatWebService {
         
         /// <remarks/>
         public event bpPosRefundRequestCompletedEventHandler bpPosRefundRequestCompleted;
+        
+        /// <remarks/>
+        public event bpRefundToPANRequestCompletedEventHandler bpRefundToPANRequestCompleted;
         
         /// <remarks/>
         public event bpRefundRequestCompletedEventHandler bpRefundRequestCompleted;
@@ -694,6 +699,44 @@ namespace BankMellatLibrary.MellatWebService {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://interfaces.core.sw.bps.com/", ResponseNamespace="http://interfaces.core.sw.bps.com/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string bpRefundToPANRequest([System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] string user, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] string password, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] long pan, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] long amount, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] long terminalId) {
+            object[] results = this.Invoke("bpRefundToPANRequest", new object[] {
+                        user,
+                        password,
+                        pan,
+                        amount,
+                        terminalId});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void bpRefundToPANRequestAsync(string user, string password, long pan, long amount, long terminalId) {
+            this.bpRefundToPANRequestAsync(user, password, pan, amount, terminalId, null);
+        }
+        
+        /// <remarks/>
+        public void bpRefundToPANRequestAsync(string user, string password, long pan, long amount, long terminalId, object userState) {
+            if ((this.bpRefundToPANRequestOperationCompleted == null)) {
+                this.bpRefundToPANRequestOperationCompleted = new System.Threading.SendOrPostCallback(this.OnbpRefundToPANRequestOperationCompleted);
+            }
+            this.InvokeAsync("bpRefundToPANRequest", new object[] {
+                        user,
+                        password,
+                        pan,
+                        amount,
+                        terminalId}, this.bpRefundToPANRequestOperationCompleted, userState);
+        }
+        
+        private void OnbpRefundToPANRequestOperationCompleted(object arg) {
+            if ((this.bpRefundToPANRequestCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.bpRefundToPANRequestCompleted(this, new bpRefundToPANRequestCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace="http://interfaces.core.sw.bps.com/", ResponseNamespace="http://interfaces.core.sw.bps.com/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string bpRefundRequest([System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] long terminalId, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] string userName, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] string userPassword, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] long orderId, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] long saleOrderId, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] long saleReferenceId, [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)] long refundAmount) {
             object[] results = this.Invoke("bpRefundRequest", new object[] {
                         terminalId,
@@ -1077,6 +1120,32 @@ namespace BankMellatLibrary.MellatWebService {
         private object[] results;
         
         internal bpPosRefundRequestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void bpRefundToPANRequestCompletedEventHandler(object sender, bpRefundToPANRequestCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class bpRefundToPANRequestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal bpRefundToPANRequestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

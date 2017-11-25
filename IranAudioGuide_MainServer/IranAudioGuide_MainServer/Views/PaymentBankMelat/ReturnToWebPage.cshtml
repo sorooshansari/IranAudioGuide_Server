@@ -4,7 +4,6 @@
     //Layout = "~/Views/Shared/_LayouProfile.cshtml";
 }
 
-
 <div class="paymentPage">
     <div class="row">
 
@@ -12,12 +11,9 @@
             <div class="nav-wrapper subheader black-text">
                 <div class="col s12">
                     <h4 style="display:inline-block"> @Global.ReceiptForInvoice</h4>
-                   
                 </div>
             </div>
         </nav>
-
-
         <div class="col s12">
             <div class="card IAGblueBack darken-1">
                 <ul class="@( ViewBag.Succeeded == true ? "successPayment" : "failePayment")">
@@ -32,6 +28,9 @@
                         }
 
                     </li>
+                    <li>
+                         aaaaaaaaaaaaaaaaaaaaaa=   @ViewBag.Msg
+                                               </li>
                     <li> <h5 class="tile-msg">@Html.Raw(ViewBag.Message)</h5> </li>
                     <li><h6 class="content white-text "> @Html.Raw(ViewBag.ErrDesc)</h6> </li>
 
@@ -42,7 +41,7 @@
                             <b>  @ViewBag.SaleReferenceId</b>
                         </li>
                         <li><i class="fa fa-briefcase"></i> @Global.PaymentPage27 <b> @ViewBag.Packname  </b></li>
-                            <li><i class="fa fa-briefcase"></i> @Global.Price <b> @string.Format("{0:#,##0.##}0", ViewBag.Price) @Global.PriceSign </b> </li>
+                        <li><i class="fa fa-briefcase"></i> @Global.Price <b> @string.Format("{0:#,##0.##}0", ViewBag.Price) @Global.PriceSign </b> </li>
                     }
                 </ul>
             </div>

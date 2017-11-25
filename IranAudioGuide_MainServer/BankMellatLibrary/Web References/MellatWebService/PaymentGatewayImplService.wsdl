@@ -121,6 +121,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="bpRefundToPANRequest">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="bpRefundToPANRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="bpRefundToPANRequestResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="bpRefundRequest">
       <soap:operation soapAction="" style="document" />
       <wsdl:input name="bpRefundRequest">

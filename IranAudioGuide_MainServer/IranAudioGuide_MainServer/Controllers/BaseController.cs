@@ -33,6 +33,8 @@ namespace IranAudioGuide_MainServer.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(User.Identity.Name) || string.IsNullOrEmpty(Message.email))
+                    return;
                 var sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/UserEmailTemplatePayment.html"));
                 var body = sr.ReadToEnd();
                 sr.Close();
@@ -78,7 +80,7 @@ namespace IranAudioGuide_MainServer.Controllers
 
                 Message.Body = body;
                 Message.Subject = Global.ReceiptForInvoice;
-                Message.Destination = User.Identity.Name;
+                Message.Destination = string.IsNullOrEmpty(User.Identity.Name) ? Message.email : User.Identity.Name;
                 EmailService es = new EmailService();
                 es.SendEmail(Message);
 

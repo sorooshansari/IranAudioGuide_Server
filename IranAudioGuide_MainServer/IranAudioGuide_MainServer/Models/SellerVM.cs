@@ -35,8 +35,9 @@ namespace IranAudioGuide_MainServer.Models
     /// </summary>
     public class PriceVM
     {
-        public int id { get; set; }
-        public double value { get; set; }
+        public Guid Id { get; set; }
+        public long Price { get; set; }
+        public float PriceDollar { get; set; }
     }
     /// <summary>
     /// barcode for buyer
@@ -49,10 +50,17 @@ namespace IranAudioGuide_MainServer.Models
     }
     public class BuyWithBarcodeVM
     {
+        public BuyWithBarcodeVM()
+        {
+            isplace = false;
+            langId = (int) EnumLang.en;
+        }
         public Guid packId { get; set; }
         public string email { get; set; }
         public string uuid { get; set; }
         public string barcode { get; set; }
+        public bool isplace { get; set; }
+        public int langId { get; set; }
 
     }
     public enum BuyWithBarcodeStatus
@@ -67,7 +75,8 @@ namespace IranAudioGuide_MainServer.Models
         isused_true = 8,
         invalidSellerName = 9,
         invalidpackprice = 10,
-        success = 11
+        success = 11,
+        isDuplicatePayment = 12,
     }
     /// <summary>
     /// convert barcode to string for buy with barcode

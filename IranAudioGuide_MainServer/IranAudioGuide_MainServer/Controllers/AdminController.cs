@@ -698,7 +698,7 @@ namespace IranAudioGuide_MainServer.Controllers
             t.TrP_Address = model.PlaceAddress;
             t.TrP_Price = model.Price;
             t.TrP_PriceDollar = model.PriceDollar;
-           
+
 
             if (newLang)
                 place.TranslatePlaces.Add(t);
@@ -1475,16 +1475,13 @@ namespace IranAudioGuide_MainServer.Controllers
                         PlaceId = place.Pla_Id,
                         ImgUrl = place.Pla_ImgUrl,
                         TumbImgUrl = place.Pla_TumbImgUrl,
-                        PlaceDesc = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Description,
-                        PlaceName = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Name,
-                        CityName = place.Pla_city.TranslateCities.FirstOrDefault(x => x.langId == lang).TrC_Name,
-                        PlaceAddress = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Address,
-                        PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
+                         PlaceCordinates = place.Pla_cordinate_X.ToString() + "," + place.Pla_cordinate_Y.ToString(),
                         PlaceCityId = place.Pla_city.Cit_Id,
                         isOnline = place.Pla_isOnline,
                         isPrimary = place.Pla_isPrimary,
-                        Price = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_Price,
-                        PriceDollar = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang).TrP_PriceDollar,
+
+                        TranslatePlaces = place.TranslatePlaces.FirstOrDefault(x => x.langId == lang)
+                        
                     }).ToList();
 
                 //List<PlaceVM> Places =

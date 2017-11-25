@@ -9,7 +9,9 @@ namespace BankMellatLibrary
         #region Base Variable Definition
 
         public readonly string PgwSite = "https://bpm.shaparak.ir/pgwchannel/startpay.mellat";
-        static readonly string callBackUrl = "https://iranaudioguide.com/PaymentBankMelat/BankMelatCallback";
+
+        static readonly string rootUrl = "https://iranaudioguide.com/";
+        static readonly string callBackUrl = "PaymentBankMelat/BankMelatCallback";
         //ﺷﻤﺎره ﭘﺎﻳﺎﻧﻪ ﭘﺬﻳﺮﻧﺪه 
         static readonly long terminalId = 2789695;
         static readonly string userName = "ira49";
@@ -23,8 +25,13 @@ namespace BankMellatLibrary
         {
             try
             {
-                localDate = DateTime.Now.ToString("yyyyMMdd");
-                localTime = DateTime.Now.ToString("HHMMSS");
+                //localDate = DateTime.Now.ToString("yyyyMMdd");
+                //localTime = DateTime.Now.ToString("HHMMSS");
+
+
+                localDate = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString().PadLeft(2, '0') + DateTime.Now.Day.ToString().PadLeft(2, '0');
+                localTime = DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + DateTime.Now.Second.ToString().PadLeft(2, '0');
+
             }
             catch (Exception error)
             {
@@ -38,17 +45,19 @@ namespace BankMellatLibrary
         /// <param name="orderId">ﺷﻤﺎره درﺧﻮاﺳﺖ-- حتما باید یکتا باشد</param>
         /// <param name="priceAmount">ﻣﺒﻠﻎ ﺧﺮﻳﺪ</param>
         /// <param name="additionalText">اﻃﻼﻋﺎت ﺗﻮﺿﻴﺤﻲ ﻛﻪ ﭘﺬﻳﺮﻧﺪه ﻣﺎﻳﻞ ﺑﻪ ﺣﻔﻆ آﻧﻬﺎ ﺑﺮای ﻫﺮ ﺗﺮاﻛﻨﺶ ﻣﻲ ﺑﺎﺷﺪ</param>
-        /// <returns> ReturnCodeForBpPayRequest,RefID(شماره پیگیری تراکنش شما) </returns>
-        public string BpPayRequest(long orderId, long priceAmount, string additionalText)
+        ///<param name="lang"> زبان موردنظر </param>
+            /// <returns> ReturnCodeForBpPayRequest,RefID(شماره پیگیری تراکنش شما) </returns>
+        public string BpPayRequest(long orderId, long priceAmount, string additionalText, string lang, long PlayerId )
         {
             try
             {
                 var WebService = new PaymentGatewayImplService();
+                var url = rootUrl + "/" + lang + "/" + callBackUrl;
                 //result = bpService.bpPayRequest
 
                 //if result == 0,RefID --> عملایت موفقیت آمیز بوده است 
                 var result = WebService.bpPayRequest(terminalId, userName, password, orderId, priceAmount,
-                    localDate, localTime, additionalText, callBackUrl,0);
+                    localDate, localTime, additionalText, url ,0);
 
                 return result;
                 // result.SelectMany(n => n.Split(',')).ToList();
@@ -67,7 +76,6 @@ namespace BankMellatLibrary
         /// <param name="saleOrderId">ﺷﻤﺎره درﺧﻮاﺳﺖ ﭘﺮداﺧﺖ</param>
         /// <param name="saleReferenceId">ﻛﺪ ﻣﺮﺟﻊ ﺗﺮاﻛﻨﺶ ﺧﺮﻳﺪ</param>
         /// <returns></returns>
-
         public string VerifyRequest(long orderId, long saleOrderId, long saleReferenceId)
         {
             try
@@ -103,7 +111,6 @@ namespace BankMellatLibrary
             }
         }
         /// <summary>
-
         /// در اﻳﻦ ﺣﺎﻟﺖ ﺑﺮای آﮔﺎﻫﻲ از نتیجه ﺗﺮاﻛﻨﺶ می ﺗﻮاﻧید در هر زﻣﺎﻧﻲ، اﻳﻦ ﻣﺘﺪ را ﻓﺮاﺧﻮاﻧﻲ ﻧﻤﺎید
         /// (اﺳﺘﻌﻼم ﺗﺮاﻛﻨﺶ)
         /// </summary>

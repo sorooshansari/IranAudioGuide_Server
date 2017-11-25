@@ -13,6 +13,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Data;
 using IranAudioGuide_MainServer.Services;
+using Elmah;
 
 namespace IranAudioGuide_MainServer.Services
 {
@@ -136,20 +137,42 @@ namespace IranAudioGuide_MainServer.Services
         //        File.WriteAllBytes(pdfpath + "guide.pdf", ms.ToArray());
         //    }
         //}
-        public long Getpackage(Guid id)
+        public PriceVM GetPrice(Guid id, bool isPlace, int langId)
         {
             try
             {
-                var res = (from p in db.Packages
-                           where p.Pac_Id == id
-                           select p.Pac_Price).FirstOrDefault();
-                return (res == default(long)) ? 0 : res;
+                if (isPlace)
+                {
+                    return db.TranslatePlaces
+                        .Include(x => x.Place)
+                        .Where(x =>
+                                    x.Place.Pla_Deactive == false &&
+                                    x.Place.Pla_isOnline == true &&
+                                     x.Pla_Id == id &&
+                                     x.langId == langId)
+                         .Select(x => new PriceVM
+                         {
+                             Price = x.TrP_Price,
+                             PriceDollar = x.TrP_PriceDollar,
+                             Id = x.TrP_Id
+                         }).FirstOrDefault();
+                }
+                else
+                {
+                    return db.Packages.Where(x => x.Pac_Id == id).Select(x => new PriceVM
+                    {
+                        Price = x.Pac_Price,
+                        PriceDollar = x.Pac_Price_Dollar,
+                        Id = x.Pac_Id
+                    }).FirstOrDefault();
+
+                }
             }
 
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return 0;
+                return null;
             }
         }
         /// <summary>
@@ -159,41 +182,71 @@ namespace IranAudioGuide_MainServer.Services
         /// <returns>is used,price</returns>
         public BarcodeVM GetBarcodes(int id)
         {
-            var res = (from b in db.Barcodes
-                       where b.Bar_Id == id
-                       select new BarcodeVM()
-                       {
-                           isUsed = b.Bar_IsUsed,
-                           price = b.Bar_Price.Pri_Value,
-                           sellerName = b.Bar_SellerName
-                       }).FirstOrDefault();
-            return res;
+            return db.Barcodes
+                .Where(b => b.Bar_Id == id)
+                .Select(b => new BarcodeVM()
+                {
+                    isUsed = b.Bar_IsUsed,
+                    price = b.Bar_Price.Pri_Value,
+                    sellerName = b.Bar_SellerName
+                }).FirstOrDefault();
+
         }
         public ConvertBarcodetoStringVM ConvertBarcodetoString(string barcode)
         {
-            string decryptedBarcode = CryptographyService.Decrypt(barcode, true);
-            var list = decryptedBarcode.Split(';').ToList();
-            ConvertBarcodetoStringVM cbs = new ConvertBarcodetoStringVM()
+            try
             {
-                CBS_id_bar = int.Parse(list[0]),
-                CBS_price_pri = double.Parse(list[1]),
-                CBS_sellername = list[2]
-            };
-            return cbs;
+                string decryptedBarcode = CryptographyService.Decrypt(barcode, true);
+                var list = decryptedBarcode.Split(';').ToList();
+                ConvertBarcodetoStringVM cbs = new ConvertBarcodetoStringVM()
+                {
+                    CBS_id_bar = int.Parse(list[0]),
+                    CBS_price_pri = double.Parse(list[1]),
+                    CBS_sellername = list[2]
+                };
+                return cbs;
+            }
+            catch (Exception)
+            {
+                var ex = new Exception(string.Format("invalid baicode-->{0}", barcode));
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return null;
+            }
+
         }
         /// <summary>
         ///  new row  Procurement and barisused
         /// </summary>
         /// <param name="CBS_id_bar">ConvertBarcodetoString id</param>
         /// <param name="userid">userid</param>
-        /// <param name="packid">packageid</param>
-        public void saved(int CBS_id_bar, string userid, Guid packid)
+        /// <param name="idproduct">packageid</param>
+        public void saved(int CBS_id_bar, string userid, Guid idproduct, bool isplace)
         {
-            var bars = db.Barcodes.Where(s => s.Bar_Id == CBS_id_bar).FirstOrDefault();
-            bars.Bar_IsUsed = true;
-            var t = new Procurement { Bar_Id = CBS_id_bar, Pro_PaymentFinished = true, Id = userid, Pac_Id = packid };
-            db.Procurements.Add(t);
-            db.SaveChanges();
+            try
+            {
+                var user = db.Users.FirstOrDefault(x=> x.Id == userid);
+                if (user == null)
+                    return;
+                var bars = db.Barcodes.Where(s => s.Bar_Id == CBS_id_bar).FirstOrDefault();
+                if (bars == null)
+                    return;
+
+                bars.Bar_IsUsed = true;
+                var t = new Procurement {
+                    Bar_Id = CBS_id_bar,
+                    Pro_PaymentFinished = true,
+                    Pro_User = user };
+                if (isplace)
+                    t.Pro_TrcPlaceId = idproduct;
+                else
+                    t.Pac_Id = idproduct;
+
+                db.Procurements.Add(t);
+              var result =  db.SaveChanges();
+            }
+            catch (Exception ex) {
+                return ;
+            }
         }
         public GeneratePDFModel DownloadPDF1(Pageing page)
         {
@@ -209,7 +262,7 @@ namespace IranAudioGuide_MainServer.Services
                 var userName = HttpContext.Current.User.Identity.Name;
 
                 var query = db.Barcodes
-                    .Where(x => x.Bar_IsUsed == false && x.Bar_SellerName == userName );
+                    .Where(x => x.Bar_IsUsed == false && x.Bar_SellerName == userName);
                 if (page.PriceId != 0)
                     query = query.Where(x => page.PriceId == x.Pri_Id);
 
@@ -246,5 +299,6 @@ namespace IranAudioGuide_MainServer.Services
             }
         }
 
+        
     }
 }

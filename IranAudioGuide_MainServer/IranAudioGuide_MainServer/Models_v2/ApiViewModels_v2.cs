@@ -7,7 +7,12 @@ namespace IranAudioGuide_MainServer.Models_v2
 {
     public class SendEmailForPaymentVM : Microsoft.AspNet.Identity.IdentityMessage
     {
-
+        public SendEmailForPaymentVM()
+        {
+            Price = "0";
+            Pac_Name = "";
+        }
+        public string email { get; set; }
         [Required]
         public string Price { get; set; }
 
@@ -267,7 +272,8 @@ namespace IranAudioGuide_MainServer.Models_v2
         //public string Url { get; set; }
         //public string Desc { get; set; }
         public Guid PlaceId { get; set; }
-        public int OrderItem { get; internal set; }
+        public int OrderItem { get; set; }
+        public int ImageType { get; set; }
     }
     public class CitiesVm
     {
