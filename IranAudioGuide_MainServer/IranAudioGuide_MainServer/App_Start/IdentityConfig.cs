@@ -164,6 +164,7 @@ namespace IranAudioGuide_MainServer
                 // Create the message:
                 var mail = new MailMessage(sentFrom, message.Destination);
                 mail.Subject = message.Subject;
+                mail.Priority = MailPriority.High;
                 mail.Body = message.Body;
                 mail.IsBodyHtml = true;
 

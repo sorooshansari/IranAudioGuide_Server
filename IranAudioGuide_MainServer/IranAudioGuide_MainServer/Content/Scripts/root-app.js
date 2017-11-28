@@ -144,9 +144,10 @@
      };
      $scope.ContactUs = function (model, form) {
          $scope.overlay = true;
+         console.log("send email");
          if (form.$valid && !model.invalidFile) {
              method = 'POST';
-             url = '/Home/ContactEmailSender';
+             url = '/fa/Home/ContactEmailSender';
              data = {
                  email: model.email,
                  message: model.message,

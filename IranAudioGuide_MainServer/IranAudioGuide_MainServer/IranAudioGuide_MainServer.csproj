@@ -271,9 +271,9 @@
     <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201710240527593_n.cs" />
-    <Compile Include="Migrations\201710240527593_n.Designer.cs">
-      <DependentUpon>201710240527593_n.cs</DependentUpon>
+    <Compile Include="Migrations\201711280614574_gh.cs" />
+    <Compile Include="Migrations\201711280614574_gh.Designer.cs">
+      <DependentUpon>201711280614574_gh.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -1888,8 +1888,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710240527593_n.resx">
-      <DependentUpon>201710240527593_n.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711280614574_gh.resx">
+      <DependentUpon>201711280614574_gh.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

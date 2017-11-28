@@ -33,7 +33,7 @@ namespace IranAudioGuide_MainServer.Controllers
             }
             try
             {
-                System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/HTMLAliTemplate.html"));
+                System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/Views/Shared/ContactEmailTemplate.html"));
                 string body = sr.ReadToEnd();
                 sr.Close();
                 body = body.Replace("#NameFamily#", model.name);
@@ -49,10 +49,9 @@ namespace IranAudioGuide_MainServer.Controllers
                 EmailService.SendWithoutTemplateAsync(new Microsoft.AspNet.Identity.IdentityMessage()
                 {
                     Body = body,
-                    Destination = "danialby@gmail.com",
+                    Destination = "iranaudioguide@gmail.com",
                     Subject = model.name + " - " + model.email
                 });
-
                 return Json(new Respond(Global.ServerEmailSending, status.success));
             }
             catch (Exception ex)
